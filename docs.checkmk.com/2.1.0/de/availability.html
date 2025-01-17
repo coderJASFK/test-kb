@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Checkmk berechnet nach Bedarf die Verfügbarkeit eines Objekts, seitdem es ihm bekannt ist. Erfahren Sie hier alles darüber, wie sie Auswertungen benutzen.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Verfügbarkeit (Availability) - Verfügbarkeiten auswerten und beurteilen">
+<meta name="og:description" content="Checkmk berechnet nach Bedarf die Verfügbarkeit eines Objekts, seitdem es ihm bekannt ist. Erfahren Sie hier alles darüber, wie sie Auswertungen benutzen.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Verfügbarkeit (Availability) - Verfügbarkeiten auswerten und beurteilen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/availability.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/availability.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/availability.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Verfügbarkeit (Availability)</h1>
+<div class="details">
+<span id="revdate">Last modified on 19-Nov-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/availability.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a>
+<a href="reporting.html">Berichte (Reports)</a>
+<a href="timeperiods.html">Zeitperioden (Time Periods)</a>
+<a href="bi.html">Business Intelligence (BI)</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__grundprinzip">
+<span class="hidden-anchor sr-only" id="_grundprinzip"></span>1. Grundprinzip</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__der_blick_in_die_vergangenheit">
+<span class="hidden-anchor sr-only" id="_der_blick_in_die_vergangenheit"></span>1.1. Der Blick in die Vergangenheit</h3>
+<div class="paragraph"><p>Da Checkmk alle Hosts und Services in regelmäßigen Intervallen
+kontinuierlich überwacht, schafft es damit eine hervorragende Grundlage
+für spätere Auswertungen über deren Verfügbarkeit. Und nicht nur das — Sie können berechnen lassen, welchen Anteil der Zeit ein Objekt in einem
+bestimmten Zustand war, wie oft dieser Zustand aufgetreten ist, wie lange
+er am längsten angehalten hat und vieles mehr.</p></div>
+<div class="paragraph"><p>Jeder Berechnung liegen dabei eine <em>Auswahl von Objekten</em> und
+ein bestimmter <em>Zeitraum der Vergangenheit</em> zugrunde. Checkmk
+rekonstruiert dann für diesen Zeitraum den Verlauf des Zustands für jedes
+der ausgewählten Objekte.  Pro Zustand werden die Zeiten aufsummiert und
+in einer Tabelle dargestellt.  Das Ergebnis kann dann z.B. sein, dass der
+Zustand eines bestimmten Services zu 99.95% <span class="state0">OK</span> war und und zu 0.005% <span class="state1">WARN</span>.</p></div>
+<div class="paragraph"><p>Dabei rechnet Checkmk auch Dinge wie Wartungszeiten, Service-Zeiten, nicht
+überwachte Zeiträume und andere Besonderheiten korrekt ab, erlaubt das
+Zusammenfassen von Zuständen, das Ignorieren von „kurzen Aussetzern“ und
+noch etliche weitere Anpassungsmöglichkeiten. Auch eine Verfügbarkeit von
+<a href="#bi">BI-Aggregationen</a> ist möglich.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_states">
+<span class="hidden-anchor sr-only" id="states"></span>1.2. Mögliche Zustände</h3>
+<div class="paragraph"><p>Durch die Einbeziehung von Wartungszeiten und ähnlichen Sonderzuständen gibt
+es theoretisch eine sehr große Zahl von möglichen Zustandskombinationen,
+wie z.B. <span class="state2">CRIT</span> + In Wartungszeit + In der Service-Zeit + Flapping. Da die
+meisten dieser Kombinationen nicht sehr nützlich sind, reduziert Checkmk
+sie auf eine kleine Zahl und geht dabei nach einem Prinzip von Prioritäten
+vor.  Da in obigem Beispiel der Service in einer Wartungszeit war, gilt als
+Zustand einfach <span class="guihint">in scheduled downtime</span> und der eigentliche Status wird
+ignoriert. Das reduziert die Anzahl der möglichen Zustände auf die Folgenden:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_states.png" alt="avail states"></div></div>
+<div class="paragraph"><p>Diese Grafik zeigt auch die Reihenfolge, nach der Zustände priorisiert
+werden. Später werden wir zeigen, wie Sie manche der Zustände ignorieren
+oder zusammenfassen können.  Hier die Zustände noch einmal im Detail:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 13%;">
+<col style="width: 57%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Zustand</th>
+<th class="tableblock halign-left valign-top">Abkürzung</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">unmonitored</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zeiträume, während derer das Objekt nicht überwacht wurde. Dafür gibt es zwei mögliche Ursachen: Das Objekt war nicht Teil der Monitoring-Konfiguration oder, das Monitoring selbst ist für diesen Zeitraum nicht gelaufen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">out of service period</span></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Objekt war außerhalb seiner <span class="image-inline"><img src="../images/icons/icon_outof_serviceperiod.png" alt="icon outof serviceperiod"></span> Service-Periode — also in einem Zeitraum, in dem die Verfügbarkeit „egal“ war. Mehr zu den Service-Perioden erfahren Sie <a href="#serviceperiod">weiter unten</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">in scheduled downtime</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Downtime</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Objekt war innerhalb einer geplanten <span class="image-inline"><img src="../images/icons/icon_downtime.png" alt="icon downtime"></span> <a href="basics_downtimes.html">Wartungszeit</a>. Bei Services wird dieser Zustand auch dann angenommen, wenn Ihr Host in einer Wartung ist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">on down host</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">H.Down</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diesen Zustand gibt es nur bei Services — und zwar wenn der Host des Services <span class="hstate1">DOWN</span> ist. Eine Überwachung des Services zu so einem Zeitpunkt ist nicht möglich. Bei den meisten Services ist dies gleichbedeutend damit, dass der Service <span class="state2">CRIT</span> ist — aber nicht bei allen! Zum Beispiel ist der Zustand eines Dateisystems (<span class="guihint">Filesystem</span>-Check) sicher unabhängig davon, ob der Host erreichbar ist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">flapping</span></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phasen, in denen Zustand <span class="image-inline"><img src="../images/icons/icon_flapping.png" alt="icon flapping"></span> <a href="monitoring_basics.html#flapping">unstetig</a> ist — also viele Zustandswechsel in kurzer Zeit erfahren hat.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="hstate0">UP</span> <span class="hstate1">DOWN</span> <span class="hstate2">UNREACH</span></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Monitoring-Zustand von Hosts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="state0">OK</span> <span class="state1">WARN</span> <span class="state2">CRIT</span> <span class="state3">UNKNOWN</span></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Monitoring-Zustand von Services und BI-Aggregaten.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__availability_aufrufen">
+<span class="hidden-anchor sr-only" id="_availability_aufrufen"></span>2. Availability aufrufen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__von_der_ansicht_zur_auswertung">
+<span class="hidden-anchor sr-only" id="_von_der_ansicht_zur_auswertung"></span>2.1. Von der Ansicht zur Auswertung</h3>
+<div class="paragraph"><p>Das Erstellen einer Verfügbarkeitsauswertung ist sehr einfach. Rufen
+Sie zunächst eine beliebige <a href="views.html">Ansicht</a> von Hosts, Services
+oder <a href="bi.html">BI-Aggregaten</a> auf.
+Dort finden Sie im Menü <span class="guihint">Services</span> den Eintrag <span class="guihint">Availability</span>, welcher Sie direkt zur Berechnung der Verfügbarkeit der ausgewählten Objekte bringt.
+Diese wird tabellarisch angezeigt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_screenshot.png" alt="avail screenshot"></div></div>
+<div class="paragraph"><p>Die Tabelle zeigt die gleichen Objekte, die auch in der vorherigen Ansicht
+sichtbar waren. In jeder Spalte wird dargestellt, welchen Anteil des
+Abfragezeitraums das Objekt im besagten Zustand war. Die Darstellung ist
+per Default in Prozent mit zwei Kommastellen, aber das können Sie leicht
+<a href="#format_time_range">umstellen</a>.</p></div>
+<div class="paragraph"><p>Den Anfragezeitraum können Sie mit dem Menüeintrag <span class="guihint">Availability &gt; Change display options &gt; <a href="#option_timerange">Time Range</a></span> ändern.
+Dazu weiter unten mehr  …​</p></div>
+<div class="paragraph"><p>Sie haben die Möglichkeit, die Ansicht als PDF zu exportieren (nur <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong>).
+Auch ein Download der Daten in CSV-Format ist möglich <span class="guihint">(Export as CSV)</span>.
+Das sieht dann für obiges Beispiel so aus:</p></div>
+<div class="listingblock">
+<div class="title">Checkmk-Availability-2021-10-19_11-01-15.csv</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Host;Service;OK;WARN;CRIT;UNKNOWN;Flapping;H.Down;Downtime;N/A
+mail.mydomain.test;Check_MK;100.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;Check_MK Discovery;100.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;Filesystem /;100.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;Filesystem /var/spool;0.00%;100.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;HTTP https://mail.mydomain.test/;99.85%;0.15%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;HTTPS https://mail.mydomain.test/;100.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;MTA performance check;99.23%;0.30%;0.46%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;Postfix Queue;100.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;Postfix status;100.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+mail.mydomain.test;Uptime;100.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%;0.00%
+Summary;;89.91%;10.05%;0.05%;0.00%;0.00%;0.00%;0.00%;0.00%</code></pre></div>
+</div>
+<div class="paragraph"><p>Mithilfe eines <a href="wato_user.html#automation">Automationsbenutzers</a>, der sich über die URL
+authentifizieren kann, können Sie so die Daten auch skriptgesteuert abrufen
+(z.B. mit <code>wget</code> oder <code>curl</code>) und automatisiert verarbeiten.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_timeline">
+<span class="hidden-anchor sr-only" id="timeline"></span>2.2. Zeitleistendarstellung</h3>
+<div class="paragraph"><p>In jeder Zeile finden Sie das Symbol <span class="image-inline"><img src="../images/icons/button_timeline.png" alt="button timeline"></span>. Dies bringt
+Sie zu eine Zeitleistendarstellung des entsprechenden Objekts, in der genau
+aufgeschlüsselt ist, welche Zustandswechsel es im Anfragezeitraum gab
+(hier gekürzt):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_timeline.png" alt="avail timeline"></div></div>
+<div class="paragraph"><p>Dazu einige Hinweise:</p></div>
+<div class="ulist"><ul>
+<li><p>Fahren Sie mit der Maus in der Zeitleistengrafik über einen Abschnitt, so wird dieser in der Tabellendarstellung hervorgehoben.</p></li>
+<li><p>Auch in der Zeitleiste können Sie mit dem Menüeintrag <span class="guihint">Availability &gt; Change display options</span> bzw. <span class="guihint">Availability &gt; Change computation options</span> die <a href="#options">Optionen</a> für die Darstellung und Auswertung anpassen.</p></li>
+<li><p>Mit dem Symbol <span class="image-inline"><img src="../images/icons/button_annotation.png" alt="button annotation"></span> erstellen Sie eine Anmerkung <span class="guihint">(Annotation)</span> zu dem gewählten Abschnitt. Hier können Sie auch nachträglich Wartungszeiten angeben (mehr dazu gleich im nächsten Abschnitt).</p></li>
+<li><p>Bei der Verfügbarkeit von BI-Aggregaten können Sie mit dem <span class="image-inline"><img src="../images/icons/button_timewarp.png" alt="button timewarp"></span> Zauberstabsymbol eine Zeitreise zu dem Zustand des Aggregats im besagten Abschnitt machen. Mehr dazu <a href="#bi">weiter unten</a>.</p></li>
+<li><p>Mit dem Menüeintrag <span class="guihint">Availability &gt; Timeline</span> in der Hauptansicht können Sie die Zeitleisten von allen gewählten Objekten in einer einzigen langen Seite ansehen.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_annotations">
+<span class="hidden-anchor sr-only" id="annotations"></span>2.3. Anmerkungen und nachträgliche Wartungszeiten</h3>
+<div class="paragraph"><p>Wie gerade erwähnt, bietet die Zeitleiste über das Symbol
+<span class="image-inline"><img src="../images/icons/button_annotation.png" alt="button annotation"></span> die Möglichkeit, für einen Zeitabschnitt eine
+Anmerkung zu hinterlegen.  Dahinter finden Sie ein vorausgefülltes Formular,
+in dem Sie einen Kommentar eingeben können:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_anno_1.png" alt="avail anno 1"></div></div>
+<div class="paragraph"><p>Dabei können Sie den Zeitraum auch anders festlegen und erweitern. Das
+ist z.B. praktisch, wenn Sie einen größeren Abschnitt annotieren möchten,
+der mehrere Statuswechsel erlebt hat.  Wenn Sie die Angabe eines Services
+weglassen, erzeugen Sie eine Anmerkung für einen Host. Diese bezieht sich
+automatisch auch auf alle Services des Hosts.</p></div>
+<div class="paragraph"><p>In jeder Verfügbarkeitsansicht werden automatisch alle Anmerkungen sichtbar,
+die zum Zeitraum und den Objekten passen, die dargestellt werden.</p></div>
+<div class="paragraph"><p>Aber Annotationen haben noch eine weitere Funktion:
+Sie können damit nachträglich Wartungszeiten eintragen oder
+umgekehrt auch entfernen. Die Verfügbarkeitsberechnung berücksichtigt
+diese Korrekturen wie ganz normale Wartungszeiten. Es gibt für so etwas
+mindestens zwei legitime Gründe:</p></div>
+<div class="ulist"><ul>
+<li><p>Während des Betriebs kann es passieren, dass geplante Wartungszeiten nicht korrekt eingetragen wurden. Das sieht für die Verfügbarkeit natürlich schlecht aus. Durch nachträgliches Eintragen dieser Zeiten können Sie den Bericht richtigstellen.</p></li>
+<li><p>Es gibt Benutzer, die bei einem spontanen Ausfall Wartungszeiten missbrauchen um Benachrichtigungen abzustellen. Das verfälscht später die Auswertungen. Durch nachträgliches <em>Entfernen</em> der Wartungszeit können Sie das korrigieren.</p></li>
+</ul></div>
+<div class="paragraph"><p>Zum Umklassifizieren von Wartungszeiten wählen Sie einfach die Checkbox
+<span class="guihint">Reclassify downtime of this period</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_anno_2.png" alt="avail anno 2"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__monitoring_historie_anzeigen">
+<span class="hidden-anchor sr-only" id="_monitoring_historie_anzeigen"></span>2.4. Monitoring-Historie anzeigen</h3>
+<div class="paragraph"><p>In der Verfügbarkeitstabelle finden Sie neben dem Symbol für die Zeitleiste
+noch ein weiteres Symbol: <span class="image-inline"><img src="../images/icons/button_history.png" alt="button history"></span>. Dieses bringt Sie zur
+<a href="views.html">Ansicht</a> der Monitoring-Historie mit einem vorausgefüllten Filter
+für das entsprechende Objekt und den Anfragezeitraum. Dort sehen Sie nicht
+nur die Ereignisse, auf denen die Verfügbarkeitsberechnung basiert (die
+Zustandswechsel), sondern auch die zugehörigen Benachrichtigungen und ähnliche
+Ereignisse:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_history.png" alt="avail history"></div></div>
+<div class="paragraph"><p>Was Sie hier nicht sehen, ist der Zustand des Objekts am <em>Anfang</em> des
+Abfragezeitraums. Die Berechnung der Verfügbarkeit geht dazu noch weiter
+in die Vergangenheit zurück, um den Anfangszustand zuverlässig zu ermitteln.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_options">
+<span class="hidden-anchor sr-only" id="options"></span>3. Auswertungen anpassen</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/avail_menu_options.png" alt="avail menu options" width="350"></div></div>
+<div class="paragraph"><p>Sowohl die Berechnung als auch die Darstellung der Verfügbarkeit können Sie
+durch zahlreiche Optionen beeinflussen.
+Sie finden diese im Menüeintrag <span class="guihint">Availability &gt; Change display options</span> (Anzeigeoptionen ändern) respektive <span class="guihint">Availability &gt; Change computation options</span> (Berechnungsregeln ändern).</p></div>
+<div class="paragraph"><p>Nachdem Sie die Optionen geändert und mit <span class="guihint">Apply</span> bestätigt haben, wird die Verfügbarkeit neu berechnet und dargestellt.
+Alle geänderten
+Optionen werden für Ihr Benutzerprofil als Default hinterlegt, so dass Sie
+beim nächsten Aufruf wieder die gleichen Einstellungen vorfinden.</p></div>
+<div class="paragraph"><p>Gleichzeitig sind die Optionen in der URL der aktuellen Seite kodiert.
+Wenn Sie also jetzt ein <em>Lesezeichen</em> auf die Seite speichern (z.B.
+mit dem praktischen <span class="guihint">Bookmarks</span>-Element), dann sind die Optionen Teil von
+diesem und werden bei einem späteren Klick darauf genau so wieder hergestellt.</p></div>
+<div class="sect2">
+<h3 id="heading_option_timerange">
+<span class="hidden-anchor sr-only" id="option_timerange"></span>3.1. Auswahl des Zeitbereichs</h3>
+<div class="openblock float-group"><div class="content">
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_time_range2.png" alt="avoption time range2" width="350"></div></div>
+<div class="paragraph"><p>Die wichtigste und erste Option jeder Verfügbarkeitsauswertung ist natürlich der Zeitbereich, der betrachtet wird. Bei <span class="guihint">Date range</span> können Sie einen exakten Zeitbereich mit Anfangs- und Enddatum festlegen. Dabei ist der letzte Tag bis 24:00 Uhr mit eingeschlossen.</p></div>
+</div></div>
+<div class="openblock float-group"><div class="content">
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_time_range.png" alt="avoption time range" width="350"></div></div>
+<div class="paragraph"><p>Viel praktischer sind die relativen Zeitangaben wie z.B. <span class="guihint">Last week</span>. Welcher
+Zeitraum genau angezeigt wird, hängt dabei (gewollt) vom Zeitpunkt ab,
+zu dem die Berechnung angestellt wird. Eine Woche geht hier übrigens immer
+von Montag 00:00 Uhr bis Sonntag 24:00 Uhr.</p></div>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__optionen_die_die_darstellung_betreffen">
+<span class="hidden-anchor sr-only" id="_optionen_die_die_darstellung_betreffen"></span>3.2. Optionen, die die Darstellung betreffen</h3>
+<div class="paragraph"><p>Viele Optionen betreffen die Art, wie die Daten präsentiert werden, andere
+wiederum beeinflussen die Berechnungsmethode. Zunächst ein Blick
+auf die Darstellung:</p></div>
+<div class="sect3">
+<h4 id="heading__zeilen_mit_100_verfügbarkeit_ausblenden">
+<span class="hidden-anchor sr-only" id="_zeilen_mit_100_verfügbarkeit_ausblenden"></span>Zeilen mit 100% Verfügbarkeit ausblenden</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_only_outages.png" alt="avoption only outages" width="350"></div></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Only show objects with outages</span> begrenzt die Darstellung auf
+solche Objekte, die überhaupt Ausfälle hatten (also Zeiten, zu denen der
+Zustand nicht <span class="state0">OK</span> bzw. <span class="hstate0">UP</span> war). Das ist nützlich, wenn Sie bei einer
+großen Zahl von Services nur die paar wenigen raus picken wollen, bei denen
+es ein Problem ab.<br></p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__beschriftungsoptionen">
+<span class="hidden-anchor sr-only" id="_beschriftungsoptionen"></span>Beschriftungsoptionen</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_labelling.png" alt="avoption labelling" width="350"></div></div>
+<div class="paragraph"><p>Die <span class="guihint">Labelling options</span> erlauben es, verschiedene Beschriftungsfelder
+ein- oder umgekehrt auszuschalten. Manche der Optionen sind vor allem
+für das <a href="reporting.html">Reporting</a> interessant. Zum Beispiel ist bei einem Bericht,
+der sowieso nur über einen Host geht, die Spalte mit dem Host-Namen
+eventuell überflüssig.</p></div>
+<div class="paragraph"><p>Die alternativen Anzeigenamen <span class="guihint">(alternative displaynames)</span> von Services
+können Sie über eine <a href="wato_rules.html">Regel</a> festlegen und damit z.B. wichtigen
+Services einen für den Leser Ihres Berichts aussagekräftigen Namen geben.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_thresholds">
+<span class="hidden-anchor sr-only" id="thresholds"></span>SLAs mit Schwellwerten farbig darstellen</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_visual_levels.png" alt="avoption visual levels" width="350"></div></div>
+<div class="paragraph"><p>Mit den <span class="guihint">Visual levels</span> können Sie Objekte optisch hervorheben, die
+eine bestimmte Verfügbarkeit im Anfragezeitraum unterschritten haben.
+Das betrifft ausschließlich die Spalte für den <span class="state0">OK</span>-Zustand. Diese ist
+normalerweise immer grün eingefärbt. Bei Unterschreitung der eingestellten
+Schwellen ändert sich die Farbe dieser Zelle dann auf Gelb bzw. Rot.
+Man kann das als sehr einfache SLA-Auswertung bezeichnen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__anzahl_und_dauer_der_einzelnen_ausfälle_anzeigen">
+<span class="hidden-anchor sr-only" id="_anzahl_und_dauer_der_einzelnen_ausfälle_anzeigen"></span>Anzahl und Dauer der einzelnen Ausfälle anzeigen</h4>
+<div class="openblock float-group"><div class="content">
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_outage_statistics.png" alt="avoption outage statistics" width="350"></div></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Outage statistics</span> liefert zusätzliche Informationsspalten
+in der Verfügbarkeitstabelle. In der Abbildung wurden die Informationen
+<span class="guihint">max. duration</span> und <span class="guihint">count</span> für die Statusspalte <span class="guihint">Crit/Down</span>
+aktiviert. Das bedeutet, dass Sie zu Ausfällen vom Status <span class="state2">CRIT</span>/<span class="hstate1">DOWN</span>
+jeweils die Anzahl der Vorfälle sowie die Dauer des längsten Vorfalls
+sehen.</p></div>
+</div></div>
+<div class="openblock float-group"><div class="content">
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_count_max.png" alt="avoption count max" width="350"></div></div>
+<div class="paragraph"><p>In der Tabelle entstehen so zusätzliche Spalten.</p></div>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="heading_format_time_range">
+<span class="hidden-anchor sr-only" id="format_time_range"></span>Darstellung von Zeitangaben</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_format_time.png" alt="avoption format time" width="350"></div></div>
+<div class="paragraph"><p>Nicht immer ist es sinnvoll, (Nicht-)Verfügbarkeiten in Prozent anzugeben.
+Die Option <span class="guihint">Format time ranges</span> erlaubt das Umstellen auf eine Darstellung,
+in der Zeiträume in absoluten Zahlen gezeigt werden. Damit können Sie die
+Gesamtlänge der Ausfallzeiten auf die Minute genau sehen. Die Darstellung
+zeigt sogar Sekunden, aber bedenken Sie, dass das nur dann Sinn macht,
+wenn Sie die Überwachung auch im Sekundenraster durchführen und nicht wie
+üblich mit einem Check pro Minute.
+Auch die Genauigkeit der Angabe (Kommastellen in den Prozentwerten) können
+Sie hier bestimmen.</p></div>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_format_timestamps.png" alt="avoption format timestamps" width="350"></div></div>
+<div class="paragraph"><p>Die Formatierung von Zeitstempeln betrifft Angaben in der Zeitleiste
+<span class="guihint">(Timeline)</span>.  Die Umstellung auf UNIX-Epoch (Sekunden seit dem 1.1.1970)
+erleichtert die Zuordnung von Zeitbereichen zu den entsprechenden Stellen
+in den Logdateien der Monitoring-Historie.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__anpassen_der_zusammenfassungszeile">
+<span class="hidden-anchor sr-only" id="_anpassen_der_zusammenfassungszeile"></span>Anpassen der Zusammenfassungszeile</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_summary_line.png" alt="avoption summary line" width="350"></div></div>
+<div class="paragraph"><p>Die Zusammenfassung in der letzten Zeile der Tabelle können Sie hiermit
+nicht nur ein- und ausschalten. Sie können sich auch zwischen Summe und
+Durchschnitt entscheiden. Bei Spalten, die Prozentwerte enthalten, wird
+auch bei der Einstellung <span class="guihint">Summe</span> ein Durchschnitt angezeigt, da es wenig
+sinnvoll ist, Prozentwerte zu addieren.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__kleine_zeitleiste_einblenden">
+<span class="hidden-anchor sr-only" id="_kleine_zeitleiste_einblenden"></span>Kleine Zeitleiste einblenden</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_timeline.png" alt="avoption timeline" width="350"></div></div>
+<div class="paragraph"><p>Diese Option fügt eine Miniaturversion der <a href="#timeline">Zeitleiste</a>
+direkt in die Ergebnistabelle ein. Sie entspricht dem grafischen Balken
+in der detaillierten Zeitleiste, ist aber kleiner und direkt in die Tabelle
+integriert. Außerdem ist sie maßstabsgetreu, damit Sie mehrere Objekte in
+der gleichen Tabelle vergleichen können.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__gruppierung_nach_host_host_gruppe_oder_service_gruppe">
+<span class="hidden-anchor sr-only" id="_gruppierung_nach_host_host_gruppe_oder_service_gruppe"></span>Gruppierung nach Host, Host-Gruppe oder Service-Gruppe</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_group.png" alt="avoption group" width="350"></div></div>
+<div class="paragraph"><p>Unabhängig von der Darstellung der Ansicht, von der Sie kommen, zeigt die
+Verfügbarkeit immer alle Objekte in einer gemeinsamen Tabelle. Sie können
+mit dieser Option eine Gruppierung nach Host, Host-Gruppe oder Service-Gruppe
+festlegen. Damit bekommen Sie auch pro Gruppe eine eigene <span class="guihint">Summary</span>-Zeile.</p></div>
+<div class="paragraph"><p>Beachten Sie, dass bei einer Gruppierung nach Service-Gruppe Services
+<em>mehrfach</em> auftreten können. Das liegt daran, dass Services in mehreren
+Gruppen gleichzeitig enthalten sein können.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__nur_die_verfügbarkeit_anzeigen">
+<span class="hidden-anchor sr-only" id="_nur_die_verfügbarkeit_anzeigen"></span>Nur die Verfügbarkeit anzeigen</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_availability.png" alt="avoption availability" width="350"></div></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Availability</span> sorgt dafür, dass als einzige Spalte
+diejenige für den Status <span class="state0">OK</span> bzw. <span class="hstate0">UP</span> ausgegeben wird und diese den
+Titel <span class="guihint">Avail.</span> bekommt.  Damit wird ausschließlich die eigentliche
+Verfügbarkeit angezeigt. Sie können das mit den weiter unter
+gezeigten Möglichkeiten kombinieren, andere Zustände (z.B. <span class="state1">WARN</span>) auch dem OK-Zustand
+zuzurechnen und damit als verfügbar zu werten.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__statusgruppierung">
+<span class="hidden-anchor sr-only" id="_statusgruppierung"></span>3.3. Statusgruppierung</h3>
+<div class="paragraph"><p>Die in der Einleitung beschriebenen <a href="#states">Zustände</a> können
+auf verschiedenste Arten angepasst und verdichtet werden. Auf diese Weise
+werden flexibel sehr unterschiedliche Arten von Auswertungen erstellt. Dafür
+gibt es verschiedene Optionen.</p></div>
+<div class="sect3">
+<h4 id="heading__behandlung_von_warn_unknown_und_host_down">
+<span class="hidden-anchor sr-only" id="_behandlung_von_warn_unknown_und_host_down"></span>Behandlung von WARN, UNKNOWN und Host Down</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_status_grouping.png" alt="avoption status grouping" width="350"></div></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Service status grouping</span> bietet die Möglichkeit, verschiedene
+„Zwischenzustände“ auf andere abzubilden. Ein häufiger Fall ist,
+dass man <span class="state1">WARN</span> zu <span class="state0">OK</span> hinzuschlägt (wie in der Abbildung zu sehen). Wenn
+Sie an der eigentlichen <em>Verfügbarkeit</em> eines Service interessiert
+sind, kann dies durchaus sinnvoll sein. Denn <span class="state1">WARN</span> bedeutet ja meist,
+dass es noch kein wirkliches Problem gibt, dies aber bald der Fall sein
+<em>könnte.</em>  So betrachtet muss dann <span class="state1">WARN</span> noch als verfügbar gelten.
+Bei Netzwerkdiensten wie einem HTTP-Server ist es sicherlich sinnvoll, Zeiten,
+in denen der Host <span class="hstate1">DOWN</span> ist, ebenso zu behandeln wie wenn der Service selbst
+<span class="state2">CRIT</span> ist.</p></div>
+<div class="paragraph"><p>Die durch die Umgruppierung weggefallenen Zustände fehlen dann natürlich
+auch in der Ergebnistabelle, welche dann weniger Spalten hat.</p></div>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_host_status_grouping.png" alt="avoption host status grouping" width="350"></div></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Host status grouping</span> ist sehr ähnlich, betrifft aber
+Auswertungen der Verfügbarkeiten von Hosts. Der Status <span class="hstate2">UNREACH</span> bedeutet
+ja, dass ein Host aufgrund von Netzwerkproblemen nicht von Checkmk
+überwacht werden konnte. Sie können hier entscheiden, ob Sie das
+zum Zwecke der Verfügbarkeitsauswertung lieber als als <span class="hstate0">UP</span> oder <span class="hstate1">DOWN</span>
+werten möchten. Default ist, dass <span class="hstate2">UNREACH</span> als eigener Status gewertet wird.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__behandlung_von_nicht_überwachten_zeiträumen_und_flapping">
+<span class="hidden-anchor sr-only" id="_behandlung_von_nicht_überwachten_zeiträumen_und_flapping"></span>Behandlung von nicht überwachten Zeiträumen und Flapping</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_status_classification.png" alt="avoption status classification" width="350"></div></div>
+<div class="paragraph"><p>In der Option <span class="guihint">Status classification</span> werden weitere Zusammenfassungen
+vorgenommen. Die Checkbox <span class="guihint">Consider periods of flapping states</span> ist per
+Default an, womit Phasen häufiger Zustandswechsel einen eigenen Status bilden:
+<span class="image-inline"><img src="../images/icons/icon_flapping.png" alt="icon flapping"></span> unstetig. Die Idee dahinter ist, dass man gut sagen
+kann, dass der betroffene Dienst während solcher Zeiten zwar immer wieder <span class="state0">OK</span>
+ist, aber durch die häufigen Ausfälle trotzdem nicht nutzbar. Deaktivieren
+Sie diese Option, so wird das Konzept „flapping“ komplett ignoriert und
+der jeweils eigentliche Status kommt wieder zum Vorschein. Und die Spalte
+<span class="guihint">flapping</span> wird aus der Tabelle entfernt.</p></div>
+<div class="paragraph"><p>Das Entfernen der Option <span class="guihint">Consider times where the host is down</span> wirkt
+ähnlich. Sie schaltet das Konzept von <span class="guihint">Host down</span> ab. Diese Option macht
+nur bei der Verfügbarkeit von Services Sinn. In Phasen, in denen der Host
+nicht <span class="hstate0">UP</span> ist, wird bei der Verfügbarkeit trotzdem der eigentliche Status
+des Services zugrunde gelegt — genauer gesagt der Status vom letzten Check
+bevor der Host unerreichbar wurde. Dies kann sinnvoll sein bei Services,
+bei denen es nicht um die Erreichbarkeit über das Netzwerk geht.</p></div>
+<div class="paragraph"><p>Ähnlich ist auch die Option <span class="guihint">Include unmonitored time</span>. Stellen Sie sich
+vor, Sie machen eine Auswertung über den Februar und ein bestimmter Service
+ist erst am 15. Februar überhaupt in das Monitoring aufgenommen worden. Hat
+dieser deswegen eine Verfügbarkeit von nur 50 Prozent? In der Standardeinstellung
+(Option gesetzt) ist dies tatsächlich der Fall. Die fehlenden 50 Prozent aber nicht
+als Ausfall gewertet, sondern in einer eigenen Spalte mit dem Titel <span class="guihint">N/A</span>
+aufsummiert. Ohne die Option beziehen sich 100 Prozent auf die Zeit vom 15. bis zum
+28. Februar. Das bedeutet dann allerdings auch, dass eine Stunde Ausfall
+bei <em>diesem</em> Service prozentual doppelt so stark zu Buche schlägt
+wie der Ausfall eines Services, der den ganzen Monat über vorhanden war.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__behandlung_von_geplanten_wartungszeiten">
+<span class="hidden-anchor sr-only" id="_behandlung_von_geplanten_wartungszeiten"></span>Behandlung von geplanten Wartungszeiten</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_downtimes.png" alt="avoption downtimes" width="350"></div></div>
+<div class="paragraph"><p>Mit der Option <span class="guihint">Scheduled Downtimes</span> können Sie einstellen, wie sich
+<a href="basics_downtimes.html">Wartungszeiten</a> in der Verfügbarkeitsauswertung
+auswirken:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Honor scheduled downtimes</span> ist der Default. Hier werden Wartungszeichen als eigener Zustand in einer eigenen Spalte aufsummiert. Mit <span class="guihint">Treat phases of UP/OK as non-downtime</span> können Sie die Zeiten, in denen der Service trotz Wartungszeit <span class="state0">OK</span> war, von der Wartungszeit abziehen.</p></li>
+<li><p><span class="guihint">Ignore scheduled downtimes</span> ist, als wären überhaupt keine Wartungszeiten eingetragen gewesen. Ausfälle sind Ausfälle. Punkt. Aber natürlich auch nur dann, wenn es tatsächlich einen Ausfall gegeben hat.</p></li>
+<li><p><span class="guihint">Exclude scheduled downtimes</span> sorgt dafür, dass die Wartungszeiten einfach aus dem Berechnungszeitraum ausgeschlossen werden. Die prozentuale Verfügbarkeit bezieht sich dann nur auf die Zeiten außerhalb der Wartung.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__zusammenfassen_gleicher_phasen">
+<span class="hidden-anchor sr-only" id="_zusammenfassen_gleicher_phasen"></span>Zusammenfassen gleicher Phasen</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_phase_merging.png" alt="avoption phase merging" width="350"></div></div>
+<div class="paragraph"><p>Durch das Umbiegen von Zuständen auf andere (z.B. aus <span class="state1">WARN</span> wird <span class="state0">OK</span>) kann
+es sein, dass aufeinanderfolgende Abschnitte der Zeitleiste eines Objekts den
+gleichen Zustand bekommen. Diese Abschnitte werden dann normalerweise zu einem
+einzigen zusammengefasst.  Das ist meistens gut so und übersichtlich, hat aber
+Auswirkungen auf die Darstellung der Details in der Zeitleiste und eventuell
+auch auf die Zählung von Ereignissen mit der Option <span class="guihint">Outage statistics</span>.
+Daher können Sie das Verschmelzen mit
+<span class="guihint">Do not merge consecutive phases with equal state</span> abschalten.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_softstates">
+<span class="hidden-anchor sr-only" id="softstates"></span>3.4. Ignorieren kurzer Störungen</h3>
+<div class="paragraph"><p>Manchmal werden Sie Überwachungen haben, die oft kurzzeitig ein Problem
+melden, das aber im Normalfall beim nächsten Check (nach einer Minute) schon
+wieder <span class="state0">OK</span> ist. Und Sie finden keinen Weg durch Anpassen von Schwellwerten
+oder Ähnlichem, das sauber in den Griff bekommen.  Eine häufige Lösung ist
+dann das Setzen der
+<a href="monitoring_basics.html#max_check_attempts"><span class="guihint">Maximum number of check attempts</span></a>
+von 1 auf 3, um mehrere Fehlversuche zu erlauben, bevor eine Benachrichtigung
+stattfindet. Dadurch ergibt sich das Konzept von <span class="guihint">Soft states</span> — die Zustände <span class="state1">WARN</span>, <span class="state2">CRIT</span> und <span class="state3">UNKNOWN</span> vor Ablauf aller Versuche.</p></div>
+<div class="paragraph"><p>Von Anwendern, die dieses Feature einsetzen, werden wir gelegentlich gefragt,
+warum das Availability-Modul von Checkmk keine Funktion hat, um für die
+Berechnung nur <span class="guihint">Hard states</span> zu verwenden.  Der Grund ist: Es gibt eine
+bessere Lösung! Denn würde man die Hard states als Grundlage nehmen,</p></div>
+<div class="ulist"><ul>
+<li><p>würden Ausfälle aufgrund der erfolglosen Versuche 1 und 2 zwei Minuten zu kurz gewertet, und</p></li>
+<li><p>man könnte das Verhalten bei kurzen Ausfällen nicht <em>nachträglich</em> nachjustieren.</p></li>
+</ul></div>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_short_times.png" alt="avoption short times" width="350"></div></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Short time intervalls</span> ist viel flexibler und gleichzeitig
+sehr einfach.  Sie legen schlicht eine Zeitdauer fest, unterhalb derer
+Zustände nicht gewertet werden.</p></div>
+<div class="paragraph"><p>Nehmen Sie an, Sie setzen den Wert auf 2,5 Minuten (150 Sekunden). Ist nun
+ein Service die ganze Zeit auf <span class="state0">OK</span>, geht dann 2 Minuten lang auf <span class="state2">CRIT</span>
+und dann wieder auf <span class="state0">OK</span>, so wird das kurze <span class="state2">CRIT</span>-Intervall einfach als
+<span class="state0">OK</span> gewertet!  Das gilt allerdings auch umgekehrt! Ein kurzes <span class="state0">OK</span> innerhalb
+einer langen <span class="state1">WARN</span>-Phase wird dann ebenfalls als <span class="state1">WARN</span> gewertet.</p></div>
+<div class="paragraph"><p>Allgemein gesagt, werden kurze Abschnitte, bei denen <em>vorher und nachher
+der gleiche Zustand herrscht</em>, mit diesem gleichgesetzt. Bei einer Abfolge
+<span class="state0">OK</span>, dann 2 Minuten <span class="state1">WARN</span>, dann <span class="state2">CRIT</span>, bleibt das <span class="state1">WARN</span> bestehen, auch
+wenn dessen Dauer unterhalb der eingestellten Zeit liegt!</p></div>
+<div class="paragraph"><p>Bedenken Sie beim Festlegen der Zeit das bei Checkmk übliche Check-Intervall
+von einer Minute.  Dadurch dauert jeder Zustand <em>etwa</em> das Vielfache
+einer Minute. Da die Antwortzeiten der Agenten leicht schwanken, können das
+auch leicht mal 61 oder 59 Sekunden sein. Daher ist es sicherer, wenn Sie
+als Wert keine ganze Minutenzahl eintragen, sondern einen Puffer einbauen
+(daher das Beispiel mit den 2,5 Minuten).</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_serviceperiod">
+<span class="hidden-anchor sr-only" id="serviceperiod"></span>3.5. Einfluss von Zeitperioden</h3>
+<div class="paragraph"><p>Eine wichtige Funktion der Verfügbarkeitsberechnung von Checkmk ist, dass
+Sie diese von <a href="timeperiods.html">Zeitperioden</a> abhängig machen können. Damit
+können Sie für jeden Host oder Service individuelle Zeiten definieren. In
+diesen Zeiten wird der Host/Service als verfügbar erwartet und der Zustand
+dann zur Auswertung genutzt.  Dafür hat jedes Objekt das Attribut
+<span class="guihint">Service period</span>. Das Vorgehen ist wie folgt:</p></div>
+<div class="ulist"><ul>
+<li><p>Definieren Sie für Ihre Service-Zeiten eine Zeitperiode.</p></li>
+<li><p>Weisen Sie diese über den Regelsatz <span class="guihint">Host &amp; Service parameters &gt; Monitoring configuration &gt; Service period for hosts</span> bzw. <span class="guihint">…​ for services</span> den Objekten zu.</p></li>
+<li><p>Aktivieren Sie die Änderungen.</p></li>
+<li><p>Nutzen Sie die Availability-Option <span class="guihint">Service time</span>, um das Verhalten zu beeinflussen.</p></li>
+</ul></div>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_service_time.png" alt="avoption service time" width="350"></div></div>
+<div class="paragraph"><p>Hier gibt es drei einfache Möglichkeiten. Der Default
+<span class="guihint">Base report only on service times</span> blendet die Zeiten außerhalb der
+definierten Service-Zeit komplett aus. Diese zählen damit auch nicht zu den
+100 Prozent. Es werden nur die Zeiträume innerhalb der Service-Zeiten
+betrachtet. In der Zeitleistendarstellung sind die übrigen Zeiten grau
+dargestellt.</p></div>
+<div class="paragraph"><p><span class="guihint">Base report only on none-service times</span> macht das Gegenteil und berechnet
+quasi die inverse Darstellung: Wie gut war die Verfügbarkeit <em>außerhalb</em>
+der Service-Zeiten?</p></div>
+<div class="paragraph"><p>Und die dritte Option <span class="guihint">Include both service and non-service times</span>
+deaktiviert das ganze Konzept der Service-Zeiten und zeigt die Auswertungen
+wieder für alle Zeiten von Montag bis Sonntag und 00:00 Uhr bis 24:00 Uhr.</p></div>
+<div class="paragraph"><p>Übrigens: Wenn ein Host nicht in der Service-Zeit ist, heißt das für
+Checkmk <em>nicht</em> automatisch, dass das auch für die Services auf dem
+Host gilt. Sie benötigen für Services immer eine eigene Regel in
+<span class="guihint">Service period for services</span>.</p></div>
+<div class="sect3">
+<h4 id="heading__der_benachrichtigungszeitraum">
+<span class="hidden-anchor sr-only" id="_der_benachrichtigungszeitraum"></span>Der Benachrichtigungszeitraum</h4>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_notification_period.png" alt="avoption notification period" width="350"></div></div>
+<div class="paragraph"><p>Es gibt übrigens noch eine etwas verwandte Option: <span class="guihint">Notification period</span>.
+Hier können Sie auch den <em>Benachrichtigungszeitraum</em> für die
+Auswertung heranziehen. Dieser ist aber eigentlich nur dafür gedacht, in
+bestimmten Zeiten keine Benachrichtigungen über Probleme zu erzeugen und deckt sich nicht
+unbedingt mit der Service-Zeit. Die Option wurde zu einer Zeit eingeführt,
+als die Software noch keine Service-Zeit kannte und ist nur noch aus
+Kompatibilitätsgründen vorhanden. Sie sollten Sie am besten nicht verwenden.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__begrenzung_der_berechnungszeit">
+<span class="hidden-anchor sr-only" id="_begrenzung_der_berechnungszeit"></span>3.6. Begrenzung der Berechnungszeit</h3>
+<div class="paragraph"><p>Bei der Berechnung der Verfügbarkeit muss die komplette Vergangenheit der
+gewählten Objekte aufgerollt werden. Wie das im einzelnen geht, erfahren
+Sie <a href="#technical">weiter unten</a>. Vor allem in der <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> kann die
+Auswertung etwas Zeit beanspruchen, da Nagios keinen Cache für die benötigten
+Daten hat und die textbasierten Logdateien durchsucht werden müssen.</p></div>
+<div class="paragraph"><p>Damit eine allzu komplexe Anfrage — die eventuell aus Versehen aufgerufen
+wurden — nicht über sehr lange Zeit einen Apache-Prozess lahmlegt, die CPU
+übermäßig strapaziert und dabei „hängt“, gibt es zwei Optionen, welche die Dauer
+der Berechnung begrenzen. Beide sind per Default aktiviert:</p></div>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_query_time_limit.png" alt="avoption query time limit" width="350"></div></div>
+<div class="paragraph"><p>Das <span class="guihint">Query time limit</span> begrenzt die Dauer der zugrundeliegenden Abfrage an
+den Monitoring-Kern auf eine bestimmte Zeit. Diese ist auf eine halbe Minute
+voreingestellt. Wird diese überschritten, wird die Auswertung abgebrochen
+und ein Fehler angezeigt. Wenn Sie sicher sind, dass die Auswertung länger
+dauern darf, können Sie dieses Timeout einfach hochsetzen.</p></div>
+<div class="imageblock inline-image"><div class="content"><img src="../images/avoption_limit_data.png" alt="avoption limit data" width="350"></div></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Limit processed data</span> schützt Sie vor Auswertungen mit zu
+vielen Objekten. Hier wird ein Limit eingezogen, das analog zu dem in den
+<a href="views.html#limit">Ansichten</a> funktioniert. Wenn die Anfrage an den Monitoring-Kern
+mehr als 5000 Zeitabschnitte liefern würde, wird die Berechnung mit einer
+Warnung abgebrochen. Die Limitierung wird bereits im Kern durchgeführt — do wo die Daten beschafft werden.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_bi">
+<span class="hidden-anchor sr-only" id="bi"></span>4. Availability bei Business Intelligence</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__grundprinzip_2">
+<span class="hidden-anchor sr-only" id="_grundprinzip_2"></span>4.1. Grundprinzip</h3>
+<div class="paragraph"><p>Ein starkes Feature der Verfügbarkeitsberechnung von Checkmk ist die
+Möglichkeit, die Verfügbarkeit von <a href="bi.html">BI-Aggregationen</a> zu berechnen.</p></div>
+<div class="paragraph"><p>Ein Alleinstellungsmerkmal dabei ist, dass Checkmk dazu <em>nachträglich</em> anhand des
+Verlaufs der einzelnen Zustände von Hosts und Services Schritt für Schritt
+rekonstruiert, wie der Zustand des jeweiligen Aggregats zu einem bestimmte
+Zeitpunkt genau war.</p></div>
+<div class="paragraph"><p>Warum der ganze Aufwand? Warum nicht einfach das BI-Aggregat mit einem
+aktiven Check abfragen und dann dessen Verfügbarkeit anzeigen? Nun, der
+Aufwand hat für Sie eine ganze Menge Vorteile:</p></div>
+<div class="ulist"><ul>
+<li><p>Sie können den Aufbau von BI-Aggregaten nachträglich anpassen und die Verfügbarkeit dann neu berechnen lassen.</p></li>
+<li><p>Die Berechnung ist genauer, da nicht durch den aktiven Check eine Ungenauigkeit von +/- einer Minute entsteht.</p></li>
+<li><p>Sie haben eine exzellente Analysefunktion, mit der Sie nachträglich untersuchen können, was denn damals genau zu einem Ausfall geführt hat.</p></li>
+<li><p>Nicht zuletzt müssen Sie nicht extra einen Check einrichten.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__verfügbarkeit_aufrufen">
+<span class="hidden-anchor sr-only" id="_verfügbarkeit_aufrufen"></span>4.2. Verfügbarkeit aufrufen</h3>
+<div class="paragraph"><p>Das Aufrufen der Verfügbarkeitsansicht geht erst einmal analog zu den Hosts und
+Services.
+Sie wählen eine Ansicht mit einem oder mehreren BI-Aggregaten und wählen den Menüeintrag <span class="guihint">BI Aggregations &gt; Availability</span> aus.
+Es gibt aber hier noch einen zweiten Weg: Jedes BI-Aggregat hat über das Symbol
+<span class="image-inline"><img src="../images/icons/button_availability.png" alt="button availability"></span> einen direkten Weg zu dessen Verfügbarkeit:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_bi_icon.png" alt="avail bi icon"></div></div>
+<div class="paragraph"><p>Die Auswertung an sich ist erst einmal analog zu der bei Services — allerdings
+ohne die Spalten <span class="guihint">Host down</span> und <span class="guihint">flapping</span>, da es diese Zustände bei
+BI nicht gibt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_bi_table.png" alt="avail bi table"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__die_zeitreise">
+<span class="hidden-anchor sr-only" id="_die_zeitreise"></span>4.3. Die Zeitreise</h3>
+<div class="paragraph"><p>Der große Unterschied kommt in der <span class="image-inline"><img src="../images/icons/button_timeline.png" alt="button timeline"></span>
+Zeitleistenansicht.  Folgendes Beispiel zeigt ein Aggregat von unserem
+Demoserver, welches für einen sehr kurzen Abschnitt von gerade mal einer
+Sekunde <span class="state2">CRIT</span> war (das wäre eines gutes Beispiel für die Option
+<span class="guihint">Short time intervals</span>).</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_bi_timeline.png" alt="avail bi timeline"></div></div>
+<div class="paragraph"><p>Wollen Sie wissen, was hier der Grund für den Ausfall war? Ein einfacher
+Klick auf den <span class="image-inline"><img src="../images/icons/button_timewarp.png" alt="button timewarp"></span> Zauberstab genügt. Er ermöglicht
+eine Zeitreise zu genau dem Zeitpunkt, an dem der Ausfall auftrat und öffnet
+eine Darstellung des BI-Aggregats zu jenem Zeitpunkt — in der folgenden
+Abbildung bereits an der richtigen Stelle aufgeklappt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_bi_timewarp.png" alt="avail bi timewarp"></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__verfügbarkeit_in_berichten">
+<span class="hidden-anchor sr-only" id="_verfügbarkeit_in_berichten"></span>5. Verfügbarkeit in Berichten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sie können Verfügbarkeitsansichten in <a href="reporting.html">Berichte</a> einbinden.
+Der einfachste Weg ist über das Menü <span class="guihint">Add to</span> in der Menüleiste:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_addto.png" alt="avail addto"></div></div>
+<div class="paragraph"><p>Das Berichtselement <span class="guihint">Availability table</span> fügt in den Bericht eine
+Verfügbarkeitsauswertung ein. Die ganzen oben genannten Optionen finden Sie
+dabei direkt als Parameter des Elements — wenn auch in einer optisch etwas
+anderen Darstellung:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_reporting_options.png" alt="avail reporting options"></div></div>
+<div class="paragraph"><p>Eine Besonderheit ist die allerletzte Option:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_reporting_elements.png" alt="avail reporting elements"></div></div>
+<div class="paragraph"><p>Hier können Sie festlegen, welche Darstellung in den Bericht übernommen
+werden soll:</p></div>
+<div class="ulist"><ul>
+<li><p>Die Tabelle der Verfügbarkeiten</p></li>
+<li><p>Die grafische Darstellung der Zeitleiste</p></li>
+<li><p>Die detaillierte Zeitleiste mit den einzelnen Abschnitten</p></li>
+</ul></div>
+<div class="paragraph"><p>Anders als bei der normalen interaktiven Ansicht, können Sie also hier im
+Bericht Tabelle und Zeitleiste <em>gleichzeitig</em> einbinden.</p></div>
+<div class="paragraph"><p>Eine zweite Besonderheit ist die fehlende Angabe für den Auswertungszeitraum; sie
+fehlt hier, weil sie automatisch vom Bericht vorgegeben wird.</p></div>
+<div class="paragraph"><p>Die Auswahl der Objekte wird wie bei allen Berichtselementen entweder vom
+Bericht übernommen oder im Element direkt festgelegt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_technical">
+<span class="hidden-anchor sr-only" id="technical"></span>6. Technische Hintergründe</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__wie_die_berechnung_funktioniert">
+<span class="hidden-anchor sr-only" id="_wie_die_berechnung_funktioniert"></span>6.1. Wie die Berechnung funktioniert</h3>
+<div class="paragraph"><p>Zur Berechnung der Verfügbarkeit greift Checkmk auf die Monitoring-Historie
+zurück.  Es orientiert sich dabei an den <em>Zustandswechseln.</em>
+Wenn ein Service z.B. am 20.10.2021 um 17:14 Uhr auf <span class="state2">CRIT</span> geht und um 17:24 Uhr wieder auf <span class="state0">OK</span>, dann wissen Sie, dass er während dieser Zeitspanne 10 Minuten den Zustand <span class="state2">CRIT</span> hatte.</p></div>
+<div class="paragraph"><p>Diese Zustandswechsel sind in Form von Einträgen im Monitoring-Log
+enthalten, haben den Typ <code>HOST ALERT</code> oder <code>SERVICE ALERT</code>
+und sehen z.B. so aus:</p></div>
+<div class="listingblock">
+<div class="title">var/check_mk/core/history</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>[1634742874] SERVICE ALERT: mail.mydomain.com;Filesystem /var/spool;CRITICAL;HARD;1;CRIT - 95.9% used (206.96 of 215.81 GB), (warn/crit at 90.00/95.00%), trend: 0.00 B / 24 hours</code></pre></div>
+</div>
+<div class="paragraph"><p>Dabei gibt es immer eine aktuelle Logdatei, die die Einträge der letzten
+Stunden oder Tage beinhaltet und ein Verzeichnis mit einem Archiv der früheren
+Zeiträume. Der Ort ist je nach verwendetem Monitoring-Kern unterschiedlich:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Kern</th>
+<th class="tableblock halign-left valign-top">aktuelle Datei</th>
+<th class="tableblock halign-left valign-top">ältere Dateien</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE"></span> Nagios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/log/nagios.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/nagios/archive/</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/CEE.png" alt="CEE"></span> <a href="cmc.html">CMC</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/check_mk/core/history</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/check_mk/core/archive</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Dabei greift die <a href="user_interface.html">Benutzeroberfläche</a> nicht direkt auf diese
+Dateien zu, sondern fragt sie mittels einer <a href="livestatus.html">Livestatus</a>-Abfrage
+vom Monitoring-Kern ab. Das ist unter anderem wichtig, weil in einem
+<a href="distributed_monitoring.html">verteilten Monitoring</a> die Dateien mit der Historie
+gar nicht auf dem gleichen System liegen wie die GUI.</p></div>
+<div class="paragraph"><p>Die Livestatus-Abfrage benutzt dabei die Tabelle <code>statehist</code>. Im
+Gegensatz zur Tabelle <code>log</code>, welche einen „nackten“ Zugriff auf
+die Historie bietet, wird hier die Tabelle <code>statehist</code> verwendet, weil
+sie bereits erste aufwendige Berechnungsschritte durchführt. Sie übernimmt
+unter anderem das Zurücklaufen in die Vergangenheit zur Ermittlung des
+Anfangszustands und das Berechnen von Zeitabschnitten gleichen Zustands mit
+Anfang, Ende und Dauer.</p></div>
+<div class="paragraph"><p>Das Verdichten der Zustände nach dem am Anfang beschriebenen Schema macht
+dann das Verfügbarkeitsmodul in der Benutzeroberfläche.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__der_availabilitycache_im_cmc">
+<span class="hidden-anchor sr-only" id="_der_availabilitycache_im_cmc"></span>6.2. Der Availabilitycache im CMC</h3>
+<div class="sect3">
+<h4 id="heading__funktionsweise_des_caches">
+<span class="hidden-anchor sr-only" id="_funktionsweise_des_caches"></span>Funktionsweise des Caches</h4>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Bei Anfragen, die weit in die Vergangenheit zurückreichen, müssen
+entsprechend viele Logdateien abgearbeitet werden. Das wirkt sich natürlich
+negativ auf die Dauer der Berechnung aus. Aus dem Grund gibt es im Checkmk
+Micro Core einen sehr effizienten Cache der Monitoring-Historie, welcher alle
+wichtigen Informationen über die Zustandswechsel von Objekten bereits
+direkt beim Start aus den Logdateien ermittelt, fest im RAM behält und
+im laufenden Monitoring ständig aktualisiert. Folge ist, dass <strong>alle</strong>
+Verfügbarkeitsanfragen direkt und sehr effizient aus dem RAM beantwortet
+werden können und kein Dateizugriff mehr nötig ist.</p></div>
+<div class="paragraph"><p>Das Parsen der Logdateien ist sehr schnell und erreicht bei ausreichend
+schnellen Platten bis zu 80 MB/s! Damit das Erstellen des Caches den Start
+des Monitorings nicht verzögert, geschieht dies zudem asynchron — und zwar
+von der Gegenwart in Richtung Vergangenheit. Sie werden also eine kurze
+Verzögerung lediglich dann feststellen, wenn Sie <em>direkt nach dem Start</em>
+der Checkmk-Instanz sofort eine Verfügbarkeitsanfrage über einen längeren
+Zeitraum machen. Dann kann es sein, dass der Cache noch nicht weit genug in die
+Vergangenheit zurückreicht und die GUI eine kleine Denkpause einlegen muss.</p></div>
+<div class="paragraph"><p>Bei einem <span class="guihint">Activate changes</span> bleibt der Cache erhalten! Er muss nur bei
+einem echten (Neu-)Start von Checkmk neu berechnet werden — z.B. nach einem
+Booten des Servers oder nach einem Update von Checkmk.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__cache_statistik">
+<span class="hidden-anchor sr-only" id="_cache_statistik"></span>Cache-Statistik</h4>
+<div class="paragraph"><p>Wenn Sie neugierig sind, wie lange das Berechnen des Caches dauert, finden
+Sie eine Statistik in der Logdatei <code>var/log/cmc.log</code>. Hier ist ein
+Beispiel von einem kleineren Monitoring-System:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_statehist_cache.png" alt="avail statehist cache"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__tunen_des_caches">
+<span class="hidden-anchor sr-only" id="_tunen_des_caches"></span>Tunen des Caches</h4>
+<div class="paragraph"><p>Um den Speicherbedarf des Caches in Grenzen zu halten, ist dieser auf einen
+Horizont von 730 Tagen in die Vergangenheit limitiert. Dieses Limit ist
+definitiv — Anfragen, die weiter in die Vergangenheit gehen sind somit nicht
+nur langsamer, sondern ganz unmöglich.
+Sie können das mit der globalen Einstellung <span class="guihint">Global Settings &gt; Monitoring Core &gt; In-memory cache for availability data</span> leicht npassen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/avail_histcache.png" alt="avail histcache"></div></div>
+<div class="paragraph"><p>Neben dem Horizont für die Auswertung gibt es hier noch eine zweite
+interessante Einstellung: <span class="guihint">Ignore core restarts shorter than…​</span>. Denn ein
+Neustart des Cores (z.B. zum Zwecke eines Updates oder Server-Neustarts) führt
+ja faktisch zu Zeitabschnitten, die als <span class="guihint">unmonitored</span> gelten. Auszeiten
+von bis zu 30 Sekunden werden dabei einfach ignoriert. Diese Zeit können
+Sie hier hochsetzen und auch längere Zeiten einfach ausblenden. Die
+Verfügbarkeitsauswertung geht dann davon aus, dass alle Hosts und Services
+den jeweils letzten ermittelten Zustand die ganze Zeit beibehalten haben.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>7. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/check_mk/core/history</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aktuelle Log-Datei der Monitoring-Historie beim CMC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/check_mk/core/archive/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verzeichnis mit den älteren Log-Dateien der Historie.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/log/cmc.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logdatei des CMC, in dem die Statistik des Availability Caches zu sehen ist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/nagios/nagios.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aktuelle Log-Datei der Monitoring-Historie von Nagios.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/nagios/archive/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verzeichnis mit den älteren Log-Dateien bei Nagios.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/check_mk/availability_annotations.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier werden die <a href="#annotations">Anmerkungen</a> und nachträglich angepassten Wartungszeiten zu Ausfällen gespeichert. Die Datei hat Python-Format und kann von Hand editiert werden.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li>
+<a href="#_grundprinzip">1. Grundprinzip</a><ul class="sectlevel1">
+<li><a href="#_der_blick_in_die_vergangenheit">1.1. Der Blick in die Vergangenheit</a></li>
+<li><a href="#states">1.2. Mögliche Zustände</a></li>
+</ul>
+</li>
+<li>
+<a href="#_availability_aufrufen">2. Availability aufrufen</a><ul class="sectlevel1">
+<li><a href="#_von_der_ansicht_zur_auswertung">2.1. Von der Ansicht zur Auswertung</a></li>
+<li><a href="#timeline">2.2. Zeitleistendarstellung</a></li>
+<li><a href="#annotations">2.3. Anmerkungen und nachträgliche Wartungszeiten</a></li>
+<li><a href="#_monitoring_historie_anzeigen">2.4. Monitoring-Historie anzeigen</a></li>
+</ul>
+</li>
+<li>
+<a href="#options">3. Auswertungen anpassen</a><ul class="sectlevel1">
+<li><a href="#option_timerange">3.1. Auswahl des Zeitbereichs</a></li>
+<li>
+<a href="#_optionen_die_die_darstellung_betreffen">3.2. Optionen, die die Darstellung betreffen</a><ul class="sectlevel2">
+<li><a href="#_zeilen_mit_100_verf%C3%BCgbarkeit_ausblenden">Zeilen mit 100% Verfügbarkeit ausblenden</a></li>
+<li><a href="#_beschriftungsoptionen">Beschriftungsoptionen</a></li>
+<li><a href="#thresholds">SLAs mit Schwellwerten farbig darstellen</a></li>
+<li><a href="#_anzahl_und_dauer_der_einzelnen_ausf%C3%A4lle_anzeigen">Anzahl und Dauer der einzelnen Ausfälle anzeigen</a></li>
+<li><a href="#format_time_range">Darstellung von Zeitangaben</a></li>
+<li><a href="#_anpassen_der_zusammenfassungszeile">Anpassen der Zusammenfassungszeile</a></li>
+<li><a href="#_kleine_zeitleiste_einblenden">Kleine Zeitleiste einblenden</a></li>
+<li><a href="#_gruppierung_nach_host_host_gruppe_oder_service_gruppe">Gruppierung nach Host, Host-Gruppe oder Service-Gruppe</a></li>
+<li><a href="#_nur_die_verf%C3%BCgbarkeit_anzeigen">Nur die Verfügbarkeit anzeigen</a></li>
+</ul>
+</li>
+<li>
+<a href="#_statusgruppierung">3.3. Statusgruppierung</a><ul class="sectlevel2">
+<li><a href="#_behandlung_von_warn_unknown_und_host_down">Behandlung von WARN, UNKNOWN und Host Down</a></li>
+<li><a href="#_behandlung_von_nicht_%C3%BCberwachten_zeitr%C3%A4umen_und_flapping">Behandlung von nicht überwachten Zeiträumen und Flapping</a></li>
+<li><a href="#_behandlung_von_geplanten_wartungszeiten">Behandlung von geplanten Wartungszeiten</a></li>
+<li><a href="#_zusammenfassen_gleicher_phasen">Zusammenfassen gleicher Phasen</a></li>
+</ul>
+</li>
+<li><a href="#softstates">3.4. Ignorieren kurzer Störungen</a></li>
+<li>
+<a href="#serviceperiod">3.5. Einfluss von Zeitperioden</a><ul class="sectlevel2"><li><a href="#_der_benachrichtigungszeitraum">Der Benachrichtigungszeitraum</a></li></ul>
+</li>
+<li><a href="#_begrenzung_der_berechnungszeit">3.6. Begrenzung der Berechnungszeit</a></li>
+</ul>
+</li>
+<li>
+<a href="#bi">4. Availability bei Business Intelligence</a><ul class="sectlevel1">
+<li><a href="#_grundprinzip_2">4.1. Grundprinzip</a></li>
+<li><a href="#_verf%C3%BCgbarkeit_aufrufen">4.2. Verfügbarkeit aufrufen</a></li>
+<li><a href="#_die_zeitreise">4.3. Die Zeitreise</a></li>
+</ul>
+</li>
+<li><a href="#_verf%C3%BCgbarkeit_in_berichten">5. Verfügbarkeit in Berichten</a></li>
+<li>
+<a href="#technical">6. Technische Hintergründe</a><ul class="sectlevel1">
+<li><a href="#_wie_die_berechnung_funktioniert">6.1. Wie die Berechnung funktioniert</a></li>
+<li>
+<a href="#_der_availabilitycache_im_cmc">6.2. Der Availabilitycache im CMC</a><ul class="sectlevel2">
+<li><a href="#_funktionsweise_des_caches">Funktionsweise des Caches</a></li>
+<li><a href="#_cache_statistik">Cache-Statistik</a></li>
+<li><a href="#_tunen_des_caches">Tunen des Caches</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#files">7. Dateien und Verzeichnisse</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

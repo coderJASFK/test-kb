@@ -1,0 +1,2096 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Der Linux-Agent der Checkmk-Version 2.1.0 ergänzt das Agentenskript mit dem Agent Controller und neuen Funktionen. Wie Sie den Agenten nutzen, erfahren Sie hier.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Linux überwachen - Der neue Agent für Linux im Detail">
+<meta name="og:description" content="Der Linux-Agent der Checkmk-Version 2.1.0 ergänzt das Agentenskript mit dem Agent Controller und neuen Funktionen. Wie Sie den Agenten nutzen, erfahren Sie hier.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Linux überwachen - Der neue Agent für Linux im Detail</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/agent_linux.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/agent_linux.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/agent_linux.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Linux überwachen</h1>
+<div class="details">
+<span id="revdate">Last modified on 28-Feb-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/de/agent_linux.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a>
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+<a href="agent_deployment.html">Automatische Agenten-Updates</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Der Linux-Agent</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/linux.png" alt="Linux-Logo." width="120"></div></div>
+<div class="paragraph"><p>Linux-Systeme können Sie mit Checkmk besonders gut überwachen.
+Das liegt weniger daran, dass sich das Checkmk-Entwicklerteam auf Linux „zu Hause“ fühlt, sondern vielmehr daran, dass Linux ein sehr offenes System ist und zahlreiche gut dokumentierte und einfach abzufragende Schnittstellen für eine detaillierte Überwachung bereitstellt.</p></div>
+<div class="paragraph"><p>Da die meisten der Schnittstellen per se nicht über das Netzwerk erreichbar sind, ist die Installation eines Monitoring-Agenten unumgänglich.
+Deswegen hat Checkmk einen eigenen Agenten für die Überwachung von Linux.
+Dieser ist ein simples Shellskript, das minimalistisch, transparent und sicher ist.</p></div>
+<div class="paragraph"><p>In der Checkmk-Version <span class="new">2.1.0</span> wurde diesem <strong>Agentenskript</strong> mit dem <strong>Agent Controller</strong> eine neue Komponente zur Seite gestellt.
+Der Agent Controller ist dem Agentenskript vorgeschaltet, fragt dieses ab und kommuniziert an dessen Stelle mit dem Checkmk-Server.
+Dazu registriert er sich am <strong>Agent Receiver</strong>, einem Prozess, der auf dem Checkmk-Server läuft.</p></div>
+<div class="paragraph"><p>Der Linux-Agent übernimmt also zum einen das Agentenskript, und damit dessen Vorteile.
+Zum anderen ergänzt er das Skript so, dass neue Funktionen hinzugefügt werden können wie die TLS-Verschlüsselung der Kommunikation oder die Datenkomprimierung.</p></div>
+<div class="paragraph"><p>Der registrierte, verschlüsselte und komprimierte <a href="glossar.html#pull_mode">Pull-Modus</a> mit dem Agent Controller ist für alle Checkmk-Editionen verfügbar
+– sofern sowohl Checkmk-Server als auch Agent mindestens Version <span class="new">2.1.0</span> haben.
+Den <a href="glossar.html#push_mode">Push-Modus</a> gibt es ab <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Cloud"></span> <strong>Checkmk Cloud</strong>, d. h. in Checkmk Cloud und Checkmk MSP.
+Die Umkehrung der Kommunikationsrichtung erleichtert die Überwachung von Hosts, die sich hinter Firewalls befinden.
+Kombiniert wird der Push-Modus meist mit der <a href="hosts_autoregister.html">automatischen Registrierung</a> des Checkmk-Agenten, die ebenfalls ab Checkmk Cloud verfügbar ist.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Standard-Agentenpakete öffnen sofort nach der Installation Port 6556.
+Sie geben darüber die unverschlüsselte Agentenausgabe an jeden, der sie anfordert aus.
+Bei Hosts, die aus dem Internet erreichbar sind, sollten Sie daher <em>vor</em> der Installation per Firewall sicherstellen, dass der Zugriff auf diesen Port nur ausgewählten Hosts erlaubt ist.
+Führen Sie die Registrierung und die damit verbundene Aktivierung der TLS-Verschlüsselung zeitnah nach der Installation durch.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Der Agent Controller wird als Hintergrundprozess (<em>Daemon</em>) vom init-System <code>systemd</code> gestartet, daher setzt der Agent eine Linux-Distribution mit <code>systemd</code> voraus.
+Wahrscheinlich wird diese Voraussetzung auf Ihrem Host erfüllt sein, da seit 2015 die meisten Linux-Distributionen <code>systemd</code> als init-System übernommen haben.</p></div>
+<div class="paragraph"><p>Allerdings beherrscht der Agent auch einen sogenannten <strong>Legacy-Modus</strong>, um Linux-Systeme zu unterstützen mit einer anderen Rechnerarchitektur als x86_64, ohne RPM- bzw. DEB-Paketmanagement und ohne init-System <code>systemd</code>.
+In diesem Legacy-Modus arbeitet der Agent nur als Agentenskript, d.h. ohne Agent Controller und damit auch ohne Registrierung am Checkmk-Server.</p></div>
+<div class="paragraph"><p>Der Artikel, den Sie gerade lesen, behandelt Installation, Konfiguration und Erweiterungen des Linux-Agenten <strong>mit</strong> Agent Controller.
+Er zeigt Ihnen aber auch, wie Sie herausfinden können, ob der Agent auf Ihrem Linux-System ohne Agent Controller im Legacy-Modus eingerichtet werden muss.
+Im Artikel <a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a> finden Sie dann dazu alle Informationen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_agent_architecture">
+<span class="hidden-anchor sr-only" id="agent_architecture"></span>2. Architektur des Agenten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Der Checkmk-Agent besteht aus dem Agentenskript und dem Agent Controller, der mit dem Agent Receiver auf dem Checkmk-Server kommuniziert.
+Im allgemeinen Artikel über die <a href="wato_monitoringagents.html#agents">Monitoring-Agenten</a> finden Sie Einzelheiten zur gemeinsamen Architektur von Linux-Agent und <a href="agent_windows.html">Windows-Agent.</a>
+In diesem Kapitel geht es um die für Linux spezifische Implementierung.</p></div>
+<div class="paragraph"><p>Das <strong>Agentenskript</strong> <code>check_mk_agent</code> ist zuständig für die Sammlung der Monitoring-Daten und ruft für die Datensammlung der Reihe nach vorhandene Systembefehle auf.
+Um auch diejenigen Informationen zu erhalten, zu deren Beschaffung <code>root</code>-Rechte erforderlich sind, wird <code>check_mk_agent</code> unter <code>root</code> ausgeführt.</p></div>
+<div class="paragraph"><p>Das Agentenskript ist minimalistisch, sicher, leicht erweiterbar und transparent, denn es ist ein Shellskript, in dem Sie sehen können, welche Befehle es aufruft.</p></div>
+<div class="paragraph"><p>Der <strong>Agent Controller</strong> <code>cmk-agent-ctl</code> kümmert sich um den Transport der vom Agentenskript gesammelten Daten.
+Er wird unter dem Benutzer <code>cmk-agent</code> ausgeführt, der nur beschränkte Rechte besitzt, z.B. keine Login-Shell hat und nur zur Datenübertragung genutzt wird.
+Der Benutzer <code>cmk-agent</code> wird während der Installation des Agentenpakets angelegt.
+Der Agent Controller wird als Daemon von <code>systemd</code> gestartet und ist als Service an diesen gekoppelt.
+Im Pull-Modus lauscht er am TCP-Port 6556 auf eingehende Verbindungen der Checkmk-<a href="glossar.html#site">Instanz</a> und fragt das Agentenskript über einen Unix-Socket (einer <code>systemd</code> Unit) ab.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_install">
+<span class="hidden-anchor sr-only" id="install"></span>3. Installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk bietet Ihnen für die Installation des Linux-Agenten verschiedene Wege — von der manuellen Installation des Software-Pakets bis hin zur vollautomatischen Verteilung inklusive Update-Funktion.
+Manche davon stehen nur in den kommerziellen Editionen zur Verfügung:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 50%;">
+<col style="width: 10%;">
+<col style="width: 10%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Methode</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+<th class="tableblock halign-left valign-top">Checkmk Raw</th>
+<th class="tableblock halign-left valign-top">Kommerzielle Editionen</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mitgeliefertes RPM/DEB-Paket</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Einfache Installation eines Standard-Agenten mit manueller Konfiguration über Konfigurationsdateien.
+Die Installationsroutine überprüft und konfiguriert in allen Editionen <code>systemd</code> und <code>xinetd</code> — in dieser Reihenfolge.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RPM/DEB-Paket aus der <a href="glossar.html#agent_bakery">Agentenbäckerei</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfiguration über die GUI, individuelle Konfiguration pro Host möglich.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="agent_deployment.html">Automatisches Update</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Paket aus der Agentenbäckerei wird erstmalig von Hand oder per Skript installiert und von da an automatisch aktualisiert.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="heading_download">
+<span class="hidden-anchor sr-only" id="download"></span>3.1. Download des RPM/DEB-Pakets</h3>
+<div class="paragraph"><p>Sie installieren den Linux-Agenten durch Installation des RPM- oder des DEB-Pakets.
+Ob Sie RPM oder DEB benötigen, hängt von der Linux-Distribution ab, auf der Sie das Paket installieren möchten:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 10%;">
+<col style="width: 80%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Paket</th>
+<th class="tableblock halign-left valign-top">Endung</th>
+<th class="tableblock halign-left valign-top">Installation auf</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RPM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.rpm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Red Hat Enterprise Linux (RHEL) basierte Systeme, SLES, Fedora, openSUSE, Derivate davon</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.deb</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debian, Ubuntu, alle anderen DEB-basierten Distributionen</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Vor der Installation müssen Sie das Paket holen und auf den Host bringen (zum Beispiel mit <code>scp</code> oder WinSCP), auf dem der Agent laufen soll.</p></div>
+<div class="sect3">
+<h4 id="heading_download_gui">
+<span class="hidden-anchor sr-only" id="download_gui"></span>Paket per Checkmk-GUI holen</h4>
+<div class="paragraph"><p>In <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong> finden Sie die Linux-Pakete des Agenten über <span class="guihint">Setup &gt; Agents &gt; Linux</span>.
+In den kommerziellen Editionen gelangen Sie im <span class="guihint">Setup</span>-Menü über <span class="guihint">Agents &gt; Windows, Linux, Solaris, AIX</span> zunächst in die <a href="wato_monitoringagents.html#bakery">Agentenbäckerei</a>, wo Sie die gebackenen Pakete finden.
+Von dort aus kommen Sie mit dem Menüeintrag <span class="guihint">Related &gt; Linux, Solaris, AIX files</span> zur Liste der Agentendateien:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_agent_files.png" alt="Download-Seite mit den RPM/DEB-Paketen."></div>
+<div class="title">Auf der Download-Seite finden Sie die RPM- und DEB-Pakete</div>
+</div>
+<div class="paragraph"><p>Alles was Sie brauchen, finden Sie gleich im ersten Kasten mit dem Namen <span class="guihint">Packaged Agents</span>:
+die fertigen RPM- und DEB-Paketdateien für die Installation des Linux-Agenten mit Standardeinstellungen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__paket_per_http_holen">
+<span class="hidden-anchor sr-only" id="_paket_per_http_holen"></span>Paket per HTTP holen</h4>
+<div class="paragraph"><p>Manchmal ist der Download auf einen Rechner und das anschließende Kopieren auf den Zielrechner mit <code>scp</code> oder WinSCP sehr umständlich.
+Sie können das Paket vom Checkmk-Server auch direkt per HTTP auf das Zielsystem laden.
+Für diesen Zweck sind die Downloads der Agentendateien bewusst <em>ohne Anmeldung</em> möglich.
+Immerhin enthalten die Dateien keine Geheimnisse.
+Jeder kann sich Checkmk selbst herunterladen und installieren und so auf die Dateien zugreifen.</p></div>
+<div class="paragraph"><p>Am einfachsten geht das mit <code>wget</code>.
+Die URL können Sie über den Browser ermitteln.
+Wenn Sie den Namen des Pakets bereits kennen, können Sie die URL einfach selbst zusammensetzen.
+Setzen Sie <code>/mysite/check_mk/agents/</code> vor den Dateinamen, im folgenden Beispiel für das RPM-Paket:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>wget<span class="tok-w"> </span>http://mycmkserver/mysite/check_mk/agents/check-mk-agent-2.3.0p16-1.noarch.rpm</code></pre></div></div>
+<div class="paragraph"><p><strong>Tipp:</strong> RPM hat sogar ein eingebautes <code>wget</code>.
+Hier können Sie Download und <a href="#install_package">Installation</a> mit einem Kommando durchführen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>rpm<span class="tok-w"> </span>-U<span class="tok-w"> </span>http://mycmkserver/mysite/check_mk/agents/check-mk-agent-2.3.0p16-1.noarch.rpm</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__paket_per_rest_api_holen">
+<span class="hidden-anchor sr-only" id="_paket_per_rest_api_holen"></span>Paket per REST-API holen</h4>
+<div class="paragraph"><p>Die <a href="rest_api.html">REST-API</a> von Checkmk bietet die folgenden Möglichkeiten Agentenpakete vom Checkmk-Server herunterzuladen:</p></div>
+<div class="ulist"><ul>
+<li><p>Herunterladen des mitgelieferten Agenten.</p></li>
+<li><p>Herunterladen eines gebackenen Agenten nach Host-Name und Betriebssystem.</p></li>
+<li><p>Herunterladen eines gebackenen Agenten nach Hash des Agenten und Betriebssystems.</p></li>
+</ul></div>
+<div class="paragraph"><p>Per REST-API haben Sie die Möglichkeit, das Paket vom Checkmk-Server direkt auf den Zielrechner zu holen.
+Das mitgelieferte DEB-Paket des Linux-Agenten lässt sich beispielsweise mit dem folgenden <code>curl</code>-Kommando holen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span>-OJG<span class="tok-w"> </span><span class="tok-s2">"http://mycmkserver/mysite/check_mk/api/1.0/domain-types/agent/actions/download/invoke"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s1">'Accept: application/octet-stream'</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s1">'Authorization: Bearer automation myautomationsecret'</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data-urlencode<span class="tok-w"> </span><span class="tok-s1">'os_type=linux_deb'</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Der Befehl wurde zugunsten der Lesbarkeit in vier Zeilen aufgeteilt.</p></div>
+<div class="paragraph"><p>Hierbei handelt es sich nur um ein einfaches Beispiel, um die Funktionsweise dieses einen REST-API-Endpunkts zum Herunterladen des Agenten zu demonstrieren.
+Details zu diesem und anderen REST-API-Endpunkten finden Sie in der API-Dokumentation, die Sie in Checkmk über <span class="guihint">Help &gt; Developer resources &gt; REST API documentation</span> aufrufen können.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_install_package">
+<span class="hidden-anchor sr-only" id="install_package"></span>3.2. Paket installieren</h3>
+<div class="paragraph"><p>Nachdem Sie das RPM- oder das DEB-Paket geholt und — falls nötig — mit <code>scp</code>, WinSCP oder anderen Mitteln auf den zu überwachenden Host kopiert haben, ist die Installation mit einem Kommando erledigt.</p></div>
+<div class="paragraph"><p>Die Installation des RPM-Pakets erfolgt unter <code>root</code> mit dem Befehl <code>rpm -U</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>rpm<span class="tok-w"> </span>-U<span class="tok-w"> </span>check-mk-agent-2.3.0p16-1.noarch.rpm</code></pre></div></div>
+<div class="paragraph"><p>Die Option <code>-U</code> steht übrigens für „Update“, kann aber auch eine Erstinstallation korrekt durchführen.
+Das bedeutet auch, dass Sie mit diesem Befehl einen bereits installierten Agenten auf die aktuelle Version updaten können — und ihn auch zukünftig für Updates des Agentenpakets nutzen können.</p></div>
+<div class="paragraph"><p>Die Installation des DEB-Pakets — und ein Update — erfolgt unter <code>root</code> mit dem Befehl <code>dpkg -i</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>dpkg<span class="tok-w"> </span>-i<span class="tok-w"> </span>check-mk-agent_2.3.0p16-1_all.deb
+<span class="tok-gp tok-gp-VirtualEnv">(Reading database ... 739920 files and directories currently installed.)</span>
+<span class="tok-go">Preparing to unpack .../check-mk-agent_2.3.0p16-1_all.deb ...</span>
+<span class="tok-go">Unpacking check-mk-agent (2.3.0p16-1) ...</span>
+<span class="tok-go">Setting up check-mk-agent (2.3.0p16-1) ...</span>
+
+<span class="tok-go">Deploying systemd units: check-mk-agent.socket check-mk-agent-async.service cmk-agent-ctl-daemon.service check-mk-agent@.service</span>
+<span class="tok-go">Deployed systemd</span>
+<span class="tok-go">Creating/updating cmk-agent user account ...</span>
+
+<span class="tok-go">WARNING: The agent controller is operating in an insecure mode! To secure the connection run <code>cmk-agent-ctl register</code>.</span>
+
+<span class="tok-go">Reloading xinetd</span>
+<span class="tok-go">Activating systemd unit 'check-mk-agent.socket'...</span>
+<span class="tok-go">Created symlink /etc/systemd/system/sockets.target.wants/check-mk-agent.socket → /lib/systemd/system/check-mk-agent.socket.</span>
+<span class="tok-go">Activating systemd unit 'check-mk-agent-async.service'...</span>
+<span class="tok-go">Created symlink /etc/systemd/system/multi-user.target.wants/check-mk-agent-async.service → /lib/systemd/system/check-mk-agent-async.service.</span>
+<span class="tok-go">Activating systemd unit 'cmk-agent-ctl-daemon.service'...</span>
+<span class="tok-go">Created symlink /etc/systemd/system/multi-user.target.wants/cmk-agent-ctl-daemon.service → /lib/systemd/system/cmk-agent-ctl-daemon.service.</span></code></pre></div></div>
+<div class="paragraph"><p>Hier wurde das Paket auf einem zuvor agentenlosen Host erstmalig installiert.
+Der Benutzer <code>cmk-agent</code> wurde erstellt und <code>systemd</code> konfiguriert.
+Auf die dazwischen angezeigte Warnung zum <code>insecure mode</code>, also dem Legacy-Pull-Modus, gehen wir <a href="#post_install">gleich</a> ein.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__installation_mit_der_agentenbäckerei">
+<span class="hidden-anchor sr-only" id="_installation_mit_der_agentenbäckerei"></span>3.3. Installation mit der Agentenbäckerei</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die kommerziellen Editionen verfügen mit der <a href="glossar.html#agent_bakery">Agentenbäckerei</a> über ein Software-Modul zum automatischen Paketieren von individuell angepassten Agenten.
+Eine ausführliche Beschreibung dazu finden Sie im allgemeinen Artikel über die <a href="wato_monitoringagents.html">Agenten</a>.
+Die Installation der gebackenen Pakete geschieht genauso wie es für die mitgelieferten Pakete <a href="#install_package">oben</a> beschrieben ist.</p></div>
+<div class="paragraph"><p>Ab Checkmk Cloud können Sie die Agentenbäckerei zusätzlich nutzen, um Agentenpakete mit einer Konfiguration für die Autoregistrierung zu versehen,
+was die <a href="hosts_autoregister.html">automatische Erstellung von Hosts</a> ermöglicht.
+In diesem Fall erfolgt die Registrierung des Agenten automatisch nach der Installation des Agentenpakets
+und eine manuelle Registrierung, wie im folgenden <a href="#registration">Kapitel</a> beschrieben, ist <em>nicht</em> mehr notwendig.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__automatisches_update">
+<span class="hidden-anchor sr-only" id="_automatisches_update"></span>3.4. Automatisches Update</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Wenn Sie die Agentenbäckerei verwenden, können Sie automatische Updates des Agenten einrichten.
+Diese werden in einem <a href="agent_deployment.html">eigenen Artikel</a> beschrieben.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_post_install">
+<span class="hidden-anchor sr-only" id="post_install"></span>3.5. Wie geht es weiter nach der Installation?</h3>
+<div class="paragraph"><p>Falls der Agent Controller bei der Installation mit <code>systemd</code> konfiguriert werden konnte, ist der nächste Schritt die <a href="#registration">Registrierung</a>, mit der die TLS-Verschlüsselung eingerichtet wird, so dass die verschlüsselte Agentenausgabe vom Checkmk-Server entschlüsselt und im Monitoring angezeigt werden kann.</p></div>
+<div class="paragraph"><p>Eine Besonderheit gibt es, falls der Agent mit Agent Controller erstmalig installiert wurde.
+Dann schaltet der Agent in den unverschlüsselten <strong>Legacy-Pull-Modus</strong>, damit der Checkmk-Server nicht von den Monitoring-Daten abgeschnitten wird und diese weiterhin anzeigen kann.
+Das betrifft sowohl eine Neuinstallation als auch das Update eines Agenten der Version <span class="new">2.0.0</span> und älter.</p></div>
+<div class="paragraph"><p>Einen Hinweis auf den aktivierten Legacy-Pull-Modus erhalten Sie bereits in der Kommandoausgabe bei der <a href="#install_package">Installation des Agenten.</a>
+Im Monitoring sieht das dann etwa so aus:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_service_legacy_pull_mode.png" alt="Der WARN-Zustand des 'Check_MK' Services wegen fehlender Verschlüsselung."></div>
+<div class="title">Warnung im Checkmk-Monitoring, dass TLS noch nicht genutzt wird</div>
+</div>
+<div class="paragraph"><p>Die Checkmk-Instanz erkennt an der Agentenausgabe, dass der Agent Controller vorhanden und damit die TLS-Verschlüsselung möglich ist — aber noch nicht eingeschaltet ist.
+Der Service <span class="guihint">Check_MK Agent</span> wechselt in den Zustand <span class="state1">WARN</span> und bleibt es solange, bis Sie die Registrierung durchgeführt haben.
+Nach der Registrierung wird nur noch im verschlüsselten Pull-Modus kommuniziert.
+Der Legacy-Pull-Modus wird abgeschaltet und bleibt es auch.
+Allerdings kann er im Bedarfsfall <a href="#deregister">per Kommando</a> wieder eingeschaltet werden.</p></div>
+<div class="paragraph"><p>Anders liegt der Fall, wenn der Agent Controller sich während der Installation nicht als Daemon bei <code>systemd</code> registrieren konnte.
+Ohne Agent Controller ist die Registrierung des Hosts nicht möglich und der einzige Kommunikationsweg verbleibt der <strong>Legacy-Modus</strong>.</p></div>
+<div class="paragraph"><p>Im nächsten Kapitel können Sie durch <a href="#test_environment">Test von Agent Controller und Systemumgebung</a> feststellen, ob Sie mit der Registrierung fortsetzen können.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Im Regelsatz <span class="guihint">Checkmk Agent installation auditing</span> finden Sie verschiedene Einstellungen, um den Zustand des Agenten zu prüfen und im Monitoring sichtbar zu machen.
+Unter anderem können Sie hier festlegen, welchen Zustand der Service <span class="guihint">Check_MK Agent</span> bei einer noch nicht durchgeführten TLS-Konfiguration haben soll.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_registration">
+<span class="hidden-anchor sr-only" id="registration"></span>4. Registrierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_overview">
+<span class="hidden-anchor sr-only" id="overview"></span>4.1. Übersicht und Voraussetzungen</h3>
+<div class="paragraph"><p>Unmittelbar nach der Installation des Agenten (auch als Update eines Agenten der Version <span class="new">2.0.0</span> und älter) ist nur unverschlüsselte Kommunikation im Legacy-Pull-Modus möglich.
+Eine ausschließlich verschlüsselte Datenübertragung ist erst nach Aufbau eines Vertrauensverhältnisses aktiv.</p></div>
+<div class="paragraph"><p>Eine Ausnahme hiervon sind die für die <a href="hosts_autoregister.html">Autoregistrierung</a> vorkonfigurierten und via Agentenbäckerei heruntergeladene Pakete.
+Diese Pakete führen die Registrierung automatisch nach der Installation durch.</p></div>
+<div class="paragraph"><p>In allen anderen Fällen führen Sie die manuelle Registrierung zeitnah nach der Installation des Agenten durch.
+Wie Sie dies bewerkstelligen, zeigt dieses Kapitel.</p></div>
+<div class="paragraph"><p>Die Registrierung und damit die Herstellung des gegenseitigen Vertrauensverhältnisses erfolgt unter einem Checkmk-Benutzer mit Zugriff auf die <a href="rest_api.html">REST-API.</a>
+Dafür bietet sich der <a href="glossar.html#automation_user">Automationsbenutzer</a> <code>agent_registration</code> an, der nur die Berechtigung zur Registrierung von Agenten besitzt und bei jeder Checkmk-Installation automatisch angelegt wird.
+Das zugehörige Automationspasswort (<em>automation secret</em>) können Sie mit <span class="image-inline"><img src="../images/icons/icon_random.png" alt="Symbol zum Auswürfeln eines Passworts."></span> auswürfeln.</p></div>
+<div class="sect3">
+<h4 id="heading__voraussetzungen_auf_dem_host">
+<span class="hidden-anchor sr-only" id="_voraussetzungen_auf_dem_host"></span>Voraussetzungen auf dem Host</h4>
+<div class="paragraph"><p>Die Registrierung mit dem Agent Controller setzt ein Linux-System voraus mit einem init-System <code>systemd</code> ab Version 219 und einer x86_64-Rechnerarchitektur.
+Im Abschnitt <a href="#test_environment">Agent Controller und Systemumgebung testen</a> erfahren Sie, wie Sie diese Voraussetzungen überprüfen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__voraussetzungen_auf_dem_checkmk_server">
+<span class="hidden-anchor sr-only" id="_voraussetzungen_auf_dem_checkmk_server"></span>Voraussetzungen auf dem Checkmk-Server</h4>
+<div class="paragraph"><p>Damit die Registrierung direkt auf dem ins Monitoring aufzunehmenden Host durchgeführt werden kann, muss dieser die REST-API des Checkmk-Servers (Port 443 oder 80) und den Agent Receiver (Port 8000 bei der ersten Instanz, 8001 bei der zweiten…) erreichen können.
+Lesen Sie den Abschnitt <a href="#networkrequirements">Netzwerkumgebung für die Registrierung</a>, falls in Ihrer IT-Infrastruktur eine dieser Bedingungen nicht erfüllt werden kann.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__host_ins_setup_aufnehmen">
+<span class="hidden-anchor sr-only" id="_host_ins_setup_aufnehmen"></span>4.2. Host ins Setup aufnehmen</h3>
+<div class="paragraph"><p>Erstellen Sie zunächst den neuen Host über <span class="guihint">Setup &gt; Hosts &gt; Add host.</span>
+Ein Host muss in der <a href="glossar.html#configuration_environment">Konfigurationsumgebung</a> existieren, bevor er registriert werden kann.</p></div>
+<div class="paragraph"><p>Ab Checkmk Cloud finden Sie in den Eigenschaften des Hosts im Abschnitt zu den <a href="hosts_setup.html#monitoring_agents">Monitoring-Agenten</a> die Option <span class="guihint">Checkmk agent connection mode.</span>
+Hier können Sie alternativ zum Pull-Modus, der in allen Editionen verfügbar ist, für den Checkmk-Agenten den Push-Modus aktivieren.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_test_environment">
+<span class="hidden-anchor sr-only" id="test_environment"></span>4.3. Agent Controller und Systemumgebung testen</h3>
+<div class="paragraph"><p>Der Agent mit Agent Controller setzt eine Linux-Distribution mit <code>systemd</code> voraus, präziser <code>systemd</code> in einer Version 219 oder neuer.</p></div>
+<div class="paragraph"><p>Die Chance ist groß, dass diese Voraussetzung auf Ihrem Host erfüllt ist, da seit 2015 die meisten Linux-Distributionen <code>systemd</code> als init-System übernommen und damit andere init-Systeme wie SysVinit ersetzt haben, z.B. SUSE Linux Enterprise Server ab Version 12, openSUSE ab Version 12.1, Red Hat Enterprise Linux ab Version 7, Fedora ab Version 15, Debian ab Version 8 und Ubuntu ab Version 15.04.
+Leider bringt der Vergleich der Versionsnummer alleine keine Gewissheit, da <code>systemd</code> auch auf einem aktuellen Linux-System fehlen kann, wenn dieses Jahre lang „nur“ aktualisiert wurde.</p></div>
+<div class="paragraph"><p>Neben der Version von <code>systemd</code> sind einige weitere Voraussetzungen zu erfüllen, die in diesem Kapitel abgeprüft werden.</p></div>
+<div class="paragraph"><p><strong>Achtung:</strong> Push-Modus und Autoregistrierung sind zwingend an den Agent Controller gebunden und daher nicht nutzbar im Legacy-Modus, auf den wir in diesem Kapitel mehrfach verweisen.</p></div>
+<div class="paragraph"><p>Prüfen Sie zunächst auf dem Host, auf dem der Agent installiert werden soll, ob und in welcher Version <code>systemd</code> läuft:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>systemctl<span class="tok-w"> </span>--version
+<span class="tok-go">systemd 245 (245.4-4ubuntu3.15)</span></code></pre></div></div>
+<div class="paragraph"><p>Die obige Kommandoausgabe zeigt, dass <code>systemd</code> in der richtigen Version installiert ist.
+Falls <code>systemd</code> nicht, oder nur in einer zu alten Version läuft, kann der Agent Controller nicht verwendet werden.
+Schließen Sie die Einrichtung ab, wie im Artikel <a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a> beschrieben.</p></div>
+<div class="paragraph"><p>Prüfen Sie nun, ob der Agent Controller gestartet werden kann:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>--version</code></pre></div></div>
+<div class="paragraph"><p>Als Ausgabe sollte die Versionsnummer zu sehen sein, beispielsweise:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">cmk-agent-ctl 2.3.0p16</span></code></pre></div></div>
+<div class="paragraph"><p>In seltenen Fällen erscheint die folgende Fehlermeldung:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">bash: /usr/bin/cmk-agent-ctl: cannot execute binary file: Exec format error</span></code></pre></div></div>
+<div class="paragraph"><p>Ursache hierfür ist, dass Ihr Linux eine andere Rechnerarchitektur als <em>x86_64</em> nutzt, zum Beispiel das ältere <em>32-Bit x86</em> oder <em>ARM</em>.
+In diesem Fall kann der Agent Controller nicht verwendet werden.
+Schließen Sie die Einrichtung ab, wie im Artikel <a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a> beschrieben.</p></div>
+<div class="paragraph"><p>Im nächsten Schritt gilt es herauszufinden, welches Programm auf Port 6556 auf Anfragen wartet:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>ss<span class="tok-w"> </span>-tulpn<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">tcp	LISTEN	0	1024	0.0.0.0:6556	0.0.0.0:*	users:(("cmk-agent-ctl",pid=1861810,fd=9))</span></code></pre></div></div>
+<div class="paragraph"><p>Hier ist es <code>cmk-agent-ctl</code>.
+Die Voraussetzungen für verschlüsselte Kommunikation sind also erfüllt.
+Steht innerhalb der Klammer stattdessen <code>systemd</code>, <code>xinetd</code> oder <code>inetd</code>, sind die Voraussetzungen für die Verwendung des Agent Controllers nicht gegeben.
+Schließen Sie auch in diesem Fall die Einrichtung ab, wie im Artikel <a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a> beschrieben.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__host_beim_server_registrieren">
+<span class="hidden-anchor sr-only" id="_host_beim_server_registrieren"></span>4.4. Host beim Server registrieren</h3>
+<div class="paragraph"><p>Die Registrierung erfolgt mit dem Agent Controller <code>cmk-agent-ctl</code>, der für die Konfiguration der Verbindungen eine Kommandoschnittstelle bietet.
+Sie können sich mit <code>cmk-agent-ctl help</code> die Kommandohilfe anzeigen lassen, auch spezifisch für die verfügbaren Subkommandos, z.B. mit <code>cmk-agent-ctl help register</code>.</p></div>
+<div class="paragraph"><p>Ob der Host dabei für den Pull-Modus oder den Push-Modus konfiguriert ist, macht für die Befehlsbeispiele keinen Unterschied.
+In welchem Modus der Agent Controller arbeiten soll, teilt ihm der Agent Receiver bei der Registrierung mit.</p></div>
+<div class="paragraph"><p>Begeben Sie sich nun zum Host, der registriert werden soll.
+Hier ist mit <code>root</code>-Rechten eine Anfrage an die Checkmk-<a href="glossar.html#site">Instanz</a> zu stellen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>register<span class="tok-w"> </span>--hostname<span class="tok-w"> </span>mynewhost<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--server<span class="tok-w"> </span>cmkserver<span class="tok-w"> </span>--site<span class="tok-w"> </span>mysite<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--user<span class="tok-w"> </span>agent_registration<span class="tok-w"> </span>--password<span class="tok-w"> </span><span class="tok-s1">'PTEGDYXBFXVGNDPRL'</span></code></pre></div></div>
+<div class="paragraph"><p>Dabei ist der Host-Name hinter der Option <code>--hostname</code> exakt so anzugeben, wie zuvor beim Erstellen im Setup.
+Die Optionen <code>--server</code> und <code>--site</code> geben den Namen des Checkmk-Servers und der Instanz an.
+Der Server-Name darf auch die IP-Adresse sein, der Instanzname (hier <code>mysite</code>) entspricht demjenigen, den Sie im URL-Pfad der Weboberfläche sehen.
+Komplettiert werden die Optionen durch Name und Passwort des Automationsbenutzers.
+Wenn Sie die Option <code>--password</code> auslassen, wird das Passwort interaktiv abgefragt.</p></div>
+<div class="paragraph"><p>Waren die angegebenen Werte korrekt, werden Sie aufgefordert, die Identität der Checkmk-Instanz zu bestätigen, zu der Sie die Verbindung herstellen wollen.
+Das zu bestätigende Server-Zertifikat haben wir aus Gründen der Übersichtlichkeit stark verkürzt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">Attempting to register at cmkserver:8000/mysite. Server certificate details:</span>
+
+<span class="tok-go">PEM-encoded certificate:</span>
+<span class="tok-go">---BEGIN CERTIFICATE---</span>
+<span class="tok-go">MIIC6zCCAdOgAwIBAgIUXbSE8FXQfmFqoRNhG9NpHhlRJ40wDQYJKoZIhvcNAQEL</span>
+<span class="tok-go">[...]</span>
+<span class="tok-go">nS+9hN5ILfRI+wkdrQLC0vkHVYY8hGIEq+xTpG/Pxw==</span>
+<span class="tok-go">---END CERTIFICATE---</span>
+
+<span class="tok-go">Issued by:</span>
+<span class="tok-go">	Site 'mysite' local CA</span>
+<span class="tok-go">Issued to:</span>
+<span class="tok-go">	localhost</span>
+<span class="tok-go">Validity:</span>
+<span class="tok-go">	From Thu, 10 Feb 2022 15:13:22 +0000</span>
+<span class="tok-go">	To   Tue, 13 Jun 3020 15:13:22 +0000</span>
+
+<span class="tok-go">Do you want to establish this connection? [Y/n]</span>
+<span class="tok-go">&gt; <mark>Y</mark></span></code></pre></div></div>
+<div class="paragraph"><p>Bestätigen Sie mit <code>Y</code>, um den Vorgang abzuschließen.</p></div>
+<div class="paragraph"><p>Falls keine Fehlermeldung angezeigt wird, ist die verschlüsselte Verbindung hergestellt.
+Über diese Verbindung werden alle Daten komprimiert übertragen.</p></div>
+<div class="paragraph"><p>Wenn Sie die interaktive Zertifikatsprüfung – beispielsweise, um die Registrierung komplett automatisieren zu können – abschalten wollen, können Sie den zusätzlichen Parameter <code>--trust-cert</code> verwenden.
+Dem übermittelten Zertifikat wird dann automatisch vertraut.
+Beachten Sie in diesem Fall, dass Sie auf anderem Weg die Integrität des Zertifikats sicher stellen sollten.
+Dies kann (von Hand oder per Skript) durch Kontrolle der <a href="#files">Datei</a> <code>/var/lib/cmk-agent/registered_connections.json</code> erfolgen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_autoregister">
+<span class="hidden-anchor sr-only" id="autoregister"></span>4.5. Host beim Server automatisch registrieren lassen</h3>
+<div class="paragraph"><p>Checkmk bietet ab Checkmk Cloud die Möglichkeit, Hosts automatisch bei der Registrierung anzulegen.
+Für die <a href="hosts_autoregister.html">Autoregistrierung</a> benötigen Sie zusätzlich zu einem Benutzer mit der Berechtigung Hosts zu registrieren, mindestens einen Ordner, der für die Aufnahme der automatisch zu erstellenden Hosts konfiguriert ist.</p></div>
+<div class="paragraph"><p>Ist dies der Fall, können Sie die Registrierung inklusive automatischer Erstellung des Hosts auch per Kommandozeile vornehmen.</p></div>
+<div class="paragraph"><p>In der Regel werden Sie den Weg über die <a href="hosts_autoregister.html#rule_autoregister_bakery">Einstellungen der Agentenbäckerei</a> gehen,
+welche die Konfigurationsdatei <code>/var/lib/cmk-agent/pre_configured_connections.json</code> ins Agentenpaket integrieren und die Registrierung automatisch bei der Installation vornehmen.
+Der hier vorgestellte Kommandozeilenaufruf dient daher primär dem Test und der Fehlersuche, beispielsweise dem Ausprobieren eigener <em>Agenten-Labels</em> mit der Option <code>--agent-labels &lt;KEY=VALUE&gt;</code>.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>register-new<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--server<span class="tok-w"> </span>cmkserver<span class="tok-w"> </span>--site<span class="tok-w"> </span>mysite<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--agent-labels<span class="tok-w"> </span>testhost:true<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--user<span class="tok-w"> </span>agent_registration<span class="tok-w"> </span>--password<span class="tok-w"> </span><span class="tok-s1">'PTEGDYXBFXVGNDPRL'</span></code></pre></div></div>
+<div class="paragraph"><p>Größter Unterschied hier ist das geänderte Subkommando <code>register-new</code>, mit dem die Registrierung <em>und</em> die Erstellung eines neuen Hosts in der Checkmk-Instanz angefragt wird.
+Als Name des Hosts wird der in der Umgebungsvariable <code>$HOSTNAME</code> hinterlegte verwendet.
+Die anschließende Bestätigung des Zertifikats entspricht der im letzten Abschnitt gezeigten.</p></div>
+<div class="paragraph"><p>Ob der Host im Pull-Modus, im Push-Modus oder überhaupt nicht angelegt wird, entscheiden Ihre Einstellungen des Regelsatzes <span class="guihint">Agent registration.</span>
+Nach erfolgreicher Registrierung können mehrere Minuten vergehen, bis der Host im Monitoring auftaucht.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__vertrauensverhältnis_überprüfen">
+<span class="hidden-anchor sr-only" id="_vertrauensverhältnis_überprüfen"></span>4.6. Vertrauensverhältnis überprüfen</h3>
+<div class="paragraph"><p>Das Kommando <code>cmk-agent-ctl status</code> zeigt nun genau ein Vertrauensverhältnis zum Checkmk-Server:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>status
+<span class="tok-go">Connection: 12.34.56.78:8000/mysite</span>
+<span class="tok-go">	UUID: d38e7e53-9f0b-4f11-bbcf-d19617971595</span>
+<span class="tok-go">	Local:</span>
+<span class="tok-go">		Connection type: pull-agent</span>
+<span class="tok-go">		Certificate issuer: Site 'mysite' local CA</span>
+<span class="tok-go">		Certificate validity: Mon, 21 Feb 2022 11:23:57 +0000 - Sat, 24 Jun 3020 11:23:57 +0000</span>
+<span class="tok-go">	Remote:</span>
+<span class="tok-go">		Connection type: pull-agent</span>
+<span class="tok-go">		Host name: mynewhost</span></code></pre></div></div>
+<div class="paragraph"><p>Ist die Information in einem maschinenlesbaren Format erforderlich, hängen Sie den zusätzlichen Parameter <code>--json</code> an, um die Ausgabe als JSON-Objekt formatiert zu erhalten.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Es kann stets nur ein Vertrauensverhältnis zwischen Host und Instanz geben.
+Wenn Sie beispielsweise den bereits registrierten Host <code>mynewhost</code> unter anderem Namen (<code>mynewhost2</code>), aber mit der gleichen IP-Adresse registrieren, dann ersetzt die neue Verbindung die bestehende.
+Die Verbindung von <code>mynewhost</code> zur Instanz wird gelöst und für den Host werden keine Agentendaten mehr für das Monitoring geliefert.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_proxyregister">
+<span class="hidden-anchor sr-only" id="proxyregister"></span>4.7. Im Auftrag registrieren</h3>
+<div class="paragraph"><p>Zur leichteren Registrierung mehrerer Hosts kann ein beliebiger Host, auf dem der Agent installiert ist, eine Registrierung im Auftrag anderer durchführen.
+Dabei wird eine JSON-Datei exportiert, die dann auf den Ziel-Host übertragen und dort importiert werden kann.
+Auch hier gilt wie zuvor: Der im Auftrag registrierte Host muss in der Instanz bereits eingerichtet sein.</p></div>
+<div class="paragraph"><p>Zunächst wird auf einem beliebigen im Setup befindlichen Host die Registrierung stellvertretend durchgeführt.
+Hier bietet sich natürlich der Checkmk-Server an, der in der Regel als erster Host eingerichtet wird.
+Wie beim Beispiel oben gilt, dass Sie das Passwort per Option übergeben können oder interaktiv danach gefragt werden, wenn Sie die Option <code>--password</code> weglassen.
+Die JSON-Ausgabe leiten wir im Beispiel in eine Datei um:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>proxy-register<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--hostname<span class="tok-w"> </span>mynewhost3<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--server<span class="tok-w"> </span>cmkserver<span class="tok-w"> </span>--site<span class="tok-w"> </span>mysite<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--user<span class="tok-w"> </span>agent_registration<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>/tmp/mynewhost3.json</code></pre></div></div>
+<div class="paragraph"><p>Nun übertragen wir die Datei <code>/tmp/mynewhost3.json</code> auf den Host, für den wir die Registrierung durchgeführt haben, und importieren die Datei:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>import<span class="tok-w"> </span>/tmp/mynewhost3.json</code></pre></div></div>
+<div class="paragraph"><p>Der gesamte Vorgang ist auch in einer Pipeline möglich, in der Sie die Ausgabe von <code>cmk-agent-ctl proxy-register</code> an <code>ssh hostname cmk-agent-ctl import</code> übergeben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>proxy-register<span class="tok-w"> </span>--hostname<span class="tok-w"> </span>mynewhost3<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--server<span class="tok-w"> </span>cmkserver<span class="tok-w"> </span>--site<span class="tok-w"> </span>mysite<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--user<span class="tok-w"> </span>agent_registration<span class="tok-w"> </span>--password<span class="tok-w"> </span><span class="tok-s1">'PTEGDYXBFXVGNDPRL'</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>ssh<span class="tok-w"> </span>root@mynewhost3<span class="tok-w"> </span>cmk-agent-ctl<span class="tok-w"> </span>import</code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__host_ins_monitoring_aufnehmen">
+<span class="hidden-anchor sr-only" id="_host_ins_monitoring_aufnehmen"></span>4.8. Host ins Monitoring aufnehmen</h3>
+<div class="paragraph"><p>Sobald die Registrierung fertiggestellt ist, führen Sie im Setup des Checkmk-Servers einen <a href="wato_monitoringagents.html#diagnosticpage">Verbindungstest</a> und eine <a href="wato_services.html#discovery">Service-Erkennung</a> durch.
+Anschließend nehmen Sie die gefundenen Services ins Monitoring auf, indem Sie als letzten Schritt <a href="wato.html#activate_changes">die Änderungen aktivieren.</a></p></div>
+<div class="paragraph"><p>Falls der Verbindungstest fehlschlägt, finden Sie im <a href="#test">folgenden Kapitel</a> Informationen zu Test und Fehlerdiagnose.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_deregister">
+<span class="hidden-anchor sr-only" id="deregister"></span>4.9. Host deregistrieren</h3>
+<div class="paragraph"><p>Die Registrierung eines Hosts können Sie auch wieder rückgängig machen.</p></div>
+<div class="paragraph"><p>Auf einem Host, der mit dem Checkmk-Server verbunden ist, können Sie das Vertrauensverhältnis widerrufen.
+Dabei ist im folgenden Kommando der anzugebende Universally Unique Identifier (UUID) derjenige, der beim Kommando <code>cmk-agent-ctl status</code> ausgegeben wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>delete<span class="tok-w"> </span>d38e7e53-9f0b-4f11-bbcf-d19617971595</code></pre></div></div>
+<div class="paragraph"><p>Um alle Verbindungen des Hosts zu entfernen <strong>und</strong> zusätzlich den Legacy-Pull-Modus wiederherzustellen, geben Sie folgendes Kommando ein:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>delete-all<span class="tok-w"> </span>--enable-insecure-connections</code></pre></div></div>
+<div class="paragraph"><p>Anschließend verhält sich der Agent wie nach der erstmaligen Installation und vor der ersten Registrierung und sendet seine Daten unverschlüsselt.</p></div>
+<div class="paragraph"><p>Komplettiert wird die Deregistrierung auf dem Checkmk-Server:
+Im Setup wählen Sie auf der Seite <span class="guihint">Properties of host</span> den Menüeintrag <span class="guihint">Host &gt; Remove TLS registration</span> aus und bestätigen die Nachfrage.</p></div>
+<div class="paragraph"><p>Falls Sie die Kommandozeile bevorzugen:
+Auf dem Checkmk-Server existiert für jede Verbindung eines registrierten Hosts, der sich im Monitoring befindet, ein Softlink mit der UUID, welcher auf den Ordner mit der Agentenausgabe zeigt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">cd</span><span class="tok-w"> </span>~/var/agent-receiver/received-outputs
+<span class="tok-gp">OMD[mysite]:~$ </span>ls<span class="tok-w"> </span>-l<span class="tok-w"> </span>d38e7e53-9f0b-4f11-bbcf-d19617971595
+<span class="tok-go">lrwxrwxrwx 1 mysite mysite 67 Feb 23 07:18 d38e7e53-9f0b-4f11-bbcf-d19617971595 -&gt; /omd/sites/mysite/tmp/check_mk/data_source_cache/push-agent/mynewhost</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_changepush">
+<span class="hidden-anchor sr-only" id="changepush"></span>4.10. Umstellung zwischen Push- und Pull-Modus</h3>
+<div class="paragraph"><p>Ab <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Cloud"></span> <strong>Checkmk Cloud</strong> können Sie Hosts vom Push- zum Pull-Modus und umgekehrt umstellen.
+Dies kann in Einzelfällen nötig sein, wenn Änderungen an der Netzwerktopologie anstehen oder ein Downgrade auf <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Enterprise"></span> <strong>Checkmk Enterprise</strong> durchgeführt werden soll, wo nur der Pull-Modus möglich sind.</p></div>
+<div class="paragraph"><p>Stellen Sie zunächst im Setup, in den Eigenschaften des Hosts, den Zugriffsmodus mit der Option <span class="guihint">Checkmk agent connection mode</span> um.
+Innerhalb der nächsten Minute werden alle Services den Status <span class="state3">UNKNOWN</span> annehmen, weil keine Monitoring-Daten eingehen.
+Führen Sie anschließend eine erneute Registrierung durch.
+Bei dieser erneuten Registrierung teilt der Agent Receiver des Checkmk-Servers dem Agent Controller mit, ob er Daten im Pull- oder im Push-Modus erwartet.
+Die anschließende Kontrolle mit <code>cmk-agent-ctl status</code> zeigt dann eine neue UUID und den Modus konsistent mit der Änderung im Setup an.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_test">
+<span class="hidden-anchor sr-only" id="test"></span>5. Test und Fehlerdiagnose</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Ein modulares System kann an vielen Stellen nicht wie vorgesehen funktionieren.
+Da mit dem Agenten seit der Version <span class="new">2.1.0</span> die beiden Komponenten Agent Controller auf dem Host und Agent Receiver auf dem Checkmk-Server eingeführt wurden, steigt die Zahl der Stellen, an denen etwas schiefgehen kann.</p></div>
+<div class="paragraph"><p>Bei der Fehlersuche ist daher eine strukturierte Vorgehensweise sinnvoll.
+Selbstverständlich können Sie die hier beschriebene schrittweise Analyse auch nutzen, die Datenerhebung und Kommunikation von Checkmk näher kennenzulernen.</p></div>
+<div class="paragraph"><p>Alle Möglichkeiten, die es vom Checkmk-Server aus gibt, sind im allgemeinen Artikel über die <a href="wato_monitoringagents.html#diagnostics">Monitoring-Agenten</a> beschrieben.
+Aber natürlich gibt es noch weitere Diagnosemöglichkeiten, wenn man direkt auf dem überwachten Host angemeldet ist.</p></div>
+<div class="paragraph"><p>Wir arbeiten uns im Folgenden vom Agentenskript über den Agent Controller und den TCP-Port 6556 bis zur Checkmk-Instanz durch.
+Beim Agent Controller im Push-Modus überspringen Sie Tests auf Port 6556 – selbst wenn der Port 6556 vor der Registrierung geöffnet ist, wird er nach der Registrierung im Push-Modus geschlossen.
+In den meisten Fällen können Sie nach Korrektur eines Fehlers die Service-Erkennung erneut starten und die Aufnahme ins Monitoring abschließen.</p></div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>Beim direkten Aufruf des Agentenskripts in einer Shell stehen möglicherweise andere <a href="https://wiki.debian.org/EnvironmentVariables" target="_blank">Umgebungsvariablen</a> zur Verfügung als beim Aufruf durch den Agent Controller.
+Um die Ausgabe des Agentenskripts zu analysieren, sollten Sie daher nach Möglichkeit den <a href="#agent_ctl_dump">Agent Controller im Dump-Modus</a> verwenden.</p></div></td>
+</tr></table></div>
+<div class="sect2">
+<h3 id="heading_script_output">
+<span class="hidden-anchor sr-only" id="script_output"></span>5.1. Ausgabe des Agentenskripts</h3>
+<div class="paragraph"><p>Das Agentenskript ist ein einfaches Shellskript, welches Daten über Ihr System beschafft und als lose formatierten Text ausgibt.
+Sie können es direkt auf der Kommandozeile aufrufen.
+Da die Ausgabe etwas länger sein kann, ist der Pager <code>less</code> zum Scrollen der Ausgabe hier sehr praktisch.
+Sie können Ihn mit der Taste Q verlassen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>check_mk_agent<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>less
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.3.0p16</span>
+<span class="tok-go">AgentOS: linux</span>
+<span class="tok-go">Hostname: mynewhost</span>
+<span class="tok-go">AgentDirectory: /etc/check_mk</span>
+<span class="tok-go">DataDirectory: /var/lib/check_mk_agent</span>
+<span class="tok-go">SpoolDirectory: /var/lib/check_mk_agent/spool</span>
+<span class="tok-go">PluginsDirectory: /usr/lib/check_mk_agent/plugins</span>
+<span class="tok-go">LocalDirectory: /usr/lib/check_mk_agent/local</span>
+<span class="tok-go">AgentController: cmk-agent-ctl 0.1.0</span></code></pre></div></div>
+<div class="paragraph"><p>So ermitteln Sie, ob das Agentenskript und Ihre Plugins und lokalen Checks richtig installiert sind.</p></div>
+<div class="paragraph"><p>Sie müssen übrigens nicht unbedingt <code>root</code> sein, um den Agenten aufzurufen.
+Allerdings werden dann in der Ausgabe einige Informationen fehlen, zu deren Beschaffung <code>root</code>-Rechte erforderlich sind (z.B. Multipath-Informationen und die Ausgaben von <code>ethtool</code>).</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__agentenskript_im_debug_modus">
+<span class="hidden-anchor sr-only" id="_agentenskript_im_debug_modus"></span>5.2. Agentenskript im Debug-Modus</h3>
+<div class="paragraph"><p>Damit eventuelle Fehlerausgaben von nicht funktionierenden Plugins oder Befehlen nicht die eigentlichen Daten „verunreinigen“, unterdrückt das Agentenskript generell den Standardfehlerkanal (STDERR).
+Sind Sie auf der Suche nach einem bestimmten Problem, können Sie diesen wieder aktivieren, indem Sie das Agentenskript in einem speziellen Debug-Modus aufrufen.</p></div>
+<div class="paragraph"><p>Vorbereitend sollten Sie prüfen, ob das Agentenskript und der Agent Controller im <a href="#agent_ctl_dump">Dump-Modus</a> eine identische Ausgabe liefern und gegebenenfalls eine identische Umgebung (<em>environment</em>) sicherstellen.
+Dies kann durch Setzen von Variablen in einem Plugin/lokalen Check oder der Shell geschehen.
+Einen Dump der Umgebung können Sie erstellen, indem Sie die Zeile</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">env &gt; /tmp/cmk_agent_environment.txt</span></code></pre></div></div>
+<div class="paragraph"><p>zu einer Plugin-Datei hinzufügen und dann den Inhalt der Datei nach Ausführung durch den Agent Controller ansehen.</p></div>
+<div class="paragraph"><p>Die Ausgabe der zusätzlichen Debug-Informationen erledigt dann die Option <code>-d</code>.
+Dabei werden auch sämtliche Shell-Befehle ausgegeben, die das Skript ausführt.
+Damit Sie hier mit <code>less</code> arbeiten können, müssen Sie Standardausgabe (STDOUT) und Fehlerkanal mit <code>2&gt;&amp;1</code> zusammenfassen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>check_mk_agent<span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-m">2</span>&gt;<span class="tok-p">&amp;</span><span class="tok-m">1</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>less</code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_networkrequirements">
+<span class="hidden-anchor sr-only" id="networkrequirements"></span>5.3. Netzwerkumgebung für die Registrierung</h3>
+<div class="paragraph"><p>Schlägt die Registrierung eines Hosts im Monitoring fehl, ohne dass überhaupt das Zertifikat angezeigt wird, hilft Kenntnis der involvierten Netzwerkkommunikation bei der Identifizierung des Problems — und natürlich bei der Behebung.</p></div>
+<div class="paragraph"><p>Nach Absetzen des Kommandos <code>cmk-agent-ctl register</code> fragt der Agent Controller zunächst mittels REST-API den Checkmk-Server nach dem Port des Agent Receivers.
+Im zweiten Schritt wird eine Verbindung zum Agent Receiver aufgebaut, um das Zertifikat abzurufen.
+Sie können die erste Anfrage auf dem Host mit einem Programm wie <code>curl</code> simulieren:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span>-v<span class="tok-w"> </span>--insecure<span class="tok-w"> </span>https://mycmkserver/mysite/check_mk/api/1.0/domain-types/internal/actions/discover-receiver/invoke</code></pre></div></div>
+<div class="paragraph"><p>Der Parameter <code>--insecure</code> weist <code>curl</code> hier an, keine Zertifikatsprüfung vorzunehmen.
+Dieses Verhalten entspricht dem Verhalten des Agent Controller an dieser Stelle.
+Die Antwort ist lediglich wenige Bytes groß und besteht aus der Port-Nummer des Agent Receiver.
+Bei der ersten Instanz auf einem Server wird die Antwort einfach <code>8000</code> lauten, bei der zweiten <code>8001</code> und so weiter.
+Typische Probleme bei dieser Anfrage sind:</p></div>
+<div class="ulist"><ul>
+<li><p>Der Checkmk-Server ist vom Host aus gar nicht erreichbar.</p></li>
+<li><p>Der von der REST-API verwendete Port weicht von den Standard-Ports 443 (https) oder 80 (http) ab.</p></li>
+</ul></div>
+<div class="paragraph"><p>Falls die obige Anfrage fehlschlägt, können Sie die Routing- oder Firewall-Einstellungen so verändern, dass der Zugriff möglich ist.</p></div>
+<div class="paragraph"><p>Wenn der zu registrierende Host einen HTTP-Proxy verwendet, nutzt <code>curl</code> diesen, <code>cmk-agent-ctl</code> jedoch nicht in den Standardeinstellungen.
+Mit der zusätzlichen Option <code>--detect-proxy</code> weisen Sie <code>cmk-agent-ctl</code> an, den systemweit konfigurierten Proxy zu nutzen.</p></div>
+<div class="paragraph"><p>Oft dürfte es am einfachsten sein, auf dem Checkmk-Server den Port des Agent Receiver auszulesen und zu notieren.
+Führen Sie dazu den folgenden Befehl als Instanzbenutzer aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>config<span class="tok-w"> </span>show<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>AGENT_RECEIVER
+<span class="tok-go">AGENT_RECEIVER: on</span>
+<span class="tok-go">AGENT_RECEIVER_PORT: 8000</span></code></pre></div></div>
+<div class="paragraph"><p>Sie können nun den ermittelten Port bei der Registrierung direkt angeben und so die erste Anfrage via REST-API überspringen.
+Die Kommunikation findet dann ohne Umwege direkt mit dem Agent Receiver statt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>register<span class="tok-w"> </span>--hostname<span class="tok-w"> </span>mynewhost<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--server<span class="tok-w"> </span>mycmkserver:8000<span class="tok-w"> </span>--site<span class="tok-w"> </span>mysite<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--user<span class="tok-w"> </span>agent_registration<span class="tok-w"> </span>--password<span class="tok-w"> </span><span class="tok-s1">'PTEGDYXBFXVGNDPRL'</span></code></pre></div></div>
+<div class="paragraph"><p>Auch dieser Port 8000 muss vom Host aus erreichbar sein.
+Ist er das nicht, erhalten Sie die eindeutige Fehlermeldung:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">ERROR [cmk_agent_ctl] Connection refused (os error 111)</span></code></pre></div></div>
+<div class="paragraph"><p>Analog zu Port 443 (respektive 80) oben können Sie jetzt die Routing- oder Firewall-Einstellungen so anpassen, dass der zu registrierende Host den Checkmk-Server auf dem Port des Agent Receiver (8000 oder 8001…) erreichen kann.</p></div>
+<div class="paragraph"><p>Im Falle der Registrierung im Push-Modus gilt:
+Hat die Registrierung funktioniert, wird auch der minütliche Transfer der Agentenausgabe erfolgreich sein.</p></div>
+<div class="paragraph"><p>Sollten Sicherheitsrichtlinien in Ihrer Umgebung den Zugriff auf den Agent Receiver nicht zulassen, haben sie die Möglichkeit, auf dem Checkmk-Server selbst die <a href="#proxyregister">Registrierung im Auftrag</a> vorzunehmen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_agent_ctl_dump">
+<span class="hidden-anchor sr-only" id="agent_ctl_dump"></span>5.4. Agent Controller im Dump-Modus</h3>
+<div class="paragraph"><p>Der Agent Controller stellt ein eigenes Subkommando <code>dump</code> bereit, das die vollständige Agentenausgabe anzeigt, wie sie im Monitoring ankommt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>dump<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>less
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.3.0p16</span>
+<span class="tok-go">AgentOS: linux</span>
+<span class="tok-go">Hostname: mynewhost</span></code></pre></div></div>
+<div class="paragraph"><p>So können Sie überprüfen, ob die Daten vom Agentenskript beim Agent Controller angekommen sind.
+Diese Ausgabe beweist noch nicht, dass der Agent auch über das Netzwerk erreichbar ist.</p></div>
+<div class="paragraph"><p>In einigen Fällen sieht die Ausgabe wie folgt aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">ERROR [cmk_agent_ctl] Error collecting monitoring data.</span>
+
+<span class="tok-go">Caused by:</span>
+<span class="tok-go">    Connection refused (os error 111)</span></code></pre></div></div>
+<div class="paragraph"><p>Dies ist der Fall, wenn der Socket des Agenten nicht im Hintergrund läuft – beispielsweise unmittelbar nach einem Update.
+Starten Sie diesen Hintergrundprozess neu:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>systemctl<span class="tok-w"> </span>restart<span class="tok-w"> </span>check-mk-agent.socket</code></pre></div></div>
+<div class="paragraph"><p>Schlägt <code>cmk-agent-ctl dump</code> erneut fehl, prüfen Sie, ob und wenn, welches Programm an Port 6556 lauscht:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>ss<span class="tok-w"> </span>-tulpn<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">tcp	LISTEN	0	1024	0.0.0.0:6556 0.0.0.0:*	users:(("cmk-agent-ctl",pid=1861810,fd=9))</span></code></pre></div></div>
+<div class="paragraph"><p>Ist die Ausgabe leer oder innerhalb der Klammer steht ein anderer Befehl als <code>cmk-agent-ctl</code>, sind die Systemvoraussetzungen für die Nutzung des Agent Controllers nicht erfüllt.
+Schließen Sie in diesem Fall die Einrichtung ab, wie im Artikel <a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a> beschrieben.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__verbindungstest_von_außen">
+<span class="hidden-anchor sr-only" id="_verbindungstest_von_außen"></span>5.5. Verbindungstest von außen</h3>
+<div class="paragraph"><p>Ist im Pull-Modus sichergestellt, dass lokal das Agentenskript und die mitinstallierten Plugins korrekt ausgeführt werden,
+können Sie als Nächstes per <code>netcat</code> (oder <code>nc</code>) prüfen, ob Port 6556 über die externe IP-Adresse des Hosts erreichbar ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>nc<span class="tok-w"> </span><span class="tok-m">10</span>.76.23.189<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">16</span></code></pre></div></div>
+<div class="paragraph"><p>Die Ausgabe <code>16</code> zeigt an, dass die Verbindungsaufnahme erfolgreich war und nun der TLS-Handshake stattfinden kann.
+Da alles weitere hier TLS verschlüsselt stattfindet, ist keine detaillierte Prüfung möglich.</p></div>
+<div class="paragraph"><p>Schlägt der Verbindungstest von außen fehl, liegt dies meist an der Firewall-Einstellung.
+Konfigurieren Sie <code>iptables</code> oder <code>nftables</code> in diesem Fall so, dass Zugriff auf TCP Port 6556 vom Checkmk-Server aus möglich ist.</p></div>
+<div class="paragraph"><p>Falls die Kommunikation zwischen Agent und Checkmk-Server <em>noch</em> unverschlüsselt ist (wie im Legacy-Pull-Modus) oder unverschlüsselt ist und auch bleibt (wie im <a href="agent_linux_legacy.html">Legacy-Modus</a>),
+erhalten Sie mit diesem Kommando statt der <code>16</code> die komplette unverschlüsselte Agentenausgabe.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Weitere Diagnosemöglichkeiten zur Ausführung auf dem Checkmk-Server finden Sie im allgemeinen Artikel über die <a href="wato_monitoringagents.html#diagnostics">Monitoring-Agenten.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_debugpush">
+<span class="hidden-anchor sr-only" id="debugpush"></span>5.6. Fehlersuche beim Agenten im Push-Modus</h3>
+<div class="paragraph"><p>Im Ordner <code>~/var/agent-receiver/received-outputs/</code> Ihrer Checkmk-Instanz finden Sie für jeden registrierten Host einen Softlink, der als Name die UUID des Hosts verwendet.
+Bei Hosts im Push-Modus zeigt dieser Softlink auf den Ordner mit der Agentenausgabe, bei Pull-Hosts auf eine nicht vorhandene Datei mit dem Namen des Hosts, wie er im Monitoring verwendet wird.</p></div>
+<div class="paragraph"><p>Anhand des Alters der zwischengespeicherten Agentenausgabe können Sie ermitteln, ob die regelmäßige Übertragung erfolgreich war oder beispielsweise durch sporadische Netzwerkprobleme vereitelt wird.</p></div>
+<div class="paragraph"><p>Des Weiteren können Sie auf dem Host mit dem Kommando <code>systemctl status cmk-agent-ctl-daemon</code> den Status der letzten Übertragungen und Übertragungsversuche auslesen.
+Zeilen wie die folgende deuten auf Verbindungsprobleme hin:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">Dez 15 17:59:49 myhost23 cmk-agent-ctl[652648]: WARN [cmk_agent_ctl::modes::push] https://mycmkserver:8000/mysite: Error pushing agent output.</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_lostconnections">
+<span class="hidden-anchor sr-only" id="lostconnections"></span>5.7. Verbindungen gehen verloren</h3>
+<div class="paragraph"><p>Wurde ein Host für die <a href="hosts_autoregister.html#rule_autoregister_bakery">Autoregistrierung</a> mit dem Regelsatz <span class="guihint">Agent controller auto-registration</span> konfiguriert und die Option <span class="guihint">Keep existing connections</span> auf <span class="guihint">no</span> gesetzt, werden bei jedem Neustart des Dienstes <code>cmk-agent-ctl-daemon</code> (beispielsweise beim Neustart eines Hosts) alle anderen Verbindungen entfernt — außer der für die Autoregistrierung konfigurierten Verbindung.
+Dies betrifft beispielsweise Hosts, auf denen vor der Installation des gebackenen Agentenpakets Verbindungen zu mehreren Instanzen eingerichtet waren oder nach der Installation des Agentenpakets manuell Verbindungen hinzugefügt wurden.</p></div>
+<div class="paragraph"><p>Sie können dieses Verhalten temporär ändern, indem Sie auf dem Host in der Datei <code>/var/lib/cmk-agent/pre_configured_connections.json</code> die Variable <code>keep_existing_connections</code> auf <code>true</code> setzen.
+Eine dauerhafte Änderung über ein Update der Agentenpakete hinweg erreichen Sie, indem Sie im oben genannten Regelsatz <span class="guihint">Keep existing connections</span> auf <span class="guihint">yes</span> setzen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_howlong">
+<span class="hidden-anchor sr-only" id="howlong"></span>5.8. Zeitdauer bis Änderungen sichtbar werden</h3>
+<div class="paragraph"><p>Bei der Autoregistrierung eines Hosts vergehen typischerweise etwa zwei Minuten, bis der Host im Monitoring auftaucht.</p></div>
+<div class="paragraph"><p>Wurde einem Host, der zuerst für den Push-Modus konfiguriert wurde, nachträglich eine Verbindung im Pull-Modus zu einer anderen Instanz hinzugefügt, vergehen bis zu fünf Minuten, bis Port 6556 geöffnet wird.
+Die sofortige Öffnung des Ports erreichen Sie durch den Neustart des Dienstes <code>cmk-agent-ctl-daemon</code>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_security">
+<span class="hidden-anchor sr-only" id="security"></span>6. Absicherung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__vorüberlegung">
+<span class="hidden-anchor sr-only" id="_vorüberlegung"></span>6.1. Vorüberlegung</h3>
+<div class="paragraph"><p>Sicherheit ist ein wichtiges Kriterium für jegliche Software, hier darf Monitoring keine Ausnahme machen.
+Da der Monitoring-Agent auf jedem überwachten Server installiert wird, hätte hier ein Sicherheitsproblem besonders gravierende Auswirkungen.</p></div>
+<div class="paragraph"><p>Deswegen wurde schon beim Design von Checkmk auf Sicherheit Wert gelegt und es gilt seit den ersten Tagen von Checkmk ein eherner Grundsatz:
+<em>Der Agent liest keine Daten vom Netzwerk. Punkt.</em>
+Somit ist mit Sicherheit ausgeschlossen, dass ein Angreifer über den Überwachungsport 6556 irgendwelche Befehle oder Skriptbestandteile einschleusen kann.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_security_tls">
+<span class="hidden-anchor sr-only" id="security_tls"></span>6.2. Transport Layer Security (TLS)</h3>
+<div class="paragraph"><p>Für einen Angreifer kann jedoch bereits eine Prozessliste ein erster Ansatz sein, Rückschlüsse auf lohnenswerte Ziele zu ziehen.
+Daher ist die Transportverschlüsselung zwischen Agent und Checkmk-Server mit Transport Layer Security (TLS) ab Checkmk-Version <span class="new">2.1.0</span> obligatorisch.
+Hierbei "pingt" der Checkmk-Server den überwachten Host an, der daraufhin die TLS-Verbindung zum Checkmk-Server aufbaut und darüber die Agentenausgabe überträgt.
+Da nur Checkmk-Server, zu denen ein Vertrauensverhältnis besteht, diese Datenübertragung initiieren können, besteht schon einmal kein Risiko, dass Daten in die falschen Hände gelangen.</p></div>
+<div class="paragraph"><p>Für die Absicherung der TLS-Verbindung verwendet Checkmk ein selbst signiertes Zertifikat, das kurz vor Ablauf seiner Gültigkeit automatisch ersetzt wird.
+Der Agent Controller kümmert sich um die rechtzeitige Erneuerung des Zertifikates vor seinem Ablauf.
+Nur längere Zeit inaktive Agenten, d.h., ohne laufenden Agent Controller, können ihre Registrierung bei Ablauf verlieren und müssen dann erneut registriert werden.
+Die Laufzeit des Zertifikats kann über die globale Einstellung <span class="guihint">Agent Certificates &gt; Lifetime of certificates</span> festgelegt werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__zugriff_über_ip_adressen_beschränken">
+<span class="hidden-anchor sr-only" id="_zugriff_über_ip_adressen_beschränken"></span>6.3. Zugriff über IP-Adressen beschränken</h3>
+<div class="paragraph"><p>Da nur autorisierte Checkmk-Server Daten abrufen können und nicht berechtigte Server nach einigen Bytes Handshake scheitern, ist die Gefahr einer <em>Denial of Service (DoS)</em> Attacke sehr gering.
+Aus diesem Grund ist aktuell keine weitere Zugriffsbeschränkung vorgesehen.
+Selbstverständlich können Sie Port 6556 per <code>iptables</code> gegen unberechtigten Zugriff sperren.
+Eine möglicherweise vorhandene und per Agentenbäckerei auf Clients übertragene Regel zur Einschränkung des Zugriffs auf bestimmte IP-Adressen wird vom Agent Controller ignoriert.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__eingebaute_verschlüsselung_abschalten">
+<span class="hidden-anchor sr-only" id="_eingebaute_verschlüsselung_abschalten"></span>6.4. Eingebaute Verschlüsselung abschalten</h3>
+<div class="paragraph"><p>Insbesondere bei einem Update des Agenten kann es sein, dass die <a href="agent_linux_legacy.html#encryption">eingebaute (symmetrische) Verschlüsselung</a> aktiv ist, die vom Agentenskript selbst durchgeführt wird.
+Sind TLS-Verschlüsselung und eingebaute Verschlüsselung gleichzeitig aktiv, dann ist die Entropie der übertragenen Daten so hoch, dass die ab Version <span class="new">2.1.0</span> aktive Komprimierung keine Ersparnis der übertragenen Daten bringt – und die CPUs sowohl des Hosts als auch des Checkmk-Servers mit zusätzlichen Ver- und Entschlüsselungsschritten belasten.</p></div>
+<div class="paragraph"><p>Aus diesem Grund sollten Sie die eingebaute Verschlüsselung zeitnah nach dem Wechsel auf TLS deaktivieren.</p></div>
+<div class="paragraph"><p>Im ersten Schritt schalten Sie in der vorhandenen Regel unter <span class="guihint">Setup &gt; Agents &gt; Access to agents &gt; Checkmk agent &gt; Symmetric encryption (Linux, Windows)</span> die Verschlüsselung ab.</p></div>
+<div class="paragraph"><p>Im zweiten Schritt benennen Sie auf dem Host des Agenten die Konfigurationsdatei <code>/etc/check_mk/encryption.cfg</code> um.</p></div>
+<div class="paragraph"><p>Im dritten und letzten Schritt legen Sie mit der Regel <span class="guihint">Enforce agent data encryption</span> fest, dass der Checkmk-Server nur noch per TLS verschlüsselte Daten akzeptiert.
+Wählen Sie dazu in der Regel den Wert <span class="guihint">Accept TLS encrypted connections only</span> aus.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Das Abschalten der Verschlüsselung mit der Agentenbäckerei geht so:
+Mit dem ersten Schritt, dem Ändern der Regel <span class="guihint">Symmetric encryption (Linux, Windows),</span> sind Sie fast fertig.
+Sie brauchen nur noch neue Agenten zu backen und zu verteilen.
+Die Konfigurationsdatei <code>/etc/check_mk/encryption.cfg</code> wird automatisch für Sie geändert und mit in die Agentenpakete eingebaut.
+Übrig bleibt dann nur der dritte Schritt, d.h. die Änderung der Regel <span class="guihint">Enforce agent data encryption.</span></p></div>
+<div class="paragraph"><p>Nach dem nächsten automatischen Agenten-Update ist die Verschlüsselung des Agentenskripts abgeschaltet, aber durch den Agent Controller die Verschlüsselung garantiert.
+Beachten Sie, dass nach dem automatischen Agenten-Update nur noch registrierte Hosts Monitoring-Daten liefern können.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_disabled_sections">
+<span class="hidden-anchor sr-only" id="disabled_sections"></span>7. Sektionen deaktivieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die Ausgabe des Checkmk-Agenten ist in Sektionen unterteilt.
+Jede dieser Sektionen enthält zusammengehörige Informationen und ist meist einfach die Ausgabe eines Diagnosebefehls.
+Sektionen beginnen immer mit einem Sektions-Header.
+Dies ist eine Zeile, die in <code>&lt;&lt;&lt;</code> und <code>&gt;&gt;&gt;</code> eingeschlossen ist.</p></div>
+<div class="paragraph"><p>Bis auf die Checkmk eigenen Sektionen, können Sie jede der über 30 Sektionen, die der Agent standardmäßig erzeugt, einzeln deaktivieren.
+Konkret bedeutet dies, dass die entsprechenden Befehle durch den Agenten überhaupt nicht ausgeführt werden und ggf. Rechenzeit eingespart werden kann.
+Andere Gründe für die Deaktivierung könnten sein, dass Sie sich für bestimmte Informationen einer gewissen Gruppe von Hosts schlicht nicht interessieren, oder dass ein bestimmter Host fehlerhafte Werte liefert und Sie den Abruf dieser Daten kurzzeitig aussetzen wollen.</p></div>
+<div class="paragraph"><p>Als Nutzer einer der kommerziellen Editionen können Sie über <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Disabled sections (Linux agent)</span> einfach eine Regel anlegen, welche dann von der <a href="glossar.html#agent_bakery">Agentenbäckerei</a> berücksichtigt wird.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_disabled_sections.png" alt="Liste der Agentenregeln für den Linux-Agenten."></div>
+<div class="title">In den kommerziellen Editionen können Sie Sektionen per Regel deaktivieren</div>
+</div>
+<div class="paragraph"><p>In der Regel finden Sie für jede deaktivierbare Sektion eine eigene Checkbox.
+Für jede angewählte Checkbox finden Sie dann — nachdem der neu gebackene Agent auf den ausgewählten Hosts installiert wurde — in der Konfigurationsdatei der Agentenbäckerei <code>/etc/check_mk/exclude_sections.cfg</code> einen eigenen Eintrag.
+Würden Sie in der Regel beispielsweise die beiden Optionen <code>Running processes</code> und <code>Systemd services</code> auswählen, sähe die passende Konfigurationsdatei wie folgt aus:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/exclude_sections.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>MK_SKIP_PS=yes
+MK_SKIP_SYSTEMD=yes</code></pre></div>
+</div>
+<div class="paragraph"><p>Nutzer von <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong> können die oben genannte Datei <code>/etc/check_mk/exclude_sections.cfg</code> manuell anlegen und dort die Sektionen eintragen, die deaktiviert werden sollen.
+Alle deaktivierbaren Sektionen sind in der Datei <code>~/share/check_mk/agents/cfg_examples/exclude_sections.cfg</code> aufgelistet.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_plugins">
+<span class="hidden-anchor sr-only" id="plugins"></span>8. Agent um Plugins erweitern</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__was_sind_agentenplugins">
+<span class="hidden-anchor sr-only" id="_was_sind_agentenplugins"></span>8.1. Was sind Agentenplugins?</h3>
+<div class="paragraph"><p>Das Agentenskript <code>/usr/bin/check_mk_agent</code> enthält eine ganze Reihe von Sektionen, welche Überwachungsdaten für diverse Check-Plugins liefern, die dann von der Service-Erkennung automatisch gefunden werden.
+Dazu gehören alle wichtigen Überwachungen des Betriebssystems.</p></div>
+<div class="paragraph"><p>Darüber hinaus gibt es die Möglichkeit, den Agenten um <em>Agentenplugins</em> zu erweitern.
+Das sind kleine Skripte oder Programme, die vom Agenten aufgerufen werden und diesen um weitere Sektionen mit zusätzlichen Monitoring-Daten erweitern.
+Das Checkmk-Projekt liefert eine ganze Reihe solcher Plugins mit aus, welche — wenn sie korrekt installiert und konfiguriert sind — in der Service-Erkennung automatisch neue Services liefern.</p></div>
+<div class="paragraph"><p>Warum sind diese Plugins nicht einfach in den Agenten fest integriert?
+Für jedes der Plugins gibt es einen der folgenden Gründe:</p></div>
+<div class="ulist"><ul>
+<li><p>Das Plugin ist in einer anderen Programmiersprache als Shell geschrieben und kann daher nicht inline realisiert werden (Beispiel: <code>mk_logwatch</code>).</p></li>
+<li><p>Das Plugin benötigt sowieso eine Konfiguration, ohne die es nicht funktionieren würde (Beispiel: <code>mk_oracle</code>).</p></li>
+<li><p>Das Plugin ist so speziell, dass es von den meisten Anwendern nicht benötigt wird (Beispiel: <code>plesk_domains</code>).</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_manualplugins">
+<span class="hidden-anchor sr-only" id="manualplugins"></span>8.2. Manuelle Installation</h3>
+<div class="paragraph"><p>Die mitgelieferten Plugins für Linux und Unix finden Sie alle auf dem Checkmk-Server unter <code>~/share/check_mk/agents/plugins</code>.</p></div>
+<div class="paragraph"><p>Auch über die Download-Seite der Agenten im Setup-Menü (wie im Kapitel <a href="#download_gui">Installation</a> beschrieben) sind diese im Kasten <span class="guihint">Plugins</span> verfügbar:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_files_agent_plugins.png" alt="Download-Seite mit den Agentenplugins."></div>
+<div class="title">Der Anfang der langen Liste verfügbarer Agentenplugins</div>
+</div>
+<div class="paragraph"><p>Zu allen von uns mitgelieferten Agentenplugins existieren die passenden Check-Plugins, welche deren Daten auswerten und Services erzeugen können.
+Diese sind bereits mitinstalliert, so dass neu gefundene Services sofort erkannt und konfiguriert werden können.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Bevor Sie ein Plugin auf dem Host installieren, werfen Sie einen Blick in die entsprechende Datei.
+Oft finden Sie dort wichtige Hinweise zur korrekten Verwendung des Plugins.</p></div>
+<div class="paragraph"><p>Die eigentliche Installation ist dann einfach:
+Kopieren Sie die Datei nach <code>/usr/lib/check_mk_agent/plugins</code>.
+Achten Sie dabei darauf, dass diese ausführbar ist.
+Falls nicht, verwenden Sie ein <code>chmod 755</code>.
+Der Agent wird das Plugin sonst nicht ausführen.
+Insbesondere, wenn Sie die Dateien nicht per <code>scp</code> übertragen sondern per HTTP von der Download-Seite holen, geht die Ausführungsberechtigung verloren.</p></div>
+<div class="paragraph"><p>Sobald das Plugin ausführbar ist und im richtigen Verzeichnis liegt, wird es vom Agenten automatisch aufgerufen und es entsteht eine neue Sektion in der Agentenausgabe.
+Diese trägt üblicherweise den gleichen Namen wie das Plugin.
+Komplexe Plugins (z.B. <code>mk_oracle</code>) erzeugen sogar eine ganze Reihe an neuen Sektionen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_pluginconfig">
+<span class="hidden-anchor sr-only" id="pluginconfig"></span>8.3. Konfiguration</h3>
+<div class="paragraph"><p>Manche Plugins brauchen eine Konfigurationsdatei in <code>/etc/check_mk/</code>, damit sie funktionieren können.
+Bei anderen ist eine Konfiguration optional und ermöglicht besondere Features oder Anpassungen.
+Wieder andere funktionieren einfach so.
+Sie haben verschiedene Quellen, um an Informationen zu kommen:</p></div>
+<div class="ulist"><ul>
+<li><p>Die Dokumentation der zugehörigen Check-Plugins in Ihrer Checkmk-Instanz, welche Sie über <span class="guihint">Setup &gt; Services &gt; Catalog of check plugins</span> erreichen.</p></li>
+<li><p>Kommentare im Plugin selbst (oft sehr hilfreich!).</p></li>
+<li><p>Einen passenden Artikel in diesem Handbuch (z.B. über das Überwachen von <a href="monitoring_oracle.html">Oracle</a>)</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_async_plugins">
+<span class="hidden-anchor sr-only" id="async_plugins"></span>8.4. Asynchrone Ausführung</h3>
+<div class="paragraph"><p>Ebenso wie bei <a href="#mrpe">MRPE</a> können Sie auch Plugins asynchron ausführen lassen.
+Das ist sehr nützlich, wenn die Plugins eine lange Laufzeit haben und die gewonnenen Statusdaten ohnehin nicht jede Minute neu erzeugt werden brauchen.</p></div>
+<div class="paragraph"><p>Die asynchrone Ausführung wird nicht über eine Datei konfiguriert.
+Stattdessen erzeugen Sie unter <code>/usr/lib/check_mk_agent/plugins</code> ein Unterverzeichnis, dessen Name eine Zahl ist: eine Anzahl von Sekunden.
+Plugins in diesem Verzeichnis werden nicht nur asynchron ausgeführt, sondern gleichzeitig geben Sie mit der Sekundenzahl eine Mindestwartezeit vor, bevor das Plugin erneut ausgeführt werden soll.
+Wird der Agent vor Ablauf der Zeit erneut abgefragt, verwendet er zwischengespeicherte Daten von der letzten Ausführung des Plugins.
+Damit können Sie ein größeres Intervall für das Plugin konfigurieren, als die typische eine Minute.</p></div>
+<div class="paragraph"><p>Folgendes Beispiel zeigt, wie das Plugin <code>my_foo_plugin</code> von synchroner Ausführung auf eine asynchrone Ausführung mit einem Intervall von 5 Minuten (oder 300 Sekunden) umgestellt wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">cd</span><span class="tok-w"> </span>/usr/lib/check_mk_agent/plugins
+<span class="tok-gp">root@linux# </span>mkdir<span class="tok-w"> </span><span class="tok-m">300</span>
+<span class="tok-gp">root@linux# </span>mv<span class="tok-w"> </span>my_foo_plugin<span class="tok-w"> </span><span class="tok-m">300</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Beachten Sie, dass einige Plugins bereits von sich aus eine asynchrone Ausführung umsetzen.
+Dazu gehört <code>mk_oracle</code>.
+Installieren Sie solche Plugins direkt nach <code>/usr/lib/check_mk_agent/plugins</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_install_plugins_using_bakery">
+<span class="hidden-anchor sr-only" id="install_plugins_using_bakery"></span>8.5. Installation über die Agentenbäckerei</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In den kommerziellen Editionen können die mitgelieferten Plugins über die <a href="glossar.html#agent_bakery">Agentenbäckerei</a> konfiguriert werden.
+Diese sorgt sowohl für die Installation des Plugins selbst als auch für die korrekte Erstellung der Konfigurationsdatei, falls eine notwendig sein sollte.</p></div>
+<div class="paragraph"><p>Jedes Plugin wird über eine Agentenregel konfiguriert.
+Sie finden die passenden Regelsätze in <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Agent Plugins</span>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_rules_agent_plugins.png" alt="Seite mit den Regeln zur Konfiguration der Agentenplugins in den kommerziellen Editionen."></div>
+<div class="title">Liste mit Regeln für die Agentenplugins in den kommerziellen Editionen</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__manuelle_ausführung">
+<span class="hidden-anchor sr-only" id="_manuelle_ausführung"></span>8.6. Manuelle Ausführung</h3>
+<div class="paragraph"><p>Da Agentenplugins ausführbare Programme sind, können Sie diese zu Test-und Diagnosezwecken auch von Hand ausführen.
+Es gibt allerdings Plugins, welche bestimmte vom Agenten gesetzte Umgebungsvariablen brauchen, um z.B. ihre Konfigurationsdatei zu finden.
+Setzen Sie diese vor der Ausführung von Hand:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_LIBDIR</span><span class="tok-o">=</span>/usr/lib/check_mk_agent
+<span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span>/etc/check_mk
+<span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_VARDIR</span><span class="tok-o">=</span>/var/lib/check_mk_agent
+<span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/mk_foobar
+<span class="tok-go">&lt;&lt;&lt;foobar&gt;&gt;&gt;</span>
+<span class="tok-go">FOO BAR BLA BLUBB 17 47 11</span></code></pre></div></div>
+<div class="paragraph"><p>Einige Plugins kennen auch spezielle Aufrufoptionen zum Debuggen.
+Werfen Sie einfach einen Blick in die Plugin-Datei.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_e2e_monitoring">
+<span class="hidden-anchor sr-only" id="e2e_monitoring"></span>9. Einbinden von Legacy Nagios Check-Plugins</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_mrpe">
+<span class="hidden-anchor sr-only" id="mrpe"></span>9.1. Plugins über MRPE ausführen</h3>
+<div class="paragraph"><p>Es gibt zwei gute Gründe, Nagios-Plugins auch unter Checkmk zu nutzen.
+Wenn Sie Ihr Monitoring von einer Nagios-basierten Lösung auf Checkmk migriert haben, können Sie ältere Check-Plugins, zu denen es noch kein Checkmk-Pendant gibt, zunächst weiternutzen.
+In vielen Fällen sind das selbst geschriebene Plugins in Perl oder Shell.</p></div>
+<div class="paragraph"><p>Der zweite Grund für die Verwendung ist echtes End-to-End-Monitoring.
+Nehmen wir an, Sie haben Ihren Checkmk-Server, einen Webserver und einen Datenbankserver über ein großes Rechenzentrum verteilt.
+In so einem Fall sind die Antwortzeiten des Datenbankservers vom Checkmk-Server aus gemessen wenig aussagekräftig.
+Weit wichtiger ist es, diese Werte für die Verbindung zwischen Web- und Datenbankserver zu kennen.</p></div>
+<div class="paragraph"><p>Der Checkmk-Agent bietet einen einfachen Mechanismus, diesen beiden Anforderungen gerecht zu werden:
+<em>MK’s Remote Plugin Executor</em> oder kurz <em>MRPE</em>.
+Der Name ist bewusst eine Analogie zum <em>NRPE</em> von Nagios, der dort die gleiche Aufgabe übernimmt.</p></div>
+<div class="paragraph"><p>Der MRPE ist im Agenten fest eingebaut und wird mit einer einfachen Textdatei konfiguriert, welche Sie als <code>/etc/check_mk/mrpe.cfg</code> selbst anlegen.
+Dort geben Sie pro Zeile einen Plugin-Aufruf an — zusammen mit dem Namen, den Checkmk für den Service verwenden soll, den es dafür automatisch erzeugt.
+Hier ist ein Beispiel:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mrpe.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Foo_Application /usr/local/bin/check_foo -w 60 -c 80
+Bar_Extender /usr/local/bin/check_bar -s -X -w 4:5</code></pre></div>
+</div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Die Nagios-Plugins dürfen nicht im Verzeichnis <code>/usr/lib/check_mk_agent/plugins</code> abgelegt werden.
+Dieses Verzeichnis ist den <a href="#plugins">Agentenplugins</a> vorbehalten.
+Abgesehen von diesem Verzeichnis steht Ihnen die Wahl frei, solange der Agent die Plugins dort finden und ausführen kann.</p></div>
+<div class="paragraph"><p>Wenn Sie jetzt den Agenten lokal laufen lassen, finden Sie pro Plugin eine neue Sektion mit dem Titel <code>&lt;&lt;&lt;mrpe&gt;&gt;&gt;</code>, welche Name, Exitcode und Ausgabe des Plugins enthält.
+Das können Sie mit folgendem praktischen <code>grep</code>-Befehl überprüfen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>check_mk_agent<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>-A1<span class="tok-w"> </span><span class="tok-s1">'^...mrpe'</span>
+<span class="tok-go">&lt;&lt;&lt;mrpe&gt;&gt;&gt;</span>
+<span class="tok-gp tok-gp-VirtualEnv">(check_foo)</span> <span class="tok-go">Foo_Application 0 OK - Foo server up and running</span>
+<span class="tok-go">&lt;&lt;&lt;mrpe&gt;&gt;&gt;</span>
+<span class="tok-gp tok-gp-VirtualEnv">(check_bar)</span> <span class="tok-go">Bar_Extender 1 WARN - Bar extender overload 6.012|bar_load=6.012</span></code></pre></div></div>
+<div class="paragraph"><p>Die <code>0</code> bzw. <code>1</code> in der Ausgabe stehen für die Exitcodes der Plugins und folgen dem klassischen Schema:
+<code>0</code> = <span class="state0">OK</span>, <code>1</code> = <span class="state1">WARN</span>, <code>2</code> = <span class="state2">CRIT</span> und <code>3</code> = <span class="state3">UNKNOWN</span>.</p></div>
+<div class="paragraph"><p>Den Rest macht jetzt Checkmk automatisch.
+Sobald Sie die Service-Erkennung für den Host aufrufen, werden die beiden neuen Services als <a href="wato_services.html#available">verfügbar</a> angezeigt.
+Das sieht dann so aus:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_mrpe_checks.png" alt="Liste der erkannten Services für die per MRPE eingerichteten Plugins."></div>
+<div class="title">Für die beiden MRPE Plugins wird je ein Service erkannt</div>
+</div>
+<div class="paragraph"><p>Übrigens: Aufgrund der Syntax der Datei darf der Name keine Leerzeichen enthalten.
+Sie können aber mithilfe der gleichen Syntax wie in URLs ein Space durch <code>%20</code> ersetzen (ASCII-Code 32 für Space ist Hexadezimal 20):</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mrpe.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Foo%20Application /usr/local/bin/check_foo -w 60 -c 80
+Bar%20Extender /usr/local/bin/check_bar -s -X -w 4:5</code></pre></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__asynchrone_ausführung">
+<span class="hidden-anchor sr-only" id="_asynchrone_ausführung"></span>9.2. Asynchrone Ausführung</h3>
+<div class="paragraph"><p>Beachten Sie, dass alle Plugins, die Sie in <code>mrpe.cfg</code> aufführen, der Reihe nach synchron ausgeführt werden.
+Die Plugins sollten daher keine allzu große Ausführungszeit haben.
+Wenn ein Plugin hängt, verzögert sich die Ausführung aller weiteren.
+Das kann dazu führen, dass das komplette Abfragen des Agenten durch Checkmk-in einen Timeout läuft und der Host nicht mehr zuverlässig überwacht werden kann.</p></div>
+<div class="paragraph"><p>Wenn Sie wirklich länger laufende Plugins benötigen, sollten Sie diese auf asynchrone Ausführung umstellen und das Problem damit vermeiden.
+Dabei legen Sie eine Zeit in Sekunden fest, die ein berechnetes Ergebnis Gültigkeit haben soll, z.B. <code>300</code> für fünf Minuten.
+Setzen Sie dazu in <code>mrpe.cfg</code> nach dem Servicenamen den Ausdruck <code>(interval=300)</code>:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mrpe.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Foo_Application (interval=300) /usr/local/bin/check_foo -w 60 -c 80
+Bar_Extender /usr/local/bin/check_bar -s -X -w 4:5</code></pre></div>
+</div>
+<div class="paragraph"><p>Das hat mehrere Auswirkungen:</p></div>
+<div class="ulist"><ul>
+<li><p>Das Plugin wird in einem Hintergrundprozess ausgeführt und bremst nicht mehr die Ausführung des Agenten.</p></li>
+<li><p>Weil der Agent die Ausführung nicht abwartet, wird das Ergebnis erst beim <em>nächsten</em> Aufruf des Agenten geliefert.</p></li>
+<li><p>Frühestens nach 300 Sekunden wird das Plugin neu ausgeführt.
+Bis dahin wird das alte Ergebnis wiederverwendet.</p></li>
+</ul></div>
+<div class="paragraph"><p>Damit können Sie also Tests, die etwas mehr Rechenzeit benötigen, auch in größeren Intervallen ausführen, ohne dass Sie dazu am Checkmk-Server etwas konfigurieren müssen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__mrpe_mit_der_agentenbäckerei">
+<span class="hidden-anchor sr-only" id="_mrpe_mit_der_agentenbäckerei"></span>9.3. MRPE mit der Agentenbäckerei</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Nutzer der kommerziellen Editionen können MRPE auch mit der <a href="glossar.html#agent_bakery">Agentenbäckerei</a> konfigurieren.
+Zuständig dafür ist der Regelsatz <span class="guihint">Setup &gt; Agents &gt; Windows, Linux Solaris, AIX &gt; Agent Rules &gt; Generic Options &gt; Execute MRPE checks</span>.
+Dort können Sie die gleichen Dinge wie oben beschrieben konfigurieren.
+Die Datei <code>mrpe.cfg</code> wird dann von der Bäckerei automatisch generiert.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_mrpe_rule.png" alt="Regel zur MRPE-Konfiguration in der Agentenbäckerei."></div>
+<div class="title">MRPEs können in den kommerziellen Editionen bequem per Regel konfiguriert werden</div>
+</div>
+<div class="sect3">
+<h4 id="heading__backen_der_plugins">
+<span class="hidden-anchor sr-only" id="_backen_der_plugins"></span>Backen der Plugins</h4>
+<div class="paragraph"><p>Auch die Check-Plugins selbst können Sie mit dem Paket ausliefern lassen.
+Damit ist der Agent dann komplett und braucht keine manuelle Installation von weiteren Dateien.
+Das Ganze geht so:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Erzeugen Sie auf dem Checkmk-Server das Verzeichnis <code>local/share/check_mk/agents/custom</code>.</p></li>
+<li><p>Erzeugen Sie dort ein Unterverzeichnis — z.B. <code>my_mrpe_plugins</code>.</p></li>
+<li><p>Erzeugen Sie wiederum darin das Unterverzeichnis <code>bin</code>.</p></li>
+<li><p>Kopieren Sie Ihre Plugins in den <code>bin</code>-Ordner.</p></li>
+<li><p>Legen Sie eine Regel in <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Generic Options &gt; Deploy custom files with agent</span> an.</p></li>
+<li><p>Wählen Sie <code>my_mrpe_plugins</code> aus, speichern Sie und backen Sie!</p></li>
+</ol></div>
+<div class="paragraph"><p>Die Check-Plugins werden jetzt in das Standard-<code>bin</code>-Verzeichnis Ihres Agenten installiert.
+Per Default ist das <code>/usr/bin</code>.
+Bei der Konfiguration der MRPE-Checks verwenden Sie dann also <code>/usr/bin/check_foo</code> anstelle von <code>/usr/local/bin/check_foo</code>.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_hw_monitoring">
+<span class="hidden-anchor sr-only" id="hw_monitoring"></span>10. Hardware überwachen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Zu einer möglichst vollständigen Überwachung eines Linux-Servers gehört natürlich auch die Hardware.
+Die Überwachung geschieht teils direkt mit dem Checkmk-Agenten, teils auch über spezielle <a href="#plugins">Plugins</a>.
+Außerdem gibt es noch Fälle, in denen man per SNMP oder sogar über ein separates Managementboard eine Überwachung umsetzen kann.</p></div>
+<div class="sect2">
+<h3 id="heading__überwachung_der_smart_werte">
+<span class="hidden-anchor sr-only" id="_überwachung_der_smart_werte"></span>10.1. Überwachung der SMART-Werte</h3>
+<div class="paragraph"><p>Moderne Festplatten verfügen fast immer über <em>S.M.A.R.T.</em> (Self-Monitoring, Analysis and Reporting Technology).
+Dieses System zeichnet kontinuierlich Daten zum Zustand der HDD oder SSD auf und Checkmk kann mit dem Plugin <code>smart</code> diese Werte abrufen und die wichtigsten davon auswerten.
+Damit das Plugin nach der Installation auch funktioniert, müssen folgende Voraussetzungen erfüllt sein:</p></div>
+<div class="ulist"><ul>
+<li><p>Das Paket <code>smartmontools</code> muss installiert sein. Sie können es auf allen modernen Distributionen über den jeweiligen Paketmanager installieren.</p></li>
+<li><p>Falls die Festplatten an einen RAID-Controller angeschlossen sind und dieser Zugriff auf die SMART-Werte erlaubt, muss das jeweilige Tool dazu installiert sein. Unterstützt werden <code>tw_cli</code> (3ware) und <code>megacli</code> (LSI).</p></li>
+</ul></div>
+<div class="paragraph"><p>Sind diese Voraussetzungen erfüllt und ist das Plugin installiert, werden die Daten automatisch ausgelesen und der Ausgabe des Agenten angehängt.
+In Checkmk können Sie die <a href="wato_services.html#available">neuen Services</a> dann auch direkt aktivieren:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_smart_stats.png" alt="Liste gefundener SMART-Services in der Service-Erkennung."></div>
+<div class="title">Von der Service-Erkennung gefundene SMART-Services</div>
+</div>
+<div class="paragraph"><p>Sollte — wie im Screenshot zu sehen — gelegentlich <code>cmd_timeout</code> auftreten, stellen Sie das Plugin auf asynchrone Ausführung im Abstand einiger Minuten um.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__überwachung_mit_hilfe_von_ipmi">
+<span class="hidden-anchor sr-only" id="_überwachung_mit_hilfe_von_ipmi"></span>10.2. Überwachung mit Hilfe von IPMI</h3>
+<div class="paragraph"><p>IPMI (Intelligent Platform Management Interface) ist eine Schnittstelle zum Hardware-Management, welche auch die Überwachung der Hardware ermöglicht.
+Checkmk nutzt dafür <code>freeipmi</code>, um direkt und ohne Netzwerk auf die Hardware zuzugreifen.
+<code>freeipmi</code> wird aus den Paketquellen installiert und ist danach sofort einsatzbereit, so dass die Daten schon beim nächsten Aufruf von Checkmk übermittelt werden.</p></div>
+<div class="paragraph"><p>Falls <code>freeipmi</code> nicht verfügbar ist, oder andere Gründe gegen eine Installation sprechen, kann auch <code>ipmitool</code> verwendet werden.
+<code>ipmitool</code> ist oft bereits auf dem System vorhanden und muss lediglich mit einem IPMI Gerätetreiber versorgt werden, wie ihn z.B. das Paket <code>openipmi</code> zur Verfügung stellt.
+Auch hier müssen Sie danach nichts weiter tun.
+Die Daten werden von Checkmk automatisch erfasst.</p></div>
+<div class="paragraph"><p>Zur Fehlerdiagnose können Sie die Tools auch händisch in einer Shell des Hosts ausführen.
+Haben Sie das Paket <code>freeipmi</code> installiert, können Sie die Funktion hiermit kontrollieren:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>ipmi-sensors<span class="tok-w"> </span>Temperature
+<span class="tok-go">32 Temperature_Ambient 20.00_C_(1.00/42.00) [OK]</span>
+<span class="tok-go">96 Temperature_Systemboard 23.00_C_(1.00/65.00) [OK]</span>
+<span class="tok-go">160 Temperature_CPU_1 31.00_C_(1.00/90.00) [OK]</span>
+<span class="tok-go">224 Temperature_CPU_2 NA(1.00/78.00) [Unknown]</span>
+<span class="tok-go">288 Temperature_DIMM-1A 54.00_C_(NA/115.00) [OK]</span>
+<span class="tok-go">352 Temperature_DIMM-1B 56.00_C_(NA/115.00) [OK]</span>
+<span class="tok-go">416 Temperature_DIMM-2A NA(NA/115.00) [Unknown]</span>
+<span class="tok-go">480 Temperature_DIMM-2B NA(NA/115.00) [Unknown]</span></code></pre></div></div>
+<div class="paragraph"><p>Wenn <code>ipmitool</code> installiert wurde, können Sie die Ausgabe der Daten mit folgendem Befehl prüfen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>ipmitool<span class="tok-w"> </span>sensor<span class="tok-w"> </span>list
+<span class="tok-go">UID_Light 0.000 unspecified ok na na 0.000 na na na</span>
+<span class="tok-go">Int._Health_LED 0.000 unspecified ok na na 0.000 na na na</span>
+<span class="tok-go">Ext._Health_LED 0.000 unspecified ok na na 0.000 na na na</span>
+<span class="tok-go">Power_Supply_1 0.000 unspecified nc na na 0.000 na na na</span>
+<span class="tok-go">Fan_Block_1 34.888 unspecified nc na na 75.264 na na na</span>
+<span class="tok-go">Fan_Block_2 29.792 unspecified nc na na 75.264 na na na</span>
+<span class="tok-go">Temp_1 39.000 degrees_C ok na na -64.000 na na na</span>
+<span class="tok-go">Temp_2 16.000 degrees_C ok na na -64.000 na na na</span>
+<span class="tok-go">Power_Meter 180.000 Watts cr na na 384.00</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__herstellerspezifische_tools">
+<span class="hidden-anchor sr-only" id="_herstellerspezifische_tools"></span>10.3. Herstellerspezifische Tools</h3>
+<div class="paragraph"><p>Viele große Server-Hersteller bieten auch eigene Tools an, um die Hardware-Informationen auszulesen und über SNMP bereitzustellen.
+Es gelten dabei die folgenden Voraussetzungen, um diese Daten abrufen und Checkmk bereitstellen zu können:</p></div>
+<div class="ulist"><ul>
+<li><p>Auf dem Linux-Host ist ein SNMP-Server eingerichtet.</p></li>
+<li><p>Das Tool des Herstellers ist installiert (z.B. Dells <em>OpenManage</em> oder Supermicros <em>SuperDoctor</em>).</p></li>
+<li><p>Der Host ist in Checkmk für die Überwachung per SNMP <strong>zusätzlich</strong> zum Checkmk-Agenten konfiguriert.
+Im Artikel zur <a href="snmp.html#snmp_cmk_agent">Überwachung mit SNMP</a> erfahren Sie, wie das geht.</p></li>
+</ul></div>
+<div class="paragraph"><p>Die dadurch unterstützten neuen Services für die Hardware-Überwachung werden dann automatisch erkannt.
+Es werden keine weiteren Plugins benötigt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__zusätzliche_überwachung_über_das_managementboard">
+<span class="hidden-anchor sr-only" id="_zusätzliche_überwachung_über_das_managementboard"></span>10.4. Zusätzliche Überwachung über das Managementboard</h3>
+<div class="paragraph"><p>Man kann zu jedem Host ein Managementboard konfigurieren und zusätzliche Daten per SNMP holen.
+Die dadurch erkannten Services werden dann ebenfalls dem Host zugeordnet.</p></div>
+<div class="paragraph"><p>Die Einrichtung des Managementboards ist dabei sehr einfach.
+Geben Sie in den Eigenschaften des Hosts lediglich das Protokoll, die IP-Adresse und die Zugangsdaten für SNMP an und speichern Sie die neuen Einstellungen ab:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_snmp_management_board.png" alt="Die Konfiguration des Managementboards für SNMP in den Eigenschaften des Hosts."></div>
+<div class="title">In den Eigenschaften des Hosts im Setup wird das Managementboard für SNMP konfiguriert</div>
+</div>
+<div class="paragraph"><p>In der Service-Erkennung werden die neu erkannten Services dann wie gewohnt aktiviert.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_uninstall">
+<span class="hidden-anchor sr-only" id="uninstall"></span>11. Deinstallation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wie die <a href="#install">Installation</a> erfolgt auch die Deinstallation des Agenten mit dem Paketmanager des Betriebssystems.
+Geben Sie hier den Namen des installierten Pakets an, nicht den Dateinamen der ursprünglichen RPM/DEB-Datei.</p></div>
+<div class="paragraph"><p>So finden Sie heraus, welches DEB-Paket installiert ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>dpkg<span class="tok-w"> </span>-l<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>check-mk-agent
+<span class="tok-go">ii  check-mk-agent          2.3.0p16-1          all          Checkmk Agent for Linux</span></code></pre></div></div>
+<div class="paragraph"><p>Die Deinstallation des DEB-Pakets erfolgt dann mit <code>dpkg --purge</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>dpkg<span class="tok-w"> </span>--purge<span class="tok-w"> </span>check-mk-agent
+<span class="tok-gp tok-gp-VirtualEnv">(Reading database ... 739951 files and directories currently installed.)</span>
+<span class="tok-go">Removing check-mk-agent (2.3.0p16-1) ...</span>
+<span class="tok-go">Removing systemd units: check-mk-agent.socket, check-mk-agent-async.service, cmk-agent-ctl-daemon.service, check-mk-agent@.service</span>
+<span class="tok-go">Deactivating systemd unit 'check-mk-agent.socket'...</span>
+<span class="tok-go">Deactivating systemd unit 'check-mk-agent-async.service'...</span>
+<span class="tok-go">Deactivating systemd unit 'cmk-agent-ctl-daemon.service'...</span>
+<span class="tok-go">Reloading xinetd</span>
+<span class="tok-go">Purging configuration files for check-mk-agent (2.3.0p16-1) ...</span></code></pre></div></div>
+<div class="paragraph"><p>So finden Sie heraus, welches RPM-Paket installiert ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>rpm<span class="tok-w"> </span>-qa<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>check-mk</code></pre></div></div>
+<div class="paragraph"><p>Die Deinstallation des RPM-Pakets erfolgt unter <code>root</code> mit dem Befehl <code>rpm -e</code>.</p></div>
+<div class="sect2">
+<h3 id="heading_reenable_legacy_pull">
+<span class="hidden-anchor sr-only" id="reenable_legacy_pull"></span>11.1. Reaktivierung des Legacy-Pull-Modus</h3>
+<div class="paragraph"><p>Bei der Deinstallation des Agenten bleibt der vom Installationsskript angelegte Nutzer <code>cmk-agent</code> erhalten.
+Er dient dem Post-Install-Skript als Indikator dafür, dass der Agent bereits auf diesem System installiert war.
+Ist dies der Fall, wird bei einer späteren Neuinstallation kein Legacy-Pull-Modus aktiviert.
+Dies führt dazu, dass nach Ausführung von <code>cmk-agent-ctl delete-all</code> und späterer Neuinstallation des Agenten gar keine Verbindung auf Port 6556 möglich ist.</p></div>
+<div class="paragraph"><p>Sollte es erwünscht sein, wieder den unverschlüsselten Legacy-Pull-Modus zu aktivieren, z.B. um die Kommunikation einer <span class="new">2.0.0</span> Instanz mit einem <span class="new">2.2.0</span> Agenten zu ermöglichen, müssen Sie diesen Modus <a href="#deregister">explizit aktivieren.</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>12. Dateien und Verzeichnisse</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__pfade_auf_dem_überwachten_host">
+<span class="hidden-anchor sr-only" id="_pfade_auf_dem_überwachten_host"></span>12.1. Pfade auf dem überwachten Host</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/bin/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Installationsverzeichnis für das Agentenskript <code>check_mk_agent</code> und des Agent Controllers <code>cmk-agent-ctl</code> auf dem Zielsystem.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Basisverzeichnis für Erweiterungen des Agenten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent/plugins</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verzeichnis für Plugins, welche automatisch vom Agenten ausgeführt werden sollen und dessen Ausgabe um zusätzliche Überwachungsdaten erweitern. Plugins können in jeder verfügbaren Programmiersprache geschrieben werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent/local</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verzeichnis für eigene <a href="localchecks.html">lokale Checks</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/check_mk_agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Basisverzeichnis für Daten des Agenten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/check_mk_agent/cache</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier werden Cache-Daten einzelner Sektionen abgelegt und dem Agenten, solange die Cache-Daten gültig sind, bei jeder Ausführung wieder angehängt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/check_mk_agent/job</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verzeichnis für überwachte Jobs. Diese werden der Agentenausgabe bei jeder Ausführung angehängt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/check_mk_agent/spool</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält Daten, die z.B. von Log-Dateien erstellt werden und eine eigene Sektion beinhalten. Diese werden ebenfalls der Agentenausgabe angehängt. Mehr dazu erfahren Sie im Artikel <a href="spool_directory.html">Das Spool-Verzeichnis.</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/cmk-agent/registered_connections.json</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält eine Liste der mit dem Agent Controller registrierten Verbindungen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/cmk-agent/pre_configured_connections.json</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält eine vorkonfigurierte und per Agentenbäckerei in das Agentenpaket integrierte Verbindung zu einer Instanz für die <a href="hosts_autoregister.html">Autoregistrierung.</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ablage von Konfigurationsdateien für den Agenten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/mrpe.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfigurationsdatei für <a href="#mrpe">MRPE</a> — für die Ausführung von Legacy Nagios-kompatiblen Check-Plugins.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/encryption.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfiguration für die <a href="agent_linux_legacy.html#encryption">eingebaute Verschlüsselung</a> der Agentendaten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/exclude_sections.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfigurationsdatei für die <a href="#disabled_sections">Deaktivierung bestimmter Sektionen</a> des Agenten.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__pfade_auf_dem_checkmk_server">
+<span class="hidden-anchor sr-only" id="_pfade_auf_dem_checkmk_server"></span>12.2. Pfade auf dem Checkmk-Server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/local/share/check_mk/agents/custom</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Basisverzeichnis für eigene Dateien, die mit einem gebackenen Agenten ausgeliefert werden sollen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/cfg_examples/exclude_sections.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Beispielhafte Konfigurationsdatei für das Deaktivieren von Sektionen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/agent-receiver/received-outputs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält für jede Verbindung deren UUID als Softlink, der auf einen Ordner mit dem Namen des Hosts zeigt. Im Push-Modus enthält dieser Ordner die Agentenausgabe.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Der Linux-Agent</a></li>
+<li><a href="#agent_architecture">2. Architektur des Agenten</a></li>
+<li>
+<a href="#install">3. Installation</a><ul class="sectlevel1">
+<li>
+<a href="#download">3.1. Download des RPM/DEB-Pakets</a><ul class="sectlevel2">
+<li><a href="#download_gui">Paket per Checkmk-GUI holen</a></li>
+<li><a href="#_paket_per_http_holen">Paket per HTTP holen</a></li>
+<li><a href="#_paket_per_rest_api_holen">Paket per REST-API holen</a></li>
+</ul>
+</li>
+<li><a href="#install_package">3.2. Paket installieren</a></li>
+<li><a href="#_installation_mit_der_agentenb%C3%A4ckerei">3.3. Installation mit der Agentenbäckerei</a></li>
+<li><a href="#_automatisches_update">3.4. Automatisches Update</a></li>
+<li><a href="#post_install">3.5. Wie geht es weiter nach der Installation?</a></li>
+</ul>
+</li>
+<li>
+<a href="#registration">4. Registrierung</a><ul class="sectlevel1">
+<li>
+<a href="#overview">4.1. Übersicht und Voraussetzungen</a><ul class="sectlevel2">
+<li><a href="#_voraussetzungen_auf_dem_host">Voraussetzungen auf dem Host</a></li>
+<li><a href="#_voraussetzungen_auf_dem_checkmk_server">Voraussetzungen auf dem Checkmk-Server</a></li>
+</ul>
+</li>
+<li><a href="#_host_ins_setup_aufnehmen">4.2. Host ins Setup aufnehmen</a></li>
+<li><a href="#test_environment">4.3. Agent Controller und Systemumgebung testen</a></li>
+<li><a href="#_host_beim_server_registrieren">4.4. Host beim Server registrieren</a></li>
+<li><a href="#autoregister">4.5. Host beim Server automatisch registrieren lassen</a></li>
+<li><a href="#_vertrauensverh%C3%A4ltnis_%C3%BCberpr%C3%BCfen">4.6. Vertrauensverhältnis überprüfen</a></li>
+<li><a href="#proxyregister">4.7. Im Auftrag registrieren</a></li>
+<li><a href="#_host_ins_monitoring_aufnehmen">4.8. Host ins Monitoring aufnehmen</a></li>
+<li><a href="#deregister">4.9. Host deregistrieren</a></li>
+<li><a href="#changepush">4.10. Umstellung zwischen Push- und Pull-Modus</a></li>
+</ul>
+</li>
+<li>
+<a href="#test">5. Test und Fehlerdiagnose</a><ul class="sectlevel1">
+<li><a href="#script_output">5.1. Ausgabe des Agentenskripts</a></li>
+<li><a href="#_agentenskript_im_debug_modus">5.2. Agentenskript im Debug-Modus</a></li>
+<li><a href="#networkrequirements">5.3. Netzwerkumgebung für die Registrierung</a></li>
+<li><a href="#agent_ctl_dump">5.4. Agent Controller im Dump-Modus</a></li>
+<li><a href="#_verbindungstest_von_au%C3%9Fen">5.5. Verbindungstest von außen</a></li>
+<li><a href="#debugpush">5.6. Fehlersuche beim Agenten im Push-Modus</a></li>
+<li><a href="#lostconnections">5.7. Verbindungen gehen verloren</a></li>
+<li><a href="#howlong">5.8. Zeitdauer bis Änderungen sichtbar werden</a></li>
+</ul>
+</li>
+<li>
+<a href="#security">6. Absicherung</a><ul class="sectlevel1">
+<li><a href="#_vor%C3%BCberlegung">6.1. Vorüberlegung</a></li>
+<li><a href="#security_tls">6.2. Transport Layer Security (TLS)</a></li>
+<li><a href="#_zugriff_%C3%BCber_ip_adressen_beschr%C3%A4nken">6.3. Zugriff über IP-Adressen beschränken</a></li>
+<li><a href="#_eingebaute_verschl%C3%BCsselung_abschalten">6.4. Eingebaute Verschlüsselung abschalten</a></li>
+</ul>
+</li>
+<li><a href="#disabled_sections">7. Sektionen deaktivieren</a></li>
+<li>
+<a href="#plugins">8. Agent um Plugins erweitern</a><ul class="sectlevel1">
+<li><a href="#_was_sind_agentenplugins">8.1. Was sind Agentenplugins?</a></li>
+<li><a href="#manualplugins">8.2. Manuelle Installation</a></li>
+<li><a href="#pluginconfig">8.3. Konfiguration</a></li>
+<li><a href="#async_plugins">8.4. Asynchrone Ausführung</a></li>
+<li><a href="#install_plugins_using_bakery">8.5. Installation über die Agentenbäckerei</a></li>
+<li><a href="#_manuelle_ausf%C3%BChrung">8.6. Manuelle Ausführung</a></li>
+</ul>
+</li>
+<li>
+<a href="#e2e_monitoring">9. Einbinden von Legacy Nagios Check-Plugins</a><ul class="sectlevel1">
+<li><a href="#mrpe">9.1. Plugins über MRPE ausführen</a></li>
+<li><a href="#_asynchrone_ausf%C3%BChrung">9.2. Asynchrone Ausführung</a></li>
+<li>
+<a href="#_mrpe_mit_der_agentenb%C3%A4ckerei">9.3. MRPE mit der Agentenbäckerei</a><ul class="sectlevel2"><li><a href="#_backen_der_plugins">Backen der Plugins</a></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#hw_monitoring">10. Hardware überwachen</a><ul class="sectlevel1">
+<li><a href="#_%C3%BCberwachung_der_smart_werte">10.1. Überwachung der SMART-Werte</a></li>
+<li><a href="#_%C3%BCberwachung_mit_hilfe_von_ipmi">10.2. Überwachung mit Hilfe von IPMI</a></li>
+<li><a href="#_herstellerspezifische_tools">10.3. Herstellerspezifische Tools</a></li>
+<li><a href="#_zus%C3%A4tzliche_%C3%BCberwachung_%C3%BCber_das_managementboard">10.4. Zusätzliche Überwachung über das Managementboard</a></li>
+</ul>
+</li>
+<li>
+<a href="#uninstall">11. Deinstallation</a><ul class="sectlevel1"><li><a href="#reenable_legacy_pull">11.1. Reaktivierung des Legacy-Pull-Modus</a></li></ul>
+</li>
+<li>
+<a href="#files">12. Dateien und Verzeichnisse</a><ul class="sectlevel1">
+<li><a href="#_pfade_auf_dem_%C3%BCberwachten_host">12.1. Pfade auf dem überwachten Host</a></li>
+<li><a href="#_pfade_auf_dem_checkmk_server">12.2. Pfade auf dem Checkmk-Server</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

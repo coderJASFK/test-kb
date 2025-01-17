@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Dieser Artikel beschreibt alle Möglichkeiten Checkmk per HTTP-API (oder Web-API) zu konfigurieren und erweitert damit den einführenden Artikel zur Web-API.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Befehlsreferenz der HTTP-API">
+<meta name="og:description" content="Dieser Artikel beschreibt alle Möglichkeiten Checkmk per HTTP-API (oder Web-API) zu konfigurieren und erweitert damit den einführenden Artikel zur Web-API.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Befehlsreferenz der HTTP-API</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/web_api_references.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/web_api_references.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/web_api_references.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Befehlsreferenz der HTTP-API</h1>
+<div class="details">
+<span id="revdate">draft</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/web_api_references.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody">
+<div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="web_api.html">Konfiguration via HTTP-API</a>
+<a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a>
+<a href="livestatus.html">Statusdaten abrufen via Livestatus</a>
+</div>
+</div>
+</div>
+<div class="paragraph"><p><strong>Wichtig:</strong> <em>Die Web-API (auch HTTP-API genannt) ist abgekündigt und wird in der nächsten Checkmk-Version <span class="new">2.2.0</span> entfernt werden. Die Web-API wird durch die <a href="rest_api.html">REST-API</a> ersetzt. Weitere Informationen erhalten Sie im Artikel zum <a href="update_major.html#rest-api">Update auf Version <span class="new">2.1.0</span>.</a></em></p></div>
+<div class="paragraph"><p>Dieser Artikel enthält eine Beschreibung zu jedem der in der Web-API
+verfügbaren Befehle. Eine generelle Kenntnis der Syntax der API und andere
+Grundlagen, wie sie in dem <a href="web_api.html">Hauptartikel</a> beschrieben sind,
+werden vorausgesetzt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_activate_changes">
+<span class="hidden-anchor sr-only" id="activate_changes"></span>1. Änderungen aktivieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Alle Änderungen, die Sie an dem Checkmk-Server durchführen, können Sie mit
+dem Befehl <code>activate_changes</code> aktivieren. In dem <code>request</code>-Teil
+können Sie bei Bedarf zusätzlich verschiedene Optionen setzen:</p></div>
+<div class="ulist"><ul>
+<li><p><code>mode</code>: Mit dieser Option teilen Sie bei Bedarf mit, dass Sie nur bestimmte Instanzen aktivieren möchten. In diesem Fall übergeben Sie hier den Wert <code>specific</code>.</p></li>
+<li><p><code>sites</code>: Falls Sie den <code>mode</code> auf <code>specific</code> geändert haben, geben Sie hier die Instanzen (sites) an, welche aktiviert werden sollen.</p></li>
+<li><p><code>allow_foreign_changes</code>: Manchmal haben zwischenzeitlich andere Benutzer ebenfalls Änderungen vorgenommen. Mit dieser Option können Sie explizit angeben, dass Sie diese ebenfalls aktivieren wollen. Übergeben Sie dafür den Wert <code>1</code>. Wenn Sie hier stattdessen <code>0</code> angeben, werden die Änderungen nur aktiviert, wenn keine Änderungen anderer Benutzer vorliegen. Sollten doch Änderungen anderer Benutzer vorliegen, wird die Aktivierung nicht durchgeführt.</p></li>
+<li><p><code>comment</code>: Fügen Sie hier wie aus dem Webinterface bekannt einen Kommentar zu der Aktivierung hinzu.</p></li>
+</ul></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{"mode": "dirty",</span>
+<span class="tok-go"> "sites": [ "central", "remote1", "remote2" ],</span>
+<span class="tok-go"> "allow_foreign_changes": "0",</span>
+<span class="tok-go"> "comment: "Änderungen aus der WebAPI."}</span></code></pre></div></div>
+<div class="paragraph"><p>Ein solcher Befehl kann dann z.B. so aussehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?_secret=myautomationsecret&amp;_username=automation&amp;action=activate_changes"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"sites":["mysite"],"allow_foreign_changes":"0"}'</span>
+<span class="tok-go">{"result": {"sites": {"mysite": {"_time_updated": 1507118620.897177, "_status_details": "Started at: 14:03:33. Finished at: 14:03:40.", "_phase": "done", "_status_text": "Success", "_pid": 10633, "_state": "success", "_time_ended": 1507118620.897177, "_expected_duration": 10.0, "_time_started": 1507118613.630956, "_site_id": "mysite", "_warnings": []}}}, "result_code": 0}</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_hosts">
+<span class="hidden-anchor sr-only" id="hosts"></span>2. Hostbefehle</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Für Hosts können Sie die folgenden Befehle über die API ausführen:</p></div>
+<div class="ulist"><ul>
+<li><p><code>get_host</code></p></li>
+<li><p><code>add_host</code></p></li>
+<li><p><code>edit_host</code></p></li>
+<li><p><code>delete_host</code></p></li>
+<li><p><code>delete_hosts</code></p></li>
+<li><p><code>get_all_hosts</code></p></li>
+<li><p><code>discover_services</code></p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_get_host">
+<span class="hidden-anchor sr-only" id="get_host"></span>2.1. get_host</h3>
+<div class="paragraph"><p>Sie können diesen Befehl nutzen, um die Konfiguration eines einzelnen
+Host abzurufen. Übergeben wird dabei lediglich der Name des abzurufenden
+Hosts. Die Ausgabe ist in diesem Beispiel für Menschen lesbar gemacht. In
+der Praxis wird die Ausgabe immer einzeilig sein:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_host&amp;_username=automation&amp;_secret=myautomationsecret&amp;output_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123"}'</span>
+<span class="tok-go">{'result': {'attributes': {'alias': u'someAlias', 'tag_agent': 'cmk-agent', 'tag_criticality': 'prod', 'management_address': '192.168.1.42', 'contactgroups': {'use_for_services': False, 'recurse_perms': False, 'recurse_use': False, 'use': True, 'groups': ['ad_admins']}, 'management_protocol': 'snmp', 'ipaddress': '192.168.0.42', 'site': 'prod', 'tag_address_family': 'ip-v4-only', 'management_snmp_community': 'public'}, 'hostname': 'myserver123', 'path': ''}, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Lesbar strukturiert kann die Antwort dann wie folgt aussehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result':</span>
+<span class="tok-go">    {'attributes': {</span>
+<span class="tok-go">        'alias': u'My Server Alias',</span>
+<span class="tok-go">                    'contactgroups': {'groups': ['ad_admins'],</span>
+<span class="tok-go">                                      'recurse_perms': False,</span>
+<span class="tok-go">                                      'recurse_use': False,</span>
+<span class="tok-go">                                      'use': True,</span>
+<span class="tok-go">                                      'use_for_services': False},</span>
+<span class="tok-go">                    'ipaddress': '192.168.0.42',</span>
+<span class="tok-go">                    'management_address': '192.168.1.42',</span>
+<span class="tok-go">                    'management_protocol': 'snmp',</span>
+<span class="tok-go">                    'management_snmp_community': 'public',</span>
+<span class="tok-go">                    'site': 'prod',</span>
+<span class="tok-go">                    'tag_address_family': 'ip-v4-only',</span>
+<span class="tok-go">                    'tag_agent': 'cmk-agent',</span>
+<span class="tok-go">                    'tag_criticality': 'prod'},</span>
+<span class="tok-go">     'hostname': 'myserver123',</span>
+<span class="tok-go">     'path': ''}</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Beachten Sie, dass in der Antwort nur die Felder ausgegeben werden, welche
+im <a href="user_interface.html">Setup</a> explizit bei dem Host definiert sind. Werte, die den Default beinhalten oder von
+einem Verzeichnis geerbt wurden, werden hier nicht ausgegeben. Eine Antwort,
+welche nur die Felder enthält, die in dem Host selbst definiert wurden, würde demnach wie folgt aussehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result':</span>
+<span class="tok-go">    {'attributes': {},</span>
+<span class="tok-go">     'hostname': 'myserver123',</span>
+<span class="tok-go">     'path': ''},</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph" id="effective_attributes"><p>Sie können dieses Verhalten ändern, indem Sie den Parameter
+<code>effective_attributes</code> übergeben und auf „1“ setzen. Die Ausgabe
+würde dann alle Attribute enthalten — diese sind in dem Beispiel nicht noch
+einmal aufgeführt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_host&amp;_username=automation&amp;_secret=myautomationsecret&amp;effective_attributes=1&amp;output_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123"}'</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_add_host">
+<span class="hidden-anchor sr-only" id="add_host"></span>2.2. add_host</h3>
+<div class="paragraph"><p>Um einen Host hinzuzufügen, müssen Sie in dem Befehl mindestens den Hostnamen
+und das Verzeichnis definieren. Soll der Host im Hauptverzeichnis liegen,
+so werden einfach zwei leere Anführungszeichen gesetzt. Optional können
+Sie auch die Attribute setzen, sofern sie verfügbar sind, Nodes angeben,
+wenn Sie einen Clusterhost anlegen wollen oder das automatische Erstellen
+von Verzeichnissen unterdrücken. Für die Attribute können Sie sich an der
+Ausgabe von dem Befehl <code>get_host</code> orientieren, so dass die Konfiguration
+z.B. so aussehen kann:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'hostname': 'myserver123',</span>
+<span class="tok-go"> 'folder': 'munich/network',</span>
+<span class="tok-go"> 'attributes': {'ipaddress': '192.168.0.42',</span>
+<span class="tok-go">                'site': 'prod',</span>
+<span class="tok-go">                'tag_agent': 'cmk-agent'},</span>
+<span class="tok-go"> 'create_folders': '0'}</span></code></pre></div></div>
+<div class="paragraph"><p>Der Befehl wird dann wie üblich ausgeführt. In dem Beispiel wird über die
+Option <code>create_folders</code> verhindert, dass neue Verzeichnisse angelegt
+werden. Wenn Sie nichts angeben, wird angenommen, dass das Anlegen von noch
+nicht existierenden Verzeichnissen erlaubt ist.
+Die Attribute werden in geschweiften Klammern (als <em>Dictionary</em>)
+aufgelistet. Hier können Sie auch Hosttags setzen. Um auf diese zuzugreifen,
+nehmen Sie die ID der Tag-Gruppe und setzen ein <code>tag_</code> als Präfix
+davor.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=add_host&amp;_username=automation&amp;_secret=myautomationsecret&amp;request_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123","folder":"munich/network","attributes":{"ipaddress":"192.168.0.42","site":"prod","tag_agent":"cmk-agent"},"create_folders":"0"}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_edit_host">
+<span class="hidden-anchor sr-only" id="edit_host"></span>2.3. edit_host</h3>
+<div class="paragraph"><p>Mit diesem Befehl können Sie Attribute eines Hosts anpassen oder mit
+<code>unset_attributes</code> auf seinen Standardwert zurücksetzen.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'hostname': 'myserver123',</span>
+<span class="tok-go"> 'unset_attributes': [ 'site', 'alias' ],</span>
+<span class="tok-go"> 'attributes': {'parents': [ 'myRouter1', 'myRouter2' ],</span>
+<span class="tok-go">                'tag_agent': 'cmk-agent'}</span>
+<span class="tok-go">}</span></code></pre></div></div>
+<div class="paragraph"><p>Verpflichtend ist hier nur die Angabe des Hostnamens. Achten Sie darauf,
+dass die Attribute, welche zurückgesetzt werden sollen, in einer Liste
+angegeben werden.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=edit_host&amp;_username=automation&amp;_secret=myautomationsecret&amp;request_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123","unset_attributes":["site","alias"],"attributes":{"parents":["myRouter1","myRouter2"],"tag_agent":"cmk-agent"}}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_delete_host">
+<span class="hidden-anchor sr-only" id="delete_host"></span>2.4. delete_host</h3>
+<div class="paragraph"><p>Um einen Host zu löschen, müssen Sie lediglich seinen Namen in dem
+request-Teil  übergeben, da dieser ja in Checkmk immer eindeutig sein muss:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=delete_host&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123"}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_delete_hosts">
+<span class="hidden-anchor sr-only" id="delete_hosts"></span>2.5. delete_hosts</h3>
+<div class="paragraph"><p>Ab Version <span class="new">1.5.0</span> können Sie diesen Befehl nutzen, wenn
+Sie mehrere Hosts gleichzeitig löschen wollen. Achten Sie auf die korrekte
+Schreibweise des Schlüssels und, dass die Hosts hier in einer Liste übergeben
+werden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=delete_hosts&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostnames":["myserver123","myserver234"]}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_get_all_hosts">
+<span class="hidden-anchor sr-only" id="get_all_hosts"></span>2.6. get_all_hosts</h3>
+<div class="paragraph"><p>Dieser Befehl ist der einzige auf die Hosts bezogene, welcher keine
+Übergabe weiterer Daten benötigt. Er gibt ganz einfach alle Hosts in
+Checkmk aus. Ebenso wie bei <a href="#get_host"><code>get_host</code></a> können
+Sie auch hier bestimmen, ob in der Ausgabe nur die explizit gesetzten
+oder <a href="#effective_attributes">alle Attribute</a> ausgegeben werden
+sollen. Beachten Sie, dass das unter Umständen eine sehr umfangreiche
+Antwort geben kann. Aus dem Grund wird auch auf die Ausgabe der Antwort in
+dem Beispiel verzichtet.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_all_hosts&amp;_username=automation&amp;_secret=myautomationsecret&amp;output_format=python"</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_discover_services">
+<span class="hidden-anchor sr-only" id="discover_services"></span>2.7. discover_services</h3>
+<div class="paragraph"><p>Mit diesem Befehl können Sie alle Services eines Hosts erkennen und
+hinzufügen lassen. Die Syntax des <code>request</code>-Befehls gestaltet sich analog
+zu <code>get_host</code>, in der Antwort wird allerdings eine Zusammenfassung des
+Ergebnisses ausgegeben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=discover_services&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123"}'</span>
+<span class="tok-go">{'result': 'Service discovery successful. Added 7, Removed 0, Kept 52, New Count 59', 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Zusätzlich können Sie über <code>mode</code> wie im <span class="guihint">Setup</span> bestimmen, wie
+mit den erkannten und bereits konfigurierten Services umgegangen
+werden soll. Die möglichen Optionen sind:</p></div>
+<div class="ulist"><ul>
+<li><p><code>new</code>: Nur neue Services hinzufügen. Das ist auch die Standardeinstellung, wenn Sie nichts angeben.</p></li>
+<li><p><code>remove</code>: Entfernt nur nicht mehr vorhandene Services.</p></li>
+<li><p><code>fixall</code>: Entfernt nicht mehr vorhandene Services und fügt neue hinzu.</p></li>
+<li><p><code>refresh</code>: Entfernt alle Services und fügt danach alle Services neu hinzu.</p></li>
+</ul></div>
+<div class="paragraph"><p>Der Parameter wird dann zusätzlich zum Hostnamen übergeben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=discover_services&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123","mode":"refresh"}'</span>
+<span class="tok-go">{"result": "Service discovery successful. Added 6, Removed 5, Kept 48, New Count 54", "result_code": 0}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__verzeichnisbefehle">
+<span class="hidden-anchor sr-only" id="_verzeichnisbefehle"></span>3. Verzeichnisbefehle</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Um die Verzeichnisse im <span class="guihint">Setup</span> zu verwalten, bietet Checkmk ab Version <span class="new">1.5.0</span> die folgenden Kommandos:</p></div>
+<div class="ulist"><ul>
+<li><p><code>get_folder</code></p></li>
+<li><p><code>add_folder</code></p></li>
+<li><p><code>edit_folder</code></p></li>
+<li><p><code>delete_folder</code></p></li>
+<li><p><code>get_all_folders</code></p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_get_folder">
+<span class="hidden-anchor sr-only" id="get_folder"></span>3.1. get_folder</h3>
+<div class="paragraph"><p>Das Abrufen der Konfiguration eines Verzeichnisses ist nicht so verschieden von
+dem eines <a href="#get_host">Hosts</a>. Sie geben den Namen des Verzeichnisses
+an und lassen sich gegebenenfalls <a href="#effective_attributes">alle Attribute</a>
+ausgeben. In dem Beispiel ist das <code>output_format</code>
+auf Python umgestellt und es werden alle Attribute des Verzeichnisses
+ausgegeben. Beachten Sie, dass in der Antwort alle Tupel in Listen umgewandelt
+würden, wenn die Ausgabe in JSON formatiert wäre.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_folder&amp;_username=automation&amp;_secret=myautomationsecret&amp;output_format=python&amp;effective_attributes=1"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"folder":"munich/network"}'</span>
+<span class="tok-go">{'result': {'attributes': {'network_scan': {'scan_interval': 86400, 'exclude_ranges': [], 'run_as': u'automation', 'ip_ranges': [], 'time_allowed': 0, 0), (24, 0}, 'tag_agent': 'cmk-agent', 'snmp_community': None, 'ipv6address': '', 'alias': '', 'management_protocol': None, 'site': 'heute', 'tag_room': 'weisses_haus', 'tag_criticality': 'prod', 'contactgroups': (True, []), 'network_scan_result': {'start': None, 'state': None, 'end': None, 'output': ''}, 'parents': ['heute'], 'tag_address_family': 'ip-v4-only', 'management_address': '', 'tag_networking': 'lan', 'ipaddress': '', 'management_snmp_community': None}, 'configuration_hash': '7001db7f20eee1cae51f9c696cddff42'}, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Wie in dem Beispiel zu sehen, muss ein Verzeichnis immer relativ
+zum Hauptverzeichnis angegeben werden, da immer nur sein Pfad, nicht aber
+der Name eindeutig ist.</p></div>
+<div class="paragraph"><p>Lesbar sieht die Antwort dann so aus (da einige der übergebenen Information
+vorerst nicht relevant sind, ist das Beispiel hier entsprechend gekürzt
+worden):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': {'attributes': {'alias': '',</span>
+<span class="tok-go">                           'contactgroups': (True, []),</span>
+<span class="tok-go">                           'network_scan': {'exclude_ranges': [],</span>
+<span class="tok-go">                                            'ip_ranges': [],</span>
+<span class="tok-go">                                            'run_as': u'automation',</span>
+<span class="tok-go">                                            'scan_interval': 86400,</span>
+<span class="tok-go">                                            'time_allowed': 0, 0),</span> <span class="tok-go">                                                             (24, 0},</span>
+<span class="tok-go">                           'network_scan_result': {'end': None,</span>
+<span class="tok-go">                                                   'output': '',</span>
+<span class="tok-go">                                                   'start': None,</span>
+<span class="tok-go">                                                   'state': None},</span>
+<span class="tok-go">                           'parents': [],</span>
+<span class="tok-go">                           'site': 'prod',</span>
+<span class="tok-go">                           'snmp_community': None,</span>
+<span class="tok-go">                           'tag_address_family': 'ip-v4-only',</span>
+<span class="tok-go">                           'tag_agent': 'cmk-agent',</span>
+<span class="tok-go">                           'tag_criticality': 'prod',</span>
+<span class="tok-go">                           'tag_networking': 'lan'},</span>
+<span class="tok-go">            'configuration_hash': '7001db7f20eee1cae51f9c696cddff42'}</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Das Attribut „alias“ wird in der Ausgabe immer leer sein. Da Verzeichnisse nur
+einmal angelegt und intern niemals umbenannt werden, kann man später über
+dieses Attribut den Anzeigename im <span class="guihint">Setup</span> anpassen. Beachten Sie also, dass
+der Name im <span class="guihint">Setup</span> nicht unbedingt mit dem echten Namen übereinstimmen muss!</p></div>
+<div class="paragraph"><p>Den <code>configuration_hash</code> können Sie verwenden, wenn das Verzeichnis
+<a href="#edit_folder">bearbeitet</a> werden soll.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_add_folder">
+<span class="hidden-anchor sr-only" id="add_folder"></span>3.2. add_folder</h3>
+<div class="paragraph"><p>Auch das Hinzufügen von Verzeichnissen funktioniert ähnlich wie das
+Hinzufügen von <a href="#get_host">Hosts</a>. Sie benötigen mindestens den Namen
+und die Attribute. Letztere können aber auch leer sein, wie in dem Beispiel:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=add_folder&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"folder":"munich/network/router","attributes":{}}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Wie Sie sehen, wird der Pfad hier ebenfalls immer relativ zum
+Hauptverzeichnis angegeben. Falls ein Elternverzeichnis nicht vorhanden
+ist, wird es angelegt. Sie können dieses Verhalten unterdrücken,
+indem Sie — analog zu <a href="#add_host"><code>add_host</code></a> — die Option
+<code>create_parent_folders</code> hinzufügen und auf „0“ setzen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_edit_folder">
+<span class="hidden-anchor sr-only" id="edit_folder"></span>3.3. edit_folder</h3>
+<div class="paragraph"><p>Um ein Verzeichnis zu editieren, benötigen Sie
+mindestens seinen Namen. Zusätzlich können Sie die unter
+<a href="#get_folder"><code>get_folder</code></a> beschriebenen Attribute anpassen. Mit
+dem optionalen <code>configuration_hash</code> wird sichergestellt, dass die
+Konfiguration des Verzeichnisses nicht zwischenzeitlich verändert wurde. Ist
+der Hash nicht identisch, wird Checkmk die Änderung an dem Verzeichnis
+nicht durchführen. In dem Beispiel wird das Ergebnis aus <code>get_folder</code>
+verwendet, um die Konfiguration anzupassen. Achten Sie darauf, dass Python
+als <code>request_format</code> verwendet wird, da bei den Einstellungen zu dem
+Netzwerkscan Tupel vorkommen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=add_folder&amp;_username=automation&amp;_secret=myautomationsecret&amp;request_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"folder":"munich/network","attributes":{"network_scan":{"time_allowed":"18,0),(24,0"}},"configuration_hash":"7001db7f20eee1cae51f9c696cddff42"}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_delete_folder">
+<span class="hidden-anchor sr-only" id="delete_folder"></span>3.4. delete_folder</h3>
+<div class="paragraph"><p>Das Löschen eines Verzeichnisses ist sehr einfach. Sie geben dazu lediglich
+den Namen an. Wie immer bei Verzeichnissen ist das der relative Pfad:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=delete_folder&amp;_username=automation&amp;_secret=myautomationsecret -d 'request={"</span>folder<span class="tok-s2">":"</span>munich/network<span class="tok-s2">"}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_get_all_folders">
+<span class="hidden-anchor sr-only" id="get_all_folders"></span>3.5. get_all_folders</h3>
+<div class="paragraph"><p>Ebenso einfach ist auch die Ausgabe aller Verzeichnisse. Das geschieht
+ähnlich zu <a href="#get_all_hosts"><code>get_all_hosts</code></a>. Beachten Sie,
+dass das Ausgabeformat wie bei <a href="#get_folder"><code>get_folder</code></a>
+auf Python stehen sollte:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_all_folders&amp;_username=automation&amp;_secret=myautomationsecret&amp;output_format=python"</span>
+<span class="tok-go">{'result': {'': {}, 'munich/windows': {}, 'munich/network': {'network_scan': {'run_as': 'automation', 'exclude_ranges': [], 'ip_ranges': [('ip_network', ('192.168.20.0', 24))], 'scan_interval': 86400, 'time_allowed': 20, 0), (24, 0}, 'tag_agent': 'snmp-only'}, 'munich': {}, 'berlin': {'tag_networking': 'dmz'}, 'berlin/databases': {'tag_criticality': 'critical'}, 'essen': {'tag_networking': 'wan'}, 'essen/linux': {}}, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Lesbar sieht die Ausgabe dann folgendermaßen aus. Sie unterscheidet sich
+von der Abfrage eines einzelnen Verzeichnisses nur in Details. Die oberste
+Zeile mit dem leeren Namen ist das Hauptverzeichnis.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': {'': {},</span>
+<span class="tok-go">            'berlin': {'tag_networking': 'dmz'},</span>
+<span class="tok-go">            'berlin/databases': {'tag_criticality': 'critical'},</span>
+<span class="tok-go">            'essen': {'tag_networking': 'wan'},</span>
+<span class="tok-go">            'essen/linux': {},</span>
+<span class="tok-go">            'munich': {},</span>
+<span class="tok-go">            'munich/network': {'network_scan': {'exclude_ranges': [],</span>
+<span class="tok-go">                                                'ip_ranges': [('ip_network',</span>
+<span class="tok-go">                                                               ('192.168.20.0',</span>
+<span class="tok-go">                                                                24))],</span>
+<span class="tok-go">                                                'run_as': 'automation',</span>
+<span class="tok-go">                                                'scan_interval': 86400,</span>
+<span class="tok-go">                                                'time_allowed': 20, 0),</span> <span class="tok-go">                                                                 (24, 0},</span>
+<span class="tok-go">                               'tag_agent': 'snmp-only'},</span>
+<span class="tok-go">            'munich/windows': {}},</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__gruppenbefehle">
+<span class="hidden-anchor sr-only" id="_gruppenbefehle"></span>4. Gruppenbefehle</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Über die Web-API können Sie Kontakt-, Host- und Service-Gruppen in Checkmk
+anlegen, editieren, löschen und natürlich auch abrufen. Dafür stehen die
+folgenden Befehle zur Verfügung:</p></div>
+<div class="ulist"><ul>
+<li><p><code>add_contactgroup</code></p></li>
+<li><p><code>edit_contactgroup</code></p></li>
+<li><p><code>delete_contactgroup</code></p></li>
+<li><p><code>get_all_contactgroups</code></p></li>
+<li><p><code>add_servicegroup</code></p></li>
+<li><p><code>edit_servicegroup</code></p></li>
+<li><p><code>delete_servicegroup</code></p></li>
+<li><p><code>get_all_servicegroups</code></p></li>
+<li><p><code>add_hostgroup</code></p></li>
+<li><p><code>edit_hostgroup</code></p></li>
+<li><p><code>delete_hostgroup</code></p></li>
+<li><p><code>get_all_hostgroups</code></p></li>
+</ul></div>
+<div class="paragraph"><p>Die Syntax unterscheidet sich nicht zwischen den Befehlen für die
+unterschiedlichen Gruppenarten. Lediglich der Befehl wird je nach Gruppe
+entsprechend angepasst. Aus diesem Grund wird jeder Befehlstyp nur einmal
+erläutert.  Die Beispiele lassen sich dann auf die jeweils anderen beiden
+Gruppenarten übertragen. Für ein besseres Verständnis, werden in den
+Beispielen jeweils unterschiedliche Gruppen verwendet.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Alle Befehle müssen immer die Gruppenart enthalten. Wenn
+von <code>add_group</code> gesprochen wird und Sie eine Hostgruppe hinzufügen
+wollen, ist der benötigte Befehl <code>add_hostgroup</code>.</p></div>
+<div class="sect2">
+<h3 id="heading_get_all_groups">
+<span class="hidden-anchor sr-only" id="get_all_groups"></span>4.1. get_all_groups</h3>
+<div class="paragraph"><p>Dieser Befehl wird — wie bei ähnlichen Befehlen auch — ohne zusätzliche
+Parameter aufgerufen. Die Antwort enthält alle Gruppen mit Namen und Alias:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_all_contactgroups&amp;_username=automation&amp;_secret=myautomationsecret"</span>
+<span class="tok-go">{"result": {"oracle": {"alias": "ORACLE Administrators"}, "windows": {"alias": "Windows Administrators"}, "all": {"alias": "Everything"}, "linux": {"alias": "Linux Administrators"}}, "result_code": 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Lesbar sieht die Antwort dann so aus; wie Sie hier sehen können, ist die
+Syntax sehr einfach:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': {'all': {'alias': 'Everything'},</span>
+<span class="tok-go">            'linux': {'alias': 'Linux Administrators'},</span>
+<span class="tok-go">            'oracle': {'alias': 'ORACLE Administrators'},</span>
+<span class="tok-go">            'windows': {'alias': 'Windows Administrators'}},</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_add_group">
+<span class="hidden-anchor sr-only" id="add_group"></span>4.2. add_group</h3>
+<div class="paragraph"><p>Um eine Gruppe hinzuzufügen, können Sie die Syntax aus
+<code>get_all_groups</code> verwenden. Es müssen hier lediglich die ID der Gruppe
+und der Alias angegeben werden. Beachten Sie, dass beim Anlegen einer neuen
+Gruppe die ID mit dem Schlüssel <code>groupname</code> übergeben wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=add_hostgroup&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"groupname":"linux", "alias":"All Linux Servers"}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_edit_group">
+<span class="hidden-anchor sr-only" id="edit_group"></span>4.3. edit_group</h3>
+<div class="paragraph"><p>Aufgrund der geringen Komplexität des Aufrufs funktioniert das Editieren
+einer Gruppe sehr ähnlich zu dem Anlegen derselben. Einzig der Gruppenname
+(<code>groupname</code>) muss natürlich bereits existieren, um seinen Alias
+bearbeiten zu können. In dem Beispiel existiert die Servicegruppe „cpu_util“
+noch nicht und die Antwort enthält einen Fehler. Bei einem erfolgreichen
+<code>curl</code>-Aufruf hätte es die gleiche Antwort gegeben wie bei <code>add_group</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=add_servicegroup&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"groupname":"cpu_util", "alias":"CPU utilization of all servers"}'</span>
+<span class="tok-go">{"result": "Check_MK exception: Unknown group: linux", "result_code": 1}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_delete_group">
+<span class="hidden-anchor sr-only" id="delete_group"></span>4.4. delete_group</h3>
+<div class="paragraph"><p>Auch das Löschen einer Gruppe ist sehr einfach. Sie übergeben hier nur
+den Gruppennamen.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=delete_hostgroup&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"groupname":"linux"}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_users">
+<span class="hidden-anchor sr-only" id="users"></span>5. Benutzerbefehle</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Für die Verwaltung der Benutzer können Sie die folgenden Befehle
+nutzen. Beachten Sie hierbei, dass über LDAP oder Active Directory
+synchronisierte Benutzer zwar abgerufen, aber nicht bearbeitet werden können.</p></div>
+<div class="ulist"><ul>
+<li><p><code>add_users</code></p></li>
+<li><p><code>edit_users</code></p></li>
+<li><p><code>delete_users</code></p></li>
+<li><p><code>get_all_users</code></p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_add_users">
+<span class="hidden-anchor sr-only" id="add_users"></span>5.1. add_users</h3>
+<div class="paragraph"><p>Um einen Benutzer anzulegen benötigen Sie mindestens den Benutzernamen (ID)
+und den Alias. Damit sich der Benutzer später auch einloggen kann, ist es
+notwendig, auch ein Passwort zu setzen. Dieses wird dann verschlüsselt
+abgespeichert, so dass bei einem Abruf das Passwort nicht im Klartext
+übertragen wird. Lediglich das Passwort für die Automationsbenutzer,
+das <code>automation_secret</code>, wird nicht verschlüsselt. Alle weiteren
+Attribute des Benutzers sind optional. Um eine Übersicht zu ein paar
+möglichen Attributen zu bekommen, können Sie sich die Beispielausgabe aus
+<a href="#get_all_users"><code>get_all_users</code></a> ansehen.</p></div>
+<div class="paragraph"><p>Der <code>request</code>-Teil wird dann mit einem <code>users</code> begonnen, so
+dass Sie mit einem einzelnen Aufruf mehrere Benutzer gleichzeitig anlegen
+können. Jeder Eintrag beginnt mit der ID des neuen Benutzers:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=add_users&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"users":{"hhirsch":{"alias":"Harry Hirsch","password":"myStrongPassword","pager":"+49176555999222"},"customAutomation":{"alias":"Custom Automation User","automation_secret":"mySuperStrongSecret"}}}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_edit_users">
+<span class="hidden-anchor sr-only" id="edit_users"></span>5.2. edit_users</h3>
+<div class="paragraph"><p>Das Editieren eines Benutzers funktioniert fast genauso wie das Anlegen
+desselben. Sie benötigen die ID des Benutzers und übergeben die Änderungen
+mit <code>set_attributes</code>. Mit <code>unset_attributes</code> können Sie
+Attribute auf ihre Standardwerte zurücksetzen. Auch bei diesem Befehl
+ist es möglich mehrere Benutzer auf einmal zu bearbeiten.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=edit_users&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"users":{"hhirsch":{"set_attributes":{"email":"<a href="mailto:hhirsch@myCompany.org">hhirsch@myCompany.org</a>","contactgroups":["windows"]},"unset_attributes":["pager"]}}}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Hier noch einmal der <code>request</code>-Teil in lesbarer Form:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'users': {'hhirsch': {'set_attributes': {'contactgroups': ['windows'],</span>
+<span class="tok-go">                                          'email': '<a href="mailto:hhirsch@myCompany.org">hhirsch@myCompany.org</a>'},</span>
+<span class="tok-go">                       'unset_attributes': ['pager']}}}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_delete_users">
+<span class="hidden-anchor sr-only" id="delete_users"></span>5.3. delete_users</h3>
+<div class="paragraph"><p>Um einen oder mehrere Benutzer zu löschen, geben Sie unter <code>users</code>
+lediglich Benutzer-IDs an.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=delete_users&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"users":["customAutomation"]}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_get_all_users">
+<span class="hidden-anchor sr-only" id="get_all_users"></span>5.4. get_all_users</h3>
+<div class="paragraph"><p>Um die Konfiguration aller Benutzer abzurufen, müssen Sie keine weiteren Parameter im
+<code>request</code>-Teil übergeben. Die Antwort enthält dann alle Benutzer-IDs
+und die jeweiligen Attribute. Beachten Sie, dass manche Attribute nur
+ausgegeben werden, wenn Sie auch explizit gesetzt wurden.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_all_users&amp;_username=automation&amp;_secret=myautomationsecret</span></code></pre></div></div>
+<div class="paragraph"><p>Die Ausgabe kann sehr umfangreich werden. Aus diesem Grund hier nur zwei
+Beispiele, welche Attribute unter anderem für einen Benutzer zurückkommen können:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'automation': {'alias': u'Check_MK Automation - used for calling web services',</span>
+<span class="tok-go">                'automation_secret': 'myautomationsecret',</span>
+<span class="tok-go">                'contactgroups': [],</span>
+<span class="tok-go">                'disable_notifications': {},</span>
+<span class="tok-go">                'email': u'',</span>
+<span class="tok-go">                'enforce_pw_change': False,</span>
+<span class="tok-go">                'fallback_contact': False,</span>
+<span class="tok-go">                'force_authuser': False,</span>
+<span class="tok-go">                'force_authuser_webservice': False,</span>
+<span class="tok-go">                'last_pw_change': 1504517726,</span>
+<span class="tok-go">                'locked': False,</span>
+<span class="tok-go">                'notifications_enabled': False,</span>
+<span class="tok-go">                'num_failed_logins': 0,</span>
+<span class="tok-go">                'pager': '',</span>
+<span class="tok-go">                'password': '$1$508982$cA48GmuUHxRZn3w2GJUnK0',</span>
+<span class="tok-go">                'roles': ['admin'],</span>
+<span class="tok-go">                'serial': 2,</span>
+<span class="tok-go">                'start_url': 'dashboard.py'},</span>
+<span class="tok-go"> 'hhirsch': {'alias': u'Harry Hirsch',</span>
+<span class="tok-go">             'connector': 'htpasswd',</span>
+<span class="tok-go">             'contactgroups': ['windows'],</span>
+<span class="tok-go">             'disable_notifications': {'disable': True},</span>
+<span class="tok-go">             'email': u'<a href="mailto:hhirsch@myCompany.org">hhirsch@myCompany.org</a>',</span>
+<span class="tok-go">             'enforce_pw_change': True,</span>
+<span class="tok-go">             'fallback_contact': True,</span>
+<span class="tok-go">             'force_authuser': False,</span>
+<span class="tok-go">             'force_authuser_webservice': False,</span>
+<span class="tok-go">             'idle_timeout': 600,</span>
+<span class="tok-go">             'language': None,</span>
+<span class="tok-go">             'last_pw_change': 1504713006,</span>
+<span class="tok-go">             'locked': False,</span>
+<span class="tok-go">             'num_failed_logins': 1,</span>
+<span class="tok-go">             'pager': '+49176555999222',</span>
+<span class="tok-go">             'password': '$1$238168$dGIr7ja6DVn3E8rMlp1aD.',</span>
+<span class="tok-go">             'roles': ['admin', 'user'],</span>
+<span class="tok-go">             'serial': 1,</span>
+<span class="tok-go">             'start_url': 'dashboard.py'}}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__regelsetbefehle">
+<span class="hidden-anchor sr-only" id="_regelsetbefehle"></span>6. Regelsetbefehle</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk bietet ab Version <span class="new">1.5.0</span> die Möglichkeit, auch Regeln
+über die Web-API zu setzen und abzurufen. Dafür sind eingehende Kenntnisse
+der Regelsyntax notwendig, so dass sich der Umgang mit den folgenden Befehlen
+eher für erfahrene Checkmk-Nutzer empfiehlt.</p></div>
+<div class="ulist"><ul>
+<li><p><code>get_ruleset</code></p></li>
+<li><p><code>set_ruleset</code></p></li>
+<li><p><code>get_ruleset_info</code></p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_get_rulset">
+<span class="hidden-anchor sr-only" id="get_rulset"></span>6.1. get_ruleset</h3>
+<div class="paragraph"><p>Es müssen Regeln in einem Regelset definiert sein, damit Sie das Regelset
+abrufen können. Als Eingabe benutzen Sie die ID des Regelsets und als
+<code>output_format</code> muss Python definiert werden, da viele Regelsets mit
+Tupeln arbeiten.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_ruleset&amp;_username=automation&amp;_secret=myautomationsecret&amp;output_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"ruleset_name":"checkgroup_parameters:filesystem"}'</span>
+<span class="tok-go">{'result': {'ruleset': {'': [{'conditions': {'host_specs': ['myserver123'], 'service_specs': [u'/media/customers$'], 'host_tags': []}, 'options': {}, 'value': {'levels': (90.0, 95.0)}}, {'conditions': {'host_specs': ['myserver123'], 'service_specs': [u'/media/meetings$'], 'host_tags': []}, 'options': {}, 'value': {'show_levels': 'onproblem', 'levels': (90.0, 95.0), 'trend_range': 24, 'trend_perfdata': True}}]}, 'configuration_hash': 'e069408225932bbfe2a485f22b9fc40e'}, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Wie Sie in der folgenden, lesbarer formatierten Antwort sehen können, werden zu
+einer Regel immer nur die verwendeten Elemente angezeigt. Außerdem werden
+die Regeln als Liste einem Verzeichnis zugeordnet:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': {'ruleset': {'munich': [{'conditions': {'host_specs': ['myserver123'],</span>
+<span class="tok-go">                                                   'host_tags': [],</span>
+<span class="tok-go">                                                   'service_specs': [u'/media/customer$']},</span>
+<span class="tok-go">                                    'options': {},</span>
+<span class="tok-go">                                    'value': {'levels': (90.0, 95.0)}},</span>
+<span class="tok-go">                                   {'conditions': {'host_specs': ['myserver123'],</span>
+<span class="tok-go">                                                   'host_tags': [],</span>
+<span class="tok-go">                                                   'service_specs': [u'/media/meeting$']},</span>
+<span class="tok-go">                                    'options': {},</span>
+<span class="tok-go">                                    'value': {'levels': (90.0, 95.0),</span>
+<span class="tok-go">                                              'show_levels': 'onproblem',</span>
+<span class="tok-go">                                              'trend_perfdata': True,</span>
+<span class="tok-go">                                              'trend_range': 24}}]},</span>
+<span class="tok-go">            'configuration_hash': 'e069408225932bbfe2a485f22b9fc40e'}</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Für die Abfrage braucht es immer die Kenntnis des internen
+Namens der jeweiligen Regel. Sie können sich z.B. mit dem Befehl
+<a href="#get_rulesets_info">get_rulesets_info</a> die internen Namen (ID) von
+allen Regelsets ausgeben lassen. Zu jedem Eintrag wird dann unter anderem
+auch der Titel angegeben, wie er im <span class="guihint">Setup</span> zu finden ist. Arbeiten Sie mit
+solchen Mitteln, wenn Sie die ID eines Regelsets noch nicht wissen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_set_ruleset">
+<span class="hidden-anchor sr-only" id="set_ruleset"></span>6.2. set_ruleset</h3>
+<div class="paragraph"><p>Auch Regelsets können Sie nur als Gesamtpaket setzen, indem Sie zu einem
+bestimmten Verzeichnis eine oder mehrere Regeln definieren. Diese Regeln
+werden in einer Liste zusammengefasst. Es bietet sich an, zuerst den aktuellen
+Stand eines Regelsets zu holen und auf dieser Basis die Anpassungen
+durchzuführen. Der Parameter <code>configuration_hash</code> steht auch hier zur
+Verfügung, um zwischenzeitliche Änderungen nachvollziehen zu können. In
+dem folgenden Beispiel wird die Antwort von oben genutzt, allerdings mit nur einer
+der beiden ausgegebenen Regeln. Achten Sie darauf, dass das <code>request_format</code>
+auf Python gesetzt ist, der <code>request</code>-Teil in doppelten
+Anführungszeichen steht:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=set_ruleset&amp;_username=automation&amp;_secret=myautomationsecret&amp;request_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s2">"request={'ruleset_name':'checkgroup_parameters:filesystem','ruleset': {'': [{'conditions': {'host_specs': ['myserver123'], 'service_specs': [u'/media/customers</span>$<span class="tok-s2">'], 'host_tags': []}, 'options': {}, 'value': {'levels': (90.0, 95.0)}}],'configuration_hash': 'e069408225932bbfe2a485f22b9fc40e'}}"</span>
+<span class="tok-go">{'result': None, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Lesbar sieht dann der <code>request</code>-Teil so aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">request={</span>
+<span class="tok-go">    'ruleset_name':'checkgroup_parameters:filesystem',</span>
+<span class="tok-go">    'ruleset': {</span>
+<span class="tok-go">        '': [{</span>
+<span class="tok-go">            'conditions': {</span>
+<span class="tok-go">                'host_specs': ['myserver123'],</span>
+<span class="tok-go">                'service_specs': [u'/media/customers$'],</span>
+<span class="tok-go">                'host_tags': []</span>
+<span class="tok-go">            },</span>
+<span class="tok-go">            'options': {},</span>
+<span class="tok-go">            'value': {'levels': (90.0, 95.0)}</span>
+<span class="tok-go">            }],</span>
+<span class="tok-go">        'configuration_hash': 'e069408225932bbfe2a485f22b9fc40e'</span>
+<span class="tok-go">    }</span>
+<span class="tok-go">}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_get_rulesets_info">
+<span class="hidden-anchor sr-only" id="get_rulesets_info"></span>6.3. get_rulesets_info</h3>
+<div class="paragraph"><p>Wenn Sie eine Übersicht haben wollen, welche Regelsets es in Checkmk gibt,
+können Sie sie mit diesem Befehl abrufen. Wie Sie sehen, ist auch hier
+Python als Ausgabeformat empfohlen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_rulesets_info&amp;_username=automation&amp;_secret=myautomationsecret&amp;output_format=python"</span></code></pre></div></div>
+<div class="paragraph"><p>Da Sie mit diesem Befehl <strong>alle</strong> verfügbaren Regelsets abrufen, verzichten
+wir auf die umfangreiche Ausgabe. Sie ist ebenso aufgebaut wie sonst auch. Hier
+lesbar exemplarisch zwei Regelsets in der Ausgabe:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': {'cmc_service_rrd_config': {'help': 'This configures how many datapoints will be stored of the performance values of services. Please note, that these settings only apply for <em>new</em> services. Existing RRDs cannot be changed.',</span>
+<span class="tok-go">                                       'number_of_rules': 1,</span>
+<span class="tok-go">                                       'title': 'Configuration of RRD databases of services'},</span>
+<span class="tok-go">            'static_checks:ipmi':     {'help': None,</span>
+<span class="tok-go">                                       'number_of_rules': 0,</span>
+<span class="tok-go">                                       'title': 'IPMI sensors'}},</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Sie können diese Information vor allem auch nutzen, wenn Sie nur den Titel
+kennen, aber nicht die ID. Das hilft in Ihren Skripten, um die Automatisierung
+mit den normalen Titeln vornehmen zu können und damit die Lesbarkeit für
+Wartungen oder Veränderungen zu verbessern.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__hosttagbefehle">
+<span class="hidden-anchor sr-only" id="_hosttagbefehle"></span>7. Hosttagbefehle</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Mit den folgenden zwei Befehlen können Sie ab Version <span class="new">1.5.0</span>
+Hosttags sowohl setzen als auch auslesen:</p></div>
+<div class="ulist"><ul>
+<li><p><code>get_hosttags</code></p></li>
+<li><p><code>set_hosttags</code></p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_get_hosttags">
+<span class="hidden-anchor sr-only" id="get_hosttags"></span>7.1. get_hosttags</h3>
+<div class="paragraph"><p>Über diesen Befehl können Sie alle Tags abrufen. Es werden sowohl die
+normalen <span class="guihint">Host tag groups</span> als auch die <span class="guihint">Auxiliary tags</span> ausgegeben.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_hosttags&amp;_username=automation&amp;_secret=myautomationsecret"</span>
+<span class="tok-go">{"result": {"aux_tags": [{"id": "snmp", "title": "monitor via SNMP"}, {"id": "tcp", "title": "monitor via Check_MK Agent"}], "tag_groups": [{"tags": [{"aux_tags": [], "id": "prod", "title": "Productive system"}, {"aux_tags": [], "id": "critical", "title": "Business critical"}, {"aux_tags": [], "id": "test", "title": "Test system"}, {"aux_tags": [], "id": "offline", "title": "Do not monitor this host"}], "id": "criticality", "title": "Criticality"}, {"tags": [{"aux_tags": [], "id": "lan", "title": "Local network (low latency)"}, {"aux_tags": [], "id": "wan", "title": "WAN (high latency)"}, {"aux_tags": [], "id": "dmz", "title": "DMZ (low latency, secure access)"}], "id": "networking", "title": "Networking Segment"}], "configuration_hash": "4c2a236ffeabb0c52d4770ea03eff48e"}, "result_code": 0}</span></code></pre></div></div>
+<div class="paragraph"><p>In lesbarer Form ist die Antwort folgendermaßen aufgebaut:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': {'aux_tags': [{'id': 'snmp', 'title': 'monitor via SNMP'},</span>
+<span class="tok-go">                         {'id': 'tcp', 'title': 'monitor via Check_MK Agent'}],</span>
+<span class="tok-go">            'tag_groups': [{'id': 'agent',</span>
+<span class="tok-go">                            'tags': [{'aux_tags': ['tcp'],</span>
+<span class="tok-go">                                      'id': 'cmk-agent',</span>
+<span class="tok-go">                                      'title': 'Check_MK Agent (Server)'},</span>
+<span class="tok-go">                                     {'aux_tags': ['snmp'],</span>
+<span class="tok-go">                                      'id': 'snmp-only',</span>
+<span class="tok-go">                                      'title': 'SNMP (Networking device, Appliance)'},</span>
+<span class="tok-go">                                     {'aux_tags': ['snmp'],</span>
+<span class="tok-go">                                      'id': 'snmp-v1',</span>
+<span class="tok-go">                                      'title': 'Legacy SNMP device (using V1)'},</span>
+<span class="tok-go">                                     {'aux_tags': ['snmp', 'tcp'],</span>
+<span class="tok-go">                                      'id': 'snmp-tcp',</span>
+<span class="tok-go">                                      'title': 'Dual: Check_MK Agent + SNMP'},</span>
+<span class="tok-go">                                     {'aux_tags': [],</span>
+<span class="tok-go">                                      'id': 'ping',</span>
+<span class="tok-go">                                      'title': 'No Agent'}],</span>
+<span class="tok-go">                            'title': 'Agent type'},</span>
+<span class="tok-go">                           {'id': 'criticality',</span>
+<span class="tok-go">                            'tags': [{'aux_tags': [],</span>
+<span class="tok-go">                                      'id': 'prod',</span>
+<span class="tok-go">                                      'title': 'Productive system'},</span>
+<span class="tok-go">                                     {'aux_tags': [],</span>
+<span class="tok-go">                                      'id': 'critical',</span>
+<span class="tok-go">                                      'title': 'Business critical'},</span>
+<span class="tok-go">                                     {'aux_tags': [],</span>
+<span class="tok-go">                                      'id': 'test',</span>
+<span class="tok-go">                                      'title': 'Test system'},</span>
+<span class="tok-go">                                     {'aux_tags': [],</span>
+<span class="tok-go">                                      'id': 'offline',</span>
+<span class="tok-go">                                      'title': 'Do not monitor this host'}],</span>
+<span class="tok-go">                            'title': 'Criticality'},</span>
+<span class="tok-go">                           {'id': 'networking',</span>
+<span class="tok-go">                            'tags': [{'aux_tags': [],</span>
+<span class="tok-go">                                      'id': 'lan',</span>
+<span class="tok-go">                                      'title': 'Local network (low latency)'},</span>
+<span class="tok-go">                                     {'aux_tags': [],</span>
+<span class="tok-go">                                      'id': 'wan',</span>
+<span class="tok-go">                                      'title': 'WAN (high latency)'},</span>
+<span class="tok-go">                                     {'aux_tags': [],</span>
+<span class="tok-go">                                      'id': 'dmz',</span>
+<span class="tok-go">                                      'title': 'DMZ (low latency, secure access)'}],</span>
+<span class="tok-go">                            'title': 'Networking Segment'}],</span>
+<span class="tok-go">            'configuration_hash': '32deebf233cade1d42387c6a0639ceb1'},</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_set_hosttags">
+<span class="hidden-anchor sr-only" id="set_hosttags"></span>7.2. set_hosttags</h3>
+<div class="paragraph"><p>Die Konfiguration wird, selbst wenn Sie nur einen einzelnen Eintrag
+hinzufügen oder ändern wollen, bei den Hosttags aus technischen Gründen
+immer komplett neu geschrieben. Es bietet sich aus diesem Grund hier an, mit
+Hilfe von <code>get_hosttags</code> die Konfiguration zu holen und dann erst die
+Änderungen hinzuzufügen. Die angepasste Konfiguration wird dann an Checkmk
+zurückgeschrieben.</p></div>
+<div class="paragraph"><p>An dieser Stelle ist der <code>configuration_hash</code> nützlich. Wenn der
+Hash auf dem Checkmk-Server beim Schreiben der Konfiguration nicht mit dem
+übergebenen übereinstimmt, wird die Annahme der Daten verweigert und ein
+Fehler ausgegeben. Auf diese Weise können Sie sicherzustellen, dass die
+Konfiguration zwischenzeitlich nicht verändert wurde und Sie somit auch
+nicht versehentlich eine Änderung überschreiben/löschen.</p></div>
+<div class="paragraph"><p>In dem folgenden Beispiel erweitern Sie die Konfiguration, welche Sie
+<a href="#get_hosttag_example">oben</a> als Antwort bekommen haben um das Hosttag
+„location“ mit den Auswahlmöglichkeiten „munich“, „essen“ und „berlin“,
+so dass die Konfiguration nun so aussieht:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'aux_tags': [{'id': 'snmp', 'title': 'monitor via SNMP'},</span>
+<span class="tok-go">              {'id': 'tcp', 'title': 'monitor via Check_MK Agent'}],</span>
+<span class="tok-go"> 'tag_groups': [{'id': 'agent',</span>
+<span class="tok-go">                 'tags': [{'aux_tags': ['tcp'],</span>
+<span class="tok-go">                           'id': 'cmk-agent',</span>
+<span class="tok-go">                           'title': 'Check_MK Agent (Server)'},</span>
+<span class="tok-go">                          {'aux_tags': ['snmp'],</span>
+<span class="tok-go">                           'id': 'snmp-only',</span>
+<span class="tok-go">                           'title': 'SNMP (Networking device, Appliance)'},</span>
+<span class="tok-go">                          {'aux_tags': ['snmp'],</span>
+<span class="tok-go">                           'id': 'snmp-v1',</span>
+<span class="tok-go">                           'title': 'Legacy SNMP device (using V1)'},</span>
+<span class="tok-go">                          {'aux_tags': ['snmp', 'tcp'],</span>
+<span class="tok-go">                           'id': 'snmp-tcp',</span>
+<span class="tok-go">                           'title': 'Dual: Check_MK Agent + SNMP'},</span>
+<span class="tok-go">                          {'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'ping',</span>
+<span class="tok-go">                           'title': 'No Agent'}],</span>
+<span class="tok-go">                 'title': 'Agent type'},</span>
+<span class="tok-go">                {'id': 'criticality',</span>
+<span class="tok-go">                 'tags': [{'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'prod',</span>
+<span class="tok-go">                           'title': 'Productive system'},</span>
+<span class="tok-go">                          {'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'critical',</span>
+<span class="tok-go">                           'title': 'Business critical'},</span>
+<span class="tok-go">                          {'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'test',</span>
+<span class="tok-go">                           'title': 'Test system'},</span>
+<span class="tok-go">                          {'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'offline',</span>
+<span class="tok-go">                           'title': 'Do not monitor this host'}],</span>
+<span class="tok-go">                 'title': 'Criticality'},</span>
+<span class="tok-go">                {'id': 'networking',</span>
+<span class="tok-go">                 'tags': [{'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'lan',</span>
+<span class="tok-go">                           'title': 'Local network (low latency)'},</span>
+<span class="tok-go">                          {'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'wan',</span>
+<span class="tok-go">                           'title': 'WAN (high latency)'},</span>
+<span class="tok-go">                          {'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'dmz',</span>
+<span class="tok-go">                           'title': 'DMZ (low latency, secure access)'}],</span>
+<span class="tok-go">                 'title': 'Networking Segment'},</span>
+<span class="tok-go">                {'id': 'location',</span>
+<span class="tok-go">                 'tags': [{'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'munich',</span>
+<span class="tok-go">                           'title': 'Munich'},</span>
+<span class="tok-go">                          {'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'essen',</span>
+<span class="tok-go">                           'title': 'Essen'},</span>
+<span class="tok-go">                          {'aux_tags': [],</span>
+<span class="tok-go">                           'id': 'berlin',</span>
+<span class="tok-go">                           'title': 'Berlin'}],</span>
+<span class="tok-go">                 'title': 'Location'}],</span>
+<span class="tok-go"> 'configuration_hash': '32deebf233cade1d42387c6a0639ceb1'},</span></code></pre></div></div>
+<div class="paragraph"><p>Diese Konfiguration können Sie in den Aufruf von <code>curl</code> einbinden
+und an den Checkmk-Server schicken:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=set_hosttags&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"aux_tags":[{"id":"snmp","title":"monitor via SNMP"},{"id":"tcp","title":"monitor via Check_MK Agent"}],"tag_groups":[{"title":"Agent type","id":"agent","tags":[{"aux_tags":["tcp"],"id":"cmk-agent","title":"Check_MK Agent (Server)"},{"aux_tags":["snmp"],"id":"snmp-only","title":"SNMP (Networking device, Appliance)"},{"aux_tags":["snmp"],"id":"snmp-v1","title":"Legacy SNMP device (usingV1)"},{"aux_tags":["snmp","tcp"],"id":"snmp-tcp","title":"Dual: Check_MK Agent + SNMP"},{"aux_tags":[],"id":"ping","title":"No Agent"}]},{"title":"Criticality","id":"criticality","tags":[{"aux_tags":[],"id":"prod","title":"Productive system"},{"aux_tags":[],"id":"critical","title":"Business critical"},{"aux_tags":[],"id":"test","title":"Test system"},{"aux_tags":[],"id":"offline","title":"Do not monitor this host"}]},{"title":"Networking Segment","id":"networking","tags":[{"aux_tags":[],"id":"lan","title":"Local network (low latency)"},{"aux_tags":[],"id":"wan","title":"WAN (high latency)"},{"aux_tags":[],"id":"dmz","title":"DMZ (low latency, secure access)"}]},{"tags":[{"aux_tags":[],"id":"munich","title":"Munich"},{"aux_tags":[],"id":"essen","title":"Essen"},{"aux_tags":[],"id":"berlin","title":"Berlin"}],"id":"location","title":"Location"}],"configuration_hash":"32deebf233cade1d42387c6a0639ceb1"}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__instanzen">
+<span class="hidden-anchor sr-only" id="_instanzen"></span>8. Instanzen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Ab Version <span class="new">1.5.0</span> können Sie auch auf das Distributed
+Monitoring zugreifen beziehungsweise Verbindungen zu anderen Instanzen (sites) herstellen
+oder löschen. Auf diese Weise lassen sich auch komplett neue Standorte
+automatisiert in Checkmk einbinden. Auf die folgenden Befehle können
+Sie zugreifen:</p></div>
+<div class="ulist"><ul>
+<li><p><code>get_site</code></p></li>
+<li><p><code>set_site</code></p></li>
+<li><p><code>delete_site</code></p></li>
+<li><p><code>login_site</code></p></li>
+<li><p><code>logout_site</code></p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_get_site">
+<span class="hidden-anchor sr-only" id="get_site"></span>8.1. get_site</h3>
+<div class="paragraph"><p>Eine Instanz abzurufen funktioniert fast identisch zu anderen Abfragen über
+die Web-API. Sie geben in dem <code>request</code>-Teil die ID der Instanz an,
+die sie abrufen wollen. Achten Sie darauf, dass dieser Befehl Python als
+<code>output_format</code> benötigt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_site&amp;_username=automation&amp;_secret=myautomationsecret&amp;output_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"site_id":"myRemote"}'</span>
+<span class="tok-go">{'result': {'site_id': 'myRemote', 'site_config': {'url_prefix': 'http://myRemoteServer/myRemote/', 'user_sync': None, 'user_login': True, 'insecure': False, 'disabled': False, 'replication': 'slave', 'multisiteurl': 'http://myRemoteServer/myRemote/check_mk/', 'replicate_mkps': True, 'status_host': ('heute', 'myRemote'), 'socket': ('proxy', {'params': None, 'socket': ('myRemoteServer', 6557)}), 'disable_wato': True, 'alias': u'My Remote Check_MK', 'timeout': 10, 'persist': True, 'replicate_ec': True}, 'configuration_hash': '136bd84ff62dfa4e0a4325c6431e294b'}, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>In lesbarer Form sieht die Antwort so aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': {'site_id': 'myRemote',</span>
+<span class="tok-go">            'site_config': {'alias': u'My Remote Check_MK',</span>
+<span class="tok-go">                            'disable_wato': True,</span>
+<span class="tok-go">                            'disabled': False,</span>
+<span class="tok-go">                            'insecure': False,</span>
+<span class="tok-go">                            'multisiteurl': 'http://myRemoteServer/myRemote/check_mk/',</span>
+<span class="tok-go">                            'persist': True,</span>
+<span class="tok-go">                            'replicate_ec': True,</span>
+<span class="tok-go">                            'replicate_mkps': True,</span>
+<span class="tok-go">                            'replication': 'slave',</span>
+<span class="tok-go">                            'socket': ('proxy',</span>
+<span class="tok-go">                                       {'params': None,</span>
+<span class="tok-go">                                        'socket': ('myRemoteServer', 6557)}),</span>
+<span class="tok-go">                            'status_host': ('mysite', 'myRemote'),</span>
+<span class="tok-go">                            'timeout': 10,</span>
+<span class="tok-go">                            'url_prefix': 'http://myRemoteServer/myRemote/',</span>
+<span class="tok-go">                            'user_login': True,</span>
+<span class="tok-go">                            'user_sync': None},</span>
+<span class="tok-go">            'configuration_hash': '136bd84ff62dfa4e0a4325c6431e294b',},</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_set_site">
+<span class="hidden-anchor sr-only" id="set_site"></span>8.2. set_site</h3>
+<div class="paragraph"><p>Verbindungen zu Instanzen können immer nur als Ganzes verändert werden, so
+dass auch bestehende Verbindungen komplett neu geschrieben werden müssen,
+wenn Sie über die Web-API eine Anpassung vornehmen wollen. Hier empfiehlt
+es sich, bei einer Anpassung vorher mit <code>get_site</code> den aktuellen
+Stand zu holen, die Änderungen in die Antwort einzupflegen und dann
+wieder an Checkmk zu schicken. Auch hier können Sie wieder, wie schon bei
+<a href="#get_folder"><code>get_folder</code></a>, den <code>configuration_hash</code>
+nutzen, um sicherzustellen, dass zwischenzeitlich keine Veränderung an der
+Konfiguration vorgenommen wurde.</p></div>
+<div class="paragraph"><p>In dem folgenden Beispiel nehmen Sie die Konfiguration von oben und ändern
+lediglich den <span class="guihint">Alias</span> (<code>alias</code>) und die <span class="guihint">Persistent Connection</span>
+(<code>persist</code>). Das <code>request</code>-Format muss in diesem Fall auf
+Python stehen und der <code>request</code>-Teil in doppelten Anführungszeichen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=set_site&amp;_username=automation&amp;_secret=myautomationsecret&amp;request_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s2">"request={'site_id': 'myRemote', 'site_config': {'url_prefix': 'http://myRemoteServer/myRemote/', 'user_sync': None, 'user_login': True, 'insecure': False, 'disabled': False, 'replication': 'slave', 'multisiteurl': 'http://myRemoteServer/myRemote/check_mk/', 'replicate_mkps': True, 'status_host': ('heute', 'myRemote'), 'socket': ('proxy', {'params': None, 'socket': ('myRemoteServer', 6557)}), 'disable_wato': True, 'alias': u'My Remote', 'timeout': 10, 'persist': False, 'replicate_ec': True}, 'configuration_hash': '136bd84ff62dfa4e0a4325c6431e294b'}"</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_delete_site">
+<span class="hidden-anchor sr-only" id="delete_site"></span>8.3. delete_site</h3>
+<div class="paragraph"><p>Um die Verbindung zu einer Instanz zu löschen, benötigen Sie nur die ID. Optional
+können Sie auch hier mit dem <code>configuration_hash</code> arbeiten.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=delete_site&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"site_id":"myRemote"}'</span><span class="tok-o">{</span><span class="tok-s2">"result"</span>:<span class="tok-w"> </span>null,<span class="tok-w"> </span><span class="tok-s2">"result_code"</span>:<span class="tok-w"> </span><span class="tok-m">0</span><span class="tok-o">}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_login_site">
+<span class="hidden-anchor sr-only" id="login_site"></span>8.4. login_site &amp; logout_site</h3>
+<div class="paragraph"><p>Um eine per Web-API erstellte Verbindung zu einer Instanz auch direkt nutzen
+zu können, können Sie sich auf der Instanz auch ein- und ausloggen. Für den
+Login übergeben Sie den Benutzernamen und das Passwort zusätzlich zu der
+ID der Instanz.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=login_site&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"site_id":"myRemote","username":"cmkadmin","password":"cmk"}'</span>
+<span class="tok-go">{"result": null, "result_code": 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Um sich wieder auszuloggen reicht es, wenn die ID der Instanz angegeben wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=logout_site&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"site_id":"myRemote"}'</span><span class="tok-o">{</span><span class="tok-s2">"result"</span>:<span class="tok-w"> </span>null,<span class="tok-w"> </span><span class="tok-s2">"result_code"</span>:<span class="tok-w"> </span><span class="tok-m">0</span><span class="tok-o">}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_bake_agents">
+<span class="hidden-anchor sr-only" id="bake_agents"></span>9. Agent Bakery Befehle</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Über die API können Sie auch automatisiert Agenten backen lassen. Auf
+diese Weise können Sie die automatisch erstellten Konfigurationen direkt
+in die Agenten einfließen lassen. Lediglich die Signierung der Agenten wird
+noch manuell erledigt, so dass die Konfiguration der gebackenen Agenten noch
+einmal kontrolliert werden kann und weiterhin die volle Kontrolle darüber
+besteht, welche Agenten auch wirklich an die Hosts ausgeliefert werden.</p></div>
+<div class="paragraph"><p>Der Aufruf ist sehr einfach und nutzt den Befehl <code>bake_agents</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=bake_agents&amp;_username=automation&amp;_secret=myautomationsecret"</span>
+<span class="tok-go">{"result": "Successfully baked agents", "result_code": 0}</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__befehle_zu_statusdaten">
+<span class="hidden-anchor sr-only" id="_befehle_zu_statusdaten"></span>10. Befehle zu Statusdaten</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_get_graph">
+<span class="hidden-anchor sr-only" id="get_graph"></span>10.1. Metriken</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Checkmk bietet zwar die Möglichkeit, externe Metrik-Datenbanken
+anzubinden. Sie können prinzipiell jedoch mit dem Befehl <code>get_graph</code>
+von jeder Drittsoftware aus auf die Metrik-Daten von Checkmk zugreifen. Dabei
+sind Sie nicht nur auf die von uns vorgegebenen Graphen festgelegt, sondern
+können auch selbst angelegte Custom-Graphen abrufen. Es werden dann immer
+die Daten zu einem kompletten Graphen ausgegeben; selbst wenn dieser mehrere
+Metriken enthält.</p></div>
+<div class="paragraph"><p>Wenn Sie einen Graphen abrufen wollen, welcher von uns direkt bereitgestellt
+wird, so ist die Syntax des <code>request</code>-Teils folgendermaßen aufgebaut:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'specification': ['template',</span>
+<span class="tok-go">                   {'graph_index': 0,</span>
+<span class="tok-go">                    'host_name': 'myserver123',</span>
+<span class="tok-go">                    'service_description': 'Memory',</span>
+<span class="tok-go">                    'site': 'mysite'}],</span>
+<span class="tok-go"> 'data_range': {'time_range': [1504623158, 1504626758]}}</span></code></pre></div></div>
+<div class="paragraph"><p>Beachten Sie, dass der Zeitraum in Unixzeit angegeben wird. Der
+<code>graph_index</code> gibt den Graphen an, den Sie holen möchten. In dem
+Beispiel wird der erste Graph des Services <span class="guihint">Memory</span> abgerufen, welcher
+unter Linux bei dem Service Memory <span class="guihint">RAM + Swap overview</span> ist. Wollen Sie
+stattdessen den Graphen <span class="guihint">RAM used</span> abrufen, zählen Sie die Graphen von
+0 beginnend durch. Der komplette Aufruf für einen Zeitraum von 10 Minuten
+(600 Sekunden) sieht dann z.B. so aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_graph&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"specification":["template",{"service_description":"Memory","site":"heute","graph_index":4,"host_name":"heute"}],"data_range":{"time_range":[1504626158, 1504626758]}}'</span>
+<span class="tok-go">{"result": {"step": 60, "start_time": 1504626180, "end_time": 1504626780, "curves": [{"color": "#80ff40", "rrddata": [3752390000.0, 3746380000.0, 3770930000.0, 3773230000.0, 3796020000.0, 3787010000.0, 3777880000.0, 3781040000.0, 3798920000.0, 3805910000.0], "line_type": "area", "title": "RAM used"}]}, "result_code": 0}</span></code></pre></div></div>
+<div class="paragraph"><p>Die Abfrage eines selbst erstellten Graphen ist etwas einfacher,
+da dieser nicht an einen bestimmen Host, Service oder eine bestimmte
+Instanz gebunden ist. Bedenken Sie jedoch, dass der Automationsbenutzer
+(z.B. <code>automation</code>) einen solchen Graphen nur dann abrufen
+kann, wenn dieser für alle Benutzer freigegeben wurde:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_graph&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"specification":["custom","all_disk_utilization"],"data_range":{"time_range":[1504709932, 1504710532]}}'</span>
+<span class="tok-go">{"result": {"step": 60, "start_time": 1504709940, "end_time": 1504710540, "curves": [{"color": "#ea905d", "rrddata": [6.2217, 0.728733, 0.7748, 0.158085, 1.90726, 15.2222, 22.6851, 7.31163, 1.96834, 0.413633], "line_type": "stack", "title": "Disk utilization sdb"}, {"color": "#a05830", "rrddata": [1.45488, 0.101608, 0.0832167, 0.0342933, 0.235585, 0.166253, 14.9513, 25.112, 11.2032, 0.400437], "line_type": "stack", "title": "Disk utilization sda"}]}, "result_code": 0}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_get_sla">
+<span class="hidden-anchor sr-only" id="get_sla"></span>10.2. SLAs</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+SLAs können ab <span class="new">1.5.0</span> mit dem Befehl <code>get_sla</code> abgerufen werden. Für eine solche Abfrage, können die folgenden Zeitdaten verwendet werden:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Zeitraum</th>
+<th class="tableblock halign-left valign-top">ID in der Abfrage</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Today</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">d0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yesterday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">d1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This week</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">w0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last week</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">w1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This month</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">m0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last month</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">m1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">y0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">y1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The last…​</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">last:86400</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time range</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">range:1530271236:1530281236</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Die eigentliche Syntax, um eine oder mehrere SLAs abzurufen, ist folgendermaßen aufgebaut:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'query': [[['my_sla_id1'],</span>
+<span class="tok-go">           ['w1', w0],</span>
+<span class="tok-go">           [['myhost123', 'CPU load'], ['myhost234', 'CPU load']]],</span>
+<span class="tok-go">          [['my_sla_id2'],</span>
+<span class="tok-go">           ['m0'],</span>
+<span class="tok-go">           [['myhost123', 'CPU load']]]],</span>
+<span class="tok-go">}</span></code></pre></div></div>
+<div class="paragraph"><p>Sie können in jeder Liste beliebig viele Werte angeben und so über eine
+oder mehrere SLAs auch mehrere Host/Service-Paare und mehrere Zeiträume
+enthalten. So würde in dem Beispiel die erste Liste vier Ergebnisse
+zurückliefern (2 Zeiträume x 2 Host/Service-Paare) und die zweite Liste ein
+Ergebnis. In dem folgenden Beispielaufruf rufen wir nur die zweite Liste ab:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">curl "http://myserver/mysite/check_mk/webapi.py?action=get_sla&amp;_username=automation&amp;_secret=myautomationsecret" -d "request={'query':[[['my_sla_id2'],['m0'],[['myhost123','CPU load']]]]}"</span></code></pre></div></div>
+<div class="paragraph"><p>Die Ausgabe in lesbarer Form ist dann folgendermaßen aufgebaut:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': {'mysite':</span>
+<span class="tok-go">                {'myhost123':</span>
+<span class="tok-go">                    {'CPU load': {(</span>
+<span class="tok-go">                        ('myhost123', 'CPU load'),</span>
+<span class="tok-go">                        'my_sla_id2',</span>
+<span class="tok-go">                        ('sla_period_range',</span>
+<span class="tok-go">                        (0, 1)),</span>
+<span class="tok-go">                        'weekly'):</span>
+<span class="tok-go">                            {'plugin_results': [{</span>
+<span class="tok-go">                                'plugin_id': 'service_state_percentage',</span>
+<span class="tok-go">                                'timerange_sla_duration': 1000934.0,</span>
+<span class="tok-go">                                'period_results': [{</span>
+<span class="tok-go">                                    'duration': 604800.0,</span>
+<span class="tok-go">                                    'sla_broken': False,</span>
+<span class="tok-go">                                    'subresults': [{</span>
+<span class="tok-go">                                        'sla_broken': False,</span>
+<span class="tok-go">                                        'requirement': (0, 'min', 0.0),</span>
+<span class="tok-go">                                        'error_instances': [],</span>
+<span class="tok-go">                                        'deviation_info': {</span>
+<span class="tok-go">                                            'deviation': 0.0,</span>
+<span class="tok-go">                                            'limit': 0.0,</span>
+<span class="tok-go">                                            'levels': (0, 0),</span>
+<span class="tok-go">                                            'deviation_state': 2}}],</span>
+<span class="tok-go">                                    'statistics': {</span>
+<span class="tok-go">                                        'duration': {-1: 604800.0},</span>
+<span class="tok-go">                                        'percentage': {-1: 100.0}},</span>
+<span class="tok-go">                                        'timerange': (1529272800.0, 1529877600.0)},</span>
+<span class="tok-go">                                {'duration': 396134.0,</span>
+<span class="tok-go">                                'sla_broken': False,</span>
+<span class="tok-go">                                'subresults': [{</span>
+<span class="tok-go">                                    'sla_broken': False,</span>
+<span class="tok-go">                                    'requirement': (0, 'min', 0.0),</span>
+<span class="tok-go">                                    'error_instances': [],</span>
+<span class="tok-go">                                    'deviation_info': {</span>
+<span class="tok-go">                                        'deviation': 2.7202916184927326,</span>
+<span class="tok-go">                                        'limit': 0.0,</span>
+<span class="tok-go">                                        'levels': (0, 0),</span>
+<span class="tok-go">                                        'deviation_state': 0}}],</span>
+<span class="tok-go">                                'statistics': {</span>
+<span class="tok-go">                                    'duration': {0: 10776, -1: 385358.0},</span>
+<span class="tok-go">                                    'percentage': {0: 2.7202916184927326, -1: 97.27970838150726}},</span>
+<span class="tok-go">                                'timerange': (1529877600.0, 1530273734)}]}],</span>
+<span class="tok-go">                            'sla_id': 'sla_configuration_1',</span>
+<span class="tok-go">                            'sla_period': 'weekly'}}}}},</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__befehle_für_grafana">
+<span class="hidden-anchor sr-only" id="_befehle_für_grafana"></span>11. Befehle für Grafana</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Um das Grafana-Plugin nutzen zu können, welches Checkmk als <em>Datasource</em> implementiert, gibt es spezielle Befehle. Sie können diese Befehle aber natürlich auch unabhängig von Grafana oder dem Plugin nutzen:</p></div>
+<div class="ulist"><ul>
+<li><p><code>get_user_sites</code></p></li>
+<li><p><code>get_host_names</code></p></li>
+<li><p><code>get_metrics_of_host</code></p></li>
+<li><p><code>get_graph_recipes</code></p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_get_user_sites">
+<span class="hidden-anchor sr-only" id="get_user_sites"></span>11.1. get_user_sites</h3>
+<div class="paragraph"><p>Ein Benutzer darf nicht unbedingt auf alle Instanzen zugreifen. Um herauszufinden, welche Instanzen für den Automationsbenutzer verfügbar sind, kann dieser Befehl verwendet werden. Er benötigt keine Optionen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_user_sites&amp;_username=automation&amp;_secret=myautomationsecret"</span></code></pre></div></div>
+<div class="paragraph"><p>Die Ausgabe enthält eine Liste der Instanzen zusammen mit ihrem Alias:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result':</span>
+<span class="tok-go">    [['mysite', 'My Site Alias'],</span>
+<span class="tok-go">    ['myremote1', 'My Remote 1 Alias']]</span>
+<span class="tok-go">}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_get_host_names">
+<span class="hidden-anchor sr-only" id="get_host_names"></span>11.2. get_host_names</h3>
+<div class="paragraph"><p>Normalerweise zielt ein Befehl der Web-API immer nur auf eine bestimmte
+Checkmk-Instanz. Mit diesem Befehl können Sie sich die Hostnamen aller
+verbundenen Instanzen in einer Liste ausgeben lassen. Dabei ist es egal,
+ob es sich um Remote-Instanzen handelt, die über die abgerufene konfiguriert
+werden, oder es nur eine lesende Verbindung gibt. Der Befehl gibt auch nur die
+Namen der Hosts aus, welche den einzelnen Instanzen bekannt sind. Optional
+können Sie die Abfrage auf eine einzelne Instanz einschränken:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_host_names&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"site_id":"mysite"}'</span></code></pre></div></div>
+<div class="paragraph"><p>Die Ausgabe enthält dann eine einfache Liste der Hostnamen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result':</span>
+<span class="tok-go">    ['myhost123', 'myhost234', 'myremotehost345']</span>
+<span class="tok-go">}</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig</strong>:
+In der Antwort ist keinerlei Information enthalten, auf welcher Instanz der
+Host läuft. Doppelte Namen können also nicht mehr zugeordnet werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_get_metrics_of_host">
+<span class="hidden-anchor sr-only" id="get_metrics_of_host"></span>11.3. get_metrics_of_host</h3>
+<div class="paragraph"><p>Wenn Sie Informationen benötigen, über welchen Metriken ein Host
+verfügt, können Sie diesen Befehl verwenden. Er eignet sich auch
+sehr gut als Grundlage für den schon länger vorhandenen Befehl
+<a href="#get_graph"><code>get_graph</code></a>. Auch hier ist die Angabe
+einer bestimmten Instanz optional:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_metrics_of_host&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myremotehost345", "site_id":"myremote1"}'</span></code></pre></div></div>
+<div class="paragraph"><p>Da die Antwort die Metriken für <em>alle</em> Services des Hosts enthält, hier nur
+ein kleiner Ausschnitt, wie so eine Ausgabe aussehen kann. Wie sie hier
+erkennen können, werden auch Services ausgegeben, welche über keine
+Metriken verfügen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result':</span>
+<span class="tok-go">    {'CPU utilization':</span>
+<span class="tok-go">        {'check_command': 'check_mk-kernel.util',</span>
+<span class="tok-go">         'metrics':</span>
+<span class="tok-go">            {'system': {'index': 3, 'name': 'system', 'title': 'System'},</span>
+<span class="tok-go">             'user': {'index': 2, 'name': 'user', 'title': 'User'},</span>
+<span class="tok-go">             'util': {'index': 0, 'name': 'util', 'title': 'CPU utilization'},</span>
+<span class="tok-go">             'wait': {'index': 1, 'name': 'io_wait', 'title': 'I/O-wait'}</span>
+<span class="tok-go">            }</span>
+<span class="tok-go">        }</span>
+<span class="tok-go">    }</span>
+<span class="tok-go">    {'Mount options of /':</span>
+<span class="tok-go">        {'check_command': 'check_mk-mounts',</span>
+<span class="tok-go">         'metrics': {}</span>
+<span class="tok-go">        }</span>
+<span class="tok-go">    }</span>
+<span class="tok-go">}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_get_graph_recipes">
+<span class="hidden-anchor sr-only" id="get_graph_recipes"></span>11.4. get_graph_recipes</h3>
+<div class="paragraph"><p>Mit diesem Befehl bekommen Sie alle nötigen Informationen zu einem konkreten Graph. So eine Graph-Definition enthält nicht nur die beteiligten Metriken, sondern auch deren Farben, Einheiten, Titel, die Auflösung, usw. Der <code>request</code>-Teil des Befehls ähnelt sich sehr stark dem von dem Befehl <code>get_graph</code>. Einen Zeitraum brauchen Sie hier aber nicht angeben, da es hier ja lediglich um die Rahmendaten geht. Hier ein Beispiel anhand des Service <em>CPU load</em>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_graph_recipes&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"specification":["template", {"service_description": "CPU load", "graph_index": 0, "host_name": "myhost123", "site": "mysite"}]}'</span></code></pre></div></div>
+<div class="paragraph"><p>Und die Antwort zu der Abfrage dieses Services könnte dann so aussehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'result': [{'consolidation_function': 'max',</span>
+<span class="tok-go">             'explicit_vertical_range': (None, None),</span>
+<span class="tok-go">             'horizontal_rules': [(20.0, '20.0', '#ffff00', u'Warning'),</span>
+<span class="tok-go">                                  (40.0, '40.0', '#ff0000', u'Critical')],</span>
+<span class="tok-go">             'metrics': [{'color': '#00d1ff',</span>
+<span class="tok-go">                          'expression': ('rrd',</span>
+<span class="tok-go">                                         'heute',</span>
+<span class="tok-go">                                         u'heute',</span>
+<span class="tok-go">                                         u'CPU load',</span>
+<span class="tok-go">                                         'load1',</span>
+<span class="tok-go">                                         None,</span>
+<span class="tok-go">                                         1.0),</span>
+<span class="tok-go">                          'line_type': 'area',</span>
+<span class="tok-go">                          'title': u'CPU load average of last minute',</span>
+<span class="tok-go">                          'unit': ''},</span>
+<span class="tok-go">                         {'color': '#428399',</span>
+<span class="tok-go">                          'expression': ('rrd',</span>
+<span class="tok-go">                                         'heute',</span>
+<span class="tok-go">                                         u'heute',</span>
+<span class="tok-go">                                         u'CPU load',</span>
+<span class="tok-go">                                         'load5',</span>
+<span class="tok-go">                                         None,</span>
+<span class="tok-go">                                         1.0),</span>
+<span class="tok-go">                          'line_type': 'line',</span>
+<span class="tok-go">                          'title': u'CPU load average of last 5 minutes',</span>
+<span class="tok-go">                          'unit': ''},</span>
+<span class="tok-go">                         {'color': '#2c5766',</span>
+<span class="tok-go">                          'expression': ('rrd',</span>
+<span class="tok-go">                                         'heute',</span>
+<span class="tok-go">                                         u'heute',</span>
+<span class="tok-go">                                         u'CPU load',</span>
+<span class="tok-go">                                         'load15',</span>
+<span class="tok-go">                                         None,</span>
+<span class="tok-go">                                         1.0),</span>
+<span class="tok-go">                          'line_type': 'line',</span>
+<span class="tok-go">                          'title': u'CPU load average of last 15 minutes',</span>
+<span class="tok-go">                          'unit': ''}],</span>
+<span class="tok-go">             'omit_zero_metrics': False,</span>
+<span class="tok-go">             'specification': ('template',</span>
+<span class="tok-go">                               {u'graph_index': 0,</span>
+<span class="tok-go">                                u'host_name': u'heute',</span>
+<span class="tok-go">                                u'service_description': u'CPU load',</span>
+<span class="tok-go">                                u'site': u'heute'}),</span>
+<span class="tok-go">             'title': u'CPU Load - 4.0  CPU Cores',</span>
+<span class="tok-go">             'unit': ''}],</span>
+<span class="tok-go"> 'result_code': 0}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__aufrufoptionen_und_befehlsübersicht">
+<span class="hidden-anchor sr-only" id="_aufrufoptionen_und_befehlsübersicht"></span>12. Aufrufoptionen und Befehlsübersicht</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading_list">
+<span class="hidden-anchor sr-only" id="list"></span>12.1. Befehle</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Befehl</th>
+<th class="tableblock halign-left valign-top">request_format</th>
+<th class="tableblock halign-left valign-top">output_format</th>
+<th class="tableblock halign-left valign-top">Notwendig</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+</tr></thead>
+<tbody>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Hostbefehle</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hostname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">effective_attributes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add_host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hostname, folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">attributes, nodes, create_folders</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit_host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hostname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unset_attributes, attributes, nodes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete_host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hostname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete_hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hostnames</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_all_hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">effective_attributes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">discover_services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hostname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mode</p></td>
+</tr>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Verzeichnisbefehle</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">effective_attributes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add_folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">folder, attributes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">create_parent_folders</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit_folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">attributes, configuration_hash</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete_folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configuration_hash</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_all_folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">effective_attributes</p></td>
+</tr>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Gruppenbefehle</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add_contactgroup, add_hostgroup, add_servicegroup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groupname, alias, customer*</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nagvis_maps**</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit_contactgroup, edit_hostgroup, edit_servicegroup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groupname, alias, customer*</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nagvis_maps**</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete_contactgroup, delete_hostgroup, delete_servicegroup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">groupname</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_all_contactgroups, get_all_hostgroups, get_all_servicegroups</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Benutzerbefehle</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add_users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit_users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete_users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_all_users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Regelsatzbefehle</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_ruleset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ruleset_name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set_ruleset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ruleset_name, ruleset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configuration_hash</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_ruleset_info</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Hosttagbefehle</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_hosttags</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set_hosttags</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tag_groups, aux_tags</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configuration_hash</p></td>
+</tr>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Instanzbefehle</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">site_id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set_site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">site_config, site_id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configuration_hash</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete_site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">site_id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configuration_hash</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">login_site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">site_id, username, password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">logout_site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">site_id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Befehle für Grafana</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_user_sites</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_host_names</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">site_id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_metrics_of_host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hostname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">site_id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_graph_recipes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">specification</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr><td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock"><strong>Andere Befehle</strong></p></td></tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">activate_changes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mode, sites, allow_foreign_changes, comment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bake_agents</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_graph</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">specification, data_range</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get_sla</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">query</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>*Nur, wenn die <span class="image-inline"><img src="../images/CME.svg" alt="CME" width="20" title="Checkmk Enterprise Managed Services Edition"></span> <strong>Checkmk Enterprise Managed Services Edition</strong> genutzt wird.</p></div>
+<div class="paragraph"><p>** Nur für Befehle zu Kontaktgruppen.</p></div>
+</div></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#activate_changes">1. Änderungen aktivieren</a></li>
+<li>
+<a href="#hosts">2. Hostbefehle</a><ul class="sectlevel1">
+<li><a href="#get_host">2.1. get_host</a></li>
+<li><a href="#add_host">2.2. add_host</a></li>
+<li><a href="#edit_host">2.3. edit_host</a></li>
+<li><a href="#delete_host">2.4. delete_host</a></li>
+<li><a href="#delete_hosts">2.5. delete_hosts</a></li>
+<li><a href="#get_all_hosts">2.6. get_all_hosts</a></li>
+<li><a href="#discover_services">2.7. discover_services</a></li>
+</ul>
+</li>
+<li>
+<a href="#_verzeichnisbefehle">3. Verzeichnisbefehle</a><ul class="sectlevel1">
+<li><a href="#get_folder">3.1. get_folder</a></li>
+<li><a href="#add_folder">3.2. add_folder</a></li>
+<li><a href="#edit_folder">3.3. edit_folder</a></li>
+<li><a href="#delete_folder">3.4. delete_folder</a></li>
+<li><a href="#get_all_folders">3.5. get_all_folders</a></li>
+</ul>
+</li>
+<li>
+<a href="#_gruppenbefehle">4. Gruppenbefehle</a><ul class="sectlevel1">
+<li><a href="#get_all_groups">4.1. get_all_groups</a></li>
+<li><a href="#add_group">4.2. add_group</a></li>
+<li><a href="#edit_group">4.3. edit_group</a></li>
+<li><a href="#delete_group">4.4. delete_group</a></li>
+</ul>
+</li>
+<li>
+<a href="#users">5. Benutzerbefehle</a><ul class="sectlevel1">
+<li><a href="#add_users">5.1. add_users</a></li>
+<li><a href="#edit_users">5.2. edit_users</a></li>
+<li><a href="#delete_users">5.3. delete_users</a></li>
+<li><a href="#get_all_users">5.4. get_all_users</a></li>
+</ul>
+</li>
+<li>
+<a href="#_regelsetbefehle">6. Regelsetbefehle</a><ul class="sectlevel1">
+<li><a href="#get_rulset">6.1. get_ruleset</a></li>
+<li><a href="#set_ruleset">6.2. set_ruleset</a></li>
+<li><a href="#get_rulesets_info">6.3. get_rulesets_info</a></li>
+</ul>
+</li>
+<li>
+<a href="#_hosttagbefehle">7. Hosttagbefehle</a><ul class="sectlevel1">
+<li><a href="#get_hosttags">7.1. get_hosttags</a></li>
+<li><a href="#set_hosttags">7.2. set_hosttags</a></li>
+</ul>
+</li>
+<li>
+<a href="#_instanzen">8. Instanzen</a><ul class="sectlevel1">
+<li><a href="#get_site">8.1. get_site</a></li>
+<li><a href="#set_site">8.2. set_site</a></li>
+<li><a href="#delete_site">8.3. delete_site</a></li>
+<li><a href="#login_site">8.4. login_site &amp; logout_site</a></li>
+</ul>
+</li>
+<li><a href="#bake_agents">9. Agent Bakery Befehle</a></li>
+<li>
+<a href="#_befehle_zu_statusdaten">10. Befehle zu Statusdaten</a><ul class="sectlevel1">
+<li><a href="#get_graph">10.1. Metriken</a></li>
+<li><a href="#get_sla">10.2. SLAs</a></li>
+</ul>
+</li>
+<li>
+<a href="#_befehle_f%C3%BCr_grafana">11. Befehle für Grafana</a><ul class="sectlevel1">
+<li><a href="#get_user_sites">11.1. get_user_sites</a></li>
+<li><a href="#get_host_names">11.2. get_host_names</a></li>
+<li><a href="#get_metrics_of_host">11.3. get_metrics_of_host</a></li>
+<li><a href="#get_graph_recipes">11.4. get_graph_recipes</a></li>
+</ul>
+</li>
+<li>
+<a href="#_aufrufoptionen_und_befehls%C3%BCbersicht">12. Aufrufoptionen und Befehlsübersicht</a><ul class="sectlevel1"><li><a href="#list">12.1. Befehle</a></li></ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

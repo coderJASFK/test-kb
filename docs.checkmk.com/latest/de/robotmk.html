@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Checkmk Synthetic Monitoring integriert Software-Tests auf Basis von Robot Framework ins Monitoring.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Checkmk Synthetic Monitoring mit Robotmk">
+<meta name="og:description" content="Checkmk Synthetic Monitoring integriert Software-Tests auf Basis von Robot Framework ins Monitoring.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Checkmk Synthetic Monitoring mit Robotmk</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/robotmk.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/robotmk.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/robotmk.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Checkmk Synthetic Monitoring mit Robotmk</h1>
+<div class="details">
+<span id="revdate">Last modified on 25-Jul-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/onprem/de/robotmk.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+<a href="agent_deployment.html">Automatische Agenten-Updates</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Synthetisches Monitoring mit Robot Framework</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span> Checkmk Synthetic Monitoring ist in den kommerziellen Checkmk-Editionen verfügbar, benötigt jedoch eine <a href="https://checkmk.com/request-quote/synthetic-monitoring" target="_blank">zusätzliche Subskription.</a>
+Sie können die Funktion allerdings mit bis zu drei Tests kostenlos und ohne Zeitbegrenzung testen.</p></div>
+<div class="paragraph"><p>Mit Checkmk können Sie Ihre eigene Infrastruktur sehr genau überwachen — bis hin zur Frage, ob ein bestimmter Service, beispielsweise ein Webserver, ordentlich läuft.
+Wird Ihre Website über einen Cloud-Service von Dritten betrieben, werden Sie keinen Zugriff auf den Service selbst haben, können aber über einen HTTP-Check prüfen, ob die Website erreichbar ist.
+Aber was sagt das über die Nutzererfahrung aus? Dass ein Online-Shop erreichbar ist, heißt ja noch nicht, dass die Navigation, Bestellprozesse und dergleichen reibungslos funktionieren.</p></div>
+<div class="paragraph"><p>An dieser Stelle setzt das Checkmk Synthetic Monitoring an.
+Mit dem Plugin Robotmk bietet Checkmk echtes End-to-End-Monitoring, also die Überwachung laufender Anwendungen aus Sicht der Nutzer.
+Das eigentliche Testen übernimmt dabei die Open-Source-Software <a href="https://robotframework.org/" target="_blank">Robot Framework</a> — in deren Trägerverein auch die Checkmk GmbH Mitglied ist.</p></div>
+<div class="paragraph"><p>Mit der Automationssoftware lässt sich Nutzerverhalten komplett automatisieren, um beispielsweise Bestellprozesse in Online-Shops Klick für Klick nachzustellen.
+Das Besondere an Robot Framework: Tests werden nicht in einer vollwertigen Programmiersprache geschrieben, sondern über einfach zu verwendende Keywords definiert, wie <code>Open Browser</code> oder <code>Click Button</code>.
+So genügt ein <code>Open Browser checkmk.com</code> zum Aufrufen der Checkmk-Website.
+Mehrere Testfälle werden dann in so genannten Test-Suites zusammengefasst (in Form einer <code>.robot</code>-Datei).</p></div>
+<div class="paragraph"><p>Robotmk kann nun diese Robot-Framework-Test-Suites auf dem Host triggern und ihre Ausführung und Resultate als Services in Checkmk überwachen.
+In der Checkmk-Weboberfläche finden Sie dann Status, zugehörige Performance-Graphen sowie die Original-Auswertungen von Robot Framework selbst.</p></div>
+<div class="sect2">
+<h3 id="heading__komponenten">
+<span class="hidden-anchor sr-only" id="_komponenten"></span>1.1. Komponenten</h3>
+<div class="paragraph"><p>Für dieses End-to-End-Monitoring spielen allerhand Komponenten zusammen, daher hier ein kurzer Überblick.</p></div>
+<div class="sect3">
+<h4 id="heading__checkmk_server">
+<span class="hidden-anchor sr-only" id="_checkmk_server"></span>Checkmk-Server</h4>
+<div class="paragraph"><p>Checkmk Synthetic Monitoring wird über Robotmk realisiert, das ein Agentenplugin als Datensammler nutzt und den Robotmk-Scheduler (auf dem überwachten Host) für das Triggern von Robot-Framework-Projekten.
+Aktiviert und konfiguriert wird das synthetische Monitoring über die Regel <span class="guihint">Robotmk Scheduler</span>.
+Hier legen Sie fest, welche Test-Suites ausgeführt werden sollen und wie exakt Robot Framework diese starten soll — zusammengefasst in einem <em>Plan.</em>
+Einmal ausgerollt, sorgt der Robotmk-Scheduler auf dem Ziel-Host für die planmäßige Ausführung Ihrer Robot-Framework-Suites.</p></div>
+<div class="paragraph"><p>Im Monitoring bekommen Sie letztlich mehrere neue Services: <span class="guihint">RMK Scheduler Status</span> zeigt den Status des Schedulers selbst, also ob Test-Suites erfolgreich gestartet werden konnten.
+Hinzu kommen Services für alle konfigurierten Test-Pläne (etwa <span class="guihint">RMK MyApp1 Plan</span>) und einzelnen Tests aus Test-Suites (etwa <span class="guihint">RMK MyApp1 Test</span>).
+Zu den Services der einzelnen Tests gehören auch die originalen Robot-Framework-Berichte.</p></div>
+<div class="paragraph"><p>Zu guter Letzt gibt es noch zwei optionale Service-Regeln: <span class="guihint">Robotmk plan</span> und <span class="guihint">Robotmk test</span> sorgen für die Feineinstellung der Plan- und Test-Services — beispielsweise um Statuswechsel bei bestimmten Laufzeiten zu erwirken.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_services_menu.png" alt="Robotmk-Regeln im Setup-Menü."></div>
+<div class="title">Die Robotmk-Regeln in Checkmk</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__testmaschine">
+<span class="hidden-anchor sr-only" id="_testmaschine"></span>Testmaschine</h4>
+<div class="paragraph"><p>Die Robot-Framework-Test-Suites müssen Sie auf einem <strong>Windows-Host</strong> bereit stellen.
+Für die Ausführung benötigt Robot Framework Zugriff auf deren Abhängigkeiten (Python, Bibliotheken, Treiber für die Browser-Automation und so weiter).
+Diese Konfiguration ist unabhängig von Checkmk und kann deklarativ in einem portablen Paket abgelegt werden.
+Dies übernimmt das Open-Source-Kommandozeilenwerkzeug <a href="https://github.com/robocorp/rcc" target="_blank">RCC.</a>
+Dieses baut anhand Ihrer Konfigurationsdateien im YAML-Format virtuelle Python-Umgebungen samt Abhängigkeiten und Robot Framework selbst.
+Der als Hintergrundprozess laufende Robotmk-Scheduler stößt diesen Bau an und sorgt anschließend selbst für die Ausführung der Tests.</p></div>
+<div class="paragraph"><p>Ein solches <em>RCC-Automationspaket</em> mit der Paketkonfiguration (<code>robot.yaml</code>), der Definition der Ausführungsumgebung (<code>conda.yaml</code>) und den Test-Suites (<code>tests.robot</code>) wird auch <em>Roboter</em> genannt.
+RCC und der Scheduler werden mit dem Checkmk-Agenten ausgerollt, das Automationspaket muss auf dem Host bereitstehen.</p></div>
+<div class="paragraph"><p>Der große Vorteil von RCC: Der ausführende Windows-Host selbst benötigt keine konfigurierte Python-Umgebung.</p></div>
+<div class="paragraph"><p>Der Agent selbst wird nur für die Übertragung von Ergebnissen, Protokollen und Screenshots benötigt.
+Dies ermöglicht auch die Überwachung sehr lange laufender oder lokal sehr ressourcenintensiver Suites – vorausgesetzt, Ihr Windows-Host verfügt über entsprechende Kapazitäten.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_ruleconfig">
+<span class="hidden-anchor sr-only" id="ruleconfig"></span>2. Test-Suites überwachen mit Robotmk</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Im Folgenden zeigen wir, wie Sie eine Test-Suite ins Monitoring aufnehmen.
+Als Beispiel dient dazu eine simple Hello-World-Suite, die lediglich zwei Strings ausgibt und dazwischen kurz wartet.
+Eine Einführung in Robot Framework ist hier freilich nicht das Thema, ein kurzer Blick in das Automationspaket und die Demo-Test-Suite muss aber sein, damit Sie sehen, welche Daten wo im Monitoring landen.</p></div>
+<div class="paragraph"><p>Das Beispiel läuft auf Basis von RCC, so dass der Windows-Host nicht extra konfiguriert werden muss.
+Die <code>rcc.exe</code> wird mit dem Agenten ausgerollt und findet sich unter <code>C:\ProgramData\checkmk\agent\bin\</code>.
+Die Beispiel-Suite können Sie als ZIP-Datei <a href="https://github.com/Checkmk/robotmk-examples/blob/main/templates/minimal.zip" target="_blank">über GitHub</a> herunterladen.
+Das Verzeichnis der Suite:</p></div>
+<div class="listingblock">
+<div class="title">C:\robots\mybot\</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>conda.yaml
+robot.yaml
+tests.robot</code></pre></div>
+</div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>RCC kann grundsätzlich auch Test-Suites auf Basis etlicher anderer Programmiersprachen verarbeiten, für den Einsatz in Checkmk muss es aber die Deklaration nach Robot Framework sein.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Das Suite-Dateiverzeichnis beinhaltet nun zwei wichtige Dateien:
+Die Deklaration der für die Ausführung benötigten Umgebung in der Datei <code>conda.yaml</code> und die eigentlichen Tests in der Datei <code>tests.robot</code> (die Suite).
+Die Datei <code>robot.yaml</code> ist für den Einsatz in Checkmk nicht relevant, wird aber von RCC benötigt.</p></div>
+<div class="paragraph"><p>Der Vollständigkeit halber, hier ein kurzer Blick in die Datei <code>robot.yaml</code>:</p></div>
+<div class="listingblock">
+<div class="title">C:\robots\mybot\robot.yaml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>tasks:
+  task1:
+    # (task definitions are not required by Robotmk,
+    but expected by RCC to be compatible with other Robocorp features)
+    shell: echo "nothing to do"
+
+environmentConfigs:
+  - conda.yaml
+
+artifactsDir: output</code></pre></div>
+</div>
+<div class="paragraph"><p>Zu Beginn legt <code>tasks</code> fest, welche Aufgaben, sprich Tests, überhaupt ausgeführt werden sollen.
+Allerdings wird dieser Part zwar von RCC formal vorausgesetzt, von Robotmk jedoch nicht benötigt.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Robot Framework unterscheidet zwischen Tests und Tasks, die für Automatisierungen stehen.
+Allerdings werden beide exakt gleich verwendet.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Im Bereich <code>environmentConfigs</code> wird dann lediglich auf die <code>conda.yaml</code> verwiesen, die sich um die eigentliche Umgebung kümmert.</p></div>
+<div class="paragraph"><p>Für die Umgebung werden in diesem Fall lediglich die Abhängigkeiten Python, Pip und Robot Framework installiert.
+Im Monitoring taucht der Umgebungsbau später als <span class="guihint">RCC environment build status</span> auf.
+Nur wenn die Umgebung erfolgreich gebaut wird, können auch die Tests abgearbeitet und folglich überwacht werden.</p></div>
+<div class="listingblock">
+<div class="title">C:\robots\mybot\conda.yaml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>channels:
+  - conda-forge
+
+dependencies:
+  - python=3.10.12
+  - pip=23.2.1
+  - pip:
+     - robotframework==7.0</code></pre></div>
+</div>
+<div class="paragraph"><p>Die eigentliche Test-Suite sieht nun wie folgt aus:</p></div>
+<div class="listingblock">
+<div class="title">C:\robots\mybot\tests.robot</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>*** Settings ***
+Documentation       Template robot main suite.
+
+*** Variables ***
+${MYVAR}    Hello Checkmk!
+
+*** Test Cases ***
+My Test
+    Log      ${MYVAR}
+    Sleep    3
+    Log      Done.</code></pre></div>
+</div>
+<div class="paragraph"><p>Hier wird also lediglich der Wert der Variablen <code>MYVAR</code> ausgegeben, dann 3 Sekunden gewartet und abschließend <code>Done</code> ausgegeben.
+Den Wert der Variablen können Sie später in der Checkmk-Weboberfläche setzen — ansonsten wird der hier gesetzte Standard <code>Hello Checkmk!</code> genutzt.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Sie können diese Test-Suite manuell ausführen.
+Dafür muss der Agent samt RCC bereits installiert sein (oder Sie laden die RCC-Binary selbst herunter).
+Navigieren Sie zunächst in Ihr Test-Suite-Dateiverzeichnis, in dem auch die <code>tests.robot</code> liegt.
+Starten Sie dann die RCC-Shell mit <code>C:\ProgramData\checkmk\agent\bin\rcc.exe task shell</code>.
+Daraufhin wird die in der <code>conda.yaml</code> definierte virtuelle Umgebung gebaut.
+Anschließend starten Sie die Suite mit <code>robot tests.robot</code>.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Und genau diese Ausführung übernimmt der Robotmk-Scheduler, sobald das Agentenplugin aktiv ist.</p></div>
+<div class="sect2">
+<h3 id="heading_agentconfig">
+<span class="hidden-anchor sr-only" id="agentconfig"></span>2.1. Regel für das Agentenplugin konfigurieren</h3>
+<div class="paragraph"><p>Den Robotmk-Scheduler finden Sie unter <span class="guihint">Setup &gt; Agent rules &gt; Robotmk scheduler (Windows).</span>
+Da die Regel recht umfangreich ist, hier zunächst ein Blick auf die noch leere Konfiguration:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_00.png" alt="Leere Robotmk-Scheduler-Regel."></div>
+<div class="title">Konfiguration des Agentenplugins</div>
+</div>
+<div class="paragraph"><p>Zunächst benötigt der Scheduler die Angabe des Basisverzeichnisses, in dem all Ihre Test-Suites liegen.
+Tragen Sie diesen beliebigen, absoluten Pfad unter <span class="guihint">Base directory of suites</span> ein, beispielsweise <code>C:\robots</code>.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_01.png" alt="Pfad für Test-Suites."></div>
+<div class="title">Basisverzeichnis für alle Robot-Framework-Projekte</div>
+</div>
+<div class="paragraph"><p>Mit <span class="guihint">Parallel plan groups</span> folgt nun ein Checkmk-eigenes Konzept.</p></div>
+<div class="paragraph"><p>Zur Erklärung müssen wir zunächst eine Hierarchieebene tiefer gehen: Hier sehen Sie den Punkt <span class="guihint">Sequential plans.</span>
+Ein solcher sequenzieller Plan legt fest, welche Suites mit welchen Parametern ausgeführt werden sollen.
+Und Robot Framework arbeitet diese Suites dann nacheinander ab.
+Der Grund ist simpel: In der Praxis geht es manchmal um Tests, die auf dem Desktop ausgeführt werden und da könnten sich mehrere Test-Suites gleichzeitig in die Quere kommen (sich gegenseitig "die Maus klauen").</p></div>
+<div class="paragraph"><p>Die Plangruppen sind nun eine Kapselung für sequenziell ausgeführte Pläne — und werden selbst parallel ausgeführt.
+Auch hier ist der Grund simpel: So können Test-Suites, die eben nicht auf den Desktop angewiesen sind, ohne Verzögerung in eigenen Plänen ausgeführt werden — wie zum Beispiel die hier im Artikel eingesetzte Test-Suite.</p></div>
+<div class="paragraph"><p>Wieder zurück zum Dialog: Die einzige explizite Einstellung ist das Ausführungsintervall, das Sie unter <span class="guihint">Group execution interval</span> setzen.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_02.png" alt="Ausführungsintervall für Ausführungsgruppen."></div>
+<div class="title">Intervall für die (parallele) Ausführung von Plangruppen</div>
+</div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>Die Pläne in der Plangruppe haben natürlich selbst eine gewisse Laufzeit, bestimmt durch den Timeout einer einzelnen Ausführung und die maximale Anzahl wiederholter Ausführungen im Falle fehlgeschlagener Tests.
+Das Ausführungsintervall der Plangruppe muss folglich größer sein als die Summe der maximalen Laufzeiten aller Pläne in der Gruppe.
+Die maximale Laufzeit eines Plans berechnet sich wie folgt: <span class="guihint">Limit per attempt</span> × (1 + <span class="guihint">Maximum number of re-executions</span>).</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Nun geht es an die Konfiguration eines ersten Plans.
+Unter <span class="guihint">Application name</span> können Sie einen beliebigen Namen eingeben.
+Dieser Name muss nicht eindeutig sein!
+Sinnvoll ist hier der Name der zu überwachenden Anwendung, beispielsweise <code>OnlineShop</code> oder hier im Beispiel schlicht <code>MyApplication</code>.
+Nun kann es natürlich vorkommen, dass eben dieser Online-Shop mehrfach getestet wird, sei es durch andere Test-Suites oder dieselbe Test-Suite mit unterschiedlichen Parametern.
+Um in solchen Fällen trotz identischer Namen dennoch eine Eindeutigkeit in den Ergebnissen zu erzielen, gibt es das Feld <span class="guihint">Variant.</span>
+Wird die Anwendung <code>OnlineShop</code> etwa einmal auf Deutsch und einmal auf Englisch getestet (über entsprechende Parameter), könnten Sie hier entsprechende Kürzel verwenden.
+Im Monitoring gibt es dann Ergebnisse für <code>My OnlineShop_de</code> und <code>My OnlineShop_en.</code></p></div>
+<div class="paragraph"><p>Notwendig ist hingegen die Angabe unter <span class="guihint">Relative path to test suite file or folder.</span>
+Die Pfadangabe ist relativ zum oben angegebenen Basisverzeichnis, also beispielsweise <code>mybot\test.robot</code> für <code>C:\robots\</code>.
+Alternativ kann hier auch ein ein Verzeichnis (mit mehreren <code>robot</code>-Dateien) angegeben werden, dann wäre es schlicht <code>mybot</code>.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_03.png" alt="Bezeichnung und Pfad der Suite."></div>
+<div class="title">Plan für die Ausführung von Suiten</div>
+</div>
+<div class="paragraph"><p>Weiter geht es mit der <span class="guihint">Execution configuration.</span>
+Unter <span class="guihint">Limit per attempt</span> legen Sie fest, wie lange eine Test-Suite maximal laufen darf — pro Versuch.
+Mit <span class="guihint">Robot Framework re-executions</span> können Sie nun Robot Framework anweisen, Test-Suites bei fehlgeschlagenen Tests komplett oder inkrementell zu wiederholen.
+Wenn die einzelnen Tests einer Test-Suite unabhängig voneinander sind, bietet sich die inkrementelle Strategie an, um Zeit zu sparen.
+Testet die Test-Suite hingegen eine logische Abfolge, etwa "Login → Aufruf Produktseite → Produkt in den Warenkorb → Checkout", muss die Test-Suite natürlich komplett neu abgearbeitet werden.
+Am Ende gibt es immer nur ein Ergebnis.</p></div>
+<div class="paragraph"><p>Bei kompletten Wiederholungen werden für das Endergebnis nur in sich abgeschlossene Suite-Ergebnisse berücksichtigt: Schlägt ein Test bei der letzten Wiederholung fehl, wird die Test-Suite als Fehlschlag gewertet.
+Bei inkrementellen Wiederholungen setzt sich das Endergebnis aus den besten Teilergebnissen zusammen: Laufen einige Tests erst im dritten Anlauf erfolgreich durch, wird auch das Endergebnis als Erfolg gewertet.
+Zur Erinnerung: Die Kombination aus Versuchen und maximalen Laufzeiten aller Pläne einer Plangruppe bestimmt deren minimales Ausführungsintervall.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_04.png" alt="Konfiguration von Ausfühungslaufzeiten und -wiederholungen."></div>
+<div class="title">Fehlgeschlagene Tests/Suiten können wiederholt werden</div>
+</div>
+<div class="paragraph"><p>Standardmäßig ist die Ausführung via RCC unter <span class="guihint">Automated environment setup (via RCC)</span> aktiviert, für die Sie zwei Werte eintragen müssen.
+Zum einen benötigt RCC die Angabe, wo die Datei <code>robot.yaml</code> liegt.
+Deren primärer Zweck ist der Verweis auf die Datei <code>conda.yaml</code>, die für den Aufbau der Python-Umgebung verantwortlich ist, also die Installation von Python und Abhängigkeiten.
+Diese Angabe ist relativ zum Basisverzeichnis, das Sie oben unter <span class="guihint">Relative path to test suite file or folder</span> gesetzt haben.
+Die YAML-Dateien können durchaus in Unterverzeichnissen gespeichert werden, Best-Practice ist aber das oberste Suite-Verzeichnis.
+Für das obige Basisverzeichnis <code>C:\robot\</code> und das Suite-Verzeichnis <code>C:\robot\mybot</code> ist es entsprechend <code>mybot\robot.yaml</code>.</p></div>
+<div class="paragraph"><p>Beim folgenden Zeitlimit für den Bau der Python-Umgebung sollten Sie bedenken, dass bisweilen größere Datenmengen heruntergeladen und eingerichtet werden müssen.
+Insbesondere für die benötigten Browser fallen hier schnell einige Hundert Megabytes an — allerdings nur beim ersten Durchlauf.
+RCC baut Umgebungen nur dann neu auf, wenn sich der Inhalt der <code>conda.yaml</code> geändert hat</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_05.png" alt="RCC-Konfiguration der Suite."></div>
+<div class="title">Zeitlimit für den Aufbau virtueller Umgebungen</div>
+</div>
+<div class="paragraph"><p>Unter <span class="guihint">Robot Framework parameters</span> haben Sie die Möglichkeit, einige der Kommandozeilenparameter von Robot Framework zu nutzen (die auch der Befehl <code>robot --help</code> anzeigt).
+Sollten Sie weitere Parameter nutzen wollen, hilft die Option <span class="guihint">Argument files.</span>
+Eine hier angegebene Datei kann beliebige robot-Parameter beinhalten.
+Weitere Informationen über die einzelnen Parameter bekommen Sie über die Inline-Hilfe.</p></div>
+<div class="paragraph"><p>Für unser Beispielprojekt wird lediglich die Option <span class="guihint">Variables</span> aktiviert und eine Variable <code>MYVAR</code> mit dem Wert <code>My Value</code> gesetzt.
+Sie erinnern sich an den Befehl <code>Log ${MYVAR}</code> oben in der Datei <code>tests.robot</code>?
+Dies ist die zugehörige Referenz.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_06.png" alt="Kommandozeilenparameter von Robot Framework."></div>
+<div class="title">Einige Optionen des <code>robot</code>-Befehls</div>
+</div>
+<div class="paragraph"><p>Am Ende der Suite-Konfiguration gibt es noch drei weitgehend selbsterklärende Optionen.
+<span class="guihint">Execute plan as a specific user</span> ermöglicht es, Robotmk im Kontext eines bestimmten Nutzerkontos auszuführen.
+Hintergrund: Standardmäßig wird Robotmk im Kontext des Checkmk-Agenten ausgeführt (<a href="https://learn.microsoft.com/de-de/windows/win32/services/localsystem-account" target="_blank">LocalSystem-Konto</a>), der keine Berechtigung für den Zugriff auf den Desktop hat.
+Hier kann nun ein Nutzer angegeben werden, der permanent an einer Desktop-Sitzung angemeldet sein muss und entsprechend Zugriff auf grafische Desktop-Anwendungen hat.</p></div>
+<div class="paragraph"><p>Mit <span class="guihint">Assign plan/test result to piggyback host</span> lassen sich die Ergebnisse des Plans/Tests einem anderen Host zuweisen.
+Testet Robot Framework zum Beispiel den Bestellprozess eines Online-Shops, ließen sich die Ergebnisse so dem zugehörigen Webserver zuweisen.</p></div>
+<div class="paragraph"><p>Jeder Testdurchlauf produziert Daten, die unter <code>C:\ProgramData\checkmk\agent\robotmk_output\working\suites\</code> abgelegt werden.
+Standardmäßig werden die Ergebnisse der letzten 14 Tage behalten, allerdings sollten Sie bedenken, dass sich hier schnell große Datenberge auftürmen.
+Pro Durchlauf fallen mindestens knapp 500 Kilobytes Daten an — mit komplexeren Test-Suites und beispielsweise eingebettete Screenshots können es aber auch schnell einige Megabyte sein.
+Je nach Ausführungsintervall, Größe des Reports und Anforderungen an Ihre Dokumentation, sollten Sie hier eingreifen.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_07.png" alt="Optionen für Nutzerkontext, Host-Zuweisung und automatische Aufräumarbeiten."></div>
+<div class="title">Automatisches Aufräumen der vielen anfallenden Daten</div>
+</div>
+<div class="paragraph"><p>Hier angelangt, könnten Sie nun weitere Pläne in dieser Plangruppe oder weitere Plangruppen erstellen.</p></div>
+<div class="paragraph"><p>Am Ende warten noch zwei Optionen, die sich wiederum auf die komplette Robotmk-Scheduler-Konfiguration beziehen.</p></div>
+<div class="paragraph"><p><span class="guihint">RCC profile configuration</span> erlaubt die Angabe von Proxy-Servern sowie davon auszunehmende Hosts.</p></div>
+<div class="paragraph"><p>Sehr nützlich kann auch <span class="guihint">Grace period before scheduler starts</span> sein: Der Scheduler startet zusammen mit dem Checkmk-Agenten noch vor der Desktop-Anmeldung — was freilich dazu führt, dass etwaige Tests auf dem Desktop fehlschlagen müssen.
+Über eine Vorlaufzeit lässt sich der Start manuell verzögern.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_08.png" alt="Optionen für Proxy-Server und eine Vorlaufszeit für den Scheduler-Start."></div>
+<div class="title">Eine Vorlaufzeit verhindert Fehlschläge</div>
+</div>
+<div class="paragraph"><p>Damit ist die Konfiguration abgeschlossen und Sie können einen neuen <a href="wato_monitoringagents.html#bakery">Agenten mit dem Plugin backen</a> und anschließend ausrollen, manuell oder über die <a href="agent_deployment.html">automatischen Agenten-Updates.</a></p></div>
+<div class="sect3">
+<h4 id="heading__daten_in_der_agentenausgabe">
+<span class="hidden-anchor sr-only" id="_daten_in_der_agentenausgabe"></span>Daten in der Agentenausgabe</h4>
+<div class="paragraph"><p>Die Ausgabe im Agenten ist recht umfangreich:
+In mehreren Sektionen werden Fehlermeldungen, Status, Konfiguration und Testdaten übermittelt.
+Letztere finden sich in der Sektion <code>robotmk_suite_execution_report</code>, hier ein stark gekürzter Auszug:</p></div>
+<div class="listingblock">
+<div class="title">mysite-robot-host-agent.txt</div>
+<div class="content"><pre>&lt;&lt;&lt;robotmk_suite_execution_report:sep(0)&gt;&gt;&gt;
+{
+    "attempts": [
+        {
+            "index": 1,
+            "outcome": "AllTestsPassed",
+            "runtime": 20
+        }
+    ],
+    "rebot": {
+        "Ok": {
+            "xml": "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\r\n
+			&lt;robot generator=\"Rebot 6.1.1 (Python 3.10.12 on win32)\"
+			generated=\"20240319 16:23:19.944\"
+			rpa=\"true\"
+			schemaversion=\"4\"&gt;\r\n&lt;suite id=\"s1\"
+			name=\"Mybot\"
+			source=\"C:\\robots\\mybot\"&gt;\r\n&lt;suite id=\"s1-s1\"
+			name=\"Tests\"
+			source=\"C:\\robots\\mybot\\tests.robot\"&gt;\r\n&lt;test id=\"s1-s1-t1\"
+			name=\"Mytest\"
+			line=\"6\"&gt;\r\n&lt;kw
+			name=\"Sleep\"
+			library=\"BuiltIn\"&gt;\r\n&lt;arg&gt;3 Seconds&lt;/arg&gt;\r\n&lt;doc&gt;Pauses the test executed for the given time.&lt;/doc&gt;\r\n&lt;msg
+			timestamp=\"20240319 16:23:02.936\"
+			level=\"INFO\"&gt;Slept 3 seconds&lt;/msg&gt;\r\n&lt;status
+			status=\"PASS\"
+			starttime=\"20240319 16:23:00.934\"
+			endtime=\"20240319 16:23:02.936\"/&gt;"
+        }
+    },
+    "suite_id": "mybot",
+    "timestamp": 1710861778
+}
+...
+"html_base64":"PCFET0NUWVBFIGh0bWw+DQo8aHRtbCBsYW ...</pre></div>
+</div>
+<div class="paragraph"><p>Interessant sind hier vor allem zwei Bereiche.
+Zum einen <code>rebot</code>: Das Tool <code>rebot</code> hat den eigentlichen Statusbericht für Robot Framework aus gegebenenfalls mehreren Teilergebnissen (daher auch re-bot) produziert.
+Zum anderen die letzte Zeile <code>html_base64</code>: Danach folgen die HTML-Berichte von Robot Framework base64-kodiert.
+Auch Screenshots, die über Tests angefertigt werden, werden auf diese Weise übertragen — entsprechend umfangreich kann die Ausgabe/Datenmenge im Agenten werden.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__daten_im_monitoring">
+<span class="hidden-anchor sr-only" id="_daten_im_monitoring"></span>Daten im Monitoring</h4>
+<div class="paragraph"><p>Sobald der Robotmk-Scheduler und die Test-Suite durchgelaufen sind, wird die <a href="glossar.html#service_discovery">Service-Erkennung</a> drei neue Services hervorbringen:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_scheduler_09.png" alt="" robotmk-services im monitoring.></div>
+<div class="title">Die neu erkannten Robotmk-Services</div>
+</div>
+<div class="paragraph"><p>Der Service <span class="guihint">RMK Scheduler Status</span> existiert einmalig und unmittelbar nach der Verteilung.
+Die Services für Pläne und Tests, hier <span class="guihint">RMK MyApplication_mybot Plan</span> und <span class="guihint">RMK MyApplication_mybot Test: /Test: My Test,</span> kommen ins Monitoring, sobald die zugehörigen Suites ein erstes Mal durchgelaufen sind.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_serviceconfig">
+<span class="hidden-anchor sr-only" id="serviceconfig"></span>2.2. Service-Regeln konfigurieren</h3>
+<div class="sect3">
+<h4 id="heading__regel_für_plan_status_anlegen">
+<span class="hidden-anchor sr-only" id="_regel_für_plan_status_anlegen"></span>Regel für Plan-Status anlegen</h4>
+<div class="paragraph"><p>Zur Erinnerung: In der Agentenregel oben wurden maximale Laufzeiten für Pläne festgelegt.
+Mit der Regel <span class="guihint">Robotmk plan</span> lassen sich diese Laufzeiten auswerten.
+So können Sie den Service etwa auf <span class="state2">CRIT</span> setzen, wenn 90 Prozent aller zusammengerechneten Timeouts erreicht werden.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_service_suite_status_01.png" alt="Konfigurationsdialog für Grenzwerte für Laufzeiten von Test-Suites."></div>
+<div class="title">Schwellwerte für Statuswechsel  aufgrund von Laufzeiten</div>
+</div>
+<div class="paragraph"><p>Im Kasten <span class="guihint">Conditions</span> gibt es die Möglichkeit, die Regel auf bestimmte Pläne zu beschränken.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_service_suite_status_02.png" alt="Dialog mit Beschränkung auf die Test-Suite 'mybot'."></div>
+<div class="title">Optionale Beschränkung auf bestimmte Pläne</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__regel_für_test_status_anlegen">
+<span class="hidden-anchor sr-only" id="_regel_für_test_status_anlegen"></span>Regel für Test-Status anlegen</h4>
+<div class="paragraph"><p>Auch für einzelne Tests in den Test-Suites lassen sich weitere Daten ins Monitoring holen, über die Regel <span class="guihint">Robotmk test.</span>
+Hier finden Sie wieder die Möglichkeit, Laufzeiten zu überwachen, sowohl von Tests als auch von Keywords.
+Die Überwachung von Keywords ist dabei eine Checkmk-eigene Funktion.
+Daher könnte auch der Suite-interne Status im Robot-Framework-Bericht <code>OK</code> sein, weil die Test-Suite innerhalb der maximal erlaubten Laufzeit verarbeitet wurde — in Checkmk jedoch <span class="state1">WARN</span> oder <span class="state2">CRIT</span>, weil schon bei zum Beispiel 80 Prozent dieser maximal erlaubten Laufzeit ein Statuswechsel stattfindet.</p></div>
+<div class="paragraph"><p>Zudem können über die Option <span class="guihint">Enable metrics for high-level keywords</span> Metriken für übergeordnete Keywords erzeugt werden.
+Nützlich ist dies insbesondere dann, wenn Ihre Test so organisiert sind, dass die übergeordneten Keywords das „Was“ beschreiben und die darunter liegenden Keywords das „Wie“ — so bekommen Sie abstraktere Auswertungen.</p></div>
+<div class="paragraph"><p>Hier im Beispiel liegen die Schwellwerte für die maximale Laufzeit eines Tests bei 2 und 4 Sekunden.
+Die Auswirkungen werden Sie unten im Kapitel <a href="#monitoring">Robotmk im Monitoring</a> sehen.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_service_test_status_01.png" alt="Regel zum Überwachen von Keywords mit Beispielwerten."></div>
+<div class="title">Über Keyword-Metriken lässt sich das Monitoring ausbauen</div>
+</div>
+<div class="paragraph"><p>Abermals gibt es im Kasten <span class="guihint">Conditions</span> eine explizite Filtermöglichkeit, hier für einzelne Tests.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_service_test_status_02.png" alt="Dialog mit Option zur Beschränkung auf Tests."></div>
+<div class="title">Optionale Beschränkung auf bestimmte Tests</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_monitoring">
+<span class="hidden-anchor sr-only" id="monitoring"></span>2.3. Robotmk im Monitoring</h3>
+<div class="paragraph"><p>Im Monitoring finden Sie Services für den Status des Robotmk Schedulers sowie der einzelnen Pläne und Tests — natürlich auch, wenn sie keine separaten Service-Regeln angelegt haben.</p></div>
+<div class="sect3">
+<h4 id="heading__scheduler_status">
+<span class="hidden-anchor sr-only" id="_scheduler_status"></span>Scheduler-Status</h4>
+<div class="paragraph"><p>Der Service <span class="guihint">RMK Scheduler Status</span> ist <span class="state0">OK</span>, wenn der Scheduler anläuft und erfolgreich die Ausführungsumgebungen bauen konnte.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_monitorng_scheduler.png" alt="Status des Schedulers im Monitoring."></div>
+<div class="title">RCC konnte die Umgebungen aufbauen — in nur einer Sekunde</div>
+</div>
+<div class="paragraph"><p>Hier im Bild sehen Sie den Hinweis <span class="guihint">Environment build took 1 second.</span>
+Eine Sekunde, um eine virtuelle Python-Umgebung mit Pip und Robot Framework aufzubauen?
+Das geht, weil RCC clever ist: Bereits heruntergeladene Dateien werden wiederverwendet und neu gebaut wird nur nach Änderungen in der <code>conda.yaml</code>.
+Der erste Bau hätte hier eher 30 oder mehr Sekunden gedauert.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__plan_status">
+<span class="hidden-anchor sr-only" id="_plan_status"></span>Plan-Status</h4>
+<div class="paragraph"><p>Der Status eines Plans wird in einem Service wiedergegeben, der nach Applikationsnamen und Suite benannt ist, beispielsweise <span class="guihint">RMK MyApplication_mybot Plan.</span></p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_monitorng_suite.png" alt="Status der Test-Suite im Monitoring."></div>
+<div class="title">Die Ausführung eines Plans — vor allem relevant für Administratoren</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__test_status">
+<span class="hidden-anchor sr-only" id="_test_status"></span>Test-Status</h4>
+<div class="paragraph"><p>Wirklich interessant wird es bei der Auswertung der Tests.
+Im Bild sehen Sie nun die Auswirkung der oben gesetzten Schwellwerte für die Laufzeit von Tests — hier die 2 Sekunden für den Zustand <span class="state1">WARN</span>.
+Da im Test selbst die Anweisung <code>Sleep 3 Seconds</code> schon für eine längere Laufzeit sorgt, muss dieser Service hier auf <span class="state1">WARN</span> gehen, obwohl der Test erfolgreich verlaufen ist.
+Dass der Test erfolgreich verlaufen ist, zeigt der Bericht von Robot Framework, den Sie über das <span class="image-inline"><img src="../images/icons/icon_log.png" alt="icon log"></span> Log-Symbol bekommen.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_monitorng_test.png" alt="Status des Tests im Monitoring."></div>
+<div class="title">Ergebnisse einer konkreten Suite — vor allem relevant für Entwickler</div>
+</div>
+<div class="paragraph"><p>Der Bericht zeigt nun klar und deutlich, dass Test und Test-Suite erfolgreich durchgelaufen sind.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_monitorng_report_01.png" alt="Robot-Framework-Bericht für Test-Suite 'Mybot'."></div>
+<div class="title">Der Robot-Framework-Log, hier im optionalen Dark-Mode</div>
+</div>
+<div class="paragraph"><p>Ganz unten in den Daten sehen Sie auch die einzelnen Keywords, hier zum Beispiel <code>Log ${MYVAR}</code> samt dem in Checkmk für <code>MYVAR</code> gesetzten Wert <code>My value</code>.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_monitorng_report_02.png" alt="Robot-Framework-Bericht auf Ebene der Keywords."></div>
+<div class="title">Die Log-Datei lässt sich bis auf kleinste Details ausklappen</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__dashboards">
+<span class="hidden-anchor sr-only" id="_dashboards"></span>Dashboards</h4>
+<div class="paragraph"><p>Natürlich können Sie sich wie gewohnt eigene Dashboards bauen — unter <span class="guihint">Monitor &gt; Synthetic Monitoring</span> finden Sie aber auch zwei eingebaute Dashboards.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/robotmk_dashboard_01.png" alt="Robotmk-Dashboard in der Weboberfläche."></div>
+<div class="title">Das komplette Checkmk Synthetic Monitoring im Überblick (gekürzt)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_troubleshooting">
+<span class="hidden-anchor sr-only" id="troubleshooting"></span>3. Troubleshooting</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__scheduler_meldet_no_data">
+<span class="hidden-anchor sr-only" id="_scheduler_meldet_no_data"></span>3.1. Scheduler meldet <code>No Data</code>
+</h3>
+<div class="paragraph"><p>Wenn der Scheduler keinerlei Daten bekommt, hat der Bau der Umgebung vermutlich nicht funktioniert.
+Ein häufiger Grund dafür sind Netzwerkprobleme, aufgrund derer zum Beispiel bestimmte Abhängigkeiten nicht geladen werden können.
+Schauen Sie in diesem Fall in die zugehörige Log-Datei unter <code>C:\ProgramData\checkmk\agent\robotmk_output\working\environment_building</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__environment_building_schlägt_fehl_post_install_script_execution">
+<span class="hidden-anchor sr-only" id="_environment_building_schlägt_fehl_post_install_script_execution"></span>3.2. Environment Building schlägt fehl: <code>post-install script execution</code>
+</h3>
+<div class="paragraph"><p>Dies ist ein besonders interessanter Fehler, der Ihnen auf frischen Windows-Systemen begegnen könnte.
+In der <code>conda.yaml</code> können auch Anweisungen hinterlegt werden, die nach der Installation der Abhängigkeiten ausgeführt werden sollen — beispielsweise die Initialisierung des Robot-Framework-Browsers.
+Hier sollen also Python-Befehle ausgeführt werden.
+Nun hat Windows 11 standardmäßig Aliasnamen für <code>python.exe</code> und <code>python3.exe</code> vorgegeben, die auf den Microsoft-Store verweisen.
+Diese Aliasnamen müssen Sie unter <code>Einstellungen/Aliase für App-Ausführung</code> deaktivieren.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>4. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\robotmk_output\working\suites\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Dateien und Ergebnisse der Suites</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\robotmk_output\working\environment_building</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Dateien zum Aufbau virtueller Umgebungen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\robotmk_output\working\rcc_setup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meldungen der RCC-Ausführung</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\logs\robotmk_scheduler_rCURRENT.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Datei des Agentenplugins</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\bin\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>rcc.exe</code> und <code>robotmk_scheduler.exe</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\plugins\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agentenplugin <code>robotmk_agent_plugin.exe</code></p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li>
+<a href="#intro">1. Synthetisches Monitoring mit Robot Framework</a><ul class="sectlevel1"><li>
+<a href="#_komponenten">1.1. Komponenten</a><ul class="sectlevel2">
+<li><a href="#_checkmk_server">Checkmk-Server</a></li>
+<li><a href="#_testmaschine">Testmaschine</a></li>
+</ul>
+</li></ul>
+</li>
+<li>
+<a href="#ruleconfig">2. Test-Suites überwachen mit Robotmk</a><ul class="sectlevel1">
+<li>
+<a href="#agentconfig">2.1. Regel für das Agentenplugin konfigurieren</a><ul class="sectlevel2">
+<li><a href="#_daten_in_der_agentenausgabe">Daten in der Agentenausgabe</a></li>
+<li><a href="#_daten_im_monitoring">Daten im Monitoring</a></li>
+</ul>
+</li>
+<li>
+<a href="#serviceconfig">2.2. Service-Regeln konfigurieren</a><ul class="sectlevel2">
+<li><a href="#_regel_f%C3%BCr_plan_status_anlegen">Regel für Plan-Status anlegen</a></li>
+<li><a href="#_regel_f%C3%BCr_test_status_anlegen">Regel für Test-Status anlegen</a></li>
+</ul>
+</li>
+<li>
+<a href="#monitoring">2.3. Robotmk im Monitoring</a><ul class="sectlevel2">
+<li><a href="#_scheduler_status">Scheduler-Status</a></li>
+<li><a href="#_plan_status">Plan-Status</a></li>
+<li><a href="#_test_status">Test-Status</a></li>
+<li><a href="#_dashboards">Dashboards</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#troubleshooting">3. Troubleshooting</a><ul class="sectlevel1">
+<li><a href="#_scheduler_meldet_no_data">3.1. Scheduler meldet <code>No Data</code></a></li>
+<li><a href="#_environment_building_schl%C3%A4gt_fehl_post_install_script_execution">3.2. Environment Building schlägt fehl: <code>post-install script execution</code></a></li>
+</ul>
+</li>
+<li><a href="#files">4. Dateien und Verzeichnisse</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

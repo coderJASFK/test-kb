@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Checkmk ermöglicht mit dem Befehl omd die Verwaltung von beliebig vielen Monitoring-Instanzen (monitoring sites) und Software-Versionen auf einem Server.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Instanzen (Sites) mit omd verwalten">
+<meta name="og:description" content="Checkmk ermöglicht mit dem Befehl omd die Verwaltung von beliebig vielen Monitoring-Instanzen (monitoring sites) und Software-Versionen auf einem Server.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Instanzen (Sites) mit omd verwalten</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/omd_basics.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/omd_basics.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/omd_basics.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Instanzen (Sites) mit omd verwalten</h1>
+<div class="details">
+<span id="revdate">Last modified on 07-Feb-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/onprem/de/omd_basics.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="update.html">Updates und Upgrades</a>
+<a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a>
+<a href="cmk_versions.html">Checkmk-Versionen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__omddie_open_monitoring_distribution">
+<span class="hidden-anchor sr-only" id="_omddie_open_monitoring_distribution"></span>1. OMD — Die Open Monitoring Distribution</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Das Checkmk Monitoring-System baut auf der <em>Open Monitoring Distribution</em> (OMD) auf.
+OMD ist ein von Mathias Kettner gegründetes Open Source Projekt, das sich rund um die komfortable und flexible Installation einer Monitoring-Lösung aus diversen Komponenten dreht.
+Die Abkürzung OMD haben Sie bereits als Teil der Namen der installierten RPM/DEB-Pakete kennengelernt.</p></div>
+<div class="paragraph"><p>Eine OMD-basierte Installation zeichnet sich durch diese Eigenschaften aus:</p></div>
+<div class="ulist"><ul>
+<li><p>die Möglichkeit <em>mehrere</em> Monitoring-Instanzen parallel zu betreiben,</p></li>
+<li><p>die Möglichkeit, dies in <em>unterschiedlichen Versionen</em> der Monitoring-Software zu tun,</p></li>
+<li><p>einen intelligenten und komfortablen Mechanismus zur Aktualisierung (<em>update</em>) der Software,</p></li>
+<li><p>einheitliche Dateipfade — egal welche Linux-Plattform Sie einsetzen,</p></li>
+<li><p>eine saubere Trennung von <em>Daten</em> und <em>Software,</em></p></li>
+<li><p>eine sehr einfache Installation — ohne Abhängigkeit von Drittanbieter-Software,</p></li>
+<li><p>eine perfekte Vorkonfiguration aller Komponenten.</p></li>
+</ul></div>
+<div class="paragraph"><p>OMD wird auf der Kommandozeile verwaltet, mit dem Befehl <code>omd</code> — genauer mit einer Reihe von <code>omd</code>-Befehlen für die unterschiedlichen Aktionen rund um die Verwaltung der Monitoring-Instanzen, z.B. <code>omd create</code> für das Anlegen einer Instanz.
+Die wichtigsten <code>omd</code>-Befehle werden in diesem Artikel vorgestellt.</p></div>
+<div class="paragraph"><p>Der erste Befehl ist <code>omd help</code>, der eine Übersicht der verfügbaren <code>omd</code>-Befehle anzeigt.
+Hilfe zu einem dieser Befehle erhalten Sie, indem Sie hinter den Befehl die Option <code>--help</code> anfügen, z.B. <code>omd create --help</code>.
+Die beiden Bindestriche vor dem <code>help</code> sind dabei wichtig, denn ohne sie hätten Sie mit <code>omd create help</code> bereits Ihre erste Instanz mit dem Namen <code>help</code> erstellt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_omd_create">
+<span class="hidden-anchor sr-only" id="omd_create"></span>2. Erstellen von Instanzen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Das vielleicht Beste an OMD ist, dass OMD auf einem Server beliebig viele <em>Monitoring-Instanzen</em> verwalten kann.
+Diese heißen auf Englisch <em>monitoring sites.</em>
+Jede Instanz ist ein in sich geschlossenes Monitoring-System, welches von den anderen getrennt läuft.</p></div>
+<div class="paragraph"><p>Eine Instanz hat immer einen eindeutigen Namen, der bei ihrer Erstellung festgelegt wird.
+Dieser ist gleichzeitig der Name eines Linux-Benutzers, der dabei angelegt wird.
+Der Instanzname orientiert sich an den Konventionen zu Benutzernamen unter Linux.
+Das erste Zeichen eines Instanznamen muss ein Buchstabe sein, alle weiteren Zeichen dürfen Buchstaben, Ziffern und Unterstriche sein.
+Die Länge darf maximal 16 Zeichen betragen.</p></div>
+<div class="paragraph"><p>Das Erstellen geschieht mit dem Befehl <code>omd create</code>.
+Dieser muss als <code>root</code>-Benutzer ausgeführt werden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>create<span class="tok-w"> </span>mysite
+<span class="tok-go">Adding /opt/omd/sites/mysite/tmp to /etc/fstab.</span>
+<span class="tok-go">Creating temporary filesystem /omd/sites/mysite/tmp...<span class="green">OK</span></span>
+<span class="tok-go">Updating core configuration...</span>
+<span class="tok-go">Generating configuration for core (type nagios)...</span>
+<span class="tok-go">Precompiling host checks...<span class="green">OK</span></span>
+<span class="tok-go">Executing post-create script "01_create-sample-config.py"...<span class="green">OK</span></span>
+<span class="tok-go">Restarting Apache...<span class="green">OK</span></span>
+<span class="tok-go">Created new site mysite with version 2.1.0p17.cre.</span>
+
+<span class="tok-go">  The site can be started with <strong>omd start mysite</strong>.</span>
+<span class="tok-go">  The default web UI is available at <strong>http://linux/mysite/</strong></span>
+
+<span class="tok-go">  The admin user for the web applications is <strong>cmkadmin</strong> with password: <strong>YzxfoFZh</strong></span>
+<span class="tok-go">  For command line administration of the site, log in with <strong>'omd su mysite'</strong>.</span>
+<span class="tok-go">  After logging in, you can change the password for cmkadmin with <strong>'cmk-passwd cmkadmin'</strong>.</span></code></pre></div></div>
+<div class="paragraph"><p>Bei der Erstellung des Benutzers <code>cmkadmin</code> wird ein zufällig generiertes Passwort angelegt und ausgegeben.</p></div>
+<div class="paragraph"><p>Was geschieht beim Anlegen einer Instanz mit dem Namen <code>mysite</code>?</p></div>
+<div class="ulist"><ul>
+<li><p>Ein Betriebssystembenutzer <code>mysite</code> und eine Gruppe <code>mysite</code> werden angelegt.</p></li>
+<li><p>Dessen neues Home-Verzeichnis <code>/omd/sites/mysite</code> wird angelegt und diesem übereignet.
+Dieses Verzeichnis wird auch Instanzverzeichnis (englisch: <em>site directory</em>) genannt.</p></li>
+<li><p>Dieses Verzeichnis wird mit Konfigurationsdateien und Verzeichnissen gefüllt.</p></li>
+<li><p>Für die neue Instanz wird eine Grundkonfiguration erstellt.</p></li>
+</ul></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Es ist nicht möglich eine neue Instanz mit einem Namen zu erstellen, der auf dem Server bereits als Namen eines "normalen" Benutzers vergeben ist.</p></div>
+<div class="sect2">
+<h3 id="heading_user_group_id">
+<span class="hidden-anchor sr-only" id="user_group_id"></span>2.1. Benutzer- und Gruppen-IDs</h3>
+<div class="paragraph"><p>In manchen Fällen möchte man die Benutzer-/Gruppen-ID des neu anzulegenden Benutzers festlegen.
+Dies geschieht mit den Optionen <code>-u</code> und <code>-g</code>, z.B.:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>create<span class="tok-w"> </span>-u<span class="tok-w"> </span><span class="tok-m">6100</span><span class="tok-w"> </span>-g<span class="tok-w"> </span><span class="tok-m">180</span><span class="tok-w"> </span>mysite</code></pre></div></div>
+<div class="paragraph"><p>Eine Übersicht über weitere Optionen erhalten Sie mit <code>omd create --help</code>.
+Die wichtigsten Optionen sind:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-u UID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der neue Benutzer wird mit der Benutzer-ID <code>UID</code> angelegt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-g GID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Gruppe des neuen Benutzers wird mit der Gruppen-ID <code>GID</code> angelegt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--admin-password mypassword</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der neue Benutzer wird — statt mit dem zufällig generierten — mit dem Passwort <code>mypassword</code> angelegt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--reuse</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OMD geht davon aus, dass der neue Benutzer bereits existiert und legt ihn nicht an. Das Home-Verzeichnis dieses Benutzers muss sich unterhalb von <code>/omd/sites/</code> befinden und leer sein.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-t SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das temporäre Dateisystem der neuen Instanz wird mit der Größe <code>SIZE</code> angelegt. <code>SIZE</code> endet mit <code>M</code> (Megabyte), <code>G</code> (Gigabyte) oder <code>%</code> (Prozent vom RAM). Beispiel: <code>-t 4G</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_init">
+<span class="hidden-anchor sr-only" id="init"></span>2.2. Externes Instanzverzeichnis</h3>
+<div class="paragraph"><p>Standardmäßig wird das Home-Verzeichnis einer neuen Instanz unter <code>/omd/sites/</code> angelegt und mit Standarddateien gefüllt.
+Sie können jedoch auch ein leeres Home-Verzeichnis erstellen lassen, um etwa ein externes Medium an dieser Stelle zu mounten.
+Das erledigt die Option <code>--no-init</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>create<span class="tok-w"> </span>--no-init<span class="tok-w"> </span>mysite</code></pre></div></div>
+<div class="paragraph"><p>Mit dieser Option wird auch die Integration in den System-Apache ausgesetzt, sprich <code>/omd/apache/mysite.conf</code> bleibt leer.
+Anschließend könnten Sie ein beliebiges Verzeichnis mounten und die Einrichtung fortsetzen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>init<span class="tok-w"> </span>mysite</code></pre></div></div>
+<div class="paragraph"><p><code>omd init</code> holt dann die beiden ausgelassenen Schritte nach, fügt also die Standarddateien ein und erstellt die Apache-Konfiguration.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_site_user">
+<span class="hidden-anchor sr-only" id="site_user"></span>3. Instanzbenutzer</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die <code>omd</code>-Befehle können Sie als <code>root</code>-Benutzer oder als Instanzbenutzer (englisch: <em>site user</em>) ausführen.
+Unter <code>root</code> haben Sie mehr Möglichkeiten.
+So kann nur <code>root</code> eine Instanz erstellen, was nachvollziehbar ist, denn erst beim Erstellen der Instanz wird der Instanzbenutzer angelegt.
+Da Sie unter <code>root</code> Befehle für alle existierenden Instanzen ausführen können, müssen Sie den Namen der Instanz, um die es geht, beim <code>omd</code>-Befehl mit angeben.</p></div>
+<div class="paragraph"><p>Sobald die Instanz existiert, sollten Sie die weiteren <code>omd</code>-Befehle nur noch als Instanzbenutzer ausführen.
+Als Instanzbenutzer können Sie alle wichtigen Operationen durchführen, die diese Instanz betreffen.</p></div>
+<div class="paragraph"><p>Der Benutzerwechsel geschieht mit <code>su</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>su<span class="tok-w"> </span>-<span class="tok-w"> </span>mysite</code></pre></div></div>
+<div class="paragraph"><p>Beachten Sie unbedingt das Minuszeichen nach dem <code>su</code>.
+Es sorgt dafür, dass der Benutzerwechsel <em>alle</em> Operationen durchläuft, die auch bei einer normalen Anmeldung ablaufen.
+Insbesondere werden alle Umgebungsvariablen korrekt gesetzt, und Ihre Sitzung wird als <code>mysite</code> im Instanzverzeichnis <code>/omd/sites/mysite</code> gestartet:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$</span></code></pre></div></div>
+<div class="paragraph"><p>Sobald sie als Instanzbenutzer angemeldet sind, brauchen Sie in der Regel bei <code>omd</code>-Befehlen keinen Instanznamen mitanzugeben, da so ein Befehl auf die Instanz angewendet wird, unter der Sie angemeldet sind.</p></div>
+<div class="paragraph"><p>Falls Sie mehrere Checkmk-Versionen auf Ihrem Checkmk-Server installiert haben, wird mit jeder dieser Versionen auch die zugehörige OMD-Version mitinstalliert.
+Da kann sich mit der Zeit schon eine lange Liste von Software-Versionen ansammeln.
+Da sich auch <code>omd</code>-Befehle zwischen den Versionen unterscheiden können, ist es manchmal interessant zu wissen, mit welcher OMD-Version Sie gerade arbeiten:</p></div>
+<div class="ulist"><ul>
+<li><p>Als Instanzbenutzer nutzen Sie stets die <code>omd</code>-Befehle der auf der Instanz aktuell installierten Checkmk-Version, die Sie sich mit <code>omd version</code> anzeigen lassen können.</p></li>
+<li><p>Als <code>root</code>-Benutzer werden die Befehle der Standardversion ausgeführt, die auch bei der Erstellung einer Instanz verwendet wird.
+In der Regel ist das die zuletzt auf dem Server installierte Version.
+Die Standardversion können Sie sich mit <code>omd version</code> anzeigen lassen und mit <code>omd setversion</code> ändern.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_omd_start_stop">
+<span class="hidden-anchor sr-only" id="omd_start_stop"></span>4. Starten und Stoppen von Instanzen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Ihre Instanz ist jetzt bereit, gestartet zu werden.
+Sie können das als <code>root</code> mit <code>omd start mysite</code> machen.
+Besser ist es aber, wenn Sie das Arbeiten mit der Instanz grundsätzlich als Instanzbenutzer erledigen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>start
+<span class="tok-go">Creating temporary filesystem /omd/sites/mysite/tmp...<span class="green">OK</span></span>
+<span class="tok-go">Starting agent-receiver...OK</span>
+<span class="tok-go">Starting mkeventd...OK</span>
+<span class="tok-go">Starting rrdcached...OK</span>
+<span class="tok-go">Starting npcd...OK</span>
+<span class="tok-go">Starting nagios...OK</span>
+<span class="tok-go">Starting apache...OK</span>
+<span class="tok-go">Starting redis...OK</span>
+<span class="tok-go">Initializing Crontab...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Wenig überraschend geht das Anhalten mit <code>omd stop</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>stop
+<span class="tok-go">Removing Crontab...OK</span>
+<span class="tok-go">Stopping redis...killing 484382...OK</span>
+<span class="tok-go">Stopping apache...killing 484371...OK</span>
+<span class="tok-go">Stopping nagios...OK</span>
+<span class="tok-go">Stopping npcd...OK</span>
+<span class="tok-go">Stopping rrdcached...waiting for termination...OK</span>
+<span class="tok-go">Stopping mkeventd...killing 484279...OK</span>
+<span class="tok-go">Stopping agent-receiver...killing 484267...OK</span>
+<span class="tok-go">Stopping 1 remaining site processes...<span class="green">OK</span></span></code></pre></div></div>
+<div class="paragraph"><p>Das Starten und Stoppen einer Instanz ist nichts anderes als das Starten bzw. Stoppen einer Reihe von Diensten.
+Diese können auch einzeln verwaltet werden, indem Sie den Namen des Diensts mit angeben, z.B.:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>start<span class="tok-w"> </span>apache
+<span class="tok-go">Temporary filesystem already mounted</span>
+<span class="tok-go">Starting apache...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Wie die einzelnen Dienste heißen, erfahren Sie im Verzeichnis <code>~/etc/init.d</code>.
+Beachten Sie die Tilde (<code>~</code>) am Anfang des Pfadnamens.
+Diese steht für das Home-Verzeichnis des Instanzbenutzers (das Instanzverzeichnis).
+<code>~/etc/init.d</code> und <code>/etc/init.d</code> sind unterschiedliche Verzeichnisse.</p></div>
+<div class="paragraph"><p>Neben <code>start</code> und <code>stop</code> gibt es noch die <code>omd</code>-Befehle <code>restart</code>, <code>reload</code> und <code>status</code>.
+Das Neuladen von Apache ist z.B. immer nach einer manuellen Änderung der Apache-Konfiguration notwendig:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>reload<span class="tok-w"> </span>apache
+<span class="tok-go">Reloading apache</span></code></pre></div></div>
+<div class="paragraph"><p>Beachten Sie, dass hier nicht der globale Apache-Prozess des Linux-Servers gemeint ist, sondern ein eigener dedizierter Apache-Prozess in der Instanz selbst:</p></div>
+<div class="paragraph"><p>Um nach den ganzen Starts und Stops einen Überblick vom Zustand der Instanz zu erhalten, verwenden Sie einfach <code>omd status</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>status
+<span class="tok-go">agent-receiver: <span class="red">stopped</span></span>
+<span class="tok-go">mkeventd:       <span class="red">stopped</span></span>
+<span class="tok-go">rrdcached:      <span class="red">stopped</span></span>
+<span class="tok-go">npcd:           <span class="red">stopped</span></span>
+<span class="tok-go">nagios:         <span class="red">stopped</span></span>
+<span class="tok-go">apache:         <span class="green">running</span></span>
+<span class="tok-go">redis:          <span class="red">stopped</span></span>
+<span class="tok-go">crontab:        <span class="red">stopped</span></span>
+<span class="tok-go">-----------------------</span>
+<span class="tok-go">Overall state:  <span class="yellow">partially running</span></span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_omd_config">
+<span class="hidden-anchor sr-only" id="omd_config"></span>5. Konfigurieren der Komponenten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wie bereits erwähnt, integriert OMD mehrere Software-Komponenten zu einem Monitoring-System.
+Dabei sind manche Komponenten optional und für manche gibt es Alternativen oder verschiedene Betriebseinstellungen.
+Dies alles kann komfortabel mit dem Befehl <code>omd config</code> konfiguriert werden.
+Dabei gibt es einen interaktiven Modus und einen Skriptmodus.</p></div>
+<div class="sect2">
+<h3 id="heading_interactive_mode">
+<span class="hidden-anchor sr-only" id="interactive_mode"></span>5.1. Interaktive Konfiguration</h3>
+<div class="paragraph"><p>Den interaktiven Modus rufen Sie als Instanzbenutzer einfach so auf:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>config</code></pre></div></div>
+<div class="imageblock">
+<div class="content"><img src="../images/omd_basics_omd_config_main.png" alt="Hauptmenü von 'omd config'." width="300"></div>
+<div class="title">Im <code>omd config</code>-Menü navigieren Sie mit den Cursor- und Enter-Tasten</div>
+</div>
+<div class="paragraph"><p>Sobald Sie bei laufender Instanz eine Einstellung ändern, wird Sie OMD darauf hinweisen, dass zuvor Ihre Instanz angehalten werden muss und diese bei Bedarf auch stoppen:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/omd_basics_omd_config_cannotchange.png" alt="Hinweis zum Ändern einer Einstellung bei gestarteter Instanz." width="300"></div>
+<div class="title">Die Konfiguration kann nur geändert werden, wenn die Instanz nicht läuft</div>
+</div>
+<div class="paragraph"><p>Vergessen Sie nicht, nach getaner Arbeit die Instanz wieder zu starten.
+<code>omd config</code> wird das <em>nicht</em> automatisch für Sie tun.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_script_mode">
+<span class="hidden-anchor sr-only" id="script_mode"></span>5.2. Konfiguration per Skriptmodus</h3>
+<div class="paragraph"><p>Wer den interaktiven Modus nicht liebt oder mit Skripten arbeiten will, kann die einzelnen Einstellungen als Variablen auch per Kommandozeile setzen.
+Dafür gibt es den Befehl <code>omd config set</code>.
+Folgendes Beispiel setzt die Variable <code>AUTOSTART</code> auf <code>off</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>config<span class="tok-w"> </span><span class="tok-nb">set</span><span class="tok-w"> </span>AUTOSTART<span class="tok-w"> </span>off</code></pre></div></div>
+<div class="paragraph"><p>Sie können <code>omd config set</code> auch als <code>root</code> aufrufen, wenn Sie den Namen der Instanz als Argument mit angeben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>config<span class="tok-w"> </span>mysite<span class="tok-w"> </span><span class="tok-nb">set</span><span class="tok-w"> </span>AUTOSTART<span class="tok-w"> </span>off</code></pre></div></div>
+<div class="paragraph"><p>Die aktuelle Belegung aller Variablen zeigt als <code>root</code> das Kommando <code>omd config mysite show</code> und als Instanzbenutzer <code>omd config show</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>config<span class="tok-w"> </span>show
+<span class="tok-go">ADMIN_MAIL:</span>
+<span class="tok-go">AGENT_RECEIVER: on</span>
+<span class="tok-go">AGENT_RECEIVER_PORT: 8005</span>
+<span class="tok-go">APACHE_MODE: own</span>
+<span class="tok-go">APACHE_TCP_ADDR: 127.0.0.1</span>
+<span class="tok-go">APACHE_TCP_PORT: 5008</span>
+<span class="tok-go">AUTOSTART: off</span>
+<span class="tok-go">[...]</span></code></pre></div></div>
+<div class="paragraph"><p>Die obige Kommandoausgabe zeigt nur die ersten Einträge.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__häufig_benötigte_einstellungen">
+<span class="hidden-anchor sr-only" id="_häufig_benötigte_einstellungen"></span>5.3. Häufig benötigte Einstellungen</h3>
+<div class="paragraph"><p>In <code>omd config</code> gibt es zahlreiche Einstellungen.
+Die Wichtigsten sind:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;">
+<col style="width: 20%;">
+<col style="width: 65%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Standard</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AUTOSTART</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>on</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stellen Sie dies auf <code>off</code>, wenn Sie verhindern möchten, dass diese Instanz beim Hochfahren des Rechners automatisch gestartet wird. Das ist vor allem bei Testinstallationen interessant, die normalerweise nicht laufen sollen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CORE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nagios</code> (Checkmk Raw),<br>
+ <code>cmc</code> (kommerzielle Editionen)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auswahl des Monitoring-Kerns. In den kommerziellen Editionen kann statt des <a href="cmc.html">Checkmk Micro Core (CMC)</a> auch der Nagios-Kern ausgewählt werden. In <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong> gibt es nur <code>nagios</code> als Monitoring-Kern.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MKEVENTD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>on</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aktiviert die <a href="glossar.html#ec">Event Console</a>, mit der Sie Syslog-Meldungen, SNMP-Traps und andere Events verarbeiten können.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LIVESTATUS_TCP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>off</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hiermit erlauben Sie Zugriff auf die Statusdaten dieser Instanz von außen. Damit kann ein <a href="glossar.html#distributed_monitoring">verteiltes Monitoring</a> aufgebaut werden. Auf der Zentralinstanz kann dann der Status dieser (Remote-) Instanz eingebunden werden. Aktivieren Sie diese Einstellung nur in einem abgesicherten Netzwerk.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Hinweis:</strong> Diese Variablen sehen Sie unter gleichem Namen auch im interaktiven Modus.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_omd_cp_mv">
+<span class="hidden-anchor sr-only" id="omd_cp_mv"></span>6. Kopieren und Umbenennen von Instanzen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_omd_cp">
+<span class="hidden-anchor sr-only" id="omd_cp"></span>6.1. Kopieren von Instanzen</h3>
+<div class="paragraph"><p>Manchmal ist es nützlich, eine Kopie einer Instanz zu erzeugen — sei es zu Testzwecken oder für die Vorbereitung eines <a href="update.html">Updates.</a>
+Natürlich könnte man jetzt einfach das Verzeichnis <code>/omd/sites/mysite_old</code> nach <code>/omd/sites/mysite_new</code> kopieren.
+Das würde aber nicht so funktionieren wie gewünscht, denn:</p></div>
+<div class="ulist"><ul>
+<li><p>in vielen Konfigurationsdateien ist der Name der Instanz enthalten,</p></li>
+<li><p>auch tauchen an etlichen Stellen absolute Pfade auf, die mit <code>/omd/sites/mysite_old</code> beginnen,</p></li>
+<li><p>und nicht zuletzt muss es auf Betriebssystemebene einen <a href="#user_group_id">Benutzer samt zugehöriger Gruppe</a> geben, dem die Instanz gehört und der standardmäßig so heißt, wie die Instanz.</p></li>
+</ul></div>
+<div class="paragraph"><p>Um das Kopieren einer Instanz zu vereinfachen, gibt es stattdessen den Befehl <code>omd cp</code>, welcher all das berücksichtigt.
+Führen Sie den Befehl als <code>root</code> aus und geben Sie als Argumente einfach den Namen der bestehenden Instanz und dann den Namen der neuen an, z.B.:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>cp<span class="tok-w"> </span>mysite_old<span class="tok-w"> </span>mysite_new</code></pre></div></div>
+<div class="paragraph"><p>Das Kopieren geht nur, wenn</p></div>
+<div class="ulist"><ul>
+<li><p>die Instanz gestoppt ist und</p></li>
+<li><p>keine Prozesse mehr laufen, die dem Instanzbenutzer gehören.</p></li>
+</ul></div>
+<div class="paragraph"><p>Beides stellt sicher, dass die Instanz zum Zeitpunkt des Kopierens in einem konsistenten Zustand ist und sich auch während des Vorgangs nicht ändert.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_omd_cp_mv_migration">
+<span class="hidden-anchor sr-only" id="omd_cp_mv_migration"></span>6.2. Migration der Konfiguration</h3>
+<div class="paragraph"><p>OMD konnte ursprünglich lediglich mit den Dateien umgehen, die beim <a href="#omd_create">Erstellen der Instanz</a> mit <code>omd create</code> auch tatsächlich angelegt wurden, und die zudem die Instanz-ID (<code>$OMD_SITE</code>) enthalten.
+Diese Dateien sind im Instanzverzeichnis <code>~/etc</code> zu finden mit diesem Befehl:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>grep<span class="tok-w"> </span>-r<span class="tok-w"> </span><span class="tok-nv">$OMD_SITE</span><span class="tok-w"> </span>etc</code></pre></div></div>
+<div class="paragraph"><p>Mit Konfigurationsdateien, die erst später über die Arbeit mit der Checkmk-Instanz entstanden, konnte OMD nichts anfangen (also zum Beispiel den Konfigurationen hinzugefügter Hosts).
+Rein technisch betrachtet entspricht dieses Verhalten genau dem Geltungsbereich von OMD.
+Die Erwartungshaltung der meisten Benutzer ist aber die, dass ein <code>omd cp</code> eine komplett neue Instanz erschafft, die produktiv weitergenutzt werden kann — inklusive der eigenen Monitoring-Konfiguration.</p></div>
+<div class="paragraph"><p>Seit der Checkmk-Version <span class="new">2.1.0</span> kann OMD nunmehr auch die wichtigsten Teile der Checkmk-Konfiguration anpassen.
+Sie selbst müssen dafür übrigens im Grunde nichts tun, die gesamte folgend beschriebene Migration findet ganz automatisch statt.</p></div>
+<div class="paragraph"><p>Ein typisches Beispiel dazu:
+In den Eigenschaften eines Hosts können Sie über das Attribut <span class="guihint">Monitored on site</span> manuell festlegen, über welche Instanz dieser Host überwacht werden soll, etwa <code>mysite_old</code>.
+Nach einem <code>omd cp mysite_old mysite_new</code> ändert sich der Wert entsprechend auf <code>mysite_new</code>.
+(Früher hätte dieses Prozedere zu dem Eintrag <code>Unknown site (mysite_old)</code> geführt.)</p></div>
+<div class="paragraph"><p>Die technische Umsetzung dieser Migration sieht wie folgt aus:
+OMD erkennt Änderungen an der Instanz-ID und führt dann den Befehl <code>post-rename-site -v -o mysite_new</code> aus.
+Die einzelnen Migrationsschritte werden in der Folge ganz automatisch über die so genannten <em>rename actions plugins</em> abgearbeitet,
+die Sie unter unter <code>cmk/post_rename_site/plugins/actions</code> im <a href="https://github.com/Checkmk/checkmk/tree/master/cmk/post_rename_site/plugins/actions" target="_blank">Git-Repository</a> finden.</p></div>
+<div class="paragraph"><p>Zur Migration gehört auch, dass Sie über Dinge informiert werden, die <strong>nicht</strong> automatisch migriert werden (können).</p></div>
+<div class="paragraph"><p>Hier ein konkretes Beispiel:
+Sie nutzen ein verteiltes Monitoring und benennen sowohl die Zentralinstanz als auch eine Remote-Instanz um.</p></div>
+<div class="paragraph"><p><strong>Zentralinstanz:</strong> Das Plugin <code>sites.py</code> erkennt, dass es sich um eine Zentralinstanz handelt und aktualisiert unter anderem den Wert <span class="guihint">URL prefix,</span> der sich in den Verbindungseinstellungen der lokalen Instanz unter <span class="guihint">Setup &gt; General &gt; Distributed Monitoring</span> findet.</p></div>
+<div class="paragraph"><p><strong>Remote-Instanz:</strong> Das Plugin <code>warn_remote_site.py</code> erkennt, dass es sich um eine Remote-Instanz handelt und weist entsprechend darauf hin, dass die Zentralinstanz manuell geprüft und gegebenenfalls angepasst werden muss.
+Das heißt hier konkret: In den Distributed-Monitoring-Einstellungen auf der Zentralinstanz muss in der Verbindungseinstellung zur umbenannten Remote-Instanz deren neuer Name eingetragen werden — das kann OMD von einem entfernten Rechner aus freilich nicht leisten.</p></div>
+<div class="paragraph"><p>OMD selbst informiert Sie im Terminal ausführlich über das gesamte Prozedere.
+Hier sehen Sie beispielhaft die Migrationsmeldungen der <code>omd cp</code>-Ausgabe beim Umbenennen einer Zentralinstanz - getrennt nach Erfolgs- und Warnmeldungen.
+Die abgearbeiteten <em>rename actions plugins</em> werden dabei einzeln durchnummeriert.
+Zunächst die Ausgabe der automatisch erfolgten Migrationsaufgaben (gekürzt):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">...</span>
+<span class="tok-go">Executing post-cp script "01_cmk-post-rename-site"...</span>
+<span class="tok-go">-|  1/6 Distributed monitoring configuration...</span>
+<span class="tok-go">-|  2/6 Hosts and folders...</span>
+<span class="tok-go">-|  3/6 Update core config...</span>
+<span class="tok-go">...</span></code></pre></div></div>
+<div class="paragraph"><p>Der zweite Teil der Ausgabe enthält nun Hinweise bezüglich Einstellungen, die Sie <strong>möglicherweise</strong> manuell anpassen müssen (stark gekürzt):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">...</span>
+<span class="tok-go">-|  4/6 Warn about renamed remote site...</span>
+<span class="tok-go">-|  5/6 Warn about new network ports...</span>
+<span class="tok-go">-|  6/6 Warn about configurations to review...</span>
+<span class="tok-go">...</span></code></pre></div></div>
+<div class="paragraph"><p>Zum Punkt <code>Warn about configurations to review…​</code> gehören allgemeine Hinweise zu einzelnen Aspekten, die bei einer Migration generell manuell geprüft werden müssen, beispielsweise hartkodierte Filter für Ansichten:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">...</span>
+<span class="tok-go">-| Parts of the site configuration cannot be migrated automatically. The following</span>
+<span class="tok-go">-| parts of the configuration may have to be reviewed and adjusted manually:</span>
+<span class="tok-go">-|</span>
+<span class="tok-go">-| - Custom bookmarks (in users bookmark lists)</span>
+<span class="tok-go">-| - Hard coded site filters in custom dashboards, views, reports</span>
+<span class="tok-go">-| - Path in rrdcached journal files</span>
+<span class="tok-go">-| - NagVis maps or custom NagVis backend settings</span>
+<span class="tok-go">-| - Notification rule "site" conditions</span>
+<span class="tok-go">-| - Event Console rule "site" conditions</span>
+<span class="tok-go">-| - "site" field in "Agent updater (Linux, Windows, Solaris)" rules (CEE/CME only)</span>
+<span class="tok-go">-| - Alert handler rule "site" conditions (CEE/CME only)</span>
+<span class="tok-go">-|</span>
+<span class="tok-go">-| Done</span></code></pre></div></div>
+<div class="paragraph"><p>Hier eine Übersicht der derzeit sechs aktiven Plugins - die Reihenfolge entspricht der Nummerierung in den obigen Ausgaben:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 65%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Plugin</th>
+<th class="tableblock halign-left valign-top">Funktion</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sites.py</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ändert die Instanz-ID in diversen Konfigurationsdateien.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hosts_and_folders.py</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ändert das Instanz-Attribut von Host- und Ordner-Eigenschaften.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>update_core_config.py</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aktualisiert die Konfiguration des Kerns (<code>cmk -U</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>warn_remote_site.py</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hinweise beim Umbenennen einer Remote-Instanz.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>warn_changed_ports.py</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hinweise bezüglich Problemen mit mehrfach genutzten Ports.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>warn_about_not_migrated_configs.py</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allgemeine Hinweise zu Aspekten, die manuell geprüft werden sollten.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_limit_data">
+<span class="hidden-anchor sr-only" id="limit_data"></span>6.3. Datenmengen einschränken</h3>
+<div class="paragraph"><p>Wenn Sie mit der Instanz eine größere Zahl von Hosts überwachen, können die Datenmengen, die kopiert werden müssen, schon ganz erheblich sein.
+Der Großteil wird dabei durch die Messwerte verursacht, die in den <a href="graphing.html#rrds">Round-Robin-Datenbanken (RRDs)</a> gespeichert sind.
+Aber auch die Log-Dateien mit historischen Ereignissen können größere Datenmengen erzeugen.</p></div>
+<div class="paragraph"><p>Wenn Sie die Historie nicht benötigen (z.B. weil Sie einfach schnell etwas testen möchten), können Sie diese beim Kopieren weglassen.
+Dazu dienen folgende Optionen, die Sie bei <code>omd cp</code> angeben können:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--no-rrds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kopiert die Instanz ohne die RRDs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--no-logs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kopiert die Instanz ohne Log-Dateien und übrige historische Daten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-N</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Macht beides: <code>-N</code> ist eine Abkürzung für <code>--no-rrds --nologs</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Die Reihenfolge der Option(en) ist dabei wichtig:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>cp<span class="tok-w"> </span>--no-rrds<span class="tok-w"> </span>mysite_old<span class="tok-w"> </span>mysite_new</code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_omd_mv">
+<span class="hidden-anchor sr-only" id="omd_mv"></span>6.4. Instanzen umbenennen</h3>
+<div class="paragraph"><p>Das Umbenennen einer Instanz erfolgt mit dem Befehl <code>omd mv</code>.
+Dies geschieht analog zum <a href="#omd_cp">Kopieren einer Instanz</a>, hat die gleichen Voraussetzungen und wird ebenfalls inklusive der <a href="#omd_cp_mv_migration">Migration der Konfiguration</a> durchgeführt.
+Die Optionen zum Beschränken der Datenmengen existieren hier nicht, weil die Dateien ja einfach nur in ein anderes Verzeichnis verschoben und nicht dupliziert werden.</p></div>
+<div class="paragraph"><p>Beispiel:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>mv<span class="tok-w"> </span>mysite_old<span class="tok-w"> </span>mysite_new</code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__weitere_optionen">
+<span class="hidden-anchor sr-only" id="_weitere_optionen"></span>6.5. Weitere Optionen</h3>
+<div class="paragraph"><p>Wie beim Erstellen einer Instanz wird auch beim Kopieren und beim Umbenennen jeweils ein neuer Linux-Benutzer angelegt.
+Daher verfügen <code>omd cp</code> und <code>omd mv</code> auch über einige der Optionen von <code>omd create</code>, z.B. zur Festlegung von <a href="#user_group_id">Benutzer- und Gruppen-IDs</a>.
+Genaue Information erhalten Sie mit den Befehlen <code>omd cp --help</code> und <code>omd mv --help</code>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_omd_diff">
+<span class="hidden-anchor sr-only" id="omd_diff"></span>7. Änderungen in Konfigurationsdateien anzeigen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Beim <a href="#omd_create">Erstellen einer Instanz</a> füllt der Befehl <code>omd create</code> das Verzeichnis <code>~/etc</code> mit vielen vordefinierten Konfigurationsdateien.
+Auch unter <code>~/var</code> und <code>~/local</code> werden etliche Verzeichnisse angelegt.</p></div>
+<div class="paragraph"><p>Nun ist es wahrscheinlich so, dass Sie im Laufe der Zeit einige der Dateien anpassen werden.
+Wenn Sie nach einiger Zeit feststellen möchten, welche Dateien nicht mehr dem Auslieferungszustand entsprechen, können Sie das mit dem Befehl <code>omd diff</code> herausfinden.
+Nützlich ist dies unter anderem vor einem <a href="update.html">Update von Checkmk</a>, da hier Ihre Änderungen möglicherweise im Konflikt stehen mit Änderungen der Standarddateien.</p></div>
+<div class="paragraph"><p>Bei einem Aufruf ohne weitere Argumente sehen Sie alle geänderten Dateien unterhalb des aktuellen Verzeichnisses:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>diff
+<span class="tok-go"> <span class="green">*</span> Changed content var/check_mk/wato/auth/auth.php</span>
+<span class="tok-go"> <span class="yellow">!</span> Changed permissions var/check_mk/wato/auth/auth.php</span>
+<span class="tok-go"> <span class="green">*</span> Changed content etc/htpasswd</span>
+<span class="tok-go"> <span class="green">*</span> Changed content etc/diskspace.conf</span>
+<span class="tok-go"> <span class="yellow">!</span> Changed permissions etc/diskspace.conf</span>
+<span class="tok-go"> <span class="green">*</span> Changed content etc/auth.secret</span>
+<span class="tok-go"> <span class="green">*</span> Changed content etc/mk-livestatus/xinetd.conf</span>
+<span class="tok-go"> <span class="green">*</span> Changed content etc/omd/allocated_ports</span>
+<span class="tok-go"> <span class="green">*</span> Changed content etc/apache/apache.conf</span>
+<span class="tok-go"> <span class="green">*</span> Deleted etc/apache/apache-own.conf</span></code></pre></div></div>
+<div class="paragraph"><p>Sie können beim Aufruf auch ein Verzeichnis angeben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>diff<span class="tok-w"> </span>etc/apache
+<span class="tok-go"> <span class="green">*</span> Changed content etc/apache/apache.conf</span>
+<span class="tok-go"> <span class="green">*</span> Deleted etc/apache/apache-own.conf</span></code></pre></div></div>
+<div class="paragraph"><p>Wenn Sie die Änderungen in der Datei im Detail sehen möchten, geben Sie einfach den Pfad zur Datei an:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>diff<span class="tok-w"> </span>etc/apache/apache.conf
+<span class="tok-go">74,75c74,75</span>
+<span class="tok-go">&lt; ServerLimit          64</span>
+<span class="tok-go">&lt; MaxClients           64</span>
+<span class="tok-go">---</span>
+<span class="tok-go">&gt; ServerLimit          128</span>
+<span class="tok-go">&gt; MaxClients           128</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_omd_update">
+<span class="hidden-anchor sr-only" id="omd_update"></span>8. Instanzen aktualisieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Um die auf der Instanz installierte Monitoring-Software auf eine höhere Version zu aktualisieren, dient der Befehl <code>omd update</code>.
+Dieser wird ausführlich im Artikel zum <a href="update.html#detailed">Update von Checkmk</a> vorgestellt.
+Dort werden auch weitere nützliche <code>omd</code>-Befehle rund um das Software-Update beispielhaft gezeigt:</p></div>
+<div class="ulist"><ul>
+<li><p><code>omd versions</code> zur Auflistung aller installierten Software-Versionen,</p></li>
+<li><p><code>omd sites</code> zur Auflistung aller existierender Instanzen mit den auf ihnen installierten Versionen,</p></li>
+<li><p><code>omd version</code> zur Anzeige der Standardversion, die bei der Erstellung einer Instanz verwendet wird,</p></li>
+<li><p><code>omd setversion</code> zur Festlegung einer anderen Standardversion.</p></li>
+</ul></div>
+<div class="paragraph"><p>Mit <code>omd update</code> wird übrigens auch ein <a href="update.html#upgrade">Upgrade</a> auf eine andere Edition durchgeführt, z.B. von Checkmk Raw auf Checkmk Enterprise.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_omd_backup_restore">
+<span class="hidden-anchor sr-only" id="omd_backup_restore"></span>9. Instanzen sichern und wiederherstellen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__backup_erstellen">
+<span class="hidden-anchor sr-only" id="_backup_erstellen"></span>9.1. Backup erstellen</h3>
+<div class="paragraph"><p>Die Instanzverwaltung von Checkmk hat einen eingebauten Mechanismus zum Sichern und Wiederherstellen von Checkmk-Instanzen.
+Die Grundlage davon sind die Befehle <code>omd backup</code> und <code>omd restore</code>, welche alle Daten einer Instanz in ein tar-Archiv einpacken bzw. von dort wieder auspacken.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Checkmk bietet auch die Möglichkeit Backup und Restore ohne Kommandozeile über die GUI durchzuführen unter <span class="guihint">Setup &gt; Maintenance &gt; Backups.</span>
+Dort können Sie auch verschlüsselte Backups und zeitgesteuerte Backup-Aufträge erstellen.
+Im Artikel zu <a href="backup.html">Backups</a> erfahren Sie, wie das geht.</p></div>
+<div class="paragraph"><p>Das Sichern einer Instanz mit <code>omd backup</code> erfordert keine <code>root</code>-Rechte.
+Sie können es als Instanzbenutzer ausführen.
+Geben Sie einfach als Argument den Namen einer zu erzeugenden Backup-Datei an:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>backup<span class="tok-w"> </span>/tmp/mysite.tar.gz</code></pre></div></div>
+<div class="paragraph"><p>Beachten Sie dabei:</p></div>
+<div class="ulist"><ul>
+<li><p>Der erzeugte Dateityp ist ein gzip-komprimiertes tar-Archiv. Verwenden Sie daher <code>.tar.gz</code> oder <code>.tgz</code> als Dateiendung.</p></li>
+<li><p>Legen Sie die Sicherung <strong>nicht</strong> in das Instanzverzeichnis. Denn dieses wird ja komplett gesichert.
+So würde jedes weitere Backup <em>alle</em> bisherigen als Kopie enthalten.</p></li>
+<li><p>Wenn Sie das Backup als Instanzbenutzer erstellen, erhält nur der Instanzbenutzer und seine Gruppe Lese- und Schreibzugriff auf das tar-Archiv.</p></li>
+</ul></div>
+<div class="paragraph"><p>Wenn das Zielverzeichnis der Sicherung nicht als Instanzbenutzer schreibbar ist, können Sie die Sicherung auch als <code>root</code> durchführen.
+Dazu benötigen Sie wie immer als zusätzliches Argument den Namen der zu sichernden Instanz:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>backup<span class="tok-w"> </span>mysite<span class="tok-w"> </span>/var/backups/mysite.tar.gz</code></pre></div></div>
+<div class="paragraph"><p>Die Sicherung enthält alle Daten der Instanz — außer den flüchtigen Daten unterhalb von <code>~/tmp/</code>.
+Sie können mit dem Befehl <code>tar tzf</code> einfach einen Blick in die Datei werfen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>tar<span class="tok-w"> </span>tvzf<span class="tok-w"> </span>/tmp/mysite.tar.gz<span class="tok-w">  </span><span class="tok-p">|</span><span class="tok-w"> </span>less
+<span class="tok-go">lrwxrwxrwx mysite/mysite     0 2022-07-25 11:59 mysite/version -&gt; ../../versions/2.1.0p8.cre</span>
+<span class="tok-go">drwxr-xr-x mysite/mysite     0 2022-07-25 17:25 mysite/</span>
+<span class="tok-go">-rw------- mysite/mysite   370 2022-07-26 17:09 mysite/.bash_history</span>
+<span class="tok-go">-rw-r--r-- mysite/mysite  1091 2022-07-25 11:59 mysite/.bashrc</span>
+<span class="tok-go">-rw-r--r-- mysite/mysite    63 2022-07-25 11:59 mysite/.modulebuildrc</span>
+<span class="tok-go">-rw-r--r-- mysite/mysite  2066 2022-07-25 11:59 mysite/.profile</span>
+<span class="tok-go">drwxr-xr-x mysite/mysite     0 2022-07-25 11:59 mysite/.version_meta/</span>
+<span class="tok-go">drwxr-xr-x mysite/mysite     0 2022-07-20 11:40 mysite/.version_meta/skel/</span>
+<span class="tok-go">-rw-r--r-- mysite/mysite  1091 2022-06-26 02:03 mysite/.version_meta/skel/.bashrc</span>
+<span class="tok-go">-rw-r--r-- mysite/mysite    52 2022-07-20 09:02 mysite/.version_meta/skel/.modulebuildrc</span>
+<span class="tok-go">-rw-r--r-- mysite/mysite  2055 2022-06-26 02:03 mysite/.version_meta/skel/.profile</span>
+<span class="tok-go">drwxr-xr-x mysite/mysite     0 2022-07-20 11:40 mysite/.version_meta/skel/etc/</span>
+<span class="tok-go">drwxr-xr-x mysite/mysite     0 2022-07-20 11:40 mysite/.version_meta/skel/etc/apache/</span>
+<span class="tok-go">-rw-r--r-- mysite/mysite  1524 2022-06-26 02:03 mysite/.version_meta/skel/etc/apache/apache-own.conf</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__backup_ohne_historie">
+<span class="hidden-anchor sr-only" id="_backup_ohne_historie"></span>9.2. Backup ohne Historie</h3>
+<div class="paragraph"><p>Der Löwenanteil der zu bewegenden Daten bei einer Instanzsicherung sind die Messwerte und die Log-Dateien mit historischen Ereignissen.
+Das gilt beim Sichern genauso wie beim Kopieren einer Instanz.
+Wenn Sie diese Daten nicht zwingend benötigen, können Sie diese weglassen und so die Sicherung deutlich schneller und die Ergebnisdatei deutlich kleiner machen.</p></div>
+<div class="paragraph"><p><code>omd backup</code> bietet zum Verzicht auf diese Daten <a href="#limit_data">die gleichen Optionen</a> wie <code>omd cp</code> beim Kopieren.
+Im folgenden Beispiel wird das Backup ohne Messdaten und ohne die in den Log-Dateien gespeicherte Historie erstellt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>backup<span class="tok-w"> </span>-N<span class="tok-w"> </span>/tmp/mysite.tar.gz</code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__backup_bei_laufender_instanz">
+<span class="hidden-anchor sr-only" id="_backup_bei_laufender_instanz"></span>9.3. Backup bei laufender Instanz</h3>
+<div class="paragraph"><p>Ein Backup kann auch von einer laufenden Instanz erstellt werden.
+Um einen konsistenten Stand der für das Aufzeichnen der Messdaten verwendeten <a href="graphing.html#rrds">Round-Robin-Datenbanken (RRDs)</a> zu gewährleisten, versetzt der Befehl <code>omd backup</code> den Round-Robin-Cache automatisch in einen Modus, bei dem laufende Updates nur noch in das Journal und nicht mehr in die RRDs geschrieben werden.
+Die Journaldateien werden zu allerletzt gesichert.
+Damit wird erreicht, dass möglichst viele der Messdaten, die während der Sicherung angefallen sind, noch mitgesichert werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__restore">
+<span class="hidden-anchor sr-only" id="_restore"></span>9.4. Restore</h3>
+<div class="paragraph"><p>Das Zurückspielen einer Sicherung ist ebenso einfach wie das Sichern selbst.
+Der Befehl <code>omd restore</code> stellt eine Instanz aus einer Sicherung wieder her — in der Checkmk-Version, mit der die Instanz gesichert wurde.
+Damit das Wiederherstellen klappt, muss daher diese Version auf dem Server installiert sein.</p></div>
+<div class="paragraph"><p>Die Instanz wird komplett geleert und neu befüllt.
+Vor dem <code>omd restore</code> muss die Instanz gestoppt sein und danach muss sie dann wieder gestartet werden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>stop
+<span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>restore<span class="tok-w"> </span>/tmp/mysite.tar.gz
+<span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>start</code></pre></div></div>
+<div class="paragraph"><p>Auch als <code>root</code>-Benutzer ist ein Wiederherstellen möglich.
+Anders als beim Aufruf durch den Instanzbenutzer wird dabei die Instanz mit der Sicherung <em>neu erstellt.</em></p></div>
+<div class="paragraph"><p>Falls also noch eine Instanz mit dem gleichen Namen existiert, müssen Sie diese vorher <a href="#omd_rm">löschen.</a>
+Das können Sie entweder mit einem <code>omd rm</code> erledigen, oder Sie geben beim <code>omd restore</code> die Option <code>--reuse</code> mit an.
+Ein <code>--kill</code> sorgt zusätzlich dafür, dass die noch bestehende Instanz vorher gestoppt wird.
+Den Namen der Instanz brauchen Sie beim Befehl nicht anzugeben, da dieser in der Sicherung enthalten ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>restore<span class="tok-w"> </span>--reuse<span class="tok-w"> </span>--kill<span class="tok-w"> </span>/var/backup/mysite.tar.gz
+<span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>start<span class="tok-w"> </span>mysite</code></pre></div></div>
+<div class="paragraph"><p>Als <code>root</code>-Benutzer können Sie eine Instanz auch mit einem anderen Namen als dem in der Sicherung gespeicherten wiederherstellen.
+Geben Sie dazu den gewünschten Namen als Argument hinter dem Wort <code>restore</code> an:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>restore<span class="tok-w"> </span>mysite2<span class="tok-w"> </span>/var/backup/mysite.tar.gz
+<span class="tok-go">Restoring site mysite2 from /tmp/mysite.tar.gz...</span>
+<span class="tok-go"> <span class="green">*</span> Converted      ./.modulebuildrc</span>
+<span class="tok-go"> <span class="green">*</span> Converted      ./.profile</span>
+<span class="tok-go"> <span class="green">*</span> Converted      etc/xinetd.conf</span>
+<span class="tok-go"> <span class="green">*</span> Converted      etc/logrotate.conf</span></code></pre></div></div>
+<div class="paragraph"><p>Die lange Liste der Konvertierungen, die hier stattfinden, hat den gleichen Grund wie bei dem weiter oben beschriebenen <a href="#omd_cp_mv">Kopieren und Umbenennen von Instanzen</a>.
+Der Name der Instanz kommt in etlichen Konfigurationsdateien vor und wird hier automatisch durch den neuen Namen ersetzt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ssh_omd_backup_restore">
+<span class="hidden-anchor sr-only" id="ssh_omd_backup_restore"></span>9.5. Live Backup &amp; Restore auf einen anderen Server</h3>
+<div class="paragraph"><p>Die Befehle <code>omd backup</code> und <code>omd restore</code> können — in guter alter Unix-Tradition — anstelle von Dateien auch über die Standard-Ein-/Ausgabe arbeiten.
+Geben Sie hierzu anstelle eines Pfads für die tar-Datei einfach einen Bindestrich (<code>-</code>) an.</p></div>
+<div class="paragraph"><p>Auf diese Art können Sie eine Pipe aufbauen und die Daten ohne Zwischendatei direkt auf einen anderen Rechner „streamen“.
+Je größer die Sicherung ist, desto nützlicher ist das, denn so wird kein temporärer Platz im Dateisystem des gesicherten Servers benötigt.</p></div>
+<div class="paragraph"><p>Folgender Befehl sichert eine Instanz per SSH auf einen anderen Rechner:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>backup<span class="tok-w"> </span>mysite<span class="tok-w"> </span>-<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>ssh<span class="tok-w"> </span>user@otherserver<span class="tok-w"> </span><span class="tok-s2">"cat &gt; /var/backup/mysite.tar.gz"</span></code></pre></div></div>
+<div class="paragraph"><p>Wenn Sie den SSH-Zugriff umdrehen, sich also lieber vom Backup Server auf die Checkmk-Instanz verbinden möchten, so geht auch das, wie folgendes Beispiel zeigt.
+Dazu muss zuvor ein SSH-Login als Instanz-Benutzer erlaubt werden.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@otherserver# </span>ssh<span class="tok-w"> </span>mysite@checkmkserver<span class="tok-w"> </span><span class="tok-s2">"omd backup -"</span><span class="tok-w"> </span>&gt;<span class="tok-w"> </span>/var/backup/mysite.tar.gz</code></pre></div></div>
+<div class="paragraph"><p>Wenn Sie das geschickt mit einem <code>omd restore</code> kombinieren, das die Daten von der Standardeingabe liest, können Sie eine komplette Instanz im laufenden Betrieb von einem Server auf einen anderen kopieren — und das ohne irgendeinen zusätzlichen Platz für eine Sicherungsdatei:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@otherserver# </span>ssh<span class="tok-w"> </span>mysite@checkmkserver<span class="tok-w"> </span><span class="tok-s2">"omd backup -"</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>omd<span class="tok-w"> </span>restore<span class="tok-w"> </span>-</code></pre></div></div>
+<div class="paragraph"><p>Und jetzt nochmal das Ganze mit umgedrehtem SSH-Zugriff — diesmal wieder vom Quellsystem auf das Zielsystem:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>backup<span class="tok-w"> </span>mysite<span class="tok-w"> </span>-<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>ssh<span class="tok-w"> </span>user@otherserver<span class="tok-w"> </span><span class="tok-s2">"omd restore -"</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_enable">
+<span class="hidden-anchor sr-only" id="enable"></span>10. Instanzen deaktivieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>OMD kann Instanzen deaktivieren.
+Mit dem Befehl <code>omd disable --kill mysite</code>, ausgeführt als <code>root</code>, passiert Folgendes:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Die Instanz <code>mysite</code> wird gestoppt.</p></li>
+<li><p>Prozesse, die auf das <code>tmpfs</code> zugreifen, werden gestoppt.</p></li>
+<li><p>Das <code>tmpfs</code> wird ausgehängt.</p></li>
+<li><p>Die Datei <code>/omd/apache/mysite.conf</code> wird geleert.</p></li>
+<li><p>Apache wird neu gestartet.</p></li>
+</ol></div>
+<div class="paragraph"><p>In diesem Status wird das Home-Verzeichnis der Instanz, hier <code>/omd/sites/mysite</code>, von keinem Prozess mehr referenziert.
+Praktisch ist dies vor allem in einem <a href="appliance_cluster.html">Cluster,</a> da sich das Home-Verzeichnis nun auf einen anderen Knoten verschieben lässt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_omd_rm">
+<span class="hidden-anchor sr-only" id="omd_rm"></span>11. Instanzen löschen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Das Löschen einer Instanz geht ebenso einfach wie das <a href="#omd_create">Erstellen</a> — mit dem Befehl <code>omd rm</code> als <code>root</code>.
+Dabei wird die Instanz vorher automatisch gestoppt.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>rm<span class="tok-w"> </span>mysite
+<span class="tok-go">PLEASE NOTE: This action removes all configuration files</span>
+<span class="tok-go">             and variable data of the site.</span>
+
+<span class="tok-go">In detail the following steps will be done:</span>
+<span class="tok-go">- Stop all processes of the site</span>
+<span class="tok-go">- Unmount tmpfs of the site</span>
+<span class="tok-go">- Remove tmpfs of the site from fstab</span>
+<span class="tok-go">- Remove the system user &lt;SITENAME&gt;</span>
+<span class="tok-go">- Remove the system group &lt;SITENAME&gt;</span>
+<span class="tok-go">- Remove the site home directory</span>
+<span class="tok-go">- Restart the system wide apache daemon</span>
+<span class="tok-go"> (yes/NO): <strong>yes</strong></span></code></pre></div></div>
+<div class="paragraph"><p>Man muss wohl nicht extra dazuschreiben, dass hierbei <strong>alle Daten der Instanz gelöscht</strong> werden!</p></div>
+<div class="paragraph"><p>Wenn Sie kein Freund von Bestätigungsdialogen sind oder das Löschen in einem Skript durchführen wollen, können Sie mit der Option <code>-f</code> das Löschen erzwingen.</p></div>
+<div class="paragraph"><p><strong>Achtung:</strong> <code>-f</code> muss hier <strong>vor</strong> dem <code>rm</code> stehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>-f<span class="tok-w"> </span>rm<span class="tok-w"> </span>mysite</code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_cleanup">
+<span class="hidden-anchor sr-only" id="cleanup"></span>12. Ungenutzte Versionen deinstallieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Da Checkmk in mehreren Versionen gleichzeitig installiert sein darf, kann es vorkommen, dass nicht alle Versionen auch wirklich von einer Instanz genutzt werden.
+OMD kann ungenutzte Versionen mit dem Kommando <code>cleanup</code> deinstallieren:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>cleanup
+<span class="tok-go">1.6.0p28.cee         In use (by mysite_old). Keeping this version.</span>
+<span class="tok-go">2.1.0p15.cee         Uninstalling</span>
+<span class="tok-go">2.1.0p15.cme         Uninstalling</span>
+<span class="tok-go">2.1.0p15.cre         In use (by mysite_raw). Keeping this version.</span>
+<span class="tok-go">2.1.0p19.cme         Keeping this version, since it is the default.</span>
+<span class="tok-go">2022.12.14.cee       In use (by mysite). Keeping this version.</span></code></pre></div></div>
+<div class="paragraph"><p>OMD behält dabei neben den genutzten Versionen auch die Standardversion.
+Die Standardversion ist, sofern nicht manuell mit <code>omd setversion</code> anders konfiguriert, die zuletzt installierte Version von Checkmk, im obigen Beispiel also <code>2.1.0p19.cme</code>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>13. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/omd/sites/mysite</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instanzverzeichnis der Instanz <code>mysite</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In diesem Verzeichnis werden die Konfigurationsdateien der Instanz abgelegt.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_omddie_open_monitoring_distribution">1. OMD — Die Open Monitoring Distribution</a></li>
+<li>
+<a href="#omd_create">2. Erstellen von Instanzen</a><ul class="sectlevel1">
+<li><a href="#user_group_id">2.1. Benutzer- und Gruppen-IDs</a></li>
+<li><a href="#init">2.2. Externes Instanzverzeichnis</a></li>
+</ul>
+</li>
+<li><a href="#site_user">3. Instanzbenutzer</a></li>
+<li><a href="#omd_start_stop">4. Starten und Stoppen von Instanzen</a></li>
+<li>
+<a href="#omd_config">5. Konfigurieren der Komponenten</a><ul class="sectlevel1">
+<li><a href="#interactive_mode">5.1. Interaktive Konfiguration</a></li>
+<li><a href="#script_mode">5.2. Konfiguration per Skriptmodus</a></li>
+<li><a href="#_h%C3%A4ufig_ben%C3%B6tigte_einstellungen">5.3. Häufig benötigte Einstellungen</a></li>
+</ul>
+</li>
+<li>
+<a href="#omd_cp_mv">6. Kopieren und Umbenennen von Instanzen</a><ul class="sectlevel1">
+<li><a href="#omd_cp">6.1. Kopieren von Instanzen</a></li>
+<li><a href="#omd_cp_mv_migration">6.2. Migration der Konfiguration</a></li>
+<li><a href="#limit_data">6.3. Datenmengen einschränken</a></li>
+<li><a href="#omd_mv">6.4. Instanzen umbenennen</a></li>
+<li><a href="#_weitere_optionen">6.5. Weitere Optionen</a></li>
+</ul>
+</li>
+<li><a href="#omd_diff">7. Änderungen in Konfigurationsdateien anzeigen</a></li>
+<li><a href="#omd_update">8. Instanzen aktualisieren</a></li>
+<li>
+<a href="#omd_backup_restore">9. Instanzen sichern und wiederherstellen</a><ul class="sectlevel1">
+<li><a href="#_backup_erstellen">9.1. Backup erstellen</a></li>
+<li><a href="#_backup_ohne_historie">9.2. Backup ohne Historie</a></li>
+<li><a href="#_backup_bei_laufender_instanz">9.3. Backup bei laufender Instanz</a></li>
+<li><a href="#_restore">9.4. Restore</a></li>
+<li><a href="#ssh_omd_backup_restore">9.5. Live Backup &amp; Restore auf einen anderen Server</a></li>
+</ul>
+</li>
+<li><a href="#enable">10. Instanzen deaktivieren</a></li>
+<li><a href="#omd_rm">11. Instanzen löschen</a></li>
+<li><a href="#cleanup">12. Ungenutzte Versionen deinstallieren</a></li>
+<li><a href="#files">13. Dateien und Verzeichnisse</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

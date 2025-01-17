@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Hier erfahren Sie, wie Sie mit Checkmk Monitoring-Daten eines Hosts beim Abfragen eines anderen Hosts huckepack (piggyback) mit übertragen.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Der Piggyback-Mechanismus">
+<meta name="og:description" content="Hier erfahren Sie, wie Sie mit Checkmk Monitoring-Daten eines Hosts beim Abfragen eines anderen Hosts huckepack (piggyback) mit übertragen.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Der Piggyback-Mechanismus</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/piggyback.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/piggyback.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/piggyback.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Der Piggyback-Mechanismus</h1>
+<div class="details">
+<span id="revdate">Last modified on 19-Nov-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/piggyback.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+<a href="dcd.html">Dynamische Host-Konfiguration</a>
+<a href="monitoring_azure.html">Microsoft Azure überwachen</a>
+<a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a>
+<a href="monitoring_kubernetes.html">Kubernetes überwachen</a>
+<a href="monitoring_docker.html">Docker überwachen</a>
+<a href="monitoring_vmware.html">VMWare ESXi überwachen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Der Piggyback-Mechanismus wurde bereits in den frühen Zeiten
+von Checkmk eingeführt — und zwar im Rahmen der Überwachung von
+<a href="monitoring_vmware.html">VMware.</a> Hier ist die Situation, dass Daten von einem
+bestimmten Host abgefragt werden müssen, weil sie nur dort bereitstehen (z.B. von
+einem ESX-Hostsystem oder dem vCenter), diese aber im Monitoring einen ganz
+anderen Host betreffen (z.B. eine virtuelle Maschine).</p></div>
+<div class="paragraph"><p>Das ist mit dem normalen Mechanismus von Checkmk nicht zu realisieren,
+denn dieser ordnet Daten und Services, die er von einem Host holt,
+automatisch diesem zu. Und es wäre schließlich sehr unpraktisch für
+das Monitoring, wenn alle Informationen zu allen VMs immer direkt
+beim ESX-Host oder gar vCenter erschienen.</p></div>
+<div class="paragraph"><p>Der Begriff „Piggyback“ (im Deutschen „Huckepack“) drückt aus, dass
+Monitoring-Daten zu Host B quasi <em>huckepack</em> beim Abfragen von
+Host A mit übertragen werden.</p></div>
+<div class="paragraph"><p>Heute kommt Piggyback bei vielen weiteren Monitoring-Plugins zum Einsatz,
+z.B. bei der Überwachung von:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="monitoring_aws.html">AWS</a></p></li>
+<li><p><a href="monitoring_azure.html">Azure</a></p></li>
+<li><p><a href="monitoring_docker.html">Docker</a></p></li>
+<li><p><a href="monitoring_kubernetes.html">Kubernetes</a></p></li>
+<li><p>Proxmox VE</p></li>
+<li><p><a href="monitoring_vmware.html">VMware</a></p></li>
+</ul></div>
+<div class="paragraph"><p>Neben Virtualisierungsumgebungen kann der Piggyback-Mechanismus auch beim
+Monitoring von Mobilgeräten oder dem Klima-Monitoring im
+Rechenzentrum (MQTT) eingesetzt werden. Da die Abfrageschnittstellen sehr
+simpel sind, ist es
+sehr einfach, den Piggyback-Mechanismus selbst zu verwenden. Sie
+können ihn beispielsweise beim Realisieren eigener Check-Plugins
+nutzen, um Daten aus einer Quelle beliebigen anderen Hosts zuzuordnen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__das_piggyback_prinzip">
+<span class="hidden-anchor sr-only" id="_das_piggyback_prinzip"></span>2. Das Piggyback-Prinzip</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Das Grundprinzip von Piggyback funktioniert so: Ein Host A kennt
+nicht nur Monitoring-Daten zu sich selbst, sondern auch zu anderen
+Hosts — oder allgemeiner gesagt: zu anderen Objekten. So kennt
+z.B. ein ESX-Host den Zustand und viele aktuelle Metriken zu jeder
+seiner VMs. Der Host A wird in diesem Zusammenhang manchmal auch
+als <em>Quell-Host</em> (<em>source host</em>) bezeichnet.</p></div>
+<div class="paragraph"><p>Wenn Checkmk jetzt von A in seinem minütlichen Rhythmus die Monitoring-Daten abruft — sei es vom normalen Checkmk-Agenten oder von einem Spezialagenten über eine Hersteller-API --,
+bekommt es in der Antwort speziell markiert auch Daten zu den anderen Hosts/Objekten
+B, C usw. mitgeteilt. Diese <em>Piggyback-Daten</em> legt es dann für die spätere
+Verarbeitung in Dateien auf dem Checkmk-Server ab. Die Hosts B, C usw. werden
+als <em>piggybacked Hosts</em> bezeichnet.</p></div>
+<div class="paragraph"><p>Wenn Checkmk dann später die Monitoring-Daten von B oder C benötigt, liegen
+diese bereits in den Dateien vor und können direkt verarbeitet werden, ohne einen Agenten
+abzufragen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/piggyback_scheme_1.png" alt="Schematische Darstellung der indirekten Datenweitergabe über den Piggyback-Mechanismus." width="50%"></div></div>
+<div class="paragraph"><p>Es ist auch möglich und sinnvoll, normales Monitoring und Piggyback zu kombinieren.
+Nehmen wir wieder das VMware-Beispiel: Vielleicht haben Sie ja in Ihrer VM B einen
+Checkmk-Agenten installiert, der lokale Informationen aus der VM auswertet, die dem ESX-Host
+nicht bekannt sind (z.B. die in der VM laufenden Prozesse). In diesem Fall wird
+der Agent abgefragt, und die Daten werden mit den Piggyback-Daten von Host A
+zusammengefasst:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/piggyback_scheme_2.png" alt="Schematische Darstellung der kombinierten Datenweitergabe: Ein Teil der Daten kommt via Piggyback, der Rest direkt vom überwachten Host." width="50%"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_piggyback_in_practice">
+<span class="hidden-anchor sr-only" id="piggyback_in_practice"></span>3. Piggyback in der Praxis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__einrichten_von_piggyback">
+<span class="hidden-anchor sr-only" id="_einrichten_von_piggyback"></span>3.1. Einrichten von Piggyback</h3>
+<div class="paragraph"><p>Die gute Nachricht ist, dass der Piggyback-Mechanismus häufig völlig automatisch funktioniert:</p></div>
+<div class="ulist"><ul>
+<li><p>Wenn beim Abfragen von A Piggyback-Daten für andere Hosts entdeckt werden, werden diese automatisch für die spätere Auswertung gespeichert.</p></li>
+<li><p>Wenn beim Abfragen von B Piggyback-Daten von einem anderen Host auftauchen, werden diese automatisch verwendet.</p></li>
+</ul></div>
+<div class="paragraph"><p>Allerdings ist — wie immer in Checkmk — alles konfigurierbar. So können Sie
+beispielsweise bei den Eigenschaften eines Hosts (Host B) im Kasten
+<span class="guihint">Monitoring agents</span> einstellen, wie dieser auf vorhandene oder fehlende
+Piggyback-Daten reagieren soll:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/piggyback_settings.png" alt="Die Umleitung der Piggyback-Daten wird in den Agenten-Einstellungen festgelegt"></div></div>
+<div class="paragraph"><p>Der Standard ist <span class="guihint">Use piggyback data from other hosts if present</span>.
+Falls vorhanden, werden also Piggyback-Daten verwendet, und wenn
+keine da sind, verwendet der Host eben nur seine „eigenen“ Monitoring-Daten.</p></div>
+<div class="paragraph"><p>Bei der Einstellung <span class="guihint">Always use and expect piggyback data</span> <em>erzwingen</em>
+Sie die Verarbeitung von Piggyback-Daten. Wenn diese fehlen oder veraltet
+sind, wird der Service <span class="guihint">Check_MK</span> eine Warnung ausgeben.</p></div>
+<div class="paragraph"><p>Bei <span class="guihint">Never use piggyback data</span> werden eventuell vorhandene Piggyback-Daten
+einfach ignoriert — eine Einstellung, die Sie nur in Ausnahmefällen
+brauchen werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__hosts_müssen_vorhanden_sein">
+<span class="hidden-anchor sr-only" id="_hosts_müssen_vorhanden_sein"></span>3.2. Hosts müssen vorhanden sein</h3>
+<div class="paragraph"><p>Damit ein Host Piggyback-Daten verarbeiten kann, muss dieser natürlich im Monitoring
+vorhanden sein. Im Beispiel von ESX bedeutet das, dass Sie Ihre VMs auch als Hosts
+in Checkmk aufnehmen müssen, damit sie überhaupt überwacht werden.</p></div>
+<div class="paragraph"><p>Mittlerweile können Sie dies mithilfe der
+<a href="dcd.html">dynamischen Konfiguration</a> automatisieren und Hosts, für die Piggyback-Daten
+vorhanden sind, automatisch anlegen lassen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_renamehosts">
+<span class="hidden-anchor sr-only" id="renamehosts"></span>3.3. Host-Namen und ihre Zuordnung</h3>
+<div class="paragraph"><p>Im Beispiel oben war es irgendwie logisch, dass die Daten von Objekt
+B auch dem Host B im Monitoring zugeordnet wurden. Aber wie genau
+funktioniert das? Beim Piggyback-Mechanismus geht die Zuordnung
+immer über einen <em>Namen</em>. Der (Spezial-)Agent schreibt zu jedem
+Satz von Piggyback-Daten einen Objektnamen. Im Fall von ESX ist das
+z.B. der Name der virtuellen Maschine. Manche Plugins wie z.B.
+<a href="monitoring_docker.html">Docker</a> haben auch mehrere Möglichkeiten, was
+als Name verwendet werden soll.</p></div>
+<div class="paragraph"><p>Damit die Zuordnung klappt, muss der Name des passenden Hosts in Checkmk
+natürlich identisch sein — auch die Groß-/Kleinschreibung betreffend.</p></div>
+<div class="paragraph"><p>Was aber, wenn die Namen der Objekte in den Piggyback-Daten für das Monitoring
+ungeeignet oder unerwünscht sind?
+Dafür gibt es den speziellen <a href="wato_rules.html">Regelsatz</a>
+<span class="guihint">Hostname translation for piggybacked hosts</span>, den Sie im Setup-Menü unter
+<span class="guihint">Setup &gt; Agents &gt; Agent access rules</span> finden.</p></div>
+<div class="paragraph"><p>Um eine Umbenennung zu konfigurieren, führen Sie die folgenden zwei Schritte aus:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Legen Sie eine Regel an und stellen Sie die Bedingung so ein, dass Sie auf dem <em>Quell-Host</em> greift — also quasi auf Host A.</p></li>
+<li><p>Legen Sie im Wert der Regel eine passende Namenszuordnung fest.</p></li>
+</ol></div>
+<div class="paragraph"><p>Hier ist ein Beispiel für den Wert der Regel. Es wurden zwei Dinge
+konfiguriert: Zunächst werden alle Host-Namen aus den Piggyback-Daten
+in Kleinbuchstaben umgewandelt. Danach werden noch die beiden Hosts
+<code>vm0815</code> bzw. <code>vm0816</code> in die Checkmk-Hosts <code>mylnxserver07</code>
+bzw. <code>mylnxserver08</code> umgewandelt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/piggyback_hostname_translation.png" alt="Optionen der 'Hostname translation', Entfernen des Domain-Parts, Umwandlung nach Kleinbuchstaben oder explizites Mapping."></div></div>
+<div class="paragraph"><p>Flexibler ist die Methode mit <a href="regexes.html">regulären Ausdrücken,</a> die Sie
+unter <span class="guihint">Multiple regular expressions</span> finden. Diese bietet sich an, wenn die
+Umbenennung von vielen Hosts notwendig ist und diese nach einem bestimmten
+Schema erfolgt. Gehen sie wie folgt vor:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Aktivieren Sie die Option <span class="guihint">Multiple regular expressions</span>.</p></li>
+<li><p>Fügen Sie mit dem Knopf <span class="guihint">Add expression</span> einen Übersetzungseintrag an. Jetzt erscheinen zwei Felder.</p></li>
+<li><p>Geben Sie im Feld <span class="guihint">Regular expression</span> einen regulären Ausdruck ein, der auf die ursprünglichen Objektnamen matcht und der mindestens eine Subgruppe enthält — also einen Teilausdruck, der in runde Klammern gesetzt ist. Eine gute Erklärung zu diesen Gruppen finden Sie im <a href="regexes.html#matchgroups">Artikel zu regulären Ausdrücken.</a></p></li>
+<li><p>Geben Sie bei <span class="guihint">Replacement</span> ein Schema für den gewünschten Namen des Ziel-Hosts an, wobei Sie die Werte, die mit den Subgruppen „eingefangen“ wurden, durch <code>\1</code>, <code>\2</code> usw. ersetzen können.</p></li>
+</ol></div>
+<div class="paragraph"><p>Ein Beispiel für den regulären Ausdruck wäre z.B. <code>vm(.*)-local</code>. Die Ersetzung <code>myvm\1</code>
+würde dann z.B. den Namen <code>vmharri-local</code> in <code>myvmharri</code> übersetzen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__die_technik_dahinter">
+<span class="hidden-anchor sr-only" id="_die_technik_dahinter"></span>4. Die Technik dahinter</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__transport_der_piggyback_daten">
+<span class="hidden-anchor sr-only" id="_transport_der_piggyback_daten"></span>4.1. Transport der Piggyback-Daten</h3>
+<div class="paragraph"><p>Wie oben beschrieben werden die Piggyback-Daten zu anderen Hosts in der Agentenausgabe
+des Quell-Hosts transportiert. Die Ausgabe des Checkmk-Agenten ist ein
+einfaches textbasiertes Format, das der
+<a href="wato_monitoringagents.html">Artikel über die Agenten</a> vorstellt.</p></div>
+<div class="paragraph"><p>Neu ist jetzt, dass im Output eine Zeile erlaubt ist, die mit <code>&lt;&lt;&lt;&lt;</code>
+beginnt und mit <code>&gt;&gt;&gt;&gt;</code> endet. Dazwischen steht ein Host-Name. Alle
+weiteren Monitoring-Daten ab dieser Zeile werden dann diesem Host zugeordnet. Hier
+ist ein beispielhafter Auszug, der die Sektion <code>&lt;&lt;&lt;esx_vsphere_vm&gt;&gt;&gt;</code>
+dem Host <code>316-VM-MGM</code> zuordnet:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>&lt;&lt;&lt;&lt;316-VM-MGM&gt;&gt;&gt;&gt;
+&lt;&lt;&lt;esx_vsphere_vm&gt;&gt;&gt;
+config.datastoreUrl url /vmfs/volumes/55b643e1-3f344a10-68eb-90b11c00ff94|uncommitted 12472944334|name EQLSAS-DS-04|type VMFS|accessible true|capacity 1099243192320|freeSpace 620699320320
+config.hardware.memoryMB 4096
+config.hardware.numCPU 2
+config.hardware.numCoresPerSocket 2
+guest.toolsVersion 9537
+guest.toolsVersionStatus guestToolsCurrent
+guestHeartbeatStatus green
+name 316-VM-MGM</code></pre></div></div>
+<div class="paragraph"><p>Durch eine Zeile mit dem Inhalt <code>&lt;&lt;&lt;&lt;&gt;&gt;&gt;&gt;</code>
+kann diese Zuordnung wieder aufgehoben werden. Der weitere Output gehört
+dann wieder zum Quell-Host.</p></div>
+<div class="paragraph"><p>Bei der Verarbeitung der Agentenausgabe extrahiert Checkmk die Teile, die für andere
+Hosts bestimmt sind, und legt sie in Dateien unterhalb von <code>tmp/check_mk/piggyback</code>
+ab. Darunter befindet sich für jeden Ziel-Host (z.B. für jede VM) ein Unterverzeichnis — in unserem Beispiel also ein Ordner mit dem Namen <code>B</code>. Darin ist dann pro
+Quell-Host eine Datei mit den eigentlichen Daten. Deren Name wäre in unserem Beispiel <code>A</code>.
+Warum ist das so kompliziert gelöst? Nun, ein Host kann in der Tat Piggyback-Daten von <em>mehreren</em>
+Hosts bekommen, somit wäre eine einzelne Datei nicht ausreichend.</p></div>
+<div class="paragraph"><p><strong>Tipp:</strong> Wenn Sie neugierig sind, wie die Piggyback-Daten bei Ihnen aussehen, finden Sie
+die Agentenausgaben Ihrer Hosts in der Monitoring-Instanz im Verzeichnis
+<code>tmp/check_mk/cache</code>.
+Eine Übersicht über alle beteiligten Dateien und Verzeichnisse finden Sie <a href="#files">weiter unten.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_orphaned_piggyback_data">
+<span class="hidden-anchor sr-only" id="orphaned_piggyback_data"></span>4.2. Verwaiste Piggyback-Daten</h3>
+<div class="paragraph"><p>Wenn Sie in in einer Umgebung arbeiten, in der Hosts automatisiert den
+Quell-Host wechseln, empfehlen wir die Nutzung der
+<a href="dcd.html">dynamischen Host-Konfiguration.</a>
+Wird deren Einsatz nicht benötigt oder erwünscht (beispielsweise weil virtuelle
+Maschinen manuell umgezogen werden), dann kann
+es Ihnen passieren, dass Piggyback-Daten für einen Host vorhanden sind, den Sie in Checkmk gar nicht angelegt
+haben. Das kann Absicht sein, vielleicht aber auch ein Fehler — z.B. weil ein Name nicht genau übereinstimmt.</p></div>
+<div class="paragraph"><p>In den „Treasures“ finden Sie ein Skript mit dem Namen
+<code>find_piggy_orphans</code>, das Checkmk nach Piggyback-Daten durchsucht,
+zu denen es keinen Host im Monitoring gibt. Dieses rufen Sie einfach ohne
+Argumente auf. Es gibt dann pro Zeile den Namen von einem nicht überwachten piggybacked Host aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>share/doc/check_mk/treasures/find_piggy_orphans
+<span class="tok-go">fooVM01</span>
+<span class="tok-go">barVM02</span></code></pre></div></div>
+<div class="paragraph"><p>Diese Ausgabe ist „sauber“, und Sie können Sie z.B. in einem Skript weiterverarbeiten.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__piggyback_im_verteilten_monitoring">
+<span class="hidden-anchor sr-only" id="_piggyback_im_verteilten_monitoring"></span>4.3. Piggyback im verteilten Monitoring</h3>
+<div class="paragraph"><p>Beachten Sie, dass in <a href="distributed_monitoring.html">verteilten Umgebungen</a>
+aktuell QuellHost und die piggybacked Hosts in der gleichen
+Instanz überwacht werden müssen. Dies liegt daran, dass die
+Übertragung der Daten zwischen den Hosts aus Effizienzgründen mit einem lokalen
+Dateiaustausch über das Verzeichnis <code>tmp/check_mk</code> läuft.</p></div>
+<div class="paragraph"><p>Zukünftige Versionen von Checkmk werden eventuell einen Mechanismus anbieten,
+der optional den Austausch von Piggyback-Daten über Instanzgrenzen hinweg
+ermöglicht.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>5. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading__pfade_auf_dem_checkmk_server">
+<span class="hidden-anchor sr-only" id="_pfade_auf_dem_checkmk_server"></span>5.1. Pfade auf dem Checkmk-Server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 65%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tmp/check_mk/piggyback/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ablageort für Piggyback-Daten</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tmp/check_mk/piggyback/B/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verzeichnis von Piggyback-Daten <em>für</em> Host B</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tmp/check_mk/piggyback/B/A</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Datei mit Piggyback-Daten <em>von</em> Host A <em>für</em> Host B</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tmp/check_mk/piggyback_sources/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metainformationen zu den Hosts, die Piggyback-Daten erzeugen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tmp/check_mk/cache/A</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agentenausgabe von Host A — inklusive eventuell vorhandenen Piggyback-Daten in Rohform</p></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li><a href="#_das_piggyback_prinzip">2. Das Piggyback-Prinzip</a></li>
+<li>
+<a href="#piggyback_in_practice">3. Piggyback in der Praxis</a><ul class="sectlevel1">
+<li><a href="#_einrichten_von_piggyback">3.1. Einrichten von Piggyback</a></li>
+<li><a href="#_hosts_m%C3%BCssen_vorhanden_sein">3.2. Hosts müssen vorhanden sein</a></li>
+<li><a href="#renamehosts">3.3. Host-Namen und ihre Zuordnung</a></li>
+</ul>
+</li>
+<li>
+<a href="#_die_technik_dahinter">4. Die Technik dahinter</a><ul class="sectlevel1">
+<li><a href="#_transport_der_piggyback_daten">4.1. Transport der Piggyback-Daten</a></li>
+<li><a href="#orphaned_piggyback_data">4.2. Verwaiste Piggyback-Daten</a></li>
+<li><a href="#_piggyback_im_verteilten_monitoring">4.3. Piggyback im verteilten Monitoring</a></li>
+</ul>
+</li>
+<li>
+<a href="#files">5. Dateien und Verzeichnisse</a><ul class="sectlevel1"><li><a href="#_pfade_auf_dem_checkmk_server">5.1. Pfade auf dem Checkmk-Server</a></li></ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

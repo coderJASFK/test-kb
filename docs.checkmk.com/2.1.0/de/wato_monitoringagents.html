@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Hier bekommen Sie einen schnellen Überblick, mit welchen Methoden Server, Switche und andere Geräte überwacht werden können und wie der Agent funktioniert.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Monitoring-Agenten - Mit Checkmk Geräte im Netzwerk überwachen">
+<meta name="og:description" content="Hier bekommen Sie einen schnellen Überblick, mit welchen Methoden Server, Switche und andere Geräte überwacht werden können und wie der Agent funktioniert.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Monitoring-Agenten - Mit Checkmk Geräte im Netzwerk überwachen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/wato_monitoringagents.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/wato_monitoringagents.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/wato_monitoringagents.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Monitoring-Agenten</h1>
+<div class="details">
+<span id="revdate">Last modified on 28-Jun-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/wato_monitoringagents.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="agent_linux.html">Linux überwachen</a>
+<a href="agent_windows.html">Windows überwachen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Damit ein Monitoring-System von einem überwachten Zielsystem mehr Informationen bekommt als nur, ob dieses erreichbar ist, benötigt es dessen Mithilfe.
+Denn wie soll Checkmk z.B. wissen, wie voll ein Dateisystem auf einem Server ist, ohne dass dieser das irgendwie mitteilt?
+Die Komponente, die diese Auskunft gibt, ist immer ein aktives Stück Software — also ein <em>Monitoring-Agent</em> oder auch kürzer ein <em>Agent.</em>
+Ein Agent sammelt die für das Monitoring relevanten Daten in festgelegten Zeitabständen von einem Host ein und übermittelt die Daten an den Monitoring-Server.</p></div>
+<div class="paragraph"><p>Für Server und Workstations bietet Checkmk eigene, die sogenannten <em>Checkmk-Agenten</em> an.
+Checkmk-Agenten gibt es für verschiedenste Betriebssysteme — von gängigen wie Windows und Linux, bis zu Exoten wie OpenVMS.
+Die Agenten verhalten sich passiv und horchen auf TCP-Port 6556.
+Erst bei einer Abfrage durch den Checkmk-Server werden sie aktiv und antworten mit den benötigten Daten.</p></div>
+<div class="paragraph"><p>Alle Checkmk-Agenten finden Sie über die Weboberfläche im <span class="guihint">Setup</span>-Menü.
+Von dort können Sie die Agenten herunterladen und auf dem Zielsystem installieren.
+Wie Sie Checkmk-Agenten installieren, konfigurieren und erweitern können, erfahren Sie in diesem Artikel.</p></div>
+<div class="paragraph"><p>Allerdings gibt es Situationen, in denen man für das Monitoring nicht extra einen Agenten <em>installieren</em> muss — weil nämlich schon einer vorhanden ist, der genutzt werden kann.
+Bestes Beispiel ist hier SNMP:
+Alle verwaltbaren Netzwerkgeräte und Appliances haben einen <a href="snmp.html">SNMP-Agenten</a> eingebaut.
+Checkmk greift auf diesen SNMP-Agenten zu und holt sich mit aktiven Anfragen (GET) Details über den Systemzustand ab.</p></div>
+<div class="paragraph"><p>Einige Systeme erlauben aber weder die Installation eines Agenten noch unterstützen sie SNMP auf brauchbare Weise.
+Stattdessen bieten sie Anwendungsprogrammierschnittstellen für das Management, sogenannte <em>APIs</em>, die auf Telnet, SSH oder HTTP/XML basieren.
+Über diese sogenannten <a href="datasource_programs.html#specialagents">Spezialagenten</a>, die auf dem Checkmk-Server laufen, fragt Checkmk diese Schnittstellen ab.</p></div>
+<div class="paragraph"><p>Ein Spezialfall ist schließlich die Überwachung von Netzwerkdiensten wie HTTP, SMTP oder IMAP.
+Bei einem Netzwerkdienst liegt es nahe, den Dienst über das Netzwerk abzufragen und über diesen Weg auch zu überwachen.
+Dazu verwendet Checkmk teils eigene, teils fertige Plugins, die ursprünglich für Nagios entwickelt wurden.
+Diese werden auch als <a href="active_checks.html">aktive Checks</a> bezeichnet.
+Sehr beliebt ist z.B. <code>check_http</code> für das Abfragen von Webseiten.
+Aber selbst in diesem Fall kommt meist zusätzlich ein Agent zum Einsatz, mit dem man auch die übrigen Daten des Servers in das Monitoring bekommt.</p></div>
+<div class="paragraph"><p>Folgende Grafik zeigt Ihnen die verschiedenen Wege, wie Checkmk auf zu überwachende Systeme zugreift:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/monitoringagents_agent_access.png" alt="Illustration der Wege, auf denen Checkmk auf die überwachten Systeme zugreift."></div></div>
+<div class="paragraph"><p>Bisher haben wir nur von <em>aktiver</em> Überwachung gesprochen — der Paradedisziplin von Checkmk.
+Es gibt auch den umkehrten Weg, nämlich dass die Zielsysteme von sich aus Nachrichten an das Monitoring senden, z.B. per Syslog oder SNMP-Traps.
+Für dieses ganze Thema bietet Checkmk die <em>Event Console</em>, die in einem <a href="ec.html">eigenen Artikel</a> beschrieben ist.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_agents">
+<span class="hidden-anchor sr-only" id="agents"></span>2. Der Checkmk-Agent</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sie benötigen für die Überwachung eines Servers oder einer Workstation ein kleines Programm — den Checkmk-Agenten — , der auf dem Host installiert werden muss.</p></div>
+<div class="paragraph"><p>Der Agent ist ein simples Shellskript, das minimalistisch, sicher und leicht erweiterbar ist.
+Seit der Checkmk-Version <span class="new">2.1.0</span> gibt es einen neuen Agenten, der das Shellskript erweitert.
+Präziser gesagt, wird dem <strong>Agentenskript</strong> eine neue Komponente zur Seite gestellt: der <strong>Agent Controller</strong>.
+Der Agent Controller ist dem Agentenskript vorgeschaltet, fragt dieses ab und kommuniziert an dessen Stelle mit dem Checkmk-Server.
+Dazu registriert er sich am <strong>Agent Receiver</strong>, einem ebenfalls neuen Prozess, der auf dem Checkmk-Server läuft.</p></div>
+<div class="imageblock border">
+<div class="content"><img src="../images/monitoringagents_communication_flow.png" alt="Illustration der Kommunikation zwischen Agent und Instanz."></div>
+<div class="title">Zusammenspiel der Software-Komponenten</div>
+</div>
+<div class="paragraph"><p>Diese Architektur ist beim <a href="agent_linux.html#agent_architecture">Linux-Agenten</a> und beim <a href="agent_windows.html#agent_architecture">Windows-Agenten</a> identisch.
+Nur die technische Realisierung ist spezifisch für die Betriebssysteme.</p></div>
+<div class="paragraph"><p>Das <strong>Agentenskript</strong> ist zuständig für die Sammlung der Monitoring-Daten und stellt diese dem Agent Controller zur Verfügung.
+Es ist:</p></div>
+<div class="ulist"><ul>
+<li><p>minimalistisch, denn es begnügt sich mit minimalen Ressourcen an RAM, CPU, Plattenplatz und Netzwerk.</p></li>
+<li><p>sicher, denn es erlaubt keinerlei Zugriffe aus dem Netzwerk.</p></li>
+<li><p>leicht erweiterbar, denn Sie können Plugins in einer beliebigen Programmier- oder Skriptsprache schreiben und vom Agentenskript ausführen lassen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Der <strong>Agent Controller</strong> ist die Komponente des Agenten, die für den Transport der vom Agentenskript gesammelten Daten zuständig ist.
+Er lauscht am TCP-Port 6556 auf eingehende Verbindungen der Checkmk-Instanz und fragt das Agentenskript ab.</p></div>
+<div class="paragraph"><p>Wozu wird nun der Agent Controller gebraucht — bisher funktionierte es doch auch sehr gut ohne ihn?
+Nun, die Software-Architektur des Agenten ist die Voraussetzung dafür, neue Funktionen anzubieten, die mit dem minimalistischen Design des Agentenskripts nicht umsetzbar sind, wie beispielsweise die Verschlüsselung der Kommunikation per Transport Layer Security (TLS), Datenkomprimierung und die Umkehrung der Kommunikationsrichtung.
+Bisher war es stets der Checkmk-Server, der die Kommunikation initiierte und die Daten vom Agenten abfragte — im sogenannten Pull-Modus.</p></div>
+<div class="paragraph"><p>Mit dem Agent Controller wird die Voraussetzung geschaffen, zukünftig zusätzlich den Push-Modus zu realisieren, in dem die Initiative vom Agenten ausgeht.
+Der Push-Modus ist für eine Cloud-basierte Konfiguration und in einigen abgeschotteten Netzwerken erforderlich.
+In beiden Fällen kann der Checkmk-Server nicht auf das Netzwerk zugreifen, in dem sich die zu überwachenden Hosts befinden.
+Daher sendet der Agent von sich aus regelmäßig die Daten an den Checkmk-Server.
+Agent Controller und Agent Receiver sind bereits für den Push-Modus vorbereitet, auch wenn dieser Modus erst mit der nächsten Checkmk-Version für die neue Checkmk Plus Edition (CPE) verfügbar sein wird.</p></div>
+<div class="paragraph"><p>Der <strong>Agent Receiver</strong> ist die Komponente des Checkmk-Servers, die als genereller Endpunkt für die Kommunikation des Agent Controllers dient, z.B. für die Registrierung der Verbindung.
+Er wird auch zukünftig die vom Agent Controller im Push-Modus gesendeten Daten empfangen.
+Im Pull-Modus erfolgt der Datenaustausch mit den Fetchern der Instanz, in den Enterprise Editions sind das die <a href="cmc_differences.html#fetcher_checker">Checkmk-Fetcher</a>.</p></div>
+<div class="paragraph"><p>TLS-Verschlüsselung und Datenkomprimierung werden über den Agent Controller und den Agent Receiver realisiert, d.h. Checkmk-Server und Agent müssen mindestens Version <span class="new">2.1.0</span> haben.
+Dabei ist nach der Installation der erste Schritt die Registrierung des Agent Controller beim Agent Receiver der Checkmk-Instanz, mit der ein Vertrauensverhältnis hergestellt wird.
+Bei der Registrierung wird bereits die TLS-Verschlüsselung der Kommunikation eingerichtet.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_download_page">
+<span class="hidden-anchor sr-only" id="download_page"></span>3. Agent von der Download-Seite herunterladen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Im Checkmk-Projekt werden aktuell Agenten für elf verschiedene Betriebssystemfamilien gepflegt.
+Alle diese Agenten sind Bestandteil von Checkmk und stehen über die Weboberfläche des Checkmk-Servers zum Download bereit.
+Die Agenten erreichen Sie über <span class="guihint">Setup &gt; Agents</span>.</p></div>
+<div class="paragraph"><p>In der <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> führen Sie die Menüeinträge <span class="guihint">Linux</span>, <span class="guihint">Windows</span> und <span class="guihint">Other operating systems</span> direkt zu den Download-Seiten, auf denen Sie die vorkonfigurierten Agenten und Agentenplugins finden, im folgenden Beispiel zur Download-Seite für <span class="guihint">Linux, Solaris, AIX</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_download_linux_cre.png" alt="Liste der Linux-Agenten zum Download in der Raw Edition."></div></div>
+<div class="paragraph"><p>In den <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> gelangen Sie mit dem Menüeintrag <span class="guihint">Windows, Linux, Solaris, AIX</span> zu einer Seite, die Ihnen Zugang zur <a href="#bakery">Agentenbäckerei</a> bietet.
+Von dieser Seite aus kommen Sie mit dem Menüeintrag <span class="guihint">Related</span> zu den Seiten mit den Agentendateien wie in der Raw Edition.</p></div>
+<div class="paragraph"><p>Die paketierten Agenten für Linux (im RPM- und DEB-Dateiformat) und für Windows (im MSI-Dateiformat) finden Sie gleich im ersten Kasten der entsprechenden Download-Seite.
+In diesen Softwarepaketen finden Sie seit der Version <span class="new">2.1.0</span> den neuen Agenten mit Agent Controller.
+Die Installation und Konfiguration ist ausführlich in den Artikeln zum <a href="agent_linux.html#install">Linux-Agenten</a> und <a href="agent_windows.html#install">Windows-Agenten</a> beschrieben.</p></div>
+<div class="paragraph"><p>Im Kasten <span class="guihint">Agents</span> finden Sie die Agentenskripte für die verschiedenen Betriebssysteme.
+Für Betriebssysteme, auf denen der Agent im Legacy-Modus (d.h. ohne Agent Controller) eingerichtet werden muss, gibt es die Artikel <a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a> und <a href="agent_freebsd.html">FreeBSD überwachen</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_bakery">
+<span class="hidden-anchor sr-only" id="bakery"></span>4. Die Agentenbäckerei</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__einleitung_2">
+<span class="hidden-anchor sr-only" id="_einleitung_2"></span>4.1. Einleitung</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Wenn Sie eine der Enterprise Editions verwenden, dann können Sie mit der Agentenbäckerei (<em>Agent Bakery</em>) Agenten individuell paketieren.
+So können Sie Agentenpakete erzeugen (oder eben „backen“), die neben dem eigentlichen Agenten auch eine individuelle Konfiguration und zusätzliche Plugins enthalten.
+Diese Pakete können Sie mit einem einzigen Befehl installieren.
+Sie eignen sich daher ideal für eine automatische Verteilung und Installation.
+Und Sie können sogar für Ordner oder bestimmte Gruppen von Hosts individuelle Agenten erzeugen.
+Das schafft vor allem in Verbindung mit dem <a href="agent_deployment.html">automatischen Agenten-Update</a> große Flexibilität.</p></div>
+<div class="paragraph"><p>Zwar funktioniert der Checkmk-Agent auch erst mal „nackt“, also ohne Konfiguration und Plugins, aber in einigen Fällen muss der Agent eben doch angepasst werden.
+Beispiele:</p></div>
+<div class="ulist"><ul>
+<li><p>Beschränkung des Zugriffs auf bestimmte IP-Adressen</p></li>
+<li><p>Überwachung von Oracle-Datenbanken (Plugin und Konfiguration nötig)</p></li>
+<li><p>Überwachung von Text-Logdateien (Plugin, Dateinamen und Textmuster nötig)</p></li>
+<li><p>Verwendung der <a href="inventory.html">Hardware-/Software-Inventur</a> (Plugin nötig)</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_bakery_download">
+<span class="hidden-anchor sr-only" id="bakery_download"></span>4.2. Agent herunterladen</h3>
+<div class="paragraph"><p>Sie erreichen die Agentenbäckerei über <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_agent_bakery_main.png" alt="Einstiegsseite zur Agentenbäckerei."></div></div>
+<div class="paragraph"><p>Checkmk unterstützt mit der Agentenbäckerei die Betriebssysteme Windows, Linux, Solaris und AIX.
+Bei Linux haben Sie dabei die Wahl zwischen den Paketformaten RPM (für Red Hat Enterprise Linux (RHEL) basierte Systeme, SLES) und DEB (für Debian, Ubuntu)
+sowie einem sogenannten „Tarball“ im TGZ-Dateiformat, der einfach als <code>root</code> unter <code>/</code> ausgepackt wird.
+Für AIX steht ebenfalls ein Tarball bereit.
+Dieser enthält allerdings keine automatische Integration in den <code>inetd</code>.
+Dies muss einmalig von Hand gemacht werden.
+Für Solaris gibt es wiederum den Tarball sowie ein PKG-Paket.</p></div>
+<div class="paragraph"><p>Wenn Sie noch keine Einstellungen für bestimmte Hosts vorgenommen haben, gibt es nur eine einzige Standardagentenkonfiguration.
+Was es mit den unterschiedlichen Agentenkonfigurationen auf sich hat, erfahren Sie im nächsten beiden Abschnitten.</p></div>
+<div class="paragraph"><p>Jede Agentenkonfiguration hat eine eindeutige ID: den <span class="guihint">Hash</span>.
+Die ersten 8 Zeichen des Hashs werden in der GUI angezeigt.
+Dieser Hash wird Teil der Paketversion und auch in den Namen der Paketdatei eingebaut.
+Wann immer Sie etwas an der Konfiguration eines Paketes ändern oder Checkmk aktualisieren, ändert sich auch der Hash des Pakets.
+Dadurch erkennt der Paketmanager des Betriebssystems, dass es sich um ein anderes Paket handelt und führt einen Update durch.
+Die Versionsnummer von Checkmk wäre hier zur Unterscheidung nicht ausreichend.</p></div>
+<div class="paragraph"><p>Gebackene Pakete für Linux und Windows werden auf die gleiche Art installiert wie die Pakete, die Sie von der <a href="#download_page">Download-Seite herunterladen</a> können.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__konfiguration_über_regeln">
+<span class="hidden-anchor sr-only" id="_konfiguration_über_regeln"></span>4.3. Konfiguration über Regeln</h3>
+<div class="paragraph"><p>Die Konfiguration des Agenten ändern Sie, wie so oft in Checkmk, über <a href="glossar.html#rule">Regeln.</a>
+Diese bieten Ihnen die Möglichkeit, verschiedene Hosts mit unterschiedlichen Einstellungen oder Plugins auszustatten.
+Über den Knopf <span class="guihint">Agent rules</span> gelangen Sie zu einer Seite, die Ihnen alle Regelsätze zeigt, die die Agenten beeinflussen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_agent_rules.png" alt="Liste der Regeln für die Agenten."></div></div>
+<div class="paragraph"><p>Nehmen wir folgendes Beispiel:
+Sie möchten die Liste der IP-Adressen beschränken, welche auf den Agenten zugreifen dürfen.
+Dazu wählen Sie den Regelsatz <span class="guihint">Generic Options &gt; Allowed agent access via IP address (Linux, Windows)</span>.
+Tragen Sie als Wert der Regel eine oder mehrere IP-Adressen ein:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_agent_rule_ipaccess.png" alt="Regel zur Einschränkung der IP-Adressen zum Zugriff auf den Agenten."></div></div>
+<div class="paragraph"><p>Lassen Sie die Standardwerte im Kasten <span class="guihint">Conditions</span> unverändert, damit diese Regel für alle Hosts gilt.
+Speichern Sie die neue Regel.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_agent_configurations">
+<span class="hidden-anchor sr-only" id="agent_configurations"></span>4.4. Die Agentenkonfigurationen</h3>
+<div class="paragraph"><p>Gehen Sie nach dem Speichern zurück zur Seite <span class="guihint">Windows, Linux, Solaris, AIX.</span>
+Der Knopf <span class="image-inline"><img src="../images/icons/button_bake_agents.png" alt="Symbol zum Backen der Agenten."></span> sorgt für ein neues Backen der Agenten.
+Das Ergebnis: Sie haben nun zwei Konfigurationen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_agent_bakery_agentlist.png" alt="Liste mit zwei Konfigurationen der Agenten zum Download."></div></div>
+<div class="paragraph"><p>In der Spalte <span class="guihint">Agent type</span> können Sie ablesen, welchen Hosts die jeweilige Konfiguration zugeordnet ist.
+Aus Platzgründen ist diese Liste eventuell nicht vollständig.</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Vanilla (factory settings)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Agentenpakete enthalten nur die Standardkonfiguration und damit <strong>keine</strong> einzige Agentenregel.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Folders</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Agentenpakete enthalten <strong>alle</strong> Agentenregeln, in denen keine Bedingungen für Hosts definiert sind, und die für die genannten Ordner greifen.<br>
+Agentenpakete werden spezifisch für einen Ordner erstellt, wenn in den Eigenschaften dieses Ordners (<span class="guihint">Folder properties</span>) das Attribut <span class="guihint">Bake agent packages</span> auf <span class="guihint">Bake a generic agent package for this folder</span> gesetzt ist.
+Dieses Attribut gilt nur für den Ordner und wird nicht vererbt.<br>
+Dieser Eintrag ist nützlich, um Agenten für Hosts zu erstellen, die noch nicht in Checkmk existieren.
+Der Ordner kann sogar leer sein — als Vorbereitung für die automatische Erstellung von Hosts, die mit der Cloud Edition der Checkmk <span class="new">2.2.0</span> eingeführt wird.
+Standardmäßig werden Agentenpakete nur für den Ordner <span class="guihint">Main</span> (oder <span class="guihint">root folder</span>) erstellt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Hosts</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Agentenpakete enthalten <strong>alle</strong> Agentenregeln, die für die genannten Hosts greifen.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Für das oben gezeigte Beispiel wurde die Regel <span class="guihint">Allowed agent access via IP address (Linux, Windows)</span> ohne Bedingungen für Hosts erstellt.
+Die neue Agentenkonfiguration gilt daher für den Ordner <span class="guihint">Main</span> und für den einzigen in der Instanz existierenden Host <code>localhost</code>.</p></div>
+<div class="paragraph"><p>Je mehr Host-spezifische Regeln aufstellen, desto mehr unterschiedliche Varianten von Agenten werden gebaut.
+Die Agentenbäckerei achtet dabei darauf, dass nur solche Konfigurationen gebaut werden, die auch von mindestens einem der vorhandenen Ordner oder Hosts verwendet werden.</p></div>
+<div class="paragraph"><p>Sie erreichen die Agentenpakete für einen Host übrigens auch bequem über die Eigenschaften des Hosts,
+indem Sie in <span class="guihint">Setup &gt; Hosts &gt; Hosts</span> den Host anklicken und im Menü <span class="guihint">Hosts</span> den Eintrag <span class="guihint">Monitoring agent</span> auswählen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_download_host_agent.png" alt="Liste der Agenten für einen Host zum Download."></div></div>
+<div class="paragraph"><p>Warum werden für jeden Host die Pakete für alle Betriebssysteme angeboten?
+Die Antwort ist sehr einfach:
+Solange kein Agent auf einem System installiert ist, kann Checkmk das Betriebssystem natürlich nicht erkennen.
+Sobald die <a href="agent_deployment.html">automatischen Agenten-Updates</a> aktiviert sind, brauchen Sie sich darum ohnehin nicht mehr zu kümmern.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__erweiterung_über_plugins">
+<span class="hidden-anchor sr-only" id="_erweiterung_über_plugins"></span>4.5. Erweiterung über Plugins</h3>
+<div class="paragraph"><p>Sehr viele Regeln befassen sich mit der Installation verschiedener <em>Plugins.</em>
+Diese erweitern den Agenten um die Überwachung von ganz bestimmten Komponenten.
+Meist sind dies spezielle Anwendungen wie z.B. Datenbanken.
+Bei der Regel, die das Plugin aktiviert, finden Sie auch gleich die Einstellungen für die Konfiguration des Plugins.
+Hier als Beispiel die Regel für die Überwachung von MySQL:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_agent_rule_mysql.png" alt="Regel für das MySQL Plugin des Agenten."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__konfigurationsdateien">
+<span class="hidden-anchor sr-only" id="_konfigurationsdateien"></span>4.6. Konfigurationsdateien</h3>
+<div class="paragraph"><p>Achten Sie darauf, dass Sie Konfigurationsdateien, die die Agentenbäckerei erzeugt, auf dem Zielsystem <strong>nicht von Hand anpassen.</strong>
+Zwar wird die manuelle Änderung erstmal funktionieren, aber beim nächsten Update des Agenten sind die Änderungen wieder verloren.
+Das Installieren von zusätzlichen Plugins und Konfigurationsdateien ist dagegen problemlos möglich.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_agent_update">
+<span class="hidden-anchor sr-only" id="agent_update"></span>5. Wann soll man den Agenten updaten?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Egal, ob Sie nur eine Handvoll oder gleich tausende Hosts überwachen:
+Eine Aktualisierung des Checkmk-Agenten auf allen Hosts ist immer ein größerer Eingriff.
+Das <a href="agent_deployment.html">automatische Agenten-Update</a> der <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> ist zwar eine Erleichterung, doch trotzdem sollten Sie den Agenten immer nur dann aktualisieren, wenn das Update:</p></div>
+<div class="ulist"><ul>
+<li><p>einen Fehler behebt, von dem Sie betroffen sind, oder</p></li>
+<li><p>neue, benötigte Funktionen enthält.</p></li>
+</ul></div>
+<div class="paragraph"><p>Damit dies auch so möglich ist, gilt in Checkmk die generelle Regel:
+Neuere Checkmk-Versionen können mit der Ausgabe von älteren Agenten grundsätzlich umgehen.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Umgekehrt gilt das nicht unbedingt.
+Wenn die Checkmk-Version eines Agenten neuer ist, als die des Monitoring-Servers, kann es sein, dass die dort vorhandenen Check-Plugins Ausgaben des Agenten nicht korrekt interpretieren können.
+In so einem Fall gehen die betroffenen Services auf <span class="state3">UNKNOWN</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_crashed_check.png" alt="Liste von Services im Status UNKNOWN wegen eines fehlgeschlagenen Checks."></div></div>
+<div class="paragraph"><p>Auch wenn die Ausgabe im obigen Bild etwas anderes nahelegt, senden Sie bitte in so einem Fall <em>keinen</em> Crash-Report.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_diagnostics">
+<span class="hidden-anchor sr-only" id="diagnostics"></span>6. Fehlerdiagnose</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__agent_über_die_kommandozeile_testen">
+<span class="hidden-anchor sr-only" id="_agent_über_die_kommandozeile_testen"></span>6.1. Agent über die Kommandozeile testen</h3>
+<div class="paragraph"><p>Sie können einen korrekt installierten Agenten sehr einfach von der Kommandozeile aus abfragen.
+Am besten machen Sie das direkt von der Checkmk-Instanz aus, welche den Agenten auch produktiv überwachen soll.
+So können Sie sicherstellen, dass die IP-Adresse des Servers vom Agenten akzeptiert wird.
+Als Befehle eignen sich z.B. <code>telnet</code> und <code>netcat</code> (oder <code>nc</code>).</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>nc<span class="tok-w"> </span><span class="tok-m">10</span>.1.1.2<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">16</span></code></pre></div></div>
+<div class="paragraph"><p>Die Ausgabe <code>16</code> zeigt an, dass die Verbindungsaufnahme über den TCP-Port 6556 erfolgreich war und nun der TLS-Handshake stattfinden kann.
+Der Agent wurde per Agent Controller bei der Checkmk-Instanz registriert, so dass die Kommunikation TLS verschlüsselt stattfindet und keine Agentenausgabe angezeigt wird.
+Einzelheiten zur Registrierung finden Sie im Artikel zum <a href="agent_linux.html#registration">Linux-Agenten</a> und <a href="agent_windows.html#registration">Windows-Agenten</a>.</p></div>
+<div class="paragraph"><p>Falls die Kommunikation zwischen Agent und Checkmk-Server <em>noch</em> unverschlüsselt ist (wie im Legacy-Pull-Modus) oder unverschlüsselt ist und auch bleibt (wie im Legacy-Modus), erhalten Sie mit diesem Kommando statt der <code>16</code> die komplette unverschlüsselte Agentenausgabe (von der im folgenden nur die ersten Zeilen gezeigt werden):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>nc<span class="tok-w"> </span><span class="tok-m">10</span>.1.1.2<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.1.0p1</span>
+<span class="tok-go">AgentOS: linux</span>
+<span class="tok-go">Hostname: mycmkserver</span>
+<span class="tok-go">AgentDirectory: /etc/check_mk</span>
+<span class="tok-go">DataDirectory: /var/lib/check_mk_agent</span>
+<span class="tok-go">SpoolDirectory: /var/lib/check_mk_agent/spool</span>
+<span class="tok-go">PluginsDirectory: /usr/lib/check_mk_agent/plugins</span></code></pre></div></div>
+<div class="paragraph"><p>Die Ausgabe beginnt immer mit der Zeile <code>&lt;&lt;&lt;check_mk&gt;&gt;&gt;</code>.
+Zeilen, die in <code>&lt;&lt;&lt;</code> und <code>&gt;&gt;&gt;</code> eingeschlossen sind, werden als <em>Sektions-Header</em> bezeichnet.
+Sie teilen die Agentenausgaben in Sektionen.
+Jede Sektion enthält zusammengehörige Informationen und ist meist einfach die Ausgabe eines Diagnosebefehls.
+Die Sektion <code>check_mk</code> spielt eine Sonderrolle.
+Sie enthält allgemeine Informationen über den Agenten selbst, wie z.B. dessen Versionsnummer.</p></div>
+<div class="paragraph"><p>Wenn der Host bereits in das Monitoring aufgenommen ist, können Sie die Daten auch mit dem <a href="cmk_commandline.html#dump_agent">Befehl</a> <code>cmk -d</code> abrufen.
+Dieser verwendet dann die im <span class="guihint">Setup</span> konfigurierte IP-Adresse, berücksichtigt eine eventuell umkonfigurierte Port-Nummer und auch den Fall eines Spezialagenten:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-d<span class="tok-w"> </span>mycmkserver
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.1.0p1</span></code></pre></div></div>
+<div class="paragraph"><p>Wenn das Monitoring für den besagten Host bereits regelmäßig läuft, finden Sie immer eine aktuelle Kopie der Ausgabe im Instanzverzeichnis <code>~/tmp/check_mk/cache</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cat<span class="tok-w"> </span>tmp/check_mk/cache/mycmkserver
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.1.0p1</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Weitere Diagnosekommandos zur Ausführung auf dem Host des Agenten finden Sie im Artikel zum <a href="agent_linux.html#test">Linux-Agenten</a> und <a href="agent_windows.html#test">Windows-Agenten.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_diagnosticpage">
+<span class="hidden-anchor sr-only" id="diagnosticpage"></span>6.2. Agent über die Weboberfläche testen</h3>
+<div class="paragraph"><p>Auch über die Weboberfläche können Sie eine Diagnose des Agenten durchführen.
+Diese berücksichtigt sämtliche Einstellungen, unterstützt auch SNMP-basierte Geräte und solche, die über einen Spezialagenten abgefragt werden.
+Das Praktische: Checkmk probiert hier einfach immer gleichzeitig die Abfrage über TCP-Port 6556 <strong>und</strong> SNMP.</p></div>
+<div class="paragraph"><p>Sie erreichen den Verbindungstest über die Eigenschaften des Hosts:
+Wählen Sie auf der Seite <span class="guihint">Properties of host</span> im Menü <span class="guihint">Host &gt; Connection tests</span> und starten Sie den Test durch Klick auf <span class="guihint">Run tests</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoringagents_host_diag.png" alt="Ergebnis des Verbindungstests zu einem Host."></div></div>
+<div class="paragraph"><p>Etliche der Einstellungen (z.B. die SNMP-Community) können Sie hier sofort ausprobieren und bei Erfolg speichern.</p></div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li><a href="#agents">2. Der Checkmk-Agent</a></li>
+<li><a href="#download_page">3. Agent von der Download-Seite herunterladen</a></li>
+<li>
+<a href="#bakery">4. Die Agentenbäckerei</a><ul class="sectlevel1">
+<li><a href="#_einleitung_2">4.1. Einleitung</a></li>
+<li><a href="#bakery_download">4.2. Agent herunterladen</a></li>
+<li><a href="#_konfiguration_%C3%BCber_regeln">4.3. Konfiguration über Regeln</a></li>
+<li><a href="#agent_configurations">4.4. Die Agentenkonfigurationen</a></li>
+<li><a href="#_erweiterung_%C3%BCber_plugins">4.5. Erweiterung über Plugins</a></li>
+<li><a href="#_konfigurationsdateien">4.6. Konfigurationsdateien</a></li>
+</ul>
+</li>
+<li><a href="#agent_update">5. Wann soll man den Agenten updaten?</a></li>
+<li>
+<a href="#diagnostics">6. Fehlerdiagnose</a><ul class="sectlevel1">
+<li><a href="#_agent_%C3%BCber_die_kommandozeile_testen">6.1. Agent über die Kommandozeile testen</a></li>
+<li><a href="#diagnosticpage">6.2. Agent über die Weboberfläche testen</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

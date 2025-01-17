@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Regeln in Checkmk können den Standard oder die Ausnahme definieren. Dieser Artikel beschreibt detailliert die Nutzung von Regeln und wie sie ausgewertet werden.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Host- und Serviceparameter - Regeln in Checkmk verstehen und nutzen">
+<meta name="og:description" content="Regeln in Checkmk können den Standard oder die Ausnahme definieren. Dieser Artikel beschreibt detailliert die Nutzung von Regeln und wie sie ausgewertet werden.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Host- und Serviceparameter - Regeln in Checkmk verstehen und nutzen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/wato_rules.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/wato_rules.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/wato_rules.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Host- und Serviceparameter</h1>
+<div class="details">
+<span id="revdate">Last modified on 28-Nov-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/wato_rules.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato.html">Die Konfiguration von Checkmk</a>
+<a href="hosts_setup.html">Verwaltung der Hosts</a>
+<a href="wato_services.html">Services verstehen und konfigurieren</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In Checkmk konfigurieren Sie Parameter für Hosts und Services über <em>Regeln.</em>
+Diese Besonderheit macht Checkmk in komplexen Umgebungen sehr leistungsfähig
+und bringt auch in kleineren Installationen etliche Vorteile.
+Um das Prinzip der regelbasierten Konfiguration anschaulich zu machen, vergleichen wir es mit der klassischen Methode.</p></div>
+<div class="sect2">
+<h3 id="heading__der_klassische_ansatz">
+<span class="hidden-anchor sr-only" id="_der_klassische_ansatz"></span>1.1. Der klassische Ansatz</h3>
+<div class="paragraph"><p>Nehmen wir als Beispiel die Konfiguration von Schwellwerten für <span class="state1">WARN</span> und <span class="state2">CRIT</span> bei der Überwachung von Dateisystemen.
+Bei einer an Datenbanken orientierten Konfiguration würde man in einer Tabelle für jedes Dateisystem eine Zeile anlegen:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Host</th>
+<th class="tableblock halign-left valign-top">Dateisystem</th>
+<th class="tableblock halign-left valign-top">Warnung</th>
+<th class="tableblock halign-left valign-top">Kritisch</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver001</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver001</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/sapdata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver001</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver002</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">85 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver002</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/opt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">85 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver002</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/sapdata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">85 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver002</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/trans</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100 %</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Das ist einigermaßen übersichtlich — aber nur weil die Tabelle hier kurz ist.
+In der Praxis haben Sie eher Hunderte oder Tausende von Dateisystemen.
+Werkzeuge wie Copy &amp; Paste und Bulk-Operationen können die Arbeit erleichtern,
+aber es bleibt ein Grundproblem:
+Wie können Sie hier eine Richtlinie (<em>policy</em>) erkennen und durchsetzen?
+Wie ist die generelle Regel?
+Wie sollen Schwellwerte für zukünftige Hosts eingestellt werden?</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rule_based">
+<span class="hidden-anchor sr-only" id="rule_based"></span>1.2. Regelbasiert ist besser!</h3>
+<div class="paragraph"><p>Eine regelbasierte Konfiguration hingegen <strong>besteht</strong> aus der Richtlinie!
+Die Logik der obigen Tabelle ersetzen wir durch einen Satz aus vier Regeln.
+Wenn wir davon ausgehen, dass <code>myserver001</code> ein Testsystem ist,
+und dass für jedes Dateisystem die jeweils <em>erste zutreffende Regel</em> gilt,
+ergeben sich die gleichen Schwellwerte wie in der Tabelle von oben:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Dateisysteme mit dem Mount-Punkt <code>/var/trans</code> haben die Schwellwerte 100/100 %.</p></li>
+<li><p>Das Dateisystem <code>/sapdata</code> auf <code>myserver002</code> hat die Schwellwerte 85/95 %.</p></li>
+<li><p>Dateisysteme auf Testsystemen haben die Schwellwerte 90/95 %.</p></li>
+<li><p>Alle (übrigen) Dateisysteme haben die Schwellwerte 85/90 %.</p></li>
+</ol></div>
+<div class="paragraph"><p>Zugegeben — bei nur zwei Hosts bringt das nicht viel.
+Aber wenn es nur ein paar mehr sind, wird der Mehraufwand schnell sehr groß.
+Die Vorteile der regelbasierten Konfiguration liegen auf der Hand:</p></div>
+<div class="ulist"><ul>
+<li><p>Die Richtlinie ist klar erkennbar und wird zuverlässig durchgesetzt.</p></li>
+<li><p>Sie können die Richtlinie jederzeit ändern, ohne dass Sie Tausende Datensätze anfassen müssen.</p></li>
+<li><p><em>Ausnahmen</em> sind immer noch möglich, aber in Form von Regeln dokumentiert.</p></li>
+<li><p>Das Aufnehmen von neuen Hosts ist einfach und wenig fehleranfällig.</p></li>
+</ul></div>
+<div class="paragraph"><p>Zusammengefasst also: weniger Arbeit — mehr Qualität!
+Und deswegen finden Sie Regeln bei Checkmk an allen Stellen, wo es irgendwie um Hosts oder Services geht:
+bei Schwellwerten, Monitoring-Einstellungen, Zuständigkeiten, Benachrichtigungen, Agentenkonfiguration und vielem mehr.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rule_set_types">
+<span class="hidden-anchor sr-only" id="rule_set_types"></span>1.3. Arten von Regelsätzen</h3>
+<div class="paragraph"><p>Im Setup von Checkmk werden Regeln in <em>Regelsätzen</em> organisiert.
+Jeder Regelsatz hat die Aufgabe, einen ganz bestimmten Parameter für Hosts oder Services festzulegen.
+In Checkmk gibt es über 700 Regelsätze!
+Hier einige Beispiele:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Host check command</span> — legt fest, wie geprüft werden soll, ob Hosts <span class="hstate0">UP</span> sind.</p></li>
+<li><p><span class="guihint">Alternative display name for services</span> — definiert für Services alternative Anzeigenamen.</p></li>
+<li><p><span class="guihint">JVM memory levels</span> — legt Schwellwerte und andere Parameter für die Überwachung des Speicherbedarfs von Java virtuellen Maschinen (VM) fest.</p></li>
+</ul></div>
+<div class="paragraph"><p>Jeder Regelsatz ist entweder für Hosts oder für Services zuständig — nie für beide.
+Wenn Parameter sowohl für Hosts als auch für Services einstellbar sind, gibt es jeweils ein Paar von Regelsätzen — z.B. <span class="guihint">Normal check interval for host checks</span> und <span class="guihint">Normal check interval for services checks</span>.</p></div>
+<div class="paragraph"><p>Einige Regelsätze legen genau genommen nicht Parameter fest, sondern erzeugen Services.
+Ein Beispiel sind die Regeln für <a href="glossar.html#active_check">aktive Checks</a>, die Sie unter <span class="guihint">Setup &gt; Services &gt; HTTP, TCP, Email, …​</span> finden.
+Damit können Sie z.B. einen HTTP-Check für bestimmte Hosts einrichten.
+Diese Regeln gelten als Host-Regeln.
+Denn die Tatsache, dass so ein Check auf einem Host existiert, gilt als eine Eigenschaft des Hosts.</p></div>
+<div class="paragraph"><p>Ferner gibt es Regelsätze, welche die <a href="glossar.html#service_discovery">Service-Erkennung</a> steuern.
+So können Sie z.B. über <span class="guihint">Windows service discovery</span> festlegen, für welche Windows-Dienste automatisch Checks eingerichtet werden sollen,
+falls diese auf einem System gefunden werden.
+Auch dies sind Host-Regeln.</p></div>
+<div class="paragraph"><p>Der Großteil der Regelsätze legt Parameter für bestimmte <a href="glossar.html#check_plugin">Check-Plugins</a> fest.
+Ein Beispiel ist <span class="guihint">Network interfaces and switch ports.</span>
+Die Einstellungen in diesen Regeln sind sehr individuell auf das jeweilige Plugin zugeschnitten.
+Solche Regelsätze finden grundsätzlich nur bei denjenigen Services Anwendung, die auf diesem Check-Plugin basieren.
+Falls Sie unsicher sind, welcher Regelsatz für welche Services zuständig ist,
+navigieren Sie am besten direkt über den Service zur passenden Regel.
+Wie das geht, erfahren Sie später.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__host_merkmale">
+<span class="hidden-anchor sr-only" id="_host_merkmale"></span>1.4. Host-Merkmale</h3>
+<div class="paragraph"><p>Eines haben wir bisher noch unterschlagen:
+In obigem Beispiel gibt es eine Regel für alle Testsysteme.
+Wo ist eigentlich festgelegt, welcher Host ein Testsystem ist?</p></div>
+<div class="paragraph"><p>So etwas wie <em>Testsystem</em> heißt bei Checkmk <a href="glossar.html#host_tag">Host-Merkmal</a> (englisch: <em>host tag</em>).
+Welche Merkmale es gibt, können Sie sich über <span class="guihint">Setup &gt; Hosts &gt; Tags</span> anzeigen lassen.
+Einige Merkmale sind bereits vordefiniert — zum Beispiel für ein <span class="guihint">Test system</span>, das in der Gruppe <span class="guihint">Criticality</span> definiert ist.</p></div>
+<div class="paragraph"><p>Die Zuordnung zu den Hosts geschieht entweder explizit in den Eigenschaften des Hosts oder per Vererbung über die Ordnerhierarchie.
+Wie das geht, erfahren Sie im <a href="hosts_setup.html#folder">Artikel über die Hosts.</a>
+Wie Sie eigene Merkmale anlegen können und was es mit den bereits vordefinierten Merkmalen auf sich hat, lesen Sie im Artikel über die <a href="host_tags.html">Host-Merkmale.</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__auffinden_der_richtigen_regelsätze">
+<span class="hidden-anchor sr-only" id="_auffinden_der_richtigen_regelsätze"></span>2. Auffinden der richtigen Regelsätze</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__host_regelsätze">
+<span class="hidden-anchor sr-only" id="_host_regelsätze"></span>2.1. Host-Regelsätze</h3>
+<div class="paragraph"><p>Wenn Sie eine neue Regel anlegen möchten, die für einen oder mehrere Hosts einen Parameter definiert,
+dann gibt es mehrere Wege zum Ziel.
+Der direkte Weg geht über die entsprechende Gruppe im <span class="guihint">Setup</span>-Menü,
+in diesem Fall also <span class="guihint">Setup &gt; Hosts &gt; Host monitoring rules:</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_host_monitoring_rules.png" alt="Setup-Menü mit Fokus auf die 'Host monitoring rules'."></div></div>
+<div class="paragraph"><p>In der folgenden Ansicht werden nun alle für das Host-Monitoring relevanten Regelsätze angezeigt.
+Die Zahlen hinter den Namen dieser Regelsätze zeigen die Anzahl der bereits definierten Regeln:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_host_monitoring_rules_2.png" alt="Die 'Host monitoring rules' im Setup-Menü."></div></div>
+<div class="paragraph"><p>Etwas schneller können Sie allerdings über das <em>Suchfeld</em> an Ihr Ziel gelangen.
+Dazu müssen Sie natürlich ungefähr wissen, wie der Regelsatz heißt.
+Hier ist als Beispiel das Ergebnis einer Suche nach <code>host checks</code>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_search_host_checks.png" alt="Auszug des Ergebnisses einer Suche nach host checks." width="50%"></div></div>
+<div class="paragraph"><p>Ein anderer Weg geht über den Menüpunkt <span class="guihint">Hosts &gt; Effective parameters</span> in den Eigenschaften eines vorhandenen Hosts im Setup
+oder über das <span class="image-inline"><img src="../images/icons/icon_rulesets.png" alt="icon rulesets"></span> Symbol in der Liste der Hosts eines Ordners.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_setup_object_parameters.png" alt="Host-Liste im Setup-Menü mit Hervorhebung des Knopfes für die gültigen Parameter."></div></div>
+<div class="paragraph"><p>Dort finden Sie nicht nur alle Regelsätze, die den Host betreffen,
+sondern auch den jeweils für diesen Host aktuell wirksamen Parameter.
+Im Beispiel von <span class="guihint">Host check command</span> greift für den gezeigten Host keine Regel,
+und er steht deswegen auf <span class="guihint">Smart PING (only with Checkmk Micro Core),</span> dem Standardwert in den Enterprise Editions.
+In der Raw Edition ist der Standardwert <span class="guihint">PING (active check with ICMP echo request).</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_host_rule_sets.png" alt="Anzeige für das 'Host check command' mit dem Standardwert."></div></div>
+<div class="paragraph"><p>Klicken Sie auf <span class="guihint">Host Check Command,</span> um den ganzen Regelsatz zu sehen.</p></div>
+<div class="paragraph"><p>Falls bereits eine Regel existiert, erscheint anstelle von <span class="guihint">Default Value</span> die Nummer der Regel, welche diesen Parameter festlegt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_host_rule_sets2.png" alt="Anzeige für das 'Host check command' mit Regel."></div></div>
+<div class="paragraph"><p>Ein Klick darauf bringt Sie direkt zu dieser Regel.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_checkparameters">
+<span class="hidden-anchor sr-only" id="checkparameters"></span>2.2. Service-Regelsätze</h3>
+<div class="paragraph"><p>Der Weg zu den Regelsätzen für Services ist ähnlich.
+Der allgemeine Zugang geht auch hier über das <span class="guihint">Setup</span>-Menü,
+in diesem Fall also <span class="guihint">Setup &gt; Services &gt; Service monitoring rules</span>
+oder zweckmäßigerweise über das Suchfeld.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_service_monitoring_rules.png" alt="Setup-Menü mit Fokus auf die 'Service monitoring rules' und das Suchfeld."></div></div>
+<div class="paragraph"><p>Wenn Sie nicht schon sehr geübt mit den Namen der Regelsätze sind, dann ist der Weg über den Service allerdings einfacher.
+Analog zu den Hosts gibt es auch hier eine Seite, auf der alle Parameter des Services dargestellt werden
+und Sie die Möglichkeit haben, die passenden Regelsätze direkt anzusteuern.
+Sie erreichen diese Parameterseite mit dem <span class="image-inline"><img src="../images/icons/icon_services.png" alt="icon services"></span> Symbol in der Liste der Services eines Hosts im Setup.
+Das <span class="image-inline"><img src="../images/icons/icon_check_parameters.png" alt="icon check parameters"></span> Symbol bringt Sie direkt zu demjenigen Regelsatz, der die <a href="wato_services.html#parameters">Parameter für das Check-Plugin</a> des Services
+festlegt.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_setup_service_list.png" alt="Services-Liste im Setup mit den Symbolen zum Aufruf der Parameter."></div></div>
+<div class="paragraph"><p>Das Symbol <span class="image-inline"><img src="../images/icons/icon_rulesets.png" alt="icon rulesets"></span> für die Parameterseite gibt es übrigens auch im Monitoring im Aktionsmenü jedes Services:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_service_context_menu.png" alt="Services-Liste im Monitoring mit geöffnetem Aktionsmenü eines Services."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_enforced_services">
+<span class="hidden-anchor sr-only" id="enforced_services"></span>2.3. Erzwungene Services</h3>
+<div class="paragraph"><p>Im <span class="guihint">Setup</span>-Menü finden Sie des Weiteren einen Eintrag für <span class="guihint">Enforced Services</span>, d.h. für erzwungene Services.
+Wie der Name schon sagt, können Sie über diese Regelsätze erzwingen, dass Services bei Ihren Hosts angelegt werden.
+Einzelheiten dazu finden Sie im <a href="wato_services.html#enforced_services">Artikel über die Services</a>.
+Eine kleine Zahl von Regelsätzen — wie z.B. <span class="guihint">Simple checks for BIOS/Hardware errors</span> — finden Sie ausschließlich unter den erzwungenen Services.
+Hierbei handelt es sich um Services, welche nicht durch die Service-Erkennung entstehen, sondern von Ihnen manuell angelegt werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__benutzte_regelsätze">
+<span class="hidden-anchor sr-only" id="_benutzte_regelsätze"></span>2.4. Benutzte Regelsätze</h3>
+<div class="paragraph"><p>In jeder der vorgenannten Auflistungen von Regelsätzen — sei es in den <span class="guihint">Host monitoring rules</span> oder den <span class="guihint">Service monitoring rules</span> — können Sie über <span class="guihint">Related &gt; Used rulesets</span> in der Menüleiste, nur genau die Regelsätze anzeigen lassen, in denen Sie mindestens eine Regel definiert haben.
+Dies ist oft ein bequemer Einstieg, wenn Sie Anpassungen an Ihren bestehenden Regeln vornehmen möchten.
+Einige der Regeln entstehen übrigens schon beim Anlegen der Checkmk-Instanz und sind Teil der Beispielkonfiguration.
+Auch diese werden hier angezeigt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__wirkungslose_regeln">
+<span class="hidden-anchor sr-only" id="_wirkungslose_regeln"></span>2.5. Wirkungslose Regeln</h3>
+<div class="paragraph"><p>Monitoring ist eine komplexe Sache.
+Da kann es schon mal vorkommen, dass es Regeln gibt, welche bei keinem einzigen Host oder Service greifen — entweder, weil Sie einen Fehler gemacht haben oder weil die passenden Hosts und Services verschwunden sind.
+Solche wirkungslosen Regeln können Sie, in den vorgenannten Auflistungen von Regelsätzen, über <span class="guihint">Related &gt; Ineffective rulesets</span> in der Menüleiste anzeigen lassen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__veraltete_regelsätze">
+<span class="hidden-anchor sr-only" id="_veraltete_regelsätze"></span>2.6. Veraltete Regelsätze</h3>
+<div class="paragraph"><p>Checkmk wird ständig weiterentwickelt.
+Gelegentlich werden dabei Dinge vereinheitlicht und es kommt dazu, dass manche Regelsätze durch andere ersetzt werden.
+Wenn Sie solche Regelsätze im Einsatz haben, finden Sie diese am einfachsten durch eine Regelsuche.
+Öffnen Sie diese über <span class="guihint">Setup &gt; General &gt; Rule search.</span>
+Klicken Sie anschließend in der Menüleiste auf <span class="guihint">Rules &gt; Refine search</span>,
+wählen Sie hinter <span class="guihint">Deprecated</span> die Option <span class="guihint">Search for deprecated rulesets</span>
+und hinter <span class="guihint">Used</span> die Option <span class="guihint">Search for rulesets that have rules configured</span>.
+Nach einem weiteren Klick auf <span class="guihint">Search</span> bekommen Sie die gewünschte Übersicht.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_search_deprecated_rules.png" alt="Optionen zur Suche nach veralteten Regelsätzen."></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_create_rules">
+<span class="hidden-anchor sr-only" id="create_rules"></span>3. Regeln erstellen und editieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die folgende Abbildung zeigt den Regelsatz <span class="guihint">Filesystems (used space and growth)</span> mit vier konfigurierten Regeln:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_filesystem.png" alt="rules filesystem"></div></div>
+<div class="paragraph"><p><strong>Neue Regeln</strong> erzeugen Sie entweder über den Knopf <span class="guihint">Create rule in folder</span> oder über das <span class="image-inline"><img src="../images/icons/icon_clone.png" alt="icon clone"></span> Klonen einer bestehenden Regel.
+Das Klonen erzeugt eine identische Kopie einer Regel, die Sie anschließend mit <span class="image-inline"><img src="../images/icons/icon_edit.png" alt="icon edit"></span> bearbeiten können.
+Eine über den Knopf <span class="guihint">Create rule in folder</span> erzeugte neue Regel wird immer am Ende der Liste der Regeln erzeugt,
+während eine geklonte Regel als Kopie unterhalb des Originals erzeugt wird.</p></div>
+<div class="paragraph"><p>Die <strong>Reihenfolge</strong> von Regeln können Sie mit dem Knopf <span class="image-inline"><img src="../images/icons/icon_drag.png" alt="icon drag"></span> ändern.
+Die Reihenfolge ist wichtig, weil weiter oben stehende Regeln immer <strong>Vorrang</strong> vor späteren haben.</p></div>
+<div class="paragraph"><p>Die Regeln sind dabei in den <a href="hosts_setup.html#folder">Ordnern</a> abgelegt, in denen Sie auch die Hosts verwalten.
+Der Wirkungsbereich von Regeln ist auf die Hosts eingeschränkt, die in diesem Ordner oder in seinen Unterordnern liegen.
+Falls sich Regeln widersprechen, so hat immer die Regel in einem Unterordner Vorrang.
+So können z.B. Benutzer, die nur für manche Ordner <a href="wato_user.html#wato_permissions">berechtigt</a> sind,
+für ihre Hosts Regeln anlegen, ohne dass diese Einfluss auf den Rest des Systems haben.
+In den Eigenschaften einer Regel können Sie deren Ordner ändern und sie somit „umziehen“.</p></div>
+<div class="sect2">
+<h3 id="heading_analyse_traffic_light">
+<span class="hidden-anchor sr-only" id="analyse_traffic_light"></span>3.1. Analyse mit der Ampel</h3>
+<div class="paragraph"><p>Wenn Sie im <span class="guihint">Setup</span> einen Regelsatz für einen Host oder Service ansteuern, zeigt Checkmk Ihnen diesen Regelsatz im <strong>Analysemodus.</strong>
+Dorthin gelangen Sie, wenn Sie im <span class="guihint">Setup</span> in der Host- oder Service-Liste im <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> Aktionsmenü das Symbol <span class="image-inline"><img src="../images/icons/icon_rulesets.png" alt="icon rulesets"></span> anklicken.
+Die folgende Seite <span class="guihint">Effective parameters of</span> zeigt die Liste der für den Host/Service geltenden Regeln.
+Um zum Analysemodus zu gelangen, klicken Sie den Namen eines Regelsatzes an, für den zumindest eine Regel existiert, der also nicht auf <span class="guihint">Default value</span> steht:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_filesystem_analyze.png" alt="Der Analysemodus mit der Ampel."></div></div>
+<div class="paragraph"><p>Dies bewirkt zwei Dinge:
+Zum einen taucht oben ein zweiter Knopf zum Anlegen von Regeln auf:
+<span class="guihint">Add rule for current host</span> bzw. <span class="guihint">Add rule for current host and service.</span></p></div>
+<div class="paragraph"><p>Damit können Sie eine neue Regel erzeugen, welche als Bedingung direkt den aktuellen Host bzw. Service eingetragen hat.
+So können Sie sehr einfach direkt eine Ausnahmeregel erzeugen.
+Zum anderen taucht in jeder Zeile ein Kugelsymbol auf, welches Ihnen anzeigt,
+ob diese Regel für den aktuellen Host bzw. Service greift.
+Dabei gibt es folgende mögliche Fälle:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 5%;">
+<col style="width: 95%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_rulenmatch.png" alt="icon rulenmatch"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Regel greift nicht für den aktuellen Host oder Service.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_rulematch.png" alt="icon rulematch"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Regel greift und definiert einen oder mehrere Parameter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_ruleimatch.png" alt="icon ruleimatch"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Regel greift zwar. Aber da eine Regel weiter oben auch greift und Vorrang hat, ist die  Regel wirkungslos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_rulepmatch.png" alt="icon rulepmatch"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Regel greift. Eine Regel weiter oben hat zwar Vorrang und greift auch, definiert aber nicht alle Parameter, so dass mindestens ein Parameter von dieser Regel definiert wird.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Der letzte Fall — das <span class="image-inline"><img src="../images/icons/icon_rulepmatch.png" alt="icon rulepmatch"></span> partielle Greifen einer Regel — kann nur bei solchen Regelsätzen auftreten,
+in denen eine Regel <strong>mehrere Parameter</strong> festlegt, welche durch Checkboxen einzeln angewählt werden können.
+Hier kann theoretisch jeder einzelne der Parameter von einer anderen Regel festgelegt werden.
+Dazu später mehr.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__eigenschaften_einer_regel">
+<span class="hidden-anchor sr-only" id="_eigenschaften_einer_regel"></span>4. Eigenschaften einer Regel</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Jede Regel besteht aus drei Blöcken.
+Der erste Block enthält allgemeine Informationen zur Regel, wie z.B. den Namen der Regel.
+Im zweiten Block wird definiert, was die Regel machen soll, welche Aktionen also durch sie ausgeführt werden.
+Der dritte Block enthält die Informationen darüber, auf wen, d.h. auf welche Hosts oder Services, die Regel angewendet werden soll.</p></div>
+<div class="sect2">
+<h3 id="heading__allgemeine_optionen_rule_properties">
+<span class="hidden-anchor sr-only" id="_allgemeine_optionen_rule_properties"></span>4.1. Allgemeine Optionen (Rule properties)</h3>
+<div class="paragraph"><p>Alles im ersten Block <span class="guihint">Rule Properties</span> ist optional und dient vor allem der Dokumentation:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_properties.png" alt="Allgemeine Regeloptionen."></div></div>
+<div class="ulist"><ul>
+<li><p>Die <span class="guihint">Description</span> wird in der Tabelle aller Regeln eines Regelsatzes angezeigt.</p></li>
+<li><p>Das Feld <span class="guihint">Comment</span> können Sie für eine längere Beschreibung verwenden.
+Es erscheint nur im Editiermodus einer Regel.
+Über das Symbol <span class="image-inline"><img src="../images/icons/icon_insertdate.png" alt="icon insertdate"></span> können Sie einen Zeitstempel und Ihren Login-Namen in den Text einfügen lassen.</p></li>
+<li><p>Die <span class="guihint">Documentation URL</span> ist für einen Link auf interne Dokumentation gedacht, die Sie in einem anderen System (z.B. einer CMDB) pflegen.
+Sie wird in der Regeltabelle über das Symbol <span class="image-inline"><img src="../images/icons/icon_url.png" alt="icon url"></span> anklickbar dargestellt.</p></li>
+<li><p>Mit der Checkbox <span class="guihint">do not apply this rule</span> können Sie die Regel vorübergehend abschalten.
+Sie wird dann in der Tabelle mit <span class="image-inline"><img src="../images/icons/icon_disabled.png" alt="icon disabled"></span> dargestellt und hat keine Wirkung.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__die_festgelegten_parameter">
+<span class="hidden-anchor sr-only" id="_die_festgelegten_parameter"></span>4.2. Die festgelegten Parameter</h3>
+<div class="paragraph"><p>Der zweite Abschnitt ist bei jeder Regel anders, legt aber immer fest, was geschehen soll.
+Folgende Abbildung zeigt einen weit verbreiteten Typ von Regel (<span class="guihint">DB2 Tablespaces</span>).
+Über Checkboxen können Sie bestimmen, welche Einzelparameter die Regel definieren soll.
+Wie weiter oben beschrieben, wird von Checkmk für jeden einzelnen Parameter getrennt ermittelt, welche Regel diesen setzt.
+Die Regel aus der Abbildung setzt also nur den einen Wert und lässt alle anderen Einstellungen unbeeinflusst:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_value_1.png" alt="Verschiedene Regelwerte mit Festlegung eines Wertes."></div></div>
+<div class="paragraph"><p>Manche Regelsätze legen keinen Parameter fest, sondern entscheiden nur, welche Hosts <em>drin</em> sind und welche nicht.
+Ein Beispiel ist der Regelsatz <span class="guihint">Hosts to be monitored</span>, dessen Parameterbereich so aussieht:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_rules_positive.png" alt="Auswahl der positiven oder negativen Übereinstimmung."></div></div>
+<div class="paragraph"><p>Durch Auswahl eines der beiden verfügbaren Werte entscheiden Sie, was mit den betroffenen Hosts geschehen soll.
+Wählen Sie <span class="guihint">Positive match (Add matching hosts to the set)</span>, so werden die betroffenen Hosts in die Menge der zu überwachenden Hosts aufgenommen.
+Durch Auswahl von <span class="guihint">Negative match (Exclude matching hosts from the set)</span> entfernen Sie die betroffenen Hosts aus dem Monitoring.
+Das <span class="guihint">Positive match</span> bzw. <span class="guihint">Negative match</span> bezieht sich auf den Inhalt der aktuellen Regel.
+Es ist <em>kein</em> zusätzliches Filterkriterium zur Auswahl der Hosts.
+Die Menge der betroffenen Hosts filtern Sie ausschließlich mit den nachfolgenden Bedingungen (<span class="guihint">Conditions</span>).</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_conditions">
+<span class="hidden-anchor sr-only" id="conditions"></span>4.3. Bedingungen (Conditions)</h3>
+<div class="paragraph"><p>Im vorigen Abschnitt haben Sie festgelegt, wie all jene Hosts bzw. Services bearbeitet werden sollen, die von Ihrer Regel betroffen sind.
+Im dritten Abschnitt <span class="guihint">Conditions</span> definieren Sie nun, welche Hosts bzw. Services für die Regel — und damit deren Auswirkungen — herangezogen werden sollen.
+Dabei gibt es verschiedene Arten von Bedingungen, die alle erfüllt sein müssen, damit die Regel greift.
+Die Bedingungen werden also logisch UND-verknüpft:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_conditions_1.png" alt="Die Bedingungen für eine Regel."></div></div>
+<div class="sect3">
+<h4 id="heading__condition_type">
+<span class="hidden-anchor sr-only" id="_condition_type"></span>Condition type</h4>
+<div class="paragraph"><p>Hier haben Sie die Möglichkeit, neben einer normalen Bedingung auch auf vordefinierte Bedingungen (<em>predefined conditions</em>) zurückzugreifen.
+Diese werden über <span class="guihint">Setup &gt; General &gt; Predefined conditions</span> verwaltet.
+Geben Sie hier Regelbedingungen, die Sie immer wieder brauchen, einen festen Namen und verweisen in den Regeln einfach darauf.
+Sie können sogar später den Inhalt dieser Bedingungen zentral ändern und alle Regeln werden automatisch angepasst.
+In folgendem Beispiel wird die vordefinierte Bedingung <span class="guihint">No VM</span> ausgewählt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_conditions_2.png" alt="Auswahl einer vordefinierten Bedingung für eine Regel."></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__folder">
+<span class="hidden-anchor sr-only" id="_folder"></span>Folder</h4>
+<div class="paragraph"><p>Mit der Bedingung <span class="guihint">Folder</span> legen Sie fest, dass die Regel nur für Hosts gelten soll, die in diesem Ordner (oder einem Unterordner) enthalten sind.
+Ist die Einstellung auf <span class="guihint">Main,</span> so gilt diese Bedingung also für alle Hosts.
+Wie weiter oben beschrieben, haben die Ordner auch einen Einfluss auf die Reihenfolge der Regeln.
+Regeln in tieferen Ordnern haben immer Vorrang vor Regeln in höher liegenden.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__host_tags">
+<span class="hidden-anchor sr-only" id="_host_tags"></span>Host tags</h4>
+<div class="paragraph"><p>Die <span class="guihint">Host tags</span> schränken die Regel auf solche Hosts ein, die bestimmte Host-Merkmale haben oder nicht haben.
+Auch hier wird immer mit UND verknüpft.
+Jede weitere Bedingung für Host-Merkmale in einer Regel verringert also die Menge der Hosts, auf die diese wirkt.</p></div>
+<div class="paragraph"><p>Wenn Sie eine Regel für zwei mögliche Ausprägungen eines Merkmals gelten lassen möchten (z.B. bei <span class="guihint">Criticality</span> sowohl <span class="guihint">Productive system</span> als auch <span class="guihint">Business critical</span>), so geht das nicht mit einer einzelnen Regel.
+Sie benötigen dann eine Kopie der Regel für jede Variante.
+Manchmal hilft hier aber auch die Negation.
+Sie können als Bedingung auch festlegen, dass ein Merkmal <strong>nicht</strong> vorhanden ist (z.B. nicht <span class="guihint">Test system</span>).
+Eine andere Möglichkeit sind sogenannte <a href="host_tags.html#aux_tag">Hilfsmerkmale.</a></p></div>
+<div class="paragraph"><p>Weil einige Anwender wirklich sehr viele Host-Merkmale verwenden, haben wir den Dialog so gestaltet, dass nicht sofort alle Host-Merkmalsgruppen angezeigt werden.
+Sie müssen diese zunächst für die Regel aktivieren.
+Das geht so:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Wählen Sie in der Auswahlbox eine Host-Merkmalsgruppe.</p></li>
+<li><p>Klicken Sie <span class="guihint">Add tag condition</span>. Dadurch wird darüber ein Eintrag für diese Gruppe hinzugefügt.</p></li>
+<li><p>Wählen Sie <span class="guihint">is</span> oder <span class="guihint">is not.</span></p></li>
+<li><p>Wählen Sie das gewünschte Merkmal als Vergleichswert.</p></li>
+</ol></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_hosttags.png" alt="Festlegung mehrerer Host-Merkmale in einer Bedingung."></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__labels">
+<span class="hidden-anchor sr-only" id="_labels"></span>Labels</h4>
+<div class="paragraph"><p>Auch <a href="glossar.html#label">Labels</a> können Sie für Bedingungen in Regeln verwenden.
+Fügen Sie Bedingungen mit <span class="guihint">Add label condition</span> hinzu.
+Wählen Sie nun entweder <span class="guihint">has</span> oder <span class="guihint">has not</span> um eine positive oder negative Bedingung zu formulieren
+und geben Sie dann das Label in der gewohnten Form <em>Schlüssel:Wert</em> ein.
+Achten Sie hier auf die exakte Schreibweise einschließlich der Groß-/Kleinschreibung.
+Sonst wird die Bedingung nicht korrekt funktionieren.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_labels.png" alt="Bedingung für Service-Labels."></div></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Haben Sie weder <span class="guihint">Host tags</span> noch <span class="guihint">Host labels</span> definiert, wird die betreffende Regel immer auf alle Hosts bzw. Services angewendet.
+Haben Sie mehrere Regeln erstellt, so werden nachfolgende Regeln dadurch unter Umständen nicht mehr ausgewertet, siehe <a href="#matching">Arten der Regelauswertung</a>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__explicit_hosts">
+<span class="hidden-anchor sr-only" id="_explicit_hosts"></span>Explicit hosts</h4>
+<div class="paragraph"><p>Diese Art von Bedingung ist für Ausnahmeregeln vorgesehen.
+Hier können Sie einen oder mehrere Host-Namen auflisten.
+Die Regel gilt dann nur für diese Hosts.
+Beachten Sie, dass wenn Sie <span class="guihint">Explicit hosts</span> angekreuzt haben und <strong>keinen</strong> Host eintragen, die Regel überhaupt nicht greifen wird.</p></div>
+<div class="paragraph"><p>Über die Option <span class="guihint">Negate</span> können Sie eine umgekehrte Ausnahme definieren.
+Damit schließen Sie bestimmte explizit genannte Hosts von der Regel aus.
+Die Regel greift dann für alle Hosts <strong>außer</strong> den hier genannten.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_explicithosts_1.png" alt="Bedingung für explizit genannte Hosts."></div></div>
+<div class="paragraph"><p><strong>Wichtig</strong>: Alle hier eingetippten Host-Namen werden auf <strong>genaue Übereinstimmung</strong> geprüft.
+Groß-/Kleinschreibung wird von Checkmk in Host-Namen grundsätzlich unterschieden!</p></div>
+<div class="paragraph"><p>Sie können dieses Verhalten auf <a href="regexes.html">reguläre Ausdrücke</a> umstellen, indem Sie dem Host-Namen eine Tilde (<code>~</code>) voranstellen.
+In diesem Fall gilt wie immer im <span class="guihint">Setup</span>:</p></div>
+<div class="ulist"><ul>
+<li><p>Die Suche geht auf den <strong>Anfang</strong> des Host-Namens.</p></li>
+<li><p>Die Suche ignoriert Groß-/Kleinschreibung.</p></li>
+</ul></div>
+<div class="paragraph"><p>Punkt-Stern (<code>.*</code>) bedeutet bei <a href="regexes.html">regulären Ausdrücken</a> eine beliebige Folge von Zeichen.
+Folgendes Beispiel zeigt eine Bedingung, die bei allen Hosts greift, deren Namen die Zeichenfolge <code>my</code> (oder <code>My</code>, <code>MY</code>, <code>mY</code> usw.) <strong>enthält</strong>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_explicithosts_2.png" alt="Bedingung zur Host-Auswahl mit Platzhaltern."></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__explicit_services">
+<span class="hidden-anchor sr-only" id="_explicit_services"></span>Explicit services</h4>
+<div class="paragraph"><p>Bei Regeln, die sich auf Services beziehen, gibt es als letzte Bedingungsart noch eine Suche auf den Namen des Services,
+bzw. bei Regeln, die Check-Parameter festlegen, auf den Namen des <strong>Check Items.</strong>
+Wonach genau gesucht wird, sehen Sie in der Beschriftung.
+In unserem Beispiel ist das der Name (<span class="guihint">Instance</span>) eines Tablespaces:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_props_explicitservices.png" alt="Bedingung zur Service-Auswahl mit Platzhaltern."></div></div>
+<div class="paragraph"><p>Hier gilt grundsätzlich eine Suche mit <a href="regexes.html">regulären Ausdrücken</a>.
+Die Folge <code>.*temp</code> findet alle Tablespaces, die <code>temp</code> <strong>enthalten,</strong> denn die Suche geht immer auf den Anfang des Namens.
+Das Dollarzeichen am Ende von <code>transfer$</code> steht für das Ende und erzwingt somit einen exakten Treffer.
+Ein Tablespace mit dem Namen <code>transfer2</code> würde daher <strong>nicht</strong> gefunden.</p></div>
+<div class="paragraph"><p>Vergessen Sie nicht:
+Bei Regeln, in denen es um <span class="guihint">Explicit services</span> geht, benötigen Sie eine Suche nach dem Service-Namen (z.B. <code>Tablespace transfer</code>).
+Bei Regeln mit Check-Parametern geht es um eine Suche nach dem Item (z.B. <code>transfer</code>).
+Das Item ist quasi der variable Teil des Service-Namens und legt fest, um <em>welchen</em> Tablespace es sich handelt.</p></div>
+<div class="paragraph"><p>Es gibt übrigens auch Services ohne Item.
+Ein Beispiel ist die <span class="guihint">CPU load.</span>
+Diese gibt es pro Host nur einmal, also ist kein Item notwendig.
+Regeln für solche Check-Typen haben folglich auch keine Bedingung dafür.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_matching">
+<span class="hidden-anchor sr-only" id="matching"></span>5. Regelauswertungen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Nun haben wir beschrieben, wie Regeln erstellt werden.
+Mit der Erstellung von Regeln ist es jedoch nicht getan.
+Im Beispiel des Abschnitts <a href="#rule_based">Regelbasiert ist besser</a> reicht eine einzelne Regel nicht, um das gewünschte Ergebnis zu erreichen.
+Ein komplexeres System aus logisch aufeinanderfolgenden Regeln wird hierfür benötigt.
+Damit wird auch das Verständnis für das Zusammenspiel verschiedener Regeln bedeutsam.</p></div>
+<div class="sect2">
+<h3 id="heading_matching_type">
+<span class="hidden-anchor sr-only" id="matching_type"></span>5.1. Arten der Regelauswertung</h3>
+<div class="paragraph"><p>In der Einleitung in das Prinzip der Regeln haben Sie gesehen, dass immer die erste zutreffende Regel den Ergebniswert festlegt.
+Das ist nicht die ganze Wahrheit.
+Es gibt insgesamt drei verschiedene Arten der Auswertung:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Auswertung</th>
+<th class="tableblock halign-left valign-top">Verhalten</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erste Regel<br>
+(<span class="guihint">The first matching rule defines the parameter.</span>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die erste Regel, die zutrifft, legt den Wert fest.
+Weitere Regeln werden nicht mehr ausgewertet.
+Dies ist der Normalfall für Regeln, die einfache Parameter festlegen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erste Regel pro Parameter<br>
+(<span class="guihint">Each parameter is defined by the first matching rule where that parameter is set.</span>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jeder Einzelparameter wird von der ersten Regel festgelegt, bei der dieser Parameter definiert ist (Checkbox angekreuzt).
+Dies ist der Normalfall für alle Regeln mit Unterparametern, die mit Checkboxen aktiviert werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Regeln<br>
+(<span class="guihint">All matching rules will add to the resulting list.</span>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle zutreffenden Regeln fügen Elemente zum Ergebnis hinzu.
+Dieser Typ kommt z.B. bei der Zuordnung von Hosts und Services zu Host-, Service- und Kontaktgruppen zum Einsatz.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Die Information, wie die Regel ausgewertet wird, wird bei jedem Regelsatz direkt unterhalb der Menüleiste angezeigt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/rules_matching_strategy.png" alt="Anzeige der geltenden Regelauswertung oberhalb der Regel."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rules_applied">
+<span class="hidden-anchor sr-only" id="rules_applied"></span>5.2. Regelauswertung praktisch erklärt</h3>
+<div class="paragraph"><p>Wie wird nun konkret ausgewertet, wenn man mehrere Regeln erstellt hat, die auf mehrere Hosts angewendet werden sollen?
+Um dies zu veranschaulichen, nehmen wir ein einfaches Beispiel:</p></div>
+<div class="paragraph"><p>Angenommen, Sie haben drei Hosts und wollen für jeden dieser Hosts (und auch für alle künftig hinzukommenden) mit der Regel <span class="guihint">Periodic notifications during host problems</span> unterschiedliche periodisch wiederholte Benachrichtigungen festlegen:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Regel A: Host-1 alle 10 Minuten</p></li>
+<li><p>Regel B: Host-2 alle 20 Minuten</p></li>
+<li><p>Regel C: alle Hosts alle 30 Minuten (allgemeine Regel, um sowohl Host-3 als auch künftige Hosts abzudecken)</p></li>
+</ol></div>
+<div class="paragraph"><p>Wenn Sie nun Ihre Konfiguration aktivieren, läuft Checkmk die Regelkette von oben nach unten durch.
+Es ergibt sich so die folgende Auswertung:</p></div>
+<div class="ulist"><ul>
+<li><p>Für Host-1 trifft Regel A zu und wird angewendet.
+Die Benachrichtigung für Host-1 erfolgt im 10-Minuten-Takt.
+Damit ist die Bearbeitung für Host-1 abgeschlossen.</p></li>
+<li><p>Für Host-2 trifft Regel A nicht zu.
+Weiter geht es mit Regel B.
+Diese trifft für Host-2 zu und wird angewendet, so dass für Host-2 im 20-Minuten-Takt benachrichtigt wird.
+Damit ist die Bearbeitung für Host-2 abgeschlossen.</p></li>
+<li><p>Für Host-3 trifft Regel A nicht zu, ebenso wenig Regel B.
+Aber Regel C passt und wird angewendet: die Benachrichtigung für Host-3 erfolgt im 30-Minuten-Takt.
+Damit ist auch die Bearbeitung für Host-3 abgeschlossen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Zu beachten ist hier:
+Da bei diesem Regelsatz <a href="#matching_type">„The first matching rule defines the parameter“</a> gilt, wird die Abarbeitung der Regelkette jeweils nach dem ersten Treffer beendet.
+Die Reihenfolge der Regeln ist daher entscheidend für das Ergebnis!
+Das zeigt sich, wenn die Reihenfolge der Regeln umgestellt wird und Regel B und C vertauscht werden:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Regel A: Host-1 alle 10 Minuten</p></li>
+<li><p>Regel C: alle Hosts alle 30 Minuten</p></li>
+<li><p>Regel B: Host-2 alle 20 Minuten</p></li>
+</ol></div>
+<div class="paragraph"><p>Wird nun die Regelkette erneut von oben nach unten für die einzelnen Hosts durchlaufen, so ändert sich auch das Ergebnis:
+Regel C trifft jetzt nicht nur auf Host-3, sondern auch auf Host-2 zu, so dass die Benachrichtigung für beide Hosts im 30-Minuten-Takt erfolgt.
+Damit ist die Bearbeitung für beide Hosts abgeschlossen.
+Obwohl Regel B für Host-2 relevant wäre, ja sogar für diesen Host geschrieben wurde, wird sie nicht mehr ausgewertet und angewendet.
+Im <a href="#analyse_traffic_light">Analysemodus</a> sieht das dann so aus:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/rules_analyse_mode_example.png" alt="Analysemodus für Host-2 nach Vertauschung der Regeln B und C."></div>
+<div class="title">Für Host-2 trifft auch die letzte Regel mit der gelben Kugel zu, wird aber nicht angewendet</div>
+</div>
+<div class="paragraph"><p>Kombinieren Sie die verschiedenen in diesem Artikel genannten Einstellungen und beachten dabei die Abarbeitungsreihenfolge,
+so können Sie damit komplexe Regelketten für ganze Host-Komplexe aufbauen.</p></div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li>
+<a href="#_einleitung">1. Einleitung</a><ul class="sectlevel1">
+<li><a href="#_der_klassische_ansatz">1.1. Der klassische Ansatz</a></li>
+<li><a href="#rule_based">1.2. Regelbasiert ist besser!</a></li>
+<li><a href="#rule_set_types">1.3. Arten von Regelsätzen</a></li>
+<li><a href="#_host_merkmale">1.4. Host-Merkmale</a></li>
+</ul>
+</li>
+<li>
+<a href="#_auffinden_der_richtigen_regels%C3%A4tze">2. Auffinden der richtigen Regelsätze</a><ul class="sectlevel1">
+<li><a href="#_host_regels%C3%A4tze">2.1. Host-Regelsätze</a></li>
+<li><a href="#checkparameters">2.2. Service-Regelsätze</a></li>
+<li><a href="#enforced_services">2.3. Erzwungene Services</a></li>
+<li><a href="#_benutzte_regels%C3%A4tze">2.4. Benutzte Regelsätze</a></li>
+<li><a href="#_wirkungslose_regeln">2.5. Wirkungslose Regeln</a></li>
+<li><a href="#_veraltete_regels%C3%A4tze">2.6. Veraltete Regelsätze</a></li>
+</ul>
+</li>
+<li>
+<a href="#create_rules">3. Regeln erstellen und editieren</a><ul class="sectlevel1"><li><a href="#analyse_traffic_light">3.1. Analyse mit der Ampel</a></li></ul>
+</li>
+<li>
+<a href="#_eigenschaften_einer_regel">4. Eigenschaften einer Regel</a><ul class="sectlevel1">
+<li><a href="#_allgemeine_optionen_rule_properties">4.1. Allgemeine Optionen (Rule properties)</a></li>
+<li><a href="#_die_festgelegten_parameter">4.2. Die festgelegten Parameter</a></li>
+<li>
+<a href="#conditions">4.3. Bedingungen (Conditions)</a><ul class="sectlevel2">
+<li><a href="#_condition_type">Condition type</a></li>
+<li><a href="#_folder">Folder</a></li>
+<li><a href="#_host_tags">Host tags</a></li>
+<li><a href="#_labels">Labels</a></li>
+<li><a href="#_explicit_hosts">Explicit hosts</a></li>
+<li><a href="#_explicit_services">Explicit services</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#matching">5. Regelauswertungen</a><ul class="sectlevel1">
+<li><a href="#matching_type">5.1. Arten der Regelauswertung</a></li>
+<li><a href="#rules_applied">5.2. Regelauswertung praktisch erklärt</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

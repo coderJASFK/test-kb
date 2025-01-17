@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Benutzer und Kontaktgruppen können in Checkmk auch über LDAP oder Microsofts Active Directory (AD) synchronisiert werden.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Benutzerverwaltung mit LDAP/Active Directory">
+<meta name="og:description" content="Benutzer und Kontaktgruppen können in Checkmk auch über LDAP oder Microsofts Active Directory (AD) synchronisiert werden.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Benutzerverwaltung mit LDAP/Active Directory</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/ldap.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/ldap.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/ldap.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Benutzerverwaltung mit LDAP/Active Directory</h1>
+<div class="details">
+<span id="revdate">Last modified on 29-Dec-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/onprem/de/ldap.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="kerberos.html">Single Sign-On mit Kerberos</a>
+<a href="omd_https.html">Weboberfläche mit HTTPS absichern</a>
+<a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody"><div class="paragraph"><p>Da eine händische Einrichtung von Benutzern nur bis zu einem gewissen Grad skaliert, bietet Checkmk die Möglichkeit, LDAP-basierte Dienste für die Benutzerverwaltung zu nutzen.
+Sie sind damit in der Lage, automatisiert Benutzer aus diesen zentralen Verzeichnissen zu synchronisieren und ihnen, ebenfalls automatisiert, Kontaktgruppen, Rollen und andere Attribute in Checkmk zuzuweisen.
+Checkmk ist dabei nicht auf eine einzelne LDAP-Quelle eingeschränkt und kann die Benutzer bei Bedarf auch an andere verbundene Instanzen weiterverteilen.</p></div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_connect">
+<span class="hidden-anchor sr-only" id="connect"></span>2. Konfiguration einer LDAP Verbindung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__verbindung_zum_server">
+<span class="hidden-anchor sr-only" id="_verbindung_zum_server"></span>2.1. Verbindung zum Server</h3>
+<div class="paragraph"><p>Um zu einem LDAP-fähigen Server eine Verbindung herzustellen, benötigen Sie zunächst einen Benutzer, welcher Leserechte auf dem Server besitzt.
+Er muss mindestens Lesezugriff auf die Personen und Gruppen haben, welche er synchronisieren soll.
+In den folgenden Beispielen heißt dieser Benutzer <code>check_mk</code>.</p></div>
+<div class="paragraph"><p>Unter <span class="guihint">Setup &gt; Users &gt; LDAP &amp; Active Directory &gt; Add connection</span> können Sie nun eine neue Verbindung anlegen.
+Im Formular vergeben Sie zunächst eine beliebige <span class="guihint">ID</span> für die Verbindung im Kasten <span class="guihint">General Properties</span>.
+Optional können Sie hier unter <span class="guihint">Description</span> einen leicht lesbaren Titel vergeben.
+Die <span class="guihint">ID</span> muss wie immer eindeutig sein und kann später nicht mehr geändert werden.
+Sie darf nur aus Buchstaben, Ziffern, Gedanken- und Unterstrich bestehen, beginnend mit einem Buchstaben oder Unterstrich.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_general_properties.png" alt="ldap new connection general properties"></div></div>
+<div class="paragraph"><p>Unter <span class="guihint">LDAP Connection</span> werden nun der LDAP-Server und — falls vorhanden — ein oder mehrere Failover Server definiert.
+Sie müssen nun noch den <span class="guihint">Directory type</span> auswählen und die Benutzerdaten für den Lesezugriff unter <span class="guihint">Bind credentials</span> definieren.
+Achten Sie darauf, dass der Benutzer mit seinem vollständigen LDAP-Pfad angegeben wird.
+Groß-/Kleinschreibung muss nicht beachtet werden.
+Ihre Konfiguration sollte nun etwa so aussehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_ldap_connection.png" alt="ldap new connection ldap connection"></div></div>
+<div class="paragraph"><p>Checkmk unterstützt nicht nur Active Directory.
+Um das Verzeichnis z.B. auf OpenLDAP zu ändern, wählen Sie es entsprechend in dem Feld <span class="guihint">Directory type</span> aus.
+Die weitere Konfiguration ändert sich dabei für Sie nur an wenigen Stellen.</p></div>
+<div class="paragraph"><p>Die <span class="guihint">Failover Servers</span> werden benutzt, wenn der eigentliche Server nicht erreichbar ist oder eine Zeitbeschränkung überschritten wurde.
+Das ist sinnvoll, wenn Sie lokal über keinen eigenen Server verfügen, aber die Verbindung redundant aufbauen möchten.</p></div>
+<div class="paragraph"><p>Die Verbindung von Checkmk mit dem LDAP-Server wird immer so lange aufrechterhalten bis der LDAP-Server aufgrund eines Timeouts oder anderer Probleme nicht mehr erreichbar ist.
+Erst dann wird zum Failover Server gewechselt.
+Das Gleiche gilt auch nach dem Wechsel:
+Die Verbindung wird erst dann wieder zurück zum eigentlich konfigurierten Server wechseln, wenn der Failover Server nicht erreicht werden kann.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_user_filter">
+<span class="hidden-anchor sr-only" id="user_filter"></span>2.2. Benutzer definieren</h3>
+<div class="paragraph"><p>Als Nächstes werden die Pfade zu den Benutzern und Gruppen bestimmt und Filter gesetzt.
+Geben Sie in <span class="guihint">User base DN</span> zunächst den Pfad an, unter dem die Benutzer zu finden sind.
+Achten Sie hier darauf, die <em>Operational Unit</em> (OU) so zu setzen, dass möglichst alle gewünschten Benutzer, aber möglichst wenig andere enthalten sind.
+Je mehr Benutzer abgefragt werden, desto langsamer wird die Synchronisation am Ende sein.</p></div>
+<div class="paragraph"><p>Danach setzen Sie die Option <span class="guihint">Search scope</span>.
+Sie können hier rekursiv nach allen Benutzern filtern, die sich in der OU und in den Units darunter befinden oder die Suche auf diejenigen einschränken, die sich nur direkt in dieser OU befinden.
+Falls Sie in dem Pfad einen Benutzer direkt angegeben haben, sollten Sie <span class="guihint">Search only the entry at the base DN</span> auswählen.
+Es wird dann nur dieser Benutzer erfasst.</p></div>
+<div class="paragraph"><p>Sie können nun mithilfe der Option <span class="guihint">Search filter</span> die Auswahl der zu importierenden Benutzer weiter einschränken.
+Wollen Sie z.B. nur Benutzer synchronisieren, welche einer bestimmten Gruppe angehören, so setzen Sie hier eine LDAP-Abfrage ein, wie in dem folgenden Screenshot zu sehen.
+Voraussetzung dabei ist, dass die Benutzer über das Attribut <code>memberof</code> verfügen.
+Wie Sie ohne dieses Attribut nach einer Gruppenzugehörigkeit filtern, erfahren Sie weiter <a href="#filter_group">unten.</a></p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_users.png" alt="ldap new connection users"></div></div>
+<div class="paragraph"><p>Sie können den Standardfilter auch mit <code>memberof</code> oder anderen Filtern kombinieren:</p></div>
+<div class="paragraph"><p><code>(&amp;(objectclass=user)(objectcategory=person)(memberof=cn=cmk-admins,ou=groups,dc=mycompany,dc=example))</code></p></div>
+<div class="paragraph"><p>Wie Sie im Kasten <span class="guihint">Users</span> sehen können, gibt es noch weitere Optionen bei der Benutzersuche.
+So ist es möglich mit der Option <span class="guihint">User-ID attribute</span> zu bestimmen, welches Attribut der Benutzer als Login ID in Checkmk benutzen wird.
+Mit diesem Login wird sich der Benutzer später anmelden.
+In der Regel wird dies bei Active Directory das Attribut <code>sAMAccountName</code> sein, welches auch als Standard in Checkmk genutzt wird.
+Unter OpenLDAP ist dies oft das Attribut <code>uid</code>.</p></div>
+<div class="paragraph"><p>Mit der Option <span class="guihint">Lower case User-IDs</span> können Sie die synchronisierten IDs in Kleinbuchstaben umwandeln.
+Das ist unter Umständen sinnvoll, da, wie bereits erwähnt, Active Directory/LDAP nicht zwischen Groß- und Kleinschreibung unterscheidet, Checkmk allerdings schon.
+Das kann zu Verwirrung führen, die durch diese Option gelöst wird.</p></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Umlauts in User-IDs (deprecated)</span> ist nur noch aus Kompatibilitätsgründen vorhanden und sollte nicht mehr verwendet/verändert werden.</p></div>
+<div class="paragraph"><p>Zu guter Letzt bietet Ihnen die Option <span class="guihint">Create users only on login</span> die Möglichkeit, neue Benutzer nicht bei der Synchronisierung sondern erst bei ihrem ersten Login in Checkmk anzulegen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_users_search_filter_2.png" alt="ldap new connection users search filter 2"></div></div>
+<div class="paragraph" id="filter_group"><p>Die Option <span class="guihint">Filter group</span> sollte nur verwendet werden, wenn der LDAP-Server <strong>kein</strong> Active Directory ist und in den Benutzerdaten das dynamische Attribut <code>memberof</code> nicht verfügbar ist.
+Die Filterung der Benutzer erfolgt in diesem Fall in Checkmk selbst.
+Es werden dabei unter Umständen viele Benutzer abgefragt, welche später wieder verworfen werden.
+Ein solches Szenario kann das LDAP-Modul in Checkmk stark ausbremsen.</p></div>
+<div class="paragraph"><p>Sind Sie jedoch auf diese Option angewiesen, so wird hier der komplette Pfad zu der Gruppe eingetragen, nach der gefiltert werden soll:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_users_filter_group.png" alt="ldap new connection users filter group"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_groupfilter">
+<span class="hidden-anchor sr-only" id="groupfilter"></span>2.3. Gruppen definieren</h3>
+<div class="paragraph"><p>Falls Sie bei den Benutzern nach einer Gruppe filtern, richten Sie noch den Pfad zu der Gruppe ein, damit ein Abgleich stattfinden kann.
+Sie können hier in gleicher Weise vorgehen, wie bei den Benutzern:
+Wird eine Gruppe direkt angegeben, so kann unter <span class="guihint">Search scope</span> die Option <span class="guihint">Search only the entry at the base DN</span> genommen werden.
+Ansonsten wird entweder in der OU direkt gesucht, oder die Units darunter werden ebenfalls einbezogen.</p></div>
+<div class="paragraph"><p>Und auch hier ist es mithilfe der Option <span class="guihint">Search filter</span> möglich, zu bestimmen, wie der Name der Gruppe in Checkmk festgelegt wird.
+Zusätzlich können Sie angeben, wie das Attribut heißt (<span class="guihint">Member attribute</span>), in dem die Mitglieder der Gruppe hinterlegt sind.
+Standardmäßig verwendet Checkmk <code>member</code>.
+Unter OpenLDAP kann dies aber auch <code>uniqueMember</code> sein.
+Ändern Sie die Option dann entsprechend ab.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_groups.png" alt="ldap new connection groups"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_config_test">
+<span class="hidden-anchor sr-only" id="config_test"></span>2.4. Testen der Konfiguration</h3>
+<div class="paragraph"><p>Sie haben nun bereits die erste Einrichtung abgeschlossen und können zur Diagnose die Konfiguration über den Knopf <span class="guihint">Save &amp; test</span> speichern und testen:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/ldap_new_connection_diagnostics.png" alt="ldap new connection diagnostics"></div></div>
+<div class="paragraph"><p>Sie müssen keine Gruppen angeben, um eine funktionierende Konfiguration zu erhalten.
+Sofern sich aber in der OU nur Benutzer für Checkmk befinden, ist es sinnvoll die Auswahl über eine oder mehrere Gruppen einzuschränken.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__das_synchronisierungsintervall">
+<span class="hidden-anchor sr-only" id="_das_synchronisierungsintervall"></span>2.5. Das Synchronisierungsintervall</h3>
+<div class="paragraph"><p>Als Letztes können Sie noch definieren, wie oft die Benutzer automatisch synchronisiert werden sollen.
+In einer Umgebung, in der sich selten etwas ändert, ist der Standardwert vielleicht etwas zu eng gewählt.
+Das Zeitfenster sollte allerdings auch nicht zu weit gesetzt werden, damit Änderungen auch zeitnah in Checkmk abgebildet werden können.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_other.png" alt="ldap new connection other"></div></div>
+<div class="paragraph"><p>Sie können die Synchronisation auch jederzeit manuell in <span class="guihint">Setup &gt; Users &gt; Users &gt; Synchronize users</span> anstoßen.
+Zusätzlich wird ein Benutzer auch bei Bedarf synchronisiert, wenn er versucht sich anzumelden, aber noch nicht synchronisiert ist.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__automatische_zuordnung_von_attributen">
+<span class="hidden-anchor sr-only" id="_automatische_zuordnung_von_attributen"></span>3. Automatische Zuordnung von Attributen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_contact_groups">
+<span class="hidden-anchor sr-only" id="contact_groups"></span>3.1. Kontaktgruppen</h3>
+<div class="paragraph"><p>Es bringt leider nichts alle Benutzer automatisch anzulegen, wenn man diese danach manuell den Kontaktgruppen zuordnen muss.
+Checkmk bietet die Möglichkeit, die Gruppen des LDAP-Servers zu nutzen, um diese Kontaktgruppen zuzuordnen.
+Aktivieren Sie dafür die Option <span class="guihint">Attribute sync plugins &gt; Contactgroup Membership:</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_contactgroup_membership.png" alt="ldap new connection contactgroup membership"></div></div>
+<div class="paragraph"><p>Damit eine Zuordnung klappt, muss der Name (<code>cn</code>) der Gruppe auf dem LDAP-Server identisch mit dem in Checkmk sein.
+Das heißt, die Kontaktgruppe <code>oracle_admins</code> wird nur korrekt einem Benutzer zugeordnet, wenn dieser auch im LDAP in der Gruppe <code>oracle_admins</code> ist.
+Ist er stattdessen in der Gruppe <code>oracle-admins</code> oder <code>ORACLE_admins</code>, so wird die Zuordnung nicht funktionieren.
+Achten Sie also auf die korrekte Schreibweise, falls es an dieser Stelle zu Problemen kommt.</p></div>
+<div class="sect3">
+<h4 id="heading_nested_groups">
+<span class="hidden-anchor sr-only" id="nested_groups"></span>Nested Groups</h4>
+<div class="paragraph"><p>Checkmk bietet — im Moment nur für Active Directory — die Möglichkeit, auch vererbte Gruppen zu nutzen.
+Aktivieren Sie diese Option, wenn z.B. Ihr Benutzer in der Gruppe <code>oracle_admins</code> ist und diese Gruppe wiederum Mitglied in <code>cmk-user</code>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__gruppen_aus_anderen_verbindungen">
+<span class="hidden-anchor sr-only" id="_gruppen_aus_anderen_verbindungen"></span>Gruppen aus anderen Verbindungen</h4>
+<div class="paragraph"><p>Wenn in Checkmk mehrere LDAP-Verbindungen eingerichtet wurden, können Sie auch Gruppen aus anderen Quellen benutzen, um eine Zuordnung zu ermöglichen.
+Das kann sinnvoll sein, wenn Sie eine allgemeine Verbindung konfiguriert haben und in den anderen nur auf bestimmte Gruppen filtern.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__rollen">
+<span class="hidden-anchor sr-only" id="_rollen"></span>3.2. Rollen</h3>
+<div class="paragraph"><p>Auch die Rollen können in einer ähnlichen Weise automatisch zugeordnet werden und die Funktion <a href="#nested_groups">Nested Groups</a> kann hier ebenfalls genutzt werden.
+Für jede Rolle können eine oder mehrere Gruppen definiert werden.
+Wählen Sie dafür die Rolle aus, zu der Sie eine Verknüpfung einrichten wollen und geben Sie den vollständigen Pfad zu der Gruppe an.
+Standardmäßig wird in den Gruppen gesucht, welche vom <a href="#groupfilter">Gruppenfilter</a> gefunden wurden.
+Sie können aber auch andere Verbindungen und die darüber gefundenen Gruppen nutzen.
+Wählen Sie dafür in der Liste die entsprechende Verbindung aus.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_roles.png" alt="ldap new connection roles"></div></div>
+<div class="paragraph"><p>Mit den Einstellungen im obigen Bild werden alle Benutzer aus der angegebenen Gruppe der Rolle <span class="guihint">Administrator</span> zugeordnet,
+sofern sie durch den <a href="#user_filter">Benutzerfilter</a> auch synchronisiert werden.
+Wie Sie im Bild sehen können, können Sie auch selbst konfigurierte Rollen auswählen und mit Gruppen aus dem LDAP verknüpfen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_other_attr">
+<span class="hidden-anchor sr-only" id="other_attr"></span>3.3. Weitere Attribute</h3>
+<div class="paragraph"><p>Für die Synchronisation von weiteren Benutzerinformationen braucht es in der Regel nur die Aktivierung des jeweiligen Plugins unter <span class="guihint">Attribute Sync Plugins</span> und eventuell der Angabe des Attributs, welches die Information bereitstellt.
+Nachfolgend eine Tabelle der Plugins, genutzten Attribute (wenn nicht manuell gesetzt) und Kurzbeschreibungen.
+Einige der Attribute finden sich auch im <a href="user_interface.html#user_menu">User-Menü</a> eines Benutzers.</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 3.3333%;">
+<col style="width: 3.3333%;">
+<col style="width: 3.3333%;">
+<col style="width: 55.0001%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Plugin</th>
+<th class="tableblock halign-left valign-top">Attribut</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Mögliche Werte</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Alias</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cn</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normalerweise der Vor- und Nachname des Benutzers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Authentication Expiration</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pwdlastset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interval</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wann ein Benutzer abgemeldet oder gesperrt wird.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Disable notifications</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>disable_notifications</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code>, <code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code> deaktiviert <strong>alle</strong> Benachrichtigungen an den Benutzer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Email address</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die E-Mail-Adresse des Benutzers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Mega menu icons</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>icons_per_item</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>None</code>, <code>entry</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In den Mega-Menüs grüne Symbole beim Thema (<code>None</code>) oder farbige Symbole bei jedem Menüeintrag (<code>entry</code>) anzeigen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Navigation bar icons</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nav_hide_icons_title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>None</code>, <code>hide</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In der <a href="glossar.html#navigation_bar">Navigationsleiste</a> nur Symbole (<code>hide</code>) oder Symbole mit Titel (<code>None</code>) anzeigen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Pager</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mobile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eine hinterlegte Telefon-/Pagernummer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Show more / Show less</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>show_mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>default_show_less</code>, <code>default_show_more</code>, <code>enforce_show_more</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In der Benutzeroberfläche weniger (<code>default_show_less</code>), mehr (<code>default_show_more</code>) oder stets alles (<code>enforce_show_more</code>) anzeigen. Mehr Informationen zum Show-less- und Show-more-Modus finden Sie im <a href="intro_gui.html#show_less_more">Leitfaden für Einsteiger.</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Sidebar position</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ui_sidebar_position</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>None</code>, <code>left</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die <a href="glossar.html#sidebar">Seitenleiste</a> auf der rechten (<code>None</code>) oder auf der linken (<code>left</code>) Seite anzeigen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Start URL to display in main frame</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>start_url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Beispiele: <code>view.py?view_name=allhosts</code> oder <code>dashboard.py</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL der Startseite.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Temperature unit</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>temperature_unit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>celsius</code>, <code>fahrenheit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Einheit der Temperatur in Celsius oder Fahrenheit für die Anzeige in Graphen und Perf-O-Metern.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">User interface theme</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ui_theme</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>facelift</code>, <code>modern-dark</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Thema der Benutzeroberfläche: Dark (<code>modern-dark</code>) oder Light (<code>facelift</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Visibility of hosts/services</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>force_authuser</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code>, <code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Hosts und Services anzeigen (<code>False</code>) oder nur diejenigen, für die der Benutzer als Kontakt zugewiesen ist (<code>True</code>).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_distr_wato">
+<span class="hidden-anchor sr-only" id="distr_wato"></span>4. LDAP in verteilten Umgebungen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Bei der Einrichtung einer <a href="distributed_monitoring.html">verteilten Umgebung</a> mit einer <a href="distributed_monitoring.html#distr_wato">zentralen Konfiguration</a> können Sie bestimmen, ob und welche LDAP-Verbindungen von der Remote-Instanz aus synchronisiert werden sollen.
+Wenn Sie nichts ändern, wird die Remote-Instanz alle Benutzer aus den konfigurierten Verbindungen selbst synchronisieren.
+Auf diese Weise werden Änderungen automatisch auf jeder Instanz innerhalb des definierten Intervalls abgebildet und müssen nicht erst von der Zentralinstanz zur Remote-Instanz kopiert werden.
+Sie können die Synchronisation aber auch auf bestimmte Verbindungen einschränken oder ganz abschalten.
+In letzterem Fall werden die Benutzer auf der Zentralinstanz aus den LDAP-Verbindungen abgerufen und beim <a href="glossar.html#activate_changes">Aktivieren der Änderungen</a> auf die Remote-Instanzen kopiert.</p></div>
+<div class="paragraph"><p>Sie können die Einstellungen in <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span> in den  <span class="guihint">Properties</span> der Verbindung konfigurieren.
+Hier ein Beispiel, bei dem die oben eingerichtete Verbindung ausgewählt wird:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_distributed_monitoring_sync_ldap.png" alt="ldap distributed monitoring sync ldap"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_ssl">
+<span class="hidden-anchor sr-only" id="ssl"></span>5. LDAP mit SSL absichern</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Um die LDAP-Verbindung mit SSL abzusichern, aktivieren Sie lediglich in den Verbindungsdaten das Häkchen <span class="guihint">Use SSL</span> und passen noch den <span class="guihint">TCP port</span> an (bei LDAP über SSL üblicherweise <code>636</code>).</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_new_connection_ldap_connection_ssl.png" alt="ldap new connection ldap connection ssl"></div></div>
+<div class="paragraph"><p>Sofern der oder die LDAP-Server ein Zertifikat nutzen, welches von einer vertrauenswürdigen Zertifizierungsstelle signiert wurde, ist damit bereits alles Nötige getan, um eine verschlüsselte Verbindung aufzubauen.</p></div>
+<div class="paragraph"><p>Wenn Sie ein selbst signiertes Zertifikat nutzen, wird der Verbindungsaufbau nur dann funktionieren, wenn Sie dieses noch in den Zertifikatsspeicher importieren.
+Erst dann wird es als vertrauenswürdig eingestuft und die Verbindung aufgebaut.</p></div>
+<div class="paragraph"><p>Öffnen Sie dazu <span class="guihint">Setup &gt; General &gt; Global settings &gt; Site management &gt; Trusted certificate authorities for SSL.</span>
+Klicken Sie hier auf <span class="guihint">Add new CA certificate or chain</span> und kopieren Sie den Inhalt Ihres Zertifikats entweder in das vorgesehene Feld oder wählen Sie <span class="guihint">Upload CRT/PEM File</span> und laden Sie Ihre PEM- oder CRT-Datei hoch.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ldap_add_new_ca_certificate.png" alt="ldap add new ca certificate"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__fehlerdiagnose">
+<span class="hidden-anchor sr-only" id="_fehlerdiagnose"></span>6. Fehlerdiagnose</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Eine Fehlerdiagnose ist in der <a href="#config_test">Konfigurationseinrichtung</a> direkt implementiert.
+Auch nach der Einrichtung kann hier überprüft werden, woher ein Problem kommen könnte.
+Zusätzlich werden Fehlermeldungen auch in das <code>web.log</code> geschrieben.
+Diese Meldungen können ebenfalls auf die Fehlerquelle hinweisen:</p></div>
+<div class="listingblock">
+<div class="title">~/var/log/web.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2020-09-19 16:03:17,155 [40] [cmk.web 31797] /ldaptest/check_mk/wato.py Internal error: Traceback (most recent call last):
+  File "/omd/sites/ldaptest/share/check_mk/web/htdocs/wato.py", line 6563, in mode_edit_ldap_connection
+    state, msg = test_func(connection, address)
+  File "/omd/sites/ldaptest/share/check_mk/web/htdocs/wato.py", line 6506, in test_group_count
+    connection.connect(enforce_new = True, enforce_server = address)
+  File "/omd/sites/ldaptest/share/check_mk/web/plugins/userdb/ldap.py", line 274, in connect
+    ('\n'.join(errors)))
+MKLDAPException: LDAP connection failed:
+ldap://myldap.mycompany.org: Can't contact LDAP server</code></pre></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__dateien_und_verzeichnisse">
+<span class="hidden-anchor sr-only" id="_dateien_und_verzeichnisse"></span>7. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/multisite.d/wato/user_connections.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In dieser Datei werden alle im Setup konfigurierten LDAP Verbindungen festgehalten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/multisite.d/wato/users.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Benutzer werden hier definiert.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/web.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Log-Datei, in der Verbindungsfehler aufgezeichnet werden. Es ist damit eine der ersten Quellen bei Problemen.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#connect">2. Konfiguration einer LDAP Verbindung</a><ul class="sectlevel1">
+<li><a href="#_verbindung_zum_server">2.1. Verbindung zum Server</a></li>
+<li><a href="#user_filter">2.2. Benutzer definieren</a></li>
+<li><a href="#groupfilter">2.3. Gruppen definieren</a></li>
+<li><a href="#config_test">2.4. Testen der Konfiguration</a></li>
+<li><a href="#_das_synchronisierungsintervall">2.5. Das Synchronisierungsintervall</a></li>
+</ul>
+</li>
+<li>
+<a href="#_automatische_zuordnung_von_attributen">3. Automatische Zuordnung von Attributen</a><ul class="sectlevel1">
+<li>
+<a href="#contact_groups">3.1. Kontaktgruppen</a><ul class="sectlevel2">
+<li><a href="#nested_groups">Nested Groups</a></li>
+<li><a href="#_gruppen_aus_anderen_verbindungen">Gruppen aus anderen Verbindungen</a></li>
+</ul>
+</li>
+<li><a href="#_rollen">3.2. Rollen</a></li>
+<li><a href="#other_attr">3.3. Weitere Attribute</a></li>
+</ul>
+</li>
+<li><a href="#distr_wato">4. LDAP in verteilten Umgebungen</a></li>
+<li><a href="#ssl">5. LDAP mit SSL absichern</a></li>
+<li><a href="#_fehlerdiagnose">6. Fehlerdiagnose</a></li>
+<li><a href="#_dateien_und_verzeichnisse">7. Dateien und Verzeichnisse</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

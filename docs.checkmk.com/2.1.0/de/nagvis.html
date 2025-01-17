@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Das Open-Source-Tool NagVis ist fester Bestandteil von Checkmk. Dieser Artikel bietet einen idealen Einstieg in NagVis und dessen Integration in Checkmk.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="NagVis: Statusdaten auf Karten und Diagrammen">
+<meta name="og:description" content="Das Open-Source-Tool NagVis ist fester Bestandteil von Checkmk. Dieser Artikel bietet einen idealen Einstieg in NagVis und dessen Integration in Checkmk.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>NagVis: Statusdaten auf Karten und Diagrammen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/nagvis.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/nagvis.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/nagvis.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>NagVis: Statusdaten auf Karten und Diagrammen</h1>
+<div class="details">
+<span id="revdate">Last modified on 26-Jun-2018</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/nagvis.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a>
+<a href="livestatus.html">Statusdaten abrufen via Livestatus</a>
+<a href="hosts_setup.html">Verwaltung der Hosts</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__was_ist_nagvis">
+<span class="hidden-anchor sr-only" id="_was_ist_nagvis"></span>1. Was ist NagVis?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Im Artikel zu den <a href="monitoring_basics.html#parents">Monitoring-Grundlagen</a>
+haben Sie kurz eine Karte einer Netzwerktopologie, basierend auf
+<a href="monitoring_basics.html#parents">Parent-Child-Beziehungen</a> gesehen. Verantwortlich
+für derlei Karten ist NagVis. Die Nagios-Erweiterung dient zum Visualisieren
+von beispielsweise Infrastrukturen, Servern, Ports oder Prozessen.</p></div>
+<div class="paragraph"><p>Die Funktionsweise von NagVis ist im Grunde sehr einfach: Checkmk,
+genauer gesagt <a href="livestatus.html">Livestatus</a>, liefert als Backend Daten wie
+zum Beispiel Hosts, Services, Host- und Servicegruppen. Diese Elemente
+aus Ihrem Monitoring lassen sich als Icons auf unterschiedlichen Karten
+platzieren. Dabei zeigen die dynamischen Icons den jeweils aktuellen Status
+des oder der Hosts und Services. Detaillierte Informationen werden zudem
+als Hover-Menüs geliefert. Und letztlich sind Icons und sonstige Elemente
+auch Links zu den Checkmk-Objekten, die sie repräsentieren. Als sonstige
+Elemente stehen Ihnen zum Beispiel Linien, Leistungsanzeigen (Gadgets)
+und Container für externe Inhalte zur Verfügung.</p></div>
+<div class="paragraph"><p>Um eine Vorstellung zu bekommen, was sich mit NagVis in Checkmk anstellen
+lässt, hier drei Beispiele:</p></div>
+<div class="ulist"><ul>
+<li><p>Geografische Karten zur Verwaltung von Standorten auf Basis von Open Street Map</p></li>
+<li><p>Automatische Topologie-Karten aus Parent-Child-Beziehungen</p></li>
+<li><p>Karten für einzelne Switches oder Serverräume, um Ports beziehungsweise Hardware im Überblick zu haben</p></li>
+</ul></div>
+<div class="paragraph"><p>Sofern Sie <a href="monitoring_basics.html#parents">Parent-Child-Beziehungen</a> definiert
+haben, können Sie ohne weiteres zutun die Map aus dem Grundlagenartikel in
+der Navigation über <span class="guihint">Views &gt; Overview &gt; Network Topology</span> aufrufen. Weitere
+Schritte sind hier nicht nötig.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_parents.png" alt="monitoring parents"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__nagvis_einrichten">
+<span class="hidden-anchor sr-only" id="_nagvis_einrichten"></span>2. NagVis einrichten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>NagVis ist komplett in Checkmk integriert und so konfiguriert, dass Sie
+direkt anfangen können, Elemente aus Ihrem Monitoring in Karten einzubauen.</p></div>
+<div class="paragraph"><p>Um NagVis zu starten, öffnen Sie zunächst den Bereich mit den verfügbaren Snapins für die <a href="user_interface.html#sidebar">Seitenleiste</a> über <span class="image-inline"><img src="../images/icons/button_sidebar_add_snapin.png" alt="button sidebar add snapin"></span> unten in der Seitenleiste.
+Wählen Sie hier das Snapin <span class="guihint">NagVis maps</span> aus und starten Sie NagVis anschließend über <span class="image-inline"><img src="../images/icons/button_view_snapin_edit.png" alt="button view snapin edit"></span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis_snapin_nagvis.png" alt="nagvis snapin nagvis" width="50%"></div></div>
+<div class="paragraph"><p>Bevor Sie eine erste Karte anlegen, sollten Sie einen Blick in die
+Grundkonfiguration unter <span class="guihint">Options &gt; General Configuration</span> werfen.
+Hier finden Sie über 100 Optionen von Grundlagen wie Datumsformat
+oder Spracheinstellungen, über die Darstellung von
+Objekten auf Karten, bis hin zur Gewichtung der verfügbaren
+Host- und Service-Status. Alle Optionen werden in der
+<a href="http://docs.nagvis.org/1.8/de_DE/index.html" target="_blank">NagVis-Dokumentation</a>
+erläutert.</p></div>
+<div class="paragraph"><p>Auf eine ausführliche Beschreibung der Nutzung und vor allem
+der Konfigurationsmöglichkeiten von NagVis möchten wir an dieser
+Stelle verzichten — NagVis hat selbst eine sehr gute, ausführliche
+<a href="https://www.nagvis.org/doc" target="_blank">Dokumentation.</a> Im Folgenden beschränken
+wir uns auf die nötigsten Grundlagen, um mit NagVis einfache, sinnvolle
+Karten in Checkmk erstellen zu können.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_general_configuration.png" alt="nagvis2 general configuration"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_maps">
+<span class="hidden-anchor sr-only" id="maps"></span>3. Karten erstellen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__die_verschiedenen_kartentypen">
+<span class="hidden-anchor sr-only" id="_die_verschiedenen_kartentypen"></span>3.1. Die verschiedenen Kartentypen</h3>
+<div class="paragraph"><p>NagVis bietet insgesamt fünf verschiedene Kartentypen: Reguläre, dynamische,
+automatische und interaktive/nicht-interaktive geographische Karten.</p></div>
+<div class="paragraph"><p><span class="guihint">Regular Map</span> ist der Standardkartentyp. Die Karten können beliebige
+Szenarien visualisieren, von Switchports, über Server-Räume, bis hin zu
+ganzen Infrastrukturen. Die Elemente (Icons, Linien etc.) werden einzeln
+aus dem Bestand der Checkmk-Hosts und -Services zur Karte hinzugefügt.</p></div>
+<div class="paragraph"><p><span class="guihint">Dynamic Maps</span> entsprechen weitestgehend den Regulären,
+allerdings mit einem gewaltigen Vorteil: Hosts, Services, Host- und
+Servicegruppen werden hier nicht explizit, sondern über Filter in Form von
+<a href="regexes.html">Regulären Ausdrücken</a> angegeben; genauer gesagt in Form gültiger
+<a href="livestatus.html">Livestatus-Filter-Definitionen.</a> Somit landen auch neue Hosts
+und Services sowie jegliche Veränderungen ohne weiteres Zutun in der Karte.</p></div>
+<div class="paragraph"><p><span class="guihint">Automaps based on parent/child relations</span> haben Sie bereits
+kennengelernt. Dabei handelt es sich um die anfangs erwähnte
+Netzwerktopologiekarte, die vollautomatisch aus in Checkmk definierten
+Eltern-Kind-Beziehungen erstellt wird.</p></div>
+<div class="paragraph"><p><span class="guihint">Geographical Maps</span> sind Karten, die mit Kartenmaterial aus dem
+Open-Street-Map(OSM)-Projekt als Hintergrund gerendert werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__eine_automatische_karte_erstellen">
+<span class="hidden-anchor sr-only" id="_eine_automatische_karte_erstellen"></span>3.2. Eine automatische Karte erstellen</h3>
+<div class="paragraph"><p>Die schnellste Möglichkeit, eine aussagekräftige Karte zu generieren, ist die
+Parent-Child-Automap. Erstellen Sie über <span class="guihint">Options &gt; Manage Maps &gt; Create Map</span>
+eine neue Karte vom Typ <span class="guihint">Automap based on parent/child relations</span>. Bei
+<span class="guihint">ID</span> tragen Sie den internen Namen <span class="guihint">myautomap</span> und bei <span class="guihint">Alias</span> Namen
+für die Anzeige <span class="guihint">My Automap</span> ein.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_automap_create.png" alt="nagvis2 automap create"></div></div>
+<div class="paragraph"><p>Die Karte selbst erscheint sofort im Content-Bereich und im
+Snapin <span class="guihint">NagVis maps</span> ein entsprechender Link. Automap-spezifische
+Einstellungen können Sie nun über <span class="guihint">Edit Map &gt; Map Options &gt; Automap</span>
+anpassen. Insbesondere der Punkt <span class="guihint">render_mode</span> ist interessant, sorgt er
+doch für das grundlegende Layout der Nodes auf der Karte.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_automap_options.png" alt="nagvis2 automap options"></div></div>
+<div class="paragraph"><p>Zudem können Sie hier die Wurzel der Karte bestimmen — einfacher geht
+das allerdings über einen Rechtsklick auf ein Icon in der Karte und den
+Kontextmenüeintrag <span class="guihint">Make root</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_automap_contextmenu.png" alt="nagvis2 automap contextmenu"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__eine_reguläre_karte_erstellen">
+<span class="hidden-anchor sr-only" id="_eine_reguläre_karte_erstellen"></span>3.3. Eine reguläre Karte erstellen</h3>
+<div class="paragraph"><p>Die <span class="guihint">Regular Maps</span> sind die gebräuchlichsten Karten in NagVis. Um die
+Vorgehensweise und die wichtigsten Elemente von NagVis kennenzulernen, zeigen
+wir Ihnen, wie Sie eine kleine Karte von einem Server-Rack erstellen. Diese
+visualisiert einen Hosts auf einem individuellen Hintergrund und warnt
+optisch und akustisch, sobald der überwachte Host nicht mehr <span class="state0">OK</span> ist.</p></div>
+<div class="paragraph"><p>Um die Karte anzulegen, öffnen Sie die Optionen über <span class="guihint">Options &gt; Manage Maps</span>.
+Hier vergeben Sie unter <span class="guihint">Create Map</span> den Namen <span class="guihint">mymap</span> und den
+Alias <span class="guihint">My Map</span>. Als <span class="guihint">Map Type</span> wählen Sie <span class="guihint">Regular map</span> und bestätigen
+dann über die Schaltfläche <span class="guihint">Create</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_create.png" alt="nagvis2 regularmap create"></div></div>
+<div class="paragraph"><p>Als nächstes importieren Sie ein Bild des zu überwachenden Racks als
+Hintergrund. Dies erledigen Sie über <span class="guihint">Options &gt; Manage Backgrounds</span>. Wählen
+Sie einfach die lokale Datei und bestätigen Sie mit der Schaltfläche
+<span class="guihint">Upload</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_upload-background.png" alt="nagvis2 regularmap upload background"></div></div>
+<div class="paragraph"><p>Nun muss das importierte Bild als Hintergrund für die aktuelle Karte gesetzt
+werden. Rufen Sie dazu die Kartenoptionen über <span class="guihint">Edit Map &gt; Map Options</span>
+auf und wechseln Sie zum Reiter <span class="guihint">Appearance</span>. Aktivieren Sie hier die
+Option <span class="guihint">map_image</span> und wählen Sie aus dem Dropdown-Menü das gewünschte
+Bild. Speichern Sie noch nicht, Sie brauchen noch eine Einstellung aus den
+Kartenoptionen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_background.png" alt="nagvis2 regularmap background"></div></div>
+<div class="paragraph"><p>Wechseln Sie zum Reiter <span class="guihint">Obj. Defaults</span>. Hier können Sie die Option
+<span class="guihint">label_show</span> aktivieren. Diese Option sorgt dafür, dass Host-
+und Service-Icons auf der Karte mit den jeweiligen Host-/Service-Namen
+beschriftet werden — ansonsten wären die Icons nur über ihre Hover-Menüs
+zu identifizieren. Speichern Sie diese Einstellungen danach ab.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_show-label.png" alt="nagvis2 regularmap show label"></div></div>
+<div class="paragraph"><p>Nun wird es Zeit, den Host hinzuzufügen. Klicken Sie dazu auf
+<span class="guihint">Edit Map &gt; Add Icon &gt; host</span> und dann mit dem zum Kreuz gewordenen Curser auf die
+Stelle der Karte, wo das Host-Icon platziert werden soll — erst dann
+öffnet sich der <span class="guihint">Create Object</span>-Dialog. Im Reiter <span class="guihint">General</span> wählen
+im Grunde nur den gewünschten Host im Dropdown-Menü bei <span class="guihint">host_name</span>
+aus und speichern. Sofern Sie mehrere Checkmk-Sites betreiben, können Sie
+über <span class="guihint">backend_id</span> auch eine alternative Datenquelle nutzen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_host_create.png" alt="nagvis2 regularmap host create"></div></div>
+<div class="paragraph"><p>Das Icon ist nun auf der Karte platziert und liefert Detailinformationen
+über ein Hover-Menü. Per Klick auf das Icon gelangen Sie direkt zum Host
+in Checkmk — alle platzierten Elemente in NagVis sind Links zu ihren
+Checkmk-Objekten.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_host-hover.png" alt="nagvis2 regularmap host hover"></div></div>
+<div class="paragraph"><p>Um das Icon verschieben oder bearbeiten zu können, müssen Sie den
+Bearbeitungsmodus aktivieren. Rufen Sie dazu das mit einem Rechtsklick auf
+das Icon sein Kontextmenü auf und wählen Sie <span class="guihint">Unlock</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_icon-menu_locked.png" alt="nagvis2 regularmap icon menu locked"></div></div>
+<div class="paragraph"><p>Nun können Sie das Icon verschieben oder wieder das Kontextmenü aufrufen:
+Hier finden Sie nun einige neue Optionen, um das Objekt zu klonen, zu löschen,
+zu bearbeiten oder ein Problem über <span class="guihint">Acknowledge</span> direkt von hier aus zu
+<a href="basics_ackn.html">quittieren.</a></p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_icon-menu_unlocked.png" alt="nagvis2 regularmap icon menu unlocked"></div></div>
+<div class="paragraph"><p>Um die Bearbeitung des Hosts/Icons zu beenden, müssen Sie aus dem Kontextmenü
+noch <span class="guihint">Lock</span> wählen. Den Bearbeitungsmodus können Sie übrigens über
+<span class="guihint">Edit Map &gt; Lock/Unlock all</span> auch für die gesamte Karte ein- und ausschalten.</p></div>
+<div class="paragraph"><p>Sie können die Karte nun mit weiteren Hosts bestücken. Und auch das
+Hinzufügen von Services, Host- und Servicegruppen funktioniert analog. Zum
+Abrunden können Sie die Karte noch so konfigurieren, dass Störungen
+beim Laden durch einen Warnton und blinkende Host-Icons signalisiert
+werden. Rufen Sie dazu <span class="guihint">Edit Map &gt; Map Options</span> auf und wechseln Sie zum
+Reiter <span class="guihint">Events</span>. Aktivieren Sie hier ganz oben
+<span class="guihint">event_on_load</span> und setzen Sie ein Häkchen ganz unten bei <span class="guihint">event_sound</span>,
+um auch die akustische Warnmeldung zu bekommen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_events.png" alt="nagvis2 regularmap events"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__eine_geografische_karte_erstellen">
+<span class="hidden-anchor sr-only" id="_eine_geografische_karte_erstellen"></span>3.4. Eine geografische Karte erstellen</h3>
+<div class="paragraph"><p>Geografische Karten gibt es in zwei unterschiedlichen Ausführungen: In
+der <em>interaktiven</em> Variante handelt es sich um eine verschieb- und
+zoombare Karte, wie man es von Google Maps &amp; Co. kennt, die automatisch als
+Hintergrund gesetzt wird. Objekte, die auf derlei Karten platziert werden,
+finden sich auch auf jeder weiteren Karte desselben Typs. NagVis geht davon
+aus, dass ein Objekt an einem bestimmten Ort zu finden ist, gleich wie groß
+der Kartenausschnitt ist. So wäre beispielsweise ein in Hamburg platzierter
+Host sowohl auf einer Welt- als auch einer Deutschland- oder gar Hamburg-Karte
+zu sehen.</p></div>
+<div class="paragraph"><p>NagVis sieht die unterschiedlichen Kartenausschnitte und Zoom-Level letztlich
+nur als <em>Viewports</em>. Viewports können jederzeit als eigene, neue Karte
+gespeichert werden. Da sich Viewports/Karten ebenfalls als Icons auf Karten
+darstellen lassen, können Karten gewissermaßen verschachtelt werden. So
+könnten Sie beispielsweise eine Deutschlandkarte mit Ihren Dependenzen
+aufrufen, per Klick in eine detailliertere Ansicht für ein Bundesland
+wechseln, dann in eine spezifische Niederlassung, dann in einen bestimmten
+Serverraum und von dort letztlich zu einer Karte für einen einzelnen Switch.</p></div>
+<div class="paragraph"><p>Im Gegensatz zum manuellen Navigieren in der interaktiven Karte spart das
+Aufwand und die Karten stehen auch einzeln bereit, beispielsweise, um sie auf
+unterschiedlichen Monitoren parallel zu verfolgen oder automatisch rotieren
+zu lassen (mehr dazu später). Auch wichtig: So steht die Zusammenfassung
+der verbundenen Karte als Hover-Menü zur Verfügung. Zudem ist die Nutzung
+für Dritte intuitiver, da sie sich schlicht durch Hierarchie klicken können
+und keine Vorstellung haben müssen, wo sie denn hin zoomen müssten.</p></div>
+<div class="paragraph"><p>Die <em>nicht interaktive</em> geografische Karte muss mit einer CSV-Datei
+gefüttert werden, die zu rendernde Hosts und Koordinaten enthält. Hier
+gibt es keine übergreifend vorhandenen Elemente.</p></div>
+<div class="paragraph"><p>In der Dokumentation heißen die <em>interaktiven</em> geografischen Karten
+<span class="guihint">Worldmaps</span>, die <em>nicht-interaktiven</em> Varianten <span class="guihint">Geomaps</span>. Worldmaps
+sind erst in der aktuellen Version 1.9 von NagVis hinzugekommen und bislang
+nur in der englischen Dokumentation erläutert.</p></div>
+<div class="paragraph"><p>Beispiel: Sie erstellen eine interaktive Karte für ganz Deutschland und
+verknüpfen einen neuen Viewport für Nordrhein-Westfalen. Eine interaktive
+geografische Karte, also eine <span class="guihint">Worldmap</span>, legen Sie über
+<span class="guihint">Options &gt; Manage Maps &gt; Create Map</span> an. Als <span class="guihint">Map Type</span> wählen Sie den
+Eintrag <span class="guihint">Geographical Map (interactive)</span>. Vergeben Sie auch hier wieder
+ID <span class="guihint">(mygeomap)</span> und Alias <span class="guihint">(My Geographical Map)</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_create.png" alt="nagvis2 geomap create"></div></div>
+<div class="paragraph"><p>Stellen Sie anschließend den gewünschten Kartenausschnitt ein, welchen
+Sie als Gesamtüberblick haben wollen und speichern Sie diese Ansicht über
+<span class="guihint">Edit Map &gt; Viewport &gt; Save view</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_save-view.png" alt="nagvis2 geomap save view"></div></div>
+<div class="paragraph"><p>Zoomen Sie nun soweit in die Karte, bis Sie die gewünschte Ansicht für
+NRW erreicht haben. Dieses mal speichern Sie die Ansicht über
+<span class="guihint">Edit Map &gt; Viewport &gt; Save as new map</span> als neue Karte <span class="guihint">mygeomap_nrw</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_save-viewport.jpeg" alt="nagvis2 geomap save viewport"></div></div>
+<div class="paragraph"><p>Der Alias der Karte wird von der Ursprungskarte übernommen, so dass Sie
+links in der Navigation nun zwei Karten namens <span class="guihint">My Geographical Map</span>
+haben. Vergeben Sie daher zunächst einen neuen Alias <span class="guihint">NRW</span> über
+<span class="guihint">Edit Map &gt; Map Options</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_vieport-alias.jpeg" alt="nagvis2 geomap vieport alias"></div></div>
+<div class="paragraph"><p>Wechseln Sie Deutschlandkarte <span class="guihint">My Geographical Map</span> und fügen Sie die
+Verknüpfung zur NRW-Karte über <span class="guihint">Edit Map &gt; Add Icon &gt; Map</span> ein. Im folgenden
+<span class="guihint">Create Object</span>-Dialog müssen Sie lediglich die Karte <span class="guihint">mygeomap_nrw</span>
+im Auswahlmenü unter <span class="guihint">map_name</span> festlegen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_map-icon_create.png" alt="nagvis2 geomap map icon create"></div></div>
+<div class="paragraph"><p>Anschließend gelangen Sie in der Kartenansicht für Deutschland über einen
+Klick auf das neue Icon direkt zur NRW-Karte.  Auf die gleiche Art und Weise
+können Sie noch weitere Karten miteinander verbinden und natürlich auch
+eine Navigation von der NRW- zurück zur Deutschlandkarte einbauen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_map-link.png" alt="nagvis2 geomap map link"></div></div>
+<div class="paragraph"><p>Das eigentliche Befüllen der Karten entspricht dann dem Vorgehen bei anderen
+Kartentypen auch. Aber denken Sie daran: Alle Objekte, die Sie auf einer der
+Worldmap-Karten hinzufügen, landen auch auf jeder anderen Worldmap-Karte — da es eben nur unterschiedliche Ansichten auf die echte geografische
+Verteilung sind.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__eine_dynamische_karten_erstellen">
+<span class="hidden-anchor sr-only" id="_eine_dynamische_karten_erstellen"></span>3.5. Eine dynamische Karten erstellen</h3>
+<div class="paragraph"><p>Dynamische Karten unterscheiden sich von den <span class="guihint">Regular Maps</span> wie oben
+erwähnt durch die Art des Hinzufügens von Elementen. Statt manuell
+bekommen die <span class="guihint">Dynamic Maps</span> ihre Elemente, also Hosts-, Services sowie
+Host- und Servicegruppen, dynamisch über Livestatus-Filter zugewiesen.
+Als Beispiel soll eine Karte automatisch mit den <span class="guihint">CPU load</span>-Services aller
+Hosts bestückt werden.</p></div>
+<div class="paragraph"><p>Um eine solche Karte zu erstellen, beginnen Sie wieder über
+<span class="guihint">Options &gt; Manage Maps &gt; Create Map</span> und vergeben ID <span class="guihint">(mydynamicmap)</span> und
+Alias <span class="guihint">(My Dynamic Map)</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_dynmap_create.png" alt="nagvis2 dynmap create"></div></div>
+<div class="paragraph"><p>Öffnen Sie anschließend die Kartenoptionen über <span class="guihint">Edit Map &gt; Map Options</span>
+und wechseln Sie zum Reiter <span class="guihint">Dynmap</span>. Hier aktivieren Sie die Option
+<span class="guihint">dynmap_object_types</span> und wählen als Objekttyp die Services.</p></div>
+<div class="paragraph"><p>Der spannende Teil folgt nun in der zweiten Option <span class="guihint">dynmab_object_filter</span>,
+wo der Filter für die Services gesetzt wird. Verwenden Sie die einfache
+<a href="livestatus.html">Livestatus-Abfrage</a> <span class="guihint">Filter: description ~ CPU load\n</span>. Damit
+wird in der Spalte <span class="guihint">description</span> nach dem String <span class="guihint">CPU load</span> gesucht. Das
+<em>\n</em> gehört nicht zum Filter selbst, sondern erzeugt einen Zeilenumbruch,
+der für die aus dem Filter konstruierte Livestatus-Anfrage benötigt wird.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_dynmap_options_filter.png" alt="nagvis2 dynmap options filter"></div></div>
+<div class="paragraph"><p>Wenn Sie nun speichern, landen alle <span class="guihint">CPU load</span>-Services in Ihrem Monitoring
+als Icons auf der Karte. Auch neue Objekte im Monitoring, die auf den Filter
+zutreffen, werden der Karte automatisch hinzugefügt.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_dynmap_auto-icons.png" alt="nagvis2 dynmap auto icons"></div></div>
+<div class="paragraph"><p>In der NagVis-Dokumentation wird auch gezeigt, wie die Konfiguration direkt
+über die Config-Dateien funktioniert.</p></div>
+<div class="paragraph"><p><strong>Übrigens:</strong> Da Sie Dynamische Karten über <span class="guihint">Actions &gt; Export to static map</span>
+auch als statische Karten speichern können, dienen sie auch
+als Einstiegshilfe, um statische Karten initial mit sehr vielen Elementen
+zu bestücken.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__karten_anpassen">
+<span class="hidden-anchor sr-only" id="_karten_anpassen"></span>4. Karten anpassen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__linien">
+<span class="hidden-anchor sr-only" id="_linien"></span>4.1. Linien</h3>
+<div class="paragraph"><p>NagVis bietet verschiedene Arten von Linien an: Es gibt rein dekorative Linien
+ohne weitere Funktion unter <span class="guihint">Edit Map &gt; Add Special &gt; Stateless Line</span>, Linien,
+die genau wie Icons Hosts und Services in Ampelfarben visualisieren und die
+<span class="guihint">Weathermap Lines</span>. Letztere visualisieren Netzwerkbandbreite in sieben
+verschiedenen Farben. Um eine solche Linie im Wetterkartenstil zu erstellen,
+gehen Sie wie folgt vor:</p></div>
+<div class="paragraph"><p>Starten Sie über <span class="guihint">Edit Map &gt; Add Line &gt; service</span> und wählen Sie im
+<span class="guihint">Create Object</span>-Dialog einen Host und eine Netzwerkschnittstelle.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_lines_create.png" alt="nagvis2 lines create"></div></div>
+<div class="paragraph"><p>Wechseln Sie anschließend zum Reiter <span class="guihint">Appearance</span> und setzen Sie den
+<span class="guihint">view_type</span> auf <span class="guihint">line</span>. Als <span class="guihint">line_type</span> aktivieren Sie die Variante
+<span class="guihint">--%+BW→←%+BW--</span>. Damit werden Linien für Up- und Download inklusive
+Labels für prozentuale (%) und absolute (BW) Bandbreitennutzung erstellt.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_lines_line-type.png" alt="nagvis2 lines line type"></div></div>
+<div class="paragraph"><p>Nach dem Speichern finden Sie die erzeugte Linie auf der Karte. Klicken Sie
+nun auf das Schlosssymbol in der Mitte, können Sie die Anfangspunkte sowie
+den Mittelpunkt der Linien verschieben.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_lines_weatherlines.png" alt="nagvis2 lines weatherlines"></div></div>
+<div class="paragraph"><p>NagVis liefert auch gleich eine fertige Legende mit: Fügen Sie über
+<span class="guihint">Edit Map &gt; Add Special &gt; shape</span> eine sogenannte <em>Form</em> ein, in NagVis schlicht
+ein Bild. Wählen Sie einfach aus dem Dropdown-Menü bei der Option <span class="guihint">icon</span>
+das Bild <em>demo_traffic_load_legend.png</em>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_lines_weatherlines_result.png" alt="nagvis2 lines weatherlines result"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__gadgets">
+<span class="hidden-anchor sr-only" id="_gadgets"></span>4.2. Gadgets</h3>
+<div class="paragraph"><p>Gadgets sind wie Linien und Icons Visualisierungen auf der Karte. Sie zeigen
+Performance-Daten in Form von Tachos, Thermometern und ähnlichem an. Folglich
+sind diese nur für Services Verfügbar.  Beispielsweise können Sie die
+Auslastung eines Netzwerk-Interface in Form einer Tachoanzeige erzeugen:</p></div>
+<div class="paragraph"><p>Fügen Sie zunächst Ihrer Karte einen Service über <span class="guihint">Edit Map &gt; Add Icon &gt; service</span>
+als Icon hinzu. Wählen Sie im Reiter <span class="guihint">General</span> als Host
+<span class="guihint">myhost</span> und als Service eine passende Netzwerkschnitstelle.</p></div>
+<div class="paragraph"><p>Wechseln Sie zum Reiter <span class="guihint">Appearance</span> und setzen Sie <span class="guihint">view_type</span>
+auf <span class="guihint">gadget</span>. Direkt darunter aktivieren Sie <span class="guihint">gadget_url</span>. Hier
+finden Sie einige Darstellungsvarianten, die den Dateien unter
+<em>share/nagvis/htdocs/userfiles/gadgets/</em> entsprechen. Für die
+Tacho-Darstellung wählen Sie hier <span class="guihint">std_speedometer.php</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_gadget_speedometer.png" alt="nagvis2 gadget speedometer"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__containeriframes">
+<span class="hidden-anchor sr-only" id="_containeriframes"></span>4.3. Container/iFrames</h3>
+<div class="paragraph"><p>Eine interessante Möglichkeit, externe Informationen einzublenden, bieten die
+<span class="guihint">Container</span>. Hier können Sie einfach eine URL angeben und das Ziel in einem
+iFrame anzeigen lassen.  Als Beispiel soll eine Hostgruppenansicht dienen,
+als <a href="views.html#embed_views">eingebettete Ansicht</a> auf die reine Tabelle beschränkt.</p></div>
+<div class="paragraph"><p>Fügen Sie Ihrer Karte über <span class="guihint">Edit Map &gt; Add Special &gt; Container</span> einen Container
+hinzu. Im Gegensatz zu Host- und Service-Icons müssen Sie hier nicht bloß
+in die Karte klicken, sondern einen Rahmen aufziehen. Sie können diesen
+später natürlich jederzeit anpassen. Anschließend öffnet sich wieder
+ein Dialog mit Optionen.</p></div>
+<div class="paragraph"><p>Im Reiter <span class="guihint">General</span> setzen Sie den <span class="guihint">view_type</span> auf
+<span class="guihint">iframe</span>. Die eigentliche Arbeit steckt in der Option <span class="guihint">url</span>:
+Die Basis-URL bekommen Sie über <span class="image-inline"><img src="../images/icons/button_frameurl.png" alt="button frameurl"></span> auf
+der Seite der Hostgruppenansicht. Anschließend fehlen noch die
+Optionen zum <a href="views.html#embed_views">Einbetten einer Ansicht</a>, damit
+auch wirklich nur die Tabelle selbst angezeigt wird (plus ein
+wenig Hintergrund). Samt dieser könnte die URL etwa so aussehen:</p></div>
+<div class="paragraph"><p><code>/mysite/check_mk/view.py?view_name=hostgroups&amp;display_options=tbdezocf</code></p></div>
+<div class="paragraph"><p>Das genaue Einpassen und Platzieren des Containers erledigen Sie ebenfalls im
+Eigenschaftenmenü über die Koordinaten sowie Höhen- und Breitenangabe. Wenn
+Sie das Kontextmenü eines iFrame-Containers öffnen wollen, müssen Sie
+den Mauszeiger direkt über dem Rand platzieren (so, dass er seine Form zum
+Skalieren-Curser ändert).</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis_modify_container.png" alt="nagvis modify container"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__karten_rotieren_lassen">
+<span class="hidden-anchor sr-only" id="_karten_rotieren_lassen"></span>4.4. Karten rotieren lassen</h3>
+<div class="paragraph"><p>Auf der Übersichtsseite von NagVis ist Ihnen vielleicht links unten in der
+Navigation der Punkt <span class="guihint">Rotations</span> beziehungsweise mittig die Auflistung
+von Karten unter <span class="guihint">Rotation Pools</span> aufgefallen. Sie können Karten
+automatisch in einem beliebigen Intervall rotieren lassen, praktisch
+beispielsweise für öffentliche Info-Monitore. Die Konfiguration
+nehmen Sie in der NagVis-Konfigurationsdatei vor. Öffnen die Datei
+<span class="guihint">/omd/mysite/etc/nagvis/nagvis.ini.php</span> und scrollen Sie zu Zeile 440,
+wo Sie die <span class="guihint">Rotation pool definitioins</span> finden.  Hier benötigen Sie drei
+Zeilen, um einen Rotations-Pool, die zugehörigen Karten und das Intervall
+zu definieren. Hier den Pool <span class="guihint">myrotation</span> mit den Karten <span class="guihint">mymap1</span>,
+<span class="guihint">mymap3</span> und <span class="guihint">mymap</span> sowie einem Intervall von 30 Sekunden:</p></div>
+<div class="listingblock">
+<div class="title">etc/nagvis/nagvis.ini.php</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>[rotation_myrotation]
+maps="mymap1,mymap2,mymap3"
+interval=30</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_was_ist_nagvis">1. Was ist NagVis?</a></li>
+<li><a href="#_nagvis_einrichten">2. NagVis einrichten</a></li>
+<li>
+<a href="#maps">3. Karten erstellen</a><ul class="sectlevel1">
+<li><a href="#_die_verschiedenen_kartentypen">3.1. Die verschiedenen Kartentypen</a></li>
+<li><a href="#_eine_automatische_karte_erstellen">3.2. Eine automatische Karte erstellen</a></li>
+<li><a href="#_eine_regul%C3%A4re_karte_erstellen">3.3. Eine reguläre Karte erstellen</a></li>
+<li><a href="#_eine_geografische_karte_erstellen">3.4. Eine geografische Karte erstellen</a></li>
+<li><a href="#_eine_dynamische_karten_erstellen">3.5. Eine dynamische Karten erstellen</a></li>
+</ul>
+</li>
+<li>
+<a href="#_karten_anpassen">4. Karten anpassen</a><ul class="sectlevel1">
+<li><a href="#_linien">4.1. Linien</a></li>
+<li><a href="#_gadgets">4.2. Gadgets</a></li>
+<li><a href="#_containeriframes">4.3. Container/iFrames</a></li>
+<li><a href="#_karten_rotieren_lassen">4.4. Karten rotieren lassen</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

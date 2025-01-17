@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="With the Checkmk REST API, tasks that you would otherwise perform using the GUI can be executed by the Checkmk server via HTTP requests.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="The Checkmk REST API">
+<meta name="og:description" content="With the Checkmk REST API, tasks that you would otherwise perform using the GUI can be executed by the Checkmk server via HTTP requests.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>The Checkmk REST API</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/de/rest_api.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/rest_api.html">2.1.0</a><a class="dropdown-item" href="../../latest/en/rest_api.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">The Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">The Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>The Checkmk REST API</h1>
+<div class="details">
+<span id="revdate">Last modified on 06-Jul-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/en/rest_api.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Since version <span class="new">2.0.0</span> Checkmk has had the REST API as its application programming interface.
+With this API, via commands or scripts with HTTP requests, you can transmit tasks to be executed on a Checkmk server — tasks that you would have performed in Checkmk’s GUI in earlier releases.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> Starting with version <span class="new">2.2.0</span>, the REST API completely replaces the old web API, which was sometimes called HTTP API.
+The web API was removed from Checkmk with version <span class="new">2.2.0</span>.
+In the <a href="#rest-web-api">last chapter</a> you can still find a comparison of the functionality of the REST API and the web API.
+From the table in the last chapter it will be clear that the Checkmk REST API not only replaces the web API, but also provides access to many more areas with more specific capabilities.</p></div>
+<div class="paragraph"><p>The <em>REST</em> in the name of the REST API stands for <em>REpresentational State Transfer</em>, and it describes an architecture for the exchange of data on distributed systems — especially for web services.
+An API implemented according to the REST architecture follows certain principles, e.g. the client-server model, stateless communication and a uniform interface.
+In practice the implementation is preferably carried out via the HTTP protocol, whereby the resources are addressed via the Uniform Resource Identifier (URI) and accessed using HTTP methods (GET, POST, PUT, DELETE).</p></div>
+<div class="paragraph"><p>So much for the principles of the REST.
+The advantages of these principles can be demonstrated by the concrete features provided by the Checkmk REST API:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Hypertext Transfer Protocol (<strong>HTTP/1.1</strong>) is used as the transport system for communication.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Coding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The JavaScript Object Notation (<strong>JSON</strong>) is used as the data format.
+The payload of the answers is serialized with JSON and encoded in UTF-8.
+Date and time information is encoded in the <strong>ISO-8601</strong> format with valid time zone information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">English is the language for labels, identifiers and API documentation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access to the API is only granted to a client if it has proven its authorization by means of <strong>HTTP authentication</strong> — 'Bearer' for example.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Versioning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The API is versioned and uses a three-level numbering scheme according to the <strong>Semantic Versioning 2.x</strong> standard.
+For details, refer to the <a href="#versioning">section on versioning</a> below.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The API is documented in a machine-readable structure, and in a human-readable, English format, and includes all resources, their input and output parameters and their associated value ranges.
+The API is created with the <strong>OpenAPI Specification (OAS) 3.x</strong>, an API description format intended especially for REST APIs.
+The API document created with this specification is displayed to the user with ReDoc, a responsive web design for OpenAPI documents.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code example</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To demonstrate its use, sample code for various applications is provided for each request — cURL and HTTPie for example.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error display</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the event of an error, the API sends numeric <strong>HTTP status codes</strong> and a diagnostic message for the problem, which helps to identify possible causes of incorrect requests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REST API classification</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The API fulfills all four levels (0 to 3) of the <strong>Richardson Maturity Model (RMM)</strong>, which can be used to assess how much REST an API contains.
+Level 1 requires the introduction of resources to enable communication via the API to individual endpoints rather than to a global one.
+Level 2 is met if HTTP methods are used for the requests.
+At the (highest) level 3, the API is effectively self-documenting, in that the server, when responding to a request, communicates any possible next actions and the resources to be addressed, thus enabling the client to discover the available functionality for themselves.
+This provision of additional information is also known as 'Hypermedia as the Engine of Application State' (<strong>HATEOAS</strong>).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>In addition to these general comfort functions, the REST API is intended to cover the complete functionality that in earlier releases Checkmk provided via the GUI and a command interface.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+For features that exist only in the commercial editions, such as service level agreement (SLA) or Agent Bakery, the associated REST API methods are also provided only in these editions.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_api_doc">
+<span class="hidden-anchor sr-only" id="api_doc"></span>2. The API documentation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_versioning">
+<span class="hidden-anchor sr-only" id="versioning"></span>2.1. Versioning</h3>
+<div class="paragraph"><p>One of the advantages of the REST API is that both the software and its documentation come from the same source — the OpenAPI document.
+Thus the API documentation always matches the software and describes exactly what the API can do.
+Therefore it is not necessary to describe the reference part of the available resources, methods, parameters etc. in the Checkmk User guide — instead you will find the API documentation separately from this manual, directly in your Checkmk site.</p></div>
+<div class="paragraph"><p>The API with its documentation is versioned and uses a three-level numbering scheme in X.Y.Z format, where X stands for a main release, Y for a minor release and Z for a patch.
+A new minor release contains new, backward-compatible functions, for example, new endpoints.
+A new main release may contain changes that make the API incompatible with the previous main release (so-called <strong>breaking changes</strong>).
+The version numbers of the main and minor releases are part of the URL used to send a request to the server.</p></div>
+<div class="paragraph"><p><strong>Important</strong>: Note that the REST API follows a different versioning scheme than that for the Checkmk software.
+Since a new main release of the API is necessary if there are incompatible API changes, this usually does not match the release cycle of the Checkmk software.</p></div>
+<div class="paragraph"><p>Nevertheless, the correlation between the versions of API documentation and Checkmk software is very straightforward, as you will learn in the next chapter.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_access">
+<span class="hidden-anchor sr-only" id="access"></span>2.2. Access</h3>
+<div class="paragraph"><p>The REST API documentation is available in HTML format for viewing in a Web browser.</p></div>
+<div class="paragraph"><p>In the Checkmk GUI, open the API documentation from the navigation bar via <span class="guihint">Help &gt; Developer resources &gt; REST API documentation</span>.
+The API documentation is displayed in a new browser window (or browser tab).
+We will discuss this in more detail in the next chapter.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/restapi_help_menu.png" alt="Help menu in the navigation bar." width="50%"></div></div>
+<div class="paragraph"><p><strong>Note</strong>: You will surely have noticed that there are more entries covering the REST API in the <span class="guihint">Help</span> menu.
+With <span class="guihint">REST API introduction</span> you can open this article.
+With <span class="guihint">REST API interactive GUI</span> you can open another view of the REST API.
+The entry is called <span class="guihint">GUI</span> since not only are you shown the REST API functions, but because you can also interact with the API directly from the browser — by sending requests to the server for example.
+We will introduce the REST API GUI as an alternative to execution by script later in the <a href="#rest_api_gui">chapter on the REST API GUI</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_structure">
+<span class="hidden-anchor sr-only" id="structure"></span>2.3. Structure and content</h3>
+<div class="paragraph"><p>The API documentation uses a responsive web design consisting of three sections:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/restapi_redoc.png" alt="API documentation in a responsive web design with three sections."></div></div>
+<div class="ulist"><ul>
+<li><p>The left-hand section, <em>Navigation</em>, is used for orientation, searching and a quick jump to the exact description of the entries in the central section.
+The table of contents contains one entry for each API endpoint.
+An endpoint uses a URL to refer to the resource that the API provides (e.g. hosts), together with the method used to access the resource (e.g. GET to display a host).
+The endpoints are organized into several folders.</p></li>
+<li><p>The central section, <em>Content</em>, contains the hard facts on the documentation:
+all information for defining a request (with parameters, value ranges, default values and descriptions) and the corresponding answers (also with all details).
+The possible answers are displayed in different colors, depending on whether the returned HTTP status code signals success or an error.</p></li>
+<li><p>The right-hand section, <span class="guihint">Request samples</span>, shows the method and URL for the endpoint selected in the content section, followed by several examples of requests:
+the payload in JSON format (if relevant for the endpoint) and code examples, e.g. for cURL, HTTPie, Python Requests and Python Urllib.
+Then follow the responses according to the HTTP status.
+All code examples can be copied to the clipboard with the <span class="guihint">Copy</span> button.</p></li>
+</ul></div>
+<div class="paragraph"><p>The navigation section is scroll-synchronized with the other two sections, which means that if you scroll up or down in the content section, the navigation section automatically scrolls to the appropriate entry in the table of contents.</p></div>
+<div class="paragraph"><p>The responsive web design ensures that the example section does not appear in a very narrow browser window (the examples are then displayed below the corresponding method), and the navigation section is converted into a menu.</p></div>
+<div class="paragraph"><p>In all sections you will find content that you can show and hide, for example, the entries for the endpoints in the navigation section, and nested parameters in the content section.
+By clicking on <span class="guihint">&gt;</span> or <span class="guihint">Expand all</span> you can show the hidden contents, and with <span class="guihint">∨</span> or <span class="guihint">Collapse all</span> you can hide them again.</p></div>
+<div class="paragraph"><p>In the next chapter you will learn how you can use the API documentation to create concrete requests from the information, send these requests to the Checkmk server, have them executed and monitor that execution and results.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_using_the_api">
+<span class="hidden-anchor sr-only" id="using_the_api"></span>3. Using the API</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_auth">
+<span class="hidden-anchor sr-only" id="auth"></span>3.1. Authentication</h3>
+<div class="paragraph"><p>In order to use the REST API in the Checkmk server from a client, the client must prove its identity.
+The REST API supports the following methods for authentication: <strong>Bearer</strong>, <strong>Web server</strong> and <strong>Cookie</strong> — in this order of precedence.
+This means, for example, that if authentication with Bearer is successful, none of the other methods will be checked.</p></div>
+<div class="sect3">
+<h4 id="heading_bearerauth">
+<span class="hidden-anchor sr-only" id="bearerauth"></span>Bearer or Header authentication</h4>
+<div class="paragraph"><p>'Bearer' means the holder of an identity.
+The client authenticates itself with the credentials of a user set up on the Checkmk server.
+Ideally, this is the so-called <a href="glossar.html#automation_user">automation user</a>, which is provided in Checkmk for the execution of actions via an API.
+Bearer authentication is recommended for use in scripts.</p></div>
+<div class="paragraph"><p>For authentication, you need the user name and the corresponding so-called <em>automation secret for machine accounts</em>, i.e. the password for the automation user.
+Both items of information must be transmitted to the Checkmk server in the header of each request.
+In a newly-created <a href="glossar.html#site">site</a>, the <code>automation</code> user will have already been created.
+You can find it, like other users, under <span class="guihint">Setup &gt; Users &gt; Users</span>.
+Make sure that the roles and associated permissions for the automation user are set to allow you to execute your requests.</p></div>
+<div class="paragraph"><p>For the scripts presented in this article, the automation user is always used as the default example.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_webserverauth">
+<span class="hidden-anchor sr-only" id="webserverauth"></span>Web server authentication</h4>
+<div class="paragraph"><p>For web server authentication, the REST API uses the HTTP authentication configured for the web server ('Basic' or 'Digest').</p></div>
+<div class="paragraph"><p>This authentication method is intended for large Checkmk installations with special requirements that are realized by using and configuring software modules for authentication of the Apache web server.
+If you want to use the web server authentication, you need to reconfigure the Apache web server of the Checkmk site itself.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_cookieauth">
+<span class="hidden-anchor sr-only" id="cookieauth"></span>Cookie authentication</h4>
+<div class="paragraph"><p>Cookie authentication is a special case of authentication by API key. Every Checkmk user who is logged into Checkmk and has been assigned an HTTP cookie can use the REST API. Cookie authentication is used for trying out and testing with the <a href="#rest_api_gui">REST API GUI</a>. Whether requests can be executed depends on whether your Checkmk user account has the appropriate permissions.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_testing">
+<span class="hidden-anchor sr-only" id="testing"></span>3.2. Testing the API locally</h3>
+<div class="paragraph"><p>To test the REST API, it is advisable to make the requests directly from the Checkmk server, i.e. in this example client and server are on the same computer.
+If you are working as a site user, you can also use local variables such as <code>$OMD_SITE</code>, which refers to the name of the site.</p></div>
+<div class="paragraph"><p>In the following examples, we use the sample code contained in the API documentation for the command line program cURL, which enables data to be transferred to or from a server without user interaction, for example via HTTP.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> Especially for complex requests, the cURL examples may contain inconsistencies and therefore may not always be reliable.
+We therefore generally recommend HTTPie, which is more consistent, easier to understand, and better suited for use in scripts.</p></div>
+<div class="paragraph"><p>The <code>curl</code> command is executed within a bash script.
+For the preparation, create a script file to which the sample code is later copied:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>touch<span class="tok-w"> </span>rest-api_test.sh
+<span class="tok-gp">OMD[mysite]:~$ </span>chmod<span class="tok-w"> </span>+x<span class="tok-w"> </span>rest-api_test.sh</code></pre></div></div>
+<div class="paragraph"><p>The REST API outputs all responses in a single-line JSON format.
+Since formatted output is much easier to read, for formatted output the cURL sample code uses the command line JSON processor <code>jq</code>.
+You can use the following command to check whether <code>jq</code> is installed:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>jq<span class="tok-w"> </span>--version
+<span class="tok-go">jq-1.6</span></code></pre></div></div>
+<div class="paragraph"><p>and — if not — install the software from <a href="https://stedolan.github.io/jq/download/" target="_blank">Github</a>.
+If you do not want to use <code>jq</code>, you will have to cope with the unformatted output.</p></div>
+<div class="paragraph"><p>Before starting, gather some basic information specific to your Checkmk configuration:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Example value</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HOST_NAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Checkmk server’s hostname</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SITE_NAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mysite</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Checkmk site name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>USERNAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>automation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The automation user’s name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PASSWORD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>theautomationsecret</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The automation user’s password</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>These variables are used in the sample code and must be edited by you before sending a request.
+In the table above you will also find the sample values used in the following.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_making_requests">
+<span class="hidden-anchor sr-only" id="making_requests"></span>3.3. Making requests using scripts</h3>
+<div class="paragraph"><p>With a straightforward example we will now demonstrate how to use the REST API.
+Create a host with its services using a total of three requests.
+In principle, you proceed in the same way as you would with the Checkmk GUI:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Create a host</p></li>
+<li><p>Perform a service discovery on the host</p></li>
+<li><p>Activate the changes</p></li>
+</ol></div>
+<div class="sect3">
+<h4 id="heading__creating_a_host">
+<span class="hidden-anchor sr-only" id="_creating_a_host"></span>Creating a host</h4>
+<div class="paragraph"><p>Open the API documentation and select the entry for creating a host (<span class="guihint">Create a host</span>) in the left navigation area:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/restapi_redoc_2pane.png" alt="The entry in the API documentation for creating a host."></div></div>
+<div class="paragraph"><p>In the central part of the panel you can see the details for the selected request, which HTTP authentication is required (this is identical for all requests via the REST API), and the required and optional parameters.
+The name of the host and the folder in which it should be created is required.
+By default, the host is created in the <span class="guihint">Main</span> directory.
+If you want to create the host in another folder, you may first need to make another API request (<span class="guihint">Show all folders</span>) to view the existing folders to determine the ID of the one you want to use.</p></div>
+<div class="paragraph"><p>In our example, we want to create the host <code>myhost123</code> with the IP address <code>192.168.0.42</code> in the <span class="guihint">Main</span> folder.</p></div>
+<div class="paragraph"><p>In the API documentation, click the <span class="guihint">curl</span> button in the right-hand example area and then click <span class="guihint">Copy</span> to copy the cURL sample code to the clipboard.
+Open the prepared script <code>rest-api_test.sh</code> and paste the clipboard’s contents into it:</p></div>
+<div class="listingblock">
+<div class="title">rest-api_test.sh</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+
+HOST_NAME="localhost"
+SITE_NAME="mysite"
+API_URL="http://$HOST_NAME/$SITE_NAME/check_mk/api/1.0"
+
+USERNAME="automation"
+PASSWORD="test123"
+
+out=$(
+  curl \
+    --request POST \
+    --write-out "\nxxx-status_code=%{http_code}\n" \
+    --header "Authorization: Bearer $USERNAME $PASSWORD" \
+    --header "Accept: application/json" \
+    --header "Content-Type: application/json" \
+    --data '{
+          "attributes": {
+            "ipaddress": "192.168.0.123"
+          },
+          "folder": "/",
+          "host_name": "example.com"
+        }' \
+    "$API_URL/domain-types/host_config/collections/all")
+
+resp=$( echo "${out}" | grep -v "xxx-status_code" )
+code=$( echo "${out}" | awk -F"=" '/^xxx-status_code/ {print $2}')
+
+# For indentation, please install 'jq' (JSON query tool)
+echo "$resp" | jq
+# echo "$resp"
+
+if [[ $code -lt 400 ]]; then
+    echo "OK"
+    exit 0
+else
+    echo "Request error"
+    exit 1
+fi</code></pre></div>
+</div>
+<div class="paragraph"><p>In the first part of the sample code you will find the environment variables, then comes the <code>curl</code> command with the POST method on the resource whose URL is in the last line.
+With the POST method, following the header lines (one of which defines the HTTP authentication), you will find the data section where the parameters for the new host are specified.
+The remaining lines are used to prepare the output.</p></div>
+<div class="paragraph"><p>Note that the cURL sample code may contain more parameters than you might need for a specific situation.
+For our example this is not the case and you only need to change the two existing parameters, <code>host_name</code> and <code>ipaddress</code>.</p></div>
+<div class="paragraph"><p>Now edit the sample code so that the result looks something like this:</p></div>
+<div class="listingblock">
+<div class="title">rest-api_test.sh</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+
+<span class="hll">HOST_NAME="myserver"
+</span><span class="hll">SITE_NAME="mysite"
+</span>API_URL="http://$HOST_NAME/$SITE_NAME/check_mk/api/1.0"
+
+<span class="hll">USERNAME="automation"
+</span><span class="hll">PASSWORD="theautomationsecret"
+</span>
+out=$(
+  curl \
+    --request POST \
+    --write-out "\nxxx-status_code=%{http_code}\n" \
+    --header "Authorization: Bearer $USERNAME $PASSWORD" \
+    --header "Accept: application/json" \
+    --header "Content-Type: application/json" \
+    --data '{
+          "attributes": {
+<span class="hll">            "ipaddress": "192.168.0.42"
+</span>          },
+          "folder": "/",
+<span class="hll">          "host_name": "myhost123"
+</span>        }' \
+    "$API_URL/domain-types/host_config/collections/all")
+
+resp=$( echo "${out}" | grep -v "xxx-status_code" )
+code=$( echo "${out}" | awk -F"=" '/^xxx-status_code/ {print $2}')
+
+# For indentation, please install 'jq' (JSON query tool)
+echo "$resp" | jq
+# echo "$resp"
+
+if [[ $code -lt 400 ]]; then
+    echo "OK"
+    exit 0
+else
+    echo "Request error"
+    exit 1
+fi</code></pre></div>
+</div>
+<div class="paragraph"><p>If the <code>jq</code> command line JSON processor is not installed, you must comment out the line with <code>jq</code> in the above sample code and comment in the line following it. The result then looks like this:</p></div>
+<div class="listingblock">
+<div class="title">rest-api_test.sh</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># echo "$resp" | jq
+echo "$resp"</code></pre></div>
+</div>
+<div class="paragraph"><p>Run the script:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>./rest-api_test.sh
+<span class="tok-gp">  % </span>Total<span class="tok-w">    </span>%<span class="tok-w"> </span>Received<span class="tok-w"> </span>%<span class="tok-w"> </span>Xferd<span class="tok-w">  </span>Average<span class="tok-w"> </span>Speed<span class="tok-w">   </span>Time<span class="tok-w">    </span>Time<span class="tok-w">     </span>Time<span class="tok-w">  </span>Current
+<span class="tok-go">                                 Dload  Upload   Total   Spent    Left  Speed</span>
+<span class="tok-go">100  3480  100  3329  100   151  38222   1733 --:--:-- --:--:-- --:--:-- 40465</span>
+<span class="tok-go">{</span>
+<span class="tok-go">  "links": [</span>
+<span class="tok-go">    {</span>
+<span class="tok-go">      "domainType": "link",</span>
+<span class="tok-go">      "rel": "self",</span>
+<span class="tok-go">      "href": "http://myserver/mysite/check_mk/api/1.0/objects/host_config/myhost123",</span>
+<span class="tok-go">      "method": "GET",</span>
+<span class="tok-go">      "type": "application/json"</span>
+<span class="tok-go">    },</span>
+<span class="tok-go">    {</span>
+<span class="tok-go">      "domainType": "link",</span>
+<span class="tok-go">      "rel": "urn:org.restfulobjects:rels/update",</span>
+<span class="tok-go">      "href": "http://myserver/mysite/check_mk/api/1.0/objects/host_config/myhost123",</span>
+<span class="tok-go">      "method": "PUT",</span>
+<span class="tok-go">      "type": "application/json"</span>
+<span class="tok-go">    },</span>
+<span class="tok-go">[...]</span>
+<span class="tok-go">    {</span>
+<span class="tok-go">      "domainType": "link",</span>
+<span class="tok-go">      "rel": "urn:com.checkmk:rels/download",</span>
+<span class="tok-go">      "href": "http://myserver/mysite/check_mk/api/1.0/domain-types/agent/actions/download/invoke?os_type=windows_msi&amp;host_name=myhost123",</span>
+<span class="tok-go">      "method": "GET",</span>
+<span class="tok-go">      "type": "application/json",</span>
+<span class="tok-go">      "title": "Download the windows_msi agent of the host."</span>
+<span class="tok-go">    }</span>
+<span class="tok-go">  ],</span>
+<span class="tok-go">  "domainType": "host_config",</span>
+<span class="hll"><span class="tok-go">  "id": "myhost123",</span>
+</span><span class="hll"><span class="tok-go">  "title": "myhost123",</span>
+</span><span class="tok-go">  "members": {},</span>
+<span class="tok-go">  "extensions": {</span>
+<span class="hll"><span class="tok-go">    "folder": "/",</span>
+</span><span class="tok-go">    "attributes": {</span>
+<span class="hll"><span class="tok-go">      "ipaddress": "192.168.0.42",</span>
+</span><span class="tok-go">      "meta_data": {</span>
+<span class="tok-go">        "created_at": "2023-02-23T10:42:31.218567+00:00",</span>
+<span class="tok-go">        "updated_at": "2023-02-23T10:42:31.248058+00:00",</span>
+<span class="tok-go">        "created_by": "automation"</span>
+<span class="tok-go">      }</span>
+<span class="tok-go">    },</span>
+<span class="tok-go">    "effective_attributes": null,</span>
+<span class="tok-go">    "is_cluster": false,</span>
+<span class="tok-go">    "is_offline": false,</span>
+<span class="tok-go">    "cluster_nodes": null</span>
+<span class="tok-go">  }</span>
+<span class="tok-go">}</span>
+<span class="tok-go">OK</span></code></pre></div></div>
+<div class="paragraph"><p>In the response, the first 3 lines contain information on the data transmission.
+Then, under <code>links</code>, the API returns a selection of requests (heavily truncated in the above example) which can be applied to the host just created — as befits a REST API.
+Finally, the API returns the ID and name (<code>title</code>) of the created host, the folder (<code>/</code> for the main folder), and under <code>attributes</code> the attributes assigned to the host including its IP address.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__perform_a_service_discovery_on_the_host">
+<span class="hidden-anchor sr-only" id="_perform_a_service_discovery_on_the_host"></span>Perform a service discovery on the host</h4>
+<div class="paragraph"><p>Once the host <code>myhost123</code> has been created, its services can be discovered.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> To ensure that a <a href="glossar.html#service_discovery">service discovery</a> actually delivers the expected services, on Linux and Windows hosts you must first install and register their respective <a href="glossar.html#agent">agents</a>.</p></div>
+<div class="paragraph"><p>To execute a service discovery via REST API, select the appropriate entry in the API documentation (<span class="guihint">Execute a service discovery on a host</span>), copy the sample code into the script, and customize it to your configuration.</p></div>
+<div class="paragraph"><p>You can copy the first part with the environment variables 1:1 from the previous example.
+In the <code>curl</code> command, change the name of the host to <code>myhost123</code> and, if necessary, use the <code>mode</code> parameter to change the type of service discovery.</p></div>
+<div class="listingblock">
+<div class="title">rest-api_test.sh</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+
+<span class="hll">HOST_NAME="myserver"
+</span><span class="hll">SITE_NAME="mysite"
+</span>API_URL="http://$HOST_NAME/$SITE_NAME/check_mk/api/1.0"
+
+<span class="hll">USERNAME="automation"
+</span><span class="hll">PASSWORD="theautomationsecret"
+</span>
+out=$(
+  curl \
+    --request POST \
+    --write-out "\nxxx-status_code=%{http_code}\n" \
+    --header "Authorization: Bearer $USERNAME $PASSWORD" \
+    --header "Accept: application/json" \
+    --header "Content-Type: application/json" \
+    --data '{
+<span class="hll">          "host_name": "myhost123",
+</span><span class="hll">          "mode": "refresh"
+</span>        }' \
+    "$API_URL/domain-types/service_discovery_run/actions/start/invoke")
+
+resp=$( echo "${out}" | grep -v "xxx-status_code" )
+code=$( echo "${out}" | awk -F"=" '/^xxx-status_code/ {print $2}')
+
+# For indentation, please install 'jq' (JSON query tool)
+echo "$resp" | jq
+# echo "$resp"
+
+if [[ $code -lt 400 ]]; then
+    echo "OK"
+    exit 0
+else
+    echo "Request error"
+    exit 1
+fi</code></pre></div>
+</div>
+<div class="paragraph"><p>Execute this script as well:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>./rest-api_test.sh
+<span class="tok-gp">  % </span>Total<span class="tok-w">    </span>%<span class="tok-w"> </span>Received<span class="tok-w"> </span>%<span class="tok-w"> </span>Xferd<span class="tok-w">  </span>Average<span class="tok-w"> </span>Speed<span class="tok-w">   </span>Time<span class="tok-w">    </span>Time<span class="tok-w">     </span>Time<span class="tok-w">  </span>Current
+<span class="tok-go">                                 Dload  Upload   Total   Spent    Left  Speed</span>
+<span class="tok-go">100    75    0     0  100    75      0   1188 --:--:-- --:--:-- --:--:--  1190</span>
+<span class="hll"><span class="tok-go">OK</span>
+</span></code></pre></div></div>
+<div class="paragraph"><p>Success is reported succinctly at the end of the output with <code>OK</code>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__activate_the_changes">
+<span class="hidden-anchor sr-only" id="_activate_the_changes"></span>Activate the changes</h4>
+<div class="paragraph"><p>Finally, the changes must be activated. The appropriate request is called <span class="guihint">Activate pending changes</span>.</p></div>
+<div class="paragraph"><p>As before, take the first part with the environment variables from the previous examples.
+In the data part of the <code>curl</code> command change the parameter <code>sites</code> and set it to the name of the site on which the changes should be activated:</p></div>
+<div class="listingblock">
+<div class="title">rest-api_test.sh</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+
+<span class="hll">HOST_NAME="myserver"
+</span><span class="hll">SITE_NAME="mysite"
+</span>API_URL="http://$HOST_NAME/$SITE_NAME/check_mk/api/1.0"
+
+<span class="hll">USERNAME="automation"
+</span><span class="hll">PASSWORD="theautomationsecret"
+</span>
+out=$(
+  curl \
+    --request POST \
+    --write-out "\nxxx-status_code=%{http_code}\n" \
+    --header "Authorization: Bearer $USERNAME $PASSWORD" \
+    --header "Accept: application/json" \
+    --header "Content-Type: application/json" \
+    --data '{
+          "force_foreign_changes": false,
+          "redirect": false,
+          "sites": [
+<span class="hll">            "mysite"
+</span>          ]
+        }' \
+    "$API_URL/domain-types/activation_run/actions/activate-changes/invoke")
+
+resp=$( echo "${out}" | grep -v "xxx-status_code" )
+code=$( echo "${out}" | awk -F"=" '/^xxx-status_code/ {print $2}')
+
+# For indentation, please install 'jq' (JSON query tool)
+echo "$resp" | jq
+# echo "$resp"
+
+if [[ $code -lt 400 ]]; then
+    echo "OK"
+    exit 0
+else
+    echo "Request error"
+    exit 1
+fi</code></pre></div>
+</div>
+<div class="paragraph"><p>Execute this script:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>./rest-api_test.sh
+<span class="tok-gp">  % </span>Total<span class="tok-w">    </span>%<span class="tok-w"> </span>Received<span class="tok-w"> </span>%<span class="tok-w"> </span>Xferd<span class="tok-w">  </span>Average<span class="tok-w"> </span>Speed<span class="tok-w">   </span>Time<span class="tok-w">    </span>Time<span class="tok-w">     </span>Time<span class="tok-w">  </span>Current
+<span class="tok-go">                                 Dload  Upload   Total   Spent    Left  Speed</span>
+<span class="tok-go">100  1094  100   962  100   132   8149   1118 --:--:-- --:--:-- --:--:--  9350</span>
+<span class="tok-go">{</span>
+<span class="tok-go">  "links": [</span>
+<span class="tok-go">    {</span>
+<span class="tok-go">      "domainType": "link",</span>
+<span class="tok-go">      "rel": "self",</span>
+<span class="tok-go">      "href": "http://myserver/mysite/check_mk/api/1.0/objects/activation_run/7ed6a562-79a4-41ff-a2a3-77938243d965",</span>
+<span class="tok-go">      "method": "GET",</span>
+<span class="tok-go">      "type": "application/json"</span>
+<span class="tok-go">    },</span>
+<span class="tok-go">    {</span>
+<span class="tok-go">      "domainType": "link",</span>
+<span class="tok-go">      "rel": "urn:com.checkmk:rels/wait-for-completion",</span>
+<span class="tok-go">      "href": "http://myserver/mysite/check_mk/api/1.0/objects/activation_run/7ed6a562-79a4-41ff-a2a3-77938243d965/actions/wait-for-completion/invoke",</span>
+<span class="tok-go">      "method": "GET",</span>
+<span class="tok-go">      "type": "application/json"</span>
+<span class="tok-go">    }</span>
+<span class="tok-go">  ],</span>
+<span class="tok-go">  "domainType": "activation_run",</span>
+<span class="tok-go">  "id": "7ed6a562-79a4-41ff-a2a3-77938243d965",</span>
+<span class="hll"><span class="tok-go">  "title": "Activation status: In progress.",</span>
+</span><span class="tok-go">  "members": {},</span>
+<span class="tok-go">  "extensions": {</span>
+<span class="tok-go">    "sites": [</span>
+<span class="tok-go">      "mysite"</span>
+<span class="tok-go">    ],</span>
+<span class="tok-go">    "is_running": true,</span>
+<span class="tok-go">    "force_foreign_changes": false,</span>
+<span class="tok-go">    "time_started": "2023-02-23T12:07:54.796169+00:00",</span>
+<span class="tok-go">    "changes": [</span>
+<span class="tok-go">      {</span>
+<span class="tok-go">        "id": "28c84ac9-aacb-4a4c-a929-6f4395c2b178",</span>
+<span class="tok-go">        "user_id": "automation",</span>
+<span class="tok-go">        "action_name": "create-host",</span>
+<span class="tok-go">        "text": "Created new host myhost123.",</span>
+<span class="tok-go">        "time": "2023-02-23T12:05:47.846263+00:00"</span>
+<span class="tok-go">      }</span>
+<span class="tok-go">    ]</span>
+<span class="tok-go">  }</span>
+<span class="tok-go">}</span>
+<span class="tok-go">OK</span></code></pre></div></div>
+<div class="paragraph"><p>The <code>title</code> text indicates that the activation has been started.
+Again, the REST API suggests two useful follow-up requests under <code>links</code>:
+to query the status of this activation, and to wait for its completion.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_rest_api_gui">
+<span class="hidden-anchor sr-only" id="rest_api_gui"></span>3.4. Making requests via the REST API GUI</h3>
+<div class="paragraph"><p>With the REST API <strong>GUI</strong> you get a new perspective on the API.
+With this GUI you can interact directly with the API from the browser by sending requests to the server via cURL commands, and immediately see the responses.
+To do this, you have to do without the code examples of the REST API documentation in the API GUI — both views are optimized for their respective functions.</p></div>
+<div class="paragraph"><p>The REST API GUI is generated from the same source as the REST API documentation — the OpenAPI document — and therefore always provides functions that match the API.</p></div>
+<div class="paragraph"><p>You open the API GUI in the Checkmk GUI from the navigation bar, menu <span class="guihint">Help &gt; Developer resources &gt; REST API interactive GUI</span>.
+The API GUI is displayed in a new browser window (or browser tab):</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/restapi_swaggerui.png" alt="The entry in the REST API GUI to create a host."></div></div>
+<div class="paragraph"><p>In the following we outline how you can execute the first request from the above example (create a host) with the REST API GUI instead of using a script:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Authenticate:
+The REST API GUI offers a dialog box for entering authentication information after clicking the <span class="guihint">Authorize</span> button (on the right side above the entry for the first endpoint folder).
+However, you <strong>do not need</strong> to make any entries there, because as a logged-in Checkmk user you are already authorized to use the REST API via <a href="#auth">cookie authentication</a>.</p></li>
+<li><p>Select the endpoint:
+In the <span class="guihint">Hosts</span> folder, select the endpoint <span class="guihint">Create a host</span> and click <span class="guihint">Try it out</span>.</p></li>
+<li><p>Enter parameter values:
+In <span class="guihint">Request body</span> overwrite the example values for <code>host_name</code> and <code>ipaddress</code>.</p></li>
+<li><p>Send a request:
+Click <span class="guihint">Execute</span>.</p></li>
+<li><p>Check the response:
+Under <span class="guihint">Responses</span> you will first see the sent cURL command and the URL of the endpoint.
+Then under <span class="guihint">Server response</span> the response is displayed with HTTP status code and in <span class="guihint">Responses</span> with the (multi-line formatted) REST API response.</p></li>
+</ol></div>
+<div class="paragraph"><p>The REST API GUI therefore offers you the opportunity to try out the functions of the API quickly and easily, and to familiarize yourself with the functions of the input values as well as with concrete responses.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_error_correction">
+<span class="hidden-anchor sr-only" id="error_correction"></span>3.5. Error correction</h3>
+<div class="paragraph"><p>In contrast to the output from successful commands via script shown so far, the REST API shows you errors in the following way:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{</span>
+<span class="tok-go">  "title": "The operation has failed.",</span>
+<span class="tok-go">  "status": 401,</span>
+<span class="tok-go">  "detail": "There are changes from other users and foreign changes are not allowed in this API call."</span>
+<span class="tok-go">}</span>
+<span class="tok-go">Request error</span></code></pre></div></div>
+<div class="paragraph"><p>Depending on the error, the parameters displayed in the output may vary.
+However, in <code>status</code> the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">HTTP status code</a>, and in <code>title</code> they always receive a brief description of the cause of the error.</p></div>
+<div class="paragraph"><p>In most cases, <code>detail</code> will show you detailed information, as the name suggests.
+In the above example, you can see that there are pending changes in Checkmk, but these were initiated by another user.
+By default, only changes that have also been made via the API can be activated via the API.</p></div>
+<div class="paragraph"><p>In the next example, the helpful messages are also in the detailed information:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{</span>
+<span class="tok-go">  "title": "Bad Request",</span>
+<span class="tok-go">  "status": 400,</span>
+<span class="tok-go">  "detail": "400 Bad Request: Failed to decode JSON object: Invalid \\escape: line 6 column 31 (char 136)"</span>
+<span class="tok-go">}</span>
+<span class="tok-go">Request error</span></code></pre></div></div>
+<div class="paragraph"><p>The problem in the above example is that a parameter value does not adhere to the valid value range because the host name contains a slash.</p></div>
+<div class="paragraph"><p>The number of possible errors is of course much greater than the two we have presented here.
+However, you can see from the examples shown that in its output the REST API usually provides sufficient information on the cause and thus gives you clues for starting the analysis and troubleshooting.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_securing">
+<span class="hidden-anchor sr-only" id="securing"></span>4. Securing the API</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Since sensitive data can be transferred during access via the REST API and — depending on the authorization of the automation user — considerable alterations could potentially be made to Checkmk, you should secure such access accordingly.
+Here you will find some of the available options:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="omd_https.html">Checkmk over HTTPS</a>:
+Use the API exclusively over Hypertext Transfer Protocol Secure (HTTPS), otherwise user names, passwords, and also configuration data will be transmitted in clear text on the network.</p></li>
+<li><p>Give the automation user a password of sufficient length.
+Since the password is usually only stored in a script, you can easily assign a very long one.</p></li>
+<li><p>Be sure to pay careful attention to the authorization concept for the scripts you use to make requests to the API.
+The scripts may contain sensitive data such as configuration data, passwords, etc.
+Therefore make sure that only authorized users and groups can read these scripts.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_examples">
+<span class="hidden-anchor sr-only" id="examples"></span>5. Examples with REST API requests</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In this chapter you will find examples that show how to perform commonly needed actions using the REST API.
+The examples are again based on the sample code for the <em>cURL</em> command line program.
+In contrast to the procedure in the chapter <a href="#using_the_api">Using the API</a>, however, here the requests are made as <code>curl</code> commands on the command line rather than by script.
+This allows you to try out our examples right away — after you have customized them to suit your own environment.</p></div>
+<div class="paragraph"><p>In order to present the commands clearly here, we have only shown the lines from the sample code that are absolutely necessary for the command execution.
+The REST API’s responses are by default unformatted, and you can format them by redirecting the output back to the command line JSON processor <code>jq</code> by appending a <code>| jq</code> to the end of a <code>curl</code> command.
+More info on <code>jq</code> is provided earlier in this article in the chapter <a href="#testing">Testing the API locally</a>.</p></div>
+<div class="paragraph"><p>As with the sample code in the API documentation, the examples in this chapter contain variables for assembling the base URL for the REST API on your Checkmk server and for setting the credentials for the <a href="glossar.html#automation_user">automation user</a> for the <a href="#bearerauth">Bearer authentication</a> used:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;">
+<col style="width: 35%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Example value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HOST_NAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the Checkmk server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SITE_NAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mysite</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the Checkmk site</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>API_URL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://$HOST_NAME/$SITE_NAME/check_mk/api/1.0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Base URL of the REST API</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>USERNAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>automation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the automation user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PASSWORD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>theautomationsecret</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password of the automation user</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Before issuing the <code>curl</code> commands, you can tailor the variables to suit your environment using the following shell commands:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span><span class="tok-nv">HOST_NAME</span><span class="tok-o">=</span><span class="tok-s2">"myserver"</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-nv">SITE_NAME</span><span class="tok-o">=</span><span class="tok-s2">"mysite"</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-nv">API_URL</span><span class="tok-o">=</span><span class="tok-s2">"http://</span><span class="tok-nv">$HOST_NAME</span><span class="tok-s2">/</span><span class="tok-nv">$SITE_NAME</span><span class="tok-s2">/check_mk/api/1.0"</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-nv">USERNAME</span><span class="tok-o">=</span><span class="tok-s2">"automation"</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-nv">PASSWORD</span><span class="tok-o">=</span><span class="tok-s2">"theautomationsecret"</span><span class="tok-p">;</span></code></pre></div></div>
+<div class="sect2">
+<h3 id="heading_examples_hosts_folders">
+<span class="hidden-anchor sr-only" id="examples_hosts_folders"></span>5.1. Hosts and folders</h3>
+<div class="paragraph"><p>The requests described in this chapter can be found in the API documentation in the <span class="guihint">Hosts</span> and <span class="guihint">Folders</span> subfolders.
+The titles of the respective endpoints contained in the API documentation are the following headings.</p></div>
+<h3 id="restapi_show_all_folders" class="discrete">Show all folders</h3>
+<div class="paragraph"><p>Here <em>all</em> folders in the Setup are displayed — recursively starting from the <span class="guihint">Main</span> folder — <em>without</em> listing the hosts they contain:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span>-G<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>GET<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data-urlencode<span class="tok-w"> </span><span class="tok-c1"><mark>'parent=~'</mark> \</span>
+--data-urlencode<span class="tok-w"> </span><span class="tok-c1"><mark>'recursive=true'</mark> \</span>
+--data-urlencode<span class="tok-w"> </span><span class="tok-c1"><mark>'show_hosts=false'</mark> \</span>
+<span class="tok-s2">"</span><span class="tok-nv">$API_URL</span><span class="tok-s2">/domain-types/folder_config/collections/all"</span></code></pre></div></div>
+<h3 id="restapi_show_all_hosts_in_a_folder" class="discrete">Show all hosts in a folder</h3>
+<div class="paragraph"><p>Here the hosts in the <span class="guihint">Main &gt; Linux</span> subfolder are requested:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>GET<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-s2">"</span><span class="tok-nv">$API_URL</span><span class="tok-s2">/objects/folder_config/<mark>~linux</mark>/collections/hosts"</span></code></pre></div></div>
+<h3 id="restapi_create_a_folder" class="discrete">Create a folder</h3>
+<div class="paragraph"><p>Here a subfolder <span class="guihint">Production Hosts</span> is created in <span class="guihint">Main &gt; Linux</span> — in the file system as the directory <code>production_hosts</code>.
+The new folder is thereby assigned the <span class="guihint">Productive system</span> <a href="glossar.html#host_tag">host tag</a> from the <a href="host_tags.html#predefined_tags">predefined host tag group</a> <span class="guihint">Criticality</span>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>POST<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w">     </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Content-Type: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data<span class="tok-w"> </span><span class="tok-err">'</span><span class="tok-o">{</span>
+<span class="tok-go">    "attributes": {</span>
+<span class="tok-go">        "tag_criticality": "prod"</span>
+<span class="tok-go">    },</span>
+<span class="tok-go">    "name": "production_hosts",</span>
+<span class="tok-go">    "parent": "~linux",</span>
+<span class="tok-go">    "title": "Production Hosts"</span>
+<span class="tok-go">    }' \</span>
+<span class="tok-go">"$API_URL/domain-types/folder_config/collections/all"</span></code></pre></div></div>
+<h3 id="restapi_create_a_host" class="discrete">Create a host</h3>
+<div class="paragraph"><p>Here, in the <span class="guihint">Main &gt; Linux &gt; Production Hosts</span> folder, the host <code>mylinuxserver</code> is created with the IP address <code>192.168.0.123</code> and the <span class="guihint">Use piggyback data from other hosts if present</span> host tag:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>POST<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Content-Type: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data<span class="tok-w"> </span><span class="tok-err">'</span><span class="tok-o">{</span>
+<span class="tok-go">    "attributes": {</span>
+<span class="tok-go">        "ipaddress": "192.168.0.123",</span>
+<span class="tok-go">        "tag_piggyback": "auto-piggyback"</span>
+<span class="tok-go">    },</span>
+<span class="tok-go">    "folder": "~linux~production_hosts",</span>
+<span class="tok-go">    "host_name": "mylinuxserver"</span>
+<span class="tok-go">    }' \</span>
+<span class="tok-go">"$API_URL/domain-types/host_config/collections/all"</span></code></pre></div></div>
+<h3 id="restapi_show_a_host" class="discrete">Show a host</h3>
+<div class="paragraph"><p>By displaying a host you receive a list of the attributes assigned to it.
+This additionally provides the HTTP ETag (<em>entity tag</em>) that you need to be able to modify a host.
+Modifying an object via REST API is not done using the object’s ID or title. Instead, the generated ETag is used, which is intended to prevent multiple competing requests from overwriting each other’s values for the same object.</p></div>
+<div class="paragraph"><p>The ETag is returned in the response header.
+To display this header, call <code>curl</code> with the <code>-v</code> option (for <em>verbose</em>).
+Here the host <code>mylinuxserver</code> is queried — and from the response only the line containing the ETag is shown:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span>-vG<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>GET<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-s2">"</span><span class="tok-nv">$API_URL</span><span class="tok-s2">/objects/host_config/<mark>mylinuxserver</mark>"</span>
+<span class="tok-go">...</span>
+<span class="tok-go">&lt; ETag: "57db3792f23bd81ca7447ba4885fa2865d0c78aed4753229b29e179e539da48b"</span>
+<span class="tok-go">...</span></code></pre></div></div>
+<h3 id="restapi_update_a_host" class="discrete">Update a host</h3>
+<div class="paragraph"><p>Before making the change, get that host’s ETag as described in the preceding section <a href="#restapi_show_a_host">Show a host</a>.
+You then enter the ETag in the request header under <code>If-Match</code>.
+Here, the host tag from the <span class="guihint">Piggyback</span> group that was specified when the host was created is deleted, and the predefined tag <span class="guihint">API integrations if configured, else Checkmk agent</span> is specified to replace it:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>PUT<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"If-Match: "</span>57db3792f23bd81ca7447ba4885fa2865d0c78aed4753229b29e179e539da48b<span class="tok-s2">""</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Content-Type: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data<span class="tok-w"> </span><span class="tok-err">'</span><span class="tok-o">{</span>
+<span class="tok-go">    "remove_attributes": [</span>
+<span class="tok-go">        "tag_piggyback"</span>
+<span class="tok-go">    ],</span>
+<span class="tok-go">    "update_attributes": {</span>
+<span class="tok-go">        "tag_agent": "cmk-agent"</span>
+<span class="tok-go">    }</span>
+<span class="tok-go">    }' \</span>
+<span class="tok-go">"$API_URL/objects/host_config/<mark>mylinuxserver</mark>"</span></code></pre></div></div>
+<h3 id="restapi_execute_a_service_discovery_on_a_host" class="discrete">Execute a service discovery on a host</h3>
+<div class="paragraph"><p>To ensure that a <a href="hosts_setup.html#services">service discovery</a> actually delivers the expected services, on Linux and Windows hosts you must first install and register their respective <a href="wato_monitoringagents.html">monitoring agents</a>.</p></div>
+<div class="paragraph"><p>Here, a service discovery is performed on the host <code>mylinuxserver</code> with the <code>refresh</code> option, which corresponds to the <span class="guihint">Full service scan</span> button in the Checkmk GUI:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>POST<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Content-Type: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data<span class="tok-w"> </span><span class="tok-err">'</span><span class="tok-o">{</span>
+<span class="tok-go">    "host_name": "mylinuxserver",</span>
+<span class="tok-go">    "mode": "refresh"</span>
+<span class="tok-go">    }' \</span>
+<span class="tok-go">"$API_URL/domain-types/service_discovery_run/actions/start/invoke"</span></code></pre></div></div>
+<h3 id="restapi_bulk_create_host" class="discrete">Bulk create hosts</h3>
+<div class="paragraph"><p>Here, two hosts are created in the <span class="guihint">Main &gt; Linux &gt; Production Hosts</span> folder: the first host with only an IP address, and the second host with a <a href="monitoring_basics.html#parents">parent host</a> and two <a href="glossar.html#label">labels</a> in addition to its IP address:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>POST<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Content-Type: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data<span class="tok-w"> </span><span class="tok-err">'</span><span class="tok-o">{</span>
+<span class="tok-go">	"entries": [</span>
+<span class="tok-go">	{</span>
+<span class="tok-go">	"attributes": {</span>
+<span class="tok-go">	    "ipaddress": "192.168.0.130"</span>
+<span class="tok-go">	},</span>
+<span class="tok-go">	"folder": "~linux~production_hosts",</span>
+<span class="tok-go">	"host_name": "mylinuxserver02"</span>
+<span class="tok-go">	},</span>
+<span class="tok-go">	{</span>
+<span class="tok-go">	"attributes": {</span>
+<span class="tok-go">	    "ipaddress": "192.168.0.131",</span>
+<span class="tok-go">	    "parents": [ "router01" ],</span>
+<span class="tok-go">	    "labels": {</span>
+<span class="tok-go">	    	"color": "blue-metallic",</span>
+<span class="tok-go">	    	"admin": "Fozzie Bear"</span>
+<span class="tok-go">	    }</span>
+<span class="tok-go">	},</span>
+<span class="tok-go">	"folder": "~linux~production_hosts",</span>
+<span class="tok-go">	"host_name": "mylinuxserver03"</span>
+<span class="tok-go">	}</span>
+<span class="tok-go">	]</span>
+<span class="tok-go">	}' \</span>
+<span class="tok-go">"$API_URL/domain-types/host_config/actions/bulk-create/invoke"</span></code></pre></div></div>
+<h3 id="restapi_activate_pending_changes" class="discrete">Activate pending changes</h3>
+<div class="paragraph"><p>Before the complex action of renaming a host can be tackled, it is necessary to activate all changes that have accumulated in its <a href="glossar.html#configuration_environment">configuration environment</a>.
+Here the changes for the site <code>mysite</code> are all activated in a single action:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>POST<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Content-Type: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data<span class="tok-w"> </span><span class="tok-err">'</span><span class="tok-o">{</span>
+<span class="tok-go">    "force_foreign_changes": false,</span>
+<span class="tok-go">    "redirect": false,</span>
+<span class="tok-go">    "sites": [</span>
+<span class="tok-go">        "mysite"</span>
+<span class="tok-go">     ]</span>
+<span class="tok-go">     }' \</span>
+<span class="tok-go">"$API_URL/domain-types/activation_run/actions/activate-changes/invoke"</span></code></pre></div></div>
+<h3 id="restapi_bulk_rename_a_host" class="discrete">Rename a host</h3>
+<div class="paragraph"><p>A new name is also going to change the host.
+Therefore, first get the host’s current ETag, e.g. from <code>mylinuxserver</code>, as described in the <a href="#restapi_show_a_host">Show a host</a> section, and enter this into the request header under <code>If-Match</code>.
+Here the host is being renamed as <code>mylinuxserver01</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>curl<span class="tok-w"> </span><span class="tok-se">\</span>
+--request<span class="tok-w"> </span>PUT<span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Authorization: Bearer </span><span class="tok-nv">$USERNAME</span><span class="tok-s2"> </span><span class="tok-nv">$PASSWORD</span><span class="tok-s2">"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Accept: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"If-Match: "</span>a200832df1b3c5ebe8f30809177630abbdcf8f7cbd9d0f69bd9f229b359f4d00<span class="tok-s2">""</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--header<span class="tok-w"> </span><span class="tok-s2">"Content-Type: application/json"</span><span class="tok-w"> </span><span class="tok-se">\</span>
+--data<span class="tok-w"> </span><span class="tok-err">'</span><span class="tok-o">{</span>
+<span class="tok-go">	"new_name": "mylinuxserver01"</span>
+<span class="tok-go">	}' \</span>
+<span class="tok-go">"$API_URL/objects/host_config/<mark>mylinuxserver</mark>/actions/rename/invoke"</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_rest-web-api">
+<span class="hidden-anchor sr-only" id="rest-web-api"></span>6. The REST API functions</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This chapter gives you an overview of the functions available to you via the REST API.
+The following tables are structured according to the endpoints that you will find in the left navigation area of the REST API documentation.
+In the table, the column for the REST API contains the HTTP methods (supplemented with context information in case of ambiguity)
+The last column contains the corresponding commands in the web API included in Checkmk up to version <span class="new">2.1.0</span>.</p></div>
+<div class="sect2">
+<h3 id="heading__endpoints_for_monitoring">
+<span class="hidden-anchor sr-only" id="_endpoints_for_monitoring"></span>6.1. Endpoints for monitoring</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Endpoint</th>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">REST API</th>
+<th class="tableblock halign-left valign-top">Web API (up to version <span class="new">2.1.0</span>)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service level agreement <sup class="footnote" id="_footnote_ee">[<a class="footnote" id="_footnoteref_1" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compute SLA data <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_sla</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Acknowledge problems</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acknowledge for hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST host</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acknowledge for services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST service</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Comment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create host comment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST host</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create service comment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST service</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete comment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show comment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show comments</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET {collection_name}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Downtime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create a host downtime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST host</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create a service downtime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST service</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="7"><p class="tableblock">Event Console</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Archive events</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Change event state</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST change_state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Change multiple event states</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST {event_id} change_state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show event</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET {event_id}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all events</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update and acknowledge an event</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET {event_id} update_and_acknowledge</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update and acknowledge events</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET update_and_acknowledge</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show hosts with specific states</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Metric</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get metrics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST metric</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_graph</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get a custom graph <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST get_custom_graph</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_graph</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="3"><p class="tableblock">Service status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show services of a host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET {host_name} services</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show service of a host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET {host_name} show_service</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Miscellaneous</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show version information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__endpoints_for_the_setup">
+<span class="hidden-anchor sr-only" id="_endpoints_for_the_setup"></span>6.2. Endpoints for the Setup</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Endpoint</th>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">REST API</th>
+<th class="tableblock halign-left valign-top">Web API (up to version <span class="new">2.1.0</span>)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="10"><p class="tableblock">Agent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show the status of automatic deployment <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET automatic-deployment</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bake all agents <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bake</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bake_agents</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bake and sign all agents <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bake_and_sign</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show the baking status <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET baking_status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Download agent by hash and operating system <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET download_by_hash</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Download agent by host or folder name and operating system <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET download_by_host</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all agents <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show agent configuration <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET {agent_hash}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sign all agents <sup class="footnoteref">[<a class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST sign</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Download agents shipped with Checkmk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET download</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Activate changes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Activate pending changes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>activate_changes</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wait for activation completion</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET wait-for-completion</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show running activations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET running</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show pending changes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET pending_changes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show activation status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET {activation_id}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Auxiliary tag</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="14"><p class="tableblock">Business Intelligence (BI)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete BI aggregation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE bi_aggregation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show BI aggregation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET bi_aggregation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create BI aggregation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bi_aggregation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update BI aggregation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT bi_aggregation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete BI pack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE bi_pack</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show BI pack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET bi_pack</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create BI pack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bi_pack</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update BI pack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT bi_pack</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete BI rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE bi_rule</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show BI rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET bi_rule</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create BI rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bi_rule</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update BI rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT bi_rule</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show status of BI aggregations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET aggregation_state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all BI packs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all bi_pack</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="8"><p class="tableblock">Contact group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bulk-create</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bulk-delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT bulk-update</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add_contactgroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_all_contactgroups</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete_contactgroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit_contactgroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="8"><p class="tableblock">Folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT bulk-update</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add_folder</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_all_folders</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete_folder</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_folder</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit_folder</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all hosts of a folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET hosts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Move</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST move</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="12"><p class="tableblock">Host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bulk-create</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE bulk-delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete_hosts</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT bulk-update</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create cluster host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST clusters</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add_host</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_all_hosts</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete_host</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_host</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit_host</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Move</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST move</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT rename</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update cluster node</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT nodes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="8"><p class="tableblock">Host group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bulk-create</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bulk-delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT bulk-update</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add_hostgroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_all_hostgroups</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete_hostgroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit_hostgroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Host tag group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_hosttags</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>set_hosttags</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Notification rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Password (in password store)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>set_ruleset</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Move</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST move</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Rule set</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Search</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_rulesets_info</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_ruleset</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="9"><p class="tableblock">Service discovery</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run service discovery on a host <sup class="footnote" id="_footnote_deprecated">[<a class="footnote" id="_footnoteref_2" href="#_footnote_2" title="View footnote.">2</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST discover_services</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>discover_services</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run bulk service discovery</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bulk-discovery-start</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run service discovery on a host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST service_discovery_run</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>discover_services</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wait for service discovery completion</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET wait-for-completion</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show status of a bulk service discovery job</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET discovery-run</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show the current service discovery result</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET service_discovery</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show last service discovery background job</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET service_discovery_run</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show services of a service discovery status <sup class="footnoteref">[<a class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET services</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update service discovery status of a service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="8"><p class="tableblock">Service group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bulk-create</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST bulk-delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT bulk-update</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add_servicegroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_all_servicegroups</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete_servicegroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit_servicegroup</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="7"><p class="tableblock">Site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete site connection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete_site</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create site connection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all site connections</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update site connection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>set_site</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show site connection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_site</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Login to remote site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST login</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>login_site</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logout from remote site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST logout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logout_site</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Time period</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add_users</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get_all_users</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete_users</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit_users</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">User role</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create/Clone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">[<a href="#_footnoteref_1">1</a>]. This entry is only present in the commercial editions.</div>
+<div class="footnote" id="_footnote_2">[<a href="#_footnoteref_2">2</a>]. This endpoint is deprecated.</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Introduction</a></li>
+<li>
+<a href="#api_doc">2. The API documentation</a><ul class="sectlevel1">
+<li><a href="#versioning">2.1. Versioning</a></li>
+<li><a href="#access">2.2. Access</a></li>
+<li><a href="#structure">2.3. Structure and content</a></li>
+</ul>
+</li>
+<li>
+<a href="#using_the_api">3. Using the API</a><ul class="sectlevel1">
+<li>
+<a href="#auth">3.1. Authentication</a><ul class="sectlevel2">
+<li><a href="#bearerauth">Bearer or Header authentication</a></li>
+<li><a href="#webserverauth">Web server authentication</a></li>
+<li><a href="#cookieauth">Cookie authentication</a></li>
+</ul>
+</li>
+<li><a href="#testing">3.2. Testing the API locally</a></li>
+<li>
+<a href="#making_requests">3.3. Making requests using scripts</a><ul class="sectlevel2">
+<li><a href="#_creating_a_host">Creating a host</a></li>
+<li><a href="#_perform_a_service_discovery_on_the_host">Perform a service discovery on the host</a></li>
+<li><a href="#_activate_the_changes">Activate the changes</a></li>
+</ul>
+</li>
+<li><a href="#rest_api_gui">3.4. Making requests via the REST API GUI</a></li>
+<li><a href="#error_correction">3.5. Error correction</a></li>
+</ul>
+</li>
+<li><a href="#securing">4. Securing the API</a></li>
+<li>
+<a href="#examples">5. Examples with REST API requests</a><ul class="sectlevel1"><li><a href="#examples_hosts_folders">5.1. Hosts and folders</a></li></ul>
+</li>
+<li>
+<a href="#rest-web-api">6. The REST API functions</a><ul class="sectlevel1">
+<li><a href="#_endpoints_for_monitoring">6.1. Endpoints for monitoring</a></li>
+<li><a href="#_endpoints_for_the_setup">6.2. Endpoints for the Setup</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

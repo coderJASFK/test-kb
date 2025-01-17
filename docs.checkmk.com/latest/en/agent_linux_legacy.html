@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="The Linux agent can be run in legacy mode without an Agent Controller if it does not meet the requirements for the encrypted pull mode.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Monitoring Linux in legacy mode">
+<meta name="og:description" content="The Linux agent can be run in legacy mode without an Agent Controller if it does not meet the requirements for the encrypted pull mode.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Monitoring Linux in legacy mode</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/agent_linux_legacy.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/agent_linux_legacy.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/agent_linux_legacy.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Monitoring Linux in legacy mode</h1>
+<div class="details">
+<span id="revdate">Last modified on 16-Feb-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/en/agent_linux_legacy.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="agent_linux.html">Monitoring Linux</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/linux.png" alt="linux" width="120"></div></div>
+<div class="paragraph"><p>Since Checkmk version <span class="new">2.1.0</span> the new Linux agent with the <strong>Agent Controller</strong> supports the registered, TLS-encrypted and compressed <strong>pull mode</strong>.
+For this, however, the Agent Controller must be started as a background process (<em>daemon</em>) by the init system on the host on which it is to be installed.
+Currently, only <code>systemd</code> on the x86_64 platform is supported in this regard, and package management for <code>deb</code> or <code>rpm</code> packages is required for setup.</p></div>
+<div class="paragraph"><p>If all of the following requirements have been met…​</p></div>
+<div class="ulist"><ul>
+<li><p>Your Linux uses <code>systemd</code> from version 219 or later as its init system</p></li>
+<li><p>The processor architecture is x86_64</p></li>
+<li><p>Packages are managed as <code>deb</code> or <code>rpm</code></p></li>
+</ul></div>
+<div class="paragraph"><p>…​you can learn how to install, configure and extend the agent with the Agent Controller in the <a href="agent_linux.html">Monitoring Linux</a> article.</p></div>
+<div class="paragraph"><p>While most Linux servers and desktops meet these requirements, years of <em>version upgraded systems</em>, older <em>virtual machines</em> with i686 instances, <em>distroless containers</em> or <em>embedded Linux</em> systems are merely not fringe elements, but normal components of many system landscapes for which there is a need for monitoring.
+Thanks to the modular structure of Checkmk, you can still include such Linux hosts in monitoring.</p></div>
+<div class="paragraph"><p>Since using encrypted transport of the agent data via Agent Controller is out of the question here, we explain in this article how to do either the unencrypted transport via an <em>internet super-server</em> or the configuration of <em>SSH as an encrypted tunnel</em>.</p></div>
+<div class="paragraph"><p>The <a href="glossar.html#push_mode">push mode</a> is also dependent on the Agent Controller and is therefore not available in the legacy mode.
+If a host that cannot be reached by the Checkmk server is to be included in the monitoring in legacy mode, you will need to find another solution.
+You can use <a href="datasource_programs.html">datasource programs</a> to connect from the monitored host and use this to transmit the agent output to the Checkmk server.</p></div>
+<div class="paragraph"><p>The issues for which the agent mode does not matter can be found in the article on the Linux agent with Agent Controller:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="agent_linux.html#disabled_sections">Disabling sections</a></p></li>
+<li><p><a href="agent_linux.html#plugins">Extending the agent with plug-ins</a></p></li>
+<li><p><a href="agent_linux.html#e2e_monitoring">Integration of classic check plug-ins</a></p></li>
+<li><p><a href="agent_linux.html#hw_monitoring">Hardware monitoring</a></p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_installation">
+<span class="hidden-anchor sr-only" id="installation"></span>2. Installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Depending on the package management, there are three installation options to choose from:
+Either DEB or RPM packages for Debian, Ubuntu, RHEL, SLES (and their derivatives), a TGZ archive for all other distributions (commercial editions) or likewise a shell script (Checkmk Raw) for any other distributions.</p></div>
+<div class="sect2">
+<h3 id="heading_frompackage">
+<span class="hidden-anchor sr-only" id="frompackage"></span>2.1. Installation from packages</h3>
+<div class="paragraph"><p>There is a comprehensive description of the installation from <code>deb</code> or <code>rpm</code> packages in the <a href="agent_linux.html">Monitoring Linux</a> article, so we will only explain the procedure in a brief review here.</p></div>
+<div class="paragraph"><p>In <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong>, you can find the agent’s Linux packages via <span class="guihint">Setup &gt; Agents &gt; Linux</span>.
+In the commercial editions, you first get to the <a href="wato_monitoringagents.html#bakery">Agent Bakery</a> in the <span class="guihint">Setup</span> menu via <span class="guihint">Agents &gt; Windows, Linux, Solaris, AIX</span>, where you will find the baked packages.
+From there, the <span class="guihint">Related &gt; Linux, Solaris, AIX files</span> menu item will take you to the list of agent files.</p></div>
+<div class="paragraph"><p>You can download these files via the browser or use <code>wget</code> or <code>curl</code> to download them directly into the host in the monitoring:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>wget<span class="tok-w"> </span>http://mycmkserver/mysite/check_mk/agents/check-mk-agent-2.3.0p16-1.noarch.rpm</code></pre></div></div>
+<div class="paragraph"><p>On RHEL, SLES and related distributions, the RPM package is installed as <code>root</code> with the command <code>rpm -U</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>rpm<span class="tok-w"> </span>-U<span class="tok-w"> </span>check-mk-agent-2.3.0p16-1.noarch.rpm</code></pre></div></div>
+<div class="paragraph"><p>By the way, the <code>-U</code> option stands for 'update' but it can also perform an initial installation correctly.</p></div>
+<div class="paragraph"><p>The installation of the DEB package on Debian, Ubuntu or related distributions is done as <code>root</code> with the command <code>dpkg -i</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>dpkg<span class="tok-w"> </span>-i<span class="tok-w"> </span>check-mk-agent_2.3.0p16-1_all.deb
+<span class="tok-gp tok-gp-VirtualEnv">(Reading database ... 739920 files and directories currently installed.)</span>
+<span class="tok-go">Preparing to unpack .../check-mk-agent_2.3.0p16-1_all.deb ...</span>
+<span class="tok-go">Unpacking check-mk-agent (2.3.0p16-1) ...</span>
+<span class="tok-go">Setting up check-mk-agent (2.3.0p16-1) ...</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_tarball">
+<span class="hidden-anchor sr-only" id="tarball"></span>2.2. Installation from the TGZ archive</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span> For a convenient distribution-independent installation you will need the Linux agent in the TGZ archive format ('Tarball'), which you can download from the commercial editions in the Setup menu via <span class="guihint">Agents &gt; Windows, Linux, Solaris, AIX</span>.
+The TGZ archive contains the complete directory structure of the Linux agent for unpacking in the monitored host’s root directory.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_linux_legacy_agents.png" alt="agent linux legacy agents"></div></div>
+<div class="paragraph"><p>The <code>-C</code> ('change directory') parameter is essential when unpacking to ensure that all of the file paths are correct.
+We also use <code>--no-overwrite-dir</code> so that permissions for already existing directories are not changed:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>tar<span class="tok-w"> </span>-C<span class="tok-w"> </span>/<span class="tok-w"> </span>--no-overwrite-dir<span class="tok-w"> </span>-xvf<span class="tok-w"> </span>/tmp/check-mk-agent_2.3.0p16.tar.gz</code></pre></div></div>
+<div class="paragraph"><p>If you have done everything correctly, the agent script should now simply be executable as a command and produce its typical output.
+The <code>| head</code> truncates everything following the 11th line of output:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>check_mk_agent<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>head
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.3.0p16</span>
+<span class="tok-go">AgentOS: linux</span>
+<span class="tok-go">Hostname: mycmkserver</span>
+<span class="tok-go">AgentDirectory: /etc/check_mk</span>
+<span class="tok-go">DataDirectory: /var/lib/check_mk_agent</span>
+<span class="tok-go">SpoolDirectory: /var/lib/check_mk_agent/spool</span>
+<span class="tok-go">PluginsDirectory: /usr/lib/check_mk_agent/plugins</span>
+<span class="tok-go">LocalDirectory: /usr/lib/check_mk_agent/local</span>
+<span class="tok-go">&lt;&lt;&lt;df&gt;&gt;&gt;</span></code></pre></div></div>
+<div class="paragraph"><p>If a version number lower than <span class="new">2.2.0</span> is printed here, you probably still have an older version of the agent script installed as <code>/usr/local/bin/check_mk_agent</code>.
+Move this old script, or rename it, for example by appending <code>.bak</code> to the filename.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_manual">
+<span class="hidden-anchor sr-only" id="manual"></span>2.3. Manual installation of the agent script</h3>
+<div class="paragraph"><p>A manual installation of the agent script is rarely necessary, but it is not very difficult either.
+In this type of installation, at first only the agent script is installed, but no configuration of the access is performed yet.
+For this purpose you require the <span class="guihint">Agents</span> box from the agent files page.
+There you will find the file <code>check_mk_agent.linux</code>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_linux_agents_manual.png" alt="List of agent scripts for download" width="."></div></div>
+<div class="paragraph"><p>Load this file onto the target system and copy it into a directory that is executable for <code>root</code>.
+<code>/usr/local/bin/</code> is a good choice, since it is in the search path and is intended for custom extensions.
+Alternatively, you can use <code>/usr/bin</code> or a subdirectory of <code>/opt</code>.
+We use <code>/usr/bin</code> so that all tests correspond to the other installation methods.
+You can also perform the installation directly with <code>wget</code> if available:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">cd</span><span class="tok-w"> </span>/usr/bin
+<span class="tok-gp">root@linux# </span>wget<span class="tok-w"> </span>http://mycmkserver/mysite/check_mk/agents/check_mk_agent.linux
+<span class="tok-gp">root@linux# </span>mv<span class="tok-w"> </span>check_mk_agent.linux<span class="tok-w"> </span>check_mk_agent
+<span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span><span class="tok-m">755</span><span class="tok-w"> </span>check_mk_agent</code></pre></div></div>
+<div class="paragraph"><p>Do not forget the last two commands — these will remove the <code>.linux</code> extension and make the file executable.
+Now the agent should be executable as a command and produce its typical output.
+The <code>| head</code> truncates everything following the 10th line of output:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>check_mk_agent<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>head
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.3.0p16</span>
+<span class="tok-go">AgentOS: linux</span>
+<span class="tok-go">Hostname: mycmkserver</span>
+<span class="tok-go">AgentDirectory: /etc/check_mk</span>
+<span class="tok-go">DataDirectory: /var/lib/check_mk_agent</span>
+<span class="tok-go">SpoolDirectory: /var/lib/check_mk_agent/spool</span>
+<span class="tok-go">PluginsDirectory: /usr/lib/check_mk_agent/plugins</span>
+<span class="tok-go">LocalDirectory: /usr/lib/check_mk_agent/local</span>
+<span class="tok-go">&lt;&lt;&lt;df&gt;&gt;&gt;</span></code></pre></div></div>
+<div class="paragraph"><p>If you want to configure or extend the agent, you will need to create the necessary directories yourself.
+The location for the three mandatory directories is hard-coded in the agent in variables that start with <code>MK_</code> and are also provided to the plug-ins via the system environment:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>grep<span class="tok-w"> </span><span class="tok-s1">'export MK_'</span><span class="tok-w"> </span>check_mk_agent
+<span class="tok-go">export MK_LIBDIR="/usr/lib/check_mk_agent"</span>
+<span class="tok-go">export MK_CONFDIR="/etc/check_mk"</span>
+<span class="tok-go">export MK_VARDIR="/var/lib/check_mk_agent"</span></code></pre></div></div>
+<div class="paragraph"><p>You should create these three directories (with the default permissions of 755 and <code>root</code> as owner):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>mkdir<span class="tok-w"> </span>/usr/lib/check_mk_agent<span class="tok-w"> </span>/etc/check_mk<span class="tok-w"> </span>/var/lib/check_mk_agent</code></pre></div></div>
+<div class="paragraph"><p>If you want to use different paths, simply edit <code>/usr/bin/check_mk_agent</code>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_inventory">
+<span class="hidden-anchor sr-only" id="inventory"></span>3. Checking the state after installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>After installation, check if a service is already set up to listen on TCP port 6556.
+In particular, when installing via package manager, an existing <code>xinetd</code> or <code>systemd</code> (in super-server mode) is used to provide unencrypted agent output on TCP port 6556.</p></div>
+<div class="paragraph"><p>We use the <code>ss</code> command.
+If this command is not available (on older distributions), one of the programs <code>netstat</code>, <code>sockstat</code> or <code>lsof</code> is available as an alternative.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>ss<span class="tok-w"> </span>-tulpn<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">tcp	LISTEN 0	64	*:6556	*:*	users:(("xinetd",pid=1573,fd=5))</span></code></pre></div></div>
+<div class="paragraph"><p>If there is no output, port 6556 is not yet open. If a line has been printed, then port 6556 is open.
+In this case we are interested in the program name within the parentheses, here <code>xinetd</code>.
+Remember this program name, because you will need it in the subsequent process — regardless of the selected access method.</p></div>
+<div class="paragraph"><p>If after installation from a DEB or RPM package the program name <code>cmk-agent-ctl</code> is printed here, you can be pleased:
+Your Linux (especially the systemd version used) is in fact up to date enough to use the Agent Controller, as described in the article <a href="agent_linux.html">Monitoring Linux</a>, and you can proceed to register the agent.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_access_method">
+<span class="hidden-anchor sr-only" id="access_method"></span>4. Selecting the access method</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>At this point you are faced with a decision:</p></div>
+<div class="ulist"><ul>
+<li><p>Do you want to allow an easy-to-set-up, unencrypted connection?</p></li>
+<li><p>Or is the higher security with encryption worth a certain additional effort to you?</p></li>
+</ul></div>
+<div class="paragraph"><p>The relevant aspects for this are what information a potential attacker has access to and how great their effort would need to be.
+For example, the process table that is always transmitted can already provide valuable clues, and a list of software updates that have not yet been carried out makes targeted attacks possible.</p></div>
+<div class="paragraph"><p>As a rule, we therefore recommend encrypted data transfer via an <a href="#ssh">SSH tunnel</a>.</p></div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>When calling the agent script directly in a shell, other <a href="https://wiki.debian.org/EnvironmentVariables" target="_blank">environment variables</a> may be available than when calling via (x)inetd, via <a href="agent_linux.html">Agent Controller</a> or in an SSH session without a controlling terminal.
+In the event of problems with one or the other execution method, it may be necessary to ensure the presence of certain environment variables.
+The method used for this depends too much on each individual case for us to be able to make recommendations at this point.</p></div></td>
+</tr></table></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_unencrypted">
+<span class="hidden-anchor sr-only" id="unencrypted"></span>5. Unencrypted: Setting up (x)inetd</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you decide that using an unencrypted data transfer is an acceptable risk, the next step is to set up an <em>internet super-server.</em>
+If the test with <code>ss</code> showed that <code>xinetd</code>, <code>inetd</code> or <code>systemd</code> is already listening on TCP port 6556, jump to <a href="#connectiontest">connection test</a>.</p></div>
+<div class="paragraph"><p>If this is not the case, use the <code>ps</code> command to check whether an <code>inetd</code> is already active:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>ps<span class="tok-w"> </span>ax<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>inetd</strong>
+<span class="tok-go"> 1913 ?        Ss     0:00 /usr/sbin/xinetd -pidfile /run/xinetd.pid -stayalive -inetd_compat -inetd_ipv6</span></code></pre></div></div>
+<div class="paragraph"><p>You can identify from the running process whether it is the more modern <code>xinetd</code> or one of the other internet super-servers (GNU-Inetutils, OpenBSD-Inetd, Busybox-Inetd).
+If no process is active, install an <code>xinetd</code> via your distribution’s package management.
+If a 'classic' <code>inetd</code> is active, it usually makes sense to <a href="#otherinetd">set up</a> and use this instead of switching to <code>xinetd</code>.</p></div>
+<div class="sect2">
+<h3 id="heading_xinetd">
+<span class="hidden-anchor sr-only" id="xinetd"></span>5.1. Configuring xinetd</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span> For configuring an existing <code>xinetd</code> that uses the <code>/etc/xinetd.d/</code> directory for configuration, both the TGZ archive and the DEB and RPM packages come with a script that automates the two necessary steps: first it installs the configuration and then it makes <code>xinetd</code> re-read the altered settings.
+You have to call the script with the full file paths:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>/var/lib/cmk-agent/scripts/super-server/1_xinetd/setup<span class="tok-w"> </span>deploy</strong>
+<span class="tok-gp">root@linux# </span><strong>/var/lib/cmk-agent/scripts/super-server/1_xinetd/setup<span class="tok-w"> </span>trigger</strong></code></pre></div></div>
+<div class="paragraph"><p>If you install the agent script manually, create the configuration file <code>/etc/xinetd.d/check-mk-agent</code> with the editor.
+The content is sufficient:</p></div>
+<div class="listingblock">
+<div class="title">/etc/xinetd.d/check-mk-agent</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>service check_mk
+{
+        type           = UNLISTED
+        port           = 6556
+        socket_type    = stream
+        protocol       = tcp
+        wait           = no
+        user           = root
+        server         = /usr/local/bin/check_mk_agent
+        # only_from    = 10.118.14.5 10.118.14.37
+        disable        = no
+}</code></pre></div>
+</div>
+<div class="paragraph"><p>Here we have added a (commented out) line restricting access to two Checkmk servers.
+Further configuration options can be seen by looking at the <code>~/share/check_mk/agents/scripts/super-server/1_xinetd/check-mk-agent</code> file on your Checkmk server.</p></div>
+<div class="paragraph"><p>If your <code>xinetd</code> uses the old configuration scheme with only one large <code>/etc/xinetd.conf</code>, transfer the sample configuration from <code>/etc/check_mk/xinetd-service-template.cfg</code> to <code>/etc/xinetd.conf</code>.</p></div>
+<div class="paragraph"><p>When the configuration of <code>xinetd</code> is complete, restart it:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>service<span class="tok-w"> </span>xinetd<span class="tok-w"> </span>restart</code></pre></div></div>
+<div class="paragraph"><p>You are now ready for the <a href="#connectiontest">connection test</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_otherinetd">
+<span class="hidden-anchor sr-only" id="otherinetd"></span>5.2. Setting up another inetd</h3>
+<div class="paragraph"><p>First, check if your <code>/etc/services</code> already contains an entry for port 6556:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>grep<span class="tok-w"> </span><span class="tok-m">6556</span>/<span class="tok-w"> </span>/etc/services</strong></code></pre></div></div>
+<div class="paragraph"><p>If this is not the case, Checkmk must be registered as a service.
+To do this, add the following line. The notation here is exactly the same as that stored in the <a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=checkmk-agent" target="_blank">IANA table</a> with a single hyphen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/services</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>checkmk-agent        6556/tcp   #Checkmk monitoring agent</code></pre></div>
+</div>
+<div class="paragraph"><p>The format of the <code>/etc/inetd.conf</code> configuration file differs between the individual variants.
+Refer to the comments in the configuration file and the manual page (<code>man 5 inetd.conf</code>) for the format that matches your <code>inetd</code>.
+This is followed by the configuration matching <code>openbsd-inetd</code> with two lines for IPv4 and IPv6 support.
+Again, it is important to note the correct notation:</p></div>
+<div class="listingblock">
+<div class="title">/etc/inetd.conf</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>checkmk-agent stream tcp  nowait root /usr/bin/check_mk_agent
+checkmk-agent stream tcp6 nowait root /usr/bin/check_mk_agent</code></pre></div>
+</div>
+<div class="paragraph"><p>After editing the configuration file, restart <code>inetd</code>, e.g. with:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>/etc/init.d/inetd<span class="tok-w"> </span>restart</strong></code></pre></div></div>
+<div class="paragraph"><p>Depending on the init system used and the super-server installed, this command may differ.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_connectiontest">
+<span class="hidden-anchor sr-only" id="connectiontest"></span>5.3. Connection test</h3>
+<div class="paragraph"><p>First check whether the <code>xinetd</code> or <code>inetd</code> could be (re)started:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>ss<span class="tok-w"> </span>-tulpn<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">tcp	LISTEN 0	64	*:6556	*:*	users:(("xinetd",pid=1573,fd=5))</span></code></pre></div></div>
+<div class="paragraph"><p>Now you can connect with <code>telnet</code> or <code>nc</code> (<code>netcat</code>) on TCP port 6556 — first from the host itself, later from the Checkmk server:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>nc<span class="tok-w"> </span><span class="tok-m">12</span>.34.56.78<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.3.0p16</span>
+<span class="tok-go">AgentOS: linux</span>
+<span class="tok-go">Hostname: myhost123</span>
+<span class="tok-go">AgentDirectory: /etc/check_mk</span>
+<span class="tok-go">DataDirectory: /var/lib/check_mk_agent</span>
+<span class="tok-go">SpoolDirectory: /var/lib/check_mk_agent/spool</span>
+<span class="tok-go">PluginsDirectory: /usr/lib/check_mk_agent/plugins</span>
+<span class="tok-go">LocalDirectory: /usr/lib/check_mk_agent/local</span></code></pre></div></div>
+<div class="paragraph"><p>If you receive a connection denied notification even though <code>(x)inetd</code> is active, check your firewall settings.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_ssh">
+<span class="hidden-anchor sr-only" id="ssh"></span>6. Encrypted: Use of an SSH tunnel</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The SSH tunnel setup is performed with the following steps:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Create an SSH key pair specifically for this purpose.</p></li>
+<li><p>On the target systems, allow access to the agent using this key.</p></li>
+<li><p>Configure the Checkmk server to use SSH instead of the TCP connection on port 6556.</p></li>
+<li><p>If available: Disable access via <code>(x)inetd</code>.</p></li>
+</ol></div>
+<div class="paragraph"><p>And now the whole procedure, step by step with all necessary details:</p></div>
+<div class="sect2">
+<h3 id="heading__creating_an_ssh_key_pair">
+<span class="hidden-anchor sr-only" id="_creating_an_ssh_key_pair"></span>6.1. Creating an SSH key pair</h3>
+<div class="paragraph"><p>SSH works with 'public key authentication'.
+To do this, you first generate a pair of matched keys, where one is public and one is private.
+When selecting the algorithm you can choose between <code>rsa</code>, <code>ecdsa</code> or <code>ed25519</code>.
+In the example below, you use the <code>ssh-keygen -t ed25519</code> command as the site user:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>ssh-keygen<span class="tok-w"> </span>-t<span class="tok-w"> </span>ed25519
+<span class="tok-go">Generating public/private ed25519 key pair.</span>
+<span class="tok-go">Enter file in which to save the key (/omd/sites/mysite/.ssh/id_ed25519):</span>
+<span class="tok-go">Enter passphrase (empty for no passphrase):</span>
+<span class="tok-go">Enter same passphrase again:</span>
+<span class="tok-go">Your identification has been saved in /omd/sites/mysite/.ssh/id_ed25519.</span>
+<span class="tok-go">Your public key has been saved in /omd/sites/mysite/.ssh/id_ed25519.pub.</span>
+<span class="tok-go">The key fingerprint is:</span>
+<span class="tok-go">cc:87:34:d2:ed:87:ed:f7:1b:ec:58:1f:7c:23:00:e2 mysite@mycmkserver</span>
+<span class="tok-go">The key's randomart image is:</span>
+<span class="tok-go">+--[ED25519  256--+</span>
+<span class="tok-go">|                 |</span>
+<span class="tok-go">|       . .       |</span>
+<span class="tok-go">|      ..+..      |</span>
+<span class="tok-go">|      .=.+.o     |</span>
+<span class="tok-go">|       ES +.o    |</span>
+<span class="tok-go">|         . o. o  |</span>
+<span class="tok-go">|            ...B.|</span>
+<span class="tok-go">|             .=.*|</span>
+<span class="tok-go">|             . o+|</span>
+<span class="tok-go">+-----------------+</span></code></pre></div></div>
+<div class="paragraph"><p>Leave the filename empty to use the suggested filename.
+Of course you can specify a different path, for example if you want to work with <a href="#multiplekeys">separate keys for individual hosts</a>.</p></div>
+<div class="paragraph"><p><strong>Important</strong>: Do <strong>not</strong> specify a passphrase!
+Encrypting the file with the secret key would be of no use, after all, you certainly don’t want to have to enter the passphrase every time you start the Checkmk server…​</p></div>
+<div class="paragraph"><p>The result is two files in the <code>.ssh</code> directory:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>ll<span class="tok-w"> </span>.ssh
+<span class="tok-go">total 8</span>
+<span class="tok-go">-rw------- 1 mysite mysite 1679 Feb 20 14:18 id_ed25519</span>
+<span class="tok-go">-rw-r--r-- 1 mysite mysite  398 Feb 20 14:18 id_ed25519.pub</span></code></pre></div></div>
+<div class="paragraph"><p>The private key is called <code>id_ed25519</code> and is readable only by the site user (<code>-rw-------</code>) — and that’s a good thing!
+The public key <code>id_ed25519.pub</code> looks something like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cat<span class="tok-w"> </span>.ssh/id_ed25519.pub
+<span class="tok-go">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGb6AaqRPlbEmDnBkeIW3Q6Emb5lr2QEbWEQLmA5pb48 mysite@mycmkserver</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__allowing_access_via_ssh">
+<span class="hidden-anchor sr-only" id="_allowing_access_via_ssh"></span>6.2. Allowing access via SSH</h3>
+<div class="paragraph"><p>The next step must now take place on (each of) the Linux host(s) monitored via SSH.
+Log in there as <code>root</code> and create the subdirectory <code>.ssh</code> in its home directory (<code>/root</code>), if it does not already exist.
+With the following command the access privileges will be set correctly to 700 right away:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>mkdir<span class="tok-w"> </span>-m<span class="tok-w"> </span><span class="tok-m">700</span><span class="tok-w"> </span>/root/.ssh</code></pre></div></div>
+<div class="paragraph"><p>Now open the <code>authorized_keys</code> file with a (console-based) text editor of your choice.
+If this file does not already exist, the editor will create it automatically:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>vim<span class="tok-w"> </span>/root/.ssh/authorized_keys</code></pre></div></div>
+<div class="paragraph"><p>Copy the content of the public keys into this file.
+This can be done e.g. with the mouse and copy &amp; paste.
+Be precise!
+Every space counts.
+Also make sure that <strong>there are never two</strong> spaces in a line.
+And: The whole thing is <strong>a single line!</strong>.
+If the file already exists, simply append a new line below.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__restricting_access_to_the_agent_execution">
+<span class="hidden-anchor sr-only" id="_restricting_access_to_the_agent_execution"></span>6.3. Restricting access to the agent execution</h3>
+<div class="paragraph"><p>What comes now is very important!
+The SSH key should be used <strong>exclusively</strong> for executing the agent.
+SSH offers something like this under the name <em>command restriction</em>.
+To do this, put the text <code>command="/usr/bin/check_mk_agent"</code> at the beginning of the line you just created — separated from the rest by a <strong>single</strong> space.
+It will look something like this:</p></div>
+<div class="listingblock">
+<div class="title">/root/.ssh/authorized_keys</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>command="/usr/bin/check_mk_agent" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGb6AaqRPlbEmDnBkeIW3Q6Emb5lr2QEbWEQLmA5pb48 mysite@mycmkserver</code></pre></div>
+</div>
+<div class="paragraph"><p>Save the file and check the permissions.
+Only the owner may have write permissions on this file.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span><span class="tok-m">600</span><span class="tok-w"> </span>/root/.ssh/authorized_keys
+<span class="tok-gp">root@linux# </span>ll<span class="tok-w"> </span>/root/.ssh/authorized_keys
+<span class="tok-gp"><mark></mark></span>-rw-------<span class="tok-w"> </span><span class="tok-m">1</span><span class="tok-w"> </span>root<span class="tok-w"> </span>root<span class="tok-w"> </span><span class="tok-m">1304</span><span class="tok-w"> </span>Feb<span class="tok-w"> </span><span class="tok-m">20</span><span class="tok-w"> </span><span class="tok-m">14</span>:36<span class="tok-w"> </span>authorized_keys</code></pre></div></div>
+<div class="paragraph"><p>Next, test the access to the agent with the <code>ssh</code> command:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>ssh<span class="tok-w"> </span>root@myhost23
+<span class="tok-go">The authenticity of host 'myhost23 (10.11.12.13)' can't be established.</span>
+<span class="tok-go">ECDSA key fingerprint is SHA256:lWgVK+LtsMgjHUbdsA1FK12PdmVQGqaEY4TE8TEps3w.</span>
+<span class="tok-go">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span>
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.3.0p16</span>
+<span class="tok-go">AgentOS: linux</span>
+<span class="tok-go">Hostname: myhost123</span>
+<span class="tok-go">AgentDirectory: /etc/check_mk</span>
+<span class="tok-go">DataDirectory: /var/lib/check_mk_agent</span>
+<span class="tok-go">SpoolDirectory: /var/lib/check_mk_agent/spool</span>
+<span class="tok-go">PluginsDirectory: /usr/lib/check_mk_agent/plugins</span>
+<span class="tok-go">LocalDirectory: /usr/lib/check_mk_agent/local</span>
+<span class="tok-go">&lt;&lt;&lt;df&gt;&gt;&gt;</span></code></pre></div></div>
+<div class="paragraph"><p>The first time you will need to confirm the key’s fingerprint by entering <code>yes</code>.
+All further accesses can then be made without user interaction, including the automatic polling of the agent script by the Checkmk server every minute.</p></div>
+<div class="paragraph"><p>If it does not work, please check:</p></div>
+<div class="ulist"><ul>
+<li><p>Is the SSH server even installed on the target system?</p></li>
+<li><p>Do the specified files and directories have the correct permissions?</p></li>
+<li><p>Have you typed the syntax of <code>authorized_keys</code> correctly?</p></li>
+<li><p>Did you enter the correct public key there?</p></li>
+<li><p>Did you log in as the correct user (<code>root@…​</code>)?</p></li>
+<li><p>Did you remember the <code>command="…​"</code>?</p></li>
+</ul></div>
+<div class="paragraph"><p>With very old target systems, it is also possible that keys with the elliptic curves (<code>ed25519</code> and <code>ecdsa</code>) are unknown.
+In this case, generate an additional RSA key and enter this in the <code>authorized_keys</code> as well.
+SSH will then automatically use the strongest known key for the connection.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__changing_the_access_from_checkmk_to_ssh">
+<span class="hidden-anchor sr-only" id="_changing_the_access_from_checkmk_to_ssh"></span>6.4. Changing the access from Checkmk to SSH</h3>
+<div class="paragraph"><p>The target system has now been prepared.
+Now only the configuration of Checkmk itself is missing.
+This is done via the <span class="guihint">Setup &gt; Agents &gt; Other integrations&gt; Custom integrations &gt; Individual program call instead of agent access</span> rule set.
+Create a rule here for the affected hosts and enter <code>ssh -T root@$HOSTNAME$</code> or <code>ssh -C -T root@$HOSTNAME$</code> (for additional compression of the agent data) as command:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_rule_ssh_key.png" alt="rule for calling the agent via SSH."></div>
+<div class="title">Calling the agent via SSH is done by rule</div>
+</div>
+<div class="paragraph"><p>You can run the connection test in the GUI under <span class="guihint">Setup &gt; Hosts &gt; Properties of host &gt; Test connection to host</span> with the <span class="guihint">Run tests</span> button.
+If the test fails with timeout or access denied, check whether you used the host name in the same spelling as when testing on the command line — OpenSSH differentiates between short host name, FQDN and IP address.
+Alternatively you can access the host using it’s IP address.
+In this case you have to use the macro <code>$HOSTADDRESS$</code> that is replaced by the cached (by Checkmk) IP address of the host.</p></div>
+<div class="paragraph"><p>After saving and executing <a href="glossar.html#activate_changes">Activate changes</a> the host is added to the monitoring.
+In the monitoring the service <span class="guihint">Check-MK Agent</span> is now displayed with the note 'Transport via SSH'.
+For further diagnostics the commands <code>cmk -D</code> and <code>cmk -d</code> can be used, which are explained in the <a href="cmk_commandline.html#cmk">article on the command line</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_multiplekeys">
+<span class="hidden-anchor sr-only" id="multiplekeys"></span>6.5. Multiple SSH keys</h3>
+<div class="paragraph"><p>You can also work with more than one SSH key.
+Place the keys in any directory.
+In the <span class="guihint">Individual program call instead of agent access</span> rule you must then specify the path to the respective private key with the <code>-i</code> option.
+It is best to use <code>$OMD_ROOT</code> here as a replacement for the path to the site directory (<code>/omd/sites/mysite</code>).
+The full command could then be <code>ssh -i $OMD_ROOT/.ssh/my_key -T root@$HOSTADDRESS$</code>, and thus the configuration would also be executable in a site with a different name:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_rule_multiple_ssh_keys.png" alt="Rule to invoke the agent with multiple SSH keys."></div>
+<div class="title">To use multiple SSH keys, the above command usually needs to be extended</div>
+</div>
+<div class="paragraph"><p>This allows you to use different SSH keys for different groups of hosts by using multiple different rules.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__disabling_access_to_port_6556">
+<span class="hidden-anchor sr-only" id="_disabling_access_to_port_6556"></span>6.6. Disabling access to port 6556</h3>
+<div class="paragraph"><p>To avoid providing potential attackers with plain text data despite SSH tunnels, you must disable any access to port 6556 that may still be available in monitoring on the host.
+If the command <code>ss -tulpn | grep 6556</code> <a href="#inventory">above</a> did not find any process listening on TCP port 6556, you are done with setting up the SSH tunnel.
+If a line is output, the process that has been found must be permanently disabled.</p></div>
+<div class="sect3">
+<h4 id="heading__xinetd">
+<span class="hidden-anchor sr-only" id="_xinetd"></span>xinetd</h4>
+<div class="paragraph"><p>To close the port provided by <code>xinetd</code>, disable Checkmk’s xinetd service by setting the value of <code>disabled</code> to <code>yes</code>.
+Do <em>not</em> delete the whole configuration file — this would otherwise reappear in some constellations during agent updates!</p></div>
+<div class="paragraph"><p>Disabling is done in the <code>/etc/xinetd.d/check-mk-agent</code> file (on systems with older agent installations, the file may be called <code>/etc/xinetd.d/check_mk</code>):</p></div>
+<div class="listingblock">
+<div class="title">/etc/xinetd.d/check-mk-agent</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>service check_mk
+{
+        type           = UNLISTED
+        port           = 6556
+        socket_type    = stream
+        protocol       = tcp
+        wait           = no
+        user           = root
+        server         = /usr/bin/check_mk_agent
+        disable        = yes
+}</code></pre></div>
+</div>
+<div class="paragraph"><p>Then restart xinetd:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/etc/init.d/xinetd<span class="tok-w"> </span>restart</code></pre></div></div>
+<div class="paragraph"><p>or</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>service<span class="tok-w"> </span>xinetd<span class="tok-w"> </span>restart</code></pre></div></div>
+<div class="paragraph"><p>Now verify that <a href="#connectiontest">access via port 6556</a> is no longer possible.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__inetd">
+<span class="hidden-anchor sr-only" id="_inetd"></span>inetd</h4>
+<div class="paragraph"><p>If it is <code>inetd</code> that controls access to port 6556, modify the <code>/etc/inetd.conf</code> configuration file.
+Look for the relevant line there:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>grep<span class="tok-w"> </span>-n<span class="tok-w"> </span>check.*mk<span class="tok-w"> </span>/etc/inetd.conf</code></pre></div></div>
+<div class="paragraph"><p>Comment this line out with a hash <code>#</code> and then restart the process.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/etc/init.d/inetd<span class="tok-w"> </span>restart</code></pre></div></div>
+<div class="paragraph"><p>Then, using <code>telnet</code> or <code>nc</code> verify <a href="#connectiontest">whether access is still possible</a>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__systemd">
+<span class="hidden-anchor sr-only" id="_systemd"></span>systemd</h4>
+<div class="paragraph"><p>If the search showed that <code>systemd</code> has TCP port 6556 open, you now need to determine the exact name of the configuration providing the socket:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>systemctl<span class="tok-w"> </span>list-units<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-s1">'check.*mk.*socket'</span>
+<span class="tok-go">  check-mk-agent.socket		loaded active listening CheckMK Agent Socket</span></code></pre></div></div>
+<div class="paragraph"><p>Now you can first stop the service and then disable it:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>systemctl<span class="tok-w"> </span>stop<span class="tok-w"> </span>check-mk-agent.socket
+<span class="tok-gp">root@linux# </span>systemctl<span class="tok-w"> </span>disable<span class="tok-w"> </span>check-mk-agent.socket
+<span class="tok-go">Removed /etc/systemd/system/sockets.target.wants/check-mk-agent.socket.</span></code></pre></div></div>
+<div class="paragraph"><p>Now <a href="#connectiontest">access to port 6556</a> should not be possible.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_checkconnection">
+<span class="hidden-anchor sr-only" id="checkconnection"></span>6.7. Verification of success</h3>
+<div class="paragraph"><p>In any case, do not forget to make a final test.
+It should now no longer be possible to connect to port 6556:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>telnet<span class="tok-w"> </span>myhost123<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">Trying 10.118.15.23...</span>
+<span class="tok-go">telnet: Unable to connect to remote host: Connection refused</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_further_options">
+<span class="hidden-anchor sr-only" id="further_options"></span>7. Further security options</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>We describe the security options presented here primarily for reasons of compatibility with existing installations.
+In many cases, the transmission of the agent output via SSH will satisfy the requirements for access restriction and eavesdropping security.
+Nevertheless, in individual cases it may make sense to <em>additionally</em> use the protection mechanisms presented below or to use them when no SSH tunnel is possible.</p></div>
+<div class="paragraph"><p>The Checkmk agent script can encrypt its own data without the need for any additional tools.
+This built-in symmetric encryption is no substitute for access control.
+However, since an attacker cannot send any commands and cannot do anything with such encrypted output data, the goal of eavesdropping security is usually sufficiently fulfilled.</p></div>
+<div class="paragraph"><p>Of course, the encryption needs a suitable configuration on the agent as well as on the server.
+This can either be created manually in Checkmk Raw or with the Agent Bakery in the commercial editions.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> Since symmetric encryption uses the same key for both encryption and decryption, an Agent Bakery-created update package which includes the encryption key could, for example, be intercepted by an attacker who could then decrypt communications content.</p></div>
+<div class="sect2">
+<h3 id="heading_encryption">
+<span class="hidden-anchor sr-only" id="encryption"></span>7.1. Implementing built-in encryption</h3>
+<div class="sect3">
+<h4 id="heading__activating_encryption">
+<span class="hidden-anchor sr-only" id="_activating_encryption"></span>Activating encryption</h4>
+<div class="paragraph"><p>The first step is to go to the <span class="guihint">Setup</span> menu and create a rule in the rule set <span class="guihint">Setup &gt; Agents &gt; Access to agents &gt; Checkmk agent &gt; Symmetric encryption (Linux, Windows)</span>.
+This rule should apply to all hosts for which you want to use encryption.
+SNMP hosts ignore this setting, so you do not need to explicitly exclude them.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_encrypt.png" alt="Rule to enable built-in encryption."></div>
+<div class="title">The built-in encryption is activated by a rule</div>
+</div>
+<div class="paragraph"><p>With the <span class="guihint">Configure shared secret and apply symmetric encryption</span> option, you specify that the agent sends the data in an encrypted form.
+The encryption works with a shared password (<em>shared secret</em>) that you specify here and which must be stored in plain text on both the Checkmk server and the agent.
+If you wish, select the <span class="image-inline"><img src="../images/icons/icon_random.png" alt="Symbol for rolling a password."></span> icon for Checkmk to generate a random password for you, and keep this password ready for the second step, configuring the agent.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__configuring_the_agent">
+<span class="hidden-anchor sr-only" id="_configuring_the_agent"></span>Configuring the agent</h4>
+<div class="paragraph"><p>On the agent’s host, create the <code>/etc/check_mk/encryption.cfg</code> file with the following content:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/encryption.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>ENCRYPTED=yes
+PASSPHRASE='MyPassword'</code></pre></div>
+</div>
+<div class="paragraph"><p>You naturally specify your own password here at <code>PASSPHRASE</code>, and you should definitely protect the <code>.cfg</code> file from read access by other users:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span><span class="tok-m">600</span><span class="tok-w"> </span>/etc/check_mk/encryption.cfg</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__configuring_the_checkmk_server">
+<span class="hidden-anchor sr-only" id="_configuring_the_checkmk_server"></span>Configuring the Checkmk server</h4>
+<div class="paragraph"><p>In the third and last step, use the <span class="guihint">Enforce agent data encryption</span> rule to specify how the Checkmk server should handle unencrypted data.</p></div>
+<div class="paragraph"><p>You have the following options:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Accept all incoming data, including unencrypted</span>: Data from agents with and without encryption will be accepted.</p></li>
+<li><p><span class="guihint">Accept all types of encryption</span>: Only encrypted data will be accepted, either via TLS or via symmetric encryption, as activated in the first step.</p></li>
+<li><p><span class="guihint">Accept TLS encrypted connections only</span>: Only data encrypted by TLS will be accepted.</p></li>
+</ul></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_enforce_encryption.png" alt="Rule to define which agent data the Checkmk server accepts."></div>
+<div class="title">With this selection symmetrically encrypted data as well as TLS encrypted data will be accepted</div>
+</div>
+<div class="paragraph"><p>It makes sense to start with <span class="guihint">Accept all incoming data, including unencrypted</span>.
+Once you think all agents have been switched to encryption, set <span class="guihint">Accept all types of encryption</span> to find any hosts that may still be sending data in plain text.
+Hosts that send unencrypted data will be detected and flagged 'red'.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__testing">
+<span class="hidden-anchor sr-only" id="_testing"></span>Testing</h4>
+<div class="paragraph"><p>Now you can perform the following tests (see also the article on <a href="cmk_commandline.html">Checkmk on the command line</a>):</p></div>
+<div class="ulist"><ul>
+<li><p>The call to <code>check_mk_agent</code> on the target system must output a jumbled character string.</p></li>
+<li><p>Access via <code>telnet myhost123 6556</code> from the Checkmk server must output the same jumble of characters.</p></li>
+<li><p>The command <code>cmk -d myhost123</code> on the Checkmk server must display the clean plain text data.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__setting_up_built_in_encryption_with_the_agent_bakery">
+<span class="hidden-anchor sr-only" id="_setting_up_built_in_encryption_with_the_agent_bakery"></span>7.2. Setting up built-in encryption with the Agent Bakery</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Setting up encryption with the Agent Bakery      goes like this:
+With the first step, creating the <span class="guihint">Symmetric encryption (Linux, Windows)</span> rule, you are almost done.
+You now only need to bake and distribute the new agents.
+The <code>/etc/check_mk/encryption.cfg</code> file is automatically created for you and will be included in the agent packages.
+All that remains is the third step, i.e. the creation of the <span class="guihint">Enforce agent data encryption</span> rule.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__xinetd_ip_restrictions">
+<span class="hidden-anchor sr-only" id="_xinetd_ip_restrictions"></span>7.3. xinetd: IP restrictions</h3>
+<div class="paragraph"><p>Even if an attacker cannot execute any commands, the agent’s monitoring data could still be useful to them, because it contains, among other things, a list of all of the processes running on the system.
+It is therefore best if the data cannot be easily accessed by anyone.</p></div>
+<div class="paragraph"><p>If you share the Checkmk Agent via <code>xinetd</code>, it is very easy and effective to restrict access to specific IP addresses — and those of the monitoring server, of course.
+This can be quickly achieved via the <code>only_from</code> directive in your <code>xinetd</code> configuration file.
+Enter IP addresses or address ranges (in the form <code>12.34.56.78/29</code> or <code>1234::/46</code>) separated by spaces.
+Host names are also allowed.
+In this case, the system checks whether the host name determined by <em>reverse resolution</em> of the IP address for the requesting host matches the one entered:</p></div>
+<div class="listingblock">
+<div class="title">/etc/xinetd.d/check-mk-agent</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>service check_mk
+{
+        type           = UNLISTED
+        port           = 6556
+        socket_type    = stream
+        protocol       = tcp
+        wait           = no
+        user           = root
+        server         = /usr/bin/check_mk_agent
+        only_from      = 10.118.14.5 10.118.14.37
+        disable        = no
+}</code></pre></div>
+</div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In the commercial editions, Agent Bakery users can configure the permitted IP addresses via the <span class="guihint">Allowed agent access via IP address (Linux, Windows)</span> rule set.
+This rule set can be found via <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Generic Options</span>.</p></div>
+<div class="paragraph"><p>Of course, an attacker can very easily fake their IP address and thus connect to the agent.
+But then it is very likely that they will not receive the response — because the response will go to the legitimate monitoring server.
+Or the attacker actually does get a response, but the Checkmk server doesn’t receive any data and will quickly report an error.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_errors">
+<span class="hidden-anchor sr-only" id="errors"></span>8. Common error messages when using SSH</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you want to retrieve the Checkmk agent via SSH, it may happen that this retrieval fails and the <span class="guihint">Check_MK</span> service on your host changes to the <span class="state2">CRIT</span> state.
+These error messages often begin with <code>Agent exited with code 255</code>.</p></div>
+<div class="paragraph"><p>Information on how to fix such errors can be found in the <a href="https://checkmk.atlassian.net/wiki/spaces/KB/pages/9473653" target="_blank">Checkmk Knowledge Base</a>.</p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li>
+<a href="#installation">2. Installation</a><ul class="sectlevel1">
+<li><a href="#frompackage">2.1. Installation from packages</a></li>
+<li><a href="#tarball">2.2. Installation from the TGZ archive</a></li>
+<li><a href="#manual">2.3. Manual installation of the agent script</a></li>
+</ul>
+</li>
+<li><a href="#inventory">3. Checking the state after installation</a></li>
+<li><a href="#access_method">4. Selecting the access method</a></li>
+<li>
+<a href="#unencrypted">5. Unencrypted: Setting up (x)inetd</a><ul class="sectlevel1">
+<li><a href="#xinetd">5.1. Configuring xinetd</a></li>
+<li><a href="#otherinetd">5.2. Setting up another inetd</a></li>
+<li><a href="#connectiontest">5.3. Connection test</a></li>
+</ul>
+</li>
+<li>
+<a href="#ssh">6. Encrypted: Use of an SSH tunnel</a><ul class="sectlevel1">
+<li><a href="#_creating_an_ssh_key_pair">6.1. Creating an SSH key pair</a></li>
+<li><a href="#_allowing_access_via_ssh">6.2. Allowing access via SSH</a></li>
+<li><a href="#_restricting_access_to_the_agent_execution">6.3. Restricting access to the agent execution</a></li>
+<li><a href="#_changing_the_access_from_checkmk_to_ssh">6.4. Changing the access from Checkmk to SSH</a></li>
+<li><a href="#multiplekeys">6.5. Multiple SSH keys</a></li>
+<li>
+<a href="#_disabling_access_to_port_6556">6.6. Disabling access to port 6556</a><ul class="sectlevel2">
+<li><a href="#_xinetd">xinetd</a></li>
+<li><a href="#_inetd">inetd</a></li>
+<li><a href="#_systemd">systemd</a></li>
+</ul>
+</li>
+<li><a href="#checkconnection">6.7. Verification of success</a></li>
+</ul>
+</li>
+<li>
+<a href="#further_options">7. Further security options</a><ul class="sectlevel1">
+<li>
+<a href="#encryption">7.1. Implementing built-in encryption</a><ul class="sectlevel2">
+<li><a href="#_activating_encryption">Activating encryption</a></li>
+<li><a href="#_configuring_the_agent">Configuring the agent</a></li>
+<li><a href="#_configuring_the_checkmk_server">Configuring the Checkmk server</a></li>
+<li><a href="#_testing">Testing</a></li>
+</ul>
+</li>
+<li><a href="#_setting_up_built_in_encryption_with_the_agent_bakery">7.2. Setting up built-in encryption with the Agent Bakery</a></li>
+<li><a href="#_xinetd_ip_restrictions">7.3. xinetd: IP restrictions</a></li>
+</ul>
+</li>
+<li><a href="#errors">8. Common error messages when using SSH</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

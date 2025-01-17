@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="For many services, it only makes sense to externally monitor them for function or response times. Here you will learn how this works in Checkmk.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Monitoring network services (Active checks) - Monitoring of HTTPS, TCP, SSH, FTP and further services">
+<meta name="og:description" content="For many services, it only makes sense to externally monitor them for function or response times. Here you will learn how this works in Checkmk.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Monitoring network services (Active checks) - Monitoring of HTTPS, TCP, SSH, FTP and further services</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/de/active_checks.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/active_checks.html">2.1.0</a><a class="dropdown-item" href="../../latest/en/active_checks.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">The Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">The Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Monitoring network services (Active checks)</h1>
+<div class="details">
+<span id="revdate">Last modified on 07-Jan-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/en/active_checks.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="datasource_programs.html">Datasource programs</a>
+<a href="agent_linux.html">Monitoring Linux</a>
+<a href="agent_windows.html">Monitoring Windows</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In Checkmk you can monitor your infrastructure in many different ways. Monitoring
+by means of <a href="wato_monitoringagents.html#agents">agents</a> or <a href="snmp.html">SNMP</a> are only two of
+<a href="wato_monitoringagents.html">a number of methods</a>. What both have in common is that
+they only report states as the host sees them from the inside, but you will
+probably be aware of some services that can only be monitored effectively from
+the outside. Whether the web server is functioning can still be verified from
+the inside, but however, the accessibility and response times of the actual user
+cannot be determined in this way.</p></div>
+<div class="paragraph"><p>Checkmk provides its <em>active checks</em> for such situations. These checks allow you
+to monitor network services directly and conveniently from the outside, and to display
+the information in your monitoring. Active checks are small programs or scripts that connect
+to a service in the network or the internet, and then provide the user with the
+monitoring data. Many of the scripts and programs you will find in Checkmk are
+originally from
+<a href="https://www.monitoring-plugins.org" target="_blank">www.monitoring-plugins.org</a>.
+Since Checkmk is generally compatible with Nagios, you can also use all of the
+plug-ins that work under Nagios.</p></div>
+<div class="paragraph"><p>When you integrate such plug-ins, keep in mind the main purpose of active checks — In terms of end-to-end monitoring, they are supposed to check the accessibility, response time, or response status
+of a network-accessible service on the monitored host.
+Checkmk offers a range of efficient checks for many other monitoring tasks.
+You can find an overview in the article <a href="devel_intro.html">Developing extensions for Checkmk</a>.</p></div>
+<div class="paragraph"><p>The most important of these programs and scripts are available in Checkmk directly
+in the web interface. Here is a small selection:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="https://checkmk.com/integrations/check_dns" target="_blank">Check DNS service</a></p></li>
+<li><p><a href="https://checkmk.com/integrations/check_smtp" target="_blank">Check access to SMTP services</a></p></li>
+<li><p><a href="https://checkmk.com/integrations/check_mail" target="_blank">Check Email</a></p></li>
+<li><p><a href="https://checkmk.com/integrations/check_sftp" target="_blank">Check SFTP service</a></p></li>
+<li><p><a href="https://checkmk.com/integrations/check_tcp" target="_blank">Check connecting to a TCP Port</a></p></li>
+<li><p><a href="https://checkmk.com/integrations/check_ssh" target="_blank">Check SSH service</a></p></li>
+<li><p><a href="https://checkmk.com/integrations/check_icmp" target="_blank">Check hosts with PING (ICMP Echo Request)</a></p></li>
+<li><p><a href="https://checkmk.com/integrations/check_http" target="_blank">Check HTTP service</a></p></li>
+<li><p><a href="https://checkmk.com/integrations/check_ldap" target="_blank">Check access to LDAP service</a></p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__setting_up_active_checks">
+<span class="hidden-anchor sr-only" id="_setting_up_active_checks"></span>2. Setting up active checks</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__setting_up_regular_active_checks">
+<span class="hidden-anchor sr-only" id="_setting_up_regular_active_checks"></span>2.1. Setting up regular active checks</h3>
+<div class="paragraph"><p>In the Setup you can — as already mentioned above — set up the most important and
+most frequently used checks directly in the web interface. To do this, open
+<span class="guihint">Setup &gt; Services &gt; HTTP, TCP, Email</span>.
+Here you will find the rule sets with which you can set up these checks:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/active_checks_rulesets.png" alt="active checks rulesets"></div></div>
+<div class="paragraph"><p>Most options in the rule sets are self-explanatory. However if something is
+unclear you can also refer to the <span class="image-inline"><img src="../images/icons/icon_help.png" alt="icon help"></span> inline help for
+explanations of the many options.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__assigning_active_checks_to_a_host">
+<span class="hidden-anchor sr-only" id="_assigning_active_checks_to_a_host"></span>2.2. Assigning active checks to a host</h3>
+<div class="paragraph"><p>For some rules, it is necessary to specify an IP address or host name in the
+options. In many places it is possible to leave this option empty, so that the
+host name or the IP is adopted from the hosts for which this rule applies.
+In this way you can easily use just one rule to provide a whole group of hosts
+with an active check. Therefore always make sure — also with the aid of the
+already-mentioned <span class="image-inline"><img src="../images/icons/icon_help.png" alt="icon help"></span> inline help — whether this option is available in the specific rule set.
+You may thus save yourself a lot of configuration work.</p></div>
+<div class="paragraph"><p>Here is an example using the HTTP check: Let’s assume you want to monitor the
+validity of the certificates for all of the web servers in your infrastructure,
+but do not want to create dozens or even hundreds of rules:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/active_checks_http_conf.png" alt="active checks http conf"></div></div>
+<div class="paragraph"><p>To accomplish this with a single rule, first think about how best to fill the
+<span class="guihint">Conditions</span>. In the following example we use the function of <a href="labels.html">labels</a>.
+In our case, we have previously set the label <code>webprotocol:https</code> for all of our web servers.
+Using this label we can now create a rule and set the <span class="guihint">Conditions</span> to reference this label:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/active_checks_http_conditions.png" alt="active checks http conditions"></div></div>
+<div class="paragraph"><p>After you have activated the rule you have just created, search in the <a href="user_interface.html#search_monitor">Monitor menu</a>
+for the service name <code>Certificate expiry</code> you just set. In the following example the label has been
+set on four hosts. With the <span class="guihint">Summary</span> you can then actually see that several
+websites were checked, because the expiration dates of their certificates are slightly
+different:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/active_checks_http_services.png" alt="active checks http services"></div></div>
+<div class="paragraph"><p><strong>Important</strong>: Note that for active checks, not only the first rule to which
+the conditions apply is evaluated, but rather <em>all rules</em> for which the
+conditions for a host apply! Only in this way is it possible to set up multiple
+services on one host.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_nagios_plugins">
+<span class="hidden-anchor sr-only" id="nagios_plugins"></span>2.3. Integrating other Nagios-compatible plug-ins</h3>
+<div class="paragraph"><p>Not only the active checks which you can find as rule sets in the web interface
+are available to you in Checkmk of course. In addition to these check plug-ins,
+you will find many more in your site. To simplify the example of an overview shown here,
+only selected relevant lines are displayed in the following sample output:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>ll<span class="tok-w"> </span>~/lib/nagios/plugins/
+<span class="tok-go">total 2466</span>
+<span class="tok-go">-rwxr-xr-x 1 root root   56856 Feb  3 00:45 check_dig</span>
+<span class="tok-go">-rwxr-xr-x 1 root root    6396 Feb  3 00:45 check_flexlm</span>
+<span class="tok-go">-rwxr-xr-x 1 root root    6922 Feb  3 00:45 check_ircd</span>
+<span class="tok-go">-rwxr-xr-x 1 root root   60984 Feb  3 00:45 check_ntp_peer</span>
+<span class="tok-go">-rwxr-xr-x 1 root root   78136 Feb  3 00:45 check_snmp</span></code></pre></div></div>
+<div class="paragraph"><p>Each of these check plug-ins also offers a help option (<code>-h</code>),
+which allows you to learn more about how to use the respective plug-in without
+having to visit the <span class="guihint">monitoring-plugins</span> website.</p></div>
+<div class="paragraph"><p>In <span class="guihint">Setup &gt; Services &gt; Other services</span> Checkmk offers the special rule set <span class="guihint">Integrate Nagios plugins</span>
+to make these plug-ins convenient to use. The two most important
+options here are the specification of a service description and a command line.
+The latter can be written as if you are already in the correct directory:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/active_checks_custom_config.png" alt="active checks custom config"></div></div>
+<div class="paragraph"><p>Note that the above-mentioned macros, such as <code>$HOSTNAME$</code> or
+<code>$HOSTADDRESS$</code> are also available here. A list of all of the available
+macros can be found as always in the <span class="image-inline"><img src="../images/icons/icon_help.png" alt="icon help"></span> inline help. After activating the changes, you can see the new service on the assigned host:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/active_checks_custom_service01.png" alt="active checks custom service01"></div></div>
+<div class="sect3">
+<h4 id="heading__using_your_own_plug_ins">
+<span class="hidden-anchor sr-only" id="_using_your_own_plug_ins"></span>Using your own plug-ins</h4>
+<div class="paragraph"><p>In some cases, you will have already written your own plug-ins and now want to
+use them in Checkmk. In this case the procedure is largely identical. The only
+requirement is that the plug-in is compatible with Nagios. This includes a
+single line output with the details of the status and an exit code describing
+the status. This must be 0 for <span class="state0">OK</span>, 1 for <span class="state1">WARN</span>, 2 for <span class="state2">CRIT</span> or 3 for
+<span class="state3">UNKNOWN</span>.</p></div>
+<div class="paragraph"><p>A short example to illustrate the very simple syntax shows the following script that you can create e.g. in the <code>tmp</code> subdirectory of the site directory:</p></div>
+<div class="listingblock">
+<div class="title">~/tmp/myscript.sh</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+echo "I am a self written check and I feel well."
+exit 0</code></pre></div>
+</div>
+<div class="paragraph"><p>With a single action place the plug-in in the local file path for your site and make it executable:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>install<span class="tok-w"> </span>-m755<span class="tok-w"> </span>~/tmp/myscript.sh<span class="tok-w"> </span>~/local/lib/nagios/plugins/</code></pre></div></div>
+<div class="paragraph"><p>The rest of the procedure is then identical to other plug-ins which are created
+via the <span class="guihint">Integrate Nagios plugins</span> rule set, so that you
+can see the new service at the end:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/active_checks_custom_service02.png" alt="active checks custom service02"></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__special_features_of_active_checks">
+<span class="hidden-anchor sr-only" id="_special_features_of_active_checks"></span>3. Special features of active checks</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Services that were created by active checks behave differently in some respects
+than other services. So the services of an active check…​</p></div>
+<div class="ulist"><ul>
+<li><p>…​ continue to be checked even if a host is <span class="hstate1">DOWN</span>.</p></li>
+<li><p>…​ execute independently of other (passive) services. This also allows you to set your own interval.</p></li>
+<li><p>…​ are always executed by the Checkmk site’s server. Exceptions are <a href="#mrpe">MRPEs</a>, which are executed directly on a host.</p></li>
+<li><p>…​ are not incorporated via <a href="wato_services.html#discovery">service discovery</a>, but are generated automatically.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_mrpe">
+<span class="hidden-anchor sr-only" id="mrpe"></span>4. Running active checks on a host (MRPE)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Suppose you are monitoring a host A (e.g. a web server) from your Checkmk site, which in turn accesses services from host B (e.g. a database).
+Monitoring the services on host B directly from the Checkmk site will most likely be corrupted by other packet run times, etc., and therefore will not give any accurate indication of how the accessibility from host A behaves in operation.
+Here it is convenient to have a Nagios plug-in run from the agent of the monitored host (here A), which directly checks the services on host B.</p></div>
+<div class="paragraph"><p>To run a classic Nagios plug-in on a host being monitored, we provide <em>MK’s
+Remote Plugin Executor</em> (abbreviated: MRPE). Depending on whether you want to
+run such a plug-in on a unix-type system or on a Windows system, place it in the
+appropriate location in the respective agent’s installation directory.
+In addition you will need a configuration file that determines how the plug-in
+is to be executed, and what the specific command line for the call looks like.</p></div>
+<div class="paragraph"><p>Detailed instructions can be found in the respective articles on
+<a href="agent_windows.html#mrpe">Windows</a> and <a href="agent_linux.html#mrpe">Linux</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__files_and_directories">
+<span class="hidden-anchor sr-only" id="_files_and_directories"></span>5. Files and directories</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/lib/nagios/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here you will find all plug-ins that are delivered with Checkmk. No distinction is made between plug-ins that are written by <a href="https://www.monitoring-plugins.org" target="_blank">www.monitoring-plugins.org</a> and those that are written specifically for Checkmk.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/local/lib/nagios/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You can store your own plug-ins here. They are then dynamically read in, and will also survive an update of the Checkmk site.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li>
+<a href="#_setting_up_active_checks">2. Setting up active checks</a><ul class="sectlevel1">
+<li><a href="#_setting_up_regular_active_checks">2.1. Setting up regular active checks</a></li>
+<li><a href="#_assigning_active_checks_to_a_host">2.2. Assigning active checks to a host</a></li>
+<li>
+<a href="#nagios_plugins">2.3. Integrating other Nagios-compatible plug-ins</a><ul class="sectlevel2"><li><a href="#_using_your_own_plug_ins">Using your own plug-ins</a></li></ul>
+</li>
+</ul>
+</li>
+<li><a href="#_special_features_of_active_checks">3. Special features of active checks</a></li>
+<li><a href="#mrpe">4. Running active checks on a host (MRPE)</a></li>
+<li><a href="#_files_and_directories">5. Files and directories</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

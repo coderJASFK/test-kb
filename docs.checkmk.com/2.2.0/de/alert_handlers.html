@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Manche Probleme tauchen nur selten für kurze Zeit auf. Checkmk kann dann Alert Handler Skripte ausführen, um Informationen für die Analyse zu sammeln.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Alert Handler - Auf Probleme automatisiert reagieren">
+<meta name="og:description" content="Manche Probleme tauchen nur selten für kurze Zeit auf. Checkmk kann dann Alert Handler Skripte ausführen, um Informationen für die Analyse zu sammeln.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Alert Handler - Auf Probleme automatisiert reagieren</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/alert_handlers.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/alert_handlers.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/alert_handlers.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Alert Handler</h1>
+<div class="details">
+<span id="revdate">Last modified on 13-Feb-2017</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/alert_handlers.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="notifications.html">Benachrichtigungen</a>
+<a href="commands.html">Kommandos</a>
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__soll_das_monitoring_eingreifen">
+<span class="hidden-anchor sr-only" id="_soll_das_monitoring_eingreifen"></span>1.1. Soll das Monitoring eingreifen?</h3>
+<div class="paragraph"><p>Man möchte meinen, es sei offensichtlich, dass ein Monitoring-System niemals ins Geschehen eingreift, sondern eben nur überwacht.
+Und wahrscheinlich ist es auch eine gute Idee, es dabei zu belassen.</p></div>
+<div class="paragraph"><p>Nun ist es aber zugegeben eine verlockende Vorstellung, dass ein System, das zuverlässig Probleme erkennen kann, diese auch selbst behebt, sofern das automatisch geht.</p></div>
+<div class="paragraph"><p>Dafür finden sich leicht einige Beispiele:</p></div>
+<div class="ulist"><ul>
+<li><p>Das Starten eines Dienstes, wenn dieser abgestürzt ist.</p></li>
+<li><p>Das Auslösen eines Garbage Collectors, wenn der Speicher einer Java-VM knapp ist.</p></li>
+<li><p>Das neue Aufbauen eines VPN-Kanals, wenn dieser definitiv tot ist.</p></li>
+</ul></div>
+<div class="paragraph"><p>Wer sich auf so etwas einlässt, muss natürlich Monitoring anders denken.
+Aus einem System, das einfach nur zuguckt und für den Betrieb „nicht notwendig“ ist, wird Schritt für Schritt ein lebenswichtiges Organ des Rechenzentrums.</p></div>
+<div class="paragraph"><p>Aber das Beheben von Problemen ist nicht das Einzige, was das Monitoring automatisiert tun kann, wenn es ein Problem feststellt.
+Ebenfalls sehr nützlich und gleichzeitig viel harmloser ist das Sammeln von zusätzlichen Diagnosedaten genau in dem Augenblick des Fehlers.
+Und sicher fallen Ihnen auf Anhieb noch etliche weitere Dinge ein, die Sie mit <strong>Alert Handlers</strong> anfangen können.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__alert_handlers_in_checkmk">
+<span class="hidden-anchor sr-only" id="_alert_handlers_in_checkmk"></span>1.2. Alert Handlers in Checkmk</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Alert Handlers sind von Ihnen selbst geschriebene Skripte, die Checkmk in den kommerziellen Editionen für Sie ausführt, wenn ein Problem festgestellt wird — oder genauer ausgedrückt: wenn ein Host oder Service seinen Zustand ändert.</p></div>
+<div class="paragraph"><p>Alert Handlers sind sehr ähnlich zu <a href="glossar.html#notification">Benachrichtigungen</a> und werden auch ähnlich konfiguriert, aber es gibt ein paar wichtige Unterschiede:</p></div>
+<div class="ulist"><ul>
+<li><p>Alert Handlers sind unabhängig von <a href="glossar.html#scheduled_downtime">Wartungszeiten</a>, Benachrichtigungsperioden, <a href="basics_ackn.html">Quittierungen</a> und ähnlichen Einschränkungen.</p></li>
+<li><p>Alert Handlers werden auch schon beim ersten Wiederholversuch aufgerufen (falls Sie mehrere Check-Versuche konfiguriert haben).</p></li>
+<li><p>Alert Handlers sind unabhängig von Benutzern und Kontaktgruppen.</p></li>
+<li><p>Alert Handlers gibt es nur in den kommerziellen Editionen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Man kann auch sagen, dass Alert Handlers sehr „low level“ sind.
+Sobald ein Host oder Service seinen Status ändert, werden <em>sofort</em> die von Ihnen konfigurierten Alert Handlers aufgerufen.
+Auf diese Art kann ein Alert Handler auch erfolgreich etwas reparieren, bevor es überhaupt zu einem Alert kommt.</p></div>
+<div class="paragraph"><p>Natürlich können Sie — wie immer bei Checkmk — durch Regeln genaue Bedingungen festlegen, wann welcher Handler ausgeführt werden soll.
+Wie das geht und auch alles andere über Alert Handlers erfahren Sie in diesem Artikel.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+Ein Hinweis für Benutzer der <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong>:
+Auch Sie können das Monitoring automatisiert Aktionen ausführen lassen.
+Verwenden Sie dazu die „Event Handlers“ von Nagios.
+Konfigurieren Sie diese mit manuellen Konfigurationsdateien in Nagios-Syntax unterhalb von <code>~/etc/nagios/conf.d/</code>.
+Die Event Handlers sind gut dokumentiert.
+Hinweise dazu finden Sie durch einfaches <a href="https://www.google.de/search?q=nagios+event+handlers" target="_blank">googeln.</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_setup">
+<span class="hidden-anchor sr-only" id="setup"></span>2. Alert Handler einrichten</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__skripte_in_das_richtige_verzeichnis_legen">
+<span class="hidden-anchor sr-only" id="_skripte_in_das_richtige_verzeichnis_legen"></span>2.1. Skripte in das richtige Verzeichnis legen</h3>
+<div class="paragraph"><p>Alert Handlers sind Skripte, die auf dem Checkmk-Server ausgeführt werden.
+Diese müssen im Verzeichnis <code>~/local/share/check_mk/alert_handlers/</code> liegen und können in jeder von Linux unterstützten Sprache geschrieben sein, z.B. in BASH, Python oder Perl.
+Vergessen Sie nicht, die Skripte mit <code>chmod +x</code> ausführbar zu machen.</p></div>
+<div class="paragraph"><p>Wenn Sie im Skript in der zweiten Zeile einen Kommentar einfügen (mit einer Raute <code>#</code>), dann erscheint dieser als Name des Skripts in der Auswahlliste bei der Regel:</p></div>
+<div class="listingblock">
+<div class="title">~/local/share/check_mk/alert_handlers/myhandler</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+# Foobar handler for repairing stuff
+...</code></pre></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__ein_einfacher_alert_handler_zum_testen">
+<span class="hidden-anchor sr-only" id="_ein_einfacher_alert_handler_zum_testen"></span>2.2. Ein einfacher Alert Handler zum Testen</h3>
+<div class="paragraph"><p>Wie bei den <a href="notifications.html">Benachrichtigungen</a> bekommt das Skript alle Informationen über den Host oder Service als Umgebungsvariablen, wobei diese hier alle mit dem Präfix <code>ALERT_</code> beginnen.</p></div>
+<div class="paragraph"><p>Um zu testen, welche Umgebungsvariablen genau beim Skript ankommen, können Sie folgenden Alert Handler zum Testen verwenden:</p></div>
+<div class="listingblock">
+<div class="title">~/local/share/check_mk/alert_handlers/debug</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+# Dump all variables to ~/tmp/alert.out
+
+env | grep ^ALERT_ | sort &gt; $OMD_ROOT/tmp/alert.out</code></pre></div>
+</div>
+<div class="ulist"><ul>
+<li><p><code>env</code> gibt alle Umgebungsvariablen aus.</p></li>
+<li><p><code>grep ^ALERT_</code> wählt daraus diejenigen aus, die mit <code>ALERT_</code> beginnen.</p></li>
+<li><p><code>sort</code> sortiert dann die verbleibende Liste alphabetisch.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__alert_handler_aktivieren">
+<span class="hidden-anchor sr-only" id="_alert_handler_aktivieren"></span>2.3. Alert Handler aktivieren</h3>
+<div class="paragraph"><p>Die Aktivierung des Handlers erfolgt über <span class="guihint">Setup &gt; Events &gt; <span class="image-inline"><img src="../images/icons/icon_alert_handlers.png" alt="icon alert handlers"></span> Alert handlers.</span></p></div>
+<div class="paragraph"><p>Gehen Sie wie folgt vor:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Legen Sie das obige Skript unter <code>~/local/share/check_mk/alert_handlers/debug</code> ab.</p></li>
+<li><p>Machen Sie es mit <code>chmod +x debug</code> ausführbar.</p></li>
+<li><p>Rufen Sie dann über <span class="guihint">Setup &gt; Events</span> die Konfiguration der <span class="guihint">Alert handlers</span> auf.</p></li>
+<li><p>Legen Sie dort mit <span class="guihint">Add rule</span> eine neue Regel an.</p></li>
+</ol></div>
+<div class="paragraph"><p>Das Formular erlaubt eine direkte Auswahl des Alert Handlers.
+Die zweite Zeile in dem ausgewählten Skript wird als Titel benutzt.
+Zusätzlich können Sie Aufrufargumente mitgeben, die Sie in die Freitextfelder eintragen.
+Diese kommen beim Skript als Kommandozeilenargumente an.
+In der Shell können Sie darauf mit <code>$1</code>, <code>$2</code> usw. zugreifen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handler_arguments.png" alt="alert handler arguments"></div></div>
+<div class="paragraph"><p><strong>Wichtig</strong>: Nach dem Speichern der Regel ist der Alert Handler sofort wirksam und wird bei jeder Zustandsänderung irgendeines Hosts oder Services ausgeführt!</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__test_und_fehlerdiagnose">
+<span class="hidden-anchor sr-only" id="_test_und_fehlerdiagnose"></span>2.4. Test und Fehlerdiagnose</h3>
+<div class="paragraph"><p>Zum Testen setzen Sie z.B. einen Service mit <span class="guihint">Fake check results</span> von Hand auf <span class="state2">CRIT</span>.
+Nun sollte die Datei mit den Variablen angelegt worden sein.
+Hier die ersten 20 Zeilen davon:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>head<span class="tok-w"> </span>-n<span class="tok-w"> </span><span class="tok-m">20</span><span class="tok-w"> </span>~/tmp/alert.out
+<span class="tok-go">ALERT_ALERTTYPE=STATECHANGE</span>
+<span class="tok-go">ALERT_CONTACTNAME=check-mk-notify</span>
+<span class="tok-go">ALERT_CONTACTS=</span>
+<span class="tok-go">ALERT_DATE=2016-07-19</span>
+<span class="tok-go">ALERT_HOSTADDRESS=127.0.0.1</span>
+<span class="tok-go">ALERT_HOSTALIAS=myserver123</span>
+<span class="tok-go">ALERT_HOSTATTEMPT=1</span>
+<span class="tok-go">ALERT_HOSTCHECKCOMMAND=check-mk-host-smart</span>
+<span class="tok-go">ALERT_HOSTCONTACTGROUPNAMES=all</span>
+<span class="tok-go">ALERT_HOSTDOWNTIME=0</span>
+<span class="tok-go">ALERT_HOSTFORURL=myserver123</span>
+<span class="tok-go">ALERT_HOSTGROUPNAMES=check_mk</span>
+<span class="tok-go">ALERT_HOSTNAME=myserver123</span>
+<span class="tok-go">ALERT_HOSTNOTESURL=</span>
+<span class="tok-go">ALERT_HOSTNOTIFICATIONNUMBER=1</span>
+<span class="tok-go">ALERT_HOSTOUTPUT=Packet received via smart PING</span>
+<span class="tok-go">ALERT_HOSTPERFDATA=</span>
+<span class="tok-go">ALERT_HOSTPROBLEMID=0</span>
+<span class="tok-go">ALERT_HOSTSHORTSTATE=UP</span>
+<span class="tok-go">ALERT_HOSTSTATE=UP</span></code></pre></div></div>
+<div class="paragraph"><p>Eine Log-Datei über die (Nicht-)Ausführung der Alert Handlers finden Sie unter <code>~/var/log/alerts.log</code>.
+Der Abschnitt für die Ausführung des Handlers <code>debug</code> für den Service <code>Filesystem /</code> auf dem Host <code>myserver123</code> sieht etwa so aus:</p></div>
+<div class="listingblock">
+<div class="title">~/var/log/alerts.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2016-07-19 15:17:22 Got raw alert (myserver123;Filesystem /) context with 60 variables
+2016-07-19 15:17:22 Rule ''...
+2016-07-19 15:17:22  -&gt; matches!
+2016-07-19 15:17:22 Executing alert handler debug for myserver123;Filesystem /
+2016-07-19 15:17:22 Spawned event handler with PID 6004
+2016-07-19 15:17:22 1 running alert handlers:
+2016-07-19 15:17:22 PID: 6004, object: myserver123;Filesystem /
+2016-07-19 15:17:24 1 running alert handlers:
+2016-07-19 15:17:24 PID: 6004, object: myserver123;Filesystem /
+2016-07-19 15:17:24 Handler [6004] for myserver123;Filesystem / exited with exit code 0.
+2016-07-19 15:17:24 Output:</code></pre></div>
+</div>
+<div class="paragraph"><p>Noch einige nützliche Hinweise:</p></div>
+<div class="ulist"><ul>
+<li><p>Texte, die der Alert Handler auf der Standardausgabe ausgibt, erscheinen in der Log-Datei neben <code>Output:</code>.</p></li>
+<li><p>Auch der Exit Code des Skripts wird geloggt (<code>exited with exit code 0</code>).</p></li>
+<li><p>Alert Handlers sind erst wirklich nützlich, wenn Sie auf dem Ziel-Host ein Kommando ausführen.
+Für Linux bietet Checkmk eine fertige Lösung, die <a href="#linux_remote">weiter unten</a> erklärt wird.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_rules">
+<span class="hidden-anchor sr-only" id="rules"></span>3. Regelbasierte Konfiguration</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wie im einführenden Beispiel gezeigt, legen Sie über Regeln fest, welche Ereignisse Alert Handlers auslösen sollen.
+Das Ganze funktioniert analog zu den <a href="notifications.html">Benachrichtigungen,</a> nur etwas vereinfacht.
+Im Beispiel haben Sie überhaupt keine Bedingungen festgelegt, was in der Praxis natürlich unrealistisch ist.
+Folgendes Beispiel zeigt eine Bedingung, die einen Alert Handler für ganz bestimmte Hosts und Services festlegt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handlers_rule_condition.png" alt="alert handlers rule condition"></div></div>
+<div class="paragraph"><p>Der Alert Handler wird nur aufgerufen, wenn</p></div>
+<div class="ulist"><ul>
+<li><p>einer der Hosts <code>myhost123</code> oder <code>myhost124</code> betroffen ist,</p></li>
+<li><p>es um den Service <code>JVM CaramKern Memory</code> geht,</p></li>
+<li><p>der Zustand von <span class="state0">OK</span> oder <span class="state1">WARN</span> auf <span class="state2">CRIT</span> wechselt und</p></li>
+<li><p>das alles beim zweiten Check-Versuch passiert.</p></li>
+</ul></div>
+<div class="paragraph"><p>Damit der Handler überhaupt aufgerufen wird, ist es in diesem Beispiel also notwendig, dass per Regel <span class="guihint">Maximum number of check attempts for service</span> die Anzahl der Versuche mindestens auf 2 eingestellt wird.
+Um einen Alert im Falle eines erfolgreichen Garbage Collectors zu vermeiden, sollte die Anzahl auf 3 eingestellt werden.
+Denn wenn der Handler direkt nach dem zweiten Versuch das Problem beheben konnte, sollte der dritte Versuch wieder den Zustand <span class="state0">OK</span> feststellen und somit kein Alert mehr notwendig sein.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Anders als an anderen Stellen von Checkmk, wird bei den Alert Handlers <strong>jede</strong> Regel ausgeführt, deren Bedingung erfüllt ist.
+Sogar wenn zwei zutreffende Regeln jeweils den gleichen Handler auswählen, wird dieser also auch tatsächlich zweimal getriggert.
+Der Alert Helper (der im nächsten Kapitel beschrieben wird) wird dann die zweite Ausführung in der Regel wieder mit einer Fehlermeldung unterdrücken, da der gleiche Handler niemals mehrfach gleichzeitig laufen soll.
+Trotzdem ist es besser, wenn Sie Ihre Regeln so schreiben, dass dieser Fall nicht auftritt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_execution">
+<span class="hidden-anchor sr-only" id="execution"></span>4. Wie Alert Handlers ausgeführt werden</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__asynchrone_ausführung">
+<span class="hidden-anchor sr-only" id="_asynchrone_ausführung"></span>4.1. Asynchrone Ausführung</h3>
+<div class="paragraph"><p>Sehr oft werden Alert Handlers dazu benutzt, sich remote per SSH oder einem anderen Protokoll auf der betroffenen Maschine anzumelden und dort skriptgesteuert eine Aktion auszuführen.
+Da die Maschine ja gerade ein Problem hat, ist es nicht ausgeschlossen, dass die Verbindung sehr lange dauert oder sogar in einen Timeout läuft.</p></div>
+<div class="paragraph"><p>Da während dieser Zeit natürlich weder das Monitoring stehen bleiben darf noch andere Alert Handlers aufgehalten werden dürfen, werden Alert Handlers grundsätzlich <em>asynchron</em> ausgeführt.
+Verantwortlich dafür ist ein Hilfsprozess — der Alert Helper —  welcher vom <a href="cmc.html">CMC</a> automatisch gestartet wird.
+Um Overhead zu vermeiden, geschieht dies allerdings nur, wenn Sie mindestens eine Regel für Alert Handlers angelegt haben.
+Im <code>cmc.log</code> sehen Sie dann folgende Zeile:</p></div>
+<div class="listingblock">
+<div class="title">~/var/log/cmc.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2016-07-19 15:17:00 [5] Alert handlers have been switched on</code></pre></div>
+</div>
+<div class="paragraph"><p>Der Alert Helper bekommt vom CMC bei jeder Zustandsänderung eines Hosts oder Services eine Benachrichtigung mit allen Informationen zu dem Ereignis.
+Nun wertet er alle Alert-Regeln aus und stellt so fest, ob ein Handler aufgerufen werden soll.
+Falls ja, wird das entsprechende Skript als externer Prozess gestartet und im Hintergrund ausgeführt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__stoppen_des_monitoring_kerns">
+<span class="hidden-anchor sr-only" id="_stoppen_des_monitoring_kerns"></span>4.2. Stoppen des Monitoring-Kerns</h3>
+<div class="paragraph"><p>Wenn Sie den CMC stoppen (z.B. durch <code>omd stop</code> oder durch Herunterfahren des Monitoring-Servers), werden alle noch laufenden Alert Helper <strong>abgebrochen.</strong>
+Diese werden später <strong>nicht wiederholt.</strong>
+Denn wer weiß schon, wie viel später dieses „später“ sein wird.
+Eventuell ist dann ein Neustart von einem Dienst oder dergleichen eher schädlich als nützlich!</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__timeouts">
+<span class="hidden-anchor sr-only" id="_timeouts"></span>4.3. Timeouts</h3>
+<div class="paragraph"><p>Um sich im Fall eines Fehlers vor zu vielen Prozessen zu schützen, gilt für die Laufzeit eines Alert Handlers ein Timeout von (einstellbar) 60 Sekunden.
+Nach Ablauf dieser Zeit wird der Handler beendet.
+Im Detail heißt das, dass nach Ablauf des Timeouts ein Signal 15 (<code>SIGTERM</code>) an den Handler geschickt wird.
+So hat dieser die Gelegenheit, sich sauber zu beenden.
+Nach weiteren 60 Sekunden (doppelter Timeout) wird er dann mit Signal 9 (<code>SIGKILL</code>) endgültig „abgeschossen“.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__überlagerung">
+<span class="hidden-anchor sr-only" id="_überlagerung"></span>4.4. Überlagerung</h3>
+<div class="paragraph"><p>Checkmk verhindert die gleichzeitige Ausführung von Alert Helpers, wenn diese den gleichen Host/Service betreffen und das gleiche Skript mit den gleichen Parametern ausführen würden.
+So ein Fall deutet darauf hin, dass der erste Handler noch am Laufen ist und es keinen Sinn macht, einen zweiten gleichen Handler zu starten.
+Der zweite Handler wird dann sofort abgebrochen und als gescheitert gewertet.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__exit_codes_und_ausgaben">
+<span class="hidden-anchor sr-only" id="_exit_codes_und_ausgaben"></span>4.5. Exit Codes und Ausgaben</h3>
+<div class="paragraph"><p>Ausgaben und Exit Codes der Alert Handlers werden sauber ausgewertet, zum Kern zurück transportiert und dort in die Historie des Monitorings geschrieben.
+Außerdem können sie zu einer Benachrichtigung führen (siehe <a href="#notification">unten</a>).</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__globale_einstellungen">
+<span class="hidden-anchor sr-only" id="_globale_einstellungen"></span>4.6. Globale Einstellungen</h3>
+<div class="paragraph"><p>Für die Ausführung der Alert Handlers gibt es etliche globale Einstellungen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handlers_options.png" alt="]"></div></div>
+<div class="paragraph"><p>Das <span class="guihint">Alert handler log level</span> hingegen beeinflusst das Logging in der Alert Helper Log-Datei (<code>~/var/log/alerts.log</code>).</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__master_control">
+<span class="hidden-anchor sr-only" id="_master_control"></span>4.7. Master control</h3>
+<div class="imageblock inline-image"><div class="content"><img src="../images/alert_handlers_master_control_off.png" alt="alert handlers master control off" width="280"></div></div>
+<div class="paragraph"><p>Mit einem Klick in das <a href="glossar.html#snapin">Snapin</a> <span class="guihint">Master control</span> können Sie Alert Handlers global deaktivieren.
+Bereits laufende Handlers sind davon <em>nicht</em> betroffen und werden noch fertig ausgeführt.</p></div>
+<div class="paragraph"><p>Vergessen Sie nicht, den kleinen Schalter beizeiten wieder auf grün zu stellen!
+Sie könnten sich sonst zu Unrecht in Sicherheit wiegen, dass das Monitoring alles wieder repariert  …​
+<br>
+<br>
+<br></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_history">
+<span class="hidden-anchor sr-only" id="history"></span>5. Alert Handlers in der Historie</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Alert Handlers erzeugen Einträge in der Monitoring-Historie.
+Damit haben Sie eine bessere Nachvollziehbarkeit, als allein durch die Log-Datei <code>alerts.log</code>.
+Es wird ein Eintrag erzeugt, sobald ein Alert Handler gestartet wird und auch wenn er sich beendet.</p></div>
+<div class="paragraph"><p>Die Alert Handlers werden dabei so betrachtet wie klassische Monitoring-Plugins.
+Das heißt, sie sollen eine Zeile Text ausgeben und als Exit Code einen der vier Werte 0 (<span class="state0">OK</span>), 1 (<span class="state1">WARN</span>), 2 (<span class="state2">CRIT</span>) oder 3 (<span class="state3">UNKNOWN</span>) zurückgeben.
+Alle Fehler, die eine Ausführung des Handlers von vornherein verhindern (Abbruch wegen Doppelausführung, Skript nicht vorhanden, Timeout, etc.), werden automatisch mit <span class="state3">UNKNOWN</span> bewertet.</p></div>
+<div class="paragraph"><p>Der Aufruf von folgendem sehr einfachen Handler  …​</p></div>
+<div class="listingblock">
+<div class="title">~/local/share/check_mk/alert_handlers/dummy</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+# Dummy handler for testing
+
+sleep 3
+echo "Everything is fine again"
+exit 0</code></pre></div>
+</div>
+<div class="paragraph"><p>... sieht in der Historie des betroffenen Services dann z.B. so aus (wie immer sind die neuen Meldungen oben):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handler_history.png" alt="alert handler history"></div></div>
+<div class="paragraph"><p>In der allgemeinen Ansicht <span class="guihint">Monitor &gt; System &gt; Alert handler executions</span> werden zudem alle Ausführungen der Alert Handlers zusammen dargestellt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_notification">
+<span class="hidden-anchor sr-only" id="notification"></span>6. Benachrichtigungen über Alert Handlers</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die Ausführung eines Alert Handlers — genauer gesagt die <em>Beendigung</em> der Ausführung — ist ein Ereignis, das zu einer <a href="notifications.html">Benachrichtigung</a> führt.
+So können Sie sich informieren lassen, wenn ein Handler seine Arbeit verrichtet hat.
+Dazu gibt es zwei Ereignistypen, auf die Sie in einer Benachrichtigungsregel filtern können:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handler_notif_condition.png" alt="alert handler notif condition"></div></div>
+<div class="paragraph"><p>Sie können also auch zwischen erfolgreich ausgeführten Handlers (Exit Code 0 - <span class="state0">OK</span>) und gescheiterten (alle anderen Codes) unterscheiden.
+Die E-Mail-Benachrichtigung von Checkmk zeigt nicht die Ausgabe des Checks, sondern die Ausgabe des Alert Handlers.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_check_execution">
+<span class="hidden-anchor sr-only" id="check_execution"></span>7. Alert Handler bei jeder Check-Ausführung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Normalerweise werden Alert Handlers nur aufgerufen, wenn sich der Zustand eines Hosts oder Services ändert (oder während der Wiederholversuche bei Problemen).
+Einfache Check-Ausführungen ohne Zustandsänderung lösen keinen Alert Handler aus.</p></div>
+<div class="paragraph"><p>Über die globale Einstellung <span class="guihint">Global settings &gt; Alert handlers &gt; Types of events that are being processed &gt; All check executions!</span> können Sie genau das umstellen.
+<strong>Jede</strong> Ausführung eines Checks löst dann potenziell Alert Handlers aus.
+Sie können das z.B. nutzen, um die laufenden Monitoring-Daten in andere Systeme zu übertragen.</p></div>
+<div class="paragraph"><p>Seien Sie mit dieser Einstellung vorsichtig!
+Das Starten von Prozessen und Aufrufen von Skripten sind sehr CPU-lastige Operationen.
+Checkmk kann spielend 1000 Checks pro Sekunde durchführen — aber 1000 Alert Handler-Skripte pro Sekunde schafft Linux ganz sicher nicht.</p></div>
+<div class="paragraph"><p>Um das Ganze dennoch sinnvoll möglich zu machen, bietet Checkmk die Möglichkeit, Alert Handlers als <strong>Python-Funktionen</strong> zu schreiben, welche dann inline laufen — ohne Prozesserzeugung.
+So einen Inline Handler legen Sie einfach im gleichen Verzeichnis ab wie die normalen Handler-Skripte.
+Folgendes funktionierendes Beispiel zeigt die Struktur eines Inline Handlers:</p></div>
+<div class="listingblock">
+<div class="title">~/local/share/check_mk/alert_handlers/foo</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/usr/bin/python
+# Inline: yes
+
+# Do some basic initialization (optional)
+def handle_init():
+    log("INIT")
+
+# Called at shutdown (optional)
+def handle_shutdown():
+    log("SHUTDOWN")
+
+# Called at every alert (mandatory)
+def handle_alert(context):
+    log("ALERT: %s" % context)</code></pre></div>
+</div>
+<div class="paragraph"><p>Das Skript hat keine Hauptfunktion, sondern definiert lediglich drei Funktionen.
+Dabei ist nur die Funktion <code>handle_alert()</code> vorgeschrieben.
+Sie wird nach jeder Check-Ausführung aufgerufen und bekommt im Argument <code>context</code> ein Python-Dictionary mit Variablen wie <code>"HOSTNAME"</code>, <code>"SERVICEOUTPUT"</code> usw.
+Dies entspricht den Umgebungsvariablen, die auch die normalen Handlers bekommen — allerdings ohne den Präfix <code>ALERT_</code>.
+Sie können das Beispiel verwenden, um sich den Inhalt von <code>context</code> anzusehen.</p></div>
+<div class="paragraph"><p>Alle Ausgaben, die die Hilfsfunktion <code>log()</code> erzeugt, landen in <code>~/var/log/alert.log</code>.
+Die beiden globalen Variablen <code>omd_root</code> und <code>omd_site</code> sind gesetzt auf das Home-Verzeichnis bzw. den Namen der Checkmk-Instanz.</p></div>
+<div class="paragraph"><p>Die Funktionen <code>handle_init()</code> und <code>handle_shutdown()</code> werden von Checkmk beim Starten bzw. Stoppen des Monitoring-Kerns aufgerufen und ermöglichen Ihnen eine Initialisierung,
+z.B. den Aufbau einer Verbindung zu einer Datenbank.</p></div>
+<div class="paragraph"><p>Weitere Hinweise:</p></div>
+<div class="ulist"><ul>
+<li><p>Beachten Sie das <code># Inline: yes</code> in der zweiten Zeile.</p></li>
+<li><p>Nach jeder Änderung in dem Skript muss der Kern neu gestartet werden (<code>omd restart cmc</code>).</p></li>
+<li><p><code>import</code>-Befehle sind erlaubt.</p></li>
+<li><p>Der Alert Helper von Checkmk ruft Ihre Funktionen <strong>synchron</strong> auf.
+Achten Sie darauf, dass keine Wartezustände entstehen!</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_linux_remote">
+<span class="hidden-anchor sr-only" id="linux_remote"></span>8. Remote-Ausführung unter Linux</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__grundprinzipien">
+<span class="hidden-anchor sr-only" id="_grundprinzipien"></span>8.1. Grundprinzipien</h3>
+<div class="paragraph"><p>Jede Checkmk-Version bringt einen Alert Handler mit, der die sichere Ausführung von Skripten auf überwachten Linux-Systemen ermöglicht.
+Wichtigste Eigenschaften dieser Lösung sind:</p></div>
+<div class="ulist"><ul>
+<li><p>Die Skripte werden per SSH mit Befehlsbeschränkung (<em>command restriction</em>) aufgerufen.</p></li>
+<li><p>Es können keine beliebigen Befehle, sondern nur die von Ihnen definierten aufgerufen werden.</p></li>
+<li><p>Das Ganze kann komplett mit der <a href="glossar.html#agent_bakery">Agentenbäckerei</a> aufgesetzt werden.</p></li>
+</ul></div>
+<div class="paragraph"><p>Die <em>Linux Remote Alert Handlers</em> bestehen aus folgenden Einzelteilen:</p></div>
+<div class="ulist"><ul>
+<li><p>Der Alert Handler <code>linux_remote</code> mit dem Titel <code>Linux via SSH</code> auf dem Checkmk-Server.</p></li>
+<li><p>Das Skript <code>mk-remote-alert-handler</code> auf dem Zielsystem.</p></li>
+<li><p>Von Ihnen geschriebene Skripte („Remote Handlers“) auf dem Zielsystem.</p></li>
+<li><p>Einträge in <code>.ssh/authorized_keys</code> desjenigen Benutzers auf dem Zielsystem, der diese ausführen soll.</p></li>
+<li><p>Regeln in <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Linux Agent &gt; Remote alert handlers (Linux)</span>, welche SSH-Schlüssel generieren.</p></li>
+<li><p>Alert Handler-Regeln, welche <code>linux_remote</code> aufrufen.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__aufsetzen">
+<span class="hidden-anchor sr-only" id="_aufsetzen"></span>8.2. Aufsetzen</h3>
+<div class="paragraph"><p>Angenommen, Sie möchten auf dem Linux-System <code>myserver123</code> das Skript <code>/etc/init.d/foo restart</code> ausführen, wann immer der Service <em>Process FOO</em> kritisch wird (welchen Sie bereits eingerichtet haben).
+Gehen Sie wie folgt vor:</p></div>
+<div class="sect3">
+<h4 id="heading__remote_handler_schreiben">
+<span class="hidden-anchor sr-only" id="_remote_handler_schreiben"></span>Remote Handler schreiben</h4>
+<div class="paragraph"><p>Schreiben Sie zunächst das Skript, das auf dem Zielsystem ausgeführt werden soll.
+Da Sie mit der <a href="wato_monitoringagents.html#bakery">Agentenbäckerei</a> arbeiten, legen Sie das Skript <strong>auf dem Checkmk-Server</strong> an (nicht auf dem Zielsystem!).
+Das korrekte Verzeichnis dafür ist <code>~/local/share/check_mk/agents/linux/alert_handlers</code>.
+Auch hier sorgt der Kommentar in der zweiten Zeile für einen Titel zur Auswahl in der Benutzeroberfläche:</p></div>
+<div class="listingblock">
+<div class="title">~/local/share/check_mk/agents/linux/alert_handlers/restart_foo</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+# Restart FOO service
+
+/etc/init.d/foo restart || {
+    echo "Could not restart FOO."
+    exit 2
+}</code></pre></div>
+</div>
+<div class="paragraph"><p>Machen Sie das Skript ausführbar:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">cd</span><span class="tok-w"> </span>local/share/check_mk/agents/linux/alert_handlers
+<span class="tok-gp">OMD[mysite]:~$ </span>chmod<span class="tok-w"> </span>+x<span class="tok-w"> </span>restart_foo</code></pre></div></div>
+<div class="paragraph"><p>Das Beispielskript ist so gebaut, dass es sich im Fehlerfall mit dem Code 2 beendet, so dass der Alert Handler dies als <span class="state2">CRIT</span> werten wird.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__agentenpaket_mit_dem_handler_vorbereiten">
+<span class="hidden-anchor sr-only" id="_agentenpaket_mit_dem_handler_vorbereiten"></span>Agentenpaket mit dem Handler vorbereiten</h4>
+<div class="paragraph"><p>Wir beschreiben hier das Vorgehen mit der Agentenbäckerei.
+Hinweise für ein Aufsetzen von Hand finden Sie weiter <a href="#manual_setup">unten.</a></p></div>
+<div class="paragraph"><p>Legen Sie eine Regel unter <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Linux Agent &gt; Remote alert handlers (Linux)</span> an.
+In den Eigenschaften sehen Sie den Remote Handler <code>Restart FOO service</code>, den Sie gerade angelegt haben.
+Wählen Sie diesen zur Installation aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handlers_install_remote.png" alt="alert handlers install remote"></div></div>
+<div class="paragraph"><p>Nachdem Sie gespeichert haben, sehen Sie die Regel in der Liste:
+Es wurde automatisch ein SSH-Schlüsselpaar für den Aufruf des Handlers „ausgewürfelt“, dessen Fingerprint in der Regel angezeigt wird.
+In dem Screenshot wurde er aus Gründen der Darstellung gekürzt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handlers_install_remote2.png" alt="alert handlers install remote2"></div></div>
+<div class="paragraph"><p>Der öffentliche Schlüssel ist für den Agenten vorgesehen.
+Der private Schlüssel wird vom Checkmk-Server später benötigt, um das so installierte Skript ohne Eingabe eines Passworts aufrufen zu können.</p></div>
+<div class="paragraph"><p>Sie können auch einen anderen Benutzer als <code>root</code> verwenden — natürlich nur, wenn dieser ausreichend Rechte für die benötigte Aktion hat.
+Der Checkmk-Agent installiert den SSH-Schlüssel nur auf Systemen, auf denen dieser Benutzer bereits existiert.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__agent_backen">
+<span class="hidden-anchor sr-only" id="_agent_backen"></span>Agent backen</h4>
+<div class="paragraph"><p>Backen Sie nun neue Agenten mit <span class="image-inline"><img src="../images/icons/button_bake_agents.png" alt="button bake agents"></span>.
+In der Liste der fertigen Agenten muss nun ein Eintrag auftauchen, in dem Sie wieder Ihren Remote Handler und SSH-Schlüssel sehen.
+Auch hier wurde der Screenshot — um die Anzahl der möglichen Pakete, die Sie herunterladen können — gekürzt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handlers_baked_handler.png" alt="alert handlers baked handler"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__agent_installieren">
+<span class="hidden-anchor sr-only" id="_agent_installieren"></span>Agent installieren</h4>
+<div class="paragraph"><p>Installieren Sie nun das RPM- oder DEB-Paket auf Ihrem Zielsystem (die Installation des TGZ-Archivs kann die SSH-Schlüssel nicht aufsetzen und ist deshalb unvollständig).
+Bei der Installation geschehen folgende Dinge:</p></div>
+<div class="ulist"><ul>
+<li><p>Ihr Remote Handler-Skript wird installiert.</p></li>
+<li><p>Das Hilfsprogramm <code>mk-remote-alert-handler</code> wird installiert.</p></li>
+<li><p>Beim gewählten Benutzer (hier <code>root</code>) wird ein Eintrag in <code>authorized_keys</code> gemacht, der die Ausführung des Handlers ermöglicht.</p></li>
+<li><p>Das Verzeichnis <code>.ssh</code> und die Datei <code>authorized_keys</code> werden bei Bedarf automatisch angelegt.</p></li>
+</ul></div>
+<div class="paragraph"><p>Bei der Installation via DEB sieht das etwa so aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@myserver123:~# </span>dpkg<span class="tok-w"> </span>-i<span class="tok-w"> </span>check-mk-agent_2016.07.19-9d3ab34905da4934_all.deb
+<span class="tok-go">Selecting previously unselected package check-mk-agent.</span>
+<span class="tok-gp tok-gp-VirtualEnv">(Reading database ... 515080 files and directories currently installed.)</span>
+<span class="tok-go">Preparing to unpack ...check-mk-agent_2016.07.19-9d3ab34905da4934_all.deb ...</span>
+<span class="tok-go">Unpacking check-mk-agent (2016.07.19-9d3ab34905da4934) ...</span>
+<span class="tok-go">Setting up check-mk-agent (2016.07.19-9d3ab34905da4934) ...</span>
+<span class="tok-go">Reloading xinetd...</span>
+<span class="tok-go"> * Reloading internet superserver configuration xinetd                            [ OK ]</span>
+<span class="tok-go"><strong>Package 9d3ab34905da4934: adding SSH keys for Linux remote alert handlers for user root...</strong></span></code></pre></div></div>
+<div class="paragraph"><p>Ein Blick in die SSH-Konfiguration von <code>root</code> zeigt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@myserver123:~# </span>cat<span class="tok-w"> </span>/root/.ssh/authorized_keys
+<span class="tok-go">command="/usr/bin/mk-remote-alert-handler restart_foo",no-port-forwarding,no-x11-forwarding,no-agent-forwarding ssh-rsa  AAAAB3NzaC1yc2EAAAADAQABAAACAQCqoDVNFEbTqYEmhSZhUMvRy5SqGIPp1nE+EJGw1LITV/rej4AAiUUBYwMkeo5aBC6VOXkq78CdRuReSozec3krKkkwVbgYf98Wtc6N3WiljS85PLAVvPadJiJCkXFctbxyI2xeF5TQ1VKDRvzbBjXE9gjTnLWbPy77RC8SVXLoOQgabixpWQquIIdGyccPsWGTRgeI7Ua0lgWZQUJt7OIKQ0X7Syv2VHKJNqtW28IWu8y2hBEY/TERip5EQoNT/VclhHqjDG2y3F45PswcXD5in6y30EnfHGcwk+PD6fgp7jPGbO2+QBUwYgW67GmRpbaVQ97CqXFJvORNF+C6+O8DNweyH3ogspjfKvM7eN+M4NIJzjMRyNBMzqF3VmrMeqpzRjfFj2BS/8UbXGgHzZRapwrK3+GXX1pG49n77cIs+GWos9xb1DxX1pEu2tgQwRBBhYcTkk2eKkH18LKzFUyObxtQmf40C24cdQOp6USbwzsniqehsLIHH2unQ7bW6opF/GiaEjZamGbgsPOe8rmey5Vcd//e8cS+OsmcPZNybsTJpBeHpes+5bw0e1POw9GD9qptylrQLYIO5R467Ov8YlRFgYKyaDFHD40j5/JHPzmtp4vjH8Si7YZZOzvTRgBYEoEgbLS5dgdr/I5ZMRKfDPCpRUbGhp9kUEdGX99o5Q== mk-remote-alert-handler-9d3ab34905da4934</span></code></pre></div></div>
+<div class="paragraph"><p>Beachten Sie noch, dass Ihr System eventuell so eingestellt ist, dass ein SSH-Zugriff als <code>root</code> generell nicht möglich ist.
+In diesem Fall können Sie über einen anderen Benutzer gehen und dort mit <code>sudo</code> arbeiten, was so konfiguriert ist, dass der gewünschte Befehl ohne Passwort ausgeführt werden kann.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__handler_per_regel_aufrufen">
+<span class="hidden-anchor sr-only" id="_handler_per_regel_aufrufen"></span>Handler per Regel aufrufen</h4>
+<div class="paragraph"><p>Sie sind fast am Ziel.
+Der Agent ist bereit.
+Nun fehlt nur noch eine Regel, um den Alert Handler auch wirklich aufzurufen.
+Das Vorgehen ist wie am Anfang dieses Artikels beschrieben und geschieht über das Anlegen einer entsprechenden Regel.
+Wählen Sie als Handler dieses Mal <code>Linux via SSH</code> aus, tragen Sie den Benutzer ein, bei dem der SSH-Schlüssel installiert wurde, und wählen Sie Ihren Remote Handler aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handlers_rule_foo.png" alt="alert handlers rule foo"></div></div>
+<div class="paragraph"><p>Setzen Sie auch eine sinnvolle Bedingung in der Regel, denn sonst wird bei <strong>jedem</strong> Service-Alert versucht, eine SSH-Verbindung zum Zielhost aufzubauen!</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__test">
+<span class="hidden-anchor sr-only" id="_test"></span>Test</h4>
+<div class="paragraph"><p>Wenn Sie den betroffenen Service jetzt z.B. von Hand auf <span class="state2">CRIT</span> setzen, sehen Sie nach kurzer Zeit in der Historie des Services:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/alert_handlers_foo_failing.png" alt="alert handlers foo failing"></div></div>
+<div class="paragraph"><p>Da es natürlich keinen Dienst <code>foo</code> gibt, klappt auch <code>/etc/init.d/foo restart</code> nicht.
+Aber Sie können daran sehen, dass dieser Befehl ausgeführt und auch der Fehlerstatus korrekt zurückgemeldet wurde.
+Und Checkmk hat eine Benachrichtigung ausgelöst, da sich ein Alert Handler beendet hat.</p></div>
+<div class="paragraph"><p>Die Meldung <code>Warning: Permanently added '127.0.0.1' (ECDSA) to the list of known hosts.</code> ist übrigens harmlos und tritt nur beim ersten Kontakt mit dem Host auf.
+Um den aufwendigen manuellen Austausch des Host Key zu vermeiden, wird SSH mit <code>-o StrictHostKeyChecking=false</code> aufgerufen.
+Bei der ersten Verbindung wird der Schlüssel dann für die Zukunft gespeichert.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_manual_setup">
+<span class="hidden-anchor sr-only" id="manual_setup"></span>8.3. Aufsetzen ohne Agentenbäckerei</h3>
+<div class="paragraph"><p>Ein Präparieren des Agenten von Hand geht natürlich auch.
+Für diesen Fall empfehlen wir, dass Sie auf einem Testsystem das Verfahren mit der Agentenbäckerei durchführen und sich dann die betroffenen Dateien ansehen und auf Ihrem System von Hand nachbauen.
+Eine Liste der Pfade finden Sie <a href="#files_agent">hier.</a></p></div>
+<div class="paragraph"><p>Wichtig dabei ist, dass Sie auch in diesem Fall in der Agentenbäckerei eine Regel für die Installation der Remote Handlers anlegen.
+Denn in dieser Regel werden die SSH-Schlüssel für den Zugriff generiert und auch vom Alert Handler verwendet!
+Den öffentlichen Schlüssel für die Installation in <code>authorized_keys</code> finden Sie in der Konfigurationsdatei <code>~/etc/check_mk/conf.d/wato/rules.mk</code> (oder in <code>rules.mk</code> in einem Unterordner).</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>9. Dateien und Verzeichnisse</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_files_server">
+<span class="hidden-anchor sr-only" id="files_server"></span>9.1. Pfade auf dem Checkmk-Server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/alerts.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Datei mit allen Ereignissen rund um die Alert Handlers (vom Alert Helper geschrieben).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/cmc.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Datei des Kerns. Auch hier landen teilweise Informationen zu Alert Handlers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/local/share/check_mk/alert_handlers/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Legen Sie hier Ihre selbst geschriebenen Alert Handlers ab.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/core/history</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Datei der Monitoring-Historie, wird vom Kern geschrieben und auch ausgewertet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/local/share/check_mk/agents/linux/alert_handlers/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remote Alert Handlers, die auf Linux-Systemen ausgeführt werden sollen.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_files_agent">
+<span class="hidden-anchor sr-only" id="files_agent"></span>9.2. Pfade auf dem überwachten Linux-Host</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/bin/mk-remote-alert-handler</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hilfsskript zur Ausführung der Remote Handlers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent/alert_handlers/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Von Ihnen geschriebene Remote Handlers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/root/.ssh/authorized_keys</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SSH-Konfiguration für den Benutzer <code>root</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~harri/.ssh/authorized_keys</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SSH-Konfiguration für einen Benutzer <code>harri</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li>
+<a href="#intro">1. Einleitung</a><ul class="sectlevel1">
+<li><a href="#_soll_das_monitoring_eingreifen">1.1. Soll das Monitoring eingreifen?</a></li>
+<li><a href="#_alert_handlers_in_checkmk">1.2. Alert Handlers in Checkmk</a></li>
+</ul>
+</li>
+<li>
+<a href="#setup">2. Alert Handler einrichten</a><ul class="sectlevel1">
+<li><a href="#_skripte_in_das_richtige_verzeichnis_legen">2.1. Skripte in das richtige Verzeichnis legen</a></li>
+<li><a href="#_ein_einfacher_alert_handler_zum_testen">2.2. Ein einfacher Alert Handler zum Testen</a></li>
+<li><a href="#_alert_handler_aktivieren">2.3. Alert Handler aktivieren</a></li>
+<li><a href="#_test_und_fehlerdiagnose">2.4. Test und Fehlerdiagnose</a></li>
+</ul>
+</li>
+<li><a href="#rules">3. Regelbasierte Konfiguration</a></li>
+<li>
+<a href="#execution">4. Wie Alert Handlers ausgeführt werden</a><ul class="sectlevel1">
+<li><a href="#_asynchrone_ausf%C3%BChrung">4.1. Asynchrone Ausführung</a></li>
+<li><a href="#_stoppen_des_monitoring_kerns">4.2. Stoppen des Monitoring-Kerns</a></li>
+<li><a href="#_timeouts">4.3. Timeouts</a></li>
+<li><a href="#_%C3%BCberlagerung">4.4. Überlagerung</a></li>
+<li><a href="#_exit_codes_und_ausgaben">4.5. Exit Codes und Ausgaben</a></li>
+<li><a href="#_globale_einstellungen">4.6. Globale Einstellungen</a></li>
+<li><a href="#_master_control">4.7. Master control</a></li>
+</ul>
+</li>
+<li><a href="#history">5. Alert Handlers in der Historie</a></li>
+<li><a href="#notification">6. Benachrichtigungen über Alert Handlers</a></li>
+<li><a href="#check_execution">7. Alert Handler bei jeder Check-Ausführung</a></li>
+<li>
+<a href="#linux_remote">8. Remote-Ausführung unter Linux</a><ul class="sectlevel1">
+<li><a href="#_grundprinzipien">8.1. Grundprinzipien</a></li>
+<li>
+<a href="#_aufsetzen">8.2. Aufsetzen</a><ul class="sectlevel2">
+<li><a href="#_remote_handler_schreiben">Remote Handler schreiben</a></li>
+<li><a href="#_agentenpaket_mit_dem_handler_vorbereiten">Agentenpaket mit dem Handler vorbereiten</a></li>
+<li><a href="#_agent_backen">Agent backen</a></li>
+<li><a href="#_agent_installieren">Agent installieren</a></li>
+<li><a href="#_handler_per_regel_aufrufen">Handler per Regel aufrufen</a></li>
+<li><a href="#_test">Test</a></li>
+</ul>
+</li>
+<li><a href="#manual_setup">8.3. Aufsetzen ohne Agentenbäckerei</a></li>
+</ul>
+</li>
+<li>
+<a href="#files">9. Dateien und Verzeichnisse</a><ul class="sectlevel1">
+<li><a href="#files_server">9.1. Pfade auf dem Checkmk-Server</a></li>
+<li><a href="#files_agent">9.2. Pfade auf dem überwachten Linux-Host</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

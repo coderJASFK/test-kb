@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Checkmk-Plugins, die in die offizielle Checkmk-Software übernommen werden sollen, müssen bestimmte Vorraussetzungen erfüllen, die Sie hier gesammelt finden.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Richtlinien für Check-Plugins">
+<meta name="og:description" content="Checkmk-Plugins, die in die offizielle Checkmk-Software übernommen werden sollen, müssen bestimmte Vorraussetzungen erfüllen, die Sie hier gesammelt finden.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Richtlinien für Check-Plugins</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/dev_guidelines.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/dev_guidelines.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/dev_guidelines.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Richtlinien für Check-Plugins</h1>
+<div class="details">
+<span id="revdate">Last modified on 18-May-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/dev_guidelines.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="check_plugins_catalog.html">Katalog der Checkplugins</a>
+<a href="localchecks.html">Lokale Checks</a>
+<a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Ein großer Vorteil von Checkmk gegenüber vielen anderen Monitoringsystemen
+ist die große Zahl von gut gepflegten mitgelieferten Check-Plugins. Damit diese
+eine einheitlich hohe Qualität haben, gibt es standardisierte Kriterien, die
+jedes Plugin erfüllen muss, welche wir hier vorstellen.</p></div>
+<div class="paragraph"><p>Dazu ein wichtiger Hinweis: gehen Sie nicht davon aus, dass alle mit
+Checkmk mitgelieferten Plugins sich bereits an alle aktuellen Richtlinien
+halten. Vergessen Sie Copy &amp; Paste. Orientieren Sie sich lieber an den
+Hinweisen in diesem Artikel.</p></div>
+<div class="paragraph"><p>Wenn Sie Plugins nur für Ihren eigenen Bedarf entwickeln, sind Sie
+natürlich völlig frei und nicht daran gebunden.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__allgemeines">
+<span class="hidden-anchor sr-only" id="_allgemeines"></span>2. Allgemeines</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__qualität">
+<span class="hidden-anchor sr-only" id="_qualität"></span>2.1. Qualität</h3>
+<div class="paragraph"><p>Für Check-Plugins, die offiziell Teil von Checkmk sind oder es werden wollen,
+gelten viel höhere Ansprüche an Qualität, als für solche, die man nur „für sich
+selbst“ schreibt. Dabei geht es sowohl um äußere Qualität (also Verhalten aus
+Sicht des Anwenders) als auch um innere Qualität (Lesbarkeit des Codes, etc.).</p></div>
+<div class="paragraph"><p>Schreiben Sie das Plugin so gut und hochwertig wie Sie können.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__umfang_eines_check_plugins">
+<span class="hidden-anchor sr-only" id="_umfang_eines_check_plugins"></span>2.2. Umfang eines Check-Plugins</h3>
+<div class="paragraph"><p>Jedes Check-Plugin muss mindestens folgende Komponenten umfassen:</p></div>
+<div class="ulist"><ul>
+<li><p>Das Check-Plugin selbst</p></li>
+<li><p>Eine <a href="#manpage">Manpage</a></p></li>
+<li><p>Bei Plugins mit Checkparametern eine <a href="#wato">WATO-Definition</a> für den zugehörigen Regelsatz</p></li>
+<li><p><a href="#metrics">Metrikdefinitionen</a> für Graphen und Perf-O-Meter, falls der Check Metrikdaten ausgibt</p></li>
+<li><p>Eine Definition für die Agentenbäckerei, falls es ein Agentenplugin gibt</p></li>
+<li><p>Mehrere vollständige unterschiedliche Beispielausgaben des Agenten bzw. SNMP-Walks</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__benennung">
+<span class="hidden-anchor sr-only" id="_benennung"></span>3. Benennung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__name_des_check_plugins">
+<span class="hidden-anchor sr-only" id="_name_des_check_plugins"></span>3.1. Name des Check-Plugins</h3>
+<div class="paragraph"><p>Die Wahl des Namens für das Plugin ist besonders kritisch, da dieser später nicht
+geändert werden kann.</p></div>
+<div class="ulist"><ul>
+<li><p>Der Name des Plugins muss <strong>kurz</strong>, <strong>spezifisch genug</strong> und <strong>verständlich</strong> sein. Beispiel: <code>firewall_status</code> ist nur dann ein guter Name, wenn das
+Plugin für <strong>alle</strong> oder zumindest viele Firewalls funktioniert.</p></li>
+<li><p>Der Name besteht aus Kleinbuchstaben und Ziffern. Als Trenner ist der Unterstrich erlaubt.</p></li>
+<li><p>Das Wort <code>status</code> oder <code>state</code> hat im Namen nichts verloren, denn schließlich überwacht <strong>jedes</strong> Plugin einen Status. Gleiches gilt für das überflüssige Wort <code>current</code>. Verwenden Sie also anstelle von <code>foobar_current_temp_status</code> einfach nur <code>foobar_temp</code>.</p></li>
+<li><p>Checks, bei denen das Item ein Ding repräsentiert (z.B. Fan, Power supply), sollen im <strong>Singular</strong> benannt werden (z.B. <code>casa_fan</code>, <code>oracle_tablespace</code>). Checks bei denen jedes Item eine Anzahl oder Menge darstellt hingegen werden im Plural (z.B. <code>user_logins</code>, <code>printer_pages</code>) benannt.</p></li>
+<li><p>Produktspezifische Checks sollen den Produktnamen als Präfix haben (z.B. <code>oracle_tablespace</code>).</p></li>
+<li><p>Herstellerspezifische Check-Plugins, die sich nicht auf ein bestimmtes Produkt beziehen, sollen mit einem Präfix versehen werden, das den Hersteller wiedergibt (z.B. <code>fsc_</code> für Fujitsu Siemens Computers).</p></li>
+<li><p>SNMP-basierte Check-Plugins, die einen allgemeinen Teil der MIB verwenden, der womöglich von mehr als einem Hersteller unterstützt wird, sollen nach der MIB benannt werden, nicht nach dem Hersteller (z.B. die <code>hr_*</code>-Check-Plugins)</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__name_des_services">
+<span class="hidden-anchor sr-only" id="_name_des_services"></span>3.2. Name des Services</h3>
+<div class="ulist"><ul>
+<li><p>Benutzen Sie bekannte, gut abgegrenzte Abkürzungen (z.B. CPU, DB, VPN, IO,…).</p></li>
+<li><p>Schreiben Sie Abkürzungen in Großbuchstaben.</p></li>
+<li><p>Verwenden Sie Groß- und Kleinschreibung wie in natürlichen englischen Sätzen (z.B. <em>CPU utilization</em>, nicht <em>Cpu Utilization</em>) — Eigennamen sind eine Ausnahme.</p></li>
+<li><p>Verwenden Sie für Produktnamen die Schreibweise des Herstellers (z.B. <em>vSphere</em>).</p></li>
+<li><p>Nutzen Sie amerikanisches Englisch (z.B. <em>utilization</em>, nicht <em>utilisation</em>).</p></li>
+<li><p>Folgen Sie Namenskonventionen, sofern diese existieren. So sollten alle Services für Interfaces das Template "Interface %s" nutzen.</p></li>
+<li><p>Halten Sie Beschreibungen kurz, denn Service-Namen werden in Dashboards, Views und Reports abgeschnitten, wenn diese zu lang sind.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__name_von_metriken">
+<span class="hidden-anchor sr-only" id="_name_von_metriken"></span>3.3. Name von Metriken</h3>
+<div class="ulist"><ul>
+<li><p>Metriken, für die schon eine sinnvolle Definition existiert, sollen wiederverwendet werden.</p></li>
+<li><p>Ansonsten gelten analoge Regeln wie bei den Namen von Check-Plugins (produktspezifisch, herstellerspezifisch, etc.)</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__name_der_wato_regelgruppe">
+<span class="hidden-anchor sr-only" id="_name_der_wato_regelgruppe"></span>3.4. Name der WATO-Regelgruppe</h3>
+<div class="ulist"><ul><li><p>Hier gilt das gleiche wie bei den Metriken.</p></li></ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__aufbau_des_check_plugins">
+<span class="hidden-anchor sr-only" id="_aufbau_des_check_plugins"></span>4. Aufbau des Check-Plugins</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__genereller_aufbau">
+<span class="hidden-anchor sr-only" id="_genereller_aufbau"></span>4.1. Genereller Aufbau</h3>
+<div class="paragraph"><p>Die eigentliche Pythondatei unter <code>share/check_mk/checks/</code> soll folgenden Aufbau haben (Reihenfolge einhalten):</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Dateiheader mit GPL-Hinweis</p></li>
+<li><p>Name und E-Mail-Adresse des ursprünglichen Autors, falls das Plugins nicht vom Checkmk-Projekt selbst entwickelt wurde.</p></li>
+<li><p>Eine kurze Beispielausgabe des Agenten</p></li>
+<li><p>Defaultwerte für die Checkparameter (<code>factory_settings</code>)</p></li>
+<li><p>Hilfsfunktionen, falls vorhanden</p></li>
+<li><p>Die Parsefunktion, falls vorhanden</p></li>
+<li><p>Die Discoveryfunktion</p></li>
+<li><p>Die Checkfunktion</p></li>
+<li><p>Die <code>check_info</code>-Deklaration</p></li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="heading__coding_richtlinien">
+<span class="hidden-anchor sr-only" id="_coding_richtlinien"></span>4.2. Coding-Richtlinien</h3>
+<div class="sect3">
+<h4 id="heading__autor">
+<span class="hidden-anchor sr-only" id="_autor"></span>Autor</h4>
+<div class="ulist"><ul><li><p>Wenn das Plugin nicht vom Checkmk-Team entwickelt wurde, kann der Name und die E-Mail-Adresse des Autors hinterlegt werden, direkt nach dem GPL-Header.</p></li></ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__lesbarkeit">
+<span class="hidden-anchor sr-only" id="_lesbarkeit"></span>Lesbarkeit</h4>
+<div class="ulist"><ul>
+<li><p>Vermeiden Sie lange Zeilen. Die maximale erlaubte Länge sind 100 Zeichen.</p></li>
+<li><p>Die Einrückung erfolgt durch jeweil vier Spaces. Verwenden Sie kein Tabulatorzeichen.</p></li>
+<li><p>Orientieren Sie sich am Python-Standard PEP 8.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__beispielausgabe_des_agenten">
+<span class="hidden-anchor sr-only" id="_beispielausgabe_des_agenten"></span>Beispielausgabe des Agenten</h4>
+<div class="paragraph"><p>Das Hinzufügen einer Beispielausgabe vom Agenten erleichtert das Lesen
+des Codes ungemein. Dabei ist es wichtig, dass auch verschiedene mögliche
+Varianten der Ausgabe im Beispiel vorkommen.  Machen Sie das Beispiel
+nicht länger als notwendig. Bei SNMP-basierten Checks geben Sie einen
+SNMP-Walk an:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span># Example excerpt from SNMP data:
+# .1.3.6.1.4.1.2.3.51.2.2.7.1.0  255
+# .1.3.6.1.4.1.2.3.51.2.2.7.2.1.1.1  1
+# .1.3.6.1.4.1.2.3.51.2.2.7.2.1.2.1  "Good"
+# .1.3.6.1.4.1.2.3.51.2.2.7.2.1.3.1  "No critical or warning events"
+# .1.3.6.1.4.1.2.3.51.2.2.7.2.1.4.1  "No timestamp"</code></pre></div></div>
+<div class="paragraph"><p>Wenn es z.B. aufgrund verschiedener Firmwarestände des Zielgerätes verschiedene
+Ausgabeformate gibt, dann geben Sie für jeden ein Beispiel an, mit einem Hinweis
+auf die Version. Ein gutes Beispiel dafür finden Sie im Check-Plugin <code>multipath</code>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__snmp_mibs">
+<span class="hidden-anchor sr-only" id="_snmp_mibs"></span>SNMP-MIBs</h4>
+<div class="paragraph"><p>Bei der Definition des <code>snmp_info</code> soll in Kommentaren der lesbare Pfad zur OID
+angegeben werden. Beispiel:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>    'snmp_info' : [(".1.3.6.1.2.1.47.1.1.1.1", [
+        OID_END,
+        "2",    # ENTITY-MIB::entPhysicalDescription
+        "5",    # ENTITY-MIB::entPhysicalClass
+        "7",    # ENTITY-MIB::entPhysicalName
+    ]),</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__verwendung_von_lambda">
+<span class="hidden-anchor sr-only" id="_verwendung_von_lambda"></span>Verwendung von <code>lambda</code>
+</h4>
+<div class="paragraph"><p>Vermeiden Sie komplizierte Ausdrücke mit <code>lambda</code>. Erlaubt ist <code>lambda</code> bei
+der Scanfunktion <code>lambda oid: …​</code> und wenn man bestehende Funktionen lediglich mit
+einem bestimmten geänderten Argument aufrufen möchte, z.B.:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>     "inventory_function" : lambda info: inventory_foobar_generic(info, "temperature")</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__schleifen_über_snmp_agentendaten">
+<span class="hidden-anchor sr-only" id="_schleifen_über_snmp_agentendaten"></span>Schleifen über SNMP-Agentendaten</h4>
+<div class="paragraph"><p>Bei Checks, die in einer Schleife über SNMP-Daten gehen, sollen Sie keine Indizes
+verwenden wie hier:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>    for line in info:
+        if line[1] != '' and line[0] ...</code></pre></div></div>
+<div class="paragraph"><p>Besser ist es, jede Zeile gleich in sinnvolle Variablen auszupacken:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>    for *sensor_id, state_state, foo, bar* in info:
+        if sensor_state != '1' and sensor_id ...</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__parsefunktionen">
+<span class="hidden-anchor sr-only" id="_parsefunktionen"></span>Parsefunktionen</h4>
+<div class="paragraph"><p>Verwenden Sie Parsefunktionen wann immer das Parsen der Agentenausgabe nicht
+trivial ist. Das Argument der Parsefunktion soll dann immer <code>info</code> heißen und
+bei der Discovery- und Checkfunktion nicht mehr <code>info</code>, sondern <code>parsed</code>.
+Somit wird dem Leser deutlich, dass dies das Ergebnis der Parsefunktion ist.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__checks_mit_mehreren_teilresultaten">
+<span class="hidden-anchor sr-only" id="_checks_mit_mehreren_teilresultaten"></span>Checks mit mehreren Teilresultaten</h4>
+<div class="paragraph"><p>Ein Check, der in einem Service mehrere Teilzustände liefert (z.B. aktuelle
+Belegung und Wachstum), muss diese mit <code>yield</code> zurückgeben. Checks, die
+nur ein Resultat liefern, müssen dies mit <code>return</code> tun.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>    if "abs_levels" in params:
+        warn, crit = params["abs_levels"]
+        if value &gt;= crit:
+            yield 2, "...."
+        elif value &gt;= warn:
+            yield 1, "...."
+        else:
+            yield 0, "..."
+
+    if "perc_levels" in params:
+        warn, crit = params["perc_levels"]
+        if percentage &gt;= crit:
+            yield 2, "...."
+        elif percentage &gt;= warn:
+            yield 1, "...."
+        else:
+            yield 0, "..."</code></pre></div></div>
+<div class="paragraph"><p>Die Markierungen <code>(!)</code> und <code>(!!)</code> sind veraltet und dürfen nicht
+mehr verwendet werden. Diese sollen durch <code>yield</code> ersetzt werden.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__schlüssel_in_check_info">
+<span class="hidden-anchor sr-only" id="_schlüssel_in_check_info"></span>Schlüssel in <code>check_info[…​]</code>
+</h4>
+<div class="paragraph"><p>Legen Sie in Ihrem Eintrag in <code>check_info</code> nur solche Schlüssel
+an, die verwendet werden. Die einzigen verpflichtenden Einträge sind
+<code>"service_description"</code> und <code>"check_function"</code>. Fügen
+Sie <code>"has_perfdata"</code> und andere Schlüssel mit boolschen Werten nur
+dann ein, wenn der Wert <code>True</code> ist.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__agentenplugins">
+<span class="hidden-anchor sr-only" id="_agentenplugins"></span>4.3. Agentenplugins</h3>
+<div class="paragraph"><p>Wenn Ihr Check-Plugin ein Agentenplugin benötigt, dann beachten Sie folgende Regeln:</p></div>
+<div class="ulist"><ul>
+<li><p>Legen Sie das Plugin nach <code>share/check_mk/agents/plugins</code> für unixartige Systeme und setzen Sie die Ausführungsrechte auf <code>755</code>.</p></li>
+<li><p>Bei Windows heißt das Verzeichnis <code>share/check_mk/agents/windows/plugins</code>.</p></li>
+<li><p>Shell- und Pythonskripte sollen keine Endung haben (<code>.sh</code> oder <code>.py</code> weglassen).</p></li>
+<li><p>Verwenden Sie bei Shellskripten <code><mark>!/bin/sh</mark></code> in der ersten Zeilen. Verwenden Sie <code>!/bin/bash</code> nur dann, wenn Sie Features der BASH brauchen.</p></li>
+<li><p>Fügen Sie den Standard Checkmk-Dateikopf mit dem GPL-Hinweis ein.</p></li>
+<li><p>Ihr Plugin darf auf dem Zielsystem keinerlei Schaden verursachen, vor allem auch dann nicht, wenn das Plugin von dem System eigentlich nicht unterstützt wird.</p></li>
+<li><p>Vergessen Sie den Hinweis auf das Plugin nicht in der Manpage des Checks.</p></li>
+<li><p>Wenn die Komponente, die das Plugin überwacht, auf einem System gar nicht existiert, darf das Plugin auch keinen Sektionskopf ausgeben.</p></li>
+<li><p>Wenn das Plugin eine Konfigurationsdatei benötigt, soll es diese (bei Linux) im Verzeichnis <code>$MK_CONFDIR</code> suchen und die Datei soll den gleichen Namen wie das Plugin haben, nur mit der Endung <code>.cfg</code> und ohne ein mögliches <code>mk_</code> am Anfang. Bei Windows gilt das analog. Das Verzeichnis ist hier <code>%MK_CONFDIR%</code>.</p></li>
+<li><p>Schreiben Sie unter Windows keine Plugins in Powershell. Dieses ist nicht portabel und außerdem sehr ressourcenhungrig. Verwenden Sie VBS.</p></li>
+<li><p>Schreiben Sie keine Plugins in Java.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__verbotene_dinge">
+<span class="hidden-anchor sr-only" id="_verbotene_dinge"></span>4.4. Verbotene Dinge</h3>
+<div class="ulist"><ul>
+<li><p>Verwenden Sie kein <code>import</code> in Ihrer Checkdatei. Alle erlaubten Pythonmodule sind bereits importiert.</p></li>
+<li><p>Verwenden Sie zum Parsen und zur Verrechnung von Zeitangaben nicht <code>datetime</code> sondern <code>time</code>. Das kann alles, was Sie brauchen. Wirklich!</p></li>
+<li><p>Argumente, die eine Ihrer Funktionen übergeben bekommt, darf diese auf keinen Fall modifizieren. Dies gilt insbesondere für <code>params</code> und <code>info</code>.</p></li>
+<li><p>Wenn Sie wirklich mit regulären Ausdrücken arbeiten wollen (diese sind langsam!), so holen Sie sich diese mit der Funktion <code>regex()</code>. Verwenden Sie nicht <code>re</code> direkt.</p></li>
+<li><p>Selbtverständlich dürfen Sie nirgendwo <code>print</code> verwenden, anderweitige Ausgaben nach <code>stdout</code> machen oder sonstirgendwie mit der Außenwelt kommunizieren!</p></li>
+<li><p>Die SNMP-Scanfunktion darf keine OIDs außer <code>.1.3.6.1.2.1.1.1.0</code> und <code>.1.3.6.1.2.1.1.2.0</code> holen. Ausnahme: sie hat vorher durch Check einer dieser beiden OIDs sichergestellt, dass weitere OIDs nur von einer eng eingegrenzten Zahl von Geräten geholten werden.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__verhalten_des_check_plugins">
+<span class="hidden-anchor sr-only" id="_verhalten_des_check_plugins"></span>5. Verhalten des Check-Plugins</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__exceptions">
+<span class="hidden-anchor sr-only" id="_exceptions"></span>5.1. Exceptions</h3>
+<div class="paragraph"><p>Ihr Check-Plugin darf nicht nur sondern <strong>soll</strong> sogar stets davon ausgehen,
+dass die Ausgabe des Agenten syntaktisch valide ist. Das Plugin darf auf keinen
+Fall versuchen, etwaige unbekannte Fehlersituationen in der Ausgabe selbst zu behandeln!</p></div>
+<div class="paragraph"><p>Warum? Checkmk hat eine sehr ausgefeilte automatische Behandlung von solchen Fehlern.
+Es kann für den Benutzer ausführliche Crashreports erzeugen und setzt auch den Zustand
+des Plugins zuverlässig auf <span class="state3">UNKNOWN</span>. Dies ist viel hilfreicher als wenn der Check z.B.
+einfach nur <code>unknown SNMP code 17</code> ausgibt.</p></div>
+<div class="paragraph"><p>Generell <strong>soll</strong> die Discovery-, Parse- und/oder Checkfunktion in eine Exception
+laufen, wenn die Ausgabe des Agenten nicht in dem definierten, bekannten Format ist,
+aufgrund dessen das Plugin entwickelt wurde.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__saveint_und_savefloat">
+<span class="hidden-anchor sr-only" id="_saveint_und_savefloat"></span>5.2. <strong>saveint()</strong> und <strong>savefloat()</strong>
+</h3>
+<div class="paragraph"><p>Die Funktionen <code>saveint()</code> und <code>savefloat()</code> konvertieren einen String
+in eine <code>int</code> bzw. <code>float</code> und ergeben eine <code>0</code>, falls der
+String nicht konvertierbar ist (z.B. leerer String).</p></div>
+<div class="paragraph"><p>Verwenden Sie diese Funktionen nur dann, wenn der leere bzw. ungültige Wert ein
+bekannter und erwartbarer Fall ist. Ansonsten würden Sie wichtige Fehlermeldungen
+damit unterdrücken (siehe oben).</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__nicht_gefundenes_item">
+<span class="hidden-anchor sr-only" id="_nicht_gefundenes_item"></span>5.3. Nicht gefundenes Item</h3>
+<div class="paragraph"><p>Ein Check, der das überwachte Item nicht findet, soll einfach <code>None</code> zurückgeben
+und <strong>nicht</strong> eine eigene Fehlermeldung dafür generieren. Checkmk wird in diesem
+Fall eine standardisierte konsistente Fehlermeldung ausgeben und den Service auf <span class="state3">UNKNOWN</span>
+setzen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__schwellwerte">
+<span class="hidden-anchor sr-only" id="_schwellwerte"></span>5.4. Schwellwerte</h3>
+<div class="paragraph"><p>Viele Check-Plugins haben Parameter, die Schwellwerte für bestimmte Metriken definieren und
+so festlegen, wann der Check <span class="state1">WARN</span> bzw. <span class="state2">CRIT</span> annimmt. Bitte beachten Sie dabei
+die folgenden Regeln, die dafür sorgen, dass sich Checkmk <strong>konsistent</strong> verhält.</p></div>
+<div class="ulist"><ul>
+<li><p>Die Schwellen für <span class="state1">WARN</span> und <span class="state2">CRIT</span> sollen immer mit <code>&gt;=</code> und <code>&lt;=</code> überprüft werden. Beispiel: ein Plugin überwacht die Länge einer Mailqueue. Die kritische obere Schwelle ist 100. Das bedeutet, dass der Wert 100 bereits kritisch ist!</p></li>
+<li><p>Wenn es nur obere oder nur untere Schwellwerte gibt (häufigster Fall), dann sollen die Eingabefelder in WATO mit <span class="guihint">Warning at <em><em></em></em></span> und <span class="guihint">Critical at <em><em></em></em></span> beschriftet werden.</p></li>
+<li><p>Wenn es obere und untere Schwellwerte gibt, soll die Beschriftung wie folgt lauten: <em>Warning at or above <em>_</em>, <em>Critical at or above </em><em>, _Warning at or below </em><em> and _Critical at or below </em>_</em>.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__ausgabe_des_check_plugins">
+<span class="hidden-anchor sr-only" id="_ausgabe_des_check_plugins"></span>5.5. Ausgabe des Check-Plugins</h3>
+<div class="paragraph"><p>Jeder Check gibt eine Zeile Text aus - den Pluginoutput. Um ein konsistenten Verhalten von allen
+Plugins zu erreichen, gelten folgende Regeln:</p></div>
+<div class="ulist"><ul>
+<li><p>Bei der Anzeige von Messwerten steht genau ein Leerzeichen zwischen dem Wert und der Einheit (z.B. <code>17.4 V</code>). Die einzige Ausnahme: bei <code>%</code> steht kein Leerzeichen: <code>89.5%</code>.</p></li>
+<li><p>Bei der Anzeige von Messwerten ist die Bezeichnung des Wertes in Großbuchstaben geschrieben, gefolgt von einem Doppelpunkt. Beispiel: <code>Voltage: 24.5 V, Phase: negative, Flux-Compensator: operational</code></p></li>
+<li><p>Zeigen Sie im Pluginoutput keine internen Schlüssel, Codewörter, SNMP-Interna oder anderen Müll an, mit dem der Benutzer nichts anfangen kann. Verwenden Sie sinnvolle menschenlesbare Begriffe. Verwenden Sie die Begriffe, die Benutzer üblicherweise erwarten! Beispiel: Verwenden Sie <code>route monitor has failed</code> anstelle von <code>routeMonitorFail</code>.</p></li>
+<li><p>Wenn das Checkitem eine zusätzliche Spezifikation hat, dann setzen Sie diese in eckige Klammern an den Anfang der Ausgabe (z.B. <code>Interface 2 - [eth0] …​</code>).</p></li>
+<li><p>Bei Aufzählungen wird mit einem Komma getrennt und danach mit einem Großbuchstaben fortgesetzt: <code>Swap used: …​, Total virtual memory used: …​</code></p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__default_schwellwerte">
+<span class="hidden-anchor sr-only" id="_default_schwellwerte"></span>5.6. Default-Schwellwerte</h3>
+<div class="paragraph"><p>Jedes Plugin, das mit Schwellwerten arbeitet, soll sinnvolle Defaultschwellwerte definieren. Dabei gelten
+folgende Regeln:</p></div>
+<div class="ulist"><ul>
+<li><p>Die im Check verwendeten Defaultschwellen sollen auch 1:1 in der zugehörigen WATO-Regel als Defaultparameter definiert sein.</p></li>
+<li><p>Die Defaultschwellwerte sollen in <code>factory_settings</code> definiert werden (falls der Check ein Dictionary als Parameter hat).</p></li>
+<li><p>Die Defaultschwellwerte sollen fachlich fundiert gewählt werden. Gibt es vom Hersteller eine Vorgabe? Gibt es 'Best Practices'?</p></li>
+<li><p>Im Check muss unbedingt dokumentiert sein, woher die Schwellwerte kommen.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__nagios_vs_cmc">
+<span class="hidden-anchor sr-only" id="_nagios_vs_cmc"></span>5.7. Nagios vs. CMC</h3>
+<div class="paragraph"><p>Stellen Sie sicher, dass Ihr Check auch mit Nagios als Core funktioniert. Meist ist das
+automatisch der Fall, aber nicht immer.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_metrics">
+<span class="hidden-anchor sr-only" id="metrics"></span>6. Metriken</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__format_der_metriken">
+<span class="hidden-anchor sr-only" id="_format_der_metriken"></span>6.1. Format der Metriken</h3>
+<div class="ulist"><ul>
+<li><p>Die Metrikdaten werden vom Check-Plugin immer als <code>int</code> oder <code>float</code> zurückgegeben. Strings sind nicht erlaubt.</p></li>
+<li><p>Wenn Sie in dem Sechstupel von einem Metrikwert Felder auslassen möchten, dann verwenden Sie <code>None</code> an deren Stelle. Beispiel: <code>[("taple_util", utilization, None, None, 0, size)]</code></p></li>
+<li><p>Wenn Sie Einträge am Ende nicht benötigen, dann kürzen Sie einfach das Tupel. Verwenden Sie kein <code>None</code> am Ende.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__benennung_der_metriken">
+<span class="hidden-anchor sr-only" id="_benennung_der_metriken"></span>6.2. Benennung der Metriken</h3>
+<div class="ulist"><ul>
+<li><p>Die Namen von Metriken bestehen aus Kleinbuchstaben und Unterstrichen. Ziffern sind erlaubt, allerdings nicht am Anfang.</p></li>
+<li><p>Die Namen von Metriken sollen analog zu den Check-Plugins kurz aber spezifisch benannt sein. Metriken, die von mehreren Plugins verwendet werden, sollen generische Namen haben.</p></li>
+<li><p>Vermeiden Sie das sinnlose Füllwort <code>current</code>. Der Messwert ist ja immer der gerade aktuelle.</p></li>
+<li><p>Die Metrik soll nach dem „Ding“ benannt werden, nicht nach der Einheit. Also z.B. <code>current</code> anstelle von <code>ampere</code> oder <code>size</code> anstelle von <code>bytes</code>.</p></li>
+<li><p><strong>Wichtig</strong> verwenden Sie immer die kanonische Größenordnung. Wirklich! Checkmk skaliert die Daten von sich aus sinnvoll. Beispiele:</p></li>
+</ul></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Domäne</th>
+<th class="tableblock halign-left valign-top">kanonische Einheit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dauer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sekunde</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dateigröße</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Temperatur</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Celsius</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Netzwerkdurchsatz</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oktette pro Sekunde (nicht Bits/sec!)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prozentwert</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wert von 0 bis 100 (nicht 0.0 bis 1.0)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ereignisse pro Zeit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 pro Sekunde</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elektrische Leistung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Watt (nicht mW)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__flag_für_metrikdaten">
+<span class="hidden-anchor sr-only" id="_flag_für_metrikdaten"></span>6.3. Flag für Metrikdaten</h3>
+<div class="ulist"><ul><li><p>Setzen Sie <code>"has_perfdata"</code> in <code>check_info</code> nur genau dann auf <code>True</code>, wenn der Check wirklich Metrikdaten ausgibt (oder ausgeben kann).</p></li></ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__definition_für_graph_und_perf_o_meter">
+<span class="hidden-anchor sr-only" id="_definition_für_graph_und_perf_o_meter"></span>6.4. Definition für Graph und Perf-O-Meter</h3>
+<div class="paragraph"><p>Die Definition für Graphen soll analog zu den Definitionen in
+<code>web/plugins/metrics/check_mk.py</code> erfolgen.  Erzeugen Sie keine
+Definitionen für PNP-Graphen. Auch in der Raw Edition werden diese anhand
+der Metrikdefinition in Checkmk selbst erzeugt.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_wato">
+<span class="hidden-anchor sr-only" id="wato"></span>7. WATO-Definition</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__name_der_checkgruppe">
+<span class="hidden-anchor sr-only" id="_name_der_checkgruppe"></span>7.1. Name der Checkgruppe</h3>
+<div class="paragraph"><p>Check-Plugins mit Parametern erfordern zwingend eine WATO-Regeldefinition. Die
+Verbindung zwischen Plugin und Regel geht über die Checkgruppe (Eintrag
+<code>"group"</code> in <code>check_info</code>).  Über die Gruppe werden alle Checks
+zusammengefasst, welche über den gleichen Regelsatz konfiguriert werden.</p></div>
+<div class="paragraph"><p>Falls Ihr Plugin sinnvollerweise mit einem bestehenden Regelsatz konfiguriert
+werden soll, dann verwenden Sie eine bestehende Gruppe.</p></div>
+<div class="paragraph"><p>Falls Ihr Plugin so spezifisch ist, dass es auf jeden Fall eine eigene
+Gruppe benötigt, dann legen Sie eine eigene Gruppe an, wobei der Name der
+Gruppe einen Bezug zum Plugin haben soll.</p></div>
+<div class="paragraph"><p>Falls abzusehen ist, dass es später noch weitere Plugins mit dem gleichen
+Regelsatz geben kann, verwenden Sie entsprechend einen generischen Namen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__defaultwerte_von_valuespecs">
+<span class="hidden-anchor sr-only" id="_defaultwerte_von_valuespecs"></span>7.2. Defaultwerte von ValueSpecs</h3>
+<div class="paragraph"><p>Definieren Sie bei Ihren Parameterdefinitionen (ValueSpecs) die Defaultwerte genau
+so, wie die wirklichen Defaults des Checks sind (falls das geht). Beispiel:
+Wenn der Check ohne Regel die Schwellwerte <code>(5, 10)</code> für <span class="state1">WARN</span> und
+<span class="state2">CRIT</span> annimmt, dann soll das ValueSpec so definiert sein, dass automatisch
+auch <code>5</code> und <code>10</code> als Schwellen angeboten werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__wahl_der_valuespecs">
+<span class="hidden-anchor sr-only" id="_wahl_der_valuespecs"></span>7.3. Wahl der ValueSpecs</h3>
+<div class="paragraph"><p>Für manche Arten von Daten gibt es spezialisierte ValueSpecs. Ein Beispiel
+ist <code>Age</code> für eine Anzahl von Sekunden. Diese müssen überall da
+verwendet werden, wo sie sinnvoll sind. Verwenden Sie z.B. nicht <code>Integer</code>
+in so einem Fall.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__include_dateien">
+<span class="hidden-anchor sr-only" id="_include_dateien"></span>8. Include-Dateien</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Für etliche Arten von Checks gibt es bereits fertige Implementierungen in Includedateien, die Sie nicht
+nur verwenden können, sondern sollen. Wichtige Includedateien sind:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">temperature.include</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Überwachung von Temperaturen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">elphase.include</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elektrische Wechelstromphase (z.B. bei USV)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fan.include</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lüfter</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if.include</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Netzwerkschnittstellen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">df.include</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Füllstände von Dateisystemen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mem.include</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Überwachung von RAM (Hauptspeicher)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ps.include</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prozesse eines Betriebssystems</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Wichtig:</strong> Verwenden Sie vorhandene Includedateien nur dann, wenn diese für
+den jeweiligen Zweck auch <strong>gedacht</strong> sind und nicht, wenn diese nur so ungefähr
+passen!</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_manpage">
+<span class="hidden-anchor sr-only" id="manpage"></span>9. Manpages</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Jedes Check-Plugin <strong>muss</strong> eine Manpage haben. Falls Sie in einer Checkdatei
+mehrere Plugins programmiert haben (Subchecks) muss natürlich jedes davon
+eine eigene Manpage haben.</p></div>
+<div class="paragraph"><p>Die Manpage ist für den Anwender gedacht! Schreiben Sie Informationen, die
+diesem helfen. Es geht nicht darum, zu dokumentieren, was Sie programmiert
+haben, sondern darum, dass der Anwender die für ihn wichtigen, nützlichen
+Informationen bekommt.</p></div>
+<div class="paragraph"><p>Die Manpage muss sein:</p></div>
+<div class="ulist"><ul>
+<li><p>vollständig</p></li>
+<li><p>präzise</p></li>
+<li><p>knapp</p></li>
+<li><p>hilfreich!</p></li>
+</ul></div>
+<div class="paragraph"><p>Eine Manpage besteht aus mehreren, teilweise optionalen, Bereichen:</p></div>
+<div class="sect2">
+<h3 id="heading__titel">
+<span class="hidden-anchor sr-only" id="_titel"></span>9.1. Titel</h3>
+<div class="paragraph"><p>mit dem Makro <code>title:</code> bestimmen Sie die Überschrift. Sie besteht aus:</p></div>
+<div class="ulist"><ul>
+<li><p>Dem exakten Gerätenamen oder der Gerätegruppe, für welche der Check geschrieben ist</p></li>
+<li><p>Was der Check überwacht (z.B. System Health)</p></li>
+</ul></div>
+<div class="paragraph"><p>Diese beiden Teile werden mit einem Doppelpunkt voneinander getrennt. Nur auf diese Weise können bestehende Checks leicht durchsucht und vor allem auch gefunden werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__agenten_kategorien">
+<span class="hidden-anchor sr-only" id="_agenten_kategorien"></span>9.2. Agenten-Kategorien</h3>
+<div class="paragraph"><p>Das Makro <code>agents:</code> kann verschiedene Kategorien haben. Grundsätzlich werden drei Bereiche unterschieden:</p></div>
+<div class="ulist"><ul>
+<li><p>Agenten: In diesem Fall werden die Betriebssysteme angegeben, für welche der Check gebaut wurde und zur Verfügung steht. Zum Beispiel <code>linux</code> oder <code>linux, windows, solaris</code></p></li>
+<li><p>SNMP: In diesem Fall gibt es nur den Eintrag <code>snmp</code></p></li>
+<li><p>Aktive Checks: Wenn ein aktiver Check in die Oberfläche von Checkmk integriert wurde, nehmen Sie die Kategorie <code>active</code></p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__katalogeintrag">
+<span class="hidden-anchor sr-only" id="_katalogeintrag"></span>9.3. Katalogeintrag</h3>
+<div class="paragraph"><p>Über den Header <code>catalog:</code> legen Sie fest, wo im Katalog der Checkmanpages
+das Plugin einsortiert wird. Falls eine Kategorie fehlt (z.B. ein neuer Hersteller),
+so muss dieser in der Datei <code>cmk/man_pages.py</code> in der Variable <code>catalog_titles</code>
+definiert werden — bzw. seit Version <span class="new">1.6.0</span> in der Datei
+<code>cmk/utils/man_pages.py</code>.</p></div>
+<div class="paragraph"><p>Aktuell kann diese Datei nicht über Plugins in <code>local/</code> erweitert werden, so
+dass Änderungen hier nur die Entwickler von Checkmk machen können.</p></div>
+<div class="paragraph"><p>Beachten Sie die genaue Groß-/Kleinschreibung von Produkt- und Firmennamen! Das gilt nicht
+nur für den Katalogeintrag, sondern auch für alle anderen Texte, in denen diese vorkommen. Beispiel:
+<strong>NetApp</strong> wird immer <strong>NetApp</strong> geschrieben und nicht netapp, NETAPP, Netapp, oder dergleichen.
+Google hilft, die richtige Schreibung zu finden!</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__beschreibung_des_plugins">
+<span class="hidden-anchor sr-only" id="_beschreibung_des_plugins"></span>9.4. Beschreibung des Plugins</h3>
+<div class="paragraph"><p>Folgende Informationen müssen in der <code>description:</code> der Manpage enthalten sein:</p></div>
+<div class="ulist"><ul>
+<li><p>Welche Hard- oder Software überwacht der Check genau? Gibt es Besonderheiten von bestimmten Firmware- oder Produktversionen der Geräte? Beziehen Sie sich dabei <strong>nicht</strong> auf eine MIB, sondern auf Produktbezeichnungen. Beispiel: Dem Nutzer ist nicht geholfen, wenn Sie schreiben „Dieser Check funktioniert bei allen Geräten, welche die Wrdpfrmpft-17.11-MIB unterstützen". Schreiben Sie, welche Produktlinien oder dergleichen unterstützt werden.</p></li>
+<li><p>Welcher Aspekt davon wird überwacht? Was macht der Check?</p></li>
+<li><p>Unter welchen Bedingungen wird der Check <span class="state0">OK</span>, <span class="state1">WARN</span> oder <span class="state2">CRIT</span>?</p></li>
+<li><p>Wird für den Check ein Agentenplugin benötigt? Falls ja: wie wird dieses installiert? Das muss auch ohne Agent Bakery gehen.</p></li>
+<li><p>Gibt es weitere Voraussetzungen, damit der Check funktioniert (Vorbereitung des Zielsystems, Installation von Treibern, etc.). Diese sollen nur dann aufgeführt werden, wenn Sie nicht sowieso normalerweise erfüllt sind (z.B. Mounten von <code>/proc</code> unter Linux).</p></li>
+</ul></div>
+<div class="paragraph"><p>Schreiben Sie nichts, was alle Checks ingesamt betrifft. Wiederholen Sie
+z.B. nicht generelle Dinge, wie man SNMP-basierte Checks einrichtet.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__item">
+<span class="hidden-anchor sr-only" id="_item"></span>9.5. Item</h3>
+<div class="paragraph"><p>Bei Checks, die ein Item haben (also auch ein <code>%s</code> im Servicenamen),
+muss in der Manpage unter <code>item:</code> beschrieben sein, wie dieses
+gebildet wird.
+Wenn das Checkplugin kein Item benutzt, können Sie diese Zeile komplett auslassen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__service_erkennung">
+<span class="hidden-anchor sr-only" id="_service_erkennung"></span>9.6. Service-Erkennung</h3>
+<div class="paragraph"><p>Schreiben Sie unter <code>inventory:</code> unter welchen Bedingungen der Service
+bzw. die Services dieses Checks automatisch gefunden werden, also wie sich
+die "Service Discovery" verhält. Beispiel aus <code>nfsmounts</code>:</p></div>
+<div class="listingblock">
+<div class="title">nfsmounts</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>inventory:
+  All NFS mounts are found automatically. This is done
+  by scanning {/proc/mounts}. The file {/etc/fstab} is irrelevant.</code></pre></div>
+</div>
+<div class="paragraph"><p>Achten Sie darauf, dass der Text ohne tiefere Kenntnisse einer MIB oder des Codes verständlich ist. Schreiben Sie also nicht:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">One service is created for each temperature sensor, if the state is 1.</span></code></pre></div></div>
+<div class="paragraph"><p>Stattdessen ist es besser, möglichst alles zu übersetzen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">One service is created for each temperature sensor, if the state is "active".</span></code></pre></div></div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#_allgemeines">2. Allgemeines</a><ul class="sectlevel1">
+<li><a href="#_qualit%C3%A4t">2.1. Qualität</a></li>
+<li><a href="#_umfang_eines_check_plugins">2.2. Umfang eines Check-Plugins</a></li>
+</ul>
+</li>
+<li>
+<a href="#_benennung">3. Benennung</a><ul class="sectlevel1">
+<li><a href="#_name_des_check_plugins">3.1. Name des Check-Plugins</a></li>
+<li><a href="#_name_des_services">3.2. Name des Services</a></li>
+<li><a href="#_name_von_metriken">3.3. Name von Metriken</a></li>
+<li><a href="#_name_der_wato_regelgruppe">3.4. Name der WATO-Regelgruppe</a></li>
+</ul>
+</li>
+<li>
+<a href="#_aufbau_des_check_plugins">4. Aufbau des Check-Plugins</a><ul class="sectlevel1">
+<li><a href="#_genereller_aufbau">4.1. Genereller Aufbau</a></li>
+<li>
+<a href="#_coding_richtlinien">4.2. Coding-Richtlinien</a><ul class="sectlevel2">
+<li><a href="#_autor">Autor</a></li>
+<li><a href="#_lesbarkeit">Lesbarkeit</a></li>
+<li><a href="#_beispielausgabe_des_agenten">Beispielausgabe des Agenten</a></li>
+<li><a href="#_snmp_mibs">SNMP-MIBs</a></li>
+<li><a href="#_verwendung_von_lambda">Verwendung von <code>lambda</code></a></li>
+<li><a href="#_schleifen_%C3%BCber_snmp_agentendaten">Schleifen über SNMP-Agentendaten</a></li>
+<li><a href="#_parsefunktionen">Parsefunktionen</a></li>
+<li><a href="#_checks_mit_mehreren_teilresultaten">Checks mit mehreren Teilresultaten</a></li>
+<li><a href="#_schl%C3%BCssel_in_check_info">Schlüssel in <code>check_info[…​]</code></a></li>
+</ul>
+</li>
+<li><a href="#_agentenplugins">4.3. Agentenplugins</a></li>
+<li><a href="#_verbotene_dinge">4.4. Verbotene Dinge</a></li>
+</ul>
+</li>
+<li>
+<a href="#_verhalten_des_check_plugins">5. Verhalten des Check-Plugins</a><ul class="sectlevel1">
+<li><a href="#_exceptions">5.1. Exceptions</a></li>
+<li><a href="#_saveint_und_savefloat">5.2. <strong>saveint()</strong> und <strong>savefloat()</strong></a></li>
+<li><a href="#_nicht_gefundenes_item">5.3. Nicht gefundenes Item</a></li>
+<li><a href="#_schwellwerte">5.4. Schwellwerte</a></li>
+<li><a href="#_ausgabe_des_check_plugins">5.5. Ausgabe des Check-Plugins</a></li>
+<li><a href="#_default_schwellwerte">5.6. Default-Schwellwerte</a></li>
+<li><a href="#_nagios_vs_cmc">5.7. Nagios vs. CMC</a></li>
+</ul>
+</li>
+<li>
+<a href="#metrics">6. Metriken</a><ul class="sectlevel1">
+<li><a href="#_format_der_metriken">6.1. Format der Metriken</a></li>
+<li><a href="#_benennung_der_metriken">6.2. Benennung der Metriken</a></li>
+<li><a href="#_flag_f%C3%BCr_metrikdaten">6.3. Flag für Metrikdaten</a></li>
+<li><a href="#_definition_f%C3%BCr_graph_und_perf_o_meter">6.4. Definition für Graph und Perf-O-Meter</a></li>
+</ul>
+</li>
+<li>
+<a href="#wato">7. WATO-Definition</a><ul class="sectlevel1">
+<li><a href="#_name_der_checkgruppe">7.1. Name der Checkgruppe</a></li>
+<li><a href="#_defaultwerte_von_valuespecs">7.2. Defaultwerte von ValueSpecs</a></li>
+<li><a href="#_wahl_der_valuespecs">7.3. Wahl der ValueSpecs</a></li>
+</ul>
+</li>
+<li><a href="#_include_dateien">8. Include-Dateien</a></li>
+<li>
+<a href="#manpage">9. Manpages</a><ul class="sectlevel1">
+<li><a href="#_titel">9.1. Titel</a></li>
+<li><a href="#_agenten_kategorien">9.2. Agenten-Kategorien</a></li>
+<li><a href="#_katalogeintrag">9.3. Katalogeintrag</a></li>
+<li><a href="#_beschreibung_des_plugins">9.4. Beschreibung des Plugins</a></li>
+<li><a href="#_item">9.5. Item</a></li>
+<li><a href="#_service_erkennung">9.6. Service-Erkennung</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

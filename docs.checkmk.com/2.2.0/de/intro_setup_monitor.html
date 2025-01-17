@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Um Checkmk für das Monitoring einzurichten, muss der erste Host aufgenommen, seine Services konfiguriert und die Änderungen aktiviert werden.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Das Monitoring einrichten">
+<meta name="og:description" content="Um Checkmk für das Monitoring einzurichten, muss der erste Host aufgenommen, seine Services konfiguriert und die Änderungen aktiviert werden.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Das Monitoring einrichten</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/intro_setup_monitor.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/intro_setup_monitor.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/intro_setup_monitor.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Das Monitoring einrichten</h1>
+<div class="details">
+<span id="revdate">Last modified on 16-Jan-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/intro_setup_monitor.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="intro_tools.html">Die Monitoring-Werkzeuge</a>
+<a href="hosts_setup.html">Verwaltung der Hosts</a>
+<a href="agent_linux.html">Linux überwachen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_hosts">
+<span class="hidden-anchor sr-only" id="hosts"></span>1. Hosts, Services und Agenten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>So, Checkmk steht bereit.
+Doch bevor wir mit dem eigentlichen Monitoring beginnen, werden wir kurz einige wichtige Begriffe erläutern.
+Das beginnt mit dem <strong>Host</strong>:
+Ein Host ist in Checkmk jedes eigenständige, physische oder virtuelle System, das von Checkmk überwacht wird.
+In der Regel handelt es sich um Dinge mit eigener IP-Adresse (Server, Switches, SNMP-Geräte, virtuelle Maschinen), aber auch um beispielsweise Docker Container oder andere logische Objekte ohne eine solche IP-Adresse. Jeder Host hat immer einen der Zustände <span class="hstate0">UP</span>, <span class="hstate1">DOWN</span>, <span class="hstate2">UNREACH</span> oder <span class="statep">PEND</span>.</p></div>
+<div class="paragraph"><p>Auf jedem Host wird eine Anzahl von <strong>Services</strong> überwacht.
+Ein Service kann dabei alles Mögliche sein, zum Beispiel ein Dateisystem, ein Prozess, ein Hardware-Sensor, ein Switchport — aber auch einfach nur eine bestimmte Metrik wie die CPU-Auslastung oder die RAM-Nutzung.
+Jeder Service hat einen der Zustände <span class="state0">OK</span>, <span class="state1">WARN</span>, <span class="state2">CRIT</span>, <span class="state3">UNKNOWN</span> oder <span class="statep">PEND</span>.</p></div>
+<div class="paragraph"><p>Damit Checkmk von einem Host Daten abfragen kann, ist ein <strong>Agent</strong> notwendig.
+Das ist ein kleines Programm, das auf dem Host installiert wird, und auf Anfrage Daten über den Zustand (oder die „Gesundheit“) des Hosts liefert.
+Server, auf denen Windows, Linux oder Unix läuft, können von Checkmk nur dann sinnvoll überwacht werden, wenn Sie dort einen von uns gelieferten Checkmk-Agenten installieren.
+Bei Netzwerkgeräten und vielen Appliances hat meist der Hersteller bereits einen Agenten eingebaut, den Checkmk ohne Weiteres mit dem standardisierten Protokoll SNMP abfragen kann.
+Cloud-Dienste wie Amazon Web Services (AWS) oder Azure stellen stattdessen eine Schnittstelle („API“) bereit, die von Checkmk per HTTP abgefragt werden kann.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_dns">
+<span class="hidden-anchor sr-only" id="dns"></span>2. Vorüberlegungen zu DNS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Auch wenn Checkmk keine Namensauflösung von Hosts voraussetzt, erleichtert ein gut gepflegtes Domain Name System (DNS) die Konfiguration erheblich und vermeidet Fehler, denn Checkmk kann dann die Namen der Hosts selbständig auflösen, ohne dass Sie IP-Adressen in Checkmk eintragen müssen.</p></div>
+<div class="paragraph"><p>Der Aufbau des Monitorings ist daher ein guter Anlass, zu überprüfen, ob Ihr DNS auf dem neuesten Stand ist und gegebenenfalls dort fehlende Einträge zu ergänzen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_folders">
+<span class="hidden-anchor sr-only" id="folders"></span>3. Ordnerstruktur für Hosts</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk verwaltet Ihre Hosts in einem hierarchischen Baum von Ordnern — ganz analog zu dem, was Sie von Dateien in Ihrem Betriebssystem kennen.
+Wenn Sie nur eine Handvoll Hosts überwachen, mag das für Sie weniger wichtig sein.
+Aber erinnern Sie sich:
+Checkmk ist für das Überwachen von Tausenden und Zigtausenden Hosts geschaffen — und dabei ist Ordnung die halbe Miete.</p></div>
+<div class="paragraph"><p>Bevor Sie die ersten Hosts in Checkmk aufnehmen, ist es daher von Vorteil, wenn Sie sich Gedanken über die Struktur dieser Ordner machen.
+Die Ordnerstruktur ist zum einen für Ihre eigene Übersicht nützlich.
+Wichtiger aber ist, dass sie für die Konfiguration von Checkmk verwendet werden kann:
+Alle Konfigurationsattribute von Hosts können in einem Ordner definiert werden, die dann automatisch an die dort enthaltenen Unterordner und Hosts <strong>vererbt</strong> werden.
+Daher ist es nicht nur, aber insbesondere für die Konfiguration großer Umgebungen elementar, von Beginn an eine wohlüberlegte Ordnerstruktur aufzusetzen.</p></div>
+<div class="paragraph"><p>Eine einmal erstellte Ordnerstruktur können Sie verändern — müssen dabei allerdings sehr gewissenhaft vorgehen.
+Das Verschieben eines Hosts in einen anderen Ordner kann nämlich zur Folge haben, dass sich dessen Attribute ändern, ohne dass Sie sich dessen vielleicht bewusst sind.</p></div>
+<div class="paragraph"><p>Die eigentliche Frage beim Aufbau einer für Sie sinnvollen Ordnerstruktur ist, nach welchen Kriterien Sie die Ordner organisieren möchten.
+Die Kriterien können in jeder Ebene des Baums andere sein.
+So können Sie z.B. in der ersten Ebene nach Standorten unterscheiden und in der zweiten Ebene nach Technologie.</p></div>
+<div class="paragraph"><p>Folgende Ordnungskriterien haben sich in der Praxis bewährt:</p></div>
+<div class="ulist"><ul>
+<li><p>Standort/Geografie</p></li>
+<li><p>Organisation</p></li>
+<li><p>Technologie</p></li>
+</ul></div>
+<div class="paragraph"><p>Eine Sortierung nach Standort ist vor allem in größeren Unternehmen sehr naheliegend, insbesondere dann, wenn Sie das Monitoring über mehrere Checkmk-Server verteilen.
+Jeder Server überwacht dann z.B. eine Region oder ein Land.
+Wenn Ihre Ordner diese Aufteilung abbilden, dann können Sie z.B. im Ordner „München“ definieren, dass alle Hosts in diesem Ordner von der Checkmk-Instanz „muc“ aus überwacht werden sollen.</p></div>
+<div class="paragraph"><p>Alternativ dazu kann die Organisation (d.h. die Antwort auf die Frage "Wer ist für einen Host zuständig?“) ein sinnvolleres Kriterium sein, denn nicht immer ist Standort und Verantwortung das Gleiche.
+So mag es sein, dass eine Gruppe Ihrer Kollegen für die Administration von Oracle zuständig ist, und zwar unabhängig davon, an welchem Standort die entsprechenden Hosts stehen.
+Ist also z.B. der Ordner „Oracle“ für die Hosts der Oracle-Kollegen vorgesehen, so ist es in Checkmk einfach zu konfigurieren, dass alle Hosts unterhalb dieses Ordners nur für diese Kollegen sichtbar sind und, dass
+diese ihre Hosts dort sogar selbst pflegen können.</p></div>
+<div class="paragraph"><p>Eine Strukturierung nach Technologie könnte z.B. einen Ordner für Windows-Server und einen für Linux-Server vorsehen.
+Das würde die Umsetzung des Schemas „Auf allen Linux-Servern muss der Prozess <code>sshd</code> laufen.“ vereinfachen.
+Ein anderes Beispiel ist die Überwachung von Geräten via SNMP, wie beispielsweise Switches oder Router.
+Hier kommt kein Checkmk-Agent zum Einsatz, sondern die Geräte werden über das Protokoll SNMP abgefragt.
+Sind diese Hosts in eigenen Ordnern zusammengefasst, so können Sie direkt am Ordner die für SNMP notwendigen Einstellungen wie etwa die „Community“ vornehmen.</p></div>
+<div class="paragraph"><p>Da eine Ordnerstruktur nur in seltenen Fällen die Komplexität der Wirklichkeit abbilden kann, bietet Checkmk mit den Host-Merkmalen (<em>host tags</em>) eine weitere ergänzende Möglichkeit zur Strukturierung:
+doch dazu in einem <a href="intro_finetune.html#host_tags">anderen Kapitel</a> mehr.
+Weiterführende Informationen zur Ordnerstruktur finden Sie in den Artikeln über die <a href="hosts_setup.html#folder">Verwaltung</a> und die <a href="hosts_structure.html#folder">Strukturierung</a> von Hosts.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_create_folders">
+<span class="hidden-anchor sr-only" id="create_folders"></span>4. Ordner erstellen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Den Einstieg in die Verwaltung von Ordnern und Hosts finden Sie über die Navigationsleiste, das <span class="guihint">Setup</span>-Menü, das Thema <span class="guihint">Hosts</span> und den Eintrag <span class="guihint">Hosts</span>.
+Dann wird die Seite <span class="guihint">Main</span> angezeigt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_empty_main.png" alt="Ordneransicht 'Main' ohne Ordner und Hosts."></div></div>
+<div class="paragraph"><p>Bevor wir den ersten Ordner erstellen, werden wir kurz auf den Aufbau dieser Seite eingehen, da Sie die verschiedenen Elemente auf den meisten Checkmk-Seiten so oder so ähnlich wiederfinden werden.
+Unterhalb des Seitentitels <span class="guihint">Main</span> finden Sie den Breadcrumb-Pfad, der Ihnen zeigt, wo Sie sich innerhalb der Checkmk-Oberfläche gerade befinden.
+Darunter wird die Menüleiste angezeigt, die die möglichen Aktionen auf dieser Seite in Menüs und Menüeinträgen zusammenfasst.
+Die Menüs sind in Checkmk stets kontext-spezifisch, d.h. sie finden nur Menüeinträge für Aktionen, die auf der aktuellen Seite Sinn ergeben.</p></div>
+<div class="paragraph"><p>Unter der Menüleiste finden Sie die Aktionsleiste, in der die wichtigsten Aktionen aus den Menüs als Knöpfe zum direkten Anklicken angeboten werden.
+Die Aktionsleiste können Sie mit dem Knopf <span class="image-inline"><img src="../images/icons/button_hide_toolbar.png" alt="Symbol zum Ausblenden der Aktionsleiste."></span> rechts neben dem <span class="guihint">Help</span>-Menü ausblenden und mit <span class="image-inline"><img src="../images/icons/button_show_toolbar.png" alt="Symbol zum Einblenden der Aktionsleiste."></span> wieder einblenden.
+Bei ausgeblendeter Aktionsleiste werden die Symbole in der Menüleiste rechts neben <span class="image-inline"><img src="../images/icons/button_show_toolbar.png" alt="Symbol zum Einblenden der Aktionsleiste."></span> angezeigt.</p></div>
+<div class="paragraph"><p>Da wir uns zurzeit auf einer leeren Seite befinden (ohne Ordner und ohne Hosts), werden die wichtigen Aktionen zum Erstellen des ersten Objekts zusätzlich über noch größere Knöpfe angeboten — damit die Möglichkeiten auch nicht übersehen werden, die die Seite bietet.
+Diese Knöpfe werden nach dem Erstellen des ersten Objekts verschwinden.</p></div>
+<div class="paragraph"><p>Nun aber zurück zum Thema, weswegen wir uns eigentlich auf dieser Seite befinden: dem Anlegen von Ordnern.
+<em>Einen</em> Ordner — den Hauptordner — gibt es in jedem frisch aufgesetzten Checkmk-System.
+Er heißt <span class="guihint">Main</span>, wie Sie im Titel der Seite sehen können.
+Unterhalb des Hauptordners werden wir nun für ein einfaches Beispiel die drei Ordner <code>Windows</code>, <code>Linux</code> und <code>Network</code> erstellen.</p></div>
+<div class="paragraph"><p>Legen Sie den ersten der drei Ordner an, indem Sie eine der angebotenen Aktionen zum Erstellen eines Ordners auswählen, z.B. den Aktionsknopf <span class="image-inline"><img src="../images/icons/icon_newfolder.png" alt="Symbol zum Erstellen eines Ordners."></span> <span class="guihint">Add folder</span>.
+Auf der neuen Seite <span class="guihint">Add folder</span> tragen Sie im ersten Kasten <span class="guihint">Basic settings</span> den Ordnernamen ein:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_folder_basic_settings.png" alt="Dialog mit Eigenschaften beim Erstellen eines Ordners: die 'Basic settings' mit Titel."></div></div>
+<div class="paragraph"><p>Im obigen Bild ist der <a href="intro_gui.html#show_less_more">Show-less-Modus</a> aktiv und es wird nur derjenige Eintrag angezeigt, der zum Erstellen eines Ordners unbedingt notwendig ist.
+Bestätigen Sie die Eingabe mit <span class="guihint">Save</span>.</p></div>
+<div class="paragraph"><p>Erstellen Sie analog zum Ordner <code>Windows</code> die anderen beiden Ordner <code>Linux</code> und <code>Network</code>.
+Danach sieht die Situation so aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_three_empty_folders.png" alt="Ansicht 'Main' mit drei Ordnern, einer davon aufgeklappt mit Symbolen für Ordneraktionen."></div></div>
+<div class="paragraph"><p><strong>Tipp:</strong> Wenn Sie mit der Maus auf den Reiter oder den oberen Bereich eines Ordner-Symbols zeigen, klappt der Ordner auf und enthüllt die Symbole, die Sie benötigen, um wichtige Aktionen mit dem Ordner auszuführen (die Eigenschaften ändern, den Ordner verschieben oder ihn löschen).</p></div>
+<div class="paragraph"><p><strong>Noch ein Tipp:</strong> Rechts oben auf jeder Seite finden Sie die Information, ob — und wenn ja, wie viele — Änderungen inzwischen bereits aufgelaufen sind.
+Da wir drei Ordner erstellt haben, gibt es drei Änderungen, die jetzt aber noch nicht aktiviert werden müssen.
+Wir werden uns mit dem Aktivieren von Änderungen weiter unten genauer beschäftigen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_linux">
+<span class="hidden-anchor sr-only" id="linux"></span>5. Den ersten Host aufnehmen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Jetzt ist alles dafür vorbereitet, um den ersten Host in das Monitoring aufzunehmen — und was wäre naheliegender, als den Checkmk-Server selbst zu überwachen?
+Natürlich wird dieser nicht seinen eigenen Totalausfall melden können, aber nützlich ist das trotzdem, denn Sie erhalten so nicht nur eine Übersicht über die CPU- und RAM-Nutzung, sondern auch etliche
+Metriken und Checks, die das Checkmk-System selbst betreffen.</p></div>
+<div class="paragraph"><p>Das Vorgehen zum Aufnehmen eines Linux-Hosts (wie übrigens auch eines Windows-Hosts) ist im Prinzip stets das Folgende:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Agent herunterladen</p></li>
+<li><p>Agent installieren</p></li>
+<li><p>Host erstellen</p></li>
+<li><p>Host registrieren</p></li>
+</ol></div>
+<div class="paragraph"><p>Nachdem der Host in der <a href="glossar.html#configuration_environment">Konfigurationsumgebung</a> erstellt wurde, werden zum Abschluss noch die Services konfiguriert und die Änderungen für die <a href="glossar.html#monitoring_environment">Monitoring-Umgebung</a> aktiviert.</p></div>
+<div class="sect2">
+<h3 id="heading_download_agent">
+<span class="hidden-anchor sr-only" id="download_agent"></span>5.1. Agent herunterladen</h3>
+<div class="paragraph"><p>Da der Checkmk-Server ein Linux-Rechner ist, benötigen Sie den Checkmk-Agenten für Linux.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+In der Raw Edition finden Sie die vorkonfigurierten Linux-Pakete des Agenten über <span class="guihint">Setup &gt; Agents &gt; Linux:</span></p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/intro_agent_download_cre.png" alt="Download-Seite mit den RPM/DEB-Paketen."></div>
+<div class="title">Die Download-Seite der Raw Edition für die Linux-Pakete</div>
+</div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In den kommerziellen Editionen gelangen Sie mit <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX</span> zu einer Seite, die Ihnen auch den Zugang zur <a href="glossar.html#agent_bakery">Agentenbäckerei</a> (<em>Agent Bakery</em>) bietet, mit
+der Sie sich individuell konfigurierte Agentenpakete „backen“ können.
+Von dieser Seite aus kommen Sie mit dem Menüeintrag <span class="guihint">Related &gt; Linux, Solaris, AIX files</span> zur Seite mit den Agentendateien wie in der Raw Edition.</p></div>
+<div class="paragraph"><p>Laden Sie die Paketdatei herunter: Wählen Sie das RPM-Dateiformat für Red Hat Enterprise Linux (RHEL) basierte Systeme und SLES oder das DEB-Dateiformat für Debian und Ubuntu.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_install_agent">
+<span class="hidden-anchor sr-only" id="install_agent"></span>5.2. Agent installieren</h3>
+<div class="paragraph"><p>Für das folgende Installationsbeispiel nehmen wir an, dass sich die heruntergeladene Paketdatei im Verzeichnis <code>/tmp/</code> befindet.
+Falls Sie die Datei in ein anderes Verzeichnis heruntergeladen haben, ersetzen Sie im folgenden Installationskommando das Verzeichnis <code>/tmp/</code> mit eben diesem Verzeichnis.
+Ähnliches gilt für den Namen der Paketdatei, den Sie mit dem Namen der von Ihnen heruntergeladene Datei ersetzen.</p></div>
+<div class="paragraph"><p>Die Paketdatei wird nur während der Installation benötigt. Sie können sie nach der Installation löschen.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> In unserem Beispiel wird der Agent auf dem Checkmk-Server installiert, d.h. Sie brauchen die Paketdatei nicht auf einen anderen Rechner zu kopieren.
+Falls sich die heruntergeladene Datei nicht auf dem Ziel-Host für die Installation des Agenten befinden sollte, müssen Sie die Datei zuerst auf den Ziel-Host kopieren, zum Beispiel mit dem Kommandozeilentool <code>scp</code>.
+Das passiert auf die gleiche Weise wie bei der Installation der Checkmk-Software und wie es für die Linux-Installation beschrieben ist, z.B. für die <a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a>.</p></div>
+<div class="paragraph"><p>Die Installation erfolgt als <code>root</code> auf der Kommandozeile, für die RPM-Datei mit <code>rpm</code>, am besten mit der Option <code>-U</code>, die für <em>Update</em> steht und dafür sorgt, dass die Installation auch dann fehlerlos durchläuft, wenn bereits eine alte Version des Agenten installiert ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>rpm<span class="tok-w"> </span>-U<span class="tok-w"> </span>/tmp/check-mk-agent-2.2.0p1-1.noarch.rpm</code></pre></div></div>
+<div class="paragraph"><p>… oder für die DEB-Datei mit dem Befehl <code>dpkg -i</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>dpkg<span class="tok-w"> </span>-i<span class="tok-w"> </span>/tmp/check-mk-agent_2.2.0p1-1_all.deb</code></pre></div></div>
+<div class="paragraph"><p>Mit dem Agenten wird der Agent Controller installiert, mit dem unter anderem bei der <a href="#register">Registrierung</a> die TLS-Verschlüsselung der Verbindung zum Checkmk-Server hergestellt wird.
+Damit die Installation des Agent Controllers klappt, setzt dies eine Linux-Distribution mit dem init-System <code>systemd</code> voraus, das seit 2015 in den meisten Linux-Distributionen Standard ist.
+Für die seltenen Fälle, in denen der Agent Controller nicht verwendet werden kann, finden Sie Informationen im Artikel <a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus.</a></p></div>
+<div class="paragraph"><p>Damit ist die Installation des Agenten abgeschlossen.
+Die Kommandozeile können Sie geöffnet lassen.
+Sie wird nochmal bei der Registrierung des Hosts benötigt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_create_host">
+<span class="hidden-anchor sr-only" id="create_host"></span>5.3. Host erstellen</h3>
+<div class="paragraph"><p>Nachdem der Agent auf dem Host installiert ist, können Sie den Host in die Konfigurationsumgebung von Checkmk aufnehmen — und zwar in den vorbereiteten Ordner <span class="guihint">Linux</span>.
+Nur zur Erinnerung:
+In diesem Beispiel sind der Checkmk-Server und der zu überwachende Host identisch.</p></div>
+<div class="paragraph"><p>Öffnen Sie in der Checkmk-Oberfläche die gleiche Seite <span class="guihint">Main</span>, auf der Sie bereits die drei Ordner erstellt haben: <span class="guihint">Setup &gt; Hosts &gt; Hosts</span>.
+Wechseln Sie dort in den Ordner <span class="guihint">Linux</span>, indem Sie den Ordner anklicken.</p></div>
+<div class="paragraph"><p>Klicken Sie <span class="guihint">Add host</span> und die Seite <span class="guihint">Add host</span> wird geöffnet:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_host_allsettings_less.png" alt="Dialog mit Eigenschaften beim Erstellen eines Hosts."></div></div>
+<div class="paragraph"><p>Wie schon beim Anlegen der drei Ordner weiter oben ist immer noch der <a href="intro_gui.html#show_less_more">Show-less-Modus</a> aktiv.
+Daher zeigt Checkmk im Formular nur die wichtigsten und zum Erstellen eines Hosts notwendigen Host-Attribute an.
+Falls es Sie interessiert, können Sie sich den Rest ansehen, indem Sie bei jedem der geöffneten Kästen die drei Auslassungszeichen <span class="image-inline"><img src="../images/icons/button_showmore.png" alt="Symbol zum Wechsel in den Show-more-Modus."></span>  anklicken und die beiden zugeklappten Kästen am Ende der Seite öffnen. Wie am Anfang erwähnt, ist Checkmk ein komplexes System, das auf jede Frage eine Antwort hat.
+Deswegen kann man bei einem Host (aber nicht nur dort) auch sehr viel konfigurieren.</p></div>
+<div class="paragraph"><p><strong>Tipp:</strong> Auf vielen Seiten — auch auf dieser — können Sie sich zusätzlich Hilfetexte zu den Attributen anzeigen lassen.
+Wählen Sie dazu im <span class="guihint">Help</span>-Menü den Eintrag <span class="guihint">Show inline help</span>.
+Die gewählte Einstellung bleibt auch auf anderen Seiten aktiv, bis Sie die Hilfe wieder abschalten.
+Das folgende Bild zeigt die Inline-Hilfe für den Parameter <span class="guihint">IPv4 address:</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_ipv4_inlinehelp.png" alt="Die Eigenschaften eines Hosts mit eingeblendeter Inline-Hilfe für die IPv4-Adresse."></div></div>
+<div class="paragraph"><p>Aber nun zu den Eingaben, um den ersten Host zu erstellen.
+Sie müssen nur ein einziges Feld ausfüllen, nämlich <span class="guihint">Hostname</span> bei den <span class="guihint">Basic settings.</span></p></div>
+<div class="paragraph"><p>Diesen Namen können Sie frei vergeben.
+Dabei sollten Sie aber wissen, dass der Host-Name von zentraler Bedeutung ist, denn er dient im Monitoring an allen Stellen als interne ID (oder Schlüssel) zur eindeutigen Identifizierung des Hosts.
+Da er in Checkmk so wichtig ist und oft genutzt wird, sollten Sie sich die Benamsung Ihrer Hosts gut überlegen.
+Ein Host-Name kann später geändert werden, aber da dies ein aufwendiger Vorgang ist, sollten Sie ihn vermeiden.</p></div>
+<div class="paragraph"><p>Am besten ist es, wenn der Host unter seinem Namen im DNS auflösbar ist.
+Dann sind Sie mit diesem Formular auch schon fertig.
+Falls nicht, oder falls Sie kein DNS verwenden möchten, können Sie die IP-Adresse aber auch von Hand im Feld <span class="guihint">IPv4 address</span> eintragen.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Damit Checkmk immer stabil und performant laufen kann, unterhält es einen eigenen Cache für die Auflösung der Host-Namen.
+Daher führt der Ausfall des DNS-Dienstes nicht zum Ausfall des Monitorings.
+Die Details zu Host-Namen, IP-Adressen und DNS finden Sie im <a href="hosts_setup.html#dns">Artikel über die Verwaltung der Hosts.</a></p></div>
+<div class="paragraph"><p>Ein Host muss in der Konfigurationsumgebung existieren, bevor er im nächsten Schritt registriert werden kann.
+Schließen Sie also die Erstellung des Hosts vorerst ab, indem Sie auf <span class="guihint">Save &amp; view folder</span> klicken.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_register">
+<span class="hidden-anchor sr-only" id="register"></span>5.4. Host registrieren</h3>
+<div class="paragraph"><p>Mit der Registrierung des Hosts beim Checkmk-Server wird das Vertrauensverhältnis zwischen beiden eingerichtet.
+Die Kommunikation zwischen Host und Server erfolgt dann nur noch Transport Layer Security (TLS) verschlüsselt.</p></div>
+<div class="paragraph"><p>Die Registrierung erfolgt durch Aufruf des Agent Controllers <code>cmk-agent-ctl</code> als <code>root</code> auf der Kommandozeile.
+Für das Kommando benötigen Sie die Namen des Checkmk-Servers (im Beispiel <code>mycmkserver</code>), der Checkmk-Instanz (<code>mysite</code>) und des Hosts (<code>localhost</code>), wie er <a href="#create_host">soeben</a> in Checkmk eingerichtet wurde.
+Komplettiert werden die Optionen durch den Namen eines Checkmk-Benutzers mit Zugriff auf die <a href="rest_api.html">REST-API.</a>
+Dazu können Sie <code>cmkadmin</code> verwenden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>register<span class="tok-w"> </span>--hostname<span class="tok-w"> </span>localhost<span class="tok-w"> </span>--server<span class="tok-w"> </span>mycmkserver<span class="tok-w"> </span>--site<span class="tok-w"> </span>mysite<span class="tok-w"> </span>--user<span class="tok-w"> </span>cmkadmin</code></pre></div></div>
+<div class="paragraph"><p>Waren die angegebenen Werte korrekt, werden Sie aufgefordert, die Identität der Checkmk-Instanz zu bestätigen, zu der Sie die Verbindung herstellen wollen.
+Das zu bestätigende Server-Zertifikat haben wir aus Gründen der Übersichtlichkeit stark verkürzt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">Attempting to register at mycmkserver, port 8000. Server certificate details:</span>
+
+<span class="tok-go">PEM-encoded certificate:</span>
+<span class="tok-go">-----BEGIN CERTIFICATE-----</span>
+<span class="tok-go">MIIC9zCCAd+gAwIBAgIUM7th5NaTjbkXVo1gMXVDC3XkX4QwDQYJKoZIhvcNAQEL</span>
+<span class="tok-go">[...]</span>
+<span class="tok-go">jbXj75+c48W2u4O0+KezRDIG/LdeVdk0Gq/kQQ8XmdqgObDU7mJKBArkuw==</span>
+<span class="tok-go">-----END CERTIFICATE-----</span>
+
+<span class="tok-go">Issued by:</span>
+<span class="tok-go">	Site 'mysite' local CA</span>
+<span class="tok-go">Issued to:</span>
+<span class="tok-go">	mysite</span>
+<span class="tok-go">Validity:</span>
+<span class="tok-go">	From Tue, 28 Feb 2023 15:55:26 +0000</span>
+<span class="tok-go">	To   Thu, 28 Feb 3022 15:55:26 +0000</span>
+
+<span class="tok-go">Do you want to establish this connection? [Y/n]</span>
+<span class="tok-go">&gt; <mark>Y</mark></span>
+
+<span class="tok-go">Please enter password for 'cmkadmin'</span>
+<span class="tok-go">&gt; *****</span>
+<span class="tok-go">Registration complete.</span></code></pre></div></div>
+<div class="paragraph"><p>Bestätigen Sie mit <code>Y</code> und geben Sie anschließend auf Anforderung das Passwort des Benutzers <code>cmkadmin</code> ein, um den Vorgang abzuschließen.</p></div>
+<div class="paragraph"><p>Falls keine Fehlermeldung angezeigt wird, ist die verschlüsselte Verbindung hergestellt.
+Über diese Verbindung werden alle Daten komprimiert übertragen.</p></div>
+<div class="paragraph"><p>Nach diesem (vorerst letzten) Ausflug auf die Kommandozeile, geht es wieder weiter in der Checkmk-Oberfläche.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_diagnosis">
+<span class="hidden-anchor sr-only" id="diagnosis"></span>5.5. Diagnose</h3>
+<div class="paragraph"><p>Murphys Gesetz („Alles, was schiefgehen kann, wird auch schiefgehen.“) kann leider auch von Checkmk nicht außer Kraft gesetzt werden.
+Schiefgehen kann vor allem dann etwas, wenn man es zum ersten Mal probiert.
+Daher sind gute Möglichkeiten zur Fehlerdiagnose wichtig.</p></div>
+<div class="paragraph"><p>Bereits bei der Erstellung eines Hosts bietet Checkmk an, nicht nur die Eingaben (Host-Name und IP-Adresse) auf der Seite <span class="guihint">Add host</span> zu sichern, sondern zusätzlich die Verbindung zum Host zu testen.
+Nach der kurzen Unterbrechung zur Registrierung werden wir diesen Verbindungstest nun nachholen.
+Auf der Seite <span class="guihint">Linux</span> klicken Sie beim gerade erstellten Host auf das Symbol <span class="image-inline"><img src="../images/icons/icon_edit.png" alt="Symbol zum Bearbeiten eines Listeneintrags."></span>, um die Host-Eigenschaften zu öffnen.
+In der Aktionsleiste der Seite <span class="guihint">Properties of host</span> finden Sie unter anderem den Knopf <span class="guihint">Save &amp; run connection tests</span>.
+Klicken Sie auf diesen.</p></div>
+<div class="paragraph"><p>Die Seite <span class="guihint">Test connection to host</span> wird angezeigt und Checkmk versucht, den Host auf den verschiedensten Wegen zu erreichen.
+Für Linux- und Windows-Hosts sind dabei nur die beiden oberen Kästen interessant:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_host_diagnostics.png" alt="Ergebnis des Verbindungstests zum Host mit ping und mit Ausgabe des Agenten."></div></div>
+<div class="paragraph"><p>Durch die Ausgabe im Kasten <span class="guihint">Agent</span> erhalten Sie die Gewissheit, dass Checkmk erfolgreich mit dem Agenten kommunizieren kann, den Sie zuvor auf dem Host manuell installiert und registriert hatten.</p></div>
+<div class="paragraph"><p>In weiteren Kästen sehen Sie, wie Checkmk versucht, per SNMP Kontakt aufzunehmen.
+Das führt in diesem Beispiel erwartbar zu SNMP-Fehlern, ist aber sehr nützlich für Netzwerkgeräte, die wir weiter <a href="#snmp">unten</a> besprechen werden.</p></div>
+<div class="paragraph"><p>Auf dieser Seite können Sie im Kasten <span class="guihint">Host Properties</span> bei Bedarf
+eine andere IP-Adresse ausprobieren, den Test erneut durchführen und die geänderte IP-Adresse mit <span class="guihint">Save &amp; go to host properties</span> sogar direkt in die Host-Eigenschaften übernehmen.</p></div>
+<div class="paragraph"><p>Klicken Sie diesen Knopf (ob Sie die IP-Adresse geändert haben oder nicht) und Sie landen wieder auf der Seite <span class="guihint">Properties of host</span>.</p></div>
+<div class="paragraph"><p>Weitere Möglichkeiten zur Diagnose finden Sie übrigens im Artikel zum <a href="agent_linux.html#test">Linux-Agenten.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_services">
+<span class="hidden-anchor sr-only" id="services"></span>5.6. Die Services konfigurieren</h3>
+<div class="paragraph"><p>Nachdem der Host selbst aufgenommen wurde, kommt das eigentlich Interessante: die Konfiguration seiner Services.
+Auf der oben genannten Seite der Host-Eigenschaften klicken Sie <span class="guihint">Save &amp; run service discovery</span> und die Seite <span class="guihint">Services of host</span> wird angezeigt.</p></div>
+<div class="paragraph"><p>Auf dieser Seite legen Sie fest, welche Services Sie auf dem Host überwachen möchten.
+Wenn der Agent auf dem Host erreichbar ist und korrekt läuft, findet Checkmk automatisch eine Reihe von Services und schlägt diese für das Monitoring vor (hier gekürzt dargestellt):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_services_of_host.png" alt="Liste der auf dem Host gefundenen Services zur Aufnahme ins Monitoring."></div></div>
+<div class="paragraph"><p>Für jeden dieser Services gibt es prinzipiell die folgenden Möglichkeiten:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Undecided</span> : Sie haben sich noch nicht entschieden, ob dieser Service überwacht werden soll.</p></li>
+<li><p><span class="guihint">Monitored</span> : Der Service wird überwacht.</p></li>
+<li><p><span class="guihint">Disabled</span> : Sie haben sich dafür entschieden, den Service grundsätzlich nicht zu überwachen.</p></li>
+<li><p><span class="guihint">Vanished</span> : Der Service wurde überwacht, existiert aber jetzt nicht mehr.</p></li>
+</ul></div>
+<div class="paragraph"><p>Die Seite zeigt alle Services nach diesen Kategorien in Tabellen an.
+Da Sie noch keinen Service konfiguriert haben, sehen Sie nur die Tabelle <span class="guihint">Undecided</span>.</p></div>
+<div class="paragraph"><p>Wenn Sie auf <span class="guihint">Monitor undecided services</span> klicken, werden alle Services direkt in das Monitoring übernommen und alle <span class="guihint">Undecided</span> zu <span class="guihint">Monitored</span> Services.</p></div>
+<div class="paragraph"><p>Umgekehrt können Services auch verschwinden, z.B. weil ein Dateisystem entfernt wurde.
+Diese erscheinen dann im Monitoring als <span class="state3">UNKNOWN</span> und auf dieser Seite als <span class="guihint">Vanished</span> und können mit <span class="guihint">Remove vanished services</span> aus dem Monitoring entfernt werden.</p></div>
+<div class="paragraph"><p>Für den Anfang ist es am einfachsten, wenn Sie jetzt auf den Knopf <span class="guihint">Accept all</span> klicken, der alles auf einmal macht:
+fehlende Services hinzufügen, verschwundene entfernen — und zusätzlich gefundene Änderungen an Host-<a href="glossar.html#label">Labels</a> übernehmen.</p></div>
+<div class="paragraph"><p>Sie können diese Seite jederzeit später aufrufen, um die Konfiguration der Services anzupassen.
+Manchmal entstehen durch Änderungen an einem Host neue Services, z.B. wenn Sie eine Logical Unit Number (LUN) als Dateisystem einbinden oder eine neue Oracle Datenbankinstanz konfigurieren.
+Diese Services erscheinen dann wieder als <span class="guihint">Undecided</span>, und Sie können sie einzeln oder alle auf einmal in das Monitoring aufnehmen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_activate_changes">
+<span class="hidden-anchor sr-only" id="activate_changes"></span>5.7. Änderungen aktivieren</h3>
+<div class="paragraph"><p>Checkmk speichert alle Änderungen, die Sie vornehmen, zunächst nur in einer vorläufigen „Konfigurationsumgebung“, die das aktuell laufende Monitoring noch nicht beeinflusst.
+Erst durch das „Aktivieren der aufgelaufenen Änderungen“ werden diese in das Monitoring übernommen.
+Mehr über die Hintergründe dazu erfahren Sie im <a href="wato.html#activate_changes">Artikel über die Konfiguration von Checkmk</a>.</p></div>
+<div class="paragraph"><p>Wie wir schon oben erwähnt hatten, finden Sie auf jeder Seite rechts oben die Information, wie viele Änderungen sich bisher angesammelt haben, die noch nicht aktiviert sind.
+Klicken Sie auf den Link mit der Anzahl der Änderungen.
+Dies bringt Sie auf die Seite <span class="guihint">Activate pending changes</span>, die unter anderem bei <span class="guihint">Pending changes</span> die noch nicht aktivierten Änderungen auflistet:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_activate_changes.png" alt="Liste der aufgelaufenen Änderungen zur Aktivierung."></div></div>
+<div class="paragraph"><p>Klicken Sie jetzt auf den Knopf <span class="guihint">Activate on selected sites</span>, um die Änderungen anzuwenden.</p></div>
+<div class="paragraph"><p>Kurz danach können Sie das Resultat in der Seitenleiste im <span class="guihint">Overview</span> sehen, der nunmehr die Zahl der Hosts (1) und die Zahl der zuvor von Ihnen ausgewählten Services anzeigt.
+Auch im Standard-Dashboard, das Sie mit einem Klick auf das Checkmk-Logo links oben in der Navigationsleiste erreichen, können Sie jetzt sehen, dass sich das System mit Leben gefüllt hat.</p></div>
+<div class="paragraph"><p>Damit haben Sie den ersten Host mit seinen Services erfolgreich ins Monitoring übernommen: Gratulation!</p></div>
+<div class="paragraph"><p>Detailliertere Informationen über den Linux-Agenten können Sie im <a href="agent_linux.html">Artikel über die Überwachung von Linux</a> nachlesen.
+Informationen dazu, wie man ausstehende Änderungen wieder zurückzieht finden Sie in der <a href="wato.html#revert_changes">Konfiguration von Checkmk.</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_windows">
+<span class="hidden-anchor sr-only" id="windows"></span>6. Windows überwachen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Ebenso wie für Linux hat Checkmk auch für Windows einen eigenen Agenten.
+Dieser ist als MSI-Paket verpackt.
+Sie finden ihn nur einen Menüeintrag entfernt vom <a href="#download_agent">Linux-Agenten.</a>
+Sobald Sie das MSI-Paket heruntergeladen und auf Ihren Windows-Rechner kopiert haben, können Sie es wie bei Windows üblich per Doppelklick installieren.</p></div>
+<div class="paragraph"><p>Sobald der Agent installiert ist, können Sie den Host in Checkmk erstellen, per Kommando registrieren und ins Monitoring aufnehmen.
+Dabei gehen Sie nach dem gleichen Ablauf vor, wie oben für den Linux-Host beschrieben, allerdings sollten Sie den Host im dafür vorgesehenen Ordner <code>Windows</code> erstellen.
+Da Windows anders aufgebaut ist als Linux, findet der Agent natürlich andere Services.
+Die detaillierte Einführung ins Thema finden Sie im <a href="agent_windows.html">Artikel über die Überwachung von Windows</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_snmp">
+<span class="hidden-anchor sr-only" id="snmp"></span>7. Mit SNMP überwachen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Professionelle Switches, Router, Drucker und viele andere Geräte und Appliances haben bereits vom Hersteller eine eingebaute Schnittstelle für das Monitoring:
+das Simple Network Management Protocol (SNMP).
+Solche Geräte lassen sich sehr einfach mit Checkmk überwachen — und Sie müssen noch nicht einmal einen Agenten installieren.</p></div>
+<div class="paragraph"><p>Das grundsätzliche Vorgehen ist dabei immer gleich:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>In der Management-Oberfläche des Geräts schalten Sie SNMP frei für <strong>lesende</strong> Zugriffe von der IP-Adresse des Checkmk-Servers.</p></li>
+<li><p>Vergeben Sie dabei eine <strong>Community</strong>.
+Das ist nichts anderes als ein Passwort für den Zugriff.
+Da dieses im Netzwerk in der Regel im Klartext übertragen wird, ist es nur begrenzt sinnvoll, das Kennwort sehr kompliziert zu wählen.
+Die meisten Anwender verwenden für alle Geräte innerhalb eines Unternehmens einfach die gleiche Community.
+Das vereinfacht auch die Konfiguration in Checkmk sehr.</p></li>
+<li><p>Erstellen Sie in Checkmk den Host für das SNMP-Gerät wie <a href="#create_host">oben beschrieben</a>, diesmal im dafür vorgesehenen Ordner <code>Network</code>.</p></li>
+<li><p>In den Eigenschaften des Hosts, im Kasten <span class="guihint">Monitoring agents</span> aktivieren Sie <span class="guihint">Checkmk agent / API integrations</span> und wählen Sie <span class="guihint">No API integrations, no Checkmk agent</span> aus.</p></li>
+<li><p>Im gleichen Kasten <span class="guihint">Monitoring agents</span> aktivieren Sie <span class="guihint">SNMP</span> und wählen Sie <span class="guihint">SNMP v2 or v3</span> aus.</p></li>
+<li><p>Falls die Community nicht <code>public</code> lautet, aktivieren Sie wieder unter <span class="guihint">Monitoring agents</span> den Eintrag <span class="guihint">SNMP credentials</span>, wählen Sie <span class="guihint">SNMP community (SNMP Versions 1 and 2c)</span> aus und tragen Sie im Eingabefeld darunter  die Community ein.</p></li>
+</ol></div>
+<div class="paragraph"><p>Für die letzten 3 Punkte sollte das Ergebnis so aussehen wie im folgenden Bild:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_snmp_configuration.png" alt="Dialog mit Eigenschaften beim Erstellen eines Hosts per SNMP: die 'Monitoring agents'."></div></div>
+<div class="paragraph"><p><strong>Tipp:</strong> Wenn Sie alle SNMP-Geräte in einem eigenen Ordner angelegt haben, führen Sie die Konfiguration der <span class="guihint">Monitoring agents</span> einfach für den Ordner aus.
+Damit gelten die Einstellungen automatisch für alle Hosts in diesem Ordner.</p></div>
+<div class="paragraph"><p>Der Rest läuft wie gehabt.
+Wenn Sie möchten, können Sie noch mit dem  Knopf <span class="guihint">Save &amp; go to connection tests</span> einen Blick auf die Seite <span class="guihint">Test connection to host</span> werfen.
+Dort sehen Sie auch sofort, ob der Zugriff via SNMP funktioniert, hier z.B. für einen Switch:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_snmp_diagnostics.png" alt="Ergebnis des Verbindungstests zum Host per SNMP."></div></div>
+<div class="paragraph"><p>Klicken Sie auf der Seite <span class="guihint">Properties of host</span> anschließend auf <span class="guihint">Save &amp; run service discovery,</span> um die Liste aller Services angezeigt zu bekommen.
+Diese sieht natürlich komplett anders aus als bei Linux oder Windows.
+Auf allen Geräten überwacht Checkmk per Default alle Ports, die aktuell in Benutzung sind.
+Dies können Sie später nach Belieben anpassen.
+Außerdem zeigt Ihnen ein Service, der immer <span class="state0">OK</span> ist, die allgemeinen Informationen zu dem Gerät, und ein anderer Service die Uptime an.</p></div>
+<div class="paragraph"><p>Die ausführliche Beschreibung finden Sie im <a href="snmp.html">Artikel über die Überwachung via SNMP</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_cloud">
+<span class="hidden-anchor sr-only" id="cloud"></span>8. Cloud, Container und virtuelle Maschinen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Auch Cloud-Dienste, Container und  virtuelle Maschinen (VM) können Sie mit Checkmk überwachen, selbst wenn Sie keinen Zugriff auf die eigentlichen Server haben.
+Checkmk nutzt dafür die von den Herstellern vorgesehenen Anwendungsprogrammierschnittstellen (API).
+Diese verwenden für den Zugriff durchgehend HTTP bzw. HTTPS.</p></div>
+<div class="paragraph"><p>Das Grundprinzip ist immer das Folgende:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Richten Sie in der Management-Oberfläche des Herstellers einen Account für Checkmk ein.</p></li>
+<li><p>Erstellen Sie in Checkmk einen Host für den Zugriff auf die API.</p></li>
+<li><p>Richten Sie für diesen Host eine Konfiguration zum Zugriff auf die API ein.</p></li>
+<li><p>Für die überwachten Objekte wie VMs, EC2-Instanzen, Container usw. legen Sie weitere Hosts in Checkmk an bzw. automatisieren die Erstellung.</p></li>
+</ol></div>
+<div class="paragraph"><p>Sie finden im Handbuch Schritt-für-Schritt-Anleitungen zur Einrichtung der Überwachung von <a href="monitoring_aws.html">Amazon Web Services (AWS)</a>, <a href="monitoring_azure.html">Microsoft Azure</a>, <a href="monitoring_gcp.html">Google Cloud Platform (GCP)</a>, <a href="monitoring_docker.html">Docker</a>, <a href="monitoring_kubernetes.html">Kubernetes</a> und <a href="monitoring_vmware.html">VMware ESXi</a>.</p></div>
+<div class="paragraph"><p><a href="intro_tools.html">Weiter geht es mit den Monitoring-Werkzeugen</a></p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#hosts">1. Hosts, Services und Agenten</a></li>
+<li><a href="#dns">2. Vorüberlegungen zu DNS</a></li>
+<li><a href="#folders">3. Ordnerstruktur für Hosts</a></li>
+<li><a href="#create_folders">4. Ordner erstellen</a></li>
+<li>
+<a href="#linux">5. Den ersten Host aufnehmen</a><ul class="sectlevel1">
+<li><a href="#download_agent">5.1. Agent herunterladen</a></li>
+<li><a href="#install_agent">5.2. Agent installieren</a></li>
+<li><a href="#create_host">5.3. Host erstellen</a></li>
+<li><a href="#register">5.4. Host registrieren</a></li>
+<li><a href="#diagnosis">5.5. Diagnose</a></li>
+<li><a href="#services">5.6. Die Services konfigurieren</a></li>
+<li><a href="#activate_changes">5.7. Änderungen aktivieren</a></li>
+</ul>
+</li>
+<li><a href="#windows">6. Windows überwachen</a></li>
+<li><a href="#snmp">7. Mit SNMP überwachen</a></li>
+<li><a href="#cloud">8. Cloud, Container und virtuelle Maschinen</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

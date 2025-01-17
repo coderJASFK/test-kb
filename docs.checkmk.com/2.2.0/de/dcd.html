@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Checkmk kann flüchtige Infrastrukturen durch dynamisches Hinzufügen und Löschen von Hosts in einem vollautomatischen Verfahren verwalten.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Dynamische Host-Konfiguration - Überwachen von dynamischen Infrastrukturen">
+<meta name="og:description" content="Checkmk kann flüchtige Infrastrukturen durch dynamisches Hinzufügen und Löschen von Hosts in einem vollautomatischen Verfahren verwalten.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Dynamische Host-Konfiguration - Überwachen von dynamischen Infrastrukturen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/dcd.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/dcd.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/dcd.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Dynamische Host-Konfiguration</h1>
+<div class="details">
+<span id="revdate">Last modified on 25-May-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/dcd.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="piggyback.html">Der Piggyback-Mechanismus</a>
+<a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a>
+<a href="monitoring_azure.html">Microsoft Azure überwachen</a>
+<a href="monitoring_kubernetes.html">Kubernetes überwachen</a>
+<a href="monitoring_docker.html">Docker überwachen</a>
+<a href="monitoring_vmware.html">VMware ESXi überwachen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/dcd_large_icon_dcd_connections.png" alt="Symbol für Dynamische Host-Konfiguration." width="100%"></div></div>
+<div class="paragraph"><p>In Cloud- und Containerumgebungen ist es immer öfter der Fall, dass zu überwachende
+Hosts automatisch entstehen und vergehen. Die Konfiguration des Monitorings hier
+aktuell zu halten, ist manuell nicht mehr sinnvoll möglich. Aber auch klassische
+Infrastrukturen wie z.B. VMware-Cluster können sehr dynamisch sein, und selbst wenn
+eine manuelle Pflege hier noch möglich ist, ist sie doch auf jeden Fall lästig.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span> Die kommerziellen Editionen von Checkmk unterstützen Sie bei diesem
+Thema mit einem smarten Werkzeug: dem <em>Dynamic Configuration Daemon</em>
+oder kurz <em>DCD</em>. Die dynamische Konfiguration von Hosts bedeutet, dass
+aufgrund von Informationen aus der Überwachung von <a href="monitoring_aws.html">AWS</a>,
+<a href="monitoring_azure.html">Azure</a>, <a href="monitoring_kubernetes.html">Kubernetes</a>,
+<a href="monitoring_vmware.html">VMware</a> und anderen Quellen vollautomatisch Hosts in das
+Monitoring aufgenommen, aber auch wieder entfernt werden können.</p></div>
+<div class="paragraph"><p>Der DCD ist dabei sehr generisch gehalten und nicht auf das Anlegen von Hosts
+beschränkt. Er bildet die Grundlage für künftige Erweiterungen von Checkmk,
+welche dynamisch die Konfiguration anpassen. Das kann z.B. auch
+das Verwalten von Benutzern bedeuten. Zu diesem Zweck arbeitet der DCD
+mit sogenannten <em>Konnektoren</em>. Jeder Konnektor kann aus einer ganz
+bestimmten Art von Quelle Informationen holen und hat dazu seine eigene
+spezifische Konfiguration.</p></div>
+<div class="paragraph"><p>Mit speziellen Konnektoren wird es in Zukunft noch einfacher werden,
+Hosts aus einer vorhandenen CMDB automatisch nach Checkmk zu übernehmen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__verwalten_von_hosts_mit_dem_dcd">
+<span class="hidden-anchor sr-only" id="_verwalten_von_hosts_mit_dem_dcd"></span>2. Verwalten von Hosts mit dem DCD</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__der_piggyback_konnektor">
+<span class="hidden-anchor sr-only" id="_der_piggyback_konnektor"></span>2.1. Der Piggyback-Konnektor</h3>
+<div class="paragraph"><p>Derzeit ist der DCD von Checkmk
+nur mit einem einzigen Konnektor ausgestattet: demjenigen für
+<a href="piggyback.html">Piggyback-Daten</a>. Dieser ist jedoch sehr universell, denn der
+Piggyback-Mechanismus wird von Checkmk in allen Situationen verwendet, wo die
+Abfrage von einem Host (meist per Spezialagent) Daten zu anderen Hosts liefert
+(meist virtuelle Maschinen oder Cloud-Objekte).</p></div>
+<div class="paragraph"><p>Hier sind einige Beispiele,
+wo Checkmk bei der Überwachung Piggyback einsetzt:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="monitoring_aws.html">AWS</a></p></li>
+<li><p><a href="monitoring_azure.html">Azure</a></p></li>
+<li><p><a href="monitoring_kubernetes.html">Kubernetes</a></p></li>
+<li><p><a href="monitoring_docker.html">Docker</a></p></li>
+<li><p><a href="monitoring_vmware.html">VMware</a></p></li>
+</ul></div>
+<div class="paragraph"><p>In allen diesen Fällen werden beim Monitoring automatisch Daten zu anderen
+Hosts (z.B. den VMs) geholt, die nicht direkt per Netzwerk angesprochen werden und auf
+denen auch kein Checkmk-Agent laufen muss. Mit dem DCD können Sie solche Hosts
+automatisch ins Monitoring aufnehmen und auch wieder entfernen lassen, um so immer
+zeitnah die Realität abzubilden.</p></div>
+<div class="paragraph"><p>Dazu analysiert der DCD die vorhandenen Piggyback-Daten, vergleicht, welche
+der Hosts bereits im Setup vorhanden sind und legt die fehlenden Hosts neu
+an bzw. entfernt inzwischen weggefallene.  Dabei sind Hosts, welche vom DCD
+automatisch angelegt wurden, trotzdem für Sie in der Setup-GUI editierbar.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_user_automation">
+<span class="hidden-anchor sr-only" id="user_automation"></span>2.2. Der Automationsbenutzer</h3>
+<div class="paragraph"><p>In Checkmk gibt es standardmäßig einen <a href="wato_user.html#automation">Automationsbenutzer</a>.
+Dieser Benutzer wird von Checkmk angelegt, um automatisierte Abrufe durchführen zu können.
+Ein existierender Automationsbenutzer ist auch für die dynamische Host-Konfiguration zwingend notwendig.</p></div>
+<div class="paragraph"><p>Haben Sie, aus welchen Gründen auch immer, in Ihrem System diesen Benutzer gelöscht oder geändert, so müssen Sie einen anderen Benutzer mit automatisiertem Zugriff auf die API schaffen.
+In diesem Fall öffnen Sie über <span class="guihint">Setup &gt; General &gt; Global settings</span> die globalen Grundeinstellungen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_basic_settings.png" alt="Automationsbenutzer in den Grundeinstellungen."></div></div>
+<div class="paragraph"><p>Mit einem Klick auf <span class="guihint">Credentials: Use "Checkmk Automation" user</span> kommen Sie zur Bearbeitungsseite der REST-API Verbindung:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_connection_RESTAPI.png" alt="Umstellung des Automationsbenutzers."></div></div>
+<div class="paragraph"><p>Hier können Sie einen anderen Benutzer und dessen Zugriffsdaten (Name, Passwort) eintragen oder Änderungen am bestehenden Automationsbenutzer eintragen.
+Sobald Sie die Änderungen mit <span class="image-inline"><img src="../images/icons/icon_save.png" alt="Symbol für das Speichern."></span> <span class="guihint">Save</span> gespeichert haben, wird der definierte Benutzer für die Automatisierung genutzt und Sie können mit der dynamischen Host-Konfiguration fortfahren.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__dynamische_konfiguration_einrichten">
+<span class="hidden-anchor sr-only" id="_dynamische_konfiguration_einrichten"></span>2.3. Dynamische Konfiguration einrichten</h3>
+<div class="sect3">
+<h4 id="heading__sind_piggyback_daten_da">
+<span class="hidden-anchor sr-only" id="_sind_piggyback_daten_da"></span>Sind Piggyback-Daten da?</h4>
+<div class="paragraph"><p>Als einzige Voraussetzung, um den DCD zu nutzen, benötigen Sie
+Piggyback-Daten. Diese haben Sie immer dann, wenn Sie das Monitoring für AWS,
+Azure und Co. korrekt aufgesetzt haben. Sie können das auch leicht auf der
+Kommandozeile überprüfen, denn die Piggyback-Daten werden von Checkmk im Verzeichnis <code>tmp/check_mk/piggyback</code>
+angelegt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>ls<span class="tok-w"> </span>tmp/check_mk/piggyback
+<span class="tok-go">myvm01  myvm02  myvm03</span></code></pre></div></div>
+<div class="paragraph"><p>Wenn dieses Verzeichnis nicht leer ist, dann wurden in dieser Instanz Piggyback-Daten erzeugt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__generelle_einstellungen_eines_konnektors">
+<span class="hidden-anchor sr-only" id="_generelle_einstellungen_eines_konnektors"></span>Generelle Einstellungen eines Konnektors</h4>
+<div class="paragraph"><p>Gehen Sie nun in die Host-Verwaltung.
+Der Menüeintrag <span class="guihint">Setup &gt; Hosts &gt; Dynamic host management</span> bringt Sie zur Konfiguration
+des DCD beziehungsweise dessen Konnektoren:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_connections_empty.png" alt="Die Seite 'Dynamic host management' mit leerer Konnektorenliste."></div></div>
+<div class="paragraph"><p>Legen Sie mit <span class="image-inline"><img src="../images/icons/icon_new.png" alt="icon new"></span> <span class="guihint">Add connection</span> eine neue Verbindung an.
+Der erste Teil der Konfiguration sind die <span class="guihint">General Properties</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_connection_general.png" alt="Allgemeine Eigenschaften beim Hinzufügen eines neuen Konnektors."></div></div>
+<div class="paragraph"><p>Hier vergeben Sie, wie so oft, eine eindeutige ID dieses Konnektors und
+einen Titel. Wichtig ist ferner die Auswahl der Checkmk-Instanz, auf der dieser
+Konnektor laufen soll. Da Piggyback-Daten immer nur lokal verarbeitet werden
+können, muss der Konnektor immer einer konkreten Instanz zugeordnet werden.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__eigenschaften_des_konnektors">
+<span class="hidden-anchor sr-only" id="_eigenschaften_des_konnektors"></span>Eigenschaften des Konnektors</h4>
+<div class="paragraph"><p>Der zweite Teil sind die <span class="guihint">Connection Properties</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_connection_properties.png" alt="Einstellungen des Konnektors im Detail."></div></div>
+<div class="paragraph"><p>Hier ist bereits der Konnektor <span class="guihint">Piggyback data</span> vorausgewählt
+(und aktuell auch der einzig mögliche).</p></div>
+<div class="paragraph"><p>Mit dem <span class="guihint">Sync interval</span> bestimmen Sie, wie oft der Konnektor nach neuen Hosts suchen
+soll. Wenn Sie den regulären Check-Zeitraum von einer Minute beibehalten haben, macht es
+keinen Sinn, das wesentlich öfter zu machen, da ja maximal einmal pro Minute eine Änderung
+der Piggyback-Daten stattfinden kann. In dynamischeren Umgebungen können Sie sowohl
+Check-Zeitraum als auch Konnektorintervall auch auf deutlich kleinere Werte einstellen.
+Dies hat allerdings auch eine höhere CPU-Auslastung auf dem Checkmk-Server zur Folge.</p></div>
+<div class="paragraph"><p>Wichtig ist jetzt, dass Sie unter <span class="guihint">Piggyback creation options</span> mindestens ein neues Element hinzufügen (<span class="guihint">Add new element</span>).
+Damit gelangen Sie zu den Einstellungen für automatisch erzeugte Hosts:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_connection_properties_2.png" alt="Ordner, in dem Hosts erstellt werden und Datenquellen, die hierfür herangezogen werden."></div></div>
+<div class="paragraph"><p>Hier können Sie zwei wichtige Dinge festlegen: In welchem Ordner die Hosts erzeugt werden sollen (hier z.B. <span class="guihint">AWS Cloud 02</span>)
+und welche Host-Attribute gesetzt werden sollen (für letzteres müssen Sie den <a href="intro_gui.html#show_less_more">Show-more-Modus</a> aktiviert haben). Vier wichtige Attribute sind dabei voreingestellt, welche für piggybacked Hosts
+meistens Sinn ergeben:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Kein Monitoring per SNMP.</p></li>
+<li><p>Kein Checkmk-Agent auf dem Host selbst (Daten kommen ja per Piggyback).</p></li>
+<li><p>Piggyback-Daten werden immer erwartet (und es gibt einen Fehler, wenn diese fehlen).</p></li>
+<li><p>Die Hosts haben keine IP-Adresse.</p></li>
+</ol></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Nur wenn Sie <span class="guihint">Delete vanished hosts</span> aktivieren, werden Hosts auch
+wieder entfernt, wenn Sie in Ihrer dynamischen Umgebung verschwunden sind.</p></div>
+<div class="paragraph"><p>Möchten Sie nicht automatisch alle Hosts anlegen,
+so können Sie das mit der Option <span class="guihint">Only add matching hosts</span> mit einem <a href="regexes.html">regulären Ausdruck</a>
+einschränken.
+<strong>Wichtig:</strong> Gemeint sind hier die Hosts, welche <em>angelegt</em> werden und <em>nicht</em>
+die Hosts, über die Sie die Überwachung von z.B. AWS eingerichtet haben.</p></div>
+<div class="paragraph"><p>Letzteres können Sie mit der Option <span class="guihint">Restrict source hosts</span> erreichen. Diese
+bezieht sich auf die Namen der Hosts, welche Piggyback-Daten <em>erzeugen</em>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__änderungen_aktivieren">
+<span class="hidden-anchor sr-only" id="_änderungen_aktivieren"></span>Änderungen aktivieren</h4>
+<div class="paragraph"><p>Zwei weitere Optionen befassen sich mit dem automatischen Aktivieren von
+Änderungen — für den Fall, dass wirklich Hosts angelegt oder entfernt
+wurden. Denn nur dadurch tauchen diese dann auch im Monitoring auf.</p></div>
+<div class="paragraph"><p>Wenn das <a href="wato.html#activate_changes">Aktivieren der Änderungen</a> bei Ihrer Instanz sehr lange dauert, können Sie mit
+<span class="guihint">Group "Activate changes"</span> dafür sorgen, dass das nach Möglichkeit nicht bei jedem neuen
+Host sofort passiert, sondern nachdem einige „zusammengekommen" sind.</p></div>
+<div class="paragraph"><p>Ferner können Sie das automatische Aktivieren von Änderungen auch für bestimmte Tageszeiten
+komplett verbieten — z.B. für die Tageszeiten, wo ihr Monitoring-System aktiv betreut wird.
+Denn wenn der DCD Änderungen aktiviert, werden auch alle anderen Änderungen aktiv, die Sie
+oder ein Kollege gerade gemacht haben!</p></div>
+<div class="paragraph"><p>Nachdem Sie gespeichert haben, erscheint der Konnektor in der Liste.
+Er kann aber erst ausgeführt werden, wenn Sie die Änderungen aktiviert haben.
+Erst dadurch nimmt er seinen Dienst auf.
+Lassen Sie sich daher nicht von der Meldung irritieren, welche zunächst nach dem Speichern erscheint:<br>
+<code>Failed to get the status from DCD (The connection 'piggy01' does not exist)</code></p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__den_konnektor_in_betrieb_nehmen">
+<span class="hidden-anchor sr-only" id="_den_konnektor_in_betrieb_nehmen"></span>3. Den Konnektor in Betrieb nehmen</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading__erstes_aktivieren">
+<span class="hidden-anchor sr-only" id="_erstes_aktivieren"></span>3.1. Erstes Aktivieren</h3>
+<div class="paragraph"><p>Nach dem Speichern der Konnektoreigenschaften und einem Aktivieren der Änderungen nimmt die
+Verbindung automatisch ihren Betrieb auf. Das kann so schnell gehen, dass Sie bereits
+direkt nach dem Aktivieren der Änderungen sehen, wie Hosts im Monitoring angelegt wurden:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_pending_changes.png" alt="Liste der anstehenden Änderungen unmittelbar vor der automatischen Übernahme ins Monitoring."></div></div>
+<div class="paragraph"><p>Wenn Sie diese Seite kurz darauf neu laden, sind diese Änderungen wahrscheinlich schon
+wieder verschwunden, weil sie ja vom DCD automatisch aktiviert wurden. Die neuen Hosts
+sind dann bereits im Monitoring und werden regelmäßig überwacht.</p></div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_automatic_deletion_of_hosts">
+<span class="hidden-anchor sr-only" id="automatic_deletion_of_hosts"></span>4. Automatisches Löschen von Hosts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__wann_werden_hosts_entfernt">
+<span class="hidden-anchor sr-only" id="_wann_werden_hosts_entfernt"></span>4.1. Wann werden Hosts entfernt?</h3>
+<div class="paragraph"><p>Wie oben erwähnt, können Sie den DCD selbstverständlich Hosts, die es
+„nicht mehr gibt“, automatisch aus dem Monitoring löschen lassen. Das klingt erst einmal
+sehr logisch. Was <em>genau</em> das „nicht mehr gibt“ allerdings bedeutet, ist
+auf den zweiten Blick doch etwas komplexer, da es verschiedene Fälle zu
+betrachten gibt. Wir gehen in folgender Übersicht davon aus, dass Sie
+die Löschoption aktiviert haben. Denn sonst werden grundsätzlich nie
+Hosts automatisch entfernt.</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Situation</th>
+<th class="tableblock halign-left valign-top">Was geschieht?</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entfernen eines DCD-Konnektors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wenn Sie einen DCD-Konnektor stilllegen (<span class="guihint">do not activate this dynamic configuration connection</span>) oder ganz entfernen, bleiben alle Hosts, die durch diesen Konnektor erzeugt wurden, erhalten. Bei Bedarf müssen Sie diese von Hand löschen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Piggybacked Host wird nicht mehr überwacht</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wenn Sie den Host, über den Sie Ihre Cloud- oder Containerumgebung überwachen, aus dem Monitoring entfernen, erzeugt dieser natürlich keine Piggyback-Daten mehr. In diesem Fall werden die automatisch erzeugten Hosts <em>nach einer Stunde</em> automatisch entfernt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Piggybacked Host ist nicht erreichbar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wenn Ihre Cloud-Umgebung mal nicht erreichbar ist, und der Checkmk-Service, der diese abfragt, auf <span class="state2">CRIT</span> geht, so bleiben die erzeugten Hosts <em>auf unbestimmte Zeit</em> im Monitoring. Hier gibt es keinen einstündigen Timeout!</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Checkmk-Server selbst ist gestoppt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ein Stoppen des ganzen Monitorings führt zwar dazu, dass Piggyback-Daten veralten. Aber natürlich werden angelegte Hosts deswegen <em>nicht</em> gelöscht. Das gleiche gilt, wenn der Checkmk-Server neu gebootet wird (wodurch vorübergehend alle Piggyback-Daten verloren gehen, da diese in der RAM-Disk liegen).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ein Host ist nicht mehr in den Piggyback-Daten enthalten</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das ist quasi der Normalfall: Ein Host in der Cloud-/Containerumgebung ist verschwunden. In diesem Fall wird er <em>sofort</em> aus dem Monitoring entfernt.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Beachten Sie, dass es mit der Regel <span class="guihint">Automatic host removal</span> für alle Hosts die Möglichkeit gibt, diese <a href="hosts_setup.html#hosts_autoremove">automatisch entfernen zu lassen.</a>
+Beide Optionen zum <em>Lifecycle Management</em> arbeiten unabhängig voneinander, d.h. ein Host wird entfernt, wenn eine der beiden Voraussetzungen erfüllt ist.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__konfigurationsmöglichkeiten">
+<span class="hidden-anchor sr-only" id="_konfigurationsmöglichkeiten"></span>4.2. Konfigurationsmöglichkeiten</h3>
+<div class="paragraph"><p>Neben der Frage, ob Hosts überhaupt automatisch entfernt werden sollen, gibt es bei den Konnektoreigenschaften
+noch drei weitere Optionen, die das Löschen beeinflussen und die wir vorhin übersprungen haben:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_deletion_tuning.png" alt="Feineinstellungen zum automatischen Löschen von Hosts."></div></div>
+<div class="paragraph"><p>Die erste Einstellung — <span class="guihint">Prevent host deletion right after initialization</span> — betrifft einen
+kompletten Neustart des Checkmk-Servers selbst. Denn in dieser Situation fehlen erst einmal Piggyback-Daten
+von allen Hosts, bis diese zum ersten Mal abgefragt wurden. Um ein sinnloses Löschen und Wiedererscheinen von
+Hosts zu vermeiden (welches auch mit wiederholten Benachrichtigungen zu schon bekannten Problemen einhergeht), wird
+standardmäßig in den ersten 10 Minuten auf ein Löschen generell verzichtet. Diese Zeit können Sie hier
+einstellen.</p></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Validity of missing data</span> behandelt den
+Fall, dass ein Host, aufgrund dessen Monitoring-Daten etliche Hosts automatisch angelegt wurden,
+keine Piggyback-Daten mehr liefert. Das kann z.B. der Fall sein, wenn ein Zugriff
+auf AWS und Co. nicht mehr funktioniert. Oder natürlich auch, wenn Sie den Spezialagenten aus der
+Konfiguration entfernt haben. Die automatisch erzeugten Hosts bleiben dann noch die eingestellte
+Zeit im System, bevor sie aus der Setup-GUI entfernt werden.</p></div>
+<div class="paragraph"><p>Die Option <span class="guihint">Validity of outdated data</span> ist
+ähnlich, behandelt aber den Fall, dass schon noch Piggyback-Daten kommen, allerdings für manche Hosts
+nicht mehr. Das ist der normale Fall wenn z.B. virtuelle Maschinen oder Cloud-Dienste nicht mehr
+vorhanden sind. Wenn Sie möchten, dass die entsprechenden Objekte aus Checkmk dann zeitnah verschwinden,
+dann setzen Sie hier eine entsprechend kurze Zeitspanne.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__diagnose">
+<span class="hidden-anchor sr-only" id="_diagnose"></span>5. Diagnose</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__ausführungshistorie">
+<span class="hidden-anchor sr-only" id="_ausführungshistorie"></span>5.1. Ausführungshistorie</h3>
+<div class="paragraph"><p>Wenn Sie dem DCD bei der Arbeit zusehen möchten, finden Sie in der Liste der Konnektoren bei jedem Eintrag
+das Symbol <span class="image-inline"><img src="../images/icons/icon_dcd_history.png" alt="icon dcd history"></span>. Dieses führt Sie zur Ausführungshistorie:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/dcd_execution_history.png" alt="Ausführungshistorie bei Suche und Anlegen neuer Hosts."></div></div>
+<div class="paragraph"><p>Sollte aus irgendwelchen Gründen die Erstellung eines Hosts fehlschlagen, sehen Sie dies in der Ausführungshistorie.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__audit_log">
+<span class="hidden-anchor sr-only" id="_audit_log"></span>5.2. Audit log</h3>
+<div class="paragraph"><p>Mit <span class="guihint">Setup &gt; General &gt; Audit log</span> öffnen Sie eine Seite mit der Liste aller Änderungen, die in
+der Setup-GUI gemacht wurden — egal ob diese bereits aktiviert wurden oder nicht. Suchen Sie nach
+Einträgen vom Benutzer <code>automation</code> bzw. dem Benutzer, den Sie stattdessen autorisiert haben (siehe hierzu Abschnitt <a href="#user_automation">Der Benutzer 'automation'</a>). Unter diesem Account arbeitet der DCD und erzeugt
+Änderungen. So können Sie nachvollziehen, wann er welchen Host angelegt oder entfernt hat.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__log_datei_des_dcd">
+<span class="hidden-anchor sr-only" id="_log_datei_des_dcd"></span>5.3. Log-Datei des DCD</h3>
+<div class="paragraph"><p>Die Log-Datei des DCD ist <code>var/log/dcd.log</code>.
+Hier ist ein Beispiel, welches zu obiger Abbildung passt. Auch hier finden Sie die Fehlermeldung,
+dass ein bestimmter Host nicht angelegt werden konnte:</p></div>
+<div class="listingblock">
+<div class="title">var/log/dcd.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-11-10 14:45:22,916 [20] [cmk.dcd] ---------------------------------------------------
+2021-11-10 14:45:22,916 [20] [cmk.dcd] Dynamic Configuration Daemon (2.0.0p14) starting (Site: mysite, PID: 7450)...
+2021-11-10 14:45:22,917 [20] [cmk.dcd.ConnectionManager] Initializing 0 connections
+2021-11-10 14:45:22,918 [20] [cmk.dcd.ConnectionManager] Initialized all connections
+2021-11-10 14:45:22,943 [20] [cmk.dcd.CommandManager] Starting up
+2021-11-10 15:10:58,271 [20] [cmk.dcd.Manager] Reloading configuration
+2021-11-10 15:10:58,272 [20] [cmk.dcd.ConnectionManager] Initializing 1 connections
+2021-11-10 15:10:58,272 [20] [cmk.dcd.ConnectionManager] Initializing connection 'piggy01'
+2021-11-10 15:10:58,272 [20] [cmk.dcd.ConnectionManager] Initialized all connections
+2021-11-10 15:10:58,272 [20] [cmk.dcd.ConnectionManager] Starting new connections
+2021-11-10 15:10:58,272 [20] [cmk.dcd.piggy01] Starting up
+2021-11-10 15:10:58,273 [20] [cmk.dcd.ConnectionManager] Started all connections</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>6. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tmp/check_mk/piggyback</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier entstehen Piggyback-Daten. Für jeden in den Piggyback-Daten enthaltenen piggybacked Host entsteht ein Verzeichnis.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/log/dcd.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logdatei des Dynamic Configuration Daemon (DCD)</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#_verwalten_von_hosts_mit_dem_dcd">2. Verwalten von Hosts mit dem DCD</a><ul class="sectlevel1">
+<li><a href="#_der_piggyback_konnektor">2.1. Der Piggyback-Konnektor</a></li>
+<li><a href="#user_automation">2.2. Der Automationsbenutzer</a></li>
+<li>
+<a href="#_dynamische_konfiguration_einrichten">2.3. Dynamische Konfiguration einrichten</a><ul class="sectlevel2">
+<li><a href="#_sind_piggyback_daten_da">Sind Piggyback-Daten da?</a></li>
+<li><a href="#_generelle_einstellungen_eines_konnektors">Generelle Einstellungen eines Konnektors</a></li>
+<li><a href="#_eigenschaften_des_konnektors">Eigenschaften des Konnektors</a></li>
+<li><a href="#_%C3%A4nderungen_aktivieren">Änderungen aktivieren</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#_den_konnektor_in_betrieb_nehmen">3. Den Konnektor in Betrieb nehmen</a><ul class="sectlevel1"><li><a href="#_erstes_aktivieren">3.1. Erstes Aktivieren</a></li></ul>
+</li>
+<li>
+<a href="#automatic_deletion_of_hosts">4. Automatisches Löschen von Hosts</a><ul class="sectlevel1">
+<li><a href="#_wann_werden_hosts_entfernt">4.1. Wann werden Hosts entfernt?</a></li>
+<li><a href="#_konfigurationsm%C3%B6glichkeiten">4.2. Konfigurationsmöglichkeiten</a></li>
+</ul>
+</li>
+<li>
+<a href="#_diagnose">5. Diagnose</a><ul class="sectlevel1">
+<li><a href="#_ausf%C3%BChrungshistorie">5.1. Ausführungshistorie</a></li>
+<li><a href="#_audit_log">5.2. Audit log</a></li>
+<li><a href="#_log_datei_des_dcd">5.3. Log-Datei des DCD</a></li>
+</ul>
+</li>
+<li><a href="#files">6. Dateien und Verzeichnisse</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

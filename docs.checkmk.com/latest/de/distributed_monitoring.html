@@ -1,0 +1,2261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Hier erfahren Sie, wie Sie mit Checkmk ein verteiltes Monitoring mit einer Zentralinstanz und mehreren Remote-Instanzen einrichten können.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Verteiltes Monitoring - Checkmk skalieren und verteilen">
+<meta name="og:description" content="Hier erfahren Sie, wie Sie mit Checkmk ein verteiltes Monitoring mit einer Zentralinstanz und mehreren Remote-Instanzen einrichten können.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Verteiltes Monitoring - Checkmk skalieren und verteilen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/distributed_monitoring.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/distributed_monitoring.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/distributed_monitoring.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Verteiltes Monitoring</h1>
+<div class="details">
+<span id="revdate">Last modified on 19-Jan-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/onprem/de/distributed_monitoring.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="livestatus.html">Statusdaten abrufen via Livestatus</a>
+<a href="cmc.html">Der Checkmk Micro Core</a>
+<a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Unter dem Begriff „verteiltes Monitoring“ (<em>distributed monitoring</em>) versteht
+wahrscheinlich nicht jeder das Gleiche. Und eigentlich ist Monitoring ja immer
+über viele Rechner verteilt — solange das Monitoring-System nicht nur
+sich selbst überwacht, was schließlich wenig nützlich wäre.</p></div>
+<div class="paragraph"><p>In diesem Handbuch sprechen wir immer dann von einem verteilten Monitoring,
+wenn das gesamte Monitoring-System aus <em>mehr als einer Checkmk-Instanz</em> besteht.
+Dabei gibt es verschiedene Gründe für das Aufteilen in mehrere Instanzen:</p></div>
+<div class="ulist"><ul>
+<li><p>Performance: Die Rechenlast des Monitorings soll oder muss auf mehrere Maschinen verteilt werden.</p></li>
+<li><p>Organisation: Die Instanzen sollen von unterschiedlichen Personenkreisen eigenverantwortlich administriert werden.</p></li>
+<li><p>Verfügbarkeit: Das Monitoring an einem Standort soll unabhängig von anderen Standorten funktionieren.</p></li>
+<li><p>Sicherheit: Datenströme zwischen zwei Sicherheitsbereichen sollen getrennt und genau kontrolliert werden (DMZ etc.).</p></li>
+<li><p>Netzwerk: Standorte, die nur schmalbandig oder unzuverlässig angebunden sind, können nicht zuverlässig von der Ferne aus überwacht werden.</p></li>
+</ul></div>
+<div class="paragraph"><p>Checkmk unterstützt mehrere Verfahren für den Aufbau eines verteilten Monitorings.
+Manche davon beherrscht Checkmk, weil es mit Nagios weitgehend kompatibel ist bzw. darauf aufbaut (falls Nagios als Kern eingestellt wurde).
+Dazu gehört z.B. das Verfahren mit <code>mod_gearman</code>.
+Dieses bietet gegenüber den Checkmk-eigenen Verfahren keine Vorteile und ist noch dazu umständlicher einzurichten.
+Wir empfehlen es daher nicht.</p></div>
+<div class="paragraph"><p>Das von Checkmk bevorzugte Verfahren basiert auf <a href="#livestatus">Livestatus</a>
+und einer automatischen Konfigurationsverteilung. Für Situationen mit stark
+abgeschotteten Netzen oder sogar einer <em>strikt unidirektionalen Datenübertragung</em>
+von der Peripherie in die Zentrale gibt es eine Methode mit <a href="#livedump">Livedump bzw. CMCDump.</a>
+Beide Methoden können kombiniert werden.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_livestatus">
+<span class="hidden-anchor sr-only" id="livestatus"></span>2. Verteiltes Monitoring mit Livestatus</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__grundprinzip">
+<span class="hidden-anchor sr-only" id="_grundprinzip"></span>2.1. Grundprinzip</h3>
+<div class="sect3">
+<h4 id="heading_central_status">
+<span class="hidden-anchor sr-only" id="central_status"></span>Zentraler Status</h4>
+<div class="paragraph"><p><a href="livestatus.html">Livestatus</a> ist eine in den <a href="cmc.html">Monitoring-Kern</a> integrierte
+Schnittstelle, mit der andere Programme von außen <em>Statusdaten</em> abfragen
+und <em>Kommandos</em> ausführen können. Livestatus kann über das Netzwerk
+verfügbar gemacht werden, so dass eine entfernte Checkmk-Instanz (<em>Remote-Instanz</em>) zugreifen kann.
+Die <a href="user_interface.html">Benutzeroberfläche</a> von Checkmk nutzt Livestatus, um
+alle angebundenen Instanzen zu einer Gesamtsicht zusammenzuführen. Das fühlt
+sich dann „wie ein großes" Monitoring-System an.</p></div>
+<div class="paragraph"><p>Folgende Skizze zeigt schematisch den Aufbau eines verteilten Monitorings
+mit Livestatus über drei Standorte. In der Zentrale befindet sich die
+Checkmk-Instanz <em>Central Site.</em> Von dieser aus werden zentrale Systeme
+direkt überwacht. Außerdem gibt es die Instanzen <em>Remote Site 1</em>
+und <em>Remote Site 2,</em> welche sich in anderen Netzen befinden und die
+dortigen Systeme überwachen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_overview_de.png" alt="distributed monitoring overview de"></div></div>
+<div class="paragraph"><p>Das Besondere an dieser Methode ist, dass der Monitoring-Status der entfernten Instanzen
+<em>nicht</em> ständig an die Zentrale übertragen wird. Die GUI ruft von den
+entfernten Instanzen immer nur <em>live</em> diejenigen Daten ab, die ein
+Benutzer in der Zentrale haben will. Die Daten werden dann in einer kombinierten
+Ansicht zusammengeführt. Es gibt also <em>keine zentrale Datenhaltung,</em>
+was riesige Vorteile für die Skalierung bedeutet!</p></div>
+<div class="paragraph"><p>Hier sind einige der Vorteile dieser Methode:</p></div>
+<div class="ulist"><ul>
+<li><p><strong>Skalierung</strong>: Das Monitoring selbst erzeugt keinerlei Netzwerkverkehr zwischen der Zentralinstanz und Remote-Instanz. Dadurch können hundert und mehr Standorte angebunden werden.</p></li>
+<li><p><strong>Zuverlässigkeit</strong>: Fällt die Netzwerkverbindung zu einer Remote-Instanz aus, so geht das Monitoring dort trotzdem völlig normal weiter. Es gibt keine Lücke in der Datenaufzeichnung und auch keinen Datenstau.  Lokale Benachrichtigungen funktionieren weiterhin.</p></li>
+<li><p><strong>Einfachheit</strong>: Instanzen können sehr einfach eingebunden und wieder entfernt werden.</p></li>
+<li><p><strong>Flexibilität</strong>: Die Remote-Instanzen sind weiterhin eigenständig und können an dem jeweiligen Standort für das Operating genutzt werden. Das ist insbesondere dann interessant, wenn der „Standort“ auf keinen Fall Zugriff auf den Rest des Monitorings haben darf.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading_distr_wato">
+<span class="hidden-anchor sr-only" id="distr_wato"></span>Zentrale Konfiguration</h4>
+<div class="paragraph"><p>Bei einem verteilten System via Livestatus wie oben beschrieben, ist es
+durchaus möglich, dass die einzelnen Instanzen von unterschiedlichen Teams
+eigenverantwortlich gepflegt werden und die Zentralinstanz lediglich die Aufgabe hat,
+ein zentrales Dashboard bereitzustellen.</p></div>
+<div class="paragraph"><p>Falls aber mehrere oder alle Instanzen von den gleichen Menschen administriert
+werden sollen, ist eine zentrale Konfiguration viel komfortabler. Checkmk
+unterstützt dies und wir sprechen dann von einer verteilten Konfigurationsumgebung.
+Dabei werden alle Hosts und Services, Benutzer und Rechte, Zeitperioden, Benachrichtigungen u.s.w. im <span class="guihint">Setup</span> der Zentralinstanz zentral gepflegt und dann automatisch nach Ihren Vorgaben auf die Remote-Instanzen verteilt.</p></div>
+<div class="paragraph"><p>So ein System hat nicht nur eine gemeinsame Statusoberfläche, sondern
+auch eine gemeinsame Konfiguration und fühlt sich dann endgültig wie „ein
+großes System“ an.</p></div>
+<div class="paragraph"><p>Sie können solch ein System sogar noch um reine <a href="#viewer">Viewer-Instanzen</a> erweitern, die nur als Statusoberflächen dienen, etwa für Teilbereiche oder bestimmte Nutzergruppen.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_distr_wato_config">
+<span class="hidden-anchor sr-only" id="distr_wato_config"></span>2.2. Verteiltes Monitoring aufsetzen</h3>
+<div class="paragraph"><p>Das Aufsetzen eines verteilten Monitorings via Livestatus und verteilter Konfigurationsumgebung geschieht in folgenden Schritten:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Zentralinstanz zunächst ganz normal wie eine Einzelinstanz aufsetzen</p></li>
+<li><p>Remote-Instanzen aufsetzen und Livestatus per Netzwerk freigeben</p></li>
+<li><p>Auf der Zentralinstanz die Remote-Instanzen über <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span> einbinden</p></li>
+<li><p>Bei Hosts und Ordnern festlegen, von welcher Instanz aus diese überwacht werden sollen</p></li>
+<li><p>Serviceerkennung für umgezogene Hosts neu durchführen und Änderungen aktivieren</p></li>
+</ol></div>
+<div class="sect3">
+<h4 id="heading__zentralinstanz_aufsetzen">
+<span class="hidden-anchor sr-only" id="_zentralinstanz_aufsetzen"></span>Zentralinstanz aufsetzen</h4>
+<div class="paragraph"><p>An die Zentrale werden keine speziellen Anforderungen gestellt.
+Das bedeutet, dass Sie auch eine schon länger bestehende Instanz ohne weitere Anpassungen zu einem verteilten Monitoring ausbauen können.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__remote_instanzen_aufsetzen_und_livestatus_per_netzwerk_freigeben">
+<span class="hidden-anchor sr-only" id="_remote_instanzen_aufsetzen_und_livestatus_per_netzwerk_freigeben"></span>Remote-Instanzen aufsetzen und Livestatus per Netzwerk freigeben</h4>
+<div class="paragraph"><p>Die Remote-Instanzen werden zunächst als neue Instanzen wie üblich mit <code>omd create</code> erzeugt.
+Dies geschieht dann natürlich auf dem (entfernten) Server, der für die jeweilige Remote-Instanz vorgesehen ist.</p></div>
+<div class="paragraph"><p><strong>Hinweise</strong>:</p></div>
+<div class="ulist"><ul>
+<li><p>Verwenden Sie für die Remote-Instanzen IDs, die in Ihrem verteilten Monitoring <em>eindeutig</em> sind.</p></li>
+<li><p>Die Checkmk-Version (z.B. <span class="new">2.2.0</span>) der Remote- und Zentralinstanz ist dieselbe – ein <a href="#mixed_versions">Mischbetrieb</a> wird nur für die leichtere Durchführung von Updates unterstützt.</p></li>
+<li><p>Da Checkmk mehrere Instanzen auf einem Server unterstützt, kann die Remote-Instanz auch auf dem gleichen Server laufen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Hier ist ein Beispiel für das Anlegen einer Remote-Instanz mit dem Namen <code>remote1</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>create<span class="tok-w"> </span>remote1
+<span class="tok-go">Adding /opt/omd/sites/remote1/tmp to /etc/fstab.</span>
+<span class="tok-go">Creating temporary filesystem /omd/sites/remote1/tmp...<span class="green">OK</span></span>
+<span class="tok-go">Updating core configuration...</span>
+<span class="tok-go">Generating configuration for core (type cmc)...</span>
+<span class="tok-go">Starting full compilation for all hosts Creating global helper config...<span class="green">OK</span></span>
+<span class="tok-go"> Creating cmc protobuf configuration...OK</span>
+<span class="tok-go">Executing post-create script "01_create-sample-config.py"...<span class="green">OK</span></span>
+<span class="tok-go">Restarting Apache...<span class="green">OK</span></span>
+<span class="tok-go">Created new site remote1 with version 2.2.0p1.cee.</span>
+
+<span class="tok-go">  The site can be started with <strong>omd start remote1</strong>.</span>
+<span class="tok-go">  The default web UI is available at <strong>http://myserver/remote1/</strong></span>
+
+<span class="tok-go">  The admin user for the web applications is <strong>cmkadmin</strong> with password: <strong>lEnM8dUV</strong></span>
+<span class="tok-go">  For command line administration of the site, log in with <strong>'omd su remote1'</strong></span>
+<span class="tok-go">  After logging in, you can change the password for cmkadmin with <strong>'cmk-passwd cmkadmin'</strong>.</span></code></pre></div></div>
+<div class="paragraph"><p>Der wichtigste Schritt ist jetzt, dass Sie Livestatus via TCP auf dem Netzwerk
+freigeben. Beachten Sie dabei, dass Livestatus per se kein abgesichertes
+Protokoll ist und nur in einem sicheren Netzwerk (abgesichertes LAN, VPN
+etc.) verwendet werden darf. Das Freigeben geschieht als Instanzbenutzer
+bei noch gestoppter Instanz per <code>omd config</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>su<span class="tok-w"> </span>-<span class="tok-w"> </span>remote1
+<span class="tok-gp">OMD[remote1]:~$ </span>omd<span class="tok-w"> </span>config</code></pre></div></div>
+<div class="paragraph"><p>Wählen Sie jetzt <span class="guihint">Distributed Monitoring</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_omd_config.png" alt="distributed monitoring omd config" width="46%"></div></div>
+<div class="paragraph"><p>Setzen Sie <span class="guihint">LIVESTATUS_TCP</span> auf <span class="guihint">on</span> und tragen Sie für
+<span class="guihint">LIVESTATUS_TCP_PORT</span> eine freie Portnummer ein, die auf diesem Server
+eindeutig ist. Der Default dafür ist 6557:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livestatus_tcp_activated.png" alt="distributed monitoring livestatus tcp activated" width="380"></div></div>
+<div class="paragraph"><p>Nach dem Speichern starten Sie die Instanz wie gewohnt mit <code>omd start</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>omd<span class="tok-w"> </span>start
+<span class="tok-go">Temporary filesystem already mounted</span>
+<span class="tok-go">Starting mkeventd...OK</span>
+<span class="tok-go">Starting liveproxyd...OK</span>
+<span class="tok-go">Starting mknotifyd...OK</span>
+<span class="tok-go">Starting rrdcached...OK</span>
+<span class="tok-go">Starting cmc...OK</span>
+<span class="tok-go">Starting apache...OK</span>
+<span class="tok-go">Starting dcd...OK</span>
+<span class="tok-go">Starting redis...OK</span>
+<span class="tok-go">Starting xinetd...OK</span>
+<span class="tok-go">Initializing Crontab...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Merken Sie sich das Passwort für <code>cmkadmin</code>. Sobald die Remote-Instanz der Zentralinstanz untergeordnet wurde,
+werden sowieso alle Benutzer durch die von der Zentralinstanz ausgetauscht.</p></div>
+<div class="paragraph"><p>Die Instanz ist jetzt bereit. Eine Kontrolle mit <code>netstat</code> zeigt, dass
+Port 6557 geöffnet ist. Die Bindung an diesen Port geschieht mit einer
+Instanz des Internet Superservers <code>xinetd</code>, welcher direkt in der Instanz läuft:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>netstat<span class="tok-w"> </span>-lnp<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-m">6557</span>
+<span class="tok-go">tcp6       0      0 :::6557               :::*          LISTEN      10719/xinetd</span></code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading_connect_remote_sites">
+<span class="hidden-anchor sr-only" id="connect_remote_sites"></span>Remote-Instanzen in die Zentralinstanz einbinden</h4>
+<div class="paragraph"><p>Die Konfiguration des verteilten Monitorings wird ausschließlich auf der Zentralinstanz im Menü <span class="guihint">Setup &gt; General &gt; Distributed Monitoring</span> vorgenommen.
+Hier verwalten Sie die Verbindungen zu den einzelnen Instanzen.
+Dabei zählt die Zentrale selbst auch als Instanz und ist bereits in der Liste eingetragen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_central_site.png" alt="distributed monitoring central site"></div></div>
+<div class="paragraph"><p>Legen Sie jetzt mit <span class="image-inline"><img src="../images/icons/icon_new.png" alt="icon new"></span> <span class="guihint">Add connection</span> die Verbindung zur ersten Remote-Instanz an:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_basic_settings.png" alt="distributed monitoring basic settings"></div></div>
+<div class="paragraph"><p>Bei den <span class="guihint">Basic settings</span> ist es wichtig, dass Sie als <span class="guihint">Site ID</span> exakt den Namen der Remote-Instanz verwenden, so wie diese mit <code>omd create</code> erzeugt wurde.
+Den Alias können Sie wie immer frei vergeben und auch später ändern.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_status_connection.png" alt="distributed monitoring status connection"></div></div>
+<div class="paragraph"><p>Bei den Einstellungen der <span class="guihint">Status connection</span> geht es darum,
+wie die Zentralinstanz den Status der Remote-Instanzen per Livestatus abfragt.
+Das Beispiel im Screenshot zeigt eine Verbindung mit der Methode <span class="guihint">Connect via TCP (IPv4)</span>.
+Diese ist für stabile Verbindungen mit kurzen Latenzzeiten optimal (wie z.B. in einem LAN).
+Optimale Einstellungen bei WAN-Verbindungen besprechen wir <a href="#wan">weiter unten.</a></p></div>
+<div class="paragraph"><p>Tragen Sie hier die HTTP-URL zu der Weboberfläche der Remote-Instanz ein und zwar nur den Teil bis vor dem <code>check_mk/</code>.
+Wenn Sie grundsätzlich per HTTPS auf Checkmk zugreifen, dann ersetzen Sie das <code>http</code> hier durch <code>https</code>.
+Weitere Details erfahren Sie wie immer in der <span class="image-inline"><img src="../images/icons/icon_help.png" alt="icon help"></span> Inline-Hilfe oder dem <a href="omd_https.html">Handbuchartikel zu HTTPS mit Checkmk.</a></p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_configuration_connection.png" alt="distributed monitoring configuration connection"></div></div>
+<div class="paragraph"><p>Das Replizieren der Konfiguration und somit die Verwendung der verteilten Konfigurationsumgebung ist, wie eingangs besprochen, optional.
+Aktivieren Sie die Replikation, wenn Sie die Remote-Instanz von der Zentralinstanz aus mitkonfigurieren möchten.
+In diesem Fall wählen Sie genau die Einstellungen, die Sie in obiger Abbildung sehen.</p></div>
+<div class="paragraph"><p>Sehr wichtig ist eine korrekte Einstellung für <span class="guihint">URL of remote site</span>.
+Die URL muss immer mit <code>/check_mk/</code> enden.
+Eine Verbindung mit HTTPS ist empfehlenswert, setzt aber voraus, dass der Apache der Remote-Instanz HTTPS unterstützt.
+Dies muss auf Linux-Ebene des entfernten Servers <a href="omd_https.html">von Hand</a> aufgesetzt werden.
+Bei der Checkmk Appliance kann <a href="appliance_usage.html#ssl">HTTPS über die webbasierte Konfigurationsoberfläche eingerichtet</a> werden.
+Falls Sie ein selbst signiertes Zertifikat verwenden, benötigen Sie die Checkbox <span class="guihint">Ignore SSL certificate errors</span>.</p></div>
+<div class="paragraph"><p>Nachdem Sie die Maske gespeichert haben, sehen Sie in der Übersicht eine zweite Instanz:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_before_login.png" alt="distributed monitoring before login"></div></div>
+<div class="paragraph"><p>Der Monitoring-Status der (noch leeren) Remote-Instanz ist jetzt schon korrekt
+eingebunden. Für eine verteilte Konfigurationsumgebung benötigen Sie noch einen <span class="guihint">Login</span> auf die entfernte Instanz von Checkmk.
+Dabei tauscht die Zentralinstanz mit der Remote-Instanz ein Anmeldegeheimnis aus, über das dann in Zukunft alle weitere Kommunikation abläuft.
+Der Zugang <code>cmkadmin</code> auf der Instanz wird dann nicht mehr verwendet.</p></div>
+<div class="paragraph"><p>Verwenden Sie als <span class="guihint">Login credentials</span> <code>cmkadmin</code> und das generierte Passwort der Remote-Instanz. Bestätigen Sie an dieser Stelle noch per <span class="guihint">Confirm overwrite,</span> dass Sie die Einstellungen überschreiben wollen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_login_credentials.png" alt="distributed monitoring login credentials"></div></div>
+<div class="paragraph"><p>Ein erfolgreicher Login wird so quittiert:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_successful_login.png" alt="distributed monitoring successful login"></div></div>
+<div class="paragraph"><p>Sollte es zu einem Fehler bei der Anmeldung kommen, kann dies verschiedene Gründe haben, z.B.:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Die Remote-Instanz ist gerade gestoppt.</p></li>
+<li><p>Die <span class="guihint">Multisite-URL of remote site</span> ist nicht korrekt eingestellt.</p></li>
+<li><p>Die Remote-Instanz ist unter dem in der URL eingestellten Hostnamen <em>von der Zentralinstanz aus</em> nicht erreichbar.</p></li>
+<li><p>Zentralinstanz und Remote-Instanz haben (zu) unterschiedliche Checkmk-Versionen.</p></li>
+<li><p>Benutzer und/oder Passwort sind falsch.</p></li>
+</ol></div>
+<div class="paragraph"><p>Die Punkte eins und zwei können Sie einfach testen, indem Sie die URL der Remote-Instanz von Hand in Ihrem Browser
+aufrufen.</p></div>
+<div class="paragraph"><p>Wenn alles geklappt hat, führen Sie nun ein <span class="guihint">Activate pending changes</span> aus.
+Auf der Übersichtsseite der noch nicht aktivierten Änderungen sehen Sie auch eine Übersicht der Livestatus-Verbindungen sowie des Synchronisationszustands der verteilten Konfigurationsumgebung der einzelnen Instanzen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_activate_pending_changes.png" alt="distributed monitoring activate pending changes"></div></div>
+<div class="paragraph"><p>Die Spalte <span class="guihint">Version</span> zeigt die Livestatus-Version der jeweiligen Instanz an.
+Bei der Verwendung des <a href="cmc.html">CMC</a> als Checkmk-Kern (kommerzielle Editionen) ist die Versionsnummer des Kerns
+(Spalte <span class="guihint">Core</span>) identisch mit der Livestatus-Version.
+Falls Sie Nagios als Kern verwenden (Checkmk Raw), sehen Sie hier die Versionsnummer von Nagios.</p></div>
+<div class="paragraph"><p>Folgende Symbole zeigen Ihnen den Replikationsstatus der Konfigurationsumgebung:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_need_restart.png" alt="icon need restart"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Instanz hat ausstehende Änderungen und muss neu gestartet werden. Mit einem Klick auf den Knopf <span class="image-inline"><img src="../images/icons/icon_need_restart.png" alt="icon need restart"></span> können Sie dies gezielt für diese Instanz durchführen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_need_replicate.png" alt="icon need replicate"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Konfigurationsumgebung dieser Instanz ist nicht synchron und muss übertragen werden. Danach ist dann natürlich auch ein Neustart notwendig, um die Konfiguration zu aktivieren. Beides zusammen erreichen Sie mit einem Klick auf den Knopf <span class="image-inline"><img src="../images/icons/icon_need_replicate.png" alt="icon need replicate"></span>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>In der Spalte <span class="guihint">Status</span> sehen Sie den Zustand der Livestatus-Verbindung
+zur jeweiligen Instanz. Dieser wird rein informativ angezeigt, da die Konfiguration
+ja nicht per Livestatus, sondern per HTTP übertragen wird.
+Folgende Werte sind möglich:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_status_label_online.png" alt="icon status label online" width="80px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Instanz ist per Livestatus erreichbar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_status_label_dead.png" alt="icon status label dead" width="80px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Instanz ist gerade nicht erreichbar. Livestatus-Anfragen laufen in einen <em>Timeout</em>. Dies verzögert den Seitenaufbau. Statusdaten dieser Instanz sind in der GUI nicht sichtbar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_status_label_down.png" alt="icon status label down" width="80px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Instanz ist gerade nicht erreichbar, aber das ist aufgrund der Einrichtung eines Status-Hosts oder durch den <a href="#livestatusproxy">Livestatus-Proxy</a> bekannt (siehe <a href="#wan">unten</a>). Die Nichterreichbarkeit führt <strong>nicht</strong> zu Timeouts. Statusdaten dieser Instanz sind in der GUI nicht sichtbar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_status_label_disabled.png" alt="icon status label disabled" width="80px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Livestatus-Verbindung zu dieser Instanz ist vorübergehend durch den Administrator (der Zentralinstanz) deaktiviert worden. Die Einstellung entspricht der Checkbox <span class="guihint">Temporarily disable this connection</span> in der Einstellung dieser Verbindung.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Ein Klick auf <span class="image-inline"><img src="../images/icons/icon_activate_changes.png" alt="icon activate changes"></span> <span class="guihint">Activate on selected sites</span> synchronisiert nun alle Instanzen und aktiviert die Änderungen.
+Dies geschieht parallel, so dass sich die Gesamtzeit nach der Dauer bei der langsamsten Instanz richtet. In der Zeit enthalten sind die Erstellung eines Konfigurations-Snapshots für die jeweilige Instanz, das Übertragen per HTTP, das Auspacken des Snapshots auf der Instanz und das Aktivieren der Änderungen.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Verlassen Sie die Seite nicht, bevor die Synchronisation auf
+alle Instanzen abgeschlossen wurde. Ein Verlassen der Seite unterbricht die
+Synchronisation.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__bei_hosts_und_ordnern_festlegen_von_welcher_instanz_aus_diese_überwacht_werden_sollen">
+<span class="hidden-anchor sr-only" id="_bei_hosts_und_ordnern_festlegen_von_welcher_instanz_aus_diese_überwacht_werden_sollen"></span>Bei Hosts und Ordnern festlegen, von welcher Instanz aus diese überwacht werden sollen</h4>
+<div class="paragraph"><p>Nachdem Ihre verteilte Umgebung eingerichtet ist, können Sie beginnen, diese zu nutzen.
+Eigentlich müssen Sie jetzt nur noch bei jedem Host sagen, von welcher Instanz aus dieser
+überwacht werden soll. Per Default ist die Zentralinstanz eingestellt.</p></div>
+<div class="paragraph"><p>Das nötige Attribut dazu heißt „<span class="guihint">Monitored on site</span>“.
+Sie können das für jeden einzelnen Host individuell einstellen. Aber natürlich bietet es sich an,
+das auf Ordnerebene zu konfigurieren:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_monitored_on_site.png" alt="distributed monitoring monitored on site"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__service_erkennung_für_umgezogene_hosts_neu_durchführen_und_änderungen_aktivieren">
+<span class="hidden-anchor sr-only" id="_service_erkennung_für_umgezogene_hosts_neu_durchführen_und_änderungen_aktivieren"></span>Service-Erkennung für umgezogene Hosts neu durchführen und Änderungen aktivieren</h4>
+<div class="paragraph"><p>Das Aufnehmen von Hosts funktioniert wie gewohnt. Bis auf die Tatsache, dass die Überwachung
+und auch die Service-Erkennung von der jeweiligen Remote-Instanz durchgeführt wird,
+gibt es nichts Spezielles zu beachten.</p></div>
+<div class="paragraph"><p>Beim <strong>Umziehen</strong> von Hosts von einer zu einer anderen Instanz gibt es einige Dinge zu beachten.
+Denn es werden <em>weder aktuelle noch historische Statusdaten dieser Hosts übernommen.</em>
+Lediglich die Konfiguration des Hosts bleibt erhalten.
+Es ist quasi, als würden Sie den Host auf einer Instanz entfernen und auf der anderen <em>neu anlegen</em>. Das bedeutet unter anderem:</p></div>
+<div class="ulist"><ul>
+<li><p>Automatisch erkannte Services werden nicht übernommen. Führen Sie daher nach dem Umziehen eine <a href="wato_services.html">Service-Erkennung</a> durch.</p></li>
+<li><p>Host und Services beginnen wieder bei <span class="statep">PEND</span>. Zu eventuell aktuell vorhandenen Problemen werden neue Benachrichtigungen erzeugt und gegebenenfalls versendet.</p></li>
+<li><p>Historische <a href="graphing.html">Metriken</a> gehen verloren. Dies können Sie vermeiden, indem Sie betroffene RRD-Dateien von Hand kopieren. Die Lage der Dateien finden Sie unter <a href="#files">Dateien und Verzeichnisse.</a></p></li>
+<li><p>Daten zur Verfügbarkeit und zu historischen Ereignissen gehen verloren. Diese sind leider nicht so einfach zu migrieren, da diese Daten sich in einzelnen Zeilen im Monitoring-Log befinden.</p></li>
+</ul></div>
+<div class="paragraph"><p>Wenn die Kontinuität der Historie für Sie wichtig ist, sollten Sie schon
+beim Aufbau des Monitorings genau planen, welcher Host von wo aus überwacht
+werden soll.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_livestatus_tls">
+<span class="hidden-anchor sr-only" id="livestatus_tls"></span>2.3. Livestatus verschlüsselt anbinden</h3>
+<div class="paragraph"><p>Livestatus-Verbindungen können zwischen der Zentralinstanz und einer Remote-Instanz verschlüsselt werden.
+Bei neu erzeugten Instanzen müssen Sie nichts weiter tun.
+Checkmk kümmert sich automatisch um die nötigen Schritte.
+Sobald Sie dann mittels <a href="#distr_wato_config"><code>omd config</code></a> Livestatus aktivieren, ist die Verschlüsselung durch TLS automatisch aktiviert:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livestatus_tcp_tls_activated.png" alt="distributed monitoring livestatus tcp tls activated" width="64%"></div></div>
+<div class="paragraph"><p>Die Konfiguration des verteilten Monitorings bleibt daher so einfach wie
+bisher. Bei neuen Verbindungen zu anderen Instanzen ist dann die Option
+<span class="guihint">Encryption</span> automatisch aktiviert.</p></div>
+<div class="paragraph"><p>Nachdem Sie die Remote-Instanz hinzugefügt haben, werden Sie zwei Dinge
+bemerken: Zum einen wird die Verbindung durch das neue Icon <span class="image-inline"><img src="../images/icons/icon_encrypted.png" alt="icon encrypted"></span>
+als verschlüsselt markiert. Und zum anderen wird Checkmk Ihnen anzeigen,
+dass der CA der Remote-Instanz nicht vertraut wird. Mit einem Klick
+auf <span class="image-inline"><img src="../images/icons/icon_encrypted.png" alt="icon encrypted"></span> gelangen Sie in die Details der benutzten
+Zertifikate. Mit einem Klick auf <span class="image-inline"><img src="../images/icons/icon_trust.png" alt="icon trust"></span> können Sie die CA
+bequem über die Weboberfläche hinzufügen. Danach werden beide Zertifikate
+als vertrauenswürdig gelistet:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_certificate_details.png" alt="distributed monitoring certificate details"></div></div>
+<div class="sect3">
+<h4 id="heading__details_zu_den_eingesetzten_technologien">
+<span class="hidden-anchor sr-only" id="_details_zu_den_eingesetzten_technologien"></span>Details zu den eingesetzten Technologien</h4>
+<div class="paragraph"><p>Um die Verschlüsselung zu realisieren, nutzt Checkmk das Programm
+<code>stunnel</code> zusammen mit einem eigenen Zertifikat und einer eigenen
+<em>Certificate Authority</em> (CA), mit der das Zertifikat signiert wird. Sie
+werden bei einer neuen Instanz automatisch zusammen mit dieser individuell
+erzeugt und sind daher <strong>keine</strong> vordefinierten, statischen CAs oder
+Zertifikate. Das ist ein sehr wichtiger Sicherheitsfaktor, um zu verhindern,
+dass gefälschte Zertifikate von Angreifern benutzt werden können, weil sie
+Zugriff auf eine allgemein zugängliche CA bekommen konnten. Die erzeugten</p></div>
+<div class="paragraph"><p>Zertifikate haben zusätzlich folgende Eigenschaften:</p></div>
+<div class="ulist"><ul>
+<li><p>Beide Zertifikate liegen im PEM-Format vor. Das signierte Zertifikat der Instanz enthält außerdem die komplette Zertifikatskette.</p></li>
+<li><p>Die Schlüssel verwenden 2048-Bit RSA und das Zertifikat wird mit SHA512 signiert.</p></li>
+<li><p>Das Zertifikat der Instanz ist 999 Jahre gültig.</p></li>
+</ul></div>
+<div class="paragraph"><p>Dass das Standard-Zertifikat so lange gültig ist, verhindert sehr effektiv,
+dass Sie nach einiger Zeit Verbindungsprobleme bekommen, die Sie nicht einordnen
+können. Gleichzeitig ist es dadurch natürlich auch möglich ein einmal
+kompromittiertes Zertifikat auch entsprechend lange zu missbrauchen. Wenn
+Sie also befürchten, dass ein Angreifer Zugriff auf die CA oder das damit
+signierte Instanz-Zertifikat bekommen hat, ersetzen Sie immer beide Zertifikate
+(CA und Instanz)!</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_livestatus_tls_omd_update">
+<span class="hidden-anchor sr-only" id="livestatus_tls_omd_update"></span>Verhalten beim Update von Checkmk</h4>
+<div class="paragraph"><p>Im Zuge eines Updates von Checkmk werden die beiden Optionen <code>LIVESTATUS_TCP</code> und <code>LIVESTATUS_TCP_TLS</code> niemals automatisch verändert.
+Eine automatische Aktivierung von TLS könnte schließlich dazu führen, dass Ihre Remote-Instanzen nicht mehr abgefragt werden können.</p></div>
+<div class="paragraph"><p>Sollten Sie Livestatus bisher unverschlüsselt einsetzen und sich jetzt entscheiden die Verschlüsselung nutzen zu wollen, müssen sie diese manuell aktivieren.
+Stoppen Sie dazu zuerst die betroffenen Instanzen und aktivieren Sie TLS anschließend mit dem folgenden Befehl:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>config<span class="tok-w"> </span><span class="tok-nb">set</span><span class="tok-w"> </span>LIVESTATUS_TCP_TLS<span class="tok-w"> </span>on</code></pre></div></div>
+<div class="paragraph"><p>Da die Zertifikate bei dem Update automatisch erzeugt wurden, wird die Instanz danach sofort die Verschlüsselung nutzen.
+Damit Sie also von der Zentralinstanz weiterhin auf die Remote-Instanz zugreifen können, muss gewährleistet sein, dass im Menü unter <span class="guihint">Setup &gt; General &gt; Distributed Monitoring</span> bei der jeweiligen Instanz unter <span class="guihint">Encryption</span> die Option <span class="guihint">Encrypt data using TLS</span> ausgewählt ist. Prüfen Sie dies und stellen Sie die Option gegebenenfalls, wie im folgenden Screenshots zu sehen ist, um:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_enable_encryption.png" alt="distributed monitoring enable encryption"></div></div>
+<div class="paragraph"><p>Der letzte Schritt ist wieder derselbe wie oben beschrieben: Auch hier müssen Sie zunächst die CA der Remote-Instanz als vertrauenswürdig markieren.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__besonderheiten_im_verteilten_setup">
+<span class="hidden-anchor sr-only" id="_besonderheiten_im_verteilten_setup"></span>2.4. Besonderheiten im verteilten Setup</h3>
+<div class="paragraph"><p>Ein verteiltes Monitoring via Livestatus verhält sich zwar fast wie ein einziges System, hat aber dennoch ein paar Besonderheiten:</p></div>
+<div class="sect3">
+<h4 id="heading__zugriff_auf_die_überwachten_hosts">
+<span class="hidden-anchor sr-only" id="_zugriff_auf_die_überwachten_hosts"></span>Zugriff auf die überwachten Hosts</h4>
+<div class="paragraph"><p>Alle Zugriffe auf einen überwachten Host geschehen konsequent von der Instanz aus, der dieser Host zugeordnet ist.
+Das betrifft nicht nur die eigentliche Überwachung, sondern auch die Serviceerkennung, die <a href="wato_monitoringagents.html#diagnosticpage">Diagnoseseite,</a> die <a href="notifications.html">Benachrichtigungen,</a> <a href="alert_handlers.html">Alert Handler</a> und alles andere.
+Das ist sehr wichtig, denn es ist überhaupt nicht gesagt, dass die Zentralinstanz auf diese Hosts Zugriff hätte.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__angabe_der_instanz_in_den_ansichten">
+<span class="hidden-anchor sr-only" id="_angabe_der_instanz_in_den_ansichten"></span>Angabe der Instanz in den Ansichten</h4>
+<div class="paragraph"><p>Manche der mitgelieferten Standardansichten sind gruppiert nach der Instanz,
+von der ein Host überwacht wird. Das gilt z.B. auch für <span class="guihint">All hosts</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_all_hosts.png" alt="distributed monitoring all hosts"></div></div>
+<div class="paragraph"><p>Auch bei den Details eines Hosts oder Services wird die Instanz angezeigt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_service_check_mk.png" alt="distributed monitoring service check mk"></div></div>
+<div class="paragraph"><p>Allgemein steht diese Information als Spalte beim Erzeugen von <a href="views.html#edit">eigenen Ansichten</a> zur Verfügung.
+Und es gibt einen Filter, mit dem Sie eine Ansicht nach Hosts aus einer bestimmten Instanz filtern können:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_filter_by_site.png" alt="distributed monitoring filter by site" width="60%"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__site_status_snapin">
+<span class="hidden-anchor sr-only" id="_site_status_snapin"></span>Site status Snapin</h4>
+<div class="paragraph"><p>Es gibt für die Seitenleiste das Snapin <span class="guihint">Site status</span>, welches Sie mit <span class="image-inline"><img src="../images/icons/button_sidebar_add_snapin.png" alt="button sidebar add snapin"></span> einbinden können.
+Dieses zeigt den Status der einzelnen Instanzen. Außerdem bietet es die Möglichkeit, vorübergehend eine einzelne Instanz durch einen Klick auf den Status zu deaktivieren und wieder zu aktivieren — oder auch gleich alle Instanzen auf einmal durch Klick auf <span class="guihint">Disable all</span> oder <span class="guihint">Enable all.</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_snapin_site_status.png" alt="distributed monitoring snapin site status" width="50%"></div></div>
+<div class="paragraph"><p>Deaktivierte Instanzen werden mit dem Status <span class="image-inline"><img src="../images/icons/icon_status_label_disabled.png" alt="icon status label disabled" width="70px"></span> angezeigt.
+Sie können so auch eine Instanz, die <span class="image-inline"><img src="../images/icons/icon_status_label_dead.png" alt="icon status label dead" width="70px"></span> ist und somit Timeouts erzeugt, deaktivieren und die Timeouts damit vermeiden.
+Diese Deaktivierung entspricht <strong>nicht</strong> dem Abschalten der Livestatus-Verbindung über die Verbindungskonfiguration im <span class="guihint">Setup</span>.
+Das Abschalten hier ist lediglich für den aktuell angemeldeten Benutzer wirksam und hat eine rein optische Funktion.
+Ein Klick auf den Namen einer Instanz bringt Sie zur Ansicht aller Hosts dieser Instanz.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__master_control_snapin">
+<span class="hidden-anchor sr-only" id="_master_control_snapin"></span>Master control Snapin</h4>
+<div class="paragraph"><p>Im verteilten Monitoring ändert das Snapin <span class="guihint">Master control</span> sein Aussehen.
+Die globalen Schalter gibt es immer <em>pro Instanz</em>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_master_control.png" alt="distributed monitoring master control" width="50%"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__checkmk_cluster_hosts">
+<span class="hidden-anchor sr-only" id="_checkmk_cluster_hosts"></span>Checkmk Cluster Hosts</h4>
+<div class="paragraph"><p>Falls Sie mit Checkmk <a href="clustered_services.html">HA-Cluster</a> überwachen, so müssen die einzelnen
+Nodes des Clusters alle der gleichen Instanz zugeordnet sein, wie der Cluster
+selbst. Dies liegt daran, dass bei der Ermittlung des Zustands der geclusterten
+Services auf Cache-Dateien zugegriffen wird, welche beim Überwachen der Nodes
+entstehen. Diese liegen lokal auf der jeweiligen Instanz.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__piggyback_daten_z_b_esxi">
+<span class="hidden-anchor sr-only" id="_piggyback_daten_z_b_esxi"></span>Piggyback-Daten (z.B. ESXi)</h4>
+<div class="paragraph"><p>Manche Check-Plugins verwenden <a href="glossar.html#piggyback">Piggyback</a>-Daten,
+um z.B. Überwachungsdaten, die „huckepack“ von einem ESXi-Host geholt wurden, den einzelnen virtuellen Maschinen zuzuordnen.
+Aus den gleichen Gründen wie beim Cluster-Monitoring müssen im verteilten Monitoring
+sowohl der Piggyhost als auch die davon abhängigen Hosts von der gleichen Instanz
+aus überwacht werden. Im Falle von ESXi bedeutet das, dass Sie die virtuellen Maschinen
+in Checkmk immer der gleichen Instanz zuordnen müssen, wie das ESXi-System, von dem
+Sie die Überwachungsdaten holen. Das kann dann dazu führen, dass Sie anstelle eines
+globalen vCenters besser die ESXi Host-Systeme direkt abfragen. Details dazu finden
+Sie in der Dokumentation zur Überwachung von ESXi.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__hardware_softwareinventur">
+<span class="hidden-anchor sr-only" id="_hardware_softwareinventur"></span>Hardware-/Softwareinventur</h4>
+<div class="paragraph"><p>Die <a href="inventory.html">Checkmk-Inventarisierung</a> funktioniert auch in verteilten
+Umgebungen. Dabei müssen die Inventurdaten regelmäßig aus dem Verzeichnis
+<code>var/check_mk/inventory</code> von den Remote-Instanzen zur Zentralinstanz übertragen werden.
+Die Benutzeroberfläche greift aus Gründen der Performance immer lokal auf dieses
+Verzeichnis zu.</p></div>
+<div class="paragraph"><p>In den kommerziellen Editionen geschieht die Synchronisation automatisch auf allen Instanzen, bei
+denen Sie den <a href="#livestatusproxy">Livestatus-Proxy</a> zur Verbindung einsetzen.</p></div>
+<div class="paragraph"><p>Falls Sie mit Checkmk Raw in einem verteilten System Inventarisierung verwenden,
+müssen Sie das Verzeichnis mit eigenen Mitteln regelmäßig zur Zentralinstanz
+spiegeln (z.B. mit <code>rsync</code>).</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__passwortänderung">
+<span class="hidden-anchor sr-only" id="_passwortänderung"></span>Passwortänderung</h4>
+<div class="paragraph"><p>Auch wenn alle Instanzen zentral administriert werden, ist eine Anmeldung
+auf der Oberfläche der einzelnen Instanzen durchaus möglich und oft auch
+sinnvoll. Deswegen sorgt Checkmk dafür, dass das Passwort eines Benutzers
+auf allen Instanzen immer gleich ist.</p></div>
+<div class="paragraph"><p>Bei einer Änderung durch den Administrator ist das automatisch gegeben,
+sobald sie per <span class="guihint">Activate pending changes</span> auf alle Instanzen verteilt wird.</p></div>
+<div class="paragraph"><p>Etwas anderes ist eine Änderung durch den Benutzer selbst in seinen
+<span class="image-inline"><img src="../images/icons/button_sidebar_settings.png" alt="button sidebar settings"></span> persönlichen Einstellungen. Diese darf
+natürlich nicht zu einem <span class="guihint">Activate pending changes</span> führen, denn der Benutzer
+hat dazu im Allgemeinen keine Berechtigung. Daher verteilt Checkmk in so einem
+Fall das geänderte Passwort automatisch auf alle Instanzen — und zwar direkt
+nach dem Speichern.</p></div>
+<div class="paragraph"><p>Nun sind aber, wie wir alle wissen, Netzwerke nie zu 100 % verfügbar.
+Ist eine Instanz zu diesem Zeitpunkt also nicht erreichbar, kann das Passwort auf diese <em>nicht</em> übertragen werden.
+Bis zum nächsten erfolgreichen <span class="guihint">Activate pending changes</span> durch einen Administrator bzw. der nächsten erfolgreichen Passwortänderung hat diese Instanz also noch das alte Passwort für den Benutzer.
+Der Benutzer wird über den Status der Passwortübertragung auf die einzelnen Instanzen durch ein Statussymbol informiert.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_replicate_user_profile.png" alt="distributed monitoring replicate user profile"></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__anbinden_von_bestehenden_instanzen">
+<span class="hidden-anchor sr-only" id="_anbinden_von_bestehenden_instanzen"></span>2.5. Anbinden von bestehenden Instanzen</h3>
+<div class="paragraph"><p>Wie bereits oben erwähnt, können Sie auch bestehende Instanzen nachträglich an ein verteiltes Monitoring anbinden.
+Sofern die oben beschriebenen Voraussetzungen erfüllt sind (passende Checkmk-Version), geschieht dies genau wie beim Einrichten einer neuen Remote-Instanz.
+Geben Sie Livestatus per TCP frei, tragen Sie die Instanz unter <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span> ein — fertig!</p></div>
+<div class="paragraph"><p>Der zweite Schritt, also die Umstellung auf eine zentrale Konfiguration, ist etwas kniffliger.
+Bevor Sie, wie oben beschrieben, die Instanz in die verteilte Konfigurationsumgebung einbinden, sollten Sie wissen, dass dabei die komplette lokale Konfiguration der Instanz <strong>überschrieben</strong> wird!</p></div>
+<div class="paragraph"><p>Wenn Sie also bestehende Hosts und eventuell auch Regeln übernehmen möchten, benötigen Sie drei Schritte:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Schema der Host-Merkmale anpassen</p></li>
+<li><p>(Host-)Verzeichnisse kopieren</p></li>
+<li><p>Eigenschaften im Elternordner einmal editieren</p></li>
+</ol></div>
+<div class="sect3">
+<h4 id="heading__1_host_merkmale">
+<span class="hidden-anchor sr-only" id="_1_host_merkmale"></span>1. Host-Merkmale</h4>
+<div class="paragraph"><p>Es versteht sich von selbst, dass die in der Remote-Instanz verwendeten Host-Merkmale (<em>host tags</em>) auch in der Zentralinstanz bekannt sein müssen, damit diese übernommen werden können.
+Kontrollieren Sie dies vor dem Umziehen und legen Sie fehlende Tags in der Zentrale von Hand an. Wichtig ist dabei, dass die Tag-ID übereinstimmt — der Titel der Tags spielt keine Rolle.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__2_ordner">
+<span class="hidden-anchor sr-only" id="_2_ordner"></span>2. Ordner</h4>
+<div class="paragraph"><p>Als Zweites ziehen die Hosts und Regeln in die Konfigurationsumgebung auf der Zentralinstanz um.
+Das funktioniert nur für Hosts und Regeln, die in Unterordnern liegen (also nicht im Ordner <span class="guihint">Main</span>).
+Hosts im Hauptordner sollten Sie auf der Remote-Instanz einfach vorher im Menü <span class="guihint">Setup &gt; Hosts &gt; Hosts</span> in einen Unterordner verschieben.</p></div>
+<div class="paragraph"><p>Das eigentliche Umziehen geht dann recht einfach durch Kopieren der entsprechenden Verzeichnisse.
+Jeder Ordner in Checkmk entspricht einem Verzeichnis unterhalb von <code>~/etc/check_mk/conf.d/wato/</code>.
+Dieses können Sie mit einem Werkzeug Ihrer Wahl (z.B. <code>scp</code>) von der angebundenen Instanz an die gleiche Stelle in die Zentralinstanz kopieren.
+Falls es dort bereits ein gleichnamiges Verzeichnis gibt, benennen Sie es einfach um.
+Achten Sie darauf, dass Linux-Benutzer und -Gruppe von der Zentrale verwendet werden.</p></div>
+<div class="paragraph"><p>Nach dem Kopieren sollten die Hosts in der Konfigurationsumgebung auf der Zentralinstanz auftauchen — und ebenso Regeln, die Sie in diesen Ordnern angelegt haben.
+Auch die Eigenschaften der Ordner wurden mit kopiert.
+Diese befinden sich im Verzeichnis in der versteckten Datei <code>.wato</code>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__3_einmal_editieren_und_speichern">
+<span class="hidden-anchor sr-only" id="_3_einmal_editieren_und_speichern"></span>3. Einmal editieren und speichern</h4>
+<div class="paragraph"><p>Damit die Vererbung von Attributen von Elternordnern der Zentralinstanz korrekt funktioniert,
+müssen Sie als letzten Schritt nach dem Umziehen einmal die Eigenschaften des Elternordners öffnen und speichern.
+Damit werden alle Host-Attribute neu berechnet.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_sitespecific">
+<span class="hidden-anchor sr-only" id="sitespecific"></span>2.6. Instanzspezifische globale Einstellungen</h3>
+<div class="paragraph"><p>Zentrale Konfiguration bedeutet zunächst einmal, dass alle Instanzen eine gemeinsame und (bis auf die Hosts) gleiche Konfiguration haben.
+Was ist aber, wenn Sie für einzelne Instanzen abweichende globale Einstellungen benötigen?
+Ein Beispiel könnte z.B. die Einstellung <span class="guihint">Maximum concurrent Checkmk checks</span> des <a href="cmc.html">CMC</a> sein.
+Vielleicht benötigen Sie für eine besonders kleine oder große Instanz eine angepasste Einstellung.</p></div>
+<div class="paragraph"><p>Für solche Fälle gibt es instanzspezifische globale Einstellungen.
+Zu diesen gelangen Sie über das Symbol <span class="image-inline"><img src="../images/icons/icon_configuration.png" alt="icon configuration"></span> im Menü <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_site_specific_global_configuration.png" alt="distributed monitoring site specific global configuration"></div></div>
+<div class="paragraph"><p>Damit gelangen Sie zur Auswahl aller globalen Einstellungen — allerdings gilt alles, was Sie jetzt einstellen, nur für die ausgewählte Instanz.
+Die optische Hinterlegung für eine Abweichung vom Standard bezieht sich jetzt nur auf diese Instanz:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_site_specific_global_configuration_2.png" alt="distributed monitoring site specific global configuration 2"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ec">
+<span class="hidden-anchor sr-only" id="ec"></span>2.7. Verteilte Event Console</h3>
+<div class="paragraph"><p>Die <a href="ec.html">Event Console</a> verarbeitet Syslog-Meldungen, SNMP Traps und andere Arten von Ereignissen asynchroner Natur.</p></div>
+<div class="paragraph"><p>Checkmk bietet die Möglichkeit, die Event Console ebenfalls verteilt laufen zu lassen.
+Auf jeder Instanz läuft dann eine eigene Event-Verarbeitung, welche die Ereignisse von allen Hosts erfasst, die von dieser Instanz aus überwacht werden.
+Die Events werden dann aber <em>nicht</em> alle zum Zentralsystem geschickt, sondern verbleiben auf den Instanzen und werden nur zentral abgefragt.
+Dies geschieht analog zu den aktiven Zuständen über Livestatus und funktioniert sowohl mit <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong> als auch mit den kommerziellen Editionen.</p></div>
+<div class="paragraph"><p>Eine Umstellung auf eine verteilte Event Console nach dem neuen Schema erfordert folgende Schritte:</p></div>
+<div class="ulist"><ul>
+<li><p>In den Verbindungseinstellungen die Replikation EC-Konfiguration einschalten (<span class="guihint">Replicate Event Console configuration to this site</span>).</p></li>
+<li><p>Syslog-Ziele und SNMP-Trap-Destinations der betroffenen Hosts auf der Remote-Instanz umstellen.
+Das ist der aufwendigste Teil.</p></li>
+<li><p>Falls Sie den Regelsatz <span class="guihint">Check event state in Event Console</span> verwenden, diesen wieder auf <span class="guihint">Connect to the local Event Console</span> umstellen.</p></li>
+<li><p>Falls Sie den Regelsatz <span class="guihint">Logwatch Event Console Forwarding</span> verwenden, diesen ebenfalls auf lokale Event Console umstellen.</p></li>
+<li><p>In den <span class="guihint">Settings</span> der Event Console den <span class="guihint">Access to event status via TCP</span> wieder auf <span class="guihint">no access via TCP</span> zurückschalten.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__nagvis">
+<span class="hidden-anchor sr-only" id="_nagvis"></span>2.8. NagVis</h3>
+<div class="imageblock inline-image"><div class="content"><img src="../images/nagvis.png" alt="nagvis" width="170"></div></div>
+<div class="paragraph"><p>Das Open Source Programm <a href="https://www.nagvis.org" target="_blank">NagVis</a> visualisiert Statusdaten aus dem Monitoring auf selbst erstellten Landkarten, Diagrammen und anderen Skizzen.
+NagVis ist in Checkmk integriert und kann sofort genutzt werden.
+Am einfachsten geht der Zugriff über das <a href="user_interface.html#sidebar">Seitenleistenelement</a> <span class="guihint">NagVis Maps</span>.
+Die Integration von NagVis in Checkmk beschreibt ein <a href="nagvis.html">eigener Artikel</a>.</p></div>
+<div class="paragraph"><p>NagVis unterstützt ein verteiltes Monitoring via Livestatus in ziemlich genau der gleichen Weise, wie es auch Checkmk macht.
+Die Anbindungen der einzelnen Instanzen nennt man <span class="guihint">Backends</span> (Deutsch: <span class="guihint">Datenquellen</span>).
+Die Backends werden von Checkmk automatisch korrekt angelegt, so dass Sie sofort damit loslegen können, NagVis-Karten zu erstellen — auch im verteilten Monitoring.</p></div>
+<div class="paragraph"><p>Wählen Sie bei jedem Objekt, das Sie auf einer Karte platzieren, das richtige Backend aus — also die Checkmk-Instanz, von der aus das Objekt überwacht wird.
+NagVis kann den Host oder Service nicht automatisch finden, vor allem aus Gründen der Performance.
+Wenn Sie also Hosts zu einer anderen Remote-Instanz verschieben, müssen Sie danach Ihre NagVis-Karten entsprechend anpassen.</p></div>
+<div class="paragraph"><p>Einzelheiten zu den Backends finden Sie in der Dokumentation von <a href="http://docs.nagvis.org/1.9/de_DE/backends.html" target="_blank">NagVis.</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_wan">
+<span class="hidden-anchor sr-only" id="wan"></span>3. Instabile oder langsame Verbindungen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die gemeinsame Statusansicht in der Benutzeroberfläche erfordert einen ständig verfügbaren und zuverlässigen Zugriff auf alle angebundenen Instanzen.
+Eine Schwierigkeit dabei ist, dass eine Ansicht immer erst dann dargestellt werden kann, wenn <em>alle</em> Instanzen geantwortet haben.
+Der Ablauf ist immer so, dass an alle Instanzen eine Livestatus-Anfrage gesendet wird (z.B. „Gib mir alle Services, deren Zustand nicht <span class="state0">OK</span> ist.").
+Erst wenn die letzte Instanz geantwortet hat, kann die Ansicht dargestellt werden.</p></div>
+<div class="paragraph"><p>Ärgerlich wird es, wenn eine Instanz gar nicht antwortet.
+Um kurze Ausfälle zu tolerieren (z.B. durch einen Neustart einer Instanz oder verlorengegangene
+TCP-Pakete), wartet die GUI einen gewissen Timeout ab, bevor eine Instanz als <span class="image-inline"><img src="../images/icons/icon_status_label_dead.png" alt="icon status label dead" width="70px"></span> deklariert wird und mit den Antworten der übrigen Instanzen fortgefahren wird.
+Das führt dann zu einer „hängenden“ GUI.
+Der Timeout ist per Default auf 10 Sekunden eingestellt.</p></div>
+<div class="paragraph"><p>Wenn das in Ihrem Netzwerk gelegentlich passiert, sollten Sie entweder Status-Hosts oder (besser) den Livestatus-Proxy einrichten.</p></div>
+<div class="sect2">
+<h3 id="heading__status_hosts">
+<span class="hidden-anchor sr-only" id="_status_hosts"></span>3.1. Status-Hosts</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+Die Konfiguration von <em>Status-Hosts</em> ist der bei <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong> empfohlene Weg, defekte Verbindungen zuverlässig zu erkennen.
+Die Idee dazu ist einfach: Die Zentrale überwacht aktiv die Verbindung zu jeder einzelnen entfernten Instanz.
+Immerhin haben wir ein Monitoring-System zur Verfügung!
+Die GUI kennt dann nicht erreichbare Instanzen und kann diese sofort ausklammern und als <span class="image-inline"><img src="../images/icons/icon_status_label_down.png" alt="icon status label down" width="70px"></span> werten.
+Timeouts werden so vermieden.</p></div>
+<div class="paragraph"><p>So richten Sie für eine Verbindung einen Status-Host ein:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Nehmen Sie den Host, auf dem die Remote-Instanz läuft, auf der Zentralinstanz ins Monitoring auf.</p></li>
+<li><p>Tragen Sie diesen bei der Verbindung zur Remote-Instanz als Status-Host ein:</p></li>
+</ol></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_status_host.png" alt="distributed monitoring status host"></div></div>
+<div class="paragraph"><p>Eine ausgefallene Verbindung zur Remote-Instanz kann jetzt nur noch für kurze Zeit zu einem Hängen der GUI führen — nämlich solange, bis das Monitoring das erkannt hat.
+Durch ein Reduzieren des Prüfintervalls des Status-Hosts vom Default von 60 Sekunden auf z.B. 5 Sekunden können Sie dies minimieren.</p></div>
+<div class="paragraph"><p>Falls Sie einen Status-Host eingerichtet haben, gibt es weitere mögliche Zustände für Verbindungen:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/pill_site_status_unreach.png" alt="pill site status unreach" width="70px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Rechner, auf dem die Remote-Instanz läuft, ist für das Monitoring gerade nicht erreichbar, weil ein Router dazwischen down ist (Status-Host hat den Zustand <span class="hstate2">UNREACH</span>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/pill_site_status_waiting.png" alt="pill site status waiting" width="70px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Status-Host, der die Verbindung zur Remote-Instanz überwacht, wurde noch nicht vom Monitoring geprüft (steht noch auf <span class="statep">PEND</span>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/pill_site_status_unknown.png" alt="pill site status unknown" width="70px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Zustand des Status-Hosts hat einen ungültigen Wert (sollte nie auftreten).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>In allen drei Fällen wird die Verbindung zu der Instanz ausgeklammert, wodurch Timeouts vermieden werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_persistent">
+<span class="hidden-anchor sr-only" id="persistent"></span>3.2. Persistente Verbindungen</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+Mit der Checkbox <span class="guihint">Use persistent connections</span> können Sie die GUI
+dazu veranlassen, einmal aufgebaute Livestatus-Verbindungen zu Remote-Instanzen
+permanent aufrecht zu erhalten und für weitere Anfragen wieder zu verwenden.
+Gerade bei Verbindungen mit einer längeren Paketlaufzeit (z.B. interkontinentale)
+kann das die GUI deutlich reaktiver machen.</p></div>
+<div class="paragraph"><p>Da die GUI von Apache auf mehrere unabhängige Prozesse aufgeteilt wird, ist pro gleichzeitig laufendem Apache Client-Prozess eine Verbindung notwendig.
+Fall Sie viele gleichzeitige Benutzer haben, sorgen Sie bei der Konfiguration des Nagios-Kerns der Remote-Instanz für eine ausreichende Anzahl von Livestatus-Verbindungen.
+Diese werden in der Datei <code>etc/mk-livestatus/nagios.cfg</code> konfiguriert.
+Der Default ist 20 (<code>num_client_threads=20</code>).</p></div>
+<div class="paragraph"><p>Per Default ist Apache in Checkmk so konfiguriert, dass er bis zu 128
+gleichzeitige Benutzerverbindungen zulässt. Dies wird in der Datei
+<code>etc/apache/apache.conf</code> in folgendem Abschnitt konfiguriert:</p></div>
+<div class="listingblock">
+<div class="title">etc/apache/apache.conf</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>&lt;IfModule prefork.c&gt;
+StartServers         1
+MinSpareServers      1
+MaxSpareServers      5
+ServerLimit          128
+MaxClients           128
+MaxRequestsPerChild  4000
+&lt;/IfModule&gt;</code></pre></div>
+</div>
+<div class="paragraph"><p>Das bedeutet, dass unter hoher Last bis zu 128 Apache-Prozesse entstehen
+können, welche dann auch bis zu 128 Livestatus-Verbindungen erzeugen und
+halten können. Sind die <code>num_client_threads</code> nicht entsprechend hoch
+eingestellt, kommt es zu Fehlern oder sehr langsamen Antwortzeiten in der GUI.</p></div>
+<div class="paragraph"><p>Bei Verbindungen im LAN oder in schnellen WAN-Netzen empfehlen wir,
+die persistenten Verbindungen <strong>nicht</strong> zu verwenden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_livestatusproxy">
+<span class="hidden-anchor sr-only" id="livestatusproxy"></span>3.3. Der Livestatus-Proxy</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die kommerziellen Editionen verfügen mit dem <em>Livestatus-Proxy</em> über einen
+ausgeklügelten Mechanismus, um tote Verbindungen zu erkennen. Außerdem
+optimiert er die Performance vor allem bei Verbindungen mit hohen
+Round-Trip-Zeiten. Vorteile des Livestatus-Proxys sind:</p></div>
+<div class="ulist"><ul>
+<li><p>Sehr schnelle proaktive Erkennung von nicht antwortenden Instanzen</p></li>
+<li><p>Lokales Zwischenspeichern von Anfragen, die statische Daten liefern</p></li>
+<li><p>Stehende TCP-Verbindungen, dadurch weniger Roundtrips notwendig und somit viel schnellere Antworten von weit entfernten Instanzen (z.B. USA ⇄ China)</p></li>
+<li><p>Genaue Kontrolle der maximal nötigen Livestatus-Verbindungen</p></li>
+<li><p>Ermöglicht <a href="inventory.html">Hardware/Softwareinventur</a> in verteilten Umgebungen</p></li>
+</ul></div>
+<div class="sect3">
+<h4 id="heading__aufsetzen">
+<span class="hidden-anchor sr-only" id="_aufsetzen"></span>Aufsetzen</h4>
+<div class="paragraph"><p>Das Aufsetzen des Livestatus-Proxys ist sehr einfach. In den kommerziellen Editionen ist dieser
+per Default aktiviert, wie Sie beim Starten einer Instanz sehen können:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>omd<span class="tok-w"> </span>start
+<span class="tok-go">Temporary filesystem already mounted</span>
+<span class="tok-go">Starting mkeventd...OK</span>
+<span class="tok-go">Starting liveproxyd...OK</span>
+<span class="tok-go">Starting mknotifyd...OK</span>
+<span class="tok-go">Starting rrdcached...OK</span>
+<span class="tok-go">Starting cmc...OK</span>
+<span class="tok-go">Starting apache...OK</span>
+<span class="tok-go">Starting dcd...OK</span>
+<span class="tok-go">Starting redis...OK</span>
+<span class="tok-go">Starting stunnel...OK</span>
+<span class="tok-go">Starting xinetd...OK</span>
+<span class="tok-go">Initializing Crontab...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Wählen Sie nun bei den Verbindungen zu der Remote-Instanz anstelle von „Connect via TCP“ die Einstellung
+„<span class="guihint">Use Livestatus Proxy-Daemon</span>“:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livestatus_proxy_daemon.png" alt="distributed monitoring livestatus proxy daemon"></div></div>
+<div class="paragraph"><p>Die Angaben zu Host und Port sind wie gehabt.
+Auf den Remote-Instanzen müssen Sie nichts ändern.
+Bei <span class="guihint">Number of channels to keep open</span> geben Sie die Anzahl der parallelen TCP-Verbindungen an, die der Proxy zur Zielseite aufbauen <em>und aufrechterhalten</em> soll.</p></div>
+<div class="paragraph"><p>Der TCP-Verbindungspool wird von allen Anfragen der GUI gemeinsam
+genutzt. Die Anzahl der Verbindungen begrenzt die maximale Anzahl von
+gleichzeitig in Bearbeitung befindlichen Anfragen. Dies beschränkt indirekt
+die Anzahl der Benutzer. In Situationen, in denen alle Kanäle belegt
+sind, kommt es nicht sofort zu einem Fehler. Die GUI wartet eine gewisse
+Zeit auf einen freien Kanal. Die meisten Anfragen benötigen nämlich nur wenige
+Millisekunden.</p></div>
+<div class="paragraph"><p>Falls die GUI länger als <span class="guihint">Timeout waiting for a free channel</span> auf so einen
+Kanal warten muss, wird mit einem Fehler abgebrochen und der Benutzer sieht
+eine Fehlermeldung. In so einem Fall sollten Sie die Anzahl der Verbindungen
+erhöhen. Beachten Sie dabei jedoch, dass auf der Gegenstelle (der Remote-Instanz)
+genügend gleichzeitige eingehende Verbindungen erlaubt sein müssen. Per Default ist
+das auf 20 eingestellt. Sie finden diese Einstellung in den globalen Optionen unter
+<span class="guihint">Monitoring core &gt; Maximum concurrent Livestatus connections</span>.</p></div>
+<div class="paragraph"><p>Der <span class="guihint">Regular heartbeat</span> sorgt für eine ständige aktive Überwachung der
+Verbindungen direkt auf Protokollebene. Dabei sendet der Proxy regelmäßig eine
+einfache Livestatus-Anfrage, welche von der Remote-Instanz in der eingestellten Zeit
+(Default: 2 Sekunden) beantwortet sein muss. So werden auch Situationen erkannt,
+wo der Zielserver und der TCP-Port zwar erreichbar sind, aber der Monitoring-Kern
+nicht mehr antwortet.</p></div>
+<div class="paragraph"><p>Bleibt die Antwort aus, so werden alle Verbindungen als tot deklariert und
+nach einer Cooldown-Zeit (Default: 4 Sekunden) wieder neu aufgebaut. Das Ganze
+geschieht proaktiv — also <em>ohne</em>, dass ein Benutzer eine GUI-Seite abrufen
+muss. So werden Ausfälle schnell erkannt und bei einer Wiedergenesung die
+Verbindungen sofort wieder aufgebaut und stehen dann im besten Fall schon
+wieder zur Verfügung, bevor ein Benutzer den Ausfall mitbekommt.</p></div>
+<div class="paragraph"><p>Das <span class="guihint">Caching</span> sorgt dafür, dass statische Anfragen nur einmal von der Remote-Instanz
+beantwortet werden müssen und ab dem Zeitpunkt direkt lokal ohne Verzögerung
+beantwortet werden können. Ein Beispiel dafür ist die Liste der überwachten
+Hosts, welche von <span class="guihint">Quicksearch</span> gebraucht wird.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__fehlerdiagnose">
+<span class="hidden-anchor sr-only" id="_fehlerdiagnose"></span>Fehlerdiagnose</h4>
+<div class="paragraph"><p>Der Livestatus-Proxy hat eine eigene Log-Datei, die Sie unter <code>var/log/liveproxyd.log</code>
+finden. Bei einer korrekt eingerichteten Remote-Instanz mit fünf Kanälen (Standard), sieht das etwa so aus:</p></div>
+<div class="listingblock">
+<div class="title">var/log/liveproxyd.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-12-01 15:58:30,624 [20] ----------------------------------------------------------
+2021-12-01 15:58:30,627 [20] [cmk.liveproxyd] Livestatus Proxy-Daemon (2.0.0p15) starting...
+2021-12-01 15:58:30,638 [20] [cmk.liveproxyd] Configured 1 sites
+2021-12-01 15:58:36,690 [20] [cmk.liveproxyd.(3236831).Manager] Reload initiated. Checking if configuration changed.
+2021-12-01 15:58:36,692 [20] [cmk.liveproxyd.(3236831).Manager] No configuration changes found, continuing.
+2021-12-01 16:00:16,989 [20] [cmk.liveproxyd.(3236831).Manager] Reload initiated. Checking if configuration changed.
+2021-12-01 16:00:16,993 [20] [cmk.liveproxyd.(3236831).Manager] Found configuration changes, triggering restart.
+2021-12-01 16:00:17,000 [20] [cmk.liveproxyd.(3236831).Manager] Restart initiated. Terminating site processes...
+2021-12-01 16:00:17,028 [20] [cmk.liveproxyd.(3236831).Manager] Restart master process</code></pre></div>
+</div>
+<div class="paragraph"><p>In die Datei <code>var/log/liveproxyd.state</code> schreibt der Livestatus-Proxy regelmäßig seinen
+Status:</p></div>
+<div class="listingblock">
+<div class="title">var/log/liveproxyd.state</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Current state:
+[remote1]
+  State:                   ready
+  State dump time:         2021-12-01 15:01:15 (0:00:00)
+  Last reset:              2021-12-01 14:58:49 (0:02:25)
+  Site's last reload:      2021-12-01 14:26:00 (0:35:15)
+  Last failed connect:     Never
+  Last failed error:       None
+  Cached responses:        1
+  Channels:
+       9 - ready             -  client: none - since: 2021-12-01 15:01:00 (0:00:14)
+      10 - ready             -  client: none - since: 2021-12-01 15:01:10 (0:00:04)
+      11 - ready             -  client: none - since: 2021-12-01 15:00:55 (0:00:19)
+      12 - ready             -  client: none - since: 2021-12-01 15:01:05 (0:00:09)
+      13 - ready             -  client: none - since: 2021-12-01 15:00:50 (0:00:24)
+  Clients:
+  Heartbeat:
+    heartbeats received: 29
+    next in 0.2s
+  Inventory:
+    State: not running
+    Last update: 2021-12-01 14:58:50 (0:02:25)</code></pre></div>
+</div>
+<div class="paragraph"><p>Und so sieht der Status aus, wenn eine Instanz gerade gestoppt ist:</p></div>
+<div class="listingblock">
+<div class="title">var/log/liveproxyd.state</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>----------------------------------------------
+Current state:
+[remote1]
+  State:                   starting
+  State dump time:         2021-12-01 16:11:35 (0:00:00)
+  Last reset:              2021-12-01 16:11:29 (0:00:06)
+  Site's last reload:      2021-12-01 16:11:29 (0:00:06)
+  Last failed connect:     2021-12-01 16:11:33 (0:00:01)
+  Last failed error:       [Errno 111] Connection refused
+  Cached responses:        0
+  Channels:
+  Clients:
+  Heartbeat:
+    heartbeats received: 0
+    next in -1.0s
+  Inventory:
+    State: not running
+    Last update: 2021-12-01 16:00:45 (0:10:50)</code></pre></div>
+</div>
+<div class="paragraph"><p>Der Zustand ist hier <code>starting</code>.
+Der Proxy ist also gerade beim Versuch, Verbindungen aufzubauen.
+Channels gibt es noch keine.
+Während dieses Zustands werden Anfragen an die Instanz sofort mit einem Fehler beantwortet.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_viewer">
+<span class="hidden-anchor sr-only" id="viewer"></span>4. Cascading Livestatus</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wie in der Einleitung bereits erwähnt, ist es möglich, das verteilte Monitoring um reine Checkmk-Viewer-Instanzen zu erweitern, die die Monitoring-Daten von Remote-Instanzen anzeigen, die selbst nicht direkt erreichbar sind.
+Einzige Voraussetzung dafür: Die Zentralinstanz muss natürlich erreichbar sein.
+Technisch wird dies über den Livestatus-Proxy umgesetzt:
+Die Zentralinstanz bekommt via Livestatus Daten von der Remote-Instanz und fungiert selbst als Proxy — kann die Daten also an dritte Instanzen durchreichen.
+Diese Kette können Sie beliebig erweitern, also zum Beispiel eine zweite Viewer-Instanz an die erste anbinden.</p></div>
+<div class="paragraph"><p>Praktisch ist dies beispielsweise für ein Szenario wie folgendes:
+Die Zentralinstanz kümmert sich um drei unabhängige Netze <em>kunde1,</em> <em>kunde2</em> und <em>kunde3</em> und wird selbst im Netz <em>betreiber1</em> betrieben.
+Möchte nun etwa das Management des Betreibers aus dem Netz <em>betreiber1</em> den Monitoring-Status der Kundeninstanzen sehen, könnte dies natürlich über einen Zugang auf der Zentralinstanz selbst geregelt werden.
+Aus technischen wie rechtlichen Gründen könnte die Zentralinstanz jedoch ausschließlich den zuständigen Mitarbeitern vorbehalten sein.
+Über eine rein zur Ansicht von entfernten Instanzen aufgesetzte Viewer-Instanz lässt sich der direkte Zugriff umgehen.
+Die Viewer-Instanz zeigt dann zwar Hosts und Services verbundener Instanzen, die eigene Konfiguration bleibt jedoch komplett leer.</p></div>
+<div class="paragraph"><p>Das Aufsetzen erfolgt in den Verbindungseinstellungen des verteilten Monitorings, zunächst auf der Zentralinstanz, dann auf der Viewer-Instanz (welche noch nicht existieren muss).</p></div>
+<div class="paragraph"><p>Öffnen Sie auf der Zentralinstanz die Verbindungseinstellungen der gewünschten Remote-Instanz über <span class="guihint">Setup &gt; General &gt; Distributed monitoring.</span>
+Unter <span class="guihint">Use Livestatus Proxy Daemon</span> aktivieren Sie die Option <span class="guihint">Allow access via TCP</span> und geben einen freien Port an (hier <code>6560</code>).
+So verbindet sich der Livestatus-Proxy der Zentralinstanz mit der Remote-Instanz und öffnet einen Port für Anfragen der Viewer-Instanz — welche dann an die Remote-Instanz weitergeleitet werden.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_livestatus_cascading_master.png" alt="Verbindungseinstellungen im verteilten Monitoring mit aktiviertem TCP-Zugriff für Viewer-Instanzen."></div></div>
+<div class="paragraph"><p>Erstellen Sie nun eine Viewer-Instanz und öffnen Sie auch dort wieder die Verbindungseinstellungen über <span class="guihint">Setup &gt; General &gt; Distributed monitoring.</span>
+In den <span class="guihint">Basic settings</span> geben Sie — wie immer bei Verbindungen im verteilten Monitoring — als <span class="guihint">Site ID</span> den exakten Namen der Zentralinstanz an.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_livestatus_cascading_viewer_01.png" alt="Instanz-ID in den Verbindungseinstellungen."></div></div>
+<div class="paragraph"><p>Im Bereich <span class="guihint">Status connection</span> geben Sie als Host die Zentralinstanz an — sowie den manuell vergebenen freien Port (hier <code>6560</code>).</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_livestatus_cascading_viewer_02.png" alt="Verbindungseinstellungen mit Zentralinstanz und freiem Port für Livestatus."></div></div>
+<div class="paragraph"><p>Sobald die Verbindung steht, sehen Sie die gewünschten Hosts und Services der Remote-Instanz in den Monitoring-Ansichten der Viewer-Instanz.</p></div>
+<div class="paragraph"><p>Möchten Sie weiter kaskadieren, müssen Sie auf der Viewer-Instanz, wie zuvor auf der Zentralinstanz, ebenfalls den TCP-Zugriff auf den Livestatus-Proxy erlauben, erneut mit einem anderen, freien Port.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_livedump">
+<span class="hidden-anchor sr-only" id="livedump"></span>5. Livedump und CMCDump</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__motivation">
+<span class="hidden-anchor sr-only" id="_motivation"></span>5.1. Motivation</h3>
+<div class="paragraph"><p>Das bisher beschriebene Konzept für ein verteiltes Monitoring mit Checkmk ist in den
+meisten Fällen eine gute und einfache Lösung. Es erfordert allerdings Netzwerkzugriff
+<em>von der Zentralinstanz auf die Remote-Instanzen</em>. Es gibt Situationen, in denen das entweder nicht
+möglich oder nicht gewünscht ist, z.B. weil</p></div>
+<div class="ulist"><ul>
+<li><p>die Instanzen in den Netzen Ihrer Kunden stehen, auf die Sie keinen Zugriff haben,</p></li>
+<li><p>die Instanzen in einem Sicherheitsbereich stehen, auf den ein Zugriff strikt verboten ist oder</p></li>
+<li><p>die Instanzen keine permanente Netzwerkverbindung oder keine festen IP-Adressen haben und Techniken, wie <a href="https://de.wikipedia.org/wiki/Dynamisches_DNS" target="_blank">Dynamisches DNS</a> keine Option sind.</p></li>
+</ul></div>
+<div class="paragraph"><p>Das verteilte Monitoring mit Livedump bzw. CMCDump geht einen ganz anderen Weg.
+Zunächst einmal sind die Remote-Instanzen so aufgesetzt, dass sie völlig unabhängig von
+der Zentralinstanz arbeiten und <em>dezentral administriert</em> werden. Auf eine verteilte
+Konfigurationsumgebung wird verzichtet.</p></div>
+<div class="paragraph"><p>Dann werden in der Zentralinstanz alle Hosts und Services der Remote-Instanzen als <em>Kopie</em> angelegt.
+Dazu kann Livedump/CMCDump einen Abzug der Konfiguration der Remote-Instanzen erstellen, der bei der Zentralinstanz eingespielt wird.</p></div>
+<div class="paragraph"><p>Während des Monitorings wird nun auf jeder Remote-Instanz einmal pro definiertem Intervall
+(z.B. jede Minute) ein Abzug des aktuellen Status in eine
+Datei geschrieben. Diese wird auf einem beliebigen Weg auf die Zentrale übertragen
+und dort als Statusupdate eingespielt. Für die Übertragung ist kein bestimmtes
+Protokoll vorgesehen oder vorbestimmt. Alle automatisierbaren Übertragungsprotokolle
+kommen in Frage. Es muss nicht unbedingt <code>scp</code> sein — auch eine Übertragung per E-Mail ist denkbar!</p></div>
+<div class="paragraph"><p>Ein solches Setup weist gegenüber dem „normalen“ verteilten Monitoring folgende Unterschiede auf:</p></div>
+<div class="ulist"><ul>
+<li><p>Die Aktualisierung der Zustände und Messdaten in der Zentrale geschieht verzögert.</p></li>
+<li><p>Eine Berechnung der Verfügbarkeit wird auf der Zentralinstanz, im Vergleich mit der Remote-Instanz, geringfügig abweichende Werte ergeben.</p></li>
+<li><p>Zustandswechsel, die schneller geschehen als das Aktualisierungsintervall, sind für die Zentrale unsichtbar.</p></li>
+<li><p>Ist eine Remote-Instanz „tot“, so veralten die Zustände auf der Zentralinstanz, die Services werden „stale“, sind aber immer noch sichtbar. Messdaten und Verfügbarkeitsdaten gehen für diesen Zeitraum verloren (auf der Remote-Instanz sind sie noch vorhanden).</p></li>
+<li><p>Kommandos wie <span class="guihint">Schedule downtimes</span> und <span class="guihint">Acknowledge problems</span> auf der Zentralinstanz können <em>nicht</em> auf die Remote-Instanz übertragen werden.</p></li>
+<li><p>Zu keiner Zeit erfolgt ein Zugriff von der Zentralinstanz auf die Remote-Instanz.</p></li>
+<li><p>Ein Zugriff auf Details der von Logwatch überwachten Log-Dateien ist nicht möglich.</p></li>
+<li><p>Die Event Console wird von Livedump/CMCDump nicht unterstützt.</p></li>
+</ul></div>
+<div class="paragraph"><p>Da kurze Zustandswechsel bedingt durch das gewählte Intervall für die Zentralinstanz
+eventuell nicht sichtbar sind, ist eine <a href="notifications.html">Benachrichtigung</a> durch die Zentrale
+nicht ideal. Wird die Zentrale jedoch als reine <em>Anzeigeinstanz</em>
+verwendet — z.B. für einen zentralen Überblick über alle Kunden — hat
+die Methode durchaus ihre Vorteile.</p></div>
+<div class="paragraph"><p>Livedump/CMCDump kann übrigens ohne Probleme <em>gleichzeitig</em> mit dem verteilten
+Monitoring über Livestatus verwendet werden. Manche Instanzen sind dann
+einfach direkt über Livestatus angebunden — andere verwenden Livedump. Dabei
+kann der Livedump auch in eine der entfernten Livestatus-Instanzen eingespielt werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__aufsetzen_von_livedump">
+<span class="hidden-anchor sr-only" id="_aufsetzen_von_livedump"></span>5.2. Aufsetzen von Livedump</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+Wenn Sie <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong> einsetzen (oder die kommerziellen Editionen mit Nagios als Kern), dann verwenden Sie das Werkzeug <code>livedump</code>.
+Der Name leitet sich ab von <em>Livestatus</em> und <em>Status-Dump.</em>
+<code>livedump</code> befindet sich direkt im Suchpfad und ist daher global als Befehl verfügbar.</p></div>
+<div class="paragraph"><p>Wir gehen im Folgenden davon aus, dass</p></div>
+<div class="ulist"><ul>
+<li><p>die Remote-Instanz bereits voll eingerichtet ist und fleißig Hosts und Services überwacht,</p></li>
+<li><p>die Zentralinstanz gestartet ist und läuft und</p></li>
+<li><p>auf der Zentrale <em>mindestens ein Host</em> lokal überwacht wird (z.B. weil sie sich selbst überwacht).</p></li>
+</ul></div>
+<div class="sect3">
+<h4 id="heading__übertragen_der_konfiguration">
+<span class="hidden-anchor sr-only" id="_übertragen_der_konfiguration"></span>Übertragen der Konfiguration</h4>
+<div class="paragraph"><p>Als Erstes erzeugen Sie auf der Remote-Instanz einen Abzug der Konfiguration Ihrer
+Hosts und Services im Nagios-Konfigurationsformat. Leiten Sie dazu die Ausgabe von <code>livedump -TC</code> in eine Datei
+um:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>livedump<span class="tok-w"> </span>-TC<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>config-remote1.cfg</code></pre></div></div>
+<div class="paragraph"><p>Der Anfang der Datei sieht in etwa wie folgt aus:</p></div>
+<div class="listingblock">
+<div class="title">config-remote1.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>define host {
+    name                    livedump-host
+    use                     check_mk_default
+    register                0
+    active_checks_enabled   0
+    passive_checks_enabled  1
+
+}
+
+define service {
+    name                    livedump-service
+    register                0
+    active_checks_enabled   0
+    passive_checks_enabled  1
+    check_period            0x0
+
+}</code></pre></div>
+</div>
+<div class="paragraph"><p>Übertragen Sie die Datei zu der Zentralinstanz (z.B. mit <code>scp</code>) und legen Sie sie
+dort in das Verzeichnis <code>~/etc/nagios/conf.d/</code>. In diesem erwartet Nagios die Konfiguration
+für Hosts und Services. Wählen Sie einen Dateinamen, der auf <code>.cfg</code>
+endet, z.B. <code>~/etc/nagios/conf.d/config-remote1.cfg</code>. Wenn ein SSH-Zugang
+von der Remote-Instanz auf die Zentralinstanz möglich ist, geht das z.B. so:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>scp<span class="tok-w"> </span>config-remote1.cfg<span class="tok-w"> </span>central@myserver.mydomain:etc/nagios/conf.d/
+<span class="tok-go">central@myserver.mydomain's password:</span>
+<span class="tok-go">config-remote1.cfg                                             100% 8071     7.9KB/s   00:00</span></code></pre></div></div>
+<div class="paragraph"><p>Loggen Sie sich jetzt auf der Zentralinstanz ein und aktivieren Sie die Änderungen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>cmk<span class="tok-w"> </span>-R
+<span class="tok-go">Generating configuration for core (type nagios)...OK</span>
+<span class="tok-go">Validating Nagios configuration...OK</span>
+<span class="tok-go">Precompiling host checks...OK</span>
+<span class="tok-go">Restarting monitoring core...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Nun sollten alle Hosts und Services der Remote-Instanz in der Zentralinstanz auftauchen — und zwar im Zustand <span class="statep">PEND</span>, in dem sie bis auf Weiteres auch bleiben:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livedump_pending.png" alt="distributed monitoring livedump pending"></div></div>
+<div class="paragraph"><p>Hinweise:</p></div>
+<div class="ulist"><ul>
+<li><p>Durch die Option <code>-T</code> bei <code>livedump</code> erzeugt Livedump Template-Definitionen, auf die sich die Konfiguration bezieht. Ohne diese kann Nagios nicht gestartet werden. Sie dürfen jedoch <em>nur einmal</em> vorhanden sein. Falls Sie auch von einer zweiten Remote-Instanz eine Konfiguration übertragen, so dürfen Sie die Option <code>-T</code> dort <strong>nicht</strong> verwenden!</p></li>
+<li><p>Der Dump der Konfiguration ist auch auf einem <a href="cmc.html">Checkmk Micro Core (CMC)</a> möglich, das Einspielen benötigt Nagios. Wenn auf Ihrer Zentralinstanz der CMC läuft, dann verwenden Sie <a href="#cmcdump">CMCDump.</a></p></li>
+<li><p>Das Abziehen und Übertragen der Konfiguration müssen Sie nach jeder Änderung von Hosts oder Services auf der Remote-Instanz wiederholen.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__übertragung_des_status">
+<span class="hidden-anchor sr-only" id="_übertragung_des_status"></span>Übertragung des Status</h4>
+<div class="paragraph"><p>Nachdem die Hosts in der Zentralinstanz sichtbar sind, geht es jetzt an die (regelmäßige)
+Übertragung des Monitoring-Status der Remote-Instanz. Wieder erzeugen Sie mit <code>livedump</code>
+eine Datei, allerdings diesmal ohne weitere Optionen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>livedump<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>state</code></pre></div></div>
+<div class="paragraph"><p>Diese Datei enthält den Zustand aller Hosts und Services in einem Format,
+welches Nagios direkt aus dem Check-Ergebnis einlesen kann. Der Anfang sieht etwa
+so aus:</p></div>
+<div class="listingblock">
+<div class="title">state</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>host_name=myhost1900
+check_type=1
+check_options=0
+reschedule_check
+latency=0.13
+start_time=1615521257.2
+finish_time=16175521257.2
+return_code=0
+output=OK - 10.1.5.44: rta 0.066ms, lost 0%|rta=0.066ms;200.000;500.000;0; pl=0%;80;100;; rtmax=0.242ms;;;; rtmin=0.017ms;;;;</code></pre></div>
+</div>
+<div class="paragraph"><p>Übertragen Sie diese Datei auf die Zentralinstanz in das Verzeichnis <code>~/tmp/nagios/checkresults</code>. <strong>Wichtig:</strong> Der Name der Datei muss mit <code>c</code> beginnen und sieben Zeichen lang sein (Nagios-Vorgabe). Mit <code>scp</code> würde das etwa so aussehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>scp<span class="tok-w"> </span>state<span class="tok-w"> </span>central@myserver.mydomain:tmp/nagios/checkresults/caabbcc
+<span class="tok-go">server@myserver.mydomain's password:</span>
+<span class="tok-go">state                                                  100%   12KB  12.5KB/s   00:00</span></code></pre></div></div>
+<div class="paragraph"><p>Anschließend erzeugen Sie auf der Zentralinstanz eine leere Datei mit dem gleichen Namen
+und der Endung <code>.ok</code>. Dadurch weiß Nagios, dass die Statusdatei komplett
+übertragen ist und eingelesen werden kann:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>touch<span class="tok-w"> </span>tmp/nagios/checkresults/caabbcc.ok</code></pre></div></div>
+<div class="paragraph"><p>Der Zustand der Hosts/Services der Remote-Instanz wird jetzt auf der Zentralinstanz sofort
+aktualisiert:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livedump_status.png" alt="distributed monitoring livedump status"></div></div>
+<div class="paragraph"><p>Das Übertragen des Status muss ab jetzt natürlich regelmäßig vorgenommen werden.
+Livedump unterstützt Sie dabei leider nicht und Sie müssen das selbst (z.B. in einem Skript) umsetzen.
+In <code>~/share/check_mk/doc/treasures/livedump</code> finden Sie das Skript <code>livedump-ssh-recv</code>, welches Sie einsetzen können, um Livedump-Updates (auch solche von der Konfiguration) per SSH auf der Zentralinstanz zu empfangen.
+Details finden Sie in den Kommentaren im Skript selbst.</p></div>
+<div class="paragraph"><p>Sie können den Dump von Konfiguration und Status auch
+durch die Angabe von Livestatus-Filtern einschränken, z.B. die Hosts auf
+die Mitglieder der Host-Gruppe <code>mygroup</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$</span>:<span class="tok-w"> </span>livedump<span class="tok-w"> </span>-H<span class="tok-w"> </span><span class="tok-s2">"Filter: host_groups &gt;= mygroup"</span><span class="tok-w"> </span>&gt;<span class="tok-w"> </span>state</code></pre></div></div>
+<div class="paragraph"><p>Weitere Hinweise zu Livedump finden Sie in der Datei <code>README</code> im Verzeichnis <code>~/share/doc/check_mk/treasures/livedump</code>.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_cmcdump">
+<span class="hidden-anchor sr-only" id="cmcdump"></span>5.3. Aufsetzen von CMCDump</h3>
+<div class="paragraph"><p>Was <a href="#livedump">Livedump</a> für Nagios ist, ist CMCDump
+für den <a href="cmc.html">Checkmk Micro Core</a> — und damit das Tool der Wahl für die
+kommerziellen Editionen. Im Gegensatz zu Livedump kann CMCDump den <em>vollständigen</em> Status
+von Hosts und Services replizieren (Nagios bietet hier nicht die notwendigen
+Schnittstellen).</p></div>
+<div class="paragraph"><p>Zum Vergleich: Bei Livedump werden folgende Daten übertragen:</p></div>
+<div class="ulist"><ul>
+<li><p>Der aktuelle Zustand, also <span class="statep">PEND</span>, <span class="state0">OK</span>, <span class="state1">WARN</span>, <span class="state2">CRIT</span>, <span class="state3">UNKNOWN</span>, <span class="hstate0">UP</span>, <span class="hstate1">DOWN</span> oder <span class="hstate2">UNREACH</span></p></li>
+<li><p>Die Ausgabe des Check-Plugins</p></li>
+<li><p>Die Messdaten</p></li>
+</ul></div>
+<div class="paragraph"><p>Zusätzlich synchronisiert CMCDump auch noch</p></div>
+<div class="ulist"><ul>
+<li><p>die <em>lange</em> Ausgabe des Plugins,</p></li>
+<li><p>ob das Objekte gerade <span class="image-inline"><img src="../images/icons/icon_flapping.png" alt="icon flapping"></span> unstetig ist,</p></li>
+<li><p>Zeitpunkt der letzten Check-Ausführung und des letzten Statuswechsels,</p></li>
+<li><p>Dauer der Check-Ausführung,</p></li>
+<li><p>Latenz der Check-Ausführung,</p></li>
+<li><p>die Nummer des aktuellen Check-Versuchs und ob der aktuelle Zustand hart oder weich ist,</p></li>
+<li><p><span class="image-inline"><img src="../images/icons/icon_ack.png" alt="icon ack"></span> <a href="basics_ackn.html">Quittierung</a>, falls vorhanden und</p></li>
+<li><p>ob das Objekt gerade in einer <span class="image-inline"><img src="../images/icons/icon_downtime.png" alt="icon downtime"></span> <a href="basics_downtimes.html">geplanten Wartungszeit</a> ist.</p></li>
+</ul></div>
+<div class="paragraph"><p>Das Abbild des Monitorings ist hier also viel genauer. Der CMC simuliert
+beim Einspielen des Status nicht einfach eine Check-Ausführung, sondern
+überträgt mittels einer dafür bestimmten Schnittstelle einen korrekten
+Status.  Das bedeutet unter anderem, dass Sie in der Zentrale jederzeit sehen
+können, ob Probleme quittiert oder Wartungszeiten eingetragen wurden.</p></div>
+<div class="paragraph"><p>Das Aufsetzen ist fast identisch wie bei Livedump, allerdings etwas einfacher,
+da Sie sich nicht um eventuelle doppelte Templates und dergleichen kümmern
+müssen.</p></div>
+<div class="paragraph"><p>Der Abzug der Konfiguration geschieht mit <code>cmcdump -C</code>. Legen
+Sie diese Datei auf der Zentralinstanz unterhalb von <code>etc/check_mk/conf.d/</code> ab.
+Die Endung muss <code>.mk</code> heißen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>cmcdump<span class="tok-w"> </span>-C<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>config.mk
+<span class="tok-gp">OMD[remote1]:~$ </span>scp<span class="tok-w"> </span>config.mk<span class="tok-w"> </span>central@mycentral.mydomain:etc/check_mk/conf.d/remote1.mk</code></pre></div></div>
+<div class="paragraph"><p>Aktivieren Sie auf der Zentralinstanz die Konfiguration:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>cmk<span class="tok-w"> </span>-O</code></pre></div></div>
+<div class="paragraph"><p>Wie bei Livedump erscheinen jetzt die Hosts und Services auf der Zentrale im
+Zustand <span class="statep">PEND</span>. Allerdings sehen Sie gleich am Symbol <span class="image-inline"><img src="../images/icons/icon_shadow.png" alt="icon shadow"></span>,
+dass es sich um <em>Schattenobjekte</em> handelt. So können Sie diese von
+direkt auf der Zentralinstanz oder einer „normalen“ Remote-Instanz überwachten
+Objekte unterscheiden:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_cmcdump_pending.png" alt="distributed monitoring cmcdump pending"></div></div>
+<div class="paragraph"><p>Das regelmäßige Erzeugen des Status geschieht mit <code>cmcdump</code> ohne
+weitere Argumente:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>cmcdump<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>state
+<span class="tok-gp">OMD[remote1]:~$ </span>scp<span class="tok-w"> </span>state<span class="tok-w"> </span>central@mycentral.mydomain:tmp/state_remote1</code></pre></div></div>
+<div class="paragraph"><p>Zum Einspielen des Status auf der Zentralinstanz muss der Inhalt der Datei mithilfe des
+Tools <code>unixcat</code> in das UNIX-Socket <code>tmp/run/live</code> geschrieben
+werden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>unixcat<span class="tok-w"> </span>tmp/run/live<span class="tok-w"> </span>&lt;<span class="tok-w"> </span>tmp/state_remote1</code></pre></div></div>
+<div class="paragraph"><p>Falls Sie per SSH einen passwortlosen Zugang von der Remote-Instanz zur Zentralinstanz haben,
+können Sie alle drei Befehle zu einem einzigen zusammenfassen — wobei nicht mal
+eine temporäre Datei entsteht:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>cmcdump<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>ssh<span class="tok-w"> </span>central@mycentral.mydomain<span class="tok-w"> </span><span class="tok-s2">"unixcat tmp/run/live"</span></code></pre></div></div>
+<div class="paragraph"><p>Es ist wirklich so einfach! Aber wie schon erwähnt, ist <code>ssh</code>/<code>scp</code>
+nicht die einzige Methode, um Dateien zu übertragen und genauso gut können Sie
+Konfiguration oder Status per E-Mail oder einem beliebigen anderen Protokoll
+übertragen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_notifications">
+<span class="hidden-anchor sr-only" id="notifications"></span>6. Benachrichtigungen in verteilten Umgebungen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__zentral_oder_dezentral">
+<span class="hidden-anchor sr-only" id="_zentral_oder_dezentral"></span>6.1. Zentral oder dezentral</h3>
+<div class="paragraph"><p>In einer verteilten Umgebung stellt sich die Frage, von welcher Instanz aus Benachrichtigungen (z.B. E-Mails) verschickt werden sollen:
+von den einzelnen entfernten Instanzen oder von der Zentralinstanz aus. Für beide gibt es Argumente.</p></div>
+<div class="paragraph"><p>Argumente für den Versand von den Remote-Instanz aus:</p></div>
+<div class="ulist"><ul>
+<li><p>Einfacher einzurichten.</p></li>
+<li><p>Benachrichtigungen vor Ort gehen auch dann, wenn die Verbindung zur Zentrale nicht verfügbar ist.</p></li>
+<li><p>Geht auch mit <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong>.</p></li>
+</ul></div>
+<div class="paragraph"><p>Argumente für den Versand von der Zentralinstanz aus:</p></div>
+<div class="ulist"><ul>
+<li><p>Benachrichtigungen können an einer zentralen Stelle verarbeitet werden (z.B. für Weiterleitung in Ticketsystem).</p></li>
+<li><p>Remote-Instanzen benötigen kein Setup für E-Mail oder SMS.</p></li>
+<li><p>Bei Versand von SMS über Hardware ist diese nur einmal notwendig: auf der Zentrale.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__dezentrale_benachrichtigungen">
+<span class="hidden-anchor sr-only" id="_dezentrale_benachrichtigungen"></span>6.2. Dezentrale Benachrichtigungen</h3>
+<div class="paragraph"><p>Für die Einrichtung dezentraler Benachrichtigungen sind keine besonderen Schritte notwendig, denn dies ist die Standardeinstellung.
+Jede Benachrichtigung, die auf einer Remote-Instanz entsteht, durchläuft dort die Kette der
+<a href="notifications.html#rules">Kette der Benachrichtigungsregeln.</a>
+Falls Sie eine verteilte Konfigurationsumgebung einsetzen, sind diese Regeln auf allen Instanzen gleich.
+Aus den Regeln resultierende Benachrichtigungen werden wie üblich zugestellt, indem lokal die entsprechenden Benachrichtigungsskripte aufgerufen werden.</p></div>
+<div class="paragraph"><p>Sie müssen lediglich sicherstellen, dass die entsprechenden Dienste auf den Instanzen korrekt aufgesetzt sind, also z.B. für E-Mail ein Smarthost eingetragen ist — also die gleichen Schritte wie beim Einrichten einer einzelnen Checkmk-Instanz.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__zentrale_benachrichtigungen">
+<span class="hidden-anchor sr-only" id="_zentrale_benachrichtigungen"></span>6.3. Zentrale Benachrichtigungen</h3>
+<div class="sect3">
+<h4 id="heading__grundlegendes">
+<span class="hidden-anchor sr-only" id="_grundlegendes"></span>Grundlegendes</h4>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die kommerziellen Editionen bieten einen eingebauten Mechanismus für zentralisierte Benachrichtigungen, welcher pro Remote-Instanz einzeln aktiviert werden kann.
+Solche Remote-Instanzen leiten dann alle Benachrichtigungen zur weiteren Verarbeitung an die Zentralinstanz weiter.
+Dabei ist die zentrale Benachrichtigung unabhängig davon, ob Sie Ihr verteiltes Monitoring auf dem klassischen Weg oder mit <a href="#cmcdump">CMCDump</a> oder einer Mischung davon eingerichtet haben.
+Genau genommen muss der zentrale Benachrichtigungs-Server nicht mal die Zentralinstanz sein. Diese Aufgabe kann jede Checkmk-Instanz übernehmen.</p></div>
+<div class="paragraph"><p>Ist eine Remote-Instanz auf Weiterleitung eingestellt, so werden alle Benachrichtigungen direkt wie sie vom Kern kommen — quasi in <em>Rohform</em> (wir sprechen hier auch von den <em>Rohbenachrichtigungen</em>) — an die Zentralinstanz weitergereicht.
+Erst dort werden die Benachrichtigungsregeln ausgewertet, welche entscheiden, wer und wie überhaupt benachrichtigt werden soll.
+Die dazu notwendigen Benachrichtigungsskripte werden auf der Zentralinstanz aufgerufen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__einrichten_der_tcp_verbindungen">
+<span class="hidden-anchor sr-only" id="_einrichten_der_tcp_verbindungen"></span>Einrichten der TCP-Verbindungen</h4>
+<div class="paragraph"><p>Die Benachrichtigung-Spooler von entfernter und zentraler (Benachrichtigungs-)Instanz tauschen sich untereinander per TCP aus.
+Benachrichtigungen werden von der Remote-Instanz zur Zentralinstanz gesendet.
+Die Zentrale quittiert empfangene Benachrichtigungen an die Remote-Instanz, was verhindert, dass Benachrichtigungen verloren gehen, selbst wenn die TCP-Verbindung abbrechen sollte.</p></div>
+<div class="paragraph"><p>Für den <em>Aufbau</em> der TCP-Verbindung haben Sie zwei Möglichkeiten:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>TCP-Verbindung wird von Zentralinstanz zur Remote-Instanz aufgebaut. Hier ist die Remote-Instanz der <em>TCP-Server</em>.</p></li>
+<li><p>TCP-Verbindung wird von Remote-Instanz zur Zentralinstanz aufgebaut. Hier ist die Zentralinstanz der <em>TCP-Server</em>.</p></li>
+</ol></div>
+<div class="paragraph"><p>Somit steht dem Weiterleiten von Benachrichtigungen auch dann nichts im Wege, wenn aus Netzwerkgründen der Verbindungsaufbau nur in eine bestimmte Richtung möglich ist.
+Die TCP-Verbindungen werden vom Spooler mit einem Heartbeat-Signal überwacht und bei Bedarf sofort neu aufgebaut — nicht erst im Falle einer Benachrichtigung.</p></div>
+<div class="paragraph"><p>Da Remote-Instanz und Zentralinstanz für den Spooler unterschiedliche globale Einstellungen
+brauchen, müssen Sie diese für <em>alle</em> Remote-Instanzen <a href="#sitespecific">instanzspezifische Einstellungen</a> machen.
+Die Konfiguration der Zentrale geschieht über die normalen globalen Einstellungen.
+Beachten Sie, dass diese automatisch an alle Remote-Instanzen vererbt wird, für die Sie <em>keine</em> spezifischen Einstellungen definiert haben.</p></div>
+<div class="paragraph"><p>Betrachten Sie zuerst den Fall, dass die Zentralinstanz die TCP-Verbindungen zu den
+Remote-Instanzen aufbauen soll.</p></div>
+<div class="paragraph"><p>Schritt 1: Editieren Sie <strong>bei der Remote-Instanz</strong> die instanzspezifische globale Einstellung
+<span class="guihint">Notifications &gt; Notification Spooler Configuration</span> und aktivieren Sie
+<span class="guihint">Accept incoming TCP connections</span>. Als TCP-Port wird 6555 vorgeschlagen.
+Sofern nichts dagegen spricht, übernehmen Sie diese Einstellung.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_spooler_configuration.png" alt="distributed monitoring notification spooler configuration"></div></div>
+<div class="paragraph"><p>Schritt 2: Setzen Sie nun ebenfalls nur <strong>auf der Remote-Instanz</strong> die Einstellung <span class="guihint">Notification Spooling</span>
+auf den Wert <span class="guihint">Forward to remote site by notification spooler</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_spooling.png" alt="distributed monitoring notification spooling"></div></div>
+<div class="paragraph"><p>Schritt 3: Auf der <strong>Zentralinstanz</strong> — also in den normalen globalen Einstellungen — richten
+Sie nun zu der Remote-Instanz (und später dann auch eventuell zu weiteren Remote-Instanzen) die
+Verbindungen ein:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_spooler_central_configuration.png" alt="distributed monitoring notification spooler central configuration"></div></div>
+<div class="paragraph"><p>Schritt 4: Setzen Sie die globale Einstellung <span class="guihint">Notification Spooling</span> auf
+<span class="guihint">Asynchronous local delivery by notification spooler</span>,
+damit auch die Meldungen der Zentrale über den gleichen
+zentralen Spooler abgewickelt werden.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_spooling_central.png" alt="distributed monitoring notification spooling central"></div></div>
+<div class="paragraph"><p>Schritt 5: Aktivieren Sie die Änderungen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__verbindungsaufbau_von_der_remote_instanz_aus">
+<span class="hidden-anchor sr-only" id="_verbindungsaufbau_von_der_remote_instanz_aus"></span>Verbindungsaufbau von der Remote-Instanz aus</h4>
+<div class="paragraph"><p>Soll die TCP-Verbindung von der Remote-Instanz aus aufgebaut werden, so ist das Vorgehen
+identisch, bis auf die Tatsache, dass Sie die oben gezeigten Einstellungen
+einfach zwischen Zentralinstanz und Remote-Instanz vertauschen.</p></div>
+<div class="paragraph"><p>Auch eine Mischung ist möglich. In diesem Fall muss die Zentrale so aufgesetzt
+werden, dass sie sowohl auf eingehende Verbindungen lauscht, als auch Verbindungen
+zu entfernten Instanzen aufbaut. Für jede Beziehung zwischen Zentralinstanz und Remote-Instanz darf aber
+<em>nur einer von beiden</em> die Verbindung aufbauen!</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__test_und_diagnose">
+<span class="hidden-anchor sr-only" id="_test_und_diagnose"></span>Test und Diagnose</h4>
+<div class="paragraph"><p>Der Benachrichtigungs-Spooler loggt in die Datei <code>var/log/mknotifyd.log</code>.
+In den Spooler-Einstellungen können Sie das Loglevel erhöhen, so dass Sie mehr Meldungen kommen.
+Bei einem Standard-Loglevel sollten Sie auf der Zentralinstanz etwa Folgendes sehen:</p></div>
+<div class="listingblock">
+<div class="title">var/log/mknotifyd.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-11-17 07:11:40,023 [20] [cmk.mknotifyd] -----------------------------------------------------------------
+2021-11-17 07:11:40,023 [20] [cmk.mknotifyd] Check_MK Notification Spooler version 2.0.0p15 starting
+2021-11-17 07:11:40,024 [20] [cmk.mknotifyd] Log verbosity: 0
+2021-11-17 07:11:40,025 [20] [cmk.mknotifyd] Daemonized with PID 31081.
+2021-11-17 07:11:40,029 [20] [cmk.mknotifyd] Connection to 10.1.8.44 port 6555 in progress
+2021-11-17 07:11:40,029 [20] [cmk.mknotifyd] Successfully connected to 10.1.8.44:6555</code></pre></div>
+</div>
+<div class="paragraph"><p>Die Datei <code>var/log/mknotifyd.state</code> enthält stets einen aktuellen Zustand des Spoolers und aller seiner Verbindungen:</p></div>
+<div class="listingblock">
+<div class="title">central:var/log/mknotifyd.state (Auszug)</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Connection:               10.1.8.44:6555
+Type:                     outgoing
+State:                    established
+Status Message:           Successfully connected to 10.1.8.44:6555
+Since:                    1637129500 (2021-11-17 07:11:40, 140 sec ago)
+Connect Time:             0.002 sec</code></pre></div>
+</div>
+<div class="paragraph"><p>Die gleiche Datei gibt es auch auf der Remote-Instanz. Dort sieht die Verbindung etwa so aus:</p></div>
+<div class="listingblock">
+<div class="title">remote-1:var/log/mknotifyd.state (Auszug)</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Connection:               10.22.4.12:56546
+Type:                     incoming
+State:                    established
+Since:                    1637129500 (2021-11-17 07:11:40, 330 sec ago)</code></pre></div>
+</div>
+<div class="paragraph"><p>Zum Testen wählen Sie z.B. einen beliebigen Service, der auf der Remote-Instanz überwacht wird, und setzen diesen per Kommando <span class="guihint">Fake check results</span> auf <span class="state2">CRIT</span>.</p></div>
+<div class="paragraph"><p>Auf der <em>Zentrale</em> sollen Sie nun in der entsprechenden Log-Datei (<code>notify.log</code>) die eingehenden Benachrichtigung sehen:</p></div>
+<div class="listingblock">
+<div class="title">central:var/log/notify.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-11-17 07:59:36,231 ----------------------------------------------------------------------
+2021-11-17 07:59:36,232 [20] [cmk.base.notify] Got spool file 307ad477 (myremotehost123;Check_MK) from remote host for local delivery.</code></pre></div>
+</div>
+<div class="paragraph"><p>Das gleiche Ereignis sieht bei der Remote-Instanz so aus:</p></div>
+<div class="listingblock">
+<div class="title">remote1:var/log/notify.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-11-17 07:59:28,161 [20] [cmk.base.notify] ----------------------------------------------------------------------
+2021-11-17 07:59:28,161 [20] [cmk.base.notify] Got raw notification (myremotehost123;Check_MK) context with 71 variables
+2021-11-17 07:59:28,162 [20] [cmk.base.notify] Creating spoolfile: /omd/sites/remote1/var/check_mk/notify/spool/307ad477-b534-4cc0-99c9-db1c517b31f3</code></pre></div>
+</div>
+<div class="paragraph"><p>In den globalen Einstellungen können Sie sowohl die normale Log-Datei für Benachrichtigungen (<code>notify.log</code>) als auch die Log-Datei des Benachrichtigungs-Spoolers auf ein höheres Loglevel umstellen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__überwachung_des_spoolings">
+<span class="hidden-anchor sr-only" id="_überwachung_des_spoolings"></span>Überwachung des Spoolings</h4>
+<div class="paragraph"><p>Nachdem Sie alles wie beschrieben aufgesetzt haben, werden Sie feststellen, dass sowohl auf der Zentralinstanz, als auch auf den Remote-Instanzen jeweils ein neuer Service gefunden wird, den Sie unbedingt in die Überwachung aufnehmen sollten.
+Dieser überwacht den Benachrichtigungs-Spooler und dessen TCP-Verbindungen.
+Dabei wird jede Verbindung zweimal überwacht: einmal durch die Zentralinstanz und einmal durch die Remote-Instanz:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_services.png" alt="distributed monitoring notification services"></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_mixed_versions">
+<span class="hidden-anchor sr-only" id="mixed_versions"></span>7. Versionsunterschiede zwischen Zentralinstanz und Remote-Instanzen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Grundsätzlich müssen die Versionen aller Remote-Instanzen und der Zentralinstanz übereinstimmen.
+Ausnahmen gelten lediglich während der Durchführung von <a href="update.html">Updates</a>.
+Hier ist zwischen folgenden Fällen zu unterscheiden:</p></div>
+<div class="sect2">
+<h3 id="heading__abweichende_patchlevel_gleiche_major_version">
+<span class="hidden-anchor sr-only" id="_abweichende_patchlevel_gleiche_major_version"></span>7.1. Abweichende Patchlevel (gleiche Major-Version)</h3>
+<div class="paragraph"><p>Die Patchlevel (z.B. p11) dürfen in den meisten Fällen unterschiedlich sein.
+In seltenen Fällen sind aber auch diese untereinander inkompatibel, so dass Sie den exakten Versionsstand (z.B. <span class="new">2.0.0</span>p11) auf allen Seiten einhalten müssen, damit eine fehlerfreie Zusammenarbeit der Instanzen möglich ist.
+Beachten Sie daher immer die inkompatiblen Änderungen zu jeder Patchversion in den <a href="https://checkmk.com/de/werks" target="_blank">Werks.</a></p></div>
+<div class="paragraph"><p>Im Regelfall — Ausnahmen sind möglich und werden in den Werks angegeben — aktualisieren Sie zunächst die Remote-Instanzen und als letztes die Zentralinstanz.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__abweichende_major_versionen">
+<span class="hidden-anchor sr-only" id="_abweichende_major_versionen"></span>7.2. Abweichende Major-Versionen</h3>
+<div class="paragraph"><p>Für die reibungslose Durchführung von <a href="update_major.html">Major-Updates</a> (beispielsweise von <span class="new">2.1.0</span> auf <span class="new">2.2.0</span>) in großen verteilten Umgebungen erlaubt Checkmk seit <span class="new">2.0.0</span> einen Mischbetrieb, bei dem die Differenz genau eine Major-Version sein darf.
+Dabei ist darauf zu achten, dass Sie die Remote-Instanzen zuerst aktualisieren.
+Die Zentralinstanz aktualisieren Sie erst, wenn alle Remote-Instanzen auf dem höheren Versionsstand sind.</p></div>
+<div class="paragraph"><p>Auch hier gilt: Prüfen Sie unbedingt die Werks sowie die Hinweise zum Versions-Update, <em>bevor</em> Sie mit dem Update beginnen!
+Es ist immer ein bestimmtes Patchlevel der älteren Version auf der Zentralinstanz erforderlich, um einen reibungslosen Mischbetrieb zu gewährleisten.</p></div>
+<div class="paragraph"><p>Eine Besonderheit im Mischbetrieb ist die zentrale Verwaltung von Erweiterungspaketen, welche nun in Varianten für sowohl die ältere, als auch die neuere Checkmk-Version vorgehalten werden können.
+Details erklärt der Artikel zur Verwaltung von <a href="mkps.html">MKPs</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>8. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading__konfigurationsdateien">
+<span class="hidden-anchor sr-only" id="_konfigurationsdateien"></span>8.1. Konfigurationsdateien</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 44%;">
+<col style="width: 56%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/multisite.d/sites.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier speichert Checkmk die Konfiguration der Verbindungen zu den einzelnen Instanzen. Sollte aufgrund von Fehlkonfiguration die Oberfläche so „hängen“, dass sie nicht mehr bedienbar ist, können Sie die störenden Einträge direkt in dieser Datei editieren. Falls der Livestatus-Proxy zum Einsatz kommt, ist anschließend jedoch ein Editieren und Speichern mindestens einer Verbindung notwendig, da erst hierbei für diesen Daemon eine passende Konfiguration erzeugt wird.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/liveproxyd.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfiguration für den Livestatus-Proxy. Diese Datei wird von Checkmk bei jeder Änderung an der Konfiguration des verteilten Monitorings neu generiert.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/mknotifyd.d/wato/global.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfiguration für den Benachrichtigungs-Spooler. Diese Datei wird von Checkmk beim Speichern der globalen Einstellungen erzeugt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/conf.d/distributed_wato.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wird auf den Remote-Instanzen erzeugt und sorgt dafür, dass diese nur ihre eigenen Hosts überwachen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/nagios/conf.d/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ablageort für selbst erstellte Nagios-Konfigurationsdateien mit Hosts und Services. Dies wird beim Einsatz von <a href="#livedump">Livedump</a> auf der Zentralinstanz benötigt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/mk-livestatus/nagios.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfiguration von Livestatus bei Verwendung von Nagios als Kern. Hier können Sie die maximale gleichzeitige Anzahl von Verbindungen konfigurieren.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/conf.d/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfiguration von Hosts und Regeln für Checkmk. Legen Sie hier Konfigurationsdateien ab, die per <a href="#cmcdump">CMCDump</a> erzeugt wurden. Nur das Unterverzeichnis <code>wato/</code> wird in der Konfigurationsumgebung verwaltet und ist dort sichtbar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/autochecks/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Von der Serviceerkennung gefundene Services. Dieses werden immer lokal auf der Remote-Instanz gespeichert.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/rrds/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ablage der Round-Robin-Datenbanken für die Archivierung der Messwerte beim Einsatz des Checkmk-RRD-Formats (Default bei den kommerziellen Editionen).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/pnp4nagios/perfdata/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ablage der Round-Robin-Datenbanken bei PNP4Nagios-Format (Checkmk Raw).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/liveproxyd.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Datei des Livestatus-Proxys.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/liveproxyd.state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aktueller Zustand des Livestatus-Proxys in lesbarer Form. Diese Datei wird alle fünf Sekunden aktualisiert.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/notify.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Datei des Checkmk-Benachrichtigungssystems.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/mknotifyd.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Datei des Benachrichtigungs-Spoolers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/mknotifyd.state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aktueller Zustand des Benachrichtigungs-Spoolers in lesbarer Form.
+Diese Datei wird alle 20 Sekunden aktualisiert.</p></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#livestatus">2. Verteiltes Monitoring mit Livestatus</a><ul class="sectlevel1">
+<li>
+<a href="#_grundprinzip">2.1. Grundprinzip</a><ul class="sectlevel2">
+<li><a href="#central_status">Zentraler Status</a></li>
+<li><a href="#distr_wato">Zentrale Konfiguration</a></li>
+</ul>
+</li>
+<li>
+<a href="#distr_wato_config">2.2. Verteiltes Monitoring aufsetzen</a><ul class="sectlevel2">
+<li><a href="#_zentralinstanz_aufsetzen">Zentralinstanz aufsetzen</a></li>
+<li><a href="#_remote_instanzen_aufsetzen_und_livestatus_per_netzwerk_freigeben">Remote-Instanzen aufsetzen und Livestatus per Netzwerk freigeben</a></li>
+<li><a href="#connect_remote_sites">Remote-Instanzen in die Zentralinstanz einbinden</a></li>
+<li><a href="#_bei_hosts_und_ordnern_festlegen_von_welcher_instanz_aus_diese_%C3%BCberwacht_werden_sollen">Bei Hosts und Ordnern festlegen, von welcher Instanz aus diese überwacht werden sollen</a></li>
+<li><a href="#_service_erkennung_f%C3%BCr_umgezogene_hosts_neu_durchf%C3%BChren_und_%C3%A4nderungen_aktivieren">Service-Erkennung für umgezogene Hosts neu durchführen und Änderungen aktivieren</a></li>
+</ul>
+</li>
+<li>
+<a href="#livestatus_tls">2.3. Livestatus verschlüsselt anbinden</a><ul class="sectlevel2">
+<li><a href="#_details_zu_den_eingesetzten_technologien">Details zu den eingesetzten Technologien</a></li>
+<li><a href="#livestatus_tls_omd_update">Verhalten beim Update von Checkmk</a></li>
+</ul>
+</li>
+<li>
+<a href="#_besonderheiten_im_verteilten_setup">2.4. Besonderheiten im verteilten Setup</a><ul class="sectlevel2">
+<li><a href="#_zugriff_auf_die_%C3%BCberwachten_hosts">Zugriff auf die überwachten Hosts</a></li>
+<li><a href="#_angabe_der_instanz_in_den_ansichten">Angabe der Instanz in den Ansichten</a></li>
+<li><a href="#_site_status_snapin">Site status Snapin</a></li>
+<li><a href="#_master_control_snapin">Master control Snapin</a></li>
+<li><a href="#_checkmk_cluster_hosts">Checkmk Cluster Hosts</a></li>
+<li><a href="#_piggyback_daten_z_b_esxi">Piggyback-Daten (z.B. ESXi)</a></li>
+<li><a href="#_hardware_softwareinventur">Hardware-/Softwareinventur</a></li>
+<li><a href="#_passwort%C3%A4nderung">Passwortänderung</a></li>
+</ul>
+</li>
+<li>
+<a href="#_anbinden_von_bestehenden_instanzen">2.5. Anbinden von bestehenden Instanzen</a><ul class="sectlevel2">
+<li><a href="#_1_host_merkmale">1. Host-Merkmale</a></li>
+<li><a href="#_2_ordner">2. Ordner</a></li>
+<li><a href="#_3_einmal_editieren_und_speichern">3. Einmal editieren und speichern</a></li>
+</ul>
+</li>
+<li><a href="#sitespecific">2.6. Instanzspezifische globale Einstellungen</a></li>
+<li><a href="#ec">2.7. Verteilte Event Console</a></li>
+<li><a href="#_nagvis">2.8. NagVis</a></li>
+</ul>
+</li>
+<li>
+<a href="#wan">3. Instabile oder langsame Verbindungen</a><ul class="sectlevel1">
+<li><a href="#_status_hosts">3.1. Status-Hosts</a></li>
+<li><a href="#persistent">3.2. Persistente Verbindungen</a></li>
+<li>
+<a href="#livestatusproxy">3.3. Der Livestatus-Proxy</a><ul class="sectlevel2">
+<li><a href="#_aufsetzen">Aufsetzen</a></li>
+<li><a href="#_fehlerdiagnose">Fehlerdiagnose</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#viewer">4. Cascading Livestatus</a></li>
+<li>
+<a href="#livedump">5. Livedump und CMCDump</a><ul class="sectlevel1">
+<li><a href="#_motivation">5.1. Motivation</a></li>
+<li>
+<a href="#_aufsetzen_von_livedump">5.2. Aufsetzen von Livedump</a><ul class="sectlevel2">
+<li><a href="#_%C3%BCbertragen_der_konfiguration">Übertragen der Konfiguration</a></li>
+<li><a href="#_%C3%BCbertragung_des_status">Übertragung des Status</a></li>
+</ul>
+</li>
+<li><a href="#cmcdump">5.3. Aufsetzen von CMCDump</a></li>
+</ul>
+</li>
+<li>
+<a href="#notifications">6. Benachrichtigungen in verteilten Umgebungen</a><ul class="sectlevel1">
+<li><a href="#_zentral_oder_dezentral">6.1. Zentral oder dezentral</a></li>
+<li><a href="#_dezentrale_benachrichtigungen">6.2. Dezentrale Benachrichtigungen</a></li>
+<li>
+<a href="#_zentrale_benachrichtigungen">6.3. Zentrale Benachrichtigungen</a><ul class="sectlevel2">
+<li><a href="#_grundlegendes">Grundlegendes</a></li>
+<li><a href="#_einrichten_der_tcp_verbindungen">Einrichten der TCP-Verbindungen</a></li>
+<li><a href="#_verbindungsaufbau_von_der_remote_instanz_aus">Verbindungsaufbau von der Remote-Instanz aus</a></li>
+<li><a href="#_test_und_diagnose">Test und Diagnose</a></li>
+<li><a href="#_%C3%BCberwachung_des_spoolings">Überwachung des Spoolings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#mixed_versions">7. Versionsunterschiede zwischen Zentralinstanz und Remote-Instanzen</a><ul class="sectlevel1">
+<li><a href="#_abweichende_patchlevel_gleiche_major_version">7.1. Abweichende Patchlevel (gleiche Major-Version)</a></li>
+<li><a href="#_abweichende_major_versionen">7.2. Abweichende Major-Versionen</a></li>
+</ul>
+</li>
+<li>
+<a href="#files">8. Dateien und Verzeichnisse</a><ul class="sectlevel1"><li><a href="#_konfigurationsdateien">8.1. Konfigurationsdateien</a></li></ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

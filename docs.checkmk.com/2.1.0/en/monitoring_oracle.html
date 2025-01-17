@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="With the plug-in for Windows, Linux, Solaris and AIX you can fully monitor Oracle databases. Details about the configuration can be found here.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Monitoring Oracle databases">
+<meta name="og:description" content="With the plug-in for Windows, Linux, Solaris and AIX you can fully monitor Oracle databases. Details about the configuration can be found here.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Monitoring Oracle databases</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/de/monitoring_oracle.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/en/monitoring_oracle.html">2.2.0</a><a class="dropdown-item" href="../../latest/en/monitoring_oracle.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host and service parameters</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Introduction to notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMWare ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Performance data and graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Configuration via the Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Configuration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Command reference for the HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Writing your own check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Monitoring Oracle databases</h1>
+<div class="details">
+<span id="revdate">Last modified on 02-Mar-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/en/monitoring_oracle.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="agent_linux.html">Monitoring Linux</a>
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="https://checkmk.com/integrations">Catalog of Check Plug-ins</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk provides comprehensive options for the monitoring of Oracle databases.
+With the plug-in you can not only retrieve a database’s tablespaces or its
+active sessions, but also many other types of performance data.
+A complete list of the monitoring options can be found in our
+<a href="https://checkmk.com/cms_check_plugins_catalog.html">Catalog of Check Plug-ins</a>.
+We extend this plug-in regularly, so it is always worth looking in the catalog.
+Among others, Checkmk can monitor the following values:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="https://checkmk.com/cms_check_oracle_instance.html">Instance state</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_version.html">Version</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_jobs.html">Jobs</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_locks.html">Locks</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_processes.html">Processes</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_sessions.html">Number of active sessions</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_recovery_area.html">Recovery area</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_logswitches.html">Log switch activity</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_tablespaces.html">General tablespace information</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_performance.html">Tablespaces performance</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_longactivesessions.html">Long active sessions</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_undostat.html">Undo retention</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_recovery_status.html">Checkpoint and online backup state</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_sql.html">Custom SQLs</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_rman.html">RMAN backup status</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_rman_backups.html">RMAN backups</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_asm_diskgroup.html">ASM disk groups</a></p></li>
+<li><p><a href="https://checkmk.com/cms_check_oracle_dataguard_stats.html">Apply and transport lag of Oracle Data-Guard</a></p></li>
+</ul></div>
+<div class="paragraph"><p>To be able to monitor the databases only the plug-in is required in addition
+to the agent on the database server. The Linux, AIX, Solaris,
+HP-UX and Windows operating systems are currently supported.
+No further additional software will be required for a monitoring,
+either on the Checkmk-Instance or on the database server.</p></div>
+<div class="paragraph"><p>Many of the steps to set up monitoring are the same for both Linux and Windows.
+For this reason, we will first describe the general steps, and then the steps
+specific to Windows and Linux. Please note that a setup using the
+<a href="#bakery">Agent Bakery</a> is currently only available for Linux,
+Solaris and AIX.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_first_steps">
+<span class="hidden-anchor sr-only" id="first_steps"></span>2. General steps for an initial setup</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__create_a_user">
+<span class="hidden-anchor sr-only" id="_create_a_user"></span>2.1. Create a user</h3>
+<div class="paragraph"><p>In principle, the first setup is quick and requires only three steps.
+The first step, of course, is to have a user who is also allowed to query the
+databases. Provided that you are not using <a href="#rac">RAC</a>, create a
+user for each database to be monitored. How to access an instance differs
+depending on the installed operating system. For Linux, you can do this for
+example, by always first setting the relevant instance as an environment
+variable for which a user is to be created. Normally you first switch to
+the <code>oracle</code> user, but this can differ depending on the setup:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>su<span class="tok-w"> </span>-<span class="tok-w"> </span>oracle
+<span class="tok-gp">oracle@myhos$ </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">ORACLE_SID</span><span class="tok-o">=</span>MYINST1</code></pre></div></div>
+<div class="paragraph"><p>Then log on to the instance and create a user for the monitoring. To get all of
+the data, the following permissions are required. In the following example,
+the newly-created user is named <code>checkmk</code>. You can also specify any other
+desired name:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">create</span><span class="tok-w"> </span><span class="tok-k">user</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-n">identified</span><span class="tok-w"> </span><span class="tok-k">by</span><span class="tok-w"> </span><span class="tok-n">myPassword</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-n">select_catalog_role</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-k">create</span><span class="tok-w"> </span><span class="tok-k">session</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">connect</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-o">/</span><span class="tok-n">myPassword</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-n">exit</span></code></pre></div></div>
+<div class="paragraph"><p>You can find out exactly how the login to a specific instance works in the
+Oracle documentation.</p></div>
+<div class="sect3">
+<h4 id="heading__multitenant_databases">
+<span class="hidden-anchor sr-only" id="_multitenant_databases"></span>Multitenant databases</h4>
+<div class="paragraph"><p>You can also configure the login for multitenant databases. This is usually
+performed in the config using a special user and with the prefix <code>C##</code>. The assignment of permissions is a bit different as for regular users as you need to specify them for all current container and for all in the future:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">create</span><span class="tok-w"> </span><span class="tok-k">user</span><span class="tok-w"> </span><span class="tok-k">c</span><span class="tok-o">##</span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-n">identified</span><span class="tok-w"> </span><span class="tok-k">by</span><span class="tok-w"> </span><span class="tok-n">myPassword</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">alter</span><span class="tok-w"> </span><span class="tok-k">user</span><span class="tok-w"> </span><span class="tok-k">c</span><span class="tok-o">##</span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-k">set</span><span class="tok-w"> </span><span class="tok-n">container_data</span><span class="tok-o">=</span><span class="tok-k">all</span><span class="tok-w"> </span><span class="tok-n">container</span><span class="tok-o">=</span><span class="tok-k">current</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-n">select_catalog_role</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-k">c</span><span class="tok-o">##</span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-n">container</span><span class="tok-o">=</span><span class="tok-k">all</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-k">create</span><span class="tok-w"> </span><span class="tok-k">session</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-k">c</span><span class="tok-o">##</span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-n">container</span><span class="tok-o">=</span><span class="tok-k">all</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-n">exit</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_user_config">
+<span class="hidden-anchor sr-only" id="user_config"></span>2.2. Create the configuration and user</h3>
+<div class="paragraph"><p>After you have created a user, the next step is to enable the agent plug-in to
+later receive this information. The simplest way is for you to define the same
+login data for all instances, and set a default in the configuration.
+Now create a new configuration file on the Oracle host for
+<a href="#linux">Linux, AIX, Solaris</a> or
+for <a href="#windows">Windows</a>. In the following example the file for
+unix-type systems can be seen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# DBUSER='USERNAME:PASSWORD'
+DBUSER='checkmk:mypassword'</code></pre></div>
+</div>
+<div class="paragraph"><p>For Windows this procedure looks very similar. There you set the variable in
+a PowerShell script:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# $DBUSER = @("USERNAME","PASSWORD")
+$DBUSER = @("checkmk","myPassword")</code></pre></div>
+</div>
+<div class="paragraph"><p>The standard user is all that the plug-in really requires. All other options
+that you can set in <a href="#adv_linux">unix-type systems</a> or under
+<a href="#adv_windows">Windows</a> are optional.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__getting_the_configuration_on_to_the_host">
+<span class="hidden-anchor sr-only" id="_getting_the_configuration_on_to_the_host"></span>2.3. Getting the configuration on to the host</h3>
+<div class="paragraph"><p>Now that you have created a user and have saved it in the configuration file,
+you must also place the plug-in in the correct agent directory.
+The correct file path for agent plug-ins is described in the articles on
+<a href="agent_linux.html#plugins">Linux</a> and <a href="agent_windows.html#plugins">Windows</a>. Solaris and AIX
+usually use the same path as that under Linux. Under Linux — and also under AIX
+or Solaris — be sure to make the plug-in executable,
+and correct it if necessary:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">cd</span><span class="tok-w"> </span>/usr/lib/check_mk_agent/plugins/
+<span class="tok-gp">root@linux# </span>ls<span class="tok-w"> </span>-lA
+<span class="tok-go">-rw-r--r-- 1 root root 120808 Jan 25 11:29 mk_oracle</span>
+<span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span>+x<span class="tok-w"> </span>mk_oracle
+<span class="tok-gp">root@linux# </span>ls<span class="tok-w"> </span>-lA
+<span class="tok-go">-rwxr-xr-x 1 root root 120808 Jan 25 11:29 mk_oracle</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__using_the_oracle_wallet">
+<span class="hidden-anchor sr-only" id="_using_the_oracle_wallet"></span>2.4. Using the Oracle-Wallet</h3>
+<div class="paragraph"><p>Alternatively, you can also use the <em>Oracle Wallet</em> to define the user
+directly and with a password in a configuration file.
+This has the advantage that you no longer need to store the access data in an
+unencrypted form on the Checkmk server and on the Oracle host. So even if you have
+defined the configuration file’s rights on the Oracle host to suit,
+the access data has nevertheless been removed from the server and is located
+on the Checkmk server as long as you use the <a href="#bakery">Agent bakery</a>.</p></div>
+<div class="paragraph"><p>The <em>Oracle Wallet</em> in turn stores the encrypted access data on the host to
+be monitored so that they can only be used, but no login data has to be made
+known explicitly. Checkmk can thus use this wallet, but in principle the access
+data needs only be known to the database administrator (DBA). Create — or the
+DBA can create — a wallet on the appropriate server:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>mkstore<span class="tok-w"> </span>-wrl<span class="tok-w"> </span>/etc/check_mk/oracle_wallet<span class="tok-w"> </span>-create</code></pre></div></div>
+<div class="paragraph"><p>The plug-in will access this file later whenever a connection to an instance is
+to be established. So that the necessary user data can also be found, you must
+enter this once in the wallet. In the following example you thus add the user
+<code>checkmk</code> for the instance <code>MYINST1</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>mkstore<span class="tok-w"> </span>-wrl<span class="tok-w"> </span>/etc/check_mk/oracle_wallet<span class="tok-w"> </span>-createCredential<span class="tok-w"> </span>MYINST1<span class="tok-w"> </span>check_mk<span class="tok-w"> </span>myPassword</code></pre></div></div>
+<div class="paragraph"><p>For the plug-in to know where to look for the wallet, it must find two files.
+The first file is the <code>sqlnet.ora</code> in which the info for the wallet’s
+location can be found. The second file — <code>tnsnames.ora</code> — defines
+the address of the instance and can then contact the instance via its alias.
+So that the agent plug-in can access these files you can specify the path under Linux, Solaris and AIX using
+the <a href="#tns_config"><code>TNSALIAS</code> extended variable</a>.
+This is especially useful if the files already exist.
+Alternatively, you can create them explicitly.
+Windows even requires that you specify them manually.</p></div>
+<div class="paragraph"><p>First create the <code>sqlnet.ora</code> file. The plug-in alternatively searches in
+this file for the login data, so the correct file path to the wallet file
+you just created must be entered here. Make sure that you set the
+<code>SQLNET.WALLET_OVERRIDE</code> parameter to <code>TRUE</code>:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/sqlnet.ora</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>LOG_DIRECTORY_CLIENT = /var/log/check_mk/oracle_client
+DIAG_ADR_ENABLED = OFF
+
+SQLNET.WALLET_OVERRIDE = TRUE
+WALLET_LOCATION =
+ (SOURCE=
+   (METHOD = FILE)
+   (METHOD_DATA = (DIRECTORY=/etc/check_mk/oracle_wallet))
+ )</code></pre></div>
+</div>
+<div class="paragraph"><p>Now the plug-in knows which credentials should be used. So that it also accesses
+the correct address, create <code>tnsnames.ora</code> as the second file.
+You can find examples of a configuration on the
+<a href="#files_cmk">Checkmk-Server</a>, and also on the Oracle host.
+The exact syntax can be found in the Oracle documentation, but as an example the
+file could look like this:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/tnsnames.ora</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>MYINST1
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = MYINST1_ALIAS)
+    )
+  )</code></pre></div>
+</div>
+<div class="paragraph"><p>With this last step you have created the prerequisites for getting the access
+data from the agent plug-in’s configuration file.
+Instead, you simply enter a <code>/</code> (slash):</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>DBUSER='/:'</code></pre></div>
+</div>
+<div class="paragraph"><p>You can of course add further access data to the wallet at a later date.
+The <code>tnsnames.ora</code> file must then simply be amended as necessary.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_linux">
+<span class="hidden-anchor sr-only" id="linux"></span>3. Linux, AIX, Solaris</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__plug_in_and_configuration_file_paths">
+<span class="hidden-anchor sr-only" id="_plug_in_and_configuration_file_paths"></span>3.1. Plug-in and configuration file paths</h3>
+<div class="paragraph"><p>Under unix-type systems Checkmk uses a uniform plug-in. On the one hand, this
+reduces maintenance effort, since SQL queries are not duplicated, and on the other hand
+you only need to pay attention to a single plug-in. On all supported systems the
+file paths for the agents are the same or very similar. Specifically, you need
+the following directories, if you have not changed them:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">OS</th>
+<th class="tableblock halign-left valign-top">Plug-in File Path</th>
+<th class="tableblock halign-left valign-top">Configuration File Path</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linux, Solaris, HP-UX</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/usr/lib/check_mk_agent/plugins/</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/etc/check_mk/</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AIX</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/usr/check_mk/lib/plugins/</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/usr/check_mk/conf/</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_adv_linux">
+<span class="hidden-anchor sr-only" id="adv_linux"></span>3.2. Further options</h3>
+<div class="paragraph"><p>In <a href="#first_steps">general setup</a> you have already learned about
+the first variables for getting monitoring data from their Oracle instances.
+However, depending on the application scenario, you will quickly need further
+possibilities for better, individual control of the monitoring per instance.</p></div>
+<div class="sect3">
+<h4 id="heading_adv_user_linux">
+<span class="hidden-anchor sr-only" id="adv_user_linux"></span>Extended user configuration</h4>
+<div class="paragraph"><p>With the standard login you can use regular or maybe even all instances of a
+database. However, there are special cases in which you require individual
+access data for specific instances. In the configuration file you therefore have
+the following three options for specifying users:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DBUSER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default if no individual access data has been defined for the database instance.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DBUSER_MYINST1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access data for a specific database instance — in this case for the instance <code>MYINST1</code>. The login data is only used for this SID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASMUSER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Special access data for Automatic Storage Management (ASM).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Important</strong>: For an <em>ASM</em> only one login at a time can be specified.</p></div>
+<div class="paragraph"><p>These variables additionally allow even more options, except for username and
+password. You can also determine whether the user is a <em>SYSDBA</em> or
+<em>SYSASM</em>, on which combination of address and port the instance listens to,
+and even which <em>TNSALIAS</em> should be used. However, these specifications are
+always — unlike user and password — optional. In addition to the above
+example, a configuration can look like this:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax
+# DBUSER='USERNAME:PASSWORD:ROLE:HOST:PORT:TNSALIAS'
+DBUSER='checkmk:myPassword'
+
+DBUSER_MYINST1='cmk_specific1:myPassword1:SYSDBA:localhost:1521'
+DBUSER_MYINST2='cmk_specific2:myPassword2::localhost::INST2'
+
+ASMUSER='cmk_asm:myASMPassword:SYSASM'</code></pre></div>
+</div>
+<div class="paragraph"><p>A few explanations for the above example:</p></div>
+<div class="ulist"><ul>
+<li><p>You can define any number of individual access data. These are always preferred to the standard.</p></li>
+<li><p>Each option is separated from the others by a <code>:</code> (colon).</p></li>
+<li><p>If an optional field is omitted in the middle of the string, a colon must be coded. See <code>DBUSER_MYINST2</code> where no special role is specified.</p></li>
+<li><p>If after a certain point, no more optional fields are needed, you can omit the colons. See <code>ASMUSER</code>, where neither the host nor the port is specified.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading_skip_include">
+<span class="hidden-anchor sr-only" id="skip_include"></span>Including or excluding instances</h4>
+<div class="paragraph"><p>In some cases you may not want to include particular instances in the monitoring.
+This may be because it is only a playground for developers, or for other reasons.
+To make the configuration as simple as possible in individual situations, you
+have various options to entirely or partially exclude one or more instances:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ONLY_SIDS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here you can determine which instances are to be monitored. This is a positive list, ignoring all instances that are not explicitly listed. This option is very useful if the number of instances to be monitored is smaller than the number of instances to be ignored.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SKIP_SIDS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unlike <code>ONLY_SIDS</code>, this is a negative list where all instances are monitored except those explicitly listed here. This option is very suitable if the number of instances to be ignored is smaller than the number to be monitored.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXCLUDE__{SID}_</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">With this option you can partially exclude instances. Again, you can use the value <code>ALL</code> to exclude all sections, and thus do the same as if you were adding them to <code>SKIP_SIDS</code>. However, you can also disable only certain sections for the specified instance and in this way also define a negative list for individual sections of the instance. <strong>Important</strong>: An ASM (<code>+ASM</code>) cannot be completely disabled with this option.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>You will have already guessed: The order in which these options are processed
+determines the result. The entries are in fact processed <em>per instance</em>
+exactly in sequence as specified. Therefore if the variable <code>ONLY_SIDS</code>
+is set, <code>SKIP_SIDS</code> is no longer evaluated, and it is no longer possible
+to determine whether a variable <code>EXCLUDE_</code> has been specified as
+<code>ALL</code> for this instance.
+If <code>ONLY_SIDS</code> is not set, the system proceeds according to the sequence.
+In case of doubt — that is, as the default behavior — the instance will be monitored accordingly.</p></div>
+<div class="paragraph"><p>Below is an example in which all variables are set and what the behavior is like:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>ONLY_SIDS='INST1 INST2 INST5'
+SKIP_SIDS='INST7 INST3 INST2'
+EXCLUDE_INST1='ALL'
+EXCLUDE_INST2='tablespaces rman'</code></pre></div>
+</div>
+<div class="paragraph"><p>Since the positive list from the first line always has priority, the second and
+third lines are accordingly no longer evaluated. Only the fourth (last) line
+will be considered at a later date, since the instance is only to be partially
+evaluated here.</p></div>
+<div class="paragraph"><p>In practice, it only makes sense to use <em>one</em> of the variables to determine
+the number of instances to be monitored.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_sections">
+<span class="hidden-anchor sr-only" id="sections"></span>Determining the data to be fetched</h4>
+<div class="paragraph"><p>As you learned in the previous section, it is not only possible to disable
+instances completely, but also to only partially monitor them.
+The operational purposes are diverse, and it is especially practical when
+it is undesirable to have certain long-running sections to be included in
+everything, or only basic information from test instances is required.
+To restrict sections globally, set the corresponding variables directly — to
+restrict only certain instances you can slot in the <code>EXCLUDE__{SID}_</code>
+variable which you have already learned about in the
+<a href="#skip_include">previous section</a>.
+The global variables are:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SYNC_SECTIONS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sections that are to be queried synchronously, i.e. every time the agent runs. Since the query interval is 60 seconds by default, the SQL queries used must be run through correspondingly fast. If the variable is not specified, all sections are queried.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASYNC_SECTIONS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sections that are to be queried asynchronously, i.e. only every x minutes. How long the data remains valid is determined by the <code>CACHE_MAXAGE</code> variable, below in this table.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SYNC_ASM_SECTIONS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here the same mechanism for ASM sections applies as that used by the <code>SYNC_SECTIONS</code> variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASYNC_ASM_SECTIONS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here the same mechanism for ASM sections applies as that used by the <code>ASYNC_SECTIONS</code> variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CACHE_MAXAGE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This variable is used to determine how long asynchronously retrieved data remains valid. If the variable’s value is not specified, a default of 600 seconds (10 minutes) is used.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>The mechanism therefore allows a value specified in the configuration file
+to predefine a default and, if necessary, to adjust this value again for
+individual instances as required.
+A configuration could then look like this, for example:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># DEFAULTS:
+# SYNC_SECTIONS="instance sessions logswitches undostat recovery_area processes recovery_status longactivesessions dataguard_stats performance locks"
+# ASYNC_SECTIONS="tablespaces rman jobs ts_quotas resumable"
+# SYNC_ASM_SECTIONS="instance processes"
+# ASYNC_ASM_SECTIONS="asm_diskgroup"
+# CACHE_MAXAGE=600
+
+SYNC_ASM_SECTIONS='instance'
+ASYNC_SECTIONS='tablespaces jobs rman resumable'
+
+CACHE_MAXAGE=300
+
+EXCLUDE_INST1='undostat locks'
+EXCLUDE_INST2='jobs'</code></pre></div>
+</div>
+<div class="paragraph"><p>As you can see in the example, only the <code>instance</code> section is queried for the ASM instances and a minimum set for the asynchronous sections is specified on all regular instances.
+<em>Additionally</em>, on the <code>INST1</code> instance the synchronous sections
+<code>undostat</code> and <code>locks</code> will be omitted. Since
+the synchronous sections are not explicitly specified, all synchronous sections
+are retrieved from all other instances. <code>INST2</code> in turn queries only
+three of the four asynchronous sections, since <code>jobs</code> was additionally
+excluded. And finally, the cache of 10 minutes is reduced to 5 minutes
+(300 seconds), as this is sufficient time to get all data.</p></div>
+<div class="paragraph"><p><strong>Important</strong>: If you define in the configuration file which
+sections you would like to retrieve, and by which method — you can also alter a
+asynchronous section to a synchronous section — you must specify
+<strong>all</strong> sections which should be executed in the respective area.
+For example, if you only want <code>locks</code> from the synchronous
+query, specify the entire synchronous list and simply omit <code>locks</code>:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Just exclude 'locks' from sync sections:
+SYNC_SECTIONS='instance sessions logswitches undostat recovery_area processes recovery_status longactivesessions dataguard_stats performance'</code></pre></div>
+</div>
+<div class="paragraph"><p>The same applies for the other three variables in which the sections
+can be determined.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_tns_config">
+<span class="hidden-anchor sr-only" id="tns_config"></span>Configuring the TNS Alias and TNS_ADMIN</h4>
+<div class="paragraph"><p><em>coming soon</em></p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_remote_instances">
+<span class="hidden-anchor sr-only" id="remote_instances"></span>3.3. Monitoring remote databases</h3>
+<div class="paragraph"><p>Under unix-type systems, you can not only retrieve locally running instances,
+but also log on to remote ones and retrieve the databases running there.
+This, for example, is advantageous if you do not have access to the underlying
+system, but still want to monitor the database. For monitoring remote databases,
+there are the following requirements:</p></div>
+<div class="ulist"><ul>
+<li><p>The <span class="guihint">Linux AIO access library</span> is installed. Under RHEL/CentOS the package is called <code>libaio</code>.</p></li>
+<li><p>The <a href="https://www.oracle.com/database/technologies/instant-client.html">Instant Client for Oracle Database</a> is installed.</p></li>
+<li><p>SQLPlus already exists in the installation, or must be installed as an extension package to the client.</p></li>
+</ul></div>
+<div class="paragraph"><p>As a rule, the conditions are already fulfilled when an Oracle installation is
+present on the host on which the plug-in is to be executed.
+Otherwise use the appropriate packages to do so.</p></div>
+<div class="paragraph"><p>In order for the plug-in to connect to the remote database, first store the
+access data in the configuration file. This procedure is similar to what you
+already know from <code>DBUSER</code>.
+However there are a number of additional — mandatory — specifications:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# REMOTE_INSTANCE_[ID]='USER:PASSWORD:ROLE:HOST:PORT:PIGGYBACKHOST:SID:VERSION:TNSALIAS'
+
+REMOTE_INSTANCE_1='check_mk:mypassword::myRemoteHost:1521:myOracleHost:MYINST3:11.2'
+REMOTE_INSTANCE_myinst1='/:::myRemoteHost:1521::MYINST1:11.2:INST1'
+
+REMOTE_ORACLE_HOME='/usr/lib/oracle/11.2/client64'</code></pre></div>
+</div>
+<div class="paragraph"><p>In the example, two remote instances are being configured. So that each text
+line is unique, each variable is given an ID. These can be freely-chosen — they
+just have to be unique for each configuration file. As you have probably already
+noticed, the port specification is now followed by further values.
+These are partly optional, and partly necessary to establish a connection.</p></div>
+<div class="paragraph"><p>The first additional value used (=<em>PIGGYBACKHOST</em>) in the <code>MYINST3</code>
+instance is <code>myOracleHost</code>. This specification assigns the results from
+the query to the specified host. If this is present as a host in Checkmk,
+the new services will be installed there accordingly instead of on the host
+where the plug-in is running or from which the data was fetched.
+You do not see this specification on the second
+instance <code>MYINST1</code> — the assignment to another host is <em>optional</em>.</p></div>
+<div class="paragraph"><p>The second new value <em>SID</em> is the instance name. Since the plug-in on
+the remote host cannot see what instances are running there, a configuration
+line must be specified for each remote instance — this value is therefore
+<em>required</em> and thus not optional.</p></div>
+<div class="paragraph"><p>The third value <em>VERSION</em> is <em>required</em> and is also due to the fact that
+much meta-information is only available if you are directly on the host.
+The version specification therefore also cannot be omitted, and it determines
+which SQL queries can be passed to the instance.
+In the example, both instances use version <code>11.2</code>.</p></div>
+<div class="paragraph"><p>The fourth and last value <em>TNSALIAS</em> is again <em>optional</em> and can be used
+if you access the remote instance via the wallet or the LDAP/Active Directory.
+In the event that the instance responds only to a specific TNS alias,
+you can specify this alias here.</p></div>
+<div class="paragraph"><p>To also find the program <em>sqlplus</em>, use the <code>REMOTE_ORACLE_HOME</code>
+variable to specify where the Oracle client is located on the host that runs the
+plug-in. Only then are all resources available that are required for the queries.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> When querying remote instances, there are some restrictions
+and special features:</p></div>
+<div class="ulist"><ul>
+<li><p>You cannot — understandably — exclude remote instances with <code>SKIP_SIDS</code>, and in return you do not need to include them in <code>ONLY_SIDS</code>.</p></li>
+<li><p>Instances with the same name (SID) must not be assigned to the same host. This is especially relevant if you are fetching instances from multiple remote and/or local hosts where identical names are used.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_bakery">
+<span class="hidden-anchor sr-only" id="bakery"></span>3.4. Setting up via the Agent Bakery</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+The setup can be greatly simplified under Linux, AIX, Solaris and HP-UX
+with the <a href="wato_monitoringagents.html#bakery">Agent Bakery</a>, because syntax errors in
+the configuration files are avoided, and adaptations to changing environments
+can be implemented more easily. The main difference compared to a manual
+configuration is that you only need to work on the Oracle host at the command
+line if you want to make special Oracle-specific configurations.</p></div>
+<div class="paragraph"><p>Nevertheless, you cannot configure all functions of the plug-in using the Agent
+Bakery. On the one hand, when you are dealing with obsolete configuration options
+that are only available for compatibility reasons. These can then be replaced
+with the current options accordingly. On the other hand, if these are functions
+that require a major intervention and require significant expertise.
+Accordingly, the <a href="#custom_sqls">Custom SQLs</a> cannot be
+configured directly in the Agent Bakery.</p></div>
+<div class="paragraph"><p>Use <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX</span> and the menu <span class="guihint">Agents &gt; Agent rules &gt; ORACLE Databases (Linux, Solaris, AIX</span> to create a rule.
+Here you will find all options available to you for configuring the plug-in:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_oracle_bakery_ruleset.png" alt="monitoring oracle bakery ruleset"></div></div>
+<div class="sect3">
+<h4 id="heading__configuring_users">
+<span class="hidden-anchor sr-only" id="_configuring_users"></span>Configuring users</h4>
+<div class="paragraph"><p>In the Agent Bakery you also have the option of creating standard users and
+creating exceptions for specific instances.
+The options — separated by a colon — that you find in the configuration file,
+you will find here as individual options which you can then fill out as needed.
+In the <a href="#user_config">simplest configuration</a> it will look
+something like this:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_oracle_bakery_login1.png" alt="monitoring oracle bakery login1"></div></div>
+<div class="paragraph"><p>Of course you can also use the wallet here by selecting
+<span class="guihint">Authentication method</span> in the dropdown menu, and simply changing to
+<span class="guihint">Use manually created ORACLE password wallet</span>.</p></div>
+<div class="paragraph"><p>The configuration for an <em>ASM</em> is done analogously via the
+<span class="guihint">Login for ASM</span> option, and the exceptions for specific instances can be found
+at <span class="guihint">Login for selected databases</span>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__advanced_options">
+<span class="hidden-anchor sr-only" id="_advanced_options"></span>Advanced options</h4>
+<div class="paragraph"><p>The following table lists the remaining options in the
+<span class="guihint">ORACLE Databases (Linux, Solaris, AIX)</span> rule set, along with a reference to
+where to find a description of the option:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Instances to monitor</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This option combines several options of the configuration file, allowing you to <a href="#skip_include">include or exclude</a> instances.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Add pre or postfix to TNSALIASes</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This option allows you to extend the <a href="#tns_config">TNSALIAS</a> either globally or for a specific instance.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Sections - data to collect</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All available sections are listed under this option, and these can be configured individually at the global level. They therefore correspond to both variables <code>SYNC_SECTIONS</code> and <code>ASYNC_SECTIONS</code>, as well as their counterpart in the case of an <em>ASM</em> from the section where the <a href="#sections">data to be fetched</a> is to be found.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Exclude some sections on certain instances</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If you do not want to use <code>EXCLUDE_{SID}</code> to exclude the entire instance, but only to exclude a few sections, you can do so using this option. A more detailed description can be found in the options for the <a href="#skip_include">Instances</a> and <a href="#sections">Sections</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Cache age for background checks</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specify here how long asynchronous sections should remain valid. The default value is 600 seconds (10 minutes).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Sqlnet Send timeout</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This option is added to <code>sqlnet.ora</code> and sets a timeout for the instance itself.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Remote instances</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configure <a href="#remote_instances">remote instances</a> with this option. It contains all elements of the configuration that you already know. To specify the variable’s ID, via <span class="guihint">Unique ID</span> you can select from various options. These only affect the specified ID and must therefore be unique.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">ORACLE_HOME to use for remote access</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here you can determine where the agent plug-in can find the <code>sqlplus</code> program. You must then specify this program if you want to monitor a <a href="#remote_instances">remote instance</a>, but <code>sqlplus</code> cannot be found via the environment variables.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">TNS_ADMIN to use for sqlnet.ora and tnsnames.ora</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If you have already created the corresponding files in another location, you can use this option — <a href="#tns_config">as described above</a> — to provide the file path to the files. Otherwise, this is searched for under <code>/etc/check_mk/</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_windows">
+<span class="hidden-anchor sr-only" id="windows"></span>4. Windows</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__plug_in_and_configuration_paths">
+<span class="hidden-anchor sr-only" id="_plug_in_and_configuration_paths"></span>4.1. Plug-in and configuration paths</h3>
+<div class="paragraph"><p>On Windows, PowerShell is used as a scripting language to monitor Oracle databases. The functionality
+is similar to the plug-in under <a href="#linux">unix-type systems</a>,
+but contains only a part of this. To use the plug-in under Windows you need the
+following paths, if you have not changed them.</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">OS</th>
+<th class="tableblock halign-left valign-top">Plug-in path</th>
+<th class="tableblock halign-left valign-top">Configuration path</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\ProgramData\checkmk\agent\plugins</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\ProgramData\checkmk\agent\plugins</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows (Legacy Agent)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\Program Files (x86)\check_mk\plugins\</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\Program Files (x86)\check_mk\config\</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Note:</strong> Since the Legacy Agent is only needed in very rare, exceptional
+cases, it is not considered in the following description. We therefore always
+refer to the current agent architecture here.</p></div>
+<div class="paragraph"><p>To activate the <code>mk_oracle.ps1</code> plug-in, copy the plug-in from
+<code>C:\Program Files (x86)\checkmk\service\plugins\</code> into the plug-in
+directory described above.
+Alternatively, you can refer to the file in the <a href="agent_windows.html#agent_architecture">installation path</a> in the <a href="agent_windows.html#plugins">agent’s configuration file</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__special_features_under_windows">
+<span class="hidden-anchor sr-only" id="_special_features_under_windows"></span>4.2. Special features under Windows</h3>
+<div class="paragraph"><p>Windows normally prevents the execution of PowerShell scripts if they have not been signed.
+You can now work around this problem very easily by modifying the policies for
+running PowerShell scripts for the user who is running the Checkmk agent:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">UP(C:\ProgramData\checkmk\agent\&gt;):Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine</span>
+<span class="tok-go">UP(C:\ProgramData\checkmk\agent\&gt;):Get-ExecutionPolicy -Scope LocalMachine</span>
+<span class="tok-go">Bypass</span></code></pre></div></div>
+<div class="paragraph"><p>This option is useful if for a short time you want to test a script or the
+general functionality of the Checkmk agent. To avoid compromising the security
+of your system, revert this setting on production servers after testing has been
+completed:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">UP(C:\Program\checkmk\agent\&gt;):Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine</span>
+<span class="tok-go">UP(C:\Program\checkmk\agent\&gt;):Get-ExecutionPolicy -Scope LocalMachine</span>
+<span class="tok-go">RemoteSigned</span></code></pre></div></div>
+<div class="paragraph"><p>Understandably, you probably don’t want to change the guidelines every 60
+seconds. You therefore set a permanent exception only for the relevant scripts.
+The configuration script must also be added to the exceptions.
+For easy readability, in this example the output has been completely omitted:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">UP(C:\ProgramData\checkmk\agent\&gt;):Unblock-File -Path .\plugins\mk_oracle.ps1</span>
+<span class="tok-go">UP(C:\ProgramData\checkmk\agent\&gt;):Unblock-File -Path .\config\mk_oracle_cfg.ps1</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_adv_windows">
+<span class="hidden-anchor sr-only" id="adv_windows"></span>4.3. Advanced options</h3>
+<div class="paragraph"><p>In the <a href="#user_config">general setup</a> you have already learned
+about the first variables to get monitoring data from your Oracle instances.
+Further options that are also available to you under Windows are described in
+the following sections.</p></div>
+<div class="sect3">
+<h4 id="heading_adv_user_windows">
+<span class="hidden-anchor sr-only" id="adv_user_windows"></span>Advanced user configuration</h4>
+<div class="paragraph"><p>As under <a href="#adv_user_linux">Linux</a>, you can also define not only
+a standard login for the Windows plug-in, but also individual logins for
+individual instances. You therefore have the same three options for specifying users:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DBUSER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default if no individual access data are defined for the database instance.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DBUSER_MYINST1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access data for a very specific database instance. In this case for the <code>MYINST1</code> instance. The login data is only used for this SID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASMUSER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Special access data for the Automatic Storage Management (ASM).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Important:</strong> Here, too, only <strong>one</strong> login can be specified for an <strong>ASM</strong>.</p></div>
+<div class="paragraph"><p>In addition, more options other than user name or password can also be specified
+here — these additional entries are also optional, however each entry must be
+filled in if it is used. A configuration may then look like this, for example:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax
+# DBUSER = @("USERNAME", "PASSWORD", "ROLE", "HOST", "PORT")
+# Default
+# DBUSER = @("", "", "", "localhost", "1521")
+$DBUSER = @("checkmk", "myPassword", "SYSDBA", "localhost", "1521")
+
+@DBUSER_MYINST1 = @("cmk_specific1", "myPassword1", "", "10.0.0.73")
+@DBUSER_MYINST2 = @("cmk_specific2", "myPassword2", "SYSDBA", "localhost", "1531")
+
+@ASMUSER = @("cmk_asm", "myASMPassword", "SYSASM")</code></pre></div>
+</div>
+<div class="paragraph"><p>A few explanations regarding the above example:</p></div>
+<div class="ulist"><ul>
+<li><p>You can define as many individual access data as you like. These will always have priority over the default.</p></li>
+<li><p>Each option is defined in a list. The order of the entries is not arbitrary, so therefore the order may not be rearranged.</p></li>
+<li><p>When an optional field remains unchanged but a field following it is to be edited, BOTH fields must be specified correctly. See <code>DBUSER_MYINST2</code> where the <code>HOST</code> is still set to <em>localhost</em> even though only the <code>PORT</code> is to be changed.</p></li>
+<li><p>If optional fields are no longer needed after a certain point, they can be omitted. See <code>ASMUSER</code>, in which only the user’s role was specified.</p></li>
+<li><p>If no special role is to be assigned to the user, but <code>HOST</code> or <code>PORT</code> is to be customized, simply enter a pair of inverted commas/double quotes (<code>""</code>) in this position.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading_skip_include_windows">
+<span class="hidden-anchor sr-only" id="skip_include_windows"></span>Enabling and disabling instances</h4>
+<div class="paragraph"><p>Even under Windows, one does not always want to include certain instances.
+The reasons for this have already been described in the section covering
+<a href="#skip_include">Linux</a>.
+Two of the three alternatives that you know from Linux can also be used here:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ONLY_SIDS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here it can be determined which instances are to be monitored. This is a positive list in which all instances that are not explicitly listed are ignored. This option is therefore very suitable if the number of instances to be monitored is smaller than the number of instances to be ignored.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXCLUDE__{SID}_</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Since the <a href="#skip_include"><code>SKIP_SIDS</code></a> option is not available to you, you can only <em>exclude</em> instances with this option and thus define a negative list. You do this by setting the value of the variable to <code>ALL</code>. In addition, you can also exclude only certain sections for the specified instance and in this way define a negative list for individual sections of the instance. <strong>Note</strong>: An (<code>+ASM</code>) cannot be completely deactivated with this option.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>The processing is done for each instance in the order given above. So first it is
+checked whether the instance is in <code>ONLY_SIDS</code>, and only then whether
+certain sections are to be excluded. If the variable <code>EXCLUDE_</code> is set to
+<code>ALL</code>, no section will be executed.</p></div>
+<div class="paragraph"><p>Below is an example where each variable is shown once:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>$ONLY_SIDS = @("MYINST1", "MYINST3")
+$EXCLUDE_INST1 = "tablespaces rman"
+$EXCLUDE_INST3 = "ALL"</code></pre></div>
+</div>
+<div class="paragraph"><p>Note that <code>ONLY_SIDS</code> is a list, whereas <code>EXCLUDE_INST1</code> is a
+string containing sections separated by spaces.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_sections_windows">
+<span class="hidden-anchor sr-only" id="sections_windows"></span>Determining data to be fetched</h4>
+<div class="paragraph"><p>The specification of which sections are to be actually fetched is done in the
+same way as with <a href="#sections">Linux</a>,
+and the following is only an example for a configuration:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># DEFAULTS:
+# $SYNC_SECTIONS = @("instance", "sessions", "logswitches", "undostat", "recovery_area", "processes", "recovery_status", "longactivesessions", "dataguard_stats", "performance", "locks")
+# $ASYNC_SECTIONS = @("tablespaces", "rman", "jobs", "ts_quotas", "resumable")
+# $SYNC_ASM_SECTIONS = @("instance", "processes")
+# $ASYNC_ASM_SECTIONS = @("asm_diskgroup")
+# $CACHE_MAXAGE = 600
+
+$SYNC_ASM_SECTIONS = @("instance")
+$ASYNC_SECTIONS = @("tablespaces", "jobs", "rman", "resumable")
+
+$CACHE_MAXAGE = 300
+
+$EXCLUDE_INST1 = "undostat locks"
+$EXCLUDE_INST2 = "jobs'</code></pre></div>
+</div>
+<div class="paragraph"><p><strong>Important:</strong> If you specify in the configuration file which sections are to
+be fetched in which way — you can also convert an asynchronous section into a
+synchronous one — you must specify <strong>all</strong> sections that are to be executed
+in the respective field. For example, if you want to exclude only <code>locks</code>
+from the synchronous query, specify the entire synchronous list and omit only <code>locks</code>:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Just exclude 'locks' from sync sections:
+$SYNC_SECTIONS = @("instance", "sessions", "logswitches", "undostat", "recovery_area", "processes", "recovery_status", "longactivesessions", "dataguard_stats", "performance")</code></pre></div>
+</div>
+<div class="paragraph"><p>The same applies for the other three variables in which the sections are determined.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__monitoring_remote_databases">
+<span class="hidden-anchor sr-only" id="_monitoring_remote_databases"></span>4.4. Monitoring remote databases</h3>
+<div class="paragraph"><p>Monitoring remote databases is currently not possible using the Windows plug-in.
+Therefore if you want to monitor remote databases, you need a host with a
+compatible <a href="#linux">unix-type operating system</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__setup_via_the_agent_bakery">
+<span class="hidden-anchor sr-only" id="_setup_via_the_agent_bakery"></span>4.5. Setup via the Agent Bakery</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+A setup via the Agent Bakery is currently only available for
+<a href="#linux">unix-type operating systems</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__clustered_instances">
+<span class="hidden-anchor sr-only" id="_clustered_instances"></span>5. Clustered instances</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__standby_databases">
+<span class="hidden-anchor sr-only" id="_standby_databases"></span>5.1. Standby databases</h3>
+<div class="paragraph"><p>Oracle supports so-called <em>standby databases</em> which can perform specified
+tasks, and which are usually simply copies of production or primary databases.
+These database concepts also require special monitoring mechanisms.
+You can find out more about these mechanisms in the following sections.</p></div>
+<div class="sect3">
+<h4 id="heading_cluster_adg">
+<span class="hidden-anchor sr-only" id="cluster_adg"></span>With <em>Active Data Guard</em> (ADG)</h4>
+<div class="paragraph"><p>Once you have licensed and activated ADG, you do not need to make any changes to
+the configuration of the agent plug-in, since you can read from a standby
+instance at any time without having to interrupt the synchronization with the
+primary instance.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__without_active_data_guard_dg">
+<span class="hidden-anchor sr-only" id="_without_active_data_guard_dg"></span>Without <em>Active Data Guard</em> (DG)</h4>
+<div class="paragraph"><p>If the instances do not have ADG, the user with which the monitoring data from
+the standby instances is to be fetched needs the <em>sysdba</em> role.
+This authorization enables the user to fetch at least part of the data, even if
+the primary instance fails and the instance on the standby server has not yet
+been changed from <em>MOUNTED</em> to <em>OPEN</em>.</p></div>
+<div class="paragraph"><p>Assign the authorization to the user who is authorized to retrieve the data from
+the instance(s). <strong>Important:</strong> How this works may differ from the following example.
+Here the role is assigned to the user as created in the example above:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">sqlplus&gt; grant sysdba to checkmk;</span></code></pre></div></div>
+<div class="paragraph"><p>To enable the data to be queried by the agent plug-in on the standby server in
+case of an error, create the user on the primary instance, and then copy the
+password file to the standby server. Finally, in the plug-in’s configuration file, set the role of the user to <code>sysdba</code>:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# DBUSER='USER:PASSWORD:ROLE:HOST:PORT:TNSALIAS'
+DBUSER='checkmk:myPassword:sysdba'</code></pre></div>
+</div>
+<div class="paragraph"><p>Note that specifying a host, port, or TNS alias is optional, and can be omitted
+as always. In addition, the agent plug-in must of course be installed on both
+the primary Oracle host and the standby hosts.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_clustered_services">
+<span class="hidden-anchor sr-only" id="clustered_services"></span>Setting up clustered services</h4>
+<div class="paragraph"><p>On the monitored host you need to perform certain actions, and on the Checkmk side it is also necessary that you customize the services and assign them to a <em>cluster host</em> — regardless of whether you use ADG or DG.
+The corresponding check plug-ins have already been prepared to the extent that they can also be configured as <a href="clustered_services.html"><em>Clustered Services</em></a>.
+Create a cluster host in Checkmk, and to this cluster host assign the individual Oracle hosts to which the primary and the standalone instances are assigned.
+Then assign the following services to this cluster host:</p></div>
+<div class="ulist"><ul>
+<li><p>ORA .* RMAN Backup</p></li>
+<li><p>ORA .* Job</p></li>
+<li><p>ORA .* Tablespaces</p></li>
+</ul></div>
+<div class="paragraph"><p>After this you will no longer need to worry about which instance the data comes
+from, and will have ensured seamless monitoring of the above-mentioned services — even in the event of a switchover of the primary instance.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_rac">
+<span class="hidden-anchor sr-only" id="rac"></span>5.2. Real Application Cluster (RAC)</h3>
+<div class="paragraph"><p>Since there is a central storage for the data in a RAC, it is sufficient here to
+create the user for the agent plug-in only once. Only the agent plug-in needs to
+be installed and configured on each node of the Oracle cluster.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> Always set up the cluster’s nodes yourself, and do not query
+the <em>SCAN</em> listener. This is the only way to ensure that access via the
+plug-in works correctly.</p></div>
+<div class="sect3">
+<h4 id="heading__setting_up_clustered_services">
+<span class="hidden-anchor sr-only" id="_setting_up_clustered_services"></span>Setting up clustered services</h4>
+<div class="paragraph"><p>Even with an RAC, it makes sense to combine specified services in a cluster host.
+In addition to the services that you assign to the cluster host under an
+<a href="#cluster_adg">(Active) Data Guard</a>, you also assign the
+following services to the cluster host to ensure seamless monitoring in the
+event of switchovers:</p></div>
+<div class="ulist"><ul>
+<li><p>ASM.* Diskgroup</p></li>
+<li><p>ORA .* Recovery Area</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_custom_sqls">
+<span class="hidden-anchor sr-only" id="custom_sqls"></span>6. Monitoring with own SQL queries (Custom SQLs)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__why_specify_own_sql_queries">
+<span class="hidden-anchor sr-only" id="_why_specify_own_sql_queries"></span>6.1. Why specify own SQL queries?</h3>
+<div class="paragraph"><p>With its official plug-in Checkmk already provides a large number of SQL queries with
+which you can monitor your database instances. To make these suitable for the
+widest possible range of technical and content requirements, they are of course
+kept in a very generalized form.</p></div>
+<div class="paragraph"><p>In order to be able to meet the individual requirements of each company for the
+monitoring of a specific database, Checkmk
+provides the possibility of defining your own SQL queries and having them queried with
+the <code>mk_oracle</code> plug-in. These SQL queries are then automatically recognized and
+monitored as own services in the Web interface.</p></div>
+<div class="paragraph"><p><strong>Important</strong>: It is only possible to query own SQL queries under Linux,
+AIX and Solaris. Under Windows this option is <em>not</em> available.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__simple_integration_of_own_sql_queries">
+<span class="hidden-anchor sr-only" id="_simple_integration_of_own_sql_queries"></span>6.2. Simple integration of own SQL queries</h3>
+<div class="sect3">
+<h4 id="heading__writing_sql_queries_to_be_queried">
+<span class="hidden-anchor sr-only" id="_writing_sql_queries_to_be_queried"></span>Writing SQL queries to be queried</h4>
+<div class="paragraph"><p>The easiest way to connect such a SQL is to use the
+<a href="https://checkmk.com/cms_check_oracle_sql.html"><span class="guihint">Custom SQLs for Oracle DBs</span> check plug-in</a>. To do this,
+first create the file <code>mySQL.sql</code> in the agent configuration directory of
+the host where the SQL is to be executed.
+The following is a dummy that illustrates the syntax:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/MySQL.sql</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>/*Syntax help in comments. The first word is always the key word and ends with a ":"*/
+
+/*details:Text to display in the service detail output*/
+prompt details: Some details for the service output;
+
+/*perfdata:METRIKNAME=CURRENTVALUE;WARN;CRIT;MAX METRIKNAME=CURRENTVALUE2;WARN;CRIT;MAX*/
+prompt perfdata:MyMetricName1=10;15;20;30 MyMetricName2=16;15;20;30;
+prompt perfdata:MyMetricName3=21;15;20;30 MyMetricName4=15;15;20;30;
+
+/*long:Text to display in the long output of the service*/
+prompt long: Here comes some long output for the service;
+prompt long: Here comes some more long output for the service;
+
+/*exit:Status of the service as a number*/
+prompt exit:2;</code></pre></div>
+</div>
+<div class="paragraph"><p>The example shows on the one hand that you can define any number of statements
+in such a file. On the other hand, the syntax is very similar to that of a
+<a href="localchecks.html">local check</a>, especially with regard to performance values.
+In detail, this syntax is much more powerful here, because you can generate
+multiline output, and then process it on the Checkmk server as a service.
+In principle, all lines are optional and do not need to be filled.
+The possible keywords are in detail:</p></div>
+<div class="ulist"><ul>
+<li><p><code>details</code>: Here you can determine what should be output in the generated service’s <span class="guihint">Status Detail</span>. This line is introduced with the keyword and a colon. The rest of the line is the output.</p></li>
+<li><p><code>perfdata</code>: Performance data is passed with this keyword. Within a line, you can create any number of metrics — each separated by a space. You can also distribute the output of the metrics over several lines. Just always start with the keyword <code>perfdata:</code>.</p></li>
+<li><p><code>long</code>: If the service should have a <a href="wato_services.html#discovery_auto"><span class="guihint">Long Output</span></a>, you can specify it here. You can also use this keyword multiple times to create multiple lines in the <span class="guihint">Long Output</span>.</p></li>
+<li><p><code>exit</code>: If the output should have a certain status, you can specify this here. The known assignments 0,1,2,3 are available for the statuses <span class="state0">OK</span>, <span class="state1">WARN</span>, <span class="state2">CRIT</span>, <span class="state3">UNKNOWN</span>.</p></li>
+</ul></div>
+<div class="paragraph"><p><strong>Note:</strong> You do not have to define the keyword <code>elapsed</code> manually.
+It is generated automatically at runtime to check how long the commands you
+defined took to process.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__configuring_the_mk_oracle_plug_in">
+<span class="hidden-anchor sr-only" id="_configuring_the_mk_oracle_plug_in"></span>Configuring the <code>mk_oracle</code>-Plug-in</h4>
+<div class="paragraph"><p>Now that you have defined your first, very simple SQL, make it known to the
+plug-in. This is done via the familiar configuration file, which you can modify
+accordingly:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>SQLS_SECTIONS="mycustomsection1"
+
+mycustomsection1 () {
+    SQLS_SIDS="INST1"
+    SQLS_DIR="/etc/check_mk"
+    SQLS_SQL="MyCustomSQL.sql"
+}</code></pre></div>
+</div>
+<div class="paragraph"><p>With the first option — <code>SQLS_SECTIONS</code> — you determine which
+individual sections you want to have executed. In the example we have specified
+only one, and then described it in more detail directly afterwards.
+Each section is actually a small function called by the <code>mk_oracle</code> plug-in.</p></div>
+<div class="paragraph"><p>In this function you can then determine further details and specify for which
+instances (<code>SQLS_SIDS</code>) this section applies. In addition, you also
+define where the file with the SQL statements is located (<code>SQLS_DIR</code>),
+and the name of this file (<code>SQLS_SQL</code>). This simple configuration is
+sufficient to be able to see the result in Checkmk. To do this, perform a service
+discovery and activate the new service. Afterwards you will see this new service
+with the other services in the host overview:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/monitoring_oracle_custom_sqls_list.png" alt="monitoring oracle custom sqls list"></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__advanced_options_2">
+<span class="hidden-anchor sr-only" id="_advanced_options_2"></span>6.3. Advanced options</h3>
+<div class="paragraph"><p>The possibilities to monitor with your own SQL queries of course go beyond the simple
+case shown above. In the following you will find a small overview of the
+available variables. For a detailed description you can also call the plug-in
+with the <code>--help</code> option. <strong>Important:</strong> Variables that can only be
+set outside or only inside a section function are marked accordingly.
+All others can be defined in both sections.
+If they are set outside of a section, they will apply globally to all sections.</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 85%;">
+<col style="width: 5%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Short description</th>
+<th class="tableblock halign-left valign-top">optional</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_SECTIONS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The self-defined section functions to be executed by the plug-in. <strong>Important:</strong> This variable can only be set outside of a <em>(global)</em> section function.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_SIDS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The instances that are to execute the section(s). Can be set globally or per section.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_DIR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The file path under which your own SQL queries were stored. Can be set globally or per section.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_SQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The file that contains the instructions for a section.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_SECTION_NAME</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The section name when you have written your own check plug-in for the individual SQL queries.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_SECTION_SEP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The separator of the individual elements in a line as ASCII-ID. This variable can only be used in conjunction with the <code>SQLS_SECTION_NAME</code> variable.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_ITEM_NAME</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determines an individual identifier for the service name. Normally the SID and the file name of the SQL queries are taken over. <strong>Important:</strong> This variable can <em>not</em> be used together with the variable <code>SQLS_SECTION_NAME</code>, and can also only be set within a section function</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_MAX_CACHE_AGE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performs the same task as <a href="#sections"><code>CACHE_MAXAGE</code></a> — but for the own SQL queries.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_DBUSER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines an individual user for the sections.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_DBPASSWORD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines an individual password for the sections.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_DBSYSCONNECT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extends the connection via a SYS role for the sections.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQLS_TNSALIAS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets an individual <a href="#tns_config">TNSALIAS</a> for the sections.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ja</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__using_your_own_check_plug_ins">
+<span class="hidden-anchor sr-only" id="_using_your_own_check_plug_ins"></span>6.4. Using your own check plug-ins</h3>
+<div class="paragraph"><p>If the possibilities of the syntax described above are not sufficient, you can
+also use the <code>SQLS_SECTION_NAME</code> variable to output your own section name
+for one or more SQL queries. However, this requires that you have also written an
+appropriate check plug-in and included it in your Checkmk instance.</p></div>
+<div class="paragraph"><p>If you have written such a check plug-in, you are completely free in the syntax
+for the plug-in’s output and can go your own way. Since this method is the most
+comprehensive, and also the most difficult, it is only mentioned here for
+completeness. It assumes that you know how to <a href="devel_check_plugins.html">program a Checkmk check</a> and
+integrate it into the monitoring instance. After that you simply assign the
+individual SQL queries with the variables to this check plug-in.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__diagnostic_options">
+<span class="hidden-anchor sr-only" id="_diagnostic_options"></span>7. Diagnostic options</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__testing_connections">
+<span class="hidden-anchor sr-only" id="_testing_connections"></span>7.1. Testing connections</h3>
+<div class="sect3">
+<h4 id="heading__linux_aix_solaris">
+<span class="hidden-anchor sr-only" id="_linux_aix_solaris"></span>Linux, AIX, Solaris</h4>
+<div class="paragraph"><p>If you have problems connecting to one or more instances on an Oracle server,
+the first thing you can do is to check basic parameters.
+With the <code>-t</code> option you can display the details of a connection.
+In the output the <em>dummy sections</em> have been omitted for readability.
+Also note that the plug-in must be provided with the file path to its
+configuration file beforehand, as it relies on this.
+The following is an example on a Linux server:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span><span class="tok-s2">"/etc/check_mk/"</span>
+<span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/mk_oracle<span class="tok-w"> </span>-t
+<span class="tok-go">---login----------------------------------------------------------------</span>
+<span class="tok-go">    Operating System:       Linux</span>
+<span class="tok-go">    ORACLE_HOME (oratab):   /u01/app/oracle/product/11.2.0/xe</span>
+<span class="tok-go">    Logincheck to Instance: XE</span>
+<span class="tok-go">    Version:                11.2</span>
+<span class="tok-go">    Login ok User:          checkmk on ORA-SRV01 Instance XE</span>
+<span class="tok-go">    SYNC_SECTIONS:          instance dataguard_stats processes longactivesessions sessions recovery_status undostat logswitches recovery_area performance</span>
+<span class="tok-go">    ASYNC_SECTIONS:         tablespaces rman jobs ts_quotas resumable</span>
+<span class="tok-go">------------------------------------------------------------------------</span></code></pre></div></div>
+<div class="paragraph"><p>Since this call is more likely to be made in the event of an error, you will of course then also receive further information: Both the connection string that was used for the connection and the first 100 characters of the error message that was returned during the connection attempt.
+With the help of this information,
+you can quickly identify simple configuration problems and then correct
+them accordingly.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows">
+<span class="hidden-anchor sr-only" id="_windows"></span>Windows</h4>
+<div class="paragraph"><p>The plug-in does not accept any parameters under Windows. So to test the connection here, temporarily limit the sections to be retrieved to <code>instance</code> and activate the <code>DEBUG</code> option:</p></div>
+<div class="listingblock">
+<div class="title">\C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# $DBUSER = @("USERNAME", "PASSWORD")
+$DBUSER = @("checkmk", "myPassword")
+
+SYNC_SECTIONS = @("instance")
+ASYNC_SECTIONS = @("")
+DEBUG = 1</code></pre></div>
+</div>
+<div class="paragraph"><p>Then run the plug-in manually. Again, you will get information about how the plug-in tries to access the instances. An output may then look like this, for example:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\ProgramData\checkmk\agent\plugins\&gt; .\mk_oracle.ps1</span>
+<span class="tok-go">2020-08-23T12:48:20.3930944+02:00 DEBUG:value of DBVERSION software = xxx112020xxx</span>
+<span class="tok-go">&lt;<a href="#oracle_instances">[oracle_instances]</a>&gt;</span>
+<span class="tok-go">2020-08-23T12:48:20.3930944+02:00 DEBUG:value of inst_name = xxxXExxx</span>
+<span class="tok-go">2020-08-23T12:48:20.3930944+02:00 DEBUG:value of DBVERSION database = xxx112020xxx</span>
+<span class="tok-go">2020-08-23T12:48:20.3930944+02:00 DEBUG:value of the_section = sql_instance</span>
+<span class="tok-go">2020-08-23T12:48:20.3930944+02:00 DEBUG:now calling multiple SQL</span>
+<span class="tok-go">2020-08-23T12:48:20.3930944+02:00 DEBUG:value of sql_connect in dbuser = checkmk/myPassword@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SID=XE))) as sysdba</span>
+<span class="tok-go">&lt;<a href="#oracle_instance">[oracle_instance]</a>&gt;</span>
+<span class="tok-go">XE|FAILURE|...</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__getting_a_log_generated">
+<span class="hidden-anchor sr-only" id="_getting_a_log_generated"></span>7.2. Getting a log generated</h3>
+<div class="sect3">
+<h4 id="heading__linux_aix_solaris_2">
+<span class="hidden-anchor sr-only" id="_linux_aix_solaris_2"></span>Linux, AIX, Solaris</h4>
+<div class="paragraph"><p>If the error cannot be found by checking a simple connection, the next step is
+to create a complete log, which logs all of the plug-in’s steps. Again, you will
+need the file path to the configuration file, and also the path to the plug-in’s
+cached data. Again, the output of the sections has been omitted here to improve
+readability:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span><span class="tok-s2">"/etc/check_mk/"</span>
+<span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_VARDIR</span><span class="tok-o">=</span><span class="tok-s2">"/var/lib/check_mk_agent/"</span>
+<span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/mk_oracle<span class="tok-w"> </span>-l
+<span class="tok-go">Start logging to file: /var/lib/check_mk_agent/log/mk_oracle.log</span></code></pre></div></div>
+<div class="paragraph"><p>When in doubt, you can use this log to identify very precisely on which line of
+the script the problem has occurred.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows_2">
+<span class="hidden-anchor sr-only" id="_windows_2"></span>Windows</h4>
+<div class="paragraph"><p>Logging under Windows works similarly to the connection test itself. If the connection itself is stable, you can add the real sections back in the configuration file and then get a complete output of the logging accordingly.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__debugging_the_plug_in">
+<span class="hidden-anchor sr-only" id="_debugging_the_plug_in"></span>7.3. Debugging the plug-in</h3>
+<div class="sect3">
+<h4 id="heading__linux_aix_solaris_3">
+<span class="hidden-anchor sr-only" id="_linux_aix_solaris_3"></span>Linux, AIX, Solaris</h4>
+<div class="paragraph"><p>If you can’t get to the problem, even with the help of the log, as a last resort
+the plug-in provides the complete output of all steps for an error analysis.
+This output is therefore the most comprehensive, and certainly the most
+difficult to read method to get to the cause of a problem, and should therefore
+only be used as a last resort.
+You can call the debugging with the <code>-d</code> option.
+Do not forget the necessary environment variable:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span><span class="tok-s2">"/etc/check_mk/"</span>
+<span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/mk_oracle<span class="tok-w"> </span>-d</code></pre></div></div>
+<div class="paragraph"><p><strong>Important:</strong> In this output sensitive data such as passwords is
+<em>not</em> masked. So everything is readable in plain text.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows_3">
+<span class="hidden-anchor sr-only" id="_windows_3"></span>Windows</h4>
+<div class="paragraph"><p>A similar functionality is available under Windows. However, since you cannot pass any arguments to the plug-in, you have to switch on tracing manually:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\ProgramData\checkmk\agent\plugins\&gt; Set-PSDebug -Trace 1</span>
+<span class="tok-go">C:\ProgramData\checkmk\agent\plugins\&gt; .\mk_oracle.ps1</span></code></pre></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__files_and_directories">
+<span class="hidden-anchor sr-only" id="_files_and_directories"></span>8. Files and directories</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__linux_aix_and_solaris">
+<span class="hidden-anchor sr-only" id="_linux_aix_and_solaris"></span>8.1. Linux, AIX and Solaris</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 55%;">
+<col style="width: 45%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/usr/bin/check_mk_agent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The agent that collects all data about the host.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/usr/lib/check_mk/plugins/mk_oracle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The usual directory where the plug-ins are located. Note that the path under <strong>AIX</strong> is slightly different: <code>/usr/check_mk/lib/plugins/mk_oracle</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/etc/check_mk/oracle.cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration file for the plug-in. Again, the difference is <strong>AIX:</strong> <code>/usr/check_mk/conf/mk_oracle.cfg</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/etc/check_mk/sqlnet.ora</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration file required for the Oracle Wallet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/etc/check_mk/tnsnames.ora</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration file which, if you specify it manually, determines an alias for a schema. Sample files are also located in the Oracle installation, but since the path differs from installation to installation, it cannot be specified in a standardized way.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__windows_4">
+<span class="hidden-anchor sr-only" id="_windows_4"></span>8.2. Windows</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 55%;">
+<col style="width: 45%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\Program Files (x86)\checkmk\service\check_mk_agent.exe</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The agent that collects all data about the host.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\ProgramData\checkmk\agent\plugins\mk_oracle.ps1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The usual directory where the plug-ins are located.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration file for the plug-in.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\ProgramData\checkmk\agent\config\sqlnet.ora</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration file required for the Oracle Wallet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C:\ProgramData\checkmk\agent\config\tnsnames.ora</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration file which, if you specify it manually, determines an alias for a schema. Sample files are also located in the Oracle installation, but since the path differs from installation to installation, it cannot be specified in a standardized way.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_files_cmk">
+<span class="hidden-anchor sr-only" id="files_cmk"></span>8.3. On the Checkmk server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 55%;">
+<col style="width: 45%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">share/check_mk/agents/cfg_examples/mk_oracle.cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here are examples of the configuration under Linux, AIX or Solaris. The plug-in needs such a configuration to be able to fetch data, since access data can be defined there.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">share/check_mk/agents/windows/cfg_examples/mk_oracle_cfg.ps1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Examples for the configuration under Windows can be found here.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">share/check_mk/agents/windows/plugins/mk_oracle.ps1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The plug-in for Windows that fetches the data on the Oracle host.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">share/check_mk/agents/plugins/mk_oracle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The plug-in for unix-type systems, which fetches the data on the Oracle host.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">share/check_mk/agents/plugins/mk_oracle_crs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This plug-in provides data to an Oracle Cluster Manager.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li>
+<a href="#first_steps">2. General steps for an initial setup</a><ul class="sectlevel1">
+<li>
+<a href="#_create_a_user">2.1. Create a user</a><ul class="sectlevel2"><li><a href="#_multitenant_databases">Multitenant databases</a></li></ul>
+</li>
+<li><a href="#user_config">2.2. Create the configuration and user</a></li>
+<li><a href="#_getting_the_configuration_on_to_the_host">2.3. Getting the configuration on to the host</a></li>
+<li><a href="#_using_the_oracle_wallet">2.4. Using the Oracle-Wallet</a></li>
+</ul>
+</li>
+<li>
+<a href="#linux">3. Linux, AIX, Solaris</a><ul class="sectlevel1">
+<li><a href="#_plug_in_and_configuration_file_paths">3.1. Plug-in and configuration file paths</a></li>
+<li>
+<a href="#adv_linux">3.2. Further options</a><ul class="sectlevel2">
+<li><a href="#adv_user_linux">Extended user configuration</a></li>
+<li><a href="#skip_include">Including or excluding instances</a></li>
+<li><a href="#sections">Determining the data to be fetched</a></li>
+<li><a href="#tns_config">Configuring the TNS Alias and TNS_ADMIN</a></li>
+</ul>
+</li>
+<li><a href="#remote_instances">3.3. Monitoring remote databases</a></li>
+<li>
+<a href="#bakery">3.4. Setting up via the Agent Bakery</a><ul class="sectlevel2">
+<li><a href="#_configuring_users">Configuring users</a></li>
+<li><a href="#_advanced_options">Advanced options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#windows">4. Windows</a><ul class="sectlevel1">
+<li><a href="#_plug_in_and_configuration_paths">4.1. Plug-in and configuration paths</a></li>
+<li><a href="#_special_features_under_windows">4.2. Special features under Windows</a></li>
+<li>
+<a href="#adv_windows">4.3. Advanced options</a><ul class="sectlevel2">
+<li><a href="#adv_user_windows">Advanced user configuration</a></li>
+<li><a href="#skip_include_windows">Enabling and disabling instances</a></li>
+<li><a href="#sections_windows">Determining data to be fetched</a></li>
+</ul>
+</li>
+<li><a href="#_monitoring_remote_databases">4.4. Monitoring remote databases</a></li>
+<li><a href="#_setup_via_the_agent_bakery">4.5. Setup via the Agent Bakery</a></li>
+</ul>
+</li>
+<li>
+<a href="#_clustered_instances">5. Clustered instances</a><ul class="sectlevel1">
+<li>
+<a href="#_standby_databases">5.1. Standby databases</a><ul class="sectlevel2">
+<li><a href="#cluster_adg">With <em>Active Data Guard</em> (ADG)</a></li>
+<li><a href="#_without_active_data_guard_dg">Without <em>Active Data Guard</em> (DG)</a></li>
+<li><a href="#clustered_services">Setting up clustered services</a></li>
+</ul>
+</li>
+<li>
+<a href="#rac">5.2. Real Application Cluster (RAC)</a><ul class="sectlevel2"><li><a href="#_setting_up_clustered_services">Setting up clustered services</a></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#custom_sqls">6. Monitoring with own SQL queries (Custom SQLs)</a><ul class="sectlevel1">
+<li><a href="#_why_specify_own_sql_queries">6.1. Why specify own SQL queries?</a></li>
+<li>
+<a href="#_simple_integration_of_own_sql_queries">6.2. Simple integration of own SQL queries</a><ul class="sectlevel2">
+<li><a href="#_writing_sql_queries_to_be_queried">Writing SQL queries to be queried</a></li>
+<li><a href="#_configuring_the_mk_oracle_plug_in">Configuring the <code>mk_oracle</code>-Plug-in</a></li>
+</ul>
+</li>
+<li><a href="#_advanced_options_2">6.3. Advanced options</a></li>
+<li><a href="#_using_your_own_check_plug_ins">6.4. Using your own check plug-ins</a></li>
+</ul>
+</li>
+<li>
+<a href="#_diagnostic_options">7. Diagnostic options</a><ul class="sectlevel1">
+<li>
+<a href="#_testing_connections">7.1. Testing connections</a><ul class="sectlevel2">
+<li><a href="#_linux_aix_solaris">Linux, AIX, Solaris</a></li>
+<li><a href="#_windows">Windows</a></li>
+</ul>
+</li>
+<li>
+<a href="#_getting_a_log_generated">7.2. Getting a log generated</a><ul class="sectlevel2">
+<li><a href="#_linux_aix_solaris_2">Linux, AIX, Solaris</a></li>
+<li><a href="#_windows_2">Windows</a></li>
+</ul>
+</li>
+<li>
+<a href="#_debugging_the_plug_in">7.3. Debugging the plug-in</a><ul class="sectlevel2">
+<li><a href="#_linux_aix_solaris_3">Linux, AIX, Solaris</a></li>
+<li><a href="#_windows_3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#_files_and_directories">8. Files and directories</a><ul class="sectlevel1">
+<li><a href="#_linux_aix_and_solaris">8.1. Linux, AIX and Solaris</a></li>
+<li><a href="#_windows_4">8.2. Windows</a></li>
+<li><a href="#files_cmk">8.3. On the Checkmk server</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Service level agreements (SLAs) are often not displayable as simple availability. This article explains how to configure and use complex SLAs.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Extended availability (SLAs) - Configuring and evaluating SLAs">
+<meta name="og:description" content="Service level agreements (SLAs) are often not displayable as simple availability. This article explains how to configure and use complex SLAs.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Extended availability (SLAs) - Configuring and evaluating SLAs</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/de/sla.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/en/sla.html">2.2.0</a><a class="dropdown-item" href="../../latest/en/sla.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host and service parameters</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Introduction to notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMWare ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Performance data and graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Configuration via the Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Configuration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Command reference for the HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Writing your own check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Extended availability (SLAs)</h1>
+<div class="details">
+<span id="revdate">Last modified on 10-Feb-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/en/sla.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="availability.html">Availability</a>
+<a href="views.html">Host and service views</a>
+<a href="wato_rules.html">Host and service parameters</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__what_do_slas_do">
+<span class="hidden-anchor sr-only" id="_what_do_slas_do"></span>1.1. What do SLAs do?</h3>
+<div class="paragraph"><p>In Checkmk you can evaluate <a href="availability.html">availability</a>, and for these also configure a rudimentary <a href="availability.html#thresholds">SLA evaluation</a>.
+Now the absolute availability over a given period is not particularly meaningful.
+To take an extreme example: an availability of 99.9 percent would allow less than 10 hours of downtime per year — actually only 8 hours, 45 minutes and 36 seconds to be precise.
+Distributing these 8.76 hours over a year averages a bit more than 43 minutes per month — which may be acceptable for many systems.
+A complete hour outage at a stretch would however cause a lot of damage.
+It is obvious that such an outage should be reflected in the assessment of availability.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span> If you’re using one of the Enterprise Editions Checkmk has a separate function for Service Level Agreements (SLA).
+The SLA feature builds on the availability data and now enables a much more detailed evaluation.</p></div>
+<div class="paragraph"><p>Two basic types of evaluation can be implemented:</p></div>
+<div class="ulist"><ul>
+<li><p>Percentage SLA: Percentage that a service status (<span class="state0">OK</span>, <span class="state1">WARN</span>, <span class="state2">CRIT</span>, <span class="state3">UNKNOWN</span>) is above or below a given value.</p></li>
+<li><p>Outage SLA: Maximum number of outages – more precisely, occurrences of the <span class="state2">CRIT</span>, <span class="state1">WARN</span>, and <span class="state3">UNKNOWN</span> statuses over a given time frame.</p></li>
+</ul></div>
+<div class="paragraph"><p>You can combine one or both types for multiple sites – for example, to ensure that during the reporting period a particular service is at least 90 percent <span class="state0">OK</span>, and that a maximum of two events of two or more minutes are permitted to flag the <span class="state2">CRIT</span> condition.</p></div>
+<div class="paragraph"><p>The results of these calculations can later be rendered in two formats in views:</p></div>
+<div class="ulist"><ul>
+<li><p>Service-specific: A service will display its associated SLA.</p></li>
+<li><p>Column-specific: A fixed SLA is displayed for each service.</p></li>
+</ul></div>
+<div class="paragraph"><p>For example, here you can see the evaluation for a file system in the overview: from today (with 3 icons in the rightmost column) and for the previous 15 days — and also immediately see that there were obvious problems up until 4 days ago:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_view_example_modern.png" alt="A view with a service and the SLA information in the right column."></div>
+<div class="title">Icons in the SLA column show the status of the different SLA periods: on the far right the current one is displayed</div>
+</div>
+<div class="paragraph"><p>But what do these evaluations reveal to you now?
+On the one hand you can see the fulfillment or non-fulfillment of completed SLAs, and for example, inform your customers of these evaluations.
+On the other hand, you can already identify an impending failure in advance:
+By default, the SLA indicator will light up <span class="state2">CRIT</span> when its value has been exceeded.
+But it can also be adjusted so that it goes to <span class="state2">CRIT</span> if, for example, the permitted <span class="state2">CRIT</span> status for the service has reached 80 percent – and before that point it could change to a <span class="state1">WARN</span> flag.</p></div>
+<div class="paragraph"><p>Ultimately, SLAs are mostly very detailed views, generated from the analysis of availability data.
+You will see these later at two points:
+in tables, optionally for all hosts and services listed there, or only for services that are specifically tied to individual SLAs.
+Secondly, there is a comprehensive detail page for each service-SLA combination.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__functionality">
+<span class="hidden-anchor sr-only" id="_functionality"></span>1.2. Functionality</h3>
+<div class="paragraph"><p>The basis for the SLA function is the availability data.
+The calculations on the SLA specifications are, of course, not applied to the entire raw data inventory – after all, SLA reports should cover specific time periods.
+So first it is determined for which period the SLA requirements should be met – the so-called 'SLA period’.
+For example: "Over each monthly monitoring period, the status of the service <em>MyService</em> should be at least 90 percent <span class="state0">OK</span>."
+For this SLA period not necessarily (inevitably) all data for the month over a 24/7 operation will be used.
+The data can be converted to the <a href="timeperiods.html">time periods</a> defined in the Setup, i.e., be limited roughly to working hours.</p></div>
+<div class="paragraph"><p>This then results in a more concrete requirement such as:
+"The service <em>MyService</em> over one month (the SLA period), during working hours (the time period) – Monday to Friday from 10:00 to 20:00 – should be 90 percent <span class="state0">OK</span> (SLA request)."
+The SLA and time periods complement each other, where of course, the latter does not have to be restricted:
+You can use all of the monitoring data generated over the SLA period.</p></div>
+<div class="paragraph"><p>In summary: You need two periods to restrict the data basis for the calculation of an SLA requirement:</p></div>
+<div class="ulist"><ul>
+<li><p>SLA period: The period (e.g., weekly) agreed in the SLA that forms the basis for the report.</p></li>
+<li><p>Time period: Active time periods as specified in the Setup configuration (such as business days only).</p></li>
+</ul></div>
+<div class="paragraph"><p>An independent result is generated for each SLA period.
+How many of these individual results you show in a table can be configured via <a href="views.html">views</a>.
+So, for example, the last five weeks, limited to business days, shown as five individual SLA periods directly on the hosts and services.</p></div>
+<div class="paragraph"><p>As usual with Checkmk, between the data source (SLA definition) and the output (view) there is still a rule to assign for SLA-specific services — but this is not a must.
+And thus for SLAs this usually results in a three-step process, when they apply to specified services:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Define the SLA via <span class="guihint">Customize &gt; Business reporting &gt; Service Level Agreements</span>.</p></li>
+<li><p>Assign the SLA to hosts/services with <span class="guihint">Setup &gt; Services &gt; Service monitoring rules &gt; Assign SLA definition to service</span> rule (optional).</p></li>
+<li><p>Create or adapt views for the SLA as required.</p></li>
+</ol></div>
+<div class="paragraph"><p>Here’s how to set up a simple SLA including a view:
+The file systems of the hosts <code>MyHost1</code> and <code>MyHost2</code> over a reporting period of one week are required to be in an <span class="state0">OK</span> condition for at least 90 per cent of the time (here in this example a maximum of 80 percent has been reached).
+In addition they are allowed to assume the <span class="state1">WARN</span> condition for two or more minutes for a maximum of five occasions.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_setup_sla">
+<span class="hidden-anchor sr-only" id="setup_sla"></span>2. Setting up SLAs</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_create_sla">
+<span class="hidden-anchor sr-only" id="create_sla"></span>2.1. Creating an SLA</h3>
+<div class="paragraph"><p>First, create the actual SLA.
+The configuration can be found via <span class="guihint">Customize &gt; Business reporting &gt; Service Level Agreements</span> (by the way, you can only see this menu item in <a href="intro_gui.html#show_less_more">Show more mode</a>):</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_main_page.png" alt="List of Service Level Agreements (SLAs) with action bar button to create an SLA."></div>
+<div class="title">In the Service Level Agreements (SLAs) list you can find the action bar button to create an SLA</div>
+</div>
+<div class="paragraph"><p>Create a new SLA via <span class="image-inline"><img src="../images/icons/icon_new.png" alt="icon new"></span> <span class="guihint">New SLA</span>.
+In the <span class="guihint">General Properties</span> section, first give a unique ID, here <code>MySLA</code>, and a title, such as <code>Filesystems</code>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_general_properties.png" alt="Dialog for defining the general properties of an SLA."></div>
+<div class="title">ID and title are used to define the general SLA properties</div>
+</div>
+<div class="paragraph"><p>Under <span class="guihint">SLA settings</span> set the <span class="guihint">SLA period</span> to the desired period, such as <span class="guihint">Weekly</span>.
+The following requirements will therefore always be valid for this one week period.</p></div>
+<div class="paragraph"><p>But you can, before you set up the actual requirements also add
+further restrictions under <span class="guihint">Filtering and computation options</span>,
+and set options which are not however needed for our simple example SLA:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 67%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Function</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Scheduled Downtimes</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Take <a href="basics_downtimes.html">scheduled downtimes</a> into consideration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Status Classification</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Take flapping, downtimes and times outside the monitoring times into consideration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Service Status Grouping</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reclassification of a status.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Only show objects with outages</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show only objects with given failure rates.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Host Status Grouping</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interpret the <span class="hstate2">UNREACH</span> host status as <span class="hstate2">UNREACH</span>, <span class="hstate0">UP</span> or <span class="hstate1">DOWN</span>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Service Time</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Take <a href="availability.html#serviceperiod">service times</a> into consideration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Notification Period</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Include notification periods.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Short Time Intervals</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ignore intervals shorter than a given duration, so that brief interruptions are ignored (similar to the concept of <a href="availability.html#softstates">soft states</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Phase Merging</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directly successive reporting periods of the same status should not be amalgamated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Query Time Limit</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limit the query time as a solution for slow or non-answering systems.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Limit processed data</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limit the number of data lines to be processed; 5000 lines is standard.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Next specify the actual requirements in the <span class="guihint">SLA requirements</span> section with <span class="guihint">Add new timeperiod</span>.
+As long as you have specified <a href="timeperiods.html">time periods</a>, these can also be used with the SLAs, as already mentioned for <a href="availability.html#serviceperiod">general availability</a>.
+Select a time period under <span class="guihint">Active in timeperiod</span>, or as here in the example <code>24X7 - Always</code> to define the requirements for a 24/7 operation.
+Under <span class="guihint">Title</span>, give a meaningful name, say <code>90 percent OK</code>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_settings_requirements_percentage.png" alt="Dialog for defining the first SLA requirement."></div>
+<div class="title">The first requirement is defined as a percentage SLA</div>
+</div>
+<div class="paragraph"><p>For <span class="guihint">Computation Type</span>, for <strong>the first request</strong> select <span class="guihint">Service state percentage</span> and add a new criterion via <span class="guihint">Add state configuration</span>.
+A new paragraph opens for the <span class="guihint">Monitoring state requirement</span>.
+To ask for at least 90 percent availability, set this record to <span class="guihint">OK</span>, <span class="guihint">minimum</span>, <span class="guihint">90</span>.
+If this value falls short, the SLA is considered <em>broken</em> and assumes the status <span class="state2">CRIT</span>, as will be seen later on the results page.</p></div>
+<div class="paragraph"><p>Perhaps the SLA should not wait until it breaks and then go to <span class="state2">CRIT</span>, but directly to <span class="state1">WARN</span> as soon as 50 percent of the buffer is consumed, and then to <span class="state2">CRIT</span> if there are 10 percent buffers left.
+The thing really breaking the SLA would then produce <span class="guihint">broken</span> but no further status changes (more on this below in section <a href="#sla_detail_page">SLA detail page</a>).
+For such a configuration check the box at <span class="guihint">Levels for SLA monitoring</span>.
+Here you can enter residual values for the transition to <span class="state1">WARN</span> and <span class="state2">CRIT</span>.
+This completes the first request.</p></div>
+<div class="paragraph"><p>Now add a <strong>second request</strong> with <span class="guihint">Add new timeperiod</span>.
+Again set the time period – under <span class="guihint">Title</span>,
+for example, specify <code>Max 5 warnings of 2 minutes</code> as the name and in this case set the <span class="guihint">Computation Type</span> to <span class="guihint">Maximum number of service outages</span>:
+The actual request is then: <span class="guihint">Maximum 5 times WARN with duration 0 days 0 hours 2 mins 0 secs</span>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_settings_requirements_outages.png" alt="Dialog for defining the second SLA requirement."></div>
+<div class="title">The second requirement is defined as an outage SLA</div>
+</div>
+<div class="paragraph"><p>According to the SLA, per SLA period the service is now allowed the specified status on a maximum of five occasions, and each occurrence for a maximum of two minutes, without the SLA being flagged as broken.
+Instead of <span class="state1">WARN</span> another status could of course also be specified at this point.
+And again via the <span class="guihint">Levels for SLA monitoring</span> you may also refine and determine how many remaining incidents will trigger a warning, before the SLA actually breaks with a <span class="state1">WARN</span> or <span class="state2">CRIT</span>.</p></div>
+<div class="paragraph"><p>As mentioned earlier, you can add more of these requirements and knit detailed SLAs together.
+But there are still no services that 'react‘ to this SLA — in our example, a rule must make this connection.
+How to use the configuration created up to this point without such an SLA service connection is described below under <a href="#sla_column">column-specific SLA displays.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_link_sla_service">
+<span class="hidden-anchor sr-only" id="link_sla_service"></span>2.2. Linking an SLA to a service</h3>
+<div class="paragraph"><p>The SLA is connected to a service via the <span class="guihint">Setup &gt; Services &gt; Service monitoring rules &gt; Assign SLA definition to service</span> rule set.
+Create a rule, enable the only rule-specific option <span class="guihint">Assign SLA to service</span>, and then choose your SLA definition <code>MySLA</code>, listed here by its title <span class="guihint">Filesystems</span>.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_rule_assign_sla.png" alt="Rule for selecting the SLA for the service."></div>
+<div class="title">The previously-created SLA is offered for selection in the list</div>
+</div>
+<div class="paragraph"><p>Next under <span class="guihint">Conditions</span> in the <span class="guihint">Services</span> section define further filters for the desired services.
+As always, here you can work with <a href="regexes.html">regular expressions</a>, and as in this example link the SLA definition to all local file systems via <code>Filesystem</code>.
+Optionally you can still restrict everything using the rule-specific filters for folders, host tags and explicit hosts;
+in our example they are the hosts <code>MyHost1</code> and <code>MyHost2</code>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_rule_condition.png" alt="Service selection condition for the SLA."></div>
+<div class="title">The file system services are assigned to the SLA</div>
+</div>
+<div class="paragraph"><p>Of course at this point you could also omit any service filtering and simply bind the SLA to all services.
+How and why it is better to do that with a column-specific SLA view is explained <a href="#sla_column">below</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__integrating_an_sla_in_view">
+<span class="hidden-anchor sr-only" id="_integrating_an_sla_in_view"></span>2.3. Integrating an SLA in view</h3>
+<div class="paragraph"><p>So you have now created the SLA definition <code>MySLA</code>, and tied it to all services for the two hosts that start with <code>Filesystem</code>.
+Now create a <a href="views.html#new">new view</a> for the SLAs.
+For the SLA example a simple view of the two hosts with their file system services and SLAs should be sufficient.
+For clarification, the Checkmk services to which no SLA is currently tied are added.
+The result will look like the <a href="#image_sla_view">image at the end of this chapter</a>.</p></div>
+<div class="paragraph"><p>Create a new view with <span class="guihint">Customize &gt; Visualization &gt; Views &gt; Add view</span>.
+In the first query specify <span class="guihint">All services</span> as <span class="guihint">Datasource</span>.
+Confirm the following query whether information of a single object should be shown with the default value <span class="guihint">No restrictions to specific objects.</span></p></div>
+<div class="paragraph"><p>Under <span class="guihint">General Properties</span>, enter an ID (here <code>MySLAView_Demo</code>), a title (such as <code>My SLA Demo View</code>), and finally select a theme such as <span class="guihint">Workplace</span> if you want to see the SLA views later under a separate item in the <a href="user_interface.html#monitor_menu">Monitor menu</a>.
+All other values can be left unchanged for this test.</p></div>
+<div class="paragraph"><p>Now navigate to the <span class="guihint">Columns</span> box and initially via <span class="guihint">Add column</span> add the three general columns <span class="guihint">Services: Service state</span>, <span class="guihint">Hosts: Hostname</span> and <span class="guihint">Services: Service description</span> as the basis for the view.</p></div>
+<div class="paragraph"><p>The column selector also contains two SLA-specific columns: <span class="guihint">Hosts/Services: SLA - Service specific</span> und <span class="guihint">Hosts/Services: SLA - Column specific.</span>
+The latter shows a fixed SLA definition for each service in the view — the better alternative to an SLA for all services as mentioned above. More on this <a href="#sla_column">later</a>.</p></div>
+<div class="paragraph"><p>Add the <span class="guihint">Hosts/Services: SLA - Service specific</span> column at this point.
+Here all sorts of options are now available for the presentation of the SLAs’ results:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_view_options.png" alt="SLA representation options when creating the view."></div>
+<div class="title">The numerous options for SLA representation in the view</div>
+</div>
+<div class="paragraph"><p><span class="guihint">SLA timerange</span>: Use this to set the time frame for for which you want to see SLA results.
+For example, if you have the reporting period <span class="guihint">Monthly</span> in your SLA definition and here <span class="guihint">Last Year</span>, you receive twelve individual results.
+In this example the <span class="guihint">SLA period range</span> option is used to directly specify the number of displayed reporting periods:
+For five periods/results set <span class="guihint">Starting from period number</span> to <code>0</code>, and <span class="guihint">Looking back</span> to <code>4</code>.</p></div>
+<div class="paragraph"><p><span class="guihint">Layout options</span>: By default, this option is set to <span class="guihint">Only Display SLA Name</span>.
+To actually see the results of the SLAs, here choose <span class="guihint">Display SLA statistics</span>.
+You can select up to three different elements:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Display SLA subresults for each requirement</span> displays each affected SLA with name in a separate line.</p></li>
+<li><p><span class="guihint">Display a summary for each SLA period</span> shows a graphic summary in the <span class="guihint">Aggregated result</span> line.</p></li>
+<li><p><span class="guihint">Display a summary over all SLA periods</span>: Shows a textual, percentage summary of all SLAs in the <span class="guihint">Summary</span> line.</p></li>
+</ul></div>
+<div class="paragraph"><p>Activate all three options for this current example.</p></div>
+<div class="paragraph"><p><span class="guihint">Generic plugin display options</span>: At this point, for the display of <em>outage/percentage SLAs</em>, define whether summaries (texts) or respectively individual results (icons) for the reporting periods should appear.
+To see both in action, leave the percentage SLAs option at <span class="guihint">Show separate result for each SLA period</span> and select <span class="guihint">Service outage count display options</span> to <span class="guihint">Show aggregated info over all SLA periods</span>.</p></div>
+<div class="paragraph"><p>If you want to group the view by individual hosts, under <span class="guihint">Grouping</span> add the column <span class="guihint">Hosts: Hostname</span> — which ensures a visual separation of the hosts.</p></div>
+<div class="paragraph"><p>Since the view should only show the <code>MyHost1</code> and <code>MyHost2</code> hosts, in the last step you have to set a filter under <span class="guihint">Context / Search Filters</span> for the <span class="guihint">Hostname</span>: <code>MyHost1|MyHost2</code>.
+For a slightly clearer example view you can still set a filter under <span class="guihint">Service</span>, for example <code>filesystem.*|Check_MK.*</code>.
+You then get the SLA-monitored file system services, and as an unmonitored counterpart the Checkmk services – in this way the results from using the service-specific SLA display will simply be clearer.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_view_context.png" alt="Filter selecting hosts and services for the view."></div>
+<div class="title">The view is narrowed down to the hosts and services of interest</div>
+</div>
+<div class="paragraph"><p>This completes the view setup.
+After selection in the <span class="guihint">Monitor</span> menu as the result you will get a view with five status icons as single results from the percentage SLA, and a summary as a percentage for the outage SLA — of course only in the file system services lines, the Checkmk lines remain empty.</p></div>
+<div class="imageblock" id="image_sla_view">
+<div class="content"><img src="../images/sla_view.png" alt="The view in monitoring shows two services with SLA information."></div>
+<div class="title">The view in monitoring shows — per host — one service with, and one without SLA information</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_more_sla_views">
+<span class="hidden-anchor sr-only" id="more_sla_views"></span>3. Further views</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_sla_column">
+<span class="hidden-anchor sr-only" id="sla_column"></span>3.1. Column-specific SLA displays</h3>
+<div class="paragraph"><p>The service-specific view has a disadvantage:
+you can indeed create multiple rules that assign the same service to different SLAs, however you can only display the SLA assigned to the first of these rules – there is no way the SLA of a second controlling rule can be displayed in a second column.</p></div>
+<div class="paragraph"><p>You can however easily show several columns with different fixed, specified SLAs.
+Such column-specific views are useful, for example, if you need multiple SLAs which should apply for all services of some or all hosts.
+So it could be about defining something like gold, silver and bronze SLAs, each in a separate column next to the services of a host.
+Then at a glance it will be clear which SLA definitions a service/host meets.
+In short: the column-specific view allows you to display more than just a single SLA for services.</p></div>
+<div class="paragraph"><p>In the example completed <a href="#setup_sla">above</a>, those three steps mentioned at the beginning were executed — create an SLA, bind it to a service, install it in a view.
+For column-specific views you can just leave out the second step.
+Create only the SLA, and arrange a view with the <span class="guihint">Hosts/Services: SLA - Column specific</span> column.
+The SLA results will then be displayed in each line independently of the respective service.</p></div>
+<div class="paragraph"><p>The following image shows the <a href="#image_sla_view">above SLA view</a> for <code>MyHost1</code> with an additional column showing SLA results (maximum three outages of Checkmk services) for each service:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_view_columnspecific.png" alt="The view with an additional SLA column for each service."></div>
+<div class="title">The view with a new SLA column for each service</div>
+</div>
+<div class="paragraph"><p>The difference between service and column-specific displays is thus clearly visible.
+What should also become clear:
+the SLA designed specifically for Checkmk services of course makes only moderate sense in the file system columns.
+It is therefore worth planning this thoroughly before beginning an implementation!</p></div>
+<div class="paragraph"><p>One more small <strong>note:</strong> In the options for the service-specific views, above under <span class="guihint">Generic plugin display options</span> we have seen the settings for outage and percentage SLAs.
+In the options for the column-specific views you can see these two as well — but only if the SLA actually includes outage and percentage criteria.
+Here <em>generic</em> is not appropriate, but <em>static</em>, a fixed SLA definition is invoked.
+Only the options that belong to this SLA will be seen.</p></div>
+<div class="paragraph"><p>There are many ways to bring SLAs, services and views together — here good planning is required for what precisely you want to display via SLAs.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_sla_detail_page">
+<span class="hidden-anchor sr-only" id="sla_detail_page"></span>3.2. The SLA detail page</h3>
+<div class="paragraph"><p>Integrating the SLA information into tables provides a fast overview, but of course you can also consider the results in detail.
+In a view, a click on the cell with the SLA data takes you directly to the detail page of the SLA results for the affected service:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_view_details_bars.png" alt="sla view details bars"></div>
+<div class="title">The details will be displayed by clicking a table cell containing SLA information</div>
+</div>
+<div class="paragraph"><p>Here four different types of information can be found:</p></div>
+<div class="ulist"><ul>
+<li><p>raw data of the availability,</p></li>
+<li><p>a summary of all of the requirements of an SLA,</p></li>
+<li><p>individual results of all of the requirements of an SLA and</p></li>
+<li><p>the SLA specification.</p></li>
+</ul></div>
+<div class="paragraph"><p><span class="guihint">General information</span>: Here you can see the raw availability data, and thus the SLA calculations as an overview of the status for each period, and below it the aggregated results of the SLA’s requirements.</p></div>
+<div class="paragraph"><p>This is followed by tables for each individual SLA requirement.
+The <span class="guihint">Timeline</span> shows every single state and the <span class="guihint">Result</span> row shows the results for each individual reporting period.
+A special feature here:
+If you, as described in the example, have set SLA levels and the SLA goes to <span class="state2">CRIT</span> before breaking, this will be indicated here by an orange bar and not the usual red bar.
+The bars will then turn red when the SLA breaks.
+Once you get that, move the mouse pointer to the result bar where, via a tooltip, you will be able to see the individual events that are responsible for the status.
+In the following picture the status is <span class="state1">WARN</span> – because only two out of the three permitted outages remain:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_view_details_result.png" alt="Tooltip of a result on the SLA details page."></div>
+<div class="title">A tooltip shows detailed information about the result row</div>
+</div>
+<div class="paragraph"><p>The message <span class="guihint">SLA broken</span> would also appear in this tooltip.</p></div>
+<div class="paragraph"><p>A small note about using the view:
+If you move the mouse over the result bar <span class="guihint">Aggregated results</span> or <span class="guihint">Result</span> of a period, this period will be highlighted — for all individual requirements as well as the summary under <span class="guihint">General information</span>.
+With a click you can select/deselect one or more periods.</p></div>
+<div class="paragraph"><p>Finally, under <span class="guihint">SLA specification</span>, the configuration data for your SLA follows, which will help you to better evaluate and understand the results presented:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_view_details_spec.png" alt="The SLA specification for the service selected in the view."></div>
+<div class="title">The complete specification evaluated for the SLA results from the service</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_slas_for_bi">
+<span class="hidden-anchor sr-only" id="slas_for_bi"></span>3.3. SLAs for BI aggregations</h3>
+<div class="paragraph"><p>In the <a href="availability.html#bi">availability article</a> you’ve already read about using the availability for BI aggregations.
+The SLAs are also available to the aggregations (the top level) – via a small detour:
+The state of a BI aggregation can be monitored via the <span class="guihint">Check State of BI Aggregation</span> rule set as a normal service.
+This then appears, for example, as <span class="guihint">Aggr My Bi Rule Top Level</span> in the views and can in turn be associated to an SLA via the <span class="guihint">Assign SLA definition to service</span> rule already used <a href="#link_sla_service">above</a>.
+As a result, it will look something like this:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_view_bi.png" alt="A view showing the SLA information for a BI aggregation." width="97%"></div>
+<div class="title">The service shows the SLA information for a BI aggregation</div>
+</div>
+<div class="paragraph"><p>You will find this rule under <span class="guihint">Setup &gt; Services &gt; Other services &gt; Check State of BI Aggregation</span> and a description of the rule set in the <a href="bi.html#biasservice">BI article</a>.
+The rule is also designed to query BI aggregates on remote Checkmk servers.
+For this you will need to connect the URL to the server and specify an <a href="wato_user.html#automation">automation user</a> — and of course the desired BI aggregation:
+In the <span class="guihint">Aggregation Name</span> field, enter the title of a top-level rule from your BI package, in the following example the rule with the <span class="guihint">My BI Rule Top Level</span> title:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/sla_bi_rules.png" alt="List of BI rules for selecting a top-level rule."></div>
+<div class="title">From the BI rules list you can read the title of the top-level rule</div>
+</div>
+<div class="paragraph"><p><strong>Note:</strong> There is a <strong>risk of confusion</strong> here:
+In the BI configuration, you create the actual aggregation, i.e. the logic, via rules — and in this example one of the top-level rules is entered via its title as <span class="guihint">Aggregation Name</span>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__error_handling">
+<span class="hidden-anchor sr-only" id="_error_handling"></span>4. Error handling</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__incorrect_or_no_functionality">
+<span class="hidden-anchor sr-only" id="_incorrect_or_no_functionality"></span>4.1. Incorrect or no functionality</h3>
+<div class="paragraph"><p>In practice SLAs are an interplay of many different configurations:
+the SLA itself, the view and service options, time periods, rules and of course availability data.
+If the SLA shows different results to those expected, just go through the complete chain.
+In case of doubt it also helps to visualize the entire process with pen and paper — to see all of the information involved at a glance.
+The following points can be used as a basic checklist:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="timeperiods.html">Time periods</a>: <span class="guihint">Setup &gt; General &gt; Time periods</span></p></li>
+<li><p><a href="basics_downtimes.html">Scheduled downtimes</a>: <span class="guihint">Setup &gt; Hosts &gt; Host monitoring rules &gt; Recurring downtimes for hosts</span> and <span class="guihint">Setup &gt; Services &gt; Service monitoring rules &gt; Recurring downtimes for services</span> (both rules only in the <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong>)</p></li>
+<li><p>Service periods: <span class="guihint">Setup &gt; Hosts &gt; Host monitoring rules &gt; Service period for hosts</span> and <span class="guihint">Setup &gt; Services &gt; Service monitoring rules &gt; Service period for services</span></p></li>
+<li><p>Service configuration: <span class="guihint">Setup &gt; Services &gt; Service monitoring rules &gt; MyService</span></p></li>
+<li><p>SLA configuration: <span class="guihint">Customize &gt; Business reporting &gt; Service Level Agreements</span></p></li>
+<li><p>SLA service link: <span class="guihint">Setup &gt; Services &gt; Service monitoring rules &gt; Assign SLA definition to service</span></p></li>
+<li><p>View configuration: <span class="guihint">Customize &gt; Visualization &gt; Views</span></p></li>
+<li><p>BI configuration: <span class="guihint">Setup &gt; Business Intelligence &gt; Business Intelligence &gt; MyBiPack &gt; MyTopLevelRule</span></p></li>
+<li><p>BI monitoring: <span class="guihint">Setup &gt; Services &gt; Other services &gt; Check State of BI Aggregation</span></p></li>
+</ul></div>
+<div class="paragraph"><p>After you have checked the configurations, you can verify the functioning of the SLA using manual (fake) status changes and scheduled downtimes by applying <a href="commands.html">commands</a> to the objects in a view.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__an_sla_is_not_shown">
+<span class="hidden-anchor sr-only" id="_an_sla_is_not_shown"></span>4.2. An SLA is not shown</h3>
+<div class="paragraph"><p>In such a case, open the settings for the affected view and first check the obvious:
+Is there even a column with an SLA?
+Contradictory filters are however a more likely cause:
+If you have tied the SLA to a service using a rule, this service of course may not be excluded from the view options under <span class="guihint">Context / Search Filters</span>.</p></div>
+<div class="paragraph"><p>Service-bound SLAs still have one more source of error:
+As described above, you can display only one rule-linked SLA for each service in a view — that of the first matching rule.
+Finally, the view receives only the instruction to display in each line the SLA associated with the service – not the second or fifth connected SLA.
+If you have created corresponding rules, they will simply be ignored.
+In such cases, you can switch to the <a href="#sla_column">column-specific display</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__an_sla_status_change_is_not_shown">
+<span class="hidden-anchor sr-only" id="_an_sla_status_change_is_not_shown"></span>4.3. An SLA status change is not shown</h3>
+<div class="paragraph"><p>In its simplest form, an SLA status only changes in the GUI views when its requirements are broken.
+To be informed of a status change beforehand, you must <a href="#create_sla">configure the SLA levels</a>.</p></div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li>
+<a href="#_introduction">1. Introduction</a><ul class="sectlevel1">
+<li><a href="#_what_do_slas_do">1.1. What do SLAs do?</a></li>
+<li><a href="#_functionality">1.2. Functionality</a></li>
+</ul>
+</li>
+<li>
+<a href="#setup_sla">2. Setting up SLAs</a><ul class="sectlevel1">
+<li><a href="#create_sla">2.1. Creating an SLA</a></li>
+<li><a href="#link_sla_service">2.2. Linking an SLA to a service</a></li>
+<li><a href="#_integrating_an_sla_in_view">2.3. Integrating an SLA in view</a></li>
+</ul>
+</li>
+<li>
+<a href="#more_sla_views">3. Further views</a><ul class="sectlevel1">
+<li><a href="#sla_column">3.1. Column-specific SLA displays</a></li>
+<li><a href="#sla_detail_page">3.2. The SLA detail page</a></li>
+<li><a href="#slas_for_bi">3.3. SLAs for BI aggregations</a></li>
+</ul>
+</li>
+<li>
+<a href="#_error_handling">4. Error handling</a><ul class="sectlevel1">
+<li><a href="#_incorrect_or_no_functionality">4.1. Incorrect or no functionality</a></li>
+<li><a href="#_an_sla_is_not_shown">4.2. An SLA is not shown</a></li>
+<li><a href="#_an_sla_status_change_is_not_shown">4.3. An SLA status change is not shown</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

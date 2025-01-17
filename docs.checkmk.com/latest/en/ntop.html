@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="With the integration of ntopng, you extend the functions of Checkmk with the monitoring of the network data flows and the deep analysis of the network traffic.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Integrating ntopng in Checkmk - Connect Checkmk to an ntop solution">
+<meta name="og:description" content="With the integration of ntopng, you extend the functions of Checkmk with the monitoring of the network data flows and the deep analysis of the network traffic.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Integrating ntopng in Checkmk - Connect Checkmk to an ntop solution</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/ntop.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/ntop.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/ntop.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Integrating ntopng in Checkmk</h1>
+<div class="details">
+<span id="revdate">Last modified on 16-Jan-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/onprem/en/ntop.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/ntop_ntopng_logo.png" alt="ntopng logo." width="150"></div></div>
+<div class="paragraph"><p>Checkmk provides many basic functions for monitoring your network infrastructure and delivers the associated metrics — such as bandwidth, packet rate or error rate.
+It also allows the monitoring of the state and speed of network interfaces and thresholds.</p></div>
+<div class="paragraph"><p>So far, so good.
+But what about the following questions — Who is communicating with your hosts?
+Which of your hosts' ports are being used?
+Who talks most often, i.e. who are the so-called 'top talkers'?
+Which applications are used in the network?
+Is my network performing well and where are the bottlenecks, if any?
+Are there threats, for instance from Distributed Denial of Service (DDoS) attacks?</p></div>
+<div class="paragraph"><p>To get answers to such and similar questions, a deep analysis of your network is necessary — which Checkmk alone cannot do.
+Here an analysis of the network flows is needed, i.e. the many communication relationships that take place simultaneously in the network.
+A network flow is defined by source and by destination (each determined by the IP address and port) and the protocol used.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Instead of adding the functions for in-depth network monitoring to Checkmk and thus reinventing the wheel, there is a more elegant solution — the integration of <strong>ntopng</strong> into Checkmk.
+The ntopng integration is an add-on available to purchase for the commercial editions of Checkmk.</p></div>
+<div class="paragraph"><p>ntopng is the powerful and resource-efficient software for monitoring and analyzing network traffic in real time as well as data from the past — so that it can provide the answers to the questions posed above.
+ntopng is the core of the open-source network traffic monitoring solution from the <a href="https://www.ntop.org/" target="_blank">ntop</a> company.
+In an ntop solution, data is usually collected from the devices via special software modules (<strong>nProbe</strong>) and forwarded to ntopng for analysis.</p></div>
+<div class="paragraph"><p>ntopng is related to Checkmk in more ways than one — it comes from and is rooted in the open-source world.
+ntopng is available in a free 'Community' version, as well as in several extended 'Professional' and 'Enterprise' <a href="https://www.ntop.org/guides/ntopng/what_is_ntopng.html#available-versions" target="_blank">commercial versions</a>.
+The user interface is web-based and provides the information in views and dashboards.
+Multiple users can be created and each user can be assigned a role.
+Notifications based on thresholds are supported.
+Lastly, the data can be fetched from ntopng via Checkmk’s REST API.</p></div>
+<div class="paragraph"><p>The interaction of the products involved is shown in the following illustration:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/ntop_product_flow.png" alt="Illustration of the communication between Checkmk and the ntop products ntopng and nProbe."></div></div>
+<div class="paragraph"><p>The integration of ntopng thus extends the functional scope of Checkmk by two important points — the monitoring of the network data flow, and the in-depth analysis of the network traffic.</p></div>
+<div class="paragraph"><p>In this context, integration means the following in concrete terms:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Checkmk and ntopng are installed and configured as independent systems on different servers.
+It is recommended that Checkmk and ntopng <strong>not</strong> be run on the same server.</p></li>
+<li><p>A connection is established from the Checkmk server to the ntopng server.
+Here Checkmk communicates with ntopng via its REST API.
+The connection parameters are used to decide which data is fetched from ntopng.
+The assignment is made via the available user accounts of both systems.</p></li>
+<li><p>Information from ntopng is displayed in the Checkmk user interface.
+On the one hand this is achieved in new <a href="glossar.html#dashboard">dashboards</a> in which the ntopng information is prepared for Checkmk users.
+On the other hand, ntopng data can be integrated into existing Checkmk <a href="glossar.html#view">views</a> and dashboards.</p></li>
+</ol></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_ntop_connect">
+<span class="hidden-anchor sr-only" id="ntop_connect"></span>2. Connecting to ntopng</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+To use the integration of ntopng in Checkmk, you need one of the commercial editions of Checkmk with the add-on for ntopng integration and an ntopng in a Professional or Enterprise version &gt;= 5.6,
+with a REST API v2 through which Checkmk and ntopng communicate.</p></div>
+<div class="paragraph"><p>First collect the following information about the ntopng target system you want to connect to Checkmk.
+You must enter this information into Checkmk as ntopng connection parameters:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name or IP address (<span class="guihint">Host Address</span>) of the ntopng server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of the TCP port (<span class="guihint">Port number</span>), over which ntopng can be reached.
+The port is specified when ntopng is started.
+The default is <code>3000</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protocol</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HTTP</code> or <code>HTTPS</code>.
+The connection between Checkmk and ntopng should only be made via HTTPS.
+The name and password of the ntopng user account are stored in plain text in the Checkmk site, as the access data must be transmitted unencrypted via the REST API to the ntopng server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User account for authentication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name and password of a user account of the ntopng user group 'Administrator' (<span class="guihint">ntopng Admin User</span>).
+Checkmk authenticates with the ntopng server using these credentials via the REST API.
+By the way, the default user account of ntopng is called <code>admin</code> and is assigned to the user group 'Administrator'.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>In Checkmk, start entering the ntopng connection parameters in the <span class="guihint">Setup &gt; General &gt; Global settings &gt; Ntopng (chargeable add-on) &gt; Ntopng Connection Parameters (chargeable add-on)</span> menu:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ntop_connection.png" alt="The ntopng connection parameters in the Global settings."></div></div>
+<div class="paragraph"><p>You will have obtained most of the requested parameter values by now and can therefore take them from the table above.
+We only need to take a closer look at one of the connection parameters: <span class="guihint">ntopng username to aquire data for</span>.
+This determines who can see which ntopng data in Checkmk.
+The user accounts with which Checkmk authenticates itself with ntopng and with which Checkmk fetches data from ntopng are defined differently.
+We explain the choices and the resulting differences in fetching the data in the following two sections.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>The entries for the connection to ntopng are not checked for validity when saving.
+You will not receive error messages for invalid values until <a href="#ntop_info_show">the ntopng information is displayed</a>.
+With the first ntopng connection parameter <span class="guihint">Enable this ntopng instance</span> you can deactivate the connection to ntopng, for instance if the ntopng server is temporarily unavailable.</p></div></td>
+</tr></table></div>
+<div class="sect2">
+<h3 id="heading_ntop_user_fixed">
+<span class="hidden-anchor sr-only" id="ntop_user_fixed"></span>2.1. Fixed assignments of Checkmk and ntopng users with the same name</h3>
+<div class="paragraph"><p>The simplest solution is to give a Checkmk user access to the information they see in ntopng under the same user name.</p></div>
+<div class="paragraph"><p>To do this, select the value <span class="guihint">Use the Checkmk username as ntopng user name</span> for the parameter <span class="guihint">ntopng username to aquire data for</span>.
+Checkmk will then use the current Checkmk username and retrieve the data from ntopng under that name.</p></div>
+<div class="paragraph"><p>For data retrieval to work via this assignment, at least one user account with the same name must exist in both Checkmk and ntopng.
+No matter how you think about it, it will probably be necessary to change user names in Checkmk, ntopng or even in both systems.
+How to create or change a user name in Checkmk is explained in the article on <a href="wato_user.html">user administration</a>.</p></div>
+<div class="paragraph"><p>After you have <a href="glossar.html#activate_changes">activated the changes</a>, all Checkmk users will see the user interface changes for ntopng
+as described in the <a href="#ntop_info_show">chapter on displaying the ntopng information</a>, for example the extension of the <span class="guihint">Monitor</span> menu.
+However the ntopng data will only be visible to those Checkmk users who have a user account on the ntopng counterpart.
+The other Checkmk users will be able to open the ntopng-specific pages, but will only receive blank pages or an error message that the login data is invalid.</p></div>
+<div class="paragraph"><p>This is the simplest option, but also an inflexible one.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ntop_user_flex">
+<span class="hidden-anchor sr-only" id="ntop_user_flex"></span>2.2. Flexible assignment of Checkmk users to ntopng users</h3>
+<div class="paragraph"><p>Checkmk and ntopng have similar concepts in their user administration — both systems can have multiple users, and each user is assigned a role.
+In Checkmk these roles are called, among others, 'Administrator', 'Normal monitoring user' and 'Guest user', while ntopng has the 'Administrator' and 'Non Privileged User' roles.
+These assigned roles are used — among other functions — to decide which information a user can access.</p></div>
+<div class="paragraph"><p>Instead of the rigid 1:1 assignment described above, you have the option of deciding for each Checkmk user whether you want to give them ntopng data and — if so — from which ntopng user they should receive it.</p></div>
+<div class="paragraph"><p>Since the users are assigned different roles in both systems, you can control very precisely what ntopng content is allowed to be viewed in Checkmk, for example like this:
+You do not assign an ntopng user to a Checkmk 'Guest user' who is not interested in network traffic, so the ntopng-specific Checkmk interface extensions are hidden for this user.
+For example, assign an ntopng 'Non Privileged User' to a Checkmk 'Normal monitoring user' and a network trainee, or assign an ntopng 'Administrator' to a Checkmk 'Administrator' and network expert.</p></div>
+<div class="paragraph"><p>The procedure for flexible allocations is as follows:</p></div>
+<div class="paragraph"><p>In the <span class="guihint">Ntopng Connection Parameters (chargeable add-on)</span> select for <span class="guihint">ntopng user name to aquire data for</span> the value <span class="guihint">Use the ntopng username as configured in the User settings</span>.</p></div>
+<div class="paragraph"><p>After you have saved the ntopng connection settings, a new field will appear in the settings for each user (<span class="guihint">Setup &gt; Users &gt; Users</span>) under <span class="guihint">Identity</span>, for example, as shown below for the user <code>cmkadmin</code>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ntop_user_settings.png" alt="The properties of a Checkmk user with the new field for entering an ntopng user."></div></div>
+<div class="paragraph"><p>In the <span class="guihint">ntopng Username</span> field, enter the ntopng user name whose information is to be displayed to the current Checkmk user.
+If this field is left empty (which is the default), the ntopng-specific extensions of the Checkmk interface are hidden for the Checkmk user.
+Finally, activate the changes.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_ntop_info_show">
+<span class="hidden-anchor sr-only" id="ntop_info_show"></span>3. Displaying the ntopng information</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Once the requirements described in the chapter <a href="#ntop_connect">Connecting to ntopng</a> have been met, you will now have access to the ntopng data in Checkmk.
+To do this, log in to Checkmk under a user account that is assigned to an ntopng user account.</p></div>
+<div class="paragraph"><p>The following is an overview of where and how you can access the ntopng information in the Checkmk user interface.</p></div>
+<div class="sect2">
+<h3 id="heading_ntop_monitor_menu">
+<span class="hidden-anchor sr-only" id="ntop_monitor_menu"></span>3.1. Network statistics in the Monitor menu</h3>
+<div class="imageblock"><div class="content"><img src="../images/ntop_menu_monitor.png" alt="The Monitor menu with the new 'Network statistics' topic."></div></div>
+<div class="paragraph"><p>The most noticeable change can be found in the <span class="guihint">Monitor</span> menu, which contains the new <span class="guihint">Network statistics</span> topic with entries for several dashboards with ntopng data, which we will introduce in later sections.</p></div>
+<div class="paragraph"><p>But first to the information you can retrieve about ntopng hosts in Checkmk.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ntop_hosts_view">
+<span class="hidden-anchor sr-only" id="ntop_hosts_view"></span>3.2. Views with ntopng hosts</h3>
+<div class="paragraph"><p>Checkmk and ntopng not only manage their users independently, but also their hosts.
+However, if a host in Checkmk is also set up in ntopng, you can display ntopng-specific information for this host.</p></div>
+<div class="paragraph"><p>In each host view, you can use the <span class="guihint">Ntopng Host</span> filter to create a display of the hosts present in <em>both</em> Checkmk <em>and</em> ntopng — like this:
+In the host view (for example <span class="guihint">All hosts</span>), click <span class="image-inline"><img src="../images/icons/icon_filter.png" alt="Icon for displaying the filter bar."></span> <span class="guihint">Filter</span> in the action bar to open the filter bar.
+In the filter bar, first click on <span class="guihint">Add filter</span> to display the available filters and then on <span class="image-inline"><img src="../images/icons/button_showmore.png" alt="Icon for switching to Show more mode."></span> to display <em>all</em> filters.
+Select the <span class="guihint">Ntopng Host</span> filter from the list, set it to <span class="guihint">yes</span> and activate it with <span class="guihint">Apply filters</span>.</p></div>
+<div class="paragraph"><p>The view will then only display hosts that are in both Checkmk <em>and</em> in ntopng:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ntop_hosts_action_menu.png" alt="The action menu of an ntopng host contains an additional entry."></div></div>
+<div class="paragraph"><p>In the example above, there are two hosts in common.
+One ntopng host shows the <span class="guihint">Ntop integration of this host</span> entry in the action menu.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ntop_nw_statistics">
+<span class="hidden-anchor sr-only" id="ntop_nw_statistics"></span>3.3. Network statistics for a host</h3>
+<div class="paragraph"><p>For an ntopng host, click the action menu item <span class="guihint">Ntop integration of this host</span> and you will get the host-specific <span class="guihint">Network statistics and flows</span> page:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ntop_nw_statistics.png" alt="The 'Network statistics and flows' page for an ntopng host."></div></div>
+<div class="paragraph"><p>The first line shows a summary of all hosts set up in ntopng, with the number of current alerts (<span class="guihint">Alerts</span> and <span class="guihint">Flow Alerts</span>).</p></div>
+<div class="paragraph"><p>The network data for the selected host is then presented from different perspectives on this page on the following tabs:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Host</span>: Basic information for the host and a summary of the most important information from the other tabs.</p></li>
+<li><p><span class="guihint">Traffic</span>: Information on the layer 4 protocol (TCP and UDP) for an overview as a pie chart and detailed as a table.</p></li>
+<li><p><span class="guihint">Packets</span>: Distribution of flags in TCP connections.
+Flags indicate the specific state of the connection or provide additional information.
+The most frequently used flags are SYN (synchronization), ACK (acknowledgment), FIN (finish) and RST (reset).</p></li>
+<li><p><span class="guihint">Ports</span>: Traffic statistics grouped by client and server ports</p></li>
+<li><p><span class="guihint">Peers</span>: An overview of the most frequently contacted <em>peers</em> (meaning partners) and the most frequently used applications — as graphics and a table.
+The graphic elements can be filtered by clicking on them.</p></li>
+<li><p><span class="guihint">Apps</span>: The volume of traffic divided by applications and summarized by categories.
+The layer 7 applications are determined by a deep packet inspection.
+In the application table, the application names are linked and lead to an ntopng page with detailed information.</p></li>
+<li><p><span class="guihint">Flows</span>: Table of the data flows that have the selected host as a start or end point.
+For more information, see the section <a href="#ntop_flows_dashboard">Flows dashboard</a>.</p></li>
+<li><p><span class="guihint">Engaged alerts</span>, <span class="guihint">Past alerts</span>, <span class="guihint">Flow alerts</span>: Tables of active alerts, past alerts and flow alerts.
+For more information, see the section <a href="#ntop_alerts_dashboard">Alerts dashboard</a>.</p></li>
+</ul></div>
+<div class="paragraph"><p>In each tab, you can use the <span class="guihint">View data in ntopng</span> link to access the associated ntopng page, which will take you to the ntopng <a href="https://www.ntop.org/guides/ntopng/web_gui/hosts.html#host-details" target="_blank">Host Details</a>.</p></div>
+<div class="paragraph"><p><strong>Tip:</strong> You can also access the <span class="guihint">Network statistics and flows</span> page from the <span class="guihint">Services of Host</span> and <span class="guihint">Status of Host</span> views by selecting the tab that opens the page.
+Both views, when called for an ntopng host, provide the <span class="guihint">ntopng</span> menu in their menu bar, which contains entries for each individual tab.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ntop_host_status">
+<span class="hidden-anchor sr-only" id="ntop_host_status"></span>3.4. Status of a host</h3>
+<div class="paragraph"><p>On the <span class="guihint">Network statistics and flows</span> page, click <span class="guihint">Status of host</span> in the action bar to open the <span class="guihint">Status of Host</span> view.</p></div>
+<div class="paragraph"><p>In this view a wide variety of host-specific information is displayed in a table, which can be extended by ntopng-specific entries.
+This will show information that you are already familiar with from some of the tabs on the <span class="guihint">Network statistics and flows</span> page — partly due to lack of space, however, only a selection of this information will be displayed.</p></div>
+<div class="paragraph"><p>To use the ntopng-specific entries, you must <a href="views.html#edit">customize this view</a>.
+In the menu, select <span class="guihint">Display &gt; Clone built-in view</span>.
+On the <span class="guihint">Clone view</span> page, the columns of the table contents can be defined in the <span class="guihint">Columns</span> box.</p></div>
+<div class="paragraph"><p>You can add the following ntopng-specific entries via the <span class="guihint">Add column</span>:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Hosts: Ntop hosts details</span>: Shows the most important information under the <span class="guihint">Host</span> tab.</p></li>
+<li><p><span class="guihint">Hosts: Ntop protocol breakdown</span>: Shows the log table in the <span class="guihint">Traffic</span> tab.</p></li>
+<li><p><span class="guihint">Hosts: Ntop ports</span>: Shows the client and server pie charts for the <span class="guihint">Ports</span> tab.</p></li>
+<li><p><span class="guihint">Hosts: Ntop top peers</span>: Shows the application pie chart for the <span class="guihint">Peers</span> tab.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ntop_alerts_dashboard">
+<span class="hidden-anchor sr-only" id="ntop_alerts_dashboard"></span>3.5. Alerts dashboard</h3>
+<div class="paragraph"><p>The <span class="guihint">Alerts</span> dashboard gives you an overview of all alerts in ntopng.</p></div>
+<div class="paragraph"><p>Select <span class="guihint">Monitor &gt; Network statistics &gt; Alerts</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ntop_dashboard_alerts.png" alt="The 'Alerts' dashboard with two past host alerts."></div></div>
+<div class="paragraph"><p>You can switch between the alert tables with the following tabs:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Engaged Host</span>: Table of active host alerts.
+ntopng generates alerts to report the exceeding of thresholds.</p></li>
+<li><p><span class="guihint">Past Host</span>: Table of old alerts that are no longer active.</p></li>
+<li><p><span class="guihint">Past Flows</span>: Table of flow alerts, a special category in which ntopng reports abnormal or suspicious flows.
+Flow alerts are always linked to events.
+They are collected in their own category and do not appear in the tables of active or past alerts.</p></li>
+</ul></div>
+<div class="paragraph"><p>Each page shows a maximum of 20 entries.
+You can switch to the other pages using the navigation buttons on the right above the table.</p></div>
+<div class="paragraph"><p>In all tabs, there are two bar charts above the table with a breakdown by date and time, which you can use to filter the table:
+By dragging with the mouse, select a time interval in a diagram.
+The filter defined in this way is immediately applied to the alert table.
+To switch off the filter, click outside the marking in the diagram.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>This dashboard is similar in structure to the three alert-specific tabs on the <span class="guihint">Network statistics and flows</span> page (see the section <a href="#ntop_nw_statistics">Network statistics for a host</a>).</p></div></td>
+</tr></table></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ntop_flows_dashboard">
+<span class="hidden-anchor sr-only" id="ntop_flows_dashboard"></span>3.6. Flows dashboard</h3>
+<div class="paragraph"><p>The <span class="guihint">Flows</span> dashboard gives you an overview of the flows in ntopng.
+A flow is a connection via the layer 4 protocol between the starting point and the end point, each determined by IP address and port.
+A flow can only be displayed after the data transmission has been completed.
+For this reason the display of flows is always a look into the past — even if it was only a few seconds ago.</p></div>
+<div class="paragraph"><p>Select <span class="guihint">Monitor &gt; Network statistics &gt; Flows</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ntop_dashboard_flows.png" alt="The 'Flows' dashboard."></div></div>
+<div class="paragraph"><p>The table is essentially identical to the <a href="https://www.ntop.org/guides/ntopng/web_gui/flows.html" target="_blank">Flows</a> table in the ntopng interface.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>This dashboard is similar in structure to the <span class="guihint">Flows</span> tab on the <span class="guihint">Network statistics and flows</span> page (see the section <a href="#ntop_nw_statistics">Network statistics for a host</a>).</p></div></td>
+</tr></table></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ntop_toptalkers_dashboard">
+<span class="hidden-anchor sr-only" id="ntop_toptalkers_dashboard"></span>3.7. Top Talkers dashboard</h3>
+<div class="paragraph"><p>The <span class="guihint">Top Talkers</span> dashboard shows you in real time which hosts in ntopng are generating the most network traffic.</p></div>
+<div class="paragraph"><p>Select <span class="guihint">Monitor &gt; Network statistics &gt; Top Talkers</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/ntop_dashboard_toptalkers.png" alt="The 'Top Talkers' dashboard."></div></div>
+<div class="paragraph"><p>In the left part of the dashboard, the current 'Top Talkers' are listed, sorted by the volume of the data traffic they are exchanging.
+The upper section shows the hosts in the local network, the lower section the destinations in remote networks.
+Each host is clickable, which opens the corresponding ntopng page with the host details.</p></div>
+<div class="paragraph"><p>In the diagrams you also get an overview of the data traffic in the applications (left) and the monitored interfaces (right), during the last hour (top) and for the preceding 24 hours (bottom).
+The entries in the legend displayed in each diagram are clickable and can be used to filter the data.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>This dashboard is similar in structure to the <a href="https://www.ntop.org/guides/ntopng/web_gui/dashboard.html#professional-enterprise-dashboard" target="_blank">Traffic Dashboard</a> in the ntopng interface.</p></div></td>
+</tr></table></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ntop_dashlets">
+<span class="hidden-anchor sr-only" id="ntop_dashlets"></span>3.8. Dashlets</h3>
+<div class="paragraph"><p>The <span class="guihint">Alerts</span>, <span class="guihint">Flows</span> and <span class="guihint">Top Talkers</span> dashboards presented in the last sections all consist of only one dashlet each.</p></div>
+<div class="paragraph"><p>When editing a <a href="dashboards.html">dashboard</a>, you can use these ntopng dashlets to customize existing dashboards or to create new ones.
+You can get started with the dashboard configuration in the in the <a href="user_interface.html#customize_menu">Customize menu</a> with <span class="guihint">Visualization &gt; Dashboards</span>.
+When editing a dashboard, you will find the ntopng dashlets, as well as the other dashlets, in the <span class="guihint">Add</span> menu in the <span class="guihint">Ntop</span> section.</p></div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Introduction</a></li>
+<li>
+<a href="#ntop_connect">2. Connecting to ntopng</a><ul class="sectlevel1">
+<li><a href="#ntop_user_fixed">2.1. Fixed assignments of Checkmk and ntopng users with the same name</a></li>
+<li><a href="#ntop_user_flex">2.2. Flexible assignment of Checkmk users to ntopng users</a></li>
+</ul>
+</li>
+<li>
+<a href="#ntop_info_show">3. Displaying the ntopng information</a><ul class="sectlevel1">
+<li><a href="#ntop_monitor_menu">3.1. Network statistics in the Monitor menu</a></li>
+<li><a href="#ntop_hosts_view">3.2. Views with ntopng hosts</a></li>
+<li><a href="#ntop_nw_statistics">3.3. Network statistics for a host</a></li>
+<li><a href="#ntop_host_status">3.4. Status of a host</a></li>
+<li><a href="#ntop_alerts_dashboard">3.5. Alerts dashboard</a></li>
+<li><a href="#ntop_flows_dashboard">3.6. Flows dashboard</a></li>
+<li><a href="#ntop_toptalkers_dashboard">3.7. Top Talkers dashboard</a></li>
+<li><a href="#ntop_dashlets">3.8. Dashlets</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

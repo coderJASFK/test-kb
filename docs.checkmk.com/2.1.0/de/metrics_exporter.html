@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Die in Checkmk gespeicherten Metriken können an die Metrikdatenbanken von InfluxDB und Graphite gesendet und dort weiterverarbeitet werden.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Metriken senden an InfluxDB und Graphite - über die InfluxDB v2 API oder das Carbon-Plaintext-Protokoll">
+<meta name="og:description" content="Die in Checkmk gespeicherten Metriken können an die Metrikdatenbanken von InfluxDB und Graphite gesendet und dort weiterverarbeitet werden.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Metriken senden an InfluxDB und Graphite - über die InfluxDB v2 API oder das Carbon-Plaintext-Protokoll</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/metrics_exporter.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/metrics_exporter.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/metrics_exporter.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Metriken an InfluxDB und Graphite senden</h1>
+<div class="details">
+<span id="revdate">Last modified on 22-Jan-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/metrics_exporter.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="graphing.html">Messwerte und Graphing</a>
+<a href="grafana.html">Checkmk in Grafana integrieren</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><a href="glossar.html#metric">Metriken</a> sind die mess- und berechenbare Werte zu Hosts und Services und werden von Checkmk intern in den sogenannten <a href="graphing.html#rrds">Round-Robin-Datenbanken (RRDs)</a> gespeichert.
+Diese Metriken werden durch das eingebaute Graphing-System aufbereitet und in der Checkmk-Weboberfläche an vielen Stellen visualisiert, zum Beispiel als Perf-O-Meter in der Liste der Services oder als Graphen, die Sie sich aus der Service-Liste mit dem <span class="image-inline"><img src="../images/icons/icon_pnp.png" alt="Symbol zur Anzeige von Graphen."></span> Graphsymbol einblenden lassen können.
+Die Oberfläche für die Visualisierung der Metriken basiert auf HTML5 und ist in den Enterprise Editions und der Raw Edition identisch.
+Im Artikel zum <a href="graphing.html">Graphing</a> erfahren Sie darüber alle Details.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Parallel zum in Checkmk eingebauten Graphing können Sie zusätzlich auch externe Metrikdatenbanken anbinden und die Metriken an <a href="https://influxdata.com/" target="_blank">InfluxDB</a> oder <a href="http://graphite.wikidot.com/" target="_blank">Graphite</a> senden.
+Da die Weiterleitung vom Checkmk Micro Core (CMC) durchgeführt wird, ist diese Funktion nur in den <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> verfügbar.</p></div>
+<div class="paragraph"><p>In diesem Artikel erfahren Sie, wie Sie in Checkmk die Weiterleitung der Metriken zur InfluxDB und zu Graphite einrichten.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_influxdb">
+<span class="hidden-anchor sr-only" id="influxdb"></span>2. Metriken an InfluxDB senden</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/influxdb-logo.png" alt="InfluxDB-Logo." width="120"></div></div>
+<div class="paragraph"><p>InfluxDB ist ein Open Source Datenbankmanagementsystem (DBMS) für Zeitreihen (<em>time series</em>) — und in diesem Segment zurzeit das populärste.
+InfluxDB bietet beginnend mit ihrer V2.0 eine neue, einheitliche API — die InfluxDB v2 API — mit der unter anderem Metrikdaten in die Datenbank geschrieben werden können.
+Checkmk nutzt die InfluxDB v2 API und bietet Ihnen die Möglichkeit, die Metriken aus Checkmk nicht nur an die InfluxDB zu senden, sondern auch passend in die bestehende Struktur der InfluxDB abzulegen.
+Durch die Nutzung der API wird einerseits die Konfiguration für das Versenden der Metrikdaten vereinfacht und andererseits ist Checkmk vorbereitet für zukünftige Erweiterungen.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Die in diesem Kapitel beschriebene Konfiguration gilt nur für die Anbindung einer InfluxDB V2.0 (oder neuer), da erst ab dieser Version die InfluxDB v2 API verfügbar ist.
+Falls Sie eine InfluxDB &lt;= V1.8 einsetzen, dann richten Sie diese stattdessen so wie im <a href="#graphite">Kapitel</a> zur Graphite-Anbindung beschrieben ein, da InfluxDB bis zur V1.8 das Carbon-Protokoll von <a href="https://docs.influxdata.com/influxdb/v1.8/supported_protocols/graphite/" target="_blank">Graphite</a> unterstützt.</p></div>
+<div class="sect2">
+<h3 id="heading_influxdb_collect">
+<span class="hidden-anchor sr-only" id="influxdb_collect"></span>2.1. Informationen sammeln</h3>
+<div class="paragraph"><p>Bevor Sie mit der Einrichtung in Checkmk loslegen, sollten Sie sich die folgenden Informationen besorgen über das InfluxDB-Zielsystem, das Sie mit Checkmk verbinden möchten:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host-Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name (oder IP-Adresse) des InfluxDB-Servers. Die Eingabe des DNS-Namens ist vor allem dann wichtig, wenn die Verbindung über HTTPS verschlüsselt wird, da Zertifikate fast nie für IP-Adressen ausgestellt werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port-Nummer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nummer des TCP Ports, über den der InfluxDB-Server erreichbar ist. Der Standard-Port ist <code>8086</code>. Beim Start mit <code>influxd</code> kann mit der Option <code>--http-bind-address</code> auch ein anderer Port angegeben werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protokoll</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HTTP</code> für unverschlüsselte Verbindungen oder <code>HTTPS</code>, um die Verbindung abzusichern.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Organisation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bei InfluxDB ist die Organisation (<em>organization</em>) der Arbeitsbereich für mehrere Benutzer. Die initiale Organisation wird bei der InfluxDB-Einrichtung abgefragt. Weitere Organisationen können manuell über die InfluxDB-GUI angelegt werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Behälter (<em>bucket</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InfluxDB speichert die Zeitreihendaten in Behältern, sogenannten <em>buckets.</em> Für jeden Behälter wird insbesondere ein Aufbewahrungszeitraum (<em>retention period</em>) festgelegt. InfluxDB löscht automatisch alle Datenpunkte, die älter sind als dieser Zeitraum.<br>
+Ein Behälter gehört stets zu einer Organisation. Der initiale Behälter wird zusammen mit der Organisation bei der InfluxDB-Einrichtung festgelegt. Weitere Behälter können manuell erstellt werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Token</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Kommunikation zwischen Checkmk und InfluxDB erfolgt über die InfluxDB v2 API.
+InfluxDB verwendet API-Tokens zur Autorisierung von Anfragen via API.
+Ein API-Token gehört zu einem bestimmten Benutzer und identifiziert die InfluxDB-Berechtigungen innerhalb der Organisation des Benutzers.
+Tokens werden über die InfluxDB-GUI angelegt, entweder mit vollem Lese- und Schreibzugriff auf alle Ressourcen in einer Organisation (<em>All Access Token</em>) oder mit ausgewählten Zugriffsrechten für bestimmte Behälter in einer Organisation (<em>Read/Write Token</em>). Ein Token kann in die Zwischenablage kopiert werden, was das spätere Einfügen während der Checkmk-Konfiguration erleichtert. Der Token für die Verbindung zum Checkmk-Server sollte natürlich Lese- und Schreibrechte für den Behälter haben, der in Checkmk konfiguriert wird.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Genaueres dazu finden Sie in der <a href="https://docs.influxdata.com/influxdb/latest/" target="_blank">InfluxDB-Dokumentation</a>.</p></div>
+<div class="paragraph"><p>Mit diesen Informationen zur Hand, erfolgt die Konfiguration in Checkmk mit nur zwei unkomplizierten Schritten.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_influxdb_connection">
+<span class="hidden-anchor sr-only" id="influxdb_connection"></span>2.2. Checkmk mit InfluxDB verbinden</h3>
+<div class="paragraph"><p>Öffnen Sie das <a href="user_interface.html#setup_menu">Setup-Menü</a> und schalten Sie den <a href="intro_gui.html#show_less_more">Show-more-Modus</a> an — denn nur dann wird der Menüeintrag <span class="guihint">Setup &gt; Exporter &gt; InfluxDB Connections</span> angezeigt.
+Wählen Sie diesen aus, um sich die Liste der existierenden InfluxDB-Verbindungen anzeigen zu lassen.
+Da Sie hier wahrscheinlich noch nichts konfiguriert haben, wird die Liste leer sein.</p></div>
+<div class="paragraph"><p>Eine Verbindung ist die Voraussetzung für das Versenden der Daten.
+Ohne <a href="#influxdb_metrics">Regel zur Auswahl der Metrikinformationen</a> werden aber keine Daten versendet.</p></div>
+<div class="paragraph"><p>Erstellen Sie also zuerst eine neue Verbindung mit <span class="image-inline"><img src="../images/icons/icon_new.png" alt="Symbol zum Erstellen einer neuen Verbindung."></span> <span class="guihint">Add connection</span>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/metrics_exporter_influxdb_new_connection_general_properties.png" alt="Die allgemeinen Eigenschaften einer InfluxDB-Verbindung."></div>
+<div class="title">ID, Titel und Instanzauswahl reichen für die allgemeinen Eigenschaften</div>
+</div>
+<div class="paragraph"><p>In den <span class="guihint">General Properties</span> bestimmen Sie, wie gewohnt, die interne ID und den Titel für die Verbindung.</p></div>
+<div class="paragraph"><p>Falls mit der aktuellen Instanz weitere Instanzen verbunden sind, wie das beim <a href="distributed_monitoring.html">verteilten Monitoring</a> der Fall ist, können Sie unter <span class="guihint">Site restriction</span> die Verbindung auf bestimmte Instanzen einschränken.
+Dazu verschieben Sie zuerst den Eintrag <span class="guihint">All sites</span> in die linke Spalte und schieben anschließend die Instanzen, die Metriken erhalten sollen, aus der linken in die rechte Spalte <span class="guihint">Selected</span>. In der linken Spalte verbleiben dann die Instanzen, die auf Metriken verzichten müssen.</p></div>
+<div class="paragraph"><p>Dann geht es weiter im nächsten Kasten mit den <span class="guihint">InfluxDB Connection Properties:</span></p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/metrics_exporter_influxdb_new_connection_influxdb_properties.png" alt="Die InfluxDB-spezifischen Eigenschaften der Verbindung."></div>
+<div class="title">Die InfluxDB-spezifischen Eigenschaften festlegen</div>
+</div>
+<div class="paragraph"><p>Geben Sie hier den ersten Satz der Parameterwerte ein, die Sie im <a href="#influxdb_collect">vorherigen Abschnitt</a> zusammengestellt haben.</p></div>
+<div class="paragraph"><p>Sichern Sie die Verbindung mit <span class="guihint">Save</span> und Sie kehren zurück zur Liste der Verbindungen:</p></div>
+<div class="imageblock" id="influxdb_connection_list">
+<div class="content"><img src="../images/metrics_exporter_influxdb_connection_list.png" alt="Liste der InfluxDB-Verbindungen."></div>
+<div class="title">Aktiv, inaktiv, mit oder ohne Regel? Die Verbindungsliste zeigt es</div>
+</div>
+<div class="paragraph"><p>In der Verbindungsliste zeigt die Spalte <span class="guihint">Enabled</span> wichtige Informationen zum Zustand der Verbindung.
+Wundern Sie sich nicht, dass die Liste im obigen Bild drei Einträge enthält:
+Um alle Symbole in Aktion sehen zu können, haben wir die Liste um zwei weitere Verbindungen erweitert.
+Aus der ersten Spalte in <span class="guihint">Enabled</span> können Sie ablesen, ob die Verbindung <span class="image-inline"><img src="../images/icons/icon_perm_yes.png" alt="Symbol zur Anzeige einer aktiven Verbindung."></span> aktiviert oder <span class="image-inline"><img src="../images/icons/icon_perm_no.png" alt="Symbol zur Anzeige einer deaktivierten Verbindung."></span> deaktiviert ist.
+In der zweiten Spalte sehen Sie, ob es für die Verbindung bereits eine Regel <span class="image-inline"><img src="../images/icons/button_rulesets_enabled.png" alt="Knopf zur Anzeige der Liste mit den Regeln im Regelsatz."></span> gibt oder <span class="image-inline"><img src="../images/icons/button_rulesets_disabled.png" alt="Knopf zur Erstellung einer neuen Regel."></span> nicht.</p></div>
+<div class="paragraph"><p>Daten werden über eine Verbindung erst dann gesendet, wenn diese mit einer Regel zur Auswahl der Metrikinformationen verknüpft ist.
+Diese Regel heißt <span class="guihint">Send metrics to InfluxDB</span>.
+Die Regelsymbole sind Knöpfe und bieten eine Abkürzung zur Regelerstellung:
+Bei einer Verbindung mit Regel klicken Sie auf <span class="image-inline"><img src="../images/icons/button_rulesets_enabled.png" alt="Knopf zur Anzeige der Liste mit den Regeln im Regelsatz."></span>, um die Übersichtsseite des Regelsatzes zu öffnen, in der hervorgehoben ist, welche Regel für die Verbindung greift oder greifen würde.
+Bei einer Verbindung ohne Regel führt ein Klick auf <span class="image-inline"><img src="../images/icons/button_rulesets_disabled.png" alt="Knopf zur Erstellung einer neuen Regel."></span> direkt in die Seite zur Erstellung der Regel.</p></div>
+<div class="paragraph"><p>Was in dieser Regel festgelegt werden kann, beschreiben wir im folgenden Kapitel genau.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_influxdb_metrics">
+<span class="hidden-anchor sr-only" id="influxdb_metrics"></span>2.3. Metrikinformationen auswählen</h3>
+<div class="paragraph"><p>Welche Daten an den InfluxDB-Server gesendet und wo sie abgelegt werden, bestimmen Sie in Checkmk mit einer Regel.</p></div>
+<div class="paragraph"><p>Den Regelsatz <span class="guihint">Send metrics to InfluxDB</span> finden Sie unter <span class="guihint">Setup &gt; Services &gt; Service monitoring rules</span>, noch schneller mit der <a href="user_interface.html#search_setup">Suche im Setup-Menü</a> und am schnellsten per Klick in der <a href="#influxdb_connection_list">Verbindungsliste</a>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/metrics_exporter_influxdb_send_metrics_rule.png" alt="Regel zur Auswahl der Metrikinformationen zum Versand über die InfluxDB-Verbindung."></div>
+<div class="title">Die Auswahl der Metrikinformationen erfolgt per Regel</div>
+</div>
+<div class="paragraph"><p>Im Kasten <span class="guihint">Send metrics to InfluxDB</span> wählen Sie zuerst die im <a href="#influxdb_connection">vorherigen Abschnitt</a> erstellte Verbindung aus und legen dann fest, wo die Daten auf dem InfluxDB-Server abgelegt werden.
+Hier geben Sie den zweiten Satz der <a href="#influxdb_collect">gesammelten Informationen</a> über den InfluxDB-Server ein.
+Mit <span class="guihint">Organization</span> entscheiden Sie, welche Benutzer die Daten erhalten, und mit <span class="guihint">Bucket</span>, wie lange die Metriken vorgehalten werden.
+Eine Mehrfachauswahl ist nicht möglich, d.h. Sie können die Metriken z.B. nicht an mehrere Behälter unterschiedlicher Organisationen schicken.</p></div>
+<div class="paragraph"><p>Im folgenden wählen Sie die Metrikdaten aus, die von Checkmk an den InfluxDB-Server gesendet werden.
+<span class="guihint">Metrics of service</span> ist standardmäßig bereits ausgewählt und aktiviert den Metrikversand.
+Durch Ankreuzen der Checkbox <span class="guihint">Service state</span> wird der <a href="monitoring_basics.html#services">Service-Zustand</a> als eigene Metrik gesendet.</p></div>
+<div class="paragraph"><p>Nach Aktivierung von <span class="guihint">Additional values per metric</span> können Sie den Metriken eine Reihe von Metadaten mitgeben, die der Darstellung dienen, z.B. den Zustand des zugehörigen Services (<span class="guihint">State of service</span>) und die Schwellwerte (<span class="guihint">Thresholds</span>).
+Beachten Sie dabei, dass <span class="guihint">Unit</span> derzeit nur bei Metriken aus <a href="glossar.html#active_check">aktiven Checks</a> funktioniert, wenn diese das unterstützen.
+Der Grund liegt darin, dass nur aktive Checks optional die Einheit mitliefern und der CMC auf andere keinen Zugriff hat.</p></div>
+<div class="paragraph"><p>In der letzten Liste <span class="guihint">Tags to use</span> werden den Metriken Metadaten wie <a href="glossar.html#host_tag">Host-Merkmale</a> oder <a href="glossar.html#label">Labels</a> hinzugefügt, die hauptsächlich der Filterung dienen und dafür optimiert sind.
+Die standardmäßig ausgewählten <span class="guihint">Host name</span> und <span class="guihint">Service name</span> sind dabei Pflichteinträge, die nicht abgewählt werden können.</p></div>
+<div class="paragraph"><p>In InfluxDB werden die <span class="guihint">Additional values per metric</span> als <em>fields</em> und die <span class="guihint">Tags to use</span> als <em>tags</em> gespeichert.</p></div>
+<div class="paragraph"><p>Zum Schluss <a href="glossar.html#activate_changes">aktivieren Sie die Änderungen</a> für die Erstellung der Verbindung und der Regel.
+Bei Problemen mit dem Metrikversand finden Sie weiter unten <a href="#diagnosis">Informationen zur Fehlerdiagnose.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_influxdb_display">
+<span class="hidden-anchor sr-only" id="influxdb_display"></span>2.4. Metriken in InfluxDB anzeigen</h3>
+<div class="paragraph"><p>Wenn die Metriken von Checkmk beim InfluxDB-Server angekommen sind, können sie in der InfluxDB-GUI angezeigt werden.
+Das folgende Bild zeigt als Beispiel den Graphen für die Metrik <code>total_used</code>, die den verwendeten Arbeitsspeicher anzeigt:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/metrics_exporter_influxdb_show_metric.png" alt="Anzeige der Metrik zum verwendeten Arbeitsspeicher in der InfluxDB-GUI."></div>
+<div class="title">In der InfluxDB-GUI gibt es unterhalb des Graphen Listen zur Auswahl und zum Filtern</div>
+</div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Diese Metrik finden Sie in Checkmk beim Service <span class="guihint">Memory</span> unter dem Metriknamen <span class="guihint">Total used memory.</span></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_graphite">
+<span class="hidden-anchor sr-only" id="graphite"></span>3. Metriken an Graphite senden</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/graphite-logo.png" alt="Graphite-Logo." width="120"></div></div>
+<div class="paragraph"><p>Auch Graphite ist ein bekanntes Open Source DBMS für Zeitreihen, um Metriken zu speichern, abzurufen, weiterzugeben und zu visualisieren.
+Graphite besteht aus dem Carbon Daemon, der auf die Daten wartet und diese in einer Datenbank speichert, aus der sie mit der Graphite Webanwendung aufbereitet und als Graphen angezeigt werden.
+Mit Checkmk können Sie die Metriken im Plaintext-Protokoll an den Carbon Daemon von Graphite weiterleiten, der auf Port 2003 auf Daten dieses Protokolls wartet.
+Im Plaintext-Protokoll ist ein Datensatz sehr einfach aufgebaut im Format <code>&lt;Metrikpfad&gt; &lt;Wert&gt; &lt;Zeitstempel&gt;</code>, wobei <code>&lt;Metrikpfad&gt;</code> ein durch Punkte getrennter eindeutiger Bezeichner ist.</p></div>
+<div class="paragraph"><p>Anders als bei der <a href="#influxdb">InfluxDB-Verbindung</a> werden standardmäßig <strong>alle</strong> Metrikdaten gesendet sobald eine Graphite-Verbindung aktiviert ist.
+Falls Sie dies nicht wünschen, sollten Sie <strong>vor</strong> der Aktivierung der Verbindung die Metriken per Regel auswählen und dann Regeln und Verbindung zusammen aktivieren.</p></div>
+<div class="sect2">
+<h3 id="heading_graphite_metrics">
+<span class="hidden-anchor sr-only" id="graphite_metrics"></span>3.1. Metrikinformationen auswählen</h3>
+<div class="paragraph"><p>In Checkmk finden Sie unter <span class="guihint">Setup &gt; Services &gt; Service monitoring rules</span> die beiden Regelsätze <span class="guihint">Send host metrics to Graphite</span> und <span class="guihint">Send service metrics to Graphite.</span>
+Die Konfiguration erfolgt in gleicher Weise für Host- und für Service-Metriken.
+Wir zeigen hier die Konfiguration für Service-Metriken.
+Die Host-Metriken richten Sie dann analog ein.</p></div>
+<div class="paragraph"><p>Mit der Regel <span class="guihint">Send service metrics to Graphite</span> können Sie einerseits die Werte auswählen, die mit den Metriken mitgeliefert werden sollen:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/metrics_exporter_graphite_rule.png" alt="Regel zur Auswahl der Service-Metriken zum Versand über die Graphite-Verbindung."></div>
+<div class="title">Auch bei Graphite erfolgt die Auswahl der Metrikinformationen per Regel</div>
+</div>
+<div class="paragraph"><p>Zum anderen können Sie in der Box <span class="guihint">Conditions</span> den Versand auf bestimmte Hosts und Services einschränken.
+Da ohne einschränkende Regel alle Daten gesendet werden, empfiehlt es sich zuerst eine Regel zu erstellen, die den Versand global abschaltet, indem Sie alle Checkboxen im obigen Bild abwählen.
+Erstellen Sie anschließend eine spezifische Regel mit den gewünschten Metrikinformationen für die Hosts und Services, deren Metriken an den Graphite-Server übermittelt werden sollen.
+Ordnen Sie die spezifische vor der globalen Regel an:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/metrics_exporter_graphite_rule_list.png" alt="Liste der Regeln für den Versand über die Graphite-Verbindung."></div>
+<div class="title">Durch die Reihenfolge der beiden Regeln werden nur Service-Metriken des Hosts <code>myhost</code> versendet</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_graphite_connection">
+<span class="hidden-anchor sr-only" id="graphite_connection"></span>3.2. Checkmk mit Graphite verbinden</h3>
+<div class="paragraph"><p>Die Verbindung zum Graphite-Server richten Sie ein unter <span class="guihint">Setup &gt; General &gt; Global Settings &gt; Monitoring Core &gt; Send metrics to Graphite</span>. Klicken Sie dort auf <span class="guihint">Add new Graphite connection:</span></p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/metrics_exporter_graphite_new_connection.png" alt="Die Eigenschaften einer Graphite-Verbindung."></div>
+<div class="title">Die Graphite-Verbindung wird in den <span class="guihint">Global Settings</span> erstellt</div>
+</div>
+<div class="paragraph"><p>Neben den offensichtlichen Angaben zum Graphite-Server (Name und Port-Nummer des Carbon-Plaintext-Protokolls) können Sie mit <span class="guihint">Optional variable prefix</span> einen Präfix konfigurieren, der jedem Host-Namen vorangestellt wird, um z.B. eindeutige Namen zu erzwingen.
+Checkmk setzt den Metrikpfad für das Plaintext-Protokoll auf <code>&lt;Host&gt;.&lt;Service&gt;.&lt;Metrik&gt;</code>.</p></div>
+<div class="paragraph"><p>Die <a href="glossar.html#activate_changes">Aktivierung der Änderungen</a> für die Regeln und die Verbindung schließt die Konfiguration für Graphite ab.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_graphite_display">
+<span class="hidden-anchor sr-only" id="graphite_display"></span>3.3. Metriken in Graphite anzeigen</h3>
+<div class="paragraph"><p>Auch in der Graphite-GUI können Sie sich die von Checkmk empfangenen Metriken ansehen.
+Das folgende Bild zeigt den Graphen für die Metrik <code>total_used</code>, den wir bereits <a href="#influxdb_display">oben</a> als Beispiel in der InfluxDB-GUI gezeigt haben:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/metrics_exporter_graphite_show_metric.png" alt="Anzeige der Metrik zum verwendeten Arbeitsspeicher in der Graphite-GUI."></div>
+<div class="title">In der Graphite-GUI erfolgt die Auswahl in einem Navigationsbereich links vom Graphen</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_diagnosis">
+<span class="hidden-anchor sr-only" id="diagnosis"></span>4. Fehlerdiagnose</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sollten die Metriken nicht dort ankommen, wo Sie sie erwarten, finden Sie Diagnoseinformationen in Ihrer Instanz in der Datei <code>~/var/log/cmc.log</code> — der <a href="cmc_files.html">Log-Datei des Checkmk Micro Core.</a></p></div>
+<div class="paragraph"><p>Folgendes Beispiel zeigt die Meldungen, falls der in Checkmk konfigurierte Behälter (<em>bucket</em>) auf dem InfluxDB-Server nicht existiert:</p></div>
+<div class="listingblock">
+<div class="title">~/var/log/cmc.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2022-01-10 11:41:35 [5] [influxdb https://myinfluxdb.example.com:8086] Successfully initiated connection
+2022-01-10 11:41:36 [5] [influxdb https://myinfluxdb.example.com:8086] Successfully connected
+2022-01-10 11:41:36 [3] [influxdb https://myinfluxdb.example.com:8086] POST [404] {"code":"not found","message":"bucket \"my_bucket\" not found"}
+2022-01-10 11:41:36 [5] [influxdb https://myinfluxdb.example.com:8086] Closing connection</code></pre></div>
+</div>
+<div class="paragraph"><p>Folgendes Beispiel zeigt die Meldungen im Fall, dass eine Verbindung zum Graphite-Server nicht klappt:</p></div>
+<div class="listingblock">
+<div class="title">~/var/log/cmc.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-12-15 17:33:33 [5] [carbon 10.0.0.5:2003] Successfully initiated connection
+2021-12-15 17:33:33 [4] [carbon 10.0.0.5:2003] Connection failed: Connection refused
+2021-12-15 17:33:33 [5] [carbon 10.0.0.5:2003] Closing connection</code></pre></div>
+</div>
+<div class="paragraph"><p>Der Checkmk Micro Core versucht in solchen Situationen von sich aus immer wieder, die Verbindung aufzubauen.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Metriken, die während einer Zeit anfallen, zu der keine Verbindung zum Zielsystem besteht, werden aus Performance-Gründen <em>nicht</em> zwischengespeichert, sondern gehen verloren (bzw. sind dann nur in den RRDs von Checkmk verfügbar).</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Falls Ihnen die Log-Meldungen nicht aussagekräftig genug sind, können Sie die Standardwerte zum Log Level ändern unter <span class="guihint">Setup &gt; General &gt; Global Settings &gt; Monitoring Core &gt; Logging of the core</span>. Hier finden Sie Einträge für das Logging der InfluxDB (<span class="guihint">InfluxDB processing</span>) und für Graphite (<span class="guihint">Carbon connections</span>).</p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Einleitung</a></li>
+<li>
+<a href="#influxdb">2. Metriken an InfluxDB senden</a><ul class="sectlevel1">
+<li><a href="#influxdb_collect">2.1. Informationen sammeln</a></li>
+<li><a href="#influxdb_connection">2.2. Checkmk mit InfluxDB verbinden</a></li>
+<li><a href="#influxdb_metrics">2.3. Metrikinformationen auswählen</a></li>
+<li><a href="#influxdb_display">2.4. Metriken in InfluxDB anzeigen</a></li>
+</ul>
+</li>
+<li>
+<a href="#graphite">3. Metriken an Graphite senden</a><ul class="sectlevel1">
+<li><a href="#graphite_metrics">3.1. Metrikinformationen auswählen</a></li>
+<li><a href="#graphite_connection">3.2. Checkmk mit Graphite verbinden</a></li>
+<li><a href="#graphite_display">3.3. Metriken in Graphite anzeigen</a></li>
+</ul>
+</li>
+<li><a href="#diagnosis">4. Fehlerdiagnose</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

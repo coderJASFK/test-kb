@@ -1,0 +1,2405 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Mit dem Agentenplugin fÜr Windows, Linux, Solaris und AIX überwachen Sie vollumfänglich Oracle-Datenbanken. Details zur Konfiguration erfahren Sie hier.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Oracle-Datenbanken überwachen">
+<meta name="og:description" content="Mit dem Agentenplugin fÜr Windows, Linux, Solaris und AIX überwachen Sie vollumfänglich Oracle-Datenbanken. Details zur Konfiguration erfahren Sie hier.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Oracle-Datenbanken überwachen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/monitoring_oracle.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/monitoring_oracle.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/monitoring_oracle.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Oracle-Datenbanken überwachen</h1>
+<div class="details">
+<span id="revdate">Last modified on 27-Aug-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/de/monitoring_oracle.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+<a href="agent_linux.html">Linux überwachen</a>
+<a href="agent_windows.html">Windows überwachen</a>
+<a href="https://checkmk.com/de/integrations" target="_blank">Katalog der Check-Plugins</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk bietet Ihnen umfangreiche Möglichkeiten Oracle-Datenbanken zu überwachen.
+So können Sie mit dem <a href="glossar.html#agent_plugin">Agentenplugin</a> nicht nur Tablespaces oder die aktiven Sitzungen einer Datenbank abrufen, sondern zusätzlich noch viele andere Metriken.
+Eine vollständige Liste der Überwachungsmöglichkeiten mit unseren <a href="glossar.html#check_plugin">Check-Plugins</a> können Sie im <a href="https://checkmk.com/de/integrations?tags=oracle" target="_blank">Katalog der Check-Plugins</a> nachlesen.
+Wir erweitern diese Plugins regelmäßig, so dass sich ein Blick in den Katalog immer wieder lohnt.
+Unter anderem kann Checkmk die folgenden Werte überwachen:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_instance" target="_blank">Oracle Instance: Status of Database</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_instance_uptime" target="_blank">Oracle Instance: Uptime of Database</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_undostat" target="_blank">Oracle Instance: Undo Retention</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_version" target="_blank">Oracle Database: Version</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_jobs" target="_blank">Oracle Database: Jobs</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_locks" target="_blank">Oracle Database: Locks</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_processes" target="_blank">Oracle Database: Processes</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_sessions" target="_blank">Oracle Database: Number of Active Sessions</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_recovery_area" target="_blank">Oracle Database: Recovery Area</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_logswitches" target="_blank">Oracle Database: Log Switch Activity</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_tablespaces" target="_blank">Oracle Tablespaces: General Information</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_performance" target="_blank">Oracle Tablespaces: Performance Data</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_longactivesessions" target="_blank">Oracle Database: Long Active Sessions</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_recovery_status" target="_blank">Oracle: Checkpoint and User Managed Backup State of Datafiles</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_sql" target="_blank">Oracle Database: Custom SQLs</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_rman" target="_blank">Oracle: RMAN Backup Status</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_asm_diskgroup" target="_blank">Oracle: ASM Disk Groups</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/oracle_dataguard_stats" target="_blank">Oracle Data-Guard: Apply and Transport Lag</a></p></li>
+</ul></div>
+<div class="paragraph"><p>Um die Datenbanken überwachen zu können, brauchen Sie lediglich das Agentenplugin zusätzlich zu dem Agenten auf dem Datenbankserver.
+Unterstützt werden dafür zur Zeit die Betriebssysteme Linux, Solaris, AIX und Windows.
+Das Agentenplugin für Linux, Solaris, AIX heißt <code>mk_oracle</code> und für Windows <code>mk_oracle.ps1</code>.
+Zusätzliche Software wird weder auf dem Checkmk-Server noch auf dem Datenbankserver für eine Überwachung benötigt.</p></div>
+<div class="paragraph"><p>Viele Schritte, um die Überwachung einzurichten, sind zwischen Linux und Windows gleich.
+Aus diesem Grund werden zunächst die allgemeinen Schritte beschrieben, dann die spezifischen für die jeweilige Betriebssystemgruppe und schließlich die <a href="glossar.html#agent_bakery">Agentenbäckerei</a> der kommerziellen Editionen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_first_steps">
+<span class="hidden-anchor sr-only" id="first_steps"></span>2. Ersteinrichtung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die in diesem und den folgenden Kapiteln vorgestellten Konfigurationsdateien mit Beispielinhalten finden Sie auf dem Checkmk-Server — entweder über die <a href="#files_cmk">Kommandozeile</a> oder über die Checkmk-Weboberfläche.
+In Checkmk Raw wählen Sie <span class="guihint">Setup &gt; Agents</span> und in den kommerziellen Editionen <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX  &gt; Related.</span>
+In allen Editionen finden Sie dort Menüeinträge für die unterschiedlichen Betriebssysteme.
+Die Konfigurationsdateien finden Sie im Kasten <span class="guihint">Example Configurations.</span></p></div>
+<div class="sect2">
+<h3 id="heading_create_user">
+<span class="hidden-anchor sr-only" id="create_user"></span>2.1. Datenbankbenutzer erstellen</h3>
+<div class="paragraph"><p>Prinzipiell ist die erste Einrichtung schnell und in nur drei Schritten erledigt.
+Der erste Schritt ist natürlich sicherzustellen, dass es einen Benutzer gibt, welcher die Datenbanken auch abfragen darf.
+Sofern Sie keinen <a href="#rac">Real Application Cluster (RAC)</a> nutzen, legen Sie dafür in jeder zu überwachenden Datenbank einen Benutzer an.
+Wie Sie sich auf einer Instanz anmelden, unterscheidet sich je nachdem, welches Betriebssystem Sie einsetzen.
+Für Linux können Sie das zum Beispiel erledigen, indem Sie zuerst immer die jeweilige Instanz als Umgebungsvariable setzen, in der Benutzer angelegt werden soll.
+Normalerweise wechselt man dafür zuvor auf den <code>oracle</code>-Benutzer.
+Das kann sich aber je nach Setup unterscheiden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>su<span class="tok-w"> </span>-<span class="tok-w"> </span>oracle
+<span class="tok-gp">oracle@linux$ </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">ORACLE_SID</span><span class="tok-o">=</span>MYINST1</code></pre></div></div>
+<div class="paragraph"><p>Danach melden Sie sich bei der Instanz an und legen einen Benutzer für das Monitoring an.
+Um an alle Daten zu kommen, werden auch die nachfolgenden Berechtigungen benötigt.
+In dem folgendem Beispiel heißt der neu angelegte Benutzer <code>checkmk</code>.
+Sie können auch jeden anderen Namen wählen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">create</span><span class="tok-w"> </span><span class="tok-k">user</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-n">identified</span><span class="tok-w"> </span><span class="tok-k">by</span><span class="tok-w"> </span><span class="tok-n">myPassword</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-n">select_catalog_role</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-k">create</span><span class="tok-w"> </span><span class="tok-k">session</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">connect</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-o">/</span><span class="tok-n">myPassword</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-n">exit</span></code></pre></div></div>
+<div class="paragraph"><p>Wie die Anmeldung an einer bestimmten Instanz genau funktioniert, können Sie in der Oracle-Dokumentation nachlesen.</p></div>
+<div class="sect3">
+<h4 id="heading__multi_tenant_datenbanken">
+<span class="hidden-anchor sr-only" id="_multi_tenant_datenbanken"></span>Multi-Tenant-Datenbanken</h4>
+<div class="paragraph"><p>Man kann auch den Login für <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/introduction-to-the-multitenant-architecture.html" target="_blank">Multi-Tenant-Datenbanken</a> konfigurieren.
+Das wird normalerweise mit einem speziellen Benutzer und in der Konfiguration mit dem Präfix <code>C##</code> durchgeführt.
+Die Berechtigungsvergabe unterscheidet sich jedoch leicht von der Anleitung für normale Benutzer, da Sie diese für alle jetzigen und zukünftigen Container festlegen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">create</span><span class="tok-w"> </span><span class="tok-k">user</span><span class="tok-w"> </span><span class="tok-k">c</span><span class="tok-o">##</span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-n">identified</span><span class="tok-w"> </span><span class="tok-k">by</span><span class="tok-w"> </span><span class="tok-n">myPassword</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">alter</span><span class="tok-w"> </span><span class="tok-k">user</span><span class="tok-w"> </span><span class="tok-k">c</span><span class="tok-o">##</span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-k">set</span><span class="tok-w"> </span><span class="tok-n">container_data</span><span class="tok-o">=</span><span class="tok-k">all</span><span class="tok-w"> </span><span class="tok-n">container</span><span class="tok-o">=</span><span class="tok-k">current</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-n">select_catalog_role</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-k">c</span><span class="tok-o">##</span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-n">container</span><span class="tok-o">=</span><span class="tok-k">all</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-k">create</span><span class="tok-w"> </span><span class="tok-k">session</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-k">c</span><span class="tok-o">##</span><span class="tok-n">checkmk</span><span class="tok-w"> </span><span class="tok-n">container</span><span class="tok-o">=</span><span class="tok-k">all</span><span class="tok-p">;</span>
+<span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-n">exit</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_user_config">
+<span class="hidden-anchor sr-only" id="user_config"></span>2.2. Konfiguration erstellen</h3>
+<div class="paragraph"><p>Nachdem Sie einen Benutzer angelegt haben, sorgen Sie als Zweites dafür, dass das Agentenplugin später diese Informationen auch bekommt.
+Die einfachste Möglichkeit ist es dann, wenn Sie für alle Instanzen die gleichen Login-Daten gesetzt haben und einen Standard in der Konfiguration setzen können.
+Legen Sie also nun auf dem Oracle-Host die Konfigurationsdatei <code>mk_oracle.cfg</code> für <a href="#linux">Linux, AIX, Solaris</a> oder <code>mk_oracle_cfg.ps1</code> für <a href="#windows">Windows</a> an.
+In dem folgenden Beispiel sehen Sie die Datei für die Unix-artigen Systeme:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# DBUSER='USERNAME:PASSWORD'
+DBUSER='checkmk:myPassword'</code></pre></div>
+</div>
+<div class="paragraph"><p>Für Windows sieht das sehr ähnlich aus.
+Hier setzen Sie die Variable in einem PowerShell-Skript:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# $DBUSER = @("USERNAME","PASSWORD")
+$DBUSER = @("checkmk","myPassword")</code></pre></div>
+</div>
+<div class="paragraph"><p>Der Standardbenutzer ist das Einzige, was das Agentenplugin zwingend benötigt.
+Alle anderen Einstellungen, die Sie unter <a href="#adv_linux">Unix-artigen Systemen</a> oder unter <a href="#adv_windows">Windows</a> verwenden können, sind optional.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_oracle_wallet">
+<span class="hidden-anchor sr-only" id="oracle_wallet"></span>2.3. Oracle-Wallet nutzen</h3>
+<div class="paragraph"><p>Alternativ dazu, den Benutzer direkt und mit Passwort in einer Konfigurationsdatei anzugeben, können Sie auch das <em>Oracle-Wallet</em> nutzen.
+Das hat den Vorteil, dass Sie nicht mehr die Zugangsdaten unverschlüsselt sowohl auf dem Checkmk-Server als auch auf dem Oracle-Host ablegen müssen.
+Denn selbst wenn Sie die Rechte der Konfigurationsdatei auf dem Oracle-Host entsprechend angepasst haben, haben die Zugangsdaten dennoch den Server verlassen und befinden sich auf dem Checkmk-Server,
+sofern Sie die <a href="#bakery">Agentenbäckerei</a> nutzen.</p></div>
+<div class="paragraph"><p>Das Oracle-Wallet wiederum legt die Zugangsdaten verschlüsselt auf dem zu überwachenden Host ab, so dass sie benutzt werden können, aber keine Login-Daten explizit bekannt gemacht werden müssen.
+Checkmk kann dieses Wallet nutzen, so dass die Zugangsdaten prinzipiell nur dem Datenbankadministrator (DBA) bekannt sein müssen.
+Dazu legen Sie — oder der DBA — ein Wallet auf dem entsprechenden Server an:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>mkstore<span class="tok-w"> </span>-wrl<span class="tok-w"> </span>/etc/check_mk/oracle_wallet<span class="tok-w"> </span>-create</code></pre></div></div>
+<div class="paragraph"><p>Auf diese Datei wird das Agentenplugin später immer dann zugreifen, wenn eine Verbindung zu einer Instanz hergestellt werden soll.
+Damit die nötigen Benutzerdaten auch gefunden werden, müssen Sie diese einmalig in das Wallet eintragen.
+In dem folgenden Beispiel fügen Sie also den Benutzer <code>checkmk</code> für die Instanz <code>MYINST1</code> hinzu:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>mkstore<span class="tok-w"> </span>-wrl<span class="tok-w"> </span>/etc/check_mk/oracle_wallet<span class="tok-w"> </span>-createCredential<span class="tok-w"> </span>MYINST1<span class="tok-w"> </span>checkmk<span class="tok-w"> </span>myPassword</code></pre></div></div>
+<div class="paragraph"><p>Damit das Agentenplugin weiß, wo es nach dem Wallet suchen muss, muss es zwei Dateien finden.
+Die erste Datei ist <code>sqlnet.ora</code> in welcher hinterlegt wird, wo das Wallet zu finden ist.
+Die zweite Datei — <code>tnsnames.ora</code> — bestimmt die Adresse der Instanz, so dass diese auch über ihren <a href="#tns_config">Alias</a> angesprochen werden kann.
+Damit das Agentenplugin diese Dateien findet, können Sie den Pfad unter Linux, Solaris und AIX über die Umgebungsvariable <a href="#tns_config"><code>TNS_ADMIN</code></a> setzen.
+Das ist vor allem dann von Vorteil, wenn die Dateien bereits existieren.
+Alternativ können Sie sie auch explizit anlegen.
+Unter Windows ist es sogar erforderlich, dass Sie diese manuell bestimmen.</p></div>
+<div class="paragraph"><p>Legen Sie zunächst die Datei <code>sqlnet.ora</code> an.
+In dieser Datei sucht das Agentenplugin alternativ nach den Zugangsdaten, so dass hier also der korrekte Pfad zu der eben erstellten Wallet-Datei angegeben werden muss.
+Achten Sie dabei darauf, dass Sie den Parameter <code>SQLNET.WALLET_OVERRIDE</code> auf <code>TRUE</code> setzen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/sqlnet.ora</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>LOG_DIRECTORY_CLIENT = /var/log/check_mk/oracle_client
+DIAG_ADR_ENABLED = OFF
+
+SQLNET.WALLET_OVERRIDE = TRUE
+WALLET_LOCATION =
+ (SOURCE=
+   (METHOD = FILE)
+   (METHOD_DATA = (DIRECTORY=/etc/check_mk/oracle_wallet))
+ )</code></pre></div>
+</div>
+<div class="paragraph"><p>Jetzt weiß das Plugin, welche Zugangsdaten benutzt werden sollen.
+Damit es auch die korrekte Adresse ansteuert, legen Sie als Datei die <code>tnsnames.ora</code> an.
+Die genaue Syntax können Sie der Oracle-Dokumentation entnehmen, aber als Beispiel könnte die Datei so aussehen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/tnsnames.ora</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>MYINST1
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = MYINST1_ALIAS)
+    )
+  )</code></pre></div>
+</div>
+<div class="paragraph"><p>Mit diesem Schritt haben Sie die Voraussetzungen geschaffen, um die Zugangsdaten aus der <a href="#user_config">Konfigurationsdatei des Agentenplugins</a> herauszunehmen.
+Statt den Zugangsdaten tragen Sie lediglich ein <code>/</code> (Schrägstrich) ein:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>DBUSER='/:'</code></pre></div>
+</div>
+<div class="paragraph"><p>Sie können dem Wallet natürlich zu einem späteren Zeitpunkt weitere Zugangsdaten hinzufügen.
+Lediglich die Datei <code>tnsnames.ora</code> muss dann gegebenenfalls erweitert werden.</p></div>
+<div class="paragraph"><p>Zum Abschluss ändern Sie die Berechtigungen der in diesem Abschnitt manuell erstellten Dateien und Verzeichnisse, damit die <a href="#access_linux">Zugriffsrechte bei der Ausführung</a> richtig gesetzt sind.
+Das Agentenplugin, das als <code>root</code> ausgeführt wird, wechselt zum Eigentümer der Oracle-Binärdateien (z.B. <code>$ORACLE_HOME/bin/sqlplus</code>), bevor es diese ausführt.
+Zumindest die Gruppe des Eigentümers der Oracle-Binärdateien benötigt daher lesenden Zugriff auf die manuell erstellten Dateien in <code>/etc/check_mk/</code>.
+Im folgenden Beispiel nehmen wir an, dass es sich bei der Gruppe um <code>oinstall</code> handelt.</p></div>
+<div class="paragraph"><p>Die folgenden Kommandos ändern die Gruppe zu <code>oinstall</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>chgrp<span class="tok-w"> </span>oinstall<span class="tok-w"> </span>/etc/check_mk/sqlnet.ora<span class="tok-w"> </span>/etc/check_mk/tnsnames.ora
+<span class="tok-gp">root@linux# </span>chgrp<span class="tok-w"> </span>-R<span class="tok-w"> </span>oinstall<span class="tok-w"> </span>/etc/check_mk/oracle_wallet</code></pre></div></div>
+<div class="paragraph"><p>Diese Kommandos stellen dann sicher, dass die Gruppe das Verzeichnis <code>oracle_wallet</code> samt Inhalt lesen kann:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span>g+x<span class="tok-w"> </span>/etc/check_mk/oracle_wallet
+<span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span>-R<span class="tok-w"> </span>g+r<span class="tok-w"> </span>/etc/check_mk/oracle_wallet</code></pre></div></div>
+<div class="paragraph"><p>Anschließend sollten die Berechtigungen etwa wie folgt aussehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>tree<span class="tok-w"> </span>-ugpR<span class="tok-w"> </span>/etc/check_mk
+<span class="tok-go">[drwxr-xr-x root     root    ]  /etc/check_mk</span>
+<span class="tok-go">├── [drwxr-x--- root   oinstall ]  oracle_wallet</span>
+<span class="tok-go">│   └── [-rw-r----- root   oinstall ]  cwallet.sso</span>
+<span class="tok-go">│   └── [-rw-r----- root   oinstall ]  cwallet.sso.lck</span>
+<span class="tok-go">│   └── [-rw-r----- root   oinstall ]  ewallet.p12</span>
+<span class="tok-go">│   └── [-rw-r----- root   oinstall ]  ewallet.p12.lck</span>
+<span class="tok-go">├── [-rw-r--r-- root   oinstall ]  sqlnet.ora</span>
+<span class="tok-go">├── [-rw-r--r-- root   oinstall ]  tnsnames.ora</span></code></pre></div></div>
+<div class="paragraph"><p>Die Kommandoausgabe zeigt nur die Dateien und Verzeichnisse, um die es geht.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_linux">
+<span class="hidden-anchor sr-only" id="linux"></span>3. Einrichtung für Linux, Solaris, AIX</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__plugin_und_konfigurationspfade">
+<span class="hidden-anchor sr-only" id="_plugin_und_konfigurationspfade"></span>3.1. Plugin- und Konfigurationspfade</h3>
+<div class="paragraph"><p>Unter Unix-artigen Systemen verwendet Checkmk ein einheitliches Agentenplugin.
+Das reduziert zum einen den Aufwand der Pflege, da SQL-Abfragen nicht dupliziert werden müssen, und sorgt zum anderen dafür, dass Sie nur ein einziges Agentenplugin zu beachten haben.
+Auf allen unterstützten Systemen sind die Pfade für die Agenten gleich oder sehr ähnlich.
+Konkret benötigen Sie die folgenden Verzeichnisse:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Betriebssystem</th>
+<th class="tableblock halign-left valign-top">Plugin-Pfad</th>
+<th class="tableblock halign-left valign-top">Konfigurationspfad</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linux, Solaris, AIX</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linux mit <code>systemd</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent/plugins/&lt;Zahl&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AIX</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/check_mk/lib/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/check_mk/conf/</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_install_linux">
+<span class="hidden-anchor sr-only" id="install_linux"></span>3.2. Agentenplugin installieren</h3>
+<div class="paragraph"><p>Nachdem Sie bei der <a href="#first_steps">Ersteinrichtung</a> einen Benutzer angelegt und diesen in der Konfigurationsdatei hinterlegt haben, installieren Sie nun noch das Agentenplugin.
+Kopieren Sie die Datei <code>mk_oracle</code> vom Checkmk-Server aus dem Verzeichnis <code>~/share/check_mk/agents/plugins/</code> auf den Oracle-Host in das oben beschriebene Plugin-Verzeichnis.</p></div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>Das Agentenplugin für Unix-artige Systeme <code>mk_oracle</code> verträgt sich nicht gut mit <code>systemd</code> (siehe <a href="https://checkmk.com/de/werk/13732" target="_blank">Werk #13732</a>).
+Auf Systemen mit <code>systemd</code> müssen Sie das Agentenplugin daher <a href="agent_linux.html#async_plugins">asynchron ausführen lassen.</a>
+Das heißt, Sie installieren das Agentenplugin nicht unter <code>/usr/lib/check_mk_agent/plugins/</code> direkt, sondern in einem Unterordner <code>/usr/lib/check_mk_agent/plugins/&lt;Zahl&gt;/</code>.
+<code>&lt;Zahl&gt;</code> meint dabei das Ausführungsintervall in Sekunden.
+Wir empfehlen die minütliche Ausführung, also <code>/usr/lib/check_mk_agent/plugins/60/</code>.
+Bei der Einrichtung über die <a href="#bakery">Agentenbäckerei</a> erledigen Sie das freilich über die Option <span class="guihint">Host uses xinetd or systemd</span> in der Oracle-Regel, bei der standardmäßig <span class="guihint">xinetd</span> vorgegeben ist.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Achten Sie darauf, dass das Agentenplugin ausführbar ist und korrigieren Sie das gegebenenfalls:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">cd</span><span class="tok-w"> </span>/usr/lib/check_mk_agent/plugins/
+<span class="tok-gp">root@linux# </span>ls<span class="tok-w"> </span>-lA
+<span class="tok-go">-rw-r--r-- 1 root root 120808 Jan 25 11:29 mk_oracle</span>
+<span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span>+x<span class="tok-w"> </span>mk_oracle
+<span class="tok-gp">root@linux# </span>ls<span class="tok-w"> </span>-lA
+<span class="tok-go">-rwxr-xr-x 1 root root 120808 Jan 25 11:29 mk_oracle</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_adv_linux">
+<span class="hidden-anchor sr-only" id="adv_linux"></span>3.3. Erweiterte Optionen</h3>
+<div class="paragraph"><p>In der <a href="#first_steps">Ersteinrichtung</a> haben Sie bereits erste Variablen kennengelernt, um Überwachungsdaten von Ihren Oracle-Instanzen zu bekommen.
+Je nach Anwendungsszenario werden Sie aber schnell weitere Möglichkeiten benötigen, um die Überwachung besser und individuell pro Instanz steuern zu können.
+Diese Optionen finden Sie in den nachfolgenden Abschnitten.</p></div>
+<div class="sect3">
+<h4 id="heading_adv_user_linux">
+<span class="hidden-anchor sr-only" id="adv_user_linux"></span>Erweiterte Benutzerkonfiguration</h4>
+<div class="paragraph"><p>Mit dem Standard-Login können Sie reguläre oder vielleicht sogar alle Instanzen einer Datenbank abfragen.
+Es gibt jedoch Sonderfälle, in denen Sie für einzelne Instanzen individuelle Zugangsdaten benötigen.
+In der Konfigurationsdatei haben Sie daher die folgenden drei Möglichkeiten, Benutzer anzugeben:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DBUSER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Standard, wenn keine individuellen Zugangsdaten für die Datenbankinstanz definiert sind.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DBUSER_MYINST1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zugangsdaten für eine ganz bestimmte Datenbankinstanz, in diesem Fall für die Instanz <code>MYINST1</code>.
+Die Zugangsdaten werden nur für diese Instanz benutzt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASMUSER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spezielle Zugangsdaten für das Automatic Storage Management (ASM).<br>
+<strong>Wichtig:</strong> Für ein ASM kann immer nur ein Login angegeben werden.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Zusätzlich erlauben diese Variablen noch mehr Optionen außer Benutzername und Passwort.
+Sie können auch bestimmen, ob es sich bei dem Benutzer um einen <code>SYSDBA</code> oder <code>SYSASM</code> handelt, auf welcher Kombination von Adresse und Port die Instanz lauscht und sogar, welcher <a href="#tns_config">TNS-Alias</a> (<code>TNSALIAS</code>) benutzt werden soll.
+Diese Angaben sind aber immer — im Gegensatz zu Benutzer und Passwort — optional.
+Zusätzlich zu dem <a href="#user_config">obigen Beispiel</a> kann eine Konfiguration dann so aussehen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax
+# DBUSER='USERNAME:PASSWORD:ROLE:HOST:PORT:TNSALIAS'
+DBUSER='checkmk:myPassword'
+
+DBUSER_MYINST1='cmk_specific1:myPassword1:SYSDBA:localhost:1521'
+DBUSER_MYINST2='cmk_specific2:myPassword2::localhost::INST2'
+
+ASMUSER='cmk_asm:myASMPassword:SYSASM'</code></pre></div>
+</div>
+<div class="paragraph"><p>Ein paar Erläuterungen zu dem Beispiel:</p></div>
+<div class="ulist"><ul>
+<li><p>Sie können beliebig viele individuelle Zugangsdaten definieren.
+Diese werden immer gegenüber dem Standard bevorzugt.</p></li>
+<li><p>Jede Option wird von den anderen durch ein <code>:</code> (Doppelpunkt) getrennt.</p></li>
+<li><p>Wird ein optionales Feld mittendrin ausgelassen, muss der Doppelpunkt geschrieben werden, wie beim Eintrag <code>DBUSER_MYINST2</code>, bei dem keine Rolle und kein Port angegeben wurde.</p></li>
+<li><p>Werden ab einem bestimmten Punkt keine optionalen Felder mehr gebraucht, können Sie die Doppelpunkte weglassen, wie beim Eintrag <code>ASMUSER</code>, bei dem weder Host, Port noch TNS-Alias angegeben wurde.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading_skip_include">
+<span class="hidden-anchor sr-only" id="skip_include"></span>Instanzen ein- oder ausschließen</h4>
+<div class="paragraph"><p>In manchen Fällen wollen Sie bestimmte Instanzen nicht in die Überwachung mit einbeziehen.
+Das kann zum Beispiel sein, weil es nur eine Spielwiese für Entwickler ist.
+Um die Konfiguration im Einzelfall möglichst einfach zu machen, haben Sie verschiedene Möglichkeiten, um eine oder mehrere Instanzen ganz oder teilweise auszuschließen:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ONLY_SIDS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hiermit können Sie bestimmen, welche Instanzen überwacht werden sollen.
+Eine Instanz wird dabei durch ihren <em>System Identifier (SID)</em> benannt.
+Es handelt sich hierbei um eine positive Liste, bei der alle Instanzen ignoriert werden, die nicht explizit gelistet sind.
+Dieser Parameter eignet sich also sehr gut, wenn die Menge der zu überwachenden Instanzen kleiner ist, als die Anzahl derer, die ignoriert werden sollen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SKIP_SIDS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Im Gegensatz zu <code>ONLY_SIDS</code> handelt es sich hier um eine negative Liste, bei der alle Instanzen außer der hier explizit gelisteten überwacht werden.
+Dieser Parameter eignet sich daher sehr gut, wenn die Anzahl der zu ignorierenden Instanzen kleiner ist, als diejenige, die überwacht werden soll.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXCLUDE_&lt;SID&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mit diesem Parameter können Sie eine Instanz teilweise ausschließen, indem Sie bestimmte Sektionen der Instanz von der Überwachung ausschließen.
+Auf diese Weise definieren Sie eine Negativliste der Sektionen einer Instanz.
+Sie können mit dem Wert <code>ALL</code> auch alle Sektionen ausschließen und erreichen damit dasselbe, als würden Sie sie die Instanz zu <code>SKIP_SIDS</code> hinzufügen.<br>
+<strong>Wichtig:</strong> Für ASM-SIDs können Sie dieses Konzept nicht verwenden, aber Sie können stattdessen <code>SKIP_SIDS="+ASM1 …​"</code> verwenden.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Sie werden es schon ahnen:
+Die Reihenfolge der Verarbeitung dieser Parameter bestimmt das Ergebnis.
+Tatsächlich werden die Angaben auch genau in der Reihenfolge <em>pro Instanz</em> verarbeitet, wie sie in der obigen Tabelle angegeben sind.
+Wenn also die Variable <code>ONLY_SIDS</code> gesetzt ist, wird <code>SKIP_SIDS</code> gar nicht mehr ausgewertet und auch nicht mehr, ob es eine Angabe der Variable <code>EXCLUDE_&lt;SID&gt;</code> auf <code>ALL</code> für diese Instanz
+gibt.
+Ist <code>ONLY_SIDS</code> nicht gesetzt, geht es dann entsprechend der Reihenfolge weiter.
+Im Zweifel — also als Standardverhalten — wird die Instanz entsprechend überwacht.</p></div>
+<div class="paragraph"><p>Am nachfolgenden Beispiel erläutern wir das Verhalten, falls alle Variablen gesetzt sind:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>ONLY_SIDS='INST1 INST2 INST5'
+SKIP_SIDS='INST7 INST3 INST2'
+EXCLUDE_INST1='ALL'
+EXCLUDE_INST2='tablespaces rman'</code></pre></div>
+</div>
+<div class="paragraph"><p>Da die positive Liste aus der ersten Zeile immer bevorzugt wird, wird die zweite und dritte Zeile nicht mehr ausgewertet.
+Lediglich die vierte (letzte) Zeile wird zu einem späteren Zeitpunkt berücksichtigt, da hier die Instanz nur teilweise ausgewertet werden soll.</p></div>
+<div class="paragraph"><p>In der Praxis ist es also sinnvoll nur <em>eine</em> der Variablen zu nutzen, um die Menge der zu überwachenden Instanzen zu bestimmen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_sections">
+<span class="hidden-anchor sr-only" id="sections"></span>Zu holende Daten bestimmen</h4>
+<div class="paragraph"><p>Wie Sie bereits im vorherigen Abschnitt gelernt haben, können Sie Instanzen nicht nur komplett ausschließen, sondern auch lediglich teilweise überwachen.
+Die Einsatzzwecke sind vielfältig und vor allem dann sinnvoll, wenn Sie bestimmte, lang laufende Sektionen nicht überall berücksichtigen wollen oder auf Testinstanzen nur grundlegende Informationen benötigen.
+Um Sektionen global einzuschränken, setzen Sie die entsprechenden Variablen direkt.
+Um nur bestimmte Instanzen einzuschränken, können Sie die Variable <code>EXCLUDE_&lt;SID&gt;</code> nutzen, die Sie im <a href="#skip_include">vorherigen Abschnitt</a> bereits kennengelernt haben.
+Die globalen Variablen sind:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SYNC_SECTIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sektionen, die synchron — das heißt bei jedem Lauf des Agenten — abgefragt werden sollen.
+Da das Abfrageintervall im Standard bei 60 Sekunden liegt, müssen die benutzten SQL-Abfragen entsprechend schnell durchlaufen.
+Wird die Variable nicht angegeben, werden alle Sektionen abgefragt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASYNC_SECTIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sektionen, die asynchron — das heißt nur alle x Minuten — abgefragt werden sollen.
+Wie lange die Daten gültig sind, bestimmt die Variable <code>CACHE_MAXAGE</code> weiter unten in der Tabelle.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SYNC_ASM_SECTIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier greift der gleiche Mechanismus für Sektionen der ASM, der bei der Variablen <code>SYNC_SECTIONS</code> allgemein beschrieben ist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASYNC_ASM_SECTIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier greift der gleiche Mechanismus für Sektionen der ASM, der bei der Variablen <code>ASYNC_SECTIONS</code> allgemein beschrieben ist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CACHE_MAXAGE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mit dieser Variable bestimmen Sie, wie lange asynchron abgerufene Daten valide sind.
+Wird die Variable nicht angegeben, wird ein Standard von 600 Sekunden (10 Minuten) benutzt.
+Achten Sie darauf, den Zeitraum nicht kürzer zu wählen, als das Intervall, mit dem der Checkmk-Agent die Daten anliefert (standardmäßig 60 Sekunden).
+Andernfalls kann es passieren, dass die Daten als veraltet betrachtet und vom Agenten nicht mitgeliefert werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MAX_TASKS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Anzahl der SIDs, die parallel verarbeitet werden. Der Standardwert ist 1.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Der Mechanismus erlaubt es demnach, in der Konfigurationsdatei einen Standard zu setzen und diesen bei Bedarf je Instanz zu überschreiben.
+Eine Konfiguration könnte dann zum Beispiel so aussehen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># DEFAULTS:
+# SYNC_SECTIONS="instance sessions logswitches undostat recovery_area processes recovery_status longactivesessions dataguard_stats performance locks"
+# ASYNC_SECTIONS="tablespaces rman jobs ts_quotas resumable"
+# SYNC_ASM_SECTIONS="instance processes"
+# ASYNC_ASM_SECTIONS="asm_diskgroup"
+# CACHE_MAXAGE=600
+
+SYNC_ASM_SECTIONS='instance'
+ASYNC_SECTIONS='tablespaces jobs rman resumable'
+
+CACHE_MAXAGE=300
+
+EXCLUDE_INST1='undostat locks'
+EXCLUDE_INST2='jobs'</code></pre></div>
+</div>
+<div class="paragraph"><p>Wie Sie in dem Beispiel sehen, wird für die ASM-Instanzen lediglich die Sektion <code>instance</code> abgefragt und auf allen regulären Instanzen ein Minimalset für die asynchronen Sektionen angegeben.
+Zusätzlich wird auf der Instanz <code>INST1</code> auf die synchronen Sektionen <code>undostat</code> und <code>locks</code> verzichtet.
+Da die synchronen Sektionen nicht explizit angegeben wurden, werden auf allen anderen Instanzen alle synchronen Sektionen abgerufen.
+Bei der Instanz <code>INST2</code> wiederum werden nur drei der vier asynchronen Sektionen abgefragt, da <code>jobs</code> zusätzlich ausgeschlossen wurde.
+Und schließlich wird der Cache von 10 Minuten auf 5 Minuten (300 Sekunden) heruntergesetzt, da es möglich ist, alle Daten in diesem Zeitraum zu holen.</p></div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>Wenn Sie in der Konfigurationsdatei bestimmen, welche Sektionen auf welche Weise abgeholt werden sollen — Sie können ja auch eine asynchrone Sektion zu einer synchronen machen — müssen Sie
+<strong>alle</strong> Sektionen angeben, welche in dem jeweiligen Bereich ausgeführt werden sollen.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Wollen Sie zum Beispiel nur <code>locks</code> aus der synchronen Abfrage herausnehmen, geben Sie die gesamte synchrone Liste an und lassen Sie lediglich <code>locks</code> weg:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Just exclude 'locks' from sync sections:
+SYNC_SECTIONS='instance sessions logswitches undostat recovery_area processes recovery_status longactivesessions dataguard_stats performance'</code></pre></div>
+</div>
+<div class="paragraph"><p>Gleiches gilt auch für die anderen drei Variablen, in denen die Sektionen bestimmt werden.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_tns_config">
+<span class="hidden-anchor sr-only" id="tns_config"></span>TNS-Alias und TNS_ADMIN konfigurieren</h4>
+<div class="paragraph"><p>Der TNS-Alias ist ein benutzerfreundlicher Name für eine Datenbankverbindung.
+Dabei steht TNS für die Oracle-Netzwerktechnologie <em>Transparent Network Substrate.</em>
+Ein TNS-Alias ermöglicht es, eine Verbindung zu einer Datenbankinstanz herzustellen, ohne jedes Mal die vollständigen Verbindungsdetails (wie Host-Name, Port-Nummer oder Service-Name) angeben zu müssen.
+TNS-Alias werden in der Datei <code>tnsnames.ora</code> festgelegt.
+Der Abschnitt zur <a href="#oracle_wallet">Oracle-Wallet</a> enthält ein Beispiel zur Festlegung eines TNS-Alias.</p></div>
+<div class="paragraph"><p><code>TNS_ADMIN</code> ist eine Umgebungsvariable, die auf das Verzeichnis zeigt, in dem sich Oracle-Konfigurationsdateien wie <code>sqlnet.ora</code> und <code>tnsnames.ora</code> befinden.
+Standardmäßig wird <code>TNS_ADMIN</code> von Oracle auf <code>$ORACLE_HOME/network/admin</code> gesetzt.
+In der Konfigurationsdatei können Sie <code>TNS_ADMIN</code> einen anderen Pfad zuweisen, wie im folgenden Beispiel für eine konkrete Oracle-Installation:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>export TNS_ADMIN=/opt/oracle/product/19c/dbhome_1/network/admin/</code></pre></div>
+</div>
+<div class="paragraph"><p>Nur falls die Variable gar nicht gesetzt ist, wird sie vom Agentenplugin auf <code>/etc/check_mk/</code> gesetzt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_access_linux">
+<span class="hidden-anchor sr-only" id="access_linux"></span>Zugriffsrechte bei der Ausführung</h4>
+<div class="paragraph"><p>Aus Sicherheitsgründen führt das Agentenplugin <code>mk_oracle</code> Oracle-Binärprogramme nicht länger unter dem Benutzer <code>root</code> aus.
+Das betrifft die Programme <code>sqlplus</code>, <code>tnsping</code> und — falls vorhanden — <code>crsctl</code>.
+Stattdessen wechselt <code>mk_oracle</code> zum Beispiel zum Eigentümer der Datei <code>$ORACLE_HOME/bin/sqlplus</code>, bevor es <code>sqlplus</code> ausführt.
+Dies stellt sicher, dass Oracle-Programme nur noch von einem nicht privilegierten Benutzer ausgeführt werden und verhindert so, dass ein böswilliger Oracle-Benutzer ein Binärprogramm wie <code>sqlplus</code> ersetzen und als <code>root</code>-Benutzer ausführen lassen kann.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>In welcher Patch-Version von Checkmk diese Änderung durchgeführt wurde, können Sie in den Werks <a href="https://checkmk.com/de/werk/15327" target="_blank">#15327</a> und <a href="https://checkmk.com/de/werk/15328" target="_blank">#15328</a> nachlesen.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Die Ausführung der Oracle-Programme durch einen nicht privilegierten Benutzer kann zu Problemen bei der Verwendung eines Oracle-Wallet führen, da dieser Benutzer möglicherweise nicht auf die Wallet-spezifischen Dateien zugreifen kann.
+Der nicht privilegierte Benutzer benötigt die Berechtigungen zum Lesen der Dateien <code>$TNS_ADMIN/sqlnet.ora</code> und <code>$TNS_ADMIN/tnsnames.ora</code>, zum Ausführen des Wallet-Ordners und zum Lesen der Dateien im Wallet-Ordner.
+Sie sollten keine Probleme mit den Zugriffsrechten haben, sofern Sie die Gruppe der Dateien und Verzeichnisse so geändert haben, wie es am Ende des Abschnitts zur <a href="#oracle_wallet">Oracle-Wallet</a> beschrieben ist.</p></div>
+<div class="paragraph"><p>Das Agentenplugin hilft Ihnen bei der Diagnose und überprüft, ob es Probleme beim Zugriff auf die genannten Dateien gibt und zeigt diese beim <a href="#connection_test">Verbindungstest</a> an.
+Das genaue Vorgehen bei der Diagnose und Korrektur von Zugriffsrechten können Sie in der <a href="https://checkmk.atlassian.net/wiki/spaces/KB/pages/70582273/" target="_blank">Checkmk Knowledge Base</a> nachlesen.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_remote_instances">
+<span class="hidden-anchor sr-only" id="remote_instances"></span>3.4. Entfernte Datenbanken überwachen</h3>
+<div class="paragraph"><p>Unter Unix-artigen Systemen können Sie nicht nur lokal laufende Instanzen abrufen, sondern sich auch auf entfernten anmelden und die dort laufenden Datenbanken abrufen.
+Dies ist zum Beispiel dann von Vorteil, wenn Sie keinen Zugriff auf das darunter liegende System haben, aber die Datenbank dennoch überwachen wollen.
+Auch ist es möglich, entfernte Datenbanken von einem Host aus zu überwachen, auf dem zwar das Agentenplugin aber keine Oracle Datenbank läuft.</p></div>
+<div class="paragraph"><p>Um entfernte Datenbanken zu überwachen, müssen auf dem Host, auf dem das Agentenplugin installiert ist, die folgenden Voraussetzungen erfüllt sein:</p></div>
+<div class="ulist"><ul>
+<li><p>Die <em>Linux AIO access library</em> ist installiert.
+Unter RHEL und Derivaten heißt das Paket <code>libaio</code>.</p></li>
+<li><p>Der <a href="https://www.oracle.com/database/technologies/instant-client.html" target="_blank">Oracle Instant Client</a> ist installiert.</p></li>
+<li><p>Das Programm <code>sqlplus</code> ist in der Installation schon vorhanden oder wurde ggf. als Erweiterungspaket zu dem Client installiert.</p></li>
+</ul></div>
+<div class="paragraph"><p>In der Regel sind die Voraussetzungen schon erfüllt, wenn sich auf dem Host eine Oracle-Installation befindet.
+Andernfalls holen Sie die Installation der entsprechenden Pakete nach.</p></div>
+<div class="paragraph"><p>Damit sich das Agentenplugin mit der entfernten Datenbank verbinden kann, hinterlegen Sie zunächst in der Konfigurationsdatei die Zugangsdaten.
+Diese sind ähnlich zu den Angaben für <code>DBUSER</code>, die Sie bereits in der <a href="#adv_user_linux">erweiterten Benutzerkonfiguration</a> kennengelernt haben.
+Allerdings gibt es zusätzlich noch eine Reihe mehr an verpflichtenden Angaben:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# REMOTE_INSTANCE_[ID]='USER:PASSWORD:ROLE:HOST:PORT:PIGGYBACKHOST:SID:VERSION:TNSALIAS'
+
+REMOTE_INSTANCE_1='check_mk:mypassword::myRemoteHost:1521:myOracleHost:MYINST3:11.2'
+REMOTE_INSTANCE_myinst1='/:::myRemoteHost:1521::MYINST1:11.2:INST1'
+
+REMOTE_ORACLE_HOME='/usr/lib/oracle/11.2/client64'</code></pre></div>
+</div>
+<div class="paragraph"><p>Im Beispiel sind zwei entfernte Instanzen konfiguriert in zwei Zeilen.
+Damit jede Zeile eindeutig ist, wird am Ende jeder Variablen eine ID festgelegt.
+Diese können Sie frei wählen, sie muss lediglich pro Konfigurationsdatei eindeutig sein.
+Wie Sie wahrscheinlich schon bemerkt haben, folgen auf die Angabe des Ports nun weitere Werte.
+Diese sind teilweise optional und teilweise notwendig, um eine Verbindung aufbauen zu können:</p></div>
+<div class="paragraph"><p>Der erste neue Wert <code>PIGGYBACKHOST</code> ist bei der Instanz <code>MYINST3</code> gesetzt auf <code>myOracleHost</code>.
+Durch diese Angabe werden die Ergebnisse für die Abfrage durch den <a href="glossar.html#piggyback">Piggyback-Mechanismus</a> dem angegebenen Host zugeordnet.
+Ist dieser in Checkmk als Host vorhanden, werden die neuen Services entsprechend dort erscheinen, anstatt auf dem Host, auf dem das Agentenplugin läuft, bzw. von dem aus die Daten geholt wurden.
+Auf der zweiten Instanz <code>MYINST1</code> sehen Sie diese Angabe nicht — die Zuordnung zu einem anderen Host ist <em>optional.</em></p></div>
+<div class="paragraph"><p>Der zweite neue Wert <code>SID</code> ist die Angabe des Instanznamens.
+Da das Agentenplugin nicht schauen kann, welche Instanzen auf dem entfernten Host laufen, muss für jede entfernte Instanz eine Konfigurationszeile angegeben werden — der Wert ist also <em>notwendig</em> und damit nicht optional.</p></div>
+<div class="paragraph"><p>Der dritte Wert <code>VERSION</code> ist <em>notwendig</em> und ebenfalls dem Umstand geschuldet, dass viele Metadaten nur zur Verfügung stehen, wenn man sich direkt auf dem Host befindet.
+Die Versionsangabe kann daher auch nicht weggelassen werden und bestimmt, welche SQL-Abfragen an die Instanz übergeben werden können.
+Im Beispiel verwenden beide entfernten Instanzen die Version <code>11.2</code>.</p></div>
+<div class="paragraph"><p>Der vierte und letzte Wert <code>TNSALIAS</code> ist wieder <em>optional</em> und kann verwendet werden, wenn Sie auf die entfernte Instanz per <a href="#oracle_wallet">Oracle Wallet</a> oder LDAP/Active Directory zugreifen möchten.
+Für den Fall, dass die Instanz dann nur auf einen bestimmten TNS-Alias antwortet, können Sie diesen hier angeben.
+Für die zweite entfernte Instanz hat <code>TNSALIAS</code> den Wert <code>INST1</code>.</p></div>
+<div class="paragraph"><p>Damit auch das Programm <code>sqlplus</code> gefunden wird, geben Sie schließlich mit der Variablen <code>REMOTE_ORACLE_HOME</code> an, wo sich der Oracle-Client auf dem Host befindet, der das Agentenplugin ausführt.
+Nur dann sind alle Ressourcen verfügbar, die für die Abfragen benötigt werden.</p></div>
+<div class="paragraph"><p>Bei der Abfrage von entfernten Instanzen gelten ein paar Einschränkungen und Besonderheiten:</p></div>
+<div class="ulist"><ul>
+<li><p>Da Sie die entfernten Instanzen in der Konfigurationsdatei explizit eingetragen haben, können Sie diese Instanzen nicht per <code>SKIP_SIDS</code> <a href="#skip_include">ausschließen</a> und brauchen sie im Gegenzug auch nicht mit <code>ONLY_SIDS</code> einzuschließen.</p></li>
+<li><p>Instanzen mit gleichem Namen (<code>SID</code>) dürfen nicht demselben Host zugewiesen werden.
+Das ist vor allem dann relevant, wenn Sie Instanzen von mehreren entfernten Hosts und/oder dem lokalen Host abrufen und dort identische Namen verwendet werden.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_windows">
+<span class="hidden-anchor sr-only" id="windows"></span>4. Einrichtung für Windows</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__plugin_und_konfigurationspfade_2">
+<span class="hidden-anchor sr-only" id="_plugin_und_konfigurationspfade_2"></span>4.1. Plugin- und Konfigurationspfade</h3>
+<div class="paragraph"><p>Unter Windows wird PowerShell als Skriptsprache benutzt, um Oracle-Datenbanken zu überwachen.
+Die Funktionalität ist an das Agentenplugin unter <a href="#linux">Unix-artigen Systemen</a> angelehnt, enthält aber nur einen Teil davon.
+Um das Agentenplugin unter Windows nutzen zu können, benötigen Sie die folgenden Verzeichnisse:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Betriebssystem</th>
+<th class="tableblock halign-left valign-top">Plugin-Pfad</th>
+<th class="tableblock halign-left valign-top">Konfigurationspfad</th>
+</tr></thead>
+<tbody><tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\plugins</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\config</code></p></td>
+</tr></tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_install_windows">
+<span class="hidden-anchor sr-only" id="install_windows"></span>4.2. Agentenplugin installieren</h3>
+<div class="paragraph"><p>Nachdem Sie bei der <a href="#first_steps">Ersteinrichtung</a> einen Benutzer angelegt und diesen in der Konfigurationsdatei hinterlegt haben, installieren Sie nun noch das Agentenplugin.
+Die Agentenplugins für Windows werden bei der Installation des Checkmk-Agenten für Windows auf dem Host abgelegt.
+Kopieren Sie auf dem Oracle-Host die Datei <code>mk_oracle.ps1</code> aus dem Verzeichnis <code>C:\Program Files (x86)\checkmk\service\plugins\</code> in das oben beschriebene Plugin-Verzeichnis.
+Alternativ dazu können Sie in der Konfigurationsdatei des Checkmk-Agenten auf die Datei im Installationspfad <a href="agent_windows.html#customizeexecution">verweisen.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__besonderheiten_unter_windows">
+<span class="hidden-anchor sr-only" id="_besonderheiten_unter_windows"></span>4.3. Besonderheiten unter Windows</h3>
+<div class="paragraph"><p>Windows verhindert normalerweise die Ausführung von PowerShell-Skripten, wenn diese nicht signiert sind.
+Sie können dieses Problem nun sehr einfach umgehen, indem Sie die Richtlinien zur Ausführung von PowerShell-Skripten für den Benutzer anpassen, welcher den Checkmk-Agenten ausführt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\&gt;</span> <span class="tok-nb">Set-ExecutionPolicy</span> <span class="tok-n">-ExecutionPolicy</span> <span class="tok-n">Bypass</span> <span class="tok-n">-Scope</span> <span class="tok-n">LocalMachine</span>
+<span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\&gt;</span> <span class="tok-nb">Get-ExecutionPolicy</span> <span class="tok-n">-Scope</span> <span class="tok-n">LocalMachine</span>
+<span class="tok-n">Bypass</span></code></pre></div></div>
+<div class="paragraph"><p>Diese Option ist praktisch, wenn man kurz ein Skript oder die generelle Funktionalität des Checkmk-Agenten testen möchte.
+Um die Sicherheit Ihres Systems nicht zu gefährden, setzen Sie nach dem Test die Einstellung auf produktiven Servern wieder zurück:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">Program</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\&gt;</span> <span class="tok-nb">Set-ExecutionPolicy</span> <span class="tok-n">-ExecutionPolicy</span> <span class="tok-n">RemoteSigned</span> <span class="tok-n">-Scope</span> <span class="tok-n">LocalMachine</span>
+<span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">Program</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\&gt;</span> <span class="tok-nb">Get-ExecutionPolicy</span> <span class="tok-n">-Scope</span> <span class="tok-n">LocalMachine</span>
+<span class="tok-n">RemoteSigned</span></code></pre></div></div>
+<div class="paragraph"><p>Verständlicherweise haben Sie wahrscheinlich keine Lust, alle 60 Sekunden die Richtlinien umzustellen.
+Setzen Sie daher eine permanente Ausnahme nur für die relevanten Skripte.
+Dabei muss auch die Konfigurationsdatei des Agentenplugins zu den Ausnahmen hinzugefügt werden.
+Die Ausgabe aus dem Beispiel wurde zu Gunsten der Lesbarkeit komplett weggelassen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\&gt;</span> <span class="tok-nb">Unblock-File</span> <span class="tok-n">-Path</span> <span class="tok-p">.\</span><span class="tok-n">plugins</span><span class="tok-p">\</span><span class="tok-n">mk_oracle</span><span class="tok-p">.</span><span class="tok-n">ps1</span>
+<span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\&gt;</span> <span class="tok-nb">Unblock-File</span> <span class="tok-n">-Path</span> <span class="tok-p">.\</span><span class="tok-n">config</span><span class="tok-p">\</span><span class="tok-n">mk_oracle_cfg</span><span class="tok-p">.</span><span class="tok-n">ps1</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_adv_windows">
+<span class="hidden-anchor sr-only" id="adv_windows"></span>4.4. Erweiterte Optionen</h3>
+<div class="paragraph"><p>In der <a href="#user_config">Ersteinrichtung</a> haben Sie bereits erste Variablen kennengelernt, um Überwachungsdaten von Ihren Oracle-Instanzen zu bekommen.
+Je nach Anwendungsszenario werden Sie aber schnell weitere Möglichkeiten benötigen, um die Überwachung besser und individuell pro Instanz steuern zu können.
+Optionen, die Ihnen auch unter Windows zur Verfügung stehen, finden Sie in den nachfolgenden Abschnitten.</p></div>
+<div class="sect3">
+<h4 id="heading_adv_user_windows">
+<span class="hidden-anchor sr-only" id="adv_user_windows"></span>Erweiterte Benutzerkonfiguration</h4>
+<div class="paragraph"><p>Wie unter <a href="#adv_user_linux">Linux</a> können Sie auch bei dem Windows-Agentenplugin nicht nur ein Standard-Login definieren, sondern auch individuelle Zugangsdaten für einzelne Instanzen
+Sie haben also die gleichen drei Möglichkeiten, Benutzer anzugeben:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DBUSER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Standard, wenn keine individuellen Zugangsdaten für die Datenbankinstanz definiert sind.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DBUSER_MYINST1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zugangsdaten für eine ganz bestimmte Datenbankinstanz, in diesem Fall für die Instanz <code>MYINST1</code>.
+Die Zugangsdaten werden nur für diese Instanz benutzt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASMUSER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spezielle Zugangsdaten für das Automatic Storage Management (ASM).<br>
+<strong>Wichtig:</strong> Für ein ASM kann immer nur ein Login angegeben werden.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Zusätzlich können auch hier noch mehr Optionen außer Benutzername oder Passwort angegeben werden.
+Diese zusätzlichen Angaben sind ebenfalls optional.
+Allerdings muss jede Angabe ausgefüllt werden, wenn sie benutzt wird.
+Eine Konfiguration kann dann zum Beispiel so aussehen:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax
+# DBUSER = @("USERNAME", "PASSWORD", "ROLE", "HOST", "PORT")
+# Default
+# DBUSER = @("", "", "", "localhost", "1521")
+$DBUSER = @("checkmk", "myPassword", "SYSDBA", "localhost", "1521")
+
+@DBUSER_MYINST1 = @("cmk_specific1", "myPassword1", "", "10.0.0.73")
+@DBUSER_MYINST2 = @("cmk_specific2", "myPassword2", "SYSDBA", "localhost", "1531")
+
+@ASMUSER = @("cmk_asm", "myASMPassword", "SYSASM")</code></pre></div>
+</div>
+<div class="paragraph"><p>Ein paar Erläuterungen zu dem Beispiel:</p></div>
+<div class="ulist"><ul>
+<li><p>Sie können beliebig viele individuelle Zugangsdaten definieren.
+Diese werden immer gegenüber dem Standard bevorzugt.</p></li>
+<li><p>Jede Option wird in einer Liste definiert.
+Die Reihenfolge der Einträge ist nicht beliebig und darf daher nicht vertauscht werden.</p></li>
+<li><p>Soll ein optionales Feld nicht verändert werden, aber ein danach folgendes, so müssen <em>beide</em> korrekt angegeben werden, wie beim Eintrag <code>DBUSER_MYINST2</code>, bei dem der <code>HOST</code> weiterhin auf <code>localhost</code> gesetzt wird, obwohl nur der <code>PORT</code> verändert werden soll.</p></li>
+<li><p>Werden ab einem bestimmten Punkt keine optionalen Felder mehr gebraucht, können sie weggelassen werden, wie beim Eintrag <code>ASMUSER</code>, bei dem nur die Rolle des Benutzers angegeben wurde.</p></li>
+<li><p>Soll dem Benutzer keine spezielle Rolle zugewiesen, aber <code>HOST</code> oder <code>PORT</code> angepasst werden, tragen Sie an der Stelle lediglich zwei Anführungszeichen (<code>""</code>) ein.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading_skip_include_windows">
+<span class="hidden-anchor sr-only" id="skip_include_windows"></span>Instanzen ein- oder ausschließen</h4>
+<div class="paragraph"><p>Auch unter Windows möchte man bestimmte Instanzen nicht immer einbeziehen.
+Gründe dafür wurden im Abschnitt für <a href="#skip_include">Linux</a> bereits beschrieben.
+Zwei der drei Parameter für Linux können Sie auch bei Windows verwenden:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ONLY_SIDS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hiermit können Sie bestimmen, welche Instanzen überwacht werden sollen.
+Eine Instanz wird dabei durch ihren <em>System Identifier (SID)</em> benannt.
+Es handelt sich hierbei um eine positive Liste, bei der alle Instanzen ignoriert werden, die nicht explizit gelistet sind.
+Dieser Parameter eignet sich also sehr gut, wenn die Menge der zu überwachenden Instanzen kleiner ist, als die Anzahl derer, die ignoriert werden sollen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXCLUDE_&lt;SID&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Da Ihnen unter Windows der Parameter <a href="#skip_include"><code>SKIP_SIDS</code></a> nicht zur Verfügung steht, können Sie nur mit <code>EXCLUDE_&lt;SID&gt;</code> Instanzen ausschließen und dadurch eine negative Liste definieren.
+Sie machen das, in dem Sie den Wert der Variable auf <code>ALL</code> setzen.
+Zusätzlich können Sie mit diesem Parameter eine Instanz teilweise ausschließen, indem Sie bestimmte Sektionen der Instanz von der Überwachung ausschließen.
+Auf diese Weise definieren Sie eine Negativliste der Sektionen einer Instanz.<br>
+<strong>Wichtig:</strong> Eine ASM (<code>+ASM</code>) kann mit dieser Option nicht komplett ausgeschlossen werden.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Die Verarbeitung erfolgt pro Instanz in der Reihenfolge, wie in der obigen Tabelle angegeben.
+Es wird also zuerst geprüft, ob sich die Instanz in <code>ONLY_SIDS</code> befindet und erst danach, ob bestimmte Sektionen ausgeschlossen werden sollen.
+Ist die Variable <code>EXCLUDE_&lt;SID&gt;</code> auf <code>ALL</code> gesetzt, so wird auch keine Sektion ausgeführt.</p></div>
+<div class="paragraph"><p>Nachfolgend ein Beispiel, bei dem beide Variablen einmal gezeigt werden:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>$ONLY_SIDS = @("MYINST1", "MYINST3")
+$EXCLUDE_INST1 = "tablespaces rman"
+$EXCLUDE_INST3 = "ALL"</code></pre></div>
+</div>
+<div class="paragraph"><p>Beachten Sie, dass es sich bei <code>ONLY_SIDS</code> um eine Liste handelt, bei <code>EXCLUDE_INST1</code> hingegen um einen String, der durch Leerzeichen separierte Sektionen enthält.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_sections_windows">
+<span class="hidden-anchor sr-only" id="sections_windows"></span>Zu holende Daten bestimmen</h4>
+<div class="paragraph"><p>Die Festlegung, welche Sektionen überhaupt zu holen sind, erfolgt äquivalent zu <a href="#sections">Linux.</a>
+Daher hier nur ein Beispiel der Konfiguration für Windows:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># DEFAULTS:
+# $SYNC_SECTIONS = @("instance", "sessions", "logswitches", "undostat", "recovery_area", "processes", "recovery_status", "longactivesessions", "dataguard_stats", "performance", "locks")
+# $ASYNC_SECTIONS = @("tablespaces", "rman", "jobs", "ts_quotas", "resumable")
+# $SYNC_ASM_SECTIONS = @("instance", "processes")
+# $ASYNC_ASM_SECTIONS = @("asm_diskgroup")
+# $CACHE_MAXAGE = 600
+
+$SYNC_ASM_SECTIONS = @("instance")
+$ASYNC_SECTIONS = @("tablespaces", "jobs", "rman", "resumable")
+
+$CACHE_MAXAGE = 300
+
+$EXCLUDE_INST1 = "undostat locks"
+$EXCLUDE_INST2 = "jobs'</code></pre></div>
+</div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>Wenn Sie in der Konfigurationsdatei bestimmen, welche Sektionen auf welche Weise abgeholt werden sollen — Sie können ja auch eine asynchrone Sektion zu einer synchronen machen — müssen Sie
+<strong>alle</strong> Sektionen angeben, welche in dem jeweiligen Bereich ausgeführt werden sollen.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Wollen Sie zum Beispiel nur <code>locks</code> aus der synchronen Abfrage herausnehmen, geben Sie die gesamte synchrone Liste an und lassen Sie lediglich <code>locks</code> weg:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Just exclude 'locks' from sync sections:
+$SYNC_SECTIONS = @("instance", "sessions", "logswitches", "undostat", "recovery_area", "processes", "recovery_status", "longactivesessions", "dataguard_stats", "performance")</code></pre></div>
+</div>
+<div class="paragraph"><p>Gleiches gilt auch für die anderen drei Variablen, in denen die Sektionen bestimmt werden.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_access_windows">
+<span class="hidden-anchor sr-only" id="access_windows"></span>Zugriffsrechte bei der Ausführung</h4>
+<div class="paragraph"><p>Aus Sicherheitsgründen führt das Agentenplugin <code>mk_oracle.ps1</code> Oracle-Binärprogramme nur noch dann als Administrator aus, wenn diese Programme auch nur von Administratoren verändert werden können.
+Als Administratoren unter Windows gelten dabei das LocalSystem-Konto und Mitglieder der eingebauten Gruppe <code>Administrators</code>.
+Das betrifft die Programme <code>sqlplus.exe</code>, <code>tnsping.exe</code> und — falls vorhanden — <code>crsctl.exe</code>.
+Das Agentenplugin <code>mk_oracle.ps1</code> führt keines dieser Programme aus, wenn nicht-administrative Benutzer eine der Berechtigungen <code>Write</code>, <code>Modify</code> oder <code>Full control</code> für die Datei haben.
+Dies verhindert das Sicherheitsrisiko der Ausführung von Programmen nicht privilegierter Benutzer als Administrator.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>In welcher Patch-Version von Checkmk diese Änderung durchgeführt wurde, können Sie im <a href="https://checkmk.com/de/werk/15843" target="_blank">Werk #15843</a> nachlesen.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Ändern Sie gegebenenfalls die Zugriffsrechte, indem Sie die oben genannten Berechtigungen nicht-administrativer Benutzer für die Programme entfernen.
+Das Agentenplugin hilft Ihnen bei der Diagnose und überprüft, ob nicht-administrative Benutzer Zugriff auf die genannten Dateien haben und zeigt diese beim <a href="#connection_test">Verbindungstest</a> an.
+Das genaue Vorgehen bei der Diagnose und Korrektur von Zugriffsrechten können Sie in der <a href="https://checkmk.atlassian.net/wiki/spaces/KB/pages/70582273/" target="_blank">Checkmk Knowledge Base</a> nachlesen.</p></div>
+<div class="paragraph"><p>Falls es bei Ihnen nicht möglich ist, die Berechtigungen für die Oracle-Programme sicher anzupassen, können Sie einzelnen Benutzern und Gruppen die Ausführung der Programme erlauben:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Oracle plugin will allow users and groups in the list to have write access to the Oracle binaries
+$WINDOWS_SAFE_ENTRIES=@("NT AUTHORITY\Authenticated Users", "&lt;Domain&gt;\&lt;User&gt;")</code></pre></div>
+</div>
+<div class="paragraph"><p>Nur wenn es keine andere Möglichkeit gibt, die Überwachung von Oracle sicherzustellen, können Sie als letzte Option die Überprüfung der Zugriffsrechte abschalten.</p></div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>Wenn Sie die Prüfung der Zugriffsrechte abschalten, wird das Agentenplugin nicht mehr sicher ausgeführt.</p></div></td>
+</tr></table></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Oracle plugin will not check if the used binaries are write-protected for non-admin users
+$SKIP_ORACLE_SECURITY_CHECK=1</code></pre></div>
+</div>
+<div class="paragraph"><p>Es gibt aber auch noch einen anderen Weg, das Agentenplugin auszuführen — und zwar ganz ohne Administratorrechte.
+So können Sie die <a href="agent_windows.html#customizeexecution">Ausführung des Agentenplugins anpassen</a> und es zum Beispiel unter der lokalen Windows-Gruppe <code>Users</code> ausführen lassen.
+Dazu bearbeiten Sie die Konfigurationsdatei <code>check_mk.user.yml</code> des Windows-Agenten, zum Beispiel so:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>plugins:
+    enabled: yes
+    execution:
+        - pattern: $CUSTOM_PLUGINS_PATH$\mk_oracle.ps1
+          async: yes
+<span class="hll">          group: Users
+</span>          run: true</code></pre></div>
+</div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In den kommerziellen Editionen können Sie sich diese Einträge mit der Agentenregel <span class="guihint">Run plug-ins and local checks using non-system account</span> von der Agentenbäckerei erstellen lassen.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__entfernte_datenbanken_überwachen">
+<span class="hidden-anchor sr-only" id="_entfernte_datenbanken_überwachen"></span>4.5. Entfernte Datenbanken überwachen</h3>
+<div class="paragraph"><p>Die Überwachung entfernter Datenbanken ist derzeit nicht mit dem Agentenplugin für Windows möglich.
+Wenn Sie entfernte Datenbanken überwachen wollen, benötigen Sie daher einen Host mit einem kompatiblen <a href="#linux">Unix-artigen Betriebssystem.</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_bakery">
+<span class="hidden-anchor sr-only" id="bakery"></span>5. Einrichtung mit der Agentenbäckerei</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die Einrichtung wird in den kommerziellen Editionen mit der <a href="glossar.html#agent_bakery">Agentenbäckerei</a> stark vereinfacht,
+da Syntaxfehler in den Konfigurationsdateien vermieden und Anpassungen an sich verändernde Umgebungen einfacher umgesetzt werden können.
+Der wesentliche Unterschied zu einer manuellen Konfiguration ist, dass Sie nur noch dann auf dem Oracle-Host auf der Kommandozeile arbeiten müssen, wenn Sie spezielle Oracle-spezifische Konfigurationen vornehmen wollen.
+Die Einrichtung mit der Agentenbäckerei können Sie für Linux, Solaris, AIX und Windows durchführen.</p></div>
+<div class="paragraph"><p>Trotzdem können Sie nicht alle Funktionen des Agentenplugins über die Agentenbäckerei konfigurieren,
+zum Beispiel wenn es Funktionen sind, welche einen größeren Eingriff benötigen und ein fundiertes Fachwissen voraussetzen.
+Entsprechend sind die <a href="#custom_sqls">benutzerdefinierten SQL-Abfragen</a> nicht in der Agentenbäckerei konfigurierbar.</p></div>
+<div class="paragraph"><p>Über <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX</span> und das Menü <span class="guihint">Agents &gt; Agent rules</span> finden Sie die Seite mit dem <a href="glossar.html#rule_set">Regelsatz</a> <span class="guihint">Oracle databases (Linux, Solaris, AIX, Windows).</span>
+Erstellen Sie mit <span class="guihint">Add rule</span> eine neue Regel.
+Hier finden Sie alle Optionen, die Ihnen für die Konfiguration des Agentenplugins zur Verfügung stehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_oracle_bakery_ruleset.png" alt="Regel zur Konfiguration von Oracle in der Agentenbäckerei."></div></div>
+<div class="paragraph"><p>Viele Optionen werden ihnen aus der manuellen Einrichtung bekannt vorkommen.
+Wie dort beschrieben, gibt es Optionen, die nicht für alle Betriebssysteme verfügbar sind.
+Der Titel dieser Optionen zeigt, für welche Betriebssysteme sie genutzt werden können.</p></div>
+<div class="sect2">
+<h3 id="heading_bakery_users">
+<span class="hidden-anchor sr-only" id="bakery_users"></span>5.1. Benutzer konfigurieren</h3>
+<div class="paragraph"><p>In der <a href="#user_config">einfachsten Konfiguration</a> für eines der Unix-artigen Betriebssysteme sieht die Regel etwa so aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_oracle_bakery_login1.png" alt="Einfachste Regel zur Konfiguration von Oracle in der Agentenbäckerei."></div></div>
+<div class="paragraph"><p>Auch in der Agentenbäckerei haben Sie die Möglichkeit, Standardbenutzer und Ausnahmen für spezielle Instanzen anzulegen.
+Die Optionen, die in der Konfigurationsdatei mit Doppelpunkt (für <a href="#adv_user_linux">Linux &amp; Co.</a>) oder als Listeneinträge (für <a href="#adv_user_windows">Windows</a>) separiert sind,
+finden Sie unter <span class="guihint">Login Defaults</span> als einzelne Optionen, die Sie dann entsprechend ausfüllen.
+Natürlich können Sie auch hier das <a href="#oracle_wallet">Oracle Wallet</a> nutzen, indem Sie bei <span class="guihint">Authentication method</span> einfach auf <span class="guihint">Use manually created Oracle password wallet</span> wechseln.</p></div>
+<div class="paragraph"><p>Die Konfiguration für ein Automatic Storage Management (ASM) erledigen Sie analog über die Option <span class="guihint">Login for ASM,</span>
+und die Ausnahmen für spezifische Instanzen tragen Sie bei <span class="guihint">Login for selected databases</span> ein, so wie es bei der erweiterten Benutzerkonfiguration für <a href="#adv_user_linux">Linux, Solaris, AIX</a> und  <a href="#adv_user_windows">Windows</a> beschrieben ist.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_bakery_advanced">
+<span class="hidden-anchor sr-only" id="bakery_advanced"></span>5.2. Erweiterte Optionen</h3>
+<div class="paragraph"><p>In der folgenden Tabelle finden Sie die restlichen Optionen des Regelsatzes <span class="guihint">Oracle databases (Linux, Solaris, AIX, Windows)</span> zusammen mit einem Verweis darauf, wo Sie eine Beschreibung zu der Option finden:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Host uses xinetd or systemd (Linux/AIX/Solaris only)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Option muss für Unix-artige Systeme mit <code>xinetd</code>/<code>systemd</code> aktiviert werden.
+Bei <code>systemd</code> ist die asynchrone Ausführung des Agentenplugins obligatorisch — im von Ihnen festgelegten Intervall.
+Mehr dazu finden Sie bei der <a href="#install_linux">Installation des Agentenplugins.</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Instances to monitor</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Option fasst mehrere Optionen der Konfigurationsdatei zusammen, mit denen Sie Instanzen für <a href="#skip_include">Linux, Solaris, AIX</a> oder <a href="#skip_include_windows">Windows</a> ein- oder ausschließen können.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Add pre or postfix to TNSALIASes (Linux/AIX/Solaris only)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mit dieser Option können Sie den <a href="#tns_config">TNS-Alias</a> entweder global oder für eine spezifische Instanz erweitern.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Sections - data to collect</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle verfügbaren Sektionen sind unter dieser Option gelistet und können individuell auf globaler Ebene konfiguriert werden.
+Sie entsprechen daher den Variablen <code>SYNC_SECTIONS</code> und <code>ASYNC_SECTIONS</code> sowie für ASM deren Gegenstücken <code>SYNC_ASM_SECTIONS</code> und <code>ASYNC_ASM_SECTIONS</code>.
+Mehr dazu im Abschnitt über die zu holenden Daten für <a href="#sections">Linux, Solaris, AIX</a> oder <a href="#sections_windows">Windows.</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Exclude some sections on certain instances</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wenn Sie mit <code>EXCLUDE_&lt;SID&gt;</code> nicht die gesamte Instanz, sondern nur ein paar Sektionen ausschließen wollen, können Sie dies mit dieser Option festlegen, so wie für <a href="#sections">Linux, Solaris, AIX</a> oder <a href="#sections_windows">Windows</a> beschrieben.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Cache age for background checks</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Legen Sie hier fest, wie lange asynchrone Sektionen gültig sein sollen.
+Der Standardwert liegt bei 600 Sekunden (10 Minuten).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Sqlnet Send timeout</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Option wird der Datei <code>sqlnet.ora</code> hinzugefügt und setzt ein Timeout, welches für alle Instanzen gilt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Remote instances (Linux/AIX/Solaris only)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#remote_instances">Entfernte Instanzen</a> konfigurieren Sie mit dieser Option.
+Sie enthält alle Elemente der Konfiguration, die Sie bereits kennen.
+Für die Bestimmung der ID der Variablen haben Sie über die <span class="guihint">Unique ID</span> die Wahl aus verschiedenen Möglichkeiten.
+Sie müssen nur darauf achten, dass die ID innerhalb der Konfiguration eindeutig ist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">ORACLE_HOME to use for remote access (Linux/AIX/Solaris only)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier können Sie bestimmen, wo das Agentenplugin das Programm <code>sqlplus</code> findet.
+Sie müssen hier einen Wert eintragen, wenn Sie eine <a href="#remote_instances">entfernte Instanz</a> überwachen wollen, aber <code>sqlplus</code> nicht über die Umgebungsvariablen gefunden werden kann.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">TNS_ADMIN to use for sqlnet.ora and tnsnames.ora (Linux/AIX/Solaris only)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Falls die beiden Dateien in einem anderen Verzeichnis als <code>/etc/check_mk/</code> liegen, können Sie mit dieser Option den Pfadnamen über die Umgebungsvariable <a href="#tns_config"><code>TNS_ADMIN</code></a> festlegen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">sqlnet.ora permission group (Linux/AIX/Solaris only)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tragen Sie hier die Linux-Gruppe des nicht privilegierten Benutzers ein, der Eigentümer der Oracle-Binärprogramme ist, damit dieser Benutzer die Datei <code>sqlnet.ora</code> lesen kann, die von der Agentenbäckerei erstellt wird.
+Bei einer Standard-Oracle-Installation kann <code>oinstall</code> als Gruppe verwendet werden.<br>
+Weitere Informationen finden Sie im Abschnitt <a href="#access_linux">Zugriffsrechte bei der Ausführung</a> für Linux.
+Dort werden auch andere Dateien und Verzeichnisse genannt, z.B. <code>tnsnames.ora</code>, die nicht von der Agentenbäckerei erstellt werden.
+Für diese manuell erstellten Dateien und Verzeichnisse müssen Sie auch die notwendigen Berechtigungen manuell setzen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Oracle binaries permissions check (Windows only)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier können Sie die Prüfung der Zugriffsrechte für die Oracle-Binärprogramme konfigurieren, indem Sie einzelnen, nicht-administrativen Benutzern und Gruppen die Ausführung der Programme erlauben.
+Die Prüfung ausschalten sollten Sie nur, wenn Sie wissen, was Sie tun.
+Mehr zum Thema finden Sie im Abschnitt <a href="#access_windows">Zugriffsrechte bei der Ausführung</a> für Windows.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_clustered_instances">
+<span class="hidden-anchor sr-only" id="clustered_instances"></span>6. Cluster-Instanzen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__standby_datenbanken">
+<span class="hidden-anchor sr-only" id="_standby_datenbanken"></span>6.1. Standby-Datenbanken</h3>
+<div class="paragraph"><p>Oracle unterstützt sogenannte <em>Standby-Datenbanken,</em> welche bestimmte Aufgaben erfüllen können und in der Regel schlicht Kopien von produktiven bzw. primären Datenbanken sind.
+Diese Datenbankkonzepte benötigen auch spezielle Mechanismen in der Überwachung.
+Welche das sind, erfahren Sie in den folgenden Abschnitten.</p></div>
+<div class="sect3">
+<h4 id="heading_cluster_adg">
+<span class="hidden-anchor sr-only" id="cluster_adg"></span>Mit Active Data Guard (ADG)</h4>
+<div class="paragraph"><p>Haben Sie ADG lizenziert und aktiviert, müssen Sie keinerlei Veränderungen in der Konfiguration des Agentenplugins vornehmen, da Sie jederzeit von einer Standby-Instanz lesen können, ohne die Synchronisation mit der primären Instanz unterbrechen zu müssen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_cluster_dg">
+<span class="hidden-anchor sr-only" id="cluster_dg"></span>Ohne Active Data Guard (DG)</h4>
+<div class="paragraph"><p>Wenn die Instanzen nicht über ADG verfügen, benötigt der Benutzer, mit dem die Monitoring-Daten der Standby-Instanzen geholt werden sollen, die Rolle <code>SYSDBA</code>.
+Durch diese Berechtigung ist der Benutzer auch dann in der Lage zumindest einen Teil der Daten zu holen, wenn die primäre Instanz ausfällt und auf dem Standby-Server die Instanz noch nicht von <code>MOUNTED</code> auf <code>OPEN</code> umgestellt wurde.</p></div>
+<div class="paragraph"><p>Weisen Sie die Berechtigung dem Benutzer zu, welcher die Daten von den Instanzen abholen darf.
+<strong>Wichtig:</strong> Wie das funktioniert, kann von dem folgenden Beispiel abweichen.
+Die Rolle wird hier dem Benutzer zugewiesen, wie er im Beispiel der <a href="#first_steps">Ersteinrichtung</a> angelegt wurde:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">sqlplus</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">grant</span><span class="tok-w"> </span><span class="tok-n">sysdba</span><span class="tok-w"> </span><span class="tok-k">to</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-p">;</span></code></pre></div></div>
+<div class="paragraph"><p>Damit die Daten im Fehlerfall vom Agentenplugin auf dem Standby-Server abgefragt werden können, legen Sie den Benutzer auf der primären Instanz an und kopieren Sie die Passwortdatei danach auf den Standby-Server.
+In der Konfigurationsdatei des Plugins setzen Sie abschließend die Rolle des Benutzers auf <code>SYSDBA</code>:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# DBUSER='USER:PASSWORD:ROLE:HOST:PORT:TNSALIAS'
+DBUSER='checkmk:myPassword:sysdba'</code></pre></div>
+</div>
+<div class="paragraph"><p>Beachten Sie, dass die Angabe eines Hosts, Ports oder des TNS-Alias optional ist und weggelassen werden kann.
+Zusätzlich muss natürlich das Agentenplugin sowohl auf dem Host der primären Instanz als auch auf den Hosts der Standby-Instanzen installiert sein.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_clustered_services">
+<span class="hidden-anchor sr-only" id="clustered_services"></span>Cluster-Services einrichten</h4>
+<div class="paragraph"><p>Auf der Seite von Checkmk ist es notwendig, dass Sie — egal, ob Sie ADG oder DG nutzen — die Services anpassen und einem <em>Cluster-Host</em> zuweisen.
+Die entsprechenden Check-Plugins wurden bereits soweit vorbereitet, dass Sie auch als <a href="clustered_services.html">Cluster-Services</a> konfiguriert werden können.
+Legen Sie also in Checkmk einen Cluster-Host an und fügen Sie diesem als Knoten die einzelnen Oracle-Hosts zu, auf denen die primäre und die Standby-Instanzen laufen.
+Danach weisen Sie diesem Cluster-Host die folgenden Services zu:</p></div>
+<div class="ulist"><ul>
+<li><p><code>ORA .* RMAN Backup</code></p></li>
+<li><p><code>ORA .* Job</code></p></li>
+<li><p><code>ORA .* Tablespaces</code></p></li>
+</ul></div>
+<div class="paragraph"><p>Sie brauchen sich sich nun nicht mehr darum zu kümmern, von welcher Instanz die Daten kommen und haben auch im Falle eines Schwenks der primären Instanz eine nahtlose Überwachung der genannten Services sichergestellt.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_rac">
+<span class="hidden-anchor sr-only" id="rac"></span>6.2. Real Application Cluster (RAC)</h3>
+<div class="paragraph"><p>Da es in einem RAC einen zentralen Speicher für die Daten gibt, reicht es hier, den Benutzer für das Agentenplugin nur einmal anzulegen.
+Lediglich das Agentenplugin muss auf jedem Knoten des Oracle-Clusters installiert und konfiguriert werden.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Richten Sie immer die Knoten des Clusters selbst ein und verzichten Sie auf die Abfrage des Oracle <em>SCAN Listener.</em>
+Nur dadurch ist gewährleistet, dass der Zugriff über das Agentenplugin funktioniert.</p></div>
+<div class="sect3">
+<h4 id="heading__cluster_services_einrichten">
+<span class="hidden-anchor sr-only" id="_cluster_services_einrichten"></span>Cluster-Services einrichten</h4>
+<div class="paragraph"><p>Auch bei einem RAC ist es sinnvoll, Cluster-Services einzurichten.
+Zusätzlich zu den Services, die Sie bei einem <a href="#cluster_adg">(Active) Data Guard</a> dem Cluster-Host zuordnen, weisen Sie auch die folgenden Services zu, um im Falle eines
+Schwenks eine nahtlose Überwachung sicherzustellen:</p></div>
+<div class="ulist"><ul>
+<li><p><code>ASM .* Diskgroup</code></p></li>
+<li><p><code>ORA .* Recovery Area</code></p></li>
+</ul></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_custom_sqls">
+<span class="hidden-anchor sr-only" id="custom_sqls"></span>7. Benutzerdefinierte SQL-Abfragen (Custom SQLs)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__warum_benutzerdefinierte_sql_abfragen">
+<span class="hidden-anchor sr-only" id="_warum_benutzerdefinierte_sql_abfragen"></span>7.1. Warum benutzerdefinierte SQL-Abfragen?</h3>
+<div class="paragraph"><p>Checkmk bietet mit dem Agentenplugin bereits eine große Menge an SQL-Abfragen, mit denen Sie Ihre Datenbankinstanzen überwachen können.
+Damit diese für eine möglichst große Menge an technischen und inhaltlichen Anforderungen passend sind, sind diese natürlich sehr allgemein gehalten.</p></div>
+<div class="paragraph"><p>Um die individuellen Anforderungen eines jeden Unternehmens an die Überwachung einer konkreten Datenbank erfüllen zu können, bietet Checkmk die Möglichkeit, eigene, benutzerdefinierte SQL-Abfragen (<em>Custom SQLs</em>) zu erstellen und mit dem Agentenplugin abfragen zu lassen.
+Diese werden dann automatisch in der Weboberfläche als eigene Services erkannt und überwacht.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Es gibt nur unter Linux, Solaris und AIX die Möglichkeit, benutzerdefinierte SQL-Abfragen einzusetzen.
+Unter Windows steht diese Option nicht zur Verfügung.</p></div></td>
+</tr></table></div>
+</div>
+<div class="sect2">
+<h3 id="heading__einfache_benutzerdefinierte_sql_abfragen">
+<span class="hidden-anchor sr-only" id="_einfache_benutzerdefinierte_sql_abfragen"></span>7.2. Einfache benutzerdefinierte SQL-Abfragen</h3>
+<div class="sect3">
+<h4 id="heading__sql_abfragen_schreiben">
+<span class="hidden-anchor sr-only" id="_sql_abfragen_schreiben"></span>SQL-Abfragen schreiben</h4>
+<div class="paragraph"><p>Die einfachste Weise so ein SQL anzubinden, ist die Nutzung des Check-Plugins <a href="https://checkmk.com/de/integrations/oracle_sql" target="_blank">Oracle Database: Custom SQLs.</a>
+Erstellen Sie dafür zunächst die Datei <code>MyCustomSQL.sql</code> in dem Konfigurationsverzeichnis des Agenten auf dem Hosts, auf dem das SQL ausgeführt werden soll.</p></div>
+<div class="paragraph"><p>Nachfolgend ein Dummy, welcher die Syntax veranschaulicht:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/MyCustomSQL.sql</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-cm">/*Syntax help in comments. The first word is alwyas the key word and ends with a ":"*/</span>
+
+<span class="tok-cm">/*details:Text to display in the service detail output*/</span>
+<span class="tok-n">prompt</span><span class="tok-w"> </span><span class="tok-n">details</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-k">Some</span><span class="tok-w"> </span><span class="tok-n">details</span><span class="tok-w"> </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-n">the</span><span class="tok-w"> </span><span class="tok-n">service</span><span class="tok-w"> </span><span class="tok-k">output</span><span class="tok-p">;</span>
+
+<span class="tok-cm">/*perfdata:METRIKNAME=CURRENTVALUE;WARN;CRIT;MAX METRIKNAME=CURRENTVALUE2;WARN;CRIT;MAX*/</span>
+<span class="tok-n">prompt</span><span class="tok-w"> </span><span class="tok-n">perfdata</span><span class="tok-p">:</span><span class="tok-n">MyMetricName1</span><span class="tok-o">=</span><span class="tok-mi">10</span><span class="tok-p">;</span><span class="tok-mi">15</span><span class="tok-p">;</span><span class="tok-mi">20</span><span class="tok-p">;</span><span class="tok-mi">30</span><span class="tok-w"> </span><span class="tok-n">MyMetricName2</span><span class="tok-o">=</span><span class="tok-mi">16</span><span class="tok-p">;</span><span class="tok-mi">15</span><span class="tok-p">;</span><span class="tok-mi">20</span><span class="tok-p">;</span><span class="tok-mi">30</span><span class="tok-p">;</span>
+<span class="tok-n">prompt</span><span class="tok-w"> </span><span class="tok-n">perfdata</span><span class="tok-p">:</span><span class="tok-n">MyMetricName3</span><span class="tok-o">=</span><span class="tok-mi">21</span><span class="tok-p">;</span><span class="tok-mi">15</span><span class="tok-p">;</span><span class="tok-mi">20</span><span class="tok-p">;</span><span class="tok-mi">30</span><span class="tok-w"> </span><span class="tok-n">MyMetricName4</span><span class="tok-o">=</span><span class="tok-mi">15</span><span class="tok-p">;</span><span class="tok-mi">15</span><span class="tok-p">;</span><span class="tok-mi">20</span><span class="tok-p">;</span><span class="tok-mi">30</span><span class="tok-p">;</span>
+
+<span class="tok-cm">/*long:Text to display in the long output of the service*/</span>
+<span class="tok-n">prompt</span><span class="tok-w"> </span><span class="tok-n">long</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-n">Here</span><span class="tok-w"> </span><span class="tok-n">comes</span><span class="tok-w"> </span><span class="tok-k">some</span><span class="tok-w"> </span><span class="tok-n">long</span><span class="tok-w"> </span><span class="tok-k">output</span><span class="tok-w"> </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-n">the</span><span class="tok-w"> </span><span class="tok-n">service</span><span class="tok-p">;</span>
+<span class="tok-n">prompt</span><span class="tok-w"> </span><span class="tok-n">long</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-n">Here</span><span class="tok-w"> </span><span class="tok-n">comes</span><span class="tok-w"> </span><span class="tok-k">some</span><span class="tok-w"> </span><span class="tok-k">more</span><span class="tok-w"> </span><span class="tok-n">long</span><span class="tok-w"> </span><span class="tok-k">output</span><span class="tok-w"> </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-n">the</span><span class="tok-w"> </span><span class="tok-n">service</span><span class="tok-p">;</span>
+
+<span class="tok-cm">/*exit:Status of the service as a number*/</span>
+<span class="tok-n">prompt</span><span class="tok-w"> </span><span class="tok-n">exit</span><span class="tok-p">:</span><span class="tok-mi">2</span><span class="tok-p">;</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Das Beispiel zeigt zum einen, dass Sie in einer solchen Datei beliebig viele Anweisungen definieren können.
+Zum anderen ist die Syntax dem eines <a href="glossar.html#local_check">lokalen Checks</a> sehr ähnlich, vor allem mit Blick auf die <a href="glossar.html#metric">Metriken.</a>
+Im Detail ist diese Syntax hier wesentlich mächtiger, da Sie mehrzeilige Ausgaben erzeugen können und diese dann auf dem Checkmk-Server als ein Service verarbeitet werden.
+Prinzipiell sind alle Zeilen optional und müssen nicht befüllt werden.</p></div>
+<div class="paragraph"><p>Die möglichen Schlüsselwörter sind im Einzelnen:</p></div>
+<div class="ulist"><ul>
+<li><p><code>details</code>:
+Hier können Sie bestimmen, was im <span class="guihint">Summary</span> des erzeugten Service ausgegeben werden soll.
+Die Zeile wird mit dem Schlüsselwort und einem Doppelpunkt eingeleitet.
+Der Rest der Zeile ergibt die Ausgabe.</p></li>
+<li><p><code>perfdata</code>:
+Metriken werden mit diesem Schlüsselwort übergeben.
+Innerhalb einer Zeile können Sie beliebig viele Metriken — getrennt durch ein Leerzeichen — erzeugen.
+Sie können die Ausgabe der Metriken auch über mehrere Zeilen verteilen.
+Beginnen Sie dabei einfach immer mit dem Schlüsselwort <code>perfdata:</code>.</p></li>
+<li><p><code>long</code>:
+Wenn der Service eine lange Ausgabe für das Feld <span class="guihint">Details</span> haben soll, können Sie diese hier angeben.
+Auch dieses Schlüsselwort können Sie mehrmals verwenden, um mehrere Zeilen in den <span class="guihint">Details</span> zu erzeugen.</p></li>
+<li><p><code>exit</code>:
+Soll die Ausgabe einen bestimmten Status haben, können Sie diesen hier bestimmen.
+Es stehen Ihnen dabei die bekannten Zuordnungen <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code> für die Status <span class="state0">OK</span>, <span class="state1">WARN</span>, <span class="state2">CRIT</span>, <span class="state3">UNKNOWN</span> zur Verfügung.</p></li>
+</ul></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Das Schlüsselwort <code>elapsed</code> müssen Sie nicht manuell definieren.
+Es wird während der Laufzeit automatisch erzeugt, um zu prüfen, wie lange die von Ihnen definierten Anweisungen gebraucht haben.</p></div></td>
+</tr></table></div>
+</div>
+<div class="sect3">
+<h4 id="heading__agentenplugin_konfigurieren">
+<span class="hidden-anchor sr-only" id="_agentenplugin_konfigurieren"></span>Agentenplugin konfigurieren</h4>
+<div class="paragraph"><p>Nachdem Sie nun Ihr erstes, sehr einfaches SQL definiert haben, machen Sie es dem Agentenplugin <code>mk_oracle</code> bekannt.
+Das erfolgt über die bekannte Konfigurationsdatei, die Sie entsprechend erweitern:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_oracle.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>SQLS_SECTIONS="mycustomsection1"
+
+mycustomsection1 () {
+    SQLS_SIDS="INST1"
+    SQLS_DIR="/etc/check_mk"
+    SQLS_SQL="MyCustomSQL.sql"
+}</code></pre></div>
+</div>
+<div class="paragraph"><p>Mit der ersten Option (<code>SQLS_SECTIONS</code>) bestimmen Sie, welche individuellen Sektionen Sie ausführen lassen möchten.
+Beachten Sie, dass mit <em>Sektion</em> hier ein Teil der Ausgabe des Agentenplugins gemeint ist — und <em>nicht</em> ein Teil einer Datenbankinstanz.
+Im Beispiel haben wir nur eine Sektion (<code>mycustomsection1</code>) angegeben und diese dann direkt danach näher beschrieben.
+Jede Sektion ist also eigentlich eine kleine Funktion, die vom Agentenplugin aufgerufen wird.</p></div>
+<div class="paragraph"><p>In dieser Funktion können Sie dann weitere Details bestimmen und festlegen, für welche Instanzen (<code>SQLS_SIDS</code>) diese Sektion gilt.
+Außerdem bestimmen Sie zusätzlich, wo sich die Datei mit den SQL-Anweisungen befindet (<code>SQLS_DIR</code>) und wie diese Datei heißt (<code>SQLS_SQL</code>).</p></div>
+<div class="paragraph"><p>Diese einfache Konfiguration reicht bereits aus, um das Ergebnis in Checkmk sehen zu können.
+Führen Sie dafür eine <a href="glossar.html#service_discovery">Service-Erkennung</a> durch und aktivieren Sie den neuen Service.
+Danach sehen Sie ihn bei den anderen Services in der Übersicht des Hosts:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_oracle_custom_sqls_list.png" alt="Der neue, durch benutzerdefinierte SQL-Abfragen erzeugte Service in der Service-Liste."></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_adv_custom_sqls">
+<span class="hidden-anchor sr-only" id="adv_custom_sqls"></span>7.3. Erweiterte Optionen</h3>
+<div class="paragraph"><p>Die Möglichkeiten, mit benutzerdefinierten SQL-Abfragen zu überwachen, gehen natürlich über das einfache, oben gezeigte Beispiel hinaus.
+Im nachfolgenden finden Sie eine Übersicht der verfügbaren Variablen, die Sie in der Konfigurationsdatei <code>mk_oracle.cfg</code> nutzen können.
+Für eine ausführliche Beschreibung können Sie auch das Agentenplugin <code>mk_oracle</code> mit der Option <code>--help</code> aufrufen.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Variablen, die nur außerhalb oder nur innerhalb einer Sektions-Funktion gesetzt werden können, sind entsprechend markiert.
+Alle anderen können in beiden Bereichen definiert werden.
+Werden sie außerhalb einer Sektion gesetzt, gelten sie global für alle Sektionen.</p></div></td>
+</tr></table></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 85%;">
+<col style="width: 5%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Kurzbeschreibung</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_SECTIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die selbst definierten Sektions-Funktionen, die vom Agentenplugin ausgeführt werden sollen.<br>
+Diese Variable kann nur global gesetzt werden (außerhalb einer Sektions-Funktion).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nein</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_SIDS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Instanzen, welche die Sektion(en) ausführen sollen.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nein</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_DIR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Pfadname des Verzeichnisses, in dem die Dateien mit den benutzerdefinierten SQL-Abfragen abgelegt sind.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nein</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_SQL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Datei, welche die SQL-Anweisungen für eine Sektion enthält.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nein</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_SECTION_NAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Name der Sektion, die Sie mit einem <a href="#own_check_plug-in">eigenen Check-Plugin</a> für die benutzerdefinierten SQL-Abfragen auswerten.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_SECTION_SEP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Separator der einzelnen Elemente in einer Zeile der Ausgabe, definiert als dezimale <a href="https://de.wikipedia.org/wiki/American_Standard_Code_for_Information_Interchange#ASCII-Tabelle" target="_blank">ASCII</a>-ID.
+Diese Variable kann nur in Verbindung mit der Variablen <code>SQLS_SECTION_NAME</code> benutzt werden.
+Wir empfehlen, für eigene Sektionen auch einen eigenen Separator festzulegen und dabei die ASCII-ID <code>124</code> für das Pipe-Zeichen (<code>|</code>) zu verwenden, da auch das Agentenplugin im Fehlerfall die Elemente der Ausgabe stets mit <code>|</code> trennt, im Format <code>&lt;SID&gt;|FAILURE|&lt;error description&gt;</code>.
+Die folgenden Zeichen dürfen <em>nicht</em> als Separator verwendet werden: <code>;</code> <code>[</code> <code>]</code> <code>=</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_ITEM_NAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bestimmt einen Teil des generierten Service-Namens.
+Standardmäßig wird der Service-Name aus SID und dem Dateinamen mit den benutzerdefinierte SQL-Abfragen zusammengesetzt.
+Der Wert dieser Variable ersetzt im Service-Namen den Dateinamen.<br>
+Diese Variable kann nur lokal gesetzt werden (innerhalb einer Sektions-Funktion).
+Sie kann nicht zusammen mit der Variable <code>SQLS_SECTION_NAME</code> benutzt werden.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_MAX_CACHE_AGE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erfüllt dieselbe Aufgabe, wie <a href="#sections"><code>CACHE_MAXAGE</code></a> — allerdings für die benutzerdefinierten SQL-Abfragen.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_DBUSER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bestimmt einen individuellen Benutzer für eine Sektion.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_DBPASSWORD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bestimmt das Passwort des mit <code>SQLS_DBUSER</code> festgelegten Benutzers.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_DBSYSCONNECT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nur wenn der mit <code>SQLS_DBUSER</code> festgelegte Benutzer <code>SYSDBA</code> oder <code>SYSOPER</code> ist, müssen Sie mit dieser Variablen die zugehörige Rolle (<code>SYSDBA</code> oder <code>SYSOPER</code>) bestimmen.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQLS_TNSALIAS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bestimmt einen individuellen <a href="#tns_config">TNS-Alias</a> für eine Sektion.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ja</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_own_check_plug-in">
+<span class="hidden-anchor sr-only" id="own_check_plug-in"></span>7.4. Eigene Check-Plugins nutzen</h3>
+<div class="paragraph"><p>Sollten Ihnen die Möglichkeiten der oben beschriebenen Syntax nicht ausreichen, können Sie über die Variable <code>SQLS_SECTION_NAME</code> auch eigene Sektionsnamen für ein oder mehrere SQL-Abfragen ausgeben lassen, und mit <code>SQLS_SECTION_SEP</code> einen eigenen Separator festlegen.
+Das setzt allerdings voraus, dass Sie auch ein entsprechendes Check-Plugin geschrieben und in Ihre Checkmk-<a href="glossar.html#site">Instanz</a> eingebunden haben.</p></div>
+<div class="paragraph"><p>Mit einem eigenen Check-Plugin sind Sie komplett frei, wie Sie die Ausgabe der selbst definierten Sektionen des Agentenplugins auswerten und können ganz eigene Wege gehen.
+Da dieser Weg der umfangreichste und auch schwierigste ist, ist er hier nur der Vollständigkeit halber erwähnt.
+Er setzt voraus, dass Sie wissen, wie man ein <a href="devel_check_plugins.html">agentenbasiertes Check-Plugin</a> schreibt und in die Instanz einbindet.
+Danach ordnen Sie die individuellen SQL-Abfragen mit den Variablen diesem Check-Plugin zu.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_diagnostic">
+<span class="hidden-anchor sr-only" id="diagnostic"></span>8. Diagnosemöglichkeiten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Unter Linux erfolgt die Diagnose durch Aufruf des Agentenplugins <code>mk_oracle</code> mit verschiedenen Optionen.
+Mit <code>mk_oracle --help</code> können Sie sich eine Übersicht aller verfügbaren Optionen anzeigen lassen.</p></div>
+<div class="sect2">
+<h3 id="heading_connection_test">
+<span class="hidden-anchor sr-only" id="connection_test"></span>8.1. Verbindungstest</h3>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Der im folgenden beschriebene Verbindungstest überprüft auch, ob die notwendigen Zugriffsrechte bei der Ausführung unter <a href="#access_linux">Linux</a> oder <a href="#access_windows">Windows</a> gesetzt sind.
+Falls Zugriffsrechte fehlen, werden diese angezeigt mit konkreten Vorschlägen zur Behebung.
+Das genaue Vorgehen bei der Diagnose und Korrektur von Zugriffsrechten können Sie in der <a href="https://checkmk.atlassian.net/wiki/spaces/KB/pages/70582273/" target="_blank">Checkmk Knowledge Base</a> nachlesen.</p></div></td>
+</tr></table></div>
+<div class="sect3">
+<h4 id="heading__linux_solaris_aix">
+<span class="hidden-anchor sr-only" id="_linux_solaris_aix"></span>Linux, Solaris, AIX</h4>
+<div class="paragraph"><p>Sollten Sie Problem mit der Verbindung zu einer oder mehreren Instanzen auf einem Oracle-Server haben, können Sie als Erstes grundlegende Parameter prüfen lassen.
+Wenn Sie das Agentenplugin mit der Option <code>-t</code> starten, gibt es die Details zu einer Verbindung aus.
+Beachten Sie, dass dem Agentenplugin zuvor die Pfade zu seiner Konfigurationsdatei und zu den zwischengespeicherten Daten des Plugins bekannt gemacht werden muss.
+In der Ausgabe wurden die <em>Dummy-Sektionen</em> zugunsten der Lesbarkeit weggelassen.</p></div>
+<div class="paragraph"><p>Im Folgenden das Beispiel für einen Linux-Server mit <code>systemd</code>, auf dem das Agentenplugin alle 60 Sekunden <a href="#install_linux">asynchron</a> ausgeführt wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span><span class="tok-s2">"/etc/check_mk/"</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_VARDIR</span><span class="tok-o">=</span><span class="tok-s2">"/var/lib/check_mk_agent"</span>
+<span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/60/mk_oracle<span class="tok-w"> </span>-t<span class="tok-w"> </span>--no-spool
+<span class="tok-go">---login----------------------------------------------------------------</span>
+<span class="tok-go">    Operating System:       Linux</span>
+<span class="tok-go">    ORACLE_HOME (oratab):   /u01/app/oracle/product/11.2.0/xe</span>
+<span class="tok-go">    Logincheck to Instance: XE</span>
+<span class="tok-go">    Version:                11.2</span>
+<span class="tok-go">    Login ok User:          checkmk on ORA-SRV01 Instance XE</span>
+<span class="tok-go">    SYNC_SECTIONS:          instance dataguard_stats processes longactivesessions sessions recovery_status undostat logswitches recovery_area performance</span>
+<span class="tok-go">    ASYNC_SECTIONS:         tablespaces rman jobs ts_quotas resumable</span>
+<span class="tok-go">------------------------------------------------------------------------</span></code></pre></div></div>
+<div class="paragraph"><p>Auf einem Linux-Server mit <code>xinetd</code> rufen Sie stattdessen <code>mk_oracle</code> für den Verbindungstest wie folgt auf:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/mk_oracle<span class="tok-w"> </span>-t</code></pre></div></div>
+<div class="paragraph"><p>Da man diesen Aufruf eher im Fehlerfall machen wird, werden Sie dann auch weitere Informationen erhalten:
+Sowohl den <em>Connection String,</em> welcher für die Verbindung benutzt wurde, als auch die ersten 100 Zeichen der Fehlermeldung, die bei dem Verbindungsversuch zurückgegeben wurden.
+Mit Hilfe dieser Informationen können Sie bereits schnell einfache Konfigurationsprobleme identifizieren und dann auch entsprechend beheben.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows">
+<span class="hidden-anchor sr-only" id="_windows"></span>Windows</h4>
+<div class="paragraph"><p>Das Agentenplugin akzeptiert unter Windows keine Parameter.
+Um hier also die Verbindung zu testen, limitieren Sie temporär die abzurufenden Sektionen auf <code>instance</code> und aktivieren Sie die Option <code>DEBUG</code>:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Syntax:
+# $DBUSER = @("USERNAME", "PASSWORD")
+$DBUSER = @("checkmk", "myPassword")
+
+SYNC_SECTIONS = @("instance")
+ASYNC_SECTIONS = @("")
+DEBUG = 1</code></pre></div>
+</div>
+<div class="paragraph"><p>Führen Sie danach das Agentenplugin manuell aus.
+Auch hier werden Sie Informationen darüber bekommen, wie das Plugin versucht, auf die Instanzen zuzugreifen.
+Eine Ausgabe kann dann z.B. so aussehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\</span><span class="tok-n">plugins</span><span class="tok-p">\&gt;</span> <span class="tok-p">.\</span><span class="tok-n">mk_oracle</span><span class="tok-p">.</span><span class="tok-n">ps1</span>
+<span class="tok-n">2020</span><span class="tok-p">-</span><span class="tok-n">08</span><span class="tok-p">-</span><span class="tok-n">23T12</span><span class="tok-p">:</span><span class="tok-n">48</span><span class="tok-p">:</span><span class="tok-n">20</span><span class="tok-p">.</span><span class="tok-n">3930944</span><span class="tok-p">+</span><span class="tok-n">02</span><span class="tok-p">:</span><span class="tok-n">00</span> <span class="tok-n">DEBUG</span><span class="tok-p">:</span><span class="tok-n">value</span> <span class="tok-n">of</span> <span class="tok-n">DBVERSION</span> <span class="tok-n">software</span> <span class="tok-p">=</span> <span class="tok-n">xxx112020xxx</span>
+<span class="tok-p">&lt;&lt;&lt;</span><span class="tok-n">oracle_instances</span><span class="tok-p">&gt;&gt;&gt;</span>
+<span class="tok-n">2020</span><span class="tok-p">-</span><span class="tok-n">08</span><span class="tok-p">-</span><span class="tok-n">23T12</span><span class="tok-p">:</span><span class="tok-n">48</span><span class="tok-p">:</span><span class="tok-n">20</span><span class="tok-p">.</span><span class="tok-n">3930944</span><span class="tok-p">+</span><span class="tok-n">02</span><span class="tok-p">:</span><span class="tok-n">00</span> <span class="tok-n">DEBUG</span><span class="tok-p">:</span><span class="tok-n">value</span> <span class="tok-n">of</span> <span class="tok-n">inst_name</span> <span class="tok-p">=</span> <span class="tok-n">xxxXExxx</span>
+<span class="tok-n">2020</span><span class="tok-p">-</span><span class="tok-n">08</span><span class="tok-p">-</span><span class="tok-n">23T12</span><span class="tok-p">:</span><span class="tok-n">48</span><span class="tok-p">:</span><span class="tok-n">20</span><span class="tok-p">.</span><span class="tok-n">3930944</span><span class="tok-p">+</span><span class="tok-n">02</span><span class="tok-p">:</span><span class="tok-n">00</span> <span class="tok-n">DEBUG</span><span class="tok-p">:</span><span class="tok-n">value</span> <span class="tok-n">of</span> <span class="tok-n">DBVERSION</span> <span class="tok-n">database</span> <span class="tok-p">=</span> <span class="tok-n">xxx112020xxx</span>
+<span class="tok-n">2020</span><span class="tok-p">-</span><span class="tok-n">08</span><span class="tok-p">-</span><span class="tok-n">23T12</span><span class="tok-p">:</span><span class="tok-n">48</span><span class="tok-p">:</span><span class="tok-n">20</span><span class="tok-p">.</span><span class="tok-n">3930944</span><span class="tok-p">+</span><span class="tok-n">02</span><span class="tok-p">:</span><span class="tok-n">00</span> <span class="tok-n">DEBUG</span><span class="tok-p">:</span><span class="tok-n">value</span> <span class="tok-n">of</span> <span class="tok-n">the_section</span> <span class="tok-p">=</span> <span class="tok-n">sql_instance</span>
+<span class="tok-n">2020</span><span class="tok-p">-</span><span class="tok-n">08</span><span class="tok-p">-</span><span class="tok-n">23T12</span><span class="tok-p">:</span><span class="tok-n">48</span><span class="tok-p">:</span><span class="tok-n">20</span><span class="tok-p">.</span><span class="tok-n">3930944</span><span class="tok-p">+</span><span class="tok-n">02</span><span class="tok-p">:</span><span class="tok-n">00</span> <span class="tok-n">DEBUG</span><span class="tok-p">:</span><span class="tok-n">now</span> <span class="tok-n">calling</span> <span class="tok-n">multiple</span> <span class="tok-n">SQL</span>
+<span class="tok-n">2020</span><span class="tok-p">-</span><span class="tok-n">08</span><span class="tok-p">-</span><span class="tok-n">23T12</span><span class="tok-p">:</span><span class="tok-n">48</span><span class="tok-p">:</span><span class="tok-n">20</span><span class="tok-p">.</span><span class="tok-n">3930944</span><span class="tok-p">+</span><span class="tok-n">02</span><span class="tok-p">:</span><span class="tok-n">00</span> <span class="tok-n">DEBUG</span><span class="tok-p">:</span><span class="tok-n">value</span> <span class="tok-n">of</span> <span class="tok-n">sql_connect</span> <span class="tok-k">in</span> <span class="tok-n">dbuser</span> <span class="tok-p">=</span> <span class="tok-n">checkmk</span><span class="tok-p">/</span><span class="tok-n">myPassword</span><span class="tok-p">@(</span><span class="tok-n">DESCRIPTION</span><span class="tok-p">=(</span><span class="tok-n">ADDRESS</span><span class="tok-p">=(</span><span class="tok-n">PROTOCOL</span><span class="tok-p">=</span><span class="tok-n">TCP</span><span class="tok-p">)(</span><span class="tok-n">HOST</span><span class="tok-p">=</span><span class="tok-n">localhost</span><span class="tok-p">)(</span><span class="tok-n">PORT</span><span class="tok-p">=</span><span class="tok-n">1521</span><span class="tok-p">))(</span><span class="tok-n">CONNECT_DATA</span><span class="tok-p">=(</span><span class="tok-n">SID</span><span class="tok-p">=</span><span class="tok-n">XE</span><span class="tok-p">)))</span> <span class="tok-n">as</span> <span class="tok-n">sysdba</span>
+<span class="tok-p">&lt;&lt;&lt;</span><span class="tok-n">oracle_instance</span><span class="tok-p">&gt;&gt;&gt;</span>
+<span class="tok-n">XE</span><span class="tok-p">|</span><span class="tok-n">FAILURE</span><span class="tok-p">|...</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_logging">
+<span class="hidden-anchor sr-only" id="logging"></span>8.2. Logging</h3>
+<div class="sect3">
+<h4 id="heading__linux_solaris_aix_2">
+<span class="hidden-anchor sr-only" id="_linux_solaris_aix_2"></span>Linux, Solaris, AIX</h4>
+<div class="paragraph"><p>Falls der Fehler nicht durch die Prüfung einer einfachen Verbindung gefunden werden kann, können Sie als nächsten Schritt eine Log-Datei anlegen lassen, welche sämtliche Schritte des Agentenplugins protokolliert.
+Vergessen Sie auch hier nicht die notwendigen Umgebungsvariablen:
+Auch im folgenden Beispiel wurde die Ausgabe der Sektionen übersprungen, um die Lesbarkeit zu erhöhen.</p></div>
+<div class="paragraph"><p>Hier der Aufruf für einen Linux-Server mit <code>systemd</code>, auf dem das Agentenplugin alle 60 Sekunden <a href="#install_linux">asynchron</a> ausgeführt wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span><span class="tok-s2">"/etc/check_mk/"</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_VARDIR</span><span class="tok-o">=</span><span class="tok-s2">"/var/lib/check_mk_agent"</span>
+<span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/60/mk_oracle<span class="tok-w"> </span>-l<span class="tok-w"> </span>--no-spool
+<span class="tok-go">Start logging to file: /var/lib/check_mk_agent/log/mk_oracle.log</span></code></pre></div></div>
+<div class="paragraph"><p>Hier der Aufruf von <code>mk_oracle</code> für das Logging auf einem Linux-Server mit <code>xinetd</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/mk_oracle<span class="tok-w"> </span>-l</code></pre></div></div>
+<div class="paragraph"><p>Mit Hilfe der erzeugten Log-Datei können Sie sehr genau identifizieren, an welcher Zeile des Skripts das Problem auftritt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows_2">
+<span class="hidden-anchor sr-only" id="_windows_2"></span>Windows</h4>
+<div class="paragraph"><p>Das Logging unter Windows funktioniert ähnlich wie der oben beschriebene Verbindungstest.
+Ist die Verbindung selbst stabil, können Sie in der Konfigurationsdatei die echten Sektionen wieder hinzufügen und bekommen dann entsprechend eine komplette Logging-Ausgabe.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_debugging">
+<span class="hidden-anchor sr-only" id="debugging"></span>8.3. Debugging</h3>
+<div class="sect3">
+<h4 id="heading__linux_solaris_aix_3">
+<span class="hidden-anchor sr-only" id="_linux_solaris_aix_3"></span>Linux, Solaris, AIX</h4>
+<div class="paragraph"><p>Wenn Sie auch mit Hilfe des Logs nicht an das Problem kommen, bietet das Agentenplugin als letzte Möglichkeit der Fehleranalyse die komplette Ausgabe aller Schritte.
+Diese Ausgabe ist entsprechend auch die umfangreichste und sicherlich auch die am schwersten zu lesende Möglichkeit, an die Ursache eines Problems zu kommen und sollte daher auch nur als letztes Mittel
+eingesetzt werden.</p></div>
+<div class="paragraph"><p>Im Folgenden das Beispiel für das Debugging auf einem Linux-Server mit <code>systemd</code>, auf dem das Agentenplugin alle 60 Sekunden <a href="#install_linux">asynchron</a> ausgeführt wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span><span class="tok-s2">"/etc/check_mk/"</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_VARDIR</span><span class="tok-o">=</span><span class="tok-s2">"/var/lib/check_mk_agent"</span>
+<span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/60/mk_oracle<span class="tok-w"> </span>-d<span class="tok-w"> </span>--no-spool</code></pre></div></div>
+<div class="paragraph"><p>Hier der Aufruf von <code>mk_oracle</code> für das Debugging auf einem Linux-Server mit <code>xinetd</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/plugins/mk_oracle<span class="tok-w"> </span>-d</code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> In dieser Ausgabe werden keine sensiblen Daten wie Passwörter maskiert.
+Es ist also alles in Klartext lesbar.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows_3">
+<span class="hidden-anchor sr-only" id="_windows_3"></span>Windows</h4>
+<div class="paragraph"><p>Unter Windows steht Ihnen eine ähnliche Funktionalität zur Verfügung.
+Da Sie dem Agentenplugin keine Argumente übergeben können, müssen Sie das Tracing allerdings manuell anschalten:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\</span><span class="tok-n">plugins</span><span class="tok-p">\&gt;</span> <span class="tok-nb">Set-PSDebug</span> <span class="tok-n">-Trace</span> <span class="tok-n">1</span>
+<span class="tok-nb">PS </span><span class="tok-n">C</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\</span><span class="tok-n">plugins</span><span class="tok-p">\&gt;</span> <span class="tok-p">.\</span><span class="tok-n">mk_oracle</span><span class="tok-p">.</span><span class="tok-n">ps1</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_ora-01031">
+<span class="hidden-anchor sr-only" id="ora-01031"></span>8.4. Fehlermeldungen in Oracle Log-Dateien</h3>
+<div class="paragraph"><p>Der <a href="#create_user">Datenbankbenutzer</a> für das Monitoring benötigt in der Regel nicht die Rolle <code>SYSDBA</code>.
+Beachten Sie aber, dass das Agentenplugin <code>mk_oracle</code> bei Multi-Tenant-Datenbanken (für das Monitoring nicht relevante) Fehlermeldungen erzeugen kann, die eventuell wegen der fehlenden <code>SYSDBA</code>-Berechtigung nicht in Log-Dateien der Oracle-Datenbank geschrieben werden können.
+Dies kann dann z.B. zu Oracle-Fehlermeldungen der Art <code>ORA-01031: insufficient privileges</code> in einer Alert-Log-Datei führen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>9. Dateien und Verzeichnisse</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__auf_dem_oracle_host_unter_linux_solaris_aix">
+<span class="hidden-anchor sr-only" id="_auf_dem_oracle_host_unter_linux_solaris_aix"></span>9.1. Auf dem Oracle-Host unter Linux, Solaris, AIX</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/bin/check_mk_agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Checkmk-Agent, welcher alle Daten zu dem Host sammelt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk/plugins/mk_oracle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Oracle-Agentenplugin im üblichen Verzeichnis für Agentenplugins.
+Beachten Sie, dass der Pfadname unter AIX etwas anders ist: <code>/usr/check_mk/lib/plugins/mk_oracle</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/oracle.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Konfigurationsdatei für das Agentenplugin.
+Auch hier unterscheidet sich AIX: <code>/usr/check_mk/conf/mk_oracle.cfg</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/sqlnet.ora</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Konfigurationsdatei, welche für das <a href="#oracle_wallet">Oracle-Wallet</a> benötigt wird.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/tnsnames.ora</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Konfigurationsdatei, welche TNS-Alias enthält.
+Beispieldateien liegen auch in der Oracle-Installation, aber da sich der Pfad je nach Installation unterscheidet, kann er nicht pauschal angegeben werden.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__auf_dem_oracle_host_unter_windows">
+<span class="hidden-anchor sr-only" id="_auf_dem_oracle_host_unter_windows"></span>9.2. Auf dem Oracle-Host unter Windows</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\Program Files (x86)\checkmk\service\check_mk_agent.exe</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Agent, welcher alle Daten zu dem Host sammelt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\plugins\mk_oracle.ps1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Oracle-Agentenplugin im üblichen Verzeichnis für Agentenplugins.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\config\mk_oracle_cfg.ps1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Konfigurationsdatei für das Agentenplugin.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\config\sqlnet.ora</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Konfigurationsdatei, welche für das Oracle-Wallet benötigt wird.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\config\tnsnames.ora</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Konfigurationsdatei, welche TNS-Alias enthält.
+Beispieldateien liegen auch in der Oracle-Installation, aber da sich der Pfad je nach Installation unterscheidet, kann er nicht pauschal angegeben werden.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_files_cmk">
+<span class="hidden-anchor sr-only" id="files_cmk"></span>9.3. Auf dem Checkmk-Server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/plugins/mk_oracle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Agentenplugin für Unix-artige Systeme, welches auf dem Oracle-Host die Daten holt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/plugins/mk_oracle_crs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dieses Agentenplugin für Unix-artige Systeme liefert Daten zu einem Oracle Cluster Manager.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/windows/plugins/mk_oracle.ps1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Agentenplugin für Windows, welches auf dem Oracle-Host die Daten holt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/cfg_examples/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier befinden sich beispielhafte Konfigurationsdateien für Unix-artige Systeme in den Dateien <code>mk_oracle.cfg</code>, <code>sqlnet.ora</code> und <code>tnsnames.ora</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/windows/cfg_examples/mk_oracle_cfg.ps1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eine beispielhafte Konfigurationsdatei für Windows.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Einleitung</a></li>
+<li>
+<a href="#first_steps">2. Ersteinrichtung</a><ul class="sectlevel1">
+<li>
+<a href="#create_user">2.1. Datenbankbenutzer erstellen</a><ul class="sectlevel2"><li><a href="#_multi_tenant_datenbanken">Multi-Tenant-Datenbanken</a></li></ul>
+</li>
+<li><a href="#user_config">2.2. Konfiguration erstellen</a></li>
+<li><a href="#oracle_wallet">2.3. Oracle-Wallet nutzen</a></li>
+</ul>
+</li>
+<li>
+<a href="#linux">3. Einrichtung für Linux, Solaris, AIX</a><ul class="sectlevel1">
+<li><a href="#_plugin_und_konfigurationspfade">3.1. Plugin- und Konfigurationspfade</a></li>
+<li><a href="#install_linux">3.2. Agentenplugin installieren</a></li>
+<li>
+<a href="#adv_linux">3.3. Erweiterte Optionen</a><ul class="sectlevel2">
+<li><a href="#adv_user_linux">Erweiterte Benutzerkonfiguration</a></li>
+<li><a href="#skip_include">Instanzen ein- oder ausschließen</a></li>
+<li><a href="#sections">Zu holende Daten bestimmen</a></li>
+<li><a href="#tns_config">TNS-Alias und TNS_ADMIN konfigurieren</a></li>
+<li><a href="#access_linux">Zugriffsrechte bei der Ausführung</a></li>
+</ul>
+</li>
+<li><a href="#remote_instances">3.4. Entfernte Datenbanken überwachen</a></li>
+</ul>
+</li>
+<li>
+<a href="#windows">4. Einrichtung für Windows</a><ul class="sectlevel1">
+<li><a href="#_plugin_und_konfigurationspfade_2">4.1. Plugin- und Konfigurationspfade</a></li>
+<li><a href="#install_windows">4.2. Agentenplugin installieren</a></li>
+<li><a href="#_besonderheiten_unter_windows">4.3. Besonderheiten unter Windows</a></li>
+<li>
+<a href="#adv_windows">4.4. Erweiterte Optionen</a><ul class="sectlevel2">
+<li><a href="#adv_user_windows">Erweiterte Benutzerkonfiguration</a></li>
+<li><a href="#skip_include_windows">Instanzen ein- oder ausschließen</a></li>
+<li><a href="#sections_windows">Zu holende Daten bestimmen</a></li>
+<li><a href="#access_windows">Zugriffsrechte bei der Ausführung</a></li>
+</ul>
+</li>
+<li><a href="#_entfernte_datenbanken_%C3%BCberwachen">4.5. Entfernte Datenbanken überwachen</a></li>
+</ul>
+</li>
+<li>
+<a href="#bakery">5. Einrichtung mit der Agentenbäckerei</a><ul class="sectlevel1">
+<li><a href="#bakery_users">5.1. Benutzer konfigurieren</a></li>
+<li><a href="#bakery_advanced">5.2. Erweiterte Optionen</a></li>
+</ul>
+</li>
+<li>
+<a href="#clustered_instances">6. Cluster-Instanzen</a><ul class="sectlevel1">
+<li>
+<a href="#_standby_datenbanken">6.1. Standby-Datenbanken</a><ul class="sectlevel2">
+<li><a href="#cluster_adg">Mit Active Data Guard (ADG)</a></li>
+<li><a href="#cluster_dg">Ohne Active Data Guard (DG)</a></li>
+<li><a href="#clustered_services">Cluster-Services einrichten</a></li>
+</ul>
+</li>
+<li>
+<a href="#rac">6.2. Real Application Cluster (RAC)</a><ul class="sectlevel2"><li><a href="#_cluster_services_einrichten">Cluster-Services einrichten</a></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#custom_sqls">7. Benutzerdefinierte SQL-Abfragen (Custom SQLs)</a><ul class="sectlevel1">
+<li><a href="#_warum_benutzerdefinierte_sql_abfragen">7.1. Warum benutzerdefinierte SQL-Abfragen?</a></li>
+<li>
+<a href="#_einfache_benutzerdefinierte_sql_abfragen">7.2. Einfache benutzerdefinierte SQL-Abfragen</a><ul class="sectlevel2">
+<li><a href="#_sql_abfragen_schreiben">SQL-Abfragen schreiben</a></li>
+<li><a href="#_agentenplugin_konfigurieren">Agentenplugin konfigurieren</a></li>
+</ul>
+</li>
+<li><a href="#adv_custom_sqls">7.3. Erweiterte Optionen</a></li>
+<li><a href="#own_check_plug-in">7.4. Eigene Check-Plugins nutzen</a></li>
+</ul>
+</li>
+<li>
+<a href="#diagnostic">8. Diagnosemöglichkeiten</a><ul class="sectlevel1">
+<li>
+<a href="#connection_test">8.1. Verbindungstest</a><ul class="sectlevel2">
+<li><a href="#_linux_solaris_aix">Linux, Solaris, AIX</a></li>
+<li><a href="#_windows">Windows</a></li>
+</ul>
+</li>
+<li>
+<a href="#logging">8.2. Logging</a><ul class="sectlevel2">
+<li><a href="#_linux_solaris_aix_2">Linux, Solaris, AIX</a></li>
+<li><a href="#_windows_2">Windows</a></li>
+</ul>
+</li>
+<li>
+<a href="#debugging">8.3. Debugging</a><ul class="sectlevel2">
+<li><a href="#_linux_solaris_aix_3">Linux, Solaris, AIX</a></li>
+<li><a href="#_windows_3">Windows</a></li>
+</ul>
+</li>
+<li><a href="#ora-01031">8.4. Fehlermeldungen in Oracle Log-Dateien</a></li>
+</ul>
+</li>
+<li>
+<a href="#files">9. Dateien und Verzeichnisse</a><ul class="sectlevel1">
+<li><a href="#_auf_dem_oracle_host_unter_linux_solaris_aix">9.1. Auf dem Oracle-Host unter Linux, Solaris, AIX</a></li>
+<li><a href="#_auf_dem_oracle_host_unter_windows">9.2. Auf dem Oracle-Host unter Windows</a></li>
+<li><a href="#files_cmk">9.3. Auf dem Checkmk-Server</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

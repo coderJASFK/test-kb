@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Checkmk flexibly supports you in monitoring all possible devices with SNMP. Here is how SNMP works and how it works with CMK.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Monitoring via SNMP - Monitoring of SNMP devices with Checkmk">
+<meta name="og:description" content="Checkmk flexibly supports you in monitoring all possible devices with SNMP. Here is how SNMP works and how it works with CMK.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Monitoring via SNMP - Monitoring of SNMP devices with Checkmk</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/de/snmp.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/en/snmp.html">2.2.0</a><a class="dropdown-item" href="../../latest/en/snmp.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host and service parameters</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Introduction to notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMWare ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Performance data and graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Configuration via the Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Configuration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Command reference for the HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Writing your own check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Monitoring via SNMP</h1>
+<div class="details">
+<span id="revdate">Last modified on 20-Jan-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/en/snmp.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="ec.html">The Event Console</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. What is SNMP?</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__using_snmp_instead_of_a_checkmk_agent">
+<span class="hidden-anchor sr-only" id="_using_snmp_instead_of_a_checkmk_agent"></span>1.1. Using SNMP instead of a Checkmk agent</h3>
+<div class="paragraph"><p>Routers, switches, firewalls, printers, appliances, UPSs, hardware sensors, and many other devices do not allow the installation of a Checkmk agent.
+They do however already have a built-in interface for monitoring provided by their manufacturer — an <em>SNMP agent</em>.
+This agent can be accessed via the <em>Simple Network Management Protocol (SNMP)</em>.
+Checkmk uses SNMP to monitor such devices.
+The benefit for you is that setting up the monitoring is very easy.</p></div>
+<div class="paragraph"><p>There are also SNMP agents for Windows and Linux, however using these <em>instead of</em> the Checkmk agent is not recommended.
+SNMP is not very performant, so using this for monitoring generally means that the Checkmk server needs more CPU and memory per host than when working with its own agent.
+In addition the data provided via SNMP are incomplete.
+In some cases, however, monitoring via SNMP <strong>in addition</strong> to the Checkmk agent can be useful.
+See the chapter on <a href="#snmp_cmk_agent">SNMP and Checkmk agent</a> for more on this topic.</p></div>
+<div class="paragraph"><p>However, if there is no Checkmk agent plug-in for monitoring a particular hardware or software component (e.g. a RAID controller), but the component has an SNMP interface, you can of course collect additional monitoring data via SNMP.
+In such a case, make sure that the query intervals are long enough.</p></div>
+<div class="paragraph"><p>Monitoring SNMP devices with Checkmk is very easy.
+If you just want to get started quickly with SNMP, you will probably need to read the short section on SNMP in the <a href="intro_setup_monitor.html#snmp">Beginner’s guide</a>.
+This article goes into much more depth, and shows you all of the details and specific scenarios when SNMP monitoring with Checkmk.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__snmp_versions">
+<span class="hidden-anchor sr-only" id="_snmp_versions"></span>1.2. SNMP versions</h3>
+<div class="paragraph"><p>The SNMP protocol is available in different versions.
+These protocols are all incompatible with each other, and so the monitoring system and the monitored device must always consistently use the same protocol version.
+Checkmk supports versions v1, v2c, and v3.
+In practice, an estimated 99% of installations use v2c.
+Here is an overview of all of the relevant versions of SNMP:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 60%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Version</th>
+<th class="tableblock halign-left valign-top">Features</th>
+<th class="tableblock halign-left valign-top">Checkmk</th>
+<th class="tableblock halign-left valign-top">Description and application in practice</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>v1</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use only on very old (say, 15 years and older) devices that do not support v2c, or their support for v2c is defective.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>v2c</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulk queries,<br>
+64-Bit-Counter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is the standard in practice. v2c is a ‘light’ variant of v2 and the ‘c’ here stands for <em>Community</em>, which performs the role of a password in SNMP. The 64-bit counters are essential in monitoring switch ports with 1 Gbps and more. The bulk queries accelerate monitoring by up to a factor of 10.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>v2</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version 2 offers even better security options in addition to the features of v2c. Version 2 of SNMP is not found in practice, therefore CMK does not support this protocol version. If you need security use <a href="#v3">version 3</a> instead.<br>
+<strong>Attention:</strong> Since the ‘real’ version 2 has no relevance, many masks in Checkmk refer simply to v2, but always really mean v2c.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>v3</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security,<br>
+Context</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#v3">Version 3</a> is used when encrypting SNMP traffic. With v2c and v1 this runs in plain text – including in the community. In practice, version 3 is rather less common, because this version requires significantly more computing power, and also the cost of the configuration is significantly higher than with v2c. The <em>Contexts</em> are a concept in which different information is visible in the same area of the SNMP data structure (OID), depending on the context ID. This would be used for partioning of fibre-channel-switches for example.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__snmp_traps">
+<span class="hidden-anchor sr-only" id="_snmp_traps"></span>1.3. SNMP traps</h3>
+<div class="paragraph"><p>Checkmk uses <em>active requests</em> for SNMP monitoring – a pull method.
+Checkmk sends a UDP packet (port 161) containing an SNMP request to the device requesting the provision of specific data.
+The device then responds with a UDP packet containing the response data (or an error message).</p></div>
+<div class="paragraph"><p>SNMP has a second process: <em>SNMP traps</em>.
+These are spontaneous push messages sent by devices at configured addresses via UDP (Port 162) in push mode.
+Traps have many disadvantages over active requests, which is the reason they are not very important for monitoring.
+Some of the disadvantages are:</p></div>
+<div class="ulist"><ul>
+<li><p>Traps are not reliable. UDP packets can be lost. There is no confirmation of receipt.</p></li>
+<li><p>Mostly only <em>Error</em> messages are sent, but no <em>Recovery</em> messages. Thus the current status in the monitoring is unclear.</p></li>
+<li><p>If thousands of switches simultaneously send traps (for example, if an important upstream service is not available for them), the trap receiver will not be able to handle it and will break under the load. Monitoring will then be overloaded when you need it most.</p></li>
+<li><p>When changing the trap receiver’s IP address, all devices must be reconfigured.</p></li>
+<li><p>Traps are hard to test. Few devices even have a function to send a generic test trap -– let alone test real error messages. Therefore it is difficult to predict whether an important trap will be processed correctly when its first invocation occurs after a few months or years.</p></li>
+</ul></div>
+<div class="paragraph"><p>However if you want or need to work with traps, the <a href="ec.html#snmp">Event Console</a> provides a solution.
+This can receive traps and generate events from them.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_snmphost">
+<span class="hidden-anchor sr-only" id="snmphost"></span>2. Setting-up SNMP in Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_enable_snmp">
+<span class="hidden-anchor sr-only" id="enable_snmp"></span>2.1. Preparing a device</h3>
+<div class="paragraph"><p>The first step is to prepare the device.
+Each device that supports SNMP has its own configuration mask somewhere in its configuration.
+Make the following settings in this configuration mask:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Go to configuration for <em>active</em> queries (SNMP GET).
+(Do not confuse this with the traps — the terminology in the configuration dialogs can be very confusing).</p></li>
+<li><p>Enable SNMP for <em>reading</em> requests.</p></li>
+<li><p>Enter the addresses of your Checkmk servers as the permitted IP addresses.
+It may also be useful to provide a Checkmk test site here.
+Important: If you have multiple redundant Checkmk servers, do not forget to also specify the IP address(es) used after a failover.
+In the case of the Checkmk appliance in particular, this uses the IP address of the active node as the source IP address for outgoing connections — and not the service IP address.
+In a <a href="distributed_monitoring.html">distributed environment</a> the IP address of the remote site from which the device is monitored is critical.</p></li>
+<li><p>Assign a <em>Community</em> if protocol versions v1 and v2c are to be used.</p></li>
+</ol></div>
+<div class="paragraph"><p>The <em>Community</em> is a kind of password, except that there is no user name for SNMP.
+There is a convention that the community is <code>public</code>.
+This is the default for many devices — and also for Checkmk.
+Of course you can argue that this is insecure and that you should specify another community.
+This certainly makes sense, but you should know that SNMP transmits the community in plain text (except for <a href="#v3">SNMP Version 3</a>).Anyone who can listen to packets can therefore very easily identify the community.
+On the other hand you have limited access to read-only access, and most of the information that can be retrieved via SNMP is not very critical.</p></div>
+<div class="paragraph"><p>Furthermore, the use of <em>different</em> communities per device is very cumbersome to handle.
+After all, these must not only be maintained in the devices, but also in the monitoring system.
+That is why in practice users usually use the same community everywhere — or at least everywhere within a region, department, computer center, etc.</p></div>
+<div class="paragraph"><p><strong>Tip:</strong> If you want to increase the security even without SNMP version 3, it makes sense to extend the network concept so that you put the traffic with the management services, and thus also SNMP, in a separate management VLAN and secure that access with the firewall.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_add_device">
+<span class="hidden-anchor sr-only" id="add_device"></span>2.2. Adding a device into Checkmk</h3>
+<div class="paragraph"><p>Add the monitored devices as hosts in Checkmk in the usual way.
+If you have chosen your folder structure so that only one folder contains SNMP devices, you can make the other settings directly in that folder.
+This makes it easier to add additional hosts later, and also avoids errors.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/snmp_host_configuration.png" alt="Adding a host to monitoring via SNMP."></div></div>
+<div class="paragraph"><p>Now in the properties of the host (or folder), in the <span class="guihint">Monitoring agents</span> box set <span class="guihint">Checkmk agent / API integrations</span> to <span class="guihint">No API integrations, no Checkmk agent</span>.</p></div>
+<div class="paragraph"><p>In the same box, also activate <span class="guihint">SNMP</span> and as the SNMP protocol select <span class="guihint">SNMP v2 or v3</span>.
+The selection of protocol version 1 is an makeshift solution only for <em>very</em> old devices.
+You should use this only if you know that v2 is really not supported, or when the implementation for the device is defective (in practice, only in isolated cases).
+Above all, SNMP version 1 is very slow because it does not support bulk accesses.
+This difference is very significant.</p></div>
+<div class="paragraph"><p>The third and final setting is called <span class="guihint">SNMP credentials</span>.
+Here again a choice of the protocol version is necessary, since v2c and v3 differ here.
+We will discuss version 3 <a href="#v3">below</a>.
+If you do not have very high security requirements, you will be well-served by version 2c — or you can place the SNMP communication in a management VLAN and thus secure it.
+Version 2c requires the entry of the Community as discussed above.</p></div>
+<div class="paragraph"><p>There is an alternative way to configure the SNMP credentials, if you can not easily pass it through your folder structure:
+the <span class="guihint">Setup &gt; Agents &gt; SNMP rules &gt; SNMP credentials of monitored hosts</span> <a href="wato_rules.html">rule set</a>.
+This will allow you to assign the credentials based on host tags, <a href="labels.html">labels</a> and similar properties.
+The principle is that a community that is set directly at the host or folder always takes precedence over the rules.</p></div>
+<div class="sect3">
+<h4 id="heading_snmp_cmk_agent">
+<span class="hidden-anchor sr-only" id="snmp_cmk_agent"></span>Monitoring via SNMP and Checkmk agent</h4>
+<div class="paragraph"><p>Occasionally the question comes up whether it would not be possible or even useful to monitor Linux or Windows using SNMP instead of the Checkmk agent.
+The answer is very simple: possible yes, useful no. Why?</p></div>
+<div class="ulist"><ul>
+<li><p>The monitoring data of the SNMP agent is very limited. Therefore you need the Checkmk agent for halfway useful monitoring anyway.</p></li>
+<li><p>The SNMP agent does not provide any meaningful data that the Checkmk agent would not provide.</p></li>
+<li><p>The SNMP agent is more cumbersome to set up.</p></li>
+<li><p>Last but not least, the SNMP protocol requires significantly more CPU and network resources than normal monitoring with Checkmk.</p></li>
+</ul></div>
+<div class="paragraph"><p>However, there are a few situations where monitoring via SNMP <strong>in addition</strong> to the Checkmk agent can be useful.
+This can then involve both the Checkmk agent for <a href="agent_linux.html">Linux</a> and for <a href="agent_windows.html">Windows</a>.
+A typical example is that for a software or hardware component (for example, a RAID controller) a tool from the server manufacturer is installed and provides monitoring data only via SNMP, as is the case with Fujitsu ServerView, for example.
+Then you can of course collect additional monitoring data via SNMP.
+In this case, make sure that the query intervals are sufficiently long.
+With Windows it can also happen that a query via PowerShell is not possible — due to the Windows version used or because there are no cmdlets for the application.</p></div>
+<div class="paragraph"><p>In such a case, if you want to monitor the Linux or Windows host via Checkmk agent <strong>and</strong> SNMP, do the following:
+In the host’s properties, in the <span class="guihint">Setup</span> menu, in the <span class="guihint">Monitoring agents</span> box, set the <span class="guihint">Checkmk agent / API integrations</span> option to a value with Checkmk agent (<span class="guihint">API integrations if configured, else Checkmk agent</span> or <span class="guihint">Configured API integrations and Checkmk agent</span>).
+In the same box, enable the <span class="guihint">SNMP</span> option and set the value to <span class="guihint">SNMP v2 or v3</span> or <span class="guihint">SNMP v1</span>, as described above:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/snmp_host_agent_and_snmp_configuration.png" alt="Include a host in monitoring via Checkmk agent and SNMP."></div></div>
+<div class="paragraph"><p>Services that are available via both SNMP and Checkmk agent (e.g. CPU usage, file systems, network cards) are then automatically fetched from the Checkmk agent and not via SNMP.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__diagnostics">
+<span class="hidden-anchor sr-only" id="_diagnostics"></span>2.3. Diagnostics</h3>
+<div class="paragraph"><p>When you have finished with the settings, you can make a short detour via the diagnostics page.
+To do this save with the <span class="guihint">Save &amp; go to connection test</span> action bar button.
+Here is an example of the diagnostics for a switch.
+Various protocol versions of SNMP are tried simultaneously, namely:</p></div>
+<div class="ulist"><ul>
+<li><p>SNMP v1</p></li>
+<li><p>SNMP v2c</p></li>
+<li><p>SNMP v2c without Bulk Queries</p></li>
+<li><p>SNMP v3</p></li>
+</ul></div>
+<div class="paragraph"><p>A normal, modern device should respond to all four variants with the same data — however this may be limited depending on the configuration.
+The result will look like this:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/snmp_diagnostics.png" alt="Output of SNMP v2c diagnostics."></div></div>
+<div class="paragraph"><p>The four information outputs are described here:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sysDescr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The description of the device as it is hard-coded in the device firmware by the manufacturer. This text is very important to Checkmk for automatic service discovery.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sysContact</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This field is for specifying a contact person and is defined by you in the device configuration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sysName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here is the host name of the device. This field is also configured on the device. For the actual monitoring the name plays no further role and is only displayed for information. However, it makes sense and is helpful if the host name here matches the host name in Checkmk.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sysLocation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is a field for a free text entry — purely for information — in which you can enter the location of the device.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_services">
+<span class="hidden-anchor sr-only" id="services"></span>2.4. The service configuration</h3>
+<div class="sect3">
+<h4 id="heading__special_features_of_snmp_devices">
+<span class="hidden-anchor sr-only" id="_special_features_of_snmp_devices"></span>Special features of SNMP devices</h4>
+<div class="paragraph"><p>After saving the host properties (and optionally the diagnostics), the next step is usually the <a href="wato_services.html">configuration of services</a>.
+There are some peculiarities with this, because internally the service discovery is done very differently in SNMP devices compared to hosts, which are monitored with the Checkmk agent.
+Checkmk can simply look at the agent’s output and find the items of interest using the individual check plug-ins.
+With SNMP a little more work is necessary.
+Although Checkmk could perform a detection and generate a full output of all SNMP data (SNMP walk), and in this look for interesting information, but there are devices for which a single detection would take several hours!</p></div>
+<div class="paragraph"><p>However Checkmk has a smarter approach.
+Initially, it only retrieves the very first two records (OIDs) from the device — the <code>sysDescr</code> and <code>sysObjectID</code>.
+Thereafter, as needed, further queries are invoked.
+Based on the results, each of the nearly 1 000 supplied SNMP check plug-ins decides whether the device actually supports this plug-in.
+Checkmk calls this phase the <em>SNMP scan</em>, and as a result the software produces a list of check plug-ins that serve as candidates for the actual service discovery.</p></div>
+<div class="paragraph"><p>In a second step the actual detection runs.
+The plug-ins found retrieve the exact data they need using local SNMP queries, and use this data to determine the services to be monitored.
+The data retrieved are precisely those which will later be fetched regularly for monitoring.</p></div>
+<div class="paragraph"><p>For devices in a LAN the whole process usually does not take very long — more than several seconds would be an exception.
+If you monitor devices over high-latency WAN links however, the entire scan may take several minutes.
+A scan also takes longer for switches with hundreds of ports of course.
+Now it would be very impractical if you had to wait so long every time you open the services’ page.</p></div>
+<div class="paragraph"><p>Therefore the Setup normally skips the scan, and does the detection only with the check plug-ins already in use at the host.
+The SNMP walks are then already available as cache files through the normal monitoring, and detection does not take long.
+With this you will be able to find new items from <em>existing</em> plug-ins (for example, new switch ports, hard disks, sensors, VPNs, etc.), but not find <em>brand new plug-ins</em>.</p></div>
+<div class="paragraph"><p>The <span class="guihint">Full service scan</span> button forces an SNMP scan and fetches fresh data via SNMP.
+As a result services from completely new plug-ins are also found.
+It may be necessary to wait for slow-responding devices.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__standard_services">
+<span class="hidden-anchor sr-only" id="_standard_services"></span>Standard services</h4>
+<div class="paragraph"><p>No matter which device you monitor via SNMP — as a minimum the following three services should appear in the configuration:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/snmp_standard_services.png" alt="Display of the three standard services that every SNMP device should have."></div></div>
+<div class="paragraph"><p>The first service is a check that monitors the network ports.
+At least one must have the device and be active — otherwise SNMP would not function.
+In general Checkmk is preset so that it includes all ports that are active at the time of a service discovery (operational status ‘up’) in the monitoring.
+You can influence this with the <span class="guihint">Setup &gt; Services &gt; Service discovery rules &gt; Network interface and switch port discovery</span> rule set.</p></div>
+<div class="paragraph"><p>By the way, in the Beginner’s guide you will find a chapter on best practices when <a href="intro_finetune.html#switchports">configuring switch ports</a>.</p></div>
+<div class="paragraph"><p>The second is the <span class="guihint">SNMP Info</span> service which displays the same four pieces of information that you saw in the diagnosis.
+This has a purely informal function and is always <span class="state0">OK</span>.</p></div>
+<div class="paragraph"><p>Finally there is the <span class="guihint">Uptime</span> service, which shows you when the device was last restarted.
+This service is always <span class="state0">OK</span> by default, but you can set upper and lower thresholds for the uptime.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__when_devices_create_problems">
+<span class="hidden-anchor sr-only" id="_when_devices_create_problems"></span>3. When devices create problems</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__a_defective_snmp_implementation">
+<span class="hidden-anchor sr-only" id="_a_defective_snmp_implementation"></span>3.1. A defective SNMP implementation</h3>
+<div class="paragraph"><p>It actually seems as if any conceivable mistake that can theoretically be made when implementing SNMP has already been made by some manufacturer at some point.
+And so there are devices with which SNMP works reasonably well, but certain parts of the protocol do not, or have been incorrectly implemented.</p></div>
+<div class="sect3">
+<h4 id="heading__no_response_for_a_request_to_sysdescr">
+<span class="hidden-anchor sr-only" id="_no_response_for_a_request_to_sysdescr"></span>No response for a request to 'sysDescr'</h4>
+<div class="paragraph"><p>One possible error is when SNMP agents fail to respond to the request for standard information — no reply to the <code>sysDescr</code> for example.
+These devices are as good as dead in a diagnosis, and they will not deliver any results to a service discovery if you don’t help them with a special configuration.
+To do this, for affected hosts create a rule under <span class="guihint">Setup &gt; Agents &gt; SNMP rules &gt; Hosts without system description OID</span> with the <span class="guihint">Positive match (Add matching hosts to the set)</span> option.
+Checkmk then simply assumes that everything is fine and skip the test with the <code>sysDescr</code>.
+Although no check plug-ins will be detected that expect specific parts in this text, in practice this does not matter as the affected plug-ins are designed to accommodate such a condition.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__v2c_works_but_bulk_requests_fail">
+<span class="hidden-anchor sr-only" id="_v2c_works_but_bulk_requests_fail"></span>V2c works, but bulk requests fail</h4>
+<div class="paragraph"><p>Some devices support version v2c — and will provide an answer to this in the diagnostics — however, the implementation of the <code>GetBulk</code> command is missing in the protocol.
+This is used by Checkmk to get as much information as possible with a single request and is very important for the performance.</p></div>
+<div class="paragraph"><p>With such a host, some simple SNMP checks will work — such as <span class="guihint">SNMP Info</span> or <span class="guihint">SNMP Uptime</span>, but other services will be missing — especially the network interfaces that must be present on each device.</p></div>
+<div class="paragraph"><p>If you actually have a host where this is the case, you can run it with v2c, but without bulk requests.
+Configure such a host as follows:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Set the SNMP version for the host properties to <span class="guihint">SNMP v1</span>.</p></li>
+<li><p>In the <span class="guihint">Setup &gt; Agents &gt; SNMP rules &gt; Legacy SNMP devices using SNMP v2c</span> rule set, create a rule for the host, and set the value typically to <span class="guihint">Positive match (Add matching hosts to the set)</span>.</p></li>
+</ol></div>
+<div class="paragraph"><p>This forces the host to use the SNMP v2c protocol — although version 1 has been set — however <em>without bulkwalk</em>.
+Incidentally, we do not recommend the use of SNMP v1 — even if that is supported — because it does not support 64-bit counters.
+This can lead to missing or erroneous measurement data for network ports which are subject to heavy traffic.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__devices_which_respond_very_slowly">
+<span class="hidden-anchor sr-only" id="_devices_which_respond_very_slowly"></span>Devices which respond very slowly</h4>
+<div class="paragraph"><p>There are some devices with which some SNMP queries take a very long time.
+This is partly due to incorrect implementations.
+Here it can sometimes help to go back to SNMP v1 — which is usually much slower, but can still sometimes be faster than a broken SNMP v2c.
+Before you try this however, you should check whether the manufacturer provides a firmware upgrade that solves the problem.</p></div>
+<div class="paragraph"><p>A second cause may be that the device has very many switch ports, and also a slow SNMP implementation.
+If you only want to monitor very few of the ports (only the first two ports, for example), you can manually limit Checkmk to polling only specified ports. Details on this can be found below in <a href="#performance">Performance</a>.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__only_the_standard_services_are_found">
+<span class="hidden-anchor sr-only" id="_only_the_standard_services_are_found"></span>3.2. Only the standard services are found</h3>
+<div class="paragraph"><p>You have included an SNMP device in the monitoring but Checkmk recognizes only the <span class="guihint">SNMP Info</span> and <span class="guihint">SNMP Uptime</span> services and the interfaces.
+This can be due to a number of causes:</p></div>
+<div class="sect3">
+<h4 id="heading__a_there_are_no_plug_ins">
+<span class="hidden-anchor sr-only" id="_a_there_are_no_plug_ins"></span>a) There are no plug-ins</h4>
+<div class="paragraph"><p>Checkmk provides nearly 1 000 check plug-ins for SNMP devices, but even this list is naturally never complete.
+Over and over again it is found that for certain devices Checkmk does not provide any specific plug-in, meaning you can only monitor the standard services as mentioned. Here you have the following options:</p></div>
+<div class="ulist"><ul>
+<li><p>You might find a suitable plug-in on the <a href="https://exchange.checkmk.com" target="_blank">Checkmk Exchange</a>, where users can upload their own plug-ins.</p></li>
+<li><p>You can develop your own plug-ins. Information on writing your own plug-ins can be found in <a href="devel_check_plugins.html">articles</a> in this User guide.</p></li>
+<li><p>You contact our support team or one of our partners and request that they develop suitable plug-ins.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__b_the_plug_ins_cannot_be_recognised">
+<span class="hidden-anchor sr-only" id="_b_the_plug_ins_cannot_be_recognised"></span>b) The plug-ins cannot be recognised</h4>
+<div class="paragraph"><p>It sometimes occurs that a new firmware version for a device results in Checkmk plug-ins no longer recognizing the device — e.g. because a text has changed in the system description for the device.
+In such a case the existing plug-ins must be adapted.
+Contact our support team for this.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__c_the_device_does_not_deliver_the_required_data">
+<span class="hidden-anchor sr-only" id="_c_the_device_does_not_deliver_the_required_data"></span>c) The device does not deliver the required data</h4>
+<div class="paragraph"><p>Some (few) devices have the ability to individually-configure access to specific information areas in their SNMP configuration.
+Your device may be set to deliver the default information, but not that for the device-specific services.</p></div>
+<div class="paragraph"><p>On a few devices you must use SNMP v3 and <a href="#contexts">Contexts</a> to get the data you want.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__devices_that_do_not_respond_at_all_to_snmp">
+<span class="hidden-anchor sr-only" id="_devices_that_do_not_respond_at_all_to_snmp"></span>3.3. Devices that do not respond at all to SNMP</h3>
+<div class="paragraph"><p>If the ping works, but none of the SNMP protocol versions work, there can be several possible causes:</p></div>
+<div class="ulist"><ul>
+<li><p>The device is not reachable via IP at all. You can check this with the Ping Test (first box).</p></li>
+<li><p>The device does not support SNMP at all.</p></li>
+<li><p>The SNMP share is not configured correctly (activation, allowed addresses, Community).</p></li>
+<li><p>A firewall blocks SNMP. You need to open UDP port 161 for both outgoing and incoming traffic.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_v3">
+<span class="hidden-anchor sr-only" id="v3"></span>4. SNMP v3</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__security">
+<span class="hidden-anchor sr-only" id="_security"></span>4.1. Security</h3>
+<div class="paragraph"><p>By default SNMP is unencrypted and is therefore very poorly-authenticated by a Community transmitted as plain-text over the network.
+This level may still be sufficient for a local, isolated network, as here monitoring is limited to accessing read-only operations.</p></div>
+<div class="paragraph"><p>If you still want a higher level of security you will need SNMP version 3.
+This provides the option of encryption and genuine authentication.
+For this however a corresponding configuration is also necessary.</p></div>
+<div class="paragraph"><p>SNMP v3 recognises various levels of security:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;">
+<col style="width: 85%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>noAuthNoPriv</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No real, user-based authentication, no encryption. Nonetheless, the advantage over v2c is that the password is no longer transmitted in plain text, instead it is hashed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authNoPriv</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User-based authentication with a name (<span class="guihint">Security name</span>) and a password, but no encryption.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authPriv</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User-based authentication as with <code>authNoPriv</code>, and additionally all data is encrypted. Here you have to manually exchange a Key — that is, deposit the Key both in the device and in Checkmk.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>The required setting in Checkmk is made in the same place where you also defined the Community — either under the host properties or the <span class="guihint">SNMP credentials of monitored hosts</span> rule.
+There, instead of <span class="guihint">SNMP Community</span>, select one of the three levels of v3 and configure the necessary values:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/snmp_credentials_v3.png" alt="Configuring SNMP v3 security settings."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_contexts">
+<span class="hidden-anchor sr-only" id="contexts"></span>4.2. Contexts</h3>
+<div class="paragraph"><p>SNMP v3 introduces the concept of <em>Contexts</em>.
+A device can show different information at one and the same point in the SNMP tree — depending on which <em>Context ID</em> is given in the query.</p></div>
+<div class="paragraph"><p>If you have a device that works with such contexts, you will need two settings in Checkmk:</p></div>
+<div class="ulist"><ul>
+<li><p>First, the device must be queried using SNMP v3 (as described in the previous section).</p></li>
+<li><p>Then you need another rule in the <span class="guihint">SNMPv3 contexts to use in requests</span> rule set.
+Here you select the check plug-in for which contexts are to be activated, and then the list of contexts that should be queried in the monitoring.</p></li>
+</ul></div>
+<div class="paragraph"><p>Luckily there are very few situations in which you have to work with contexts, because unfortunately it is not possible for the monitoring to recognize them automatically.
+A manual configuration of the contexts is always necessary.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_performance">
+<span class="hidden-anchor sr-only" id="performance"></span>5. Performance and timing</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__inline_snmp">
+<span class="hidden-anchor sr-only" id="_inline_snmp"></span>5.1. Inline-SNMP</h3>
+<div class="paragraph"><p>Performance always plays a role — especially in environments with many hosts — and monitoring with SNMP consumes more CPU and memory than with Checkmk agents.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+While the Raw Edition makes SNMP requests in the classic way via the <code>snmpget</code> or <code>snmpbulkwalk</code> commands, the Enterprise Editions have a built-in SNMP engine that performs SNMP requests very efficiently without generating any extra processes.
+With this, CPU load for SNMP processing is approximately halved.
+The shorter polling times also reduce the number of Checkmk processes needed concurrently, and thus the memory usage.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__check_intervals_for_snmp_checks">
+<span class="hidden-anchor sr-only" id="_check_intervals_for_snmp_checks"></span>5.2. Check intervals for SNMP checks</h3>
+<div class="paragraph"><p>If your resources reach their limits, or if it takes more than 60 seconds to poll a single device, you can reduce the interval at which Checkmk queries the host(s).</p></div>
+<div class="paragraph"><p>With the <span class="guihint">Normal check interval for service checks</span> rule set, which you apply specifically to the Checkmk-Services of hosts, you can extend the general interval of one minute to, for example, 2 or 5 minutes.</p></div>
+<div class="paragraph"><p>Especially for SNMP checks, there is also the <span class="guihint">Check intervals for SNMP checks</span> rule set.
+This allows you to lower the interval for <em>individual</em> check plug-ins.
+It is important to know that you can never set the interval to faster than the interval for general monitoring by the Checkmk service.</p></div>
+<div class="paragraph"><p>Overall, however, we recommend that the monitoring be designed so that the standard interval of one minute can be maintained, and only increased in exceptional cases for individual hosts or checks.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__timing_settings_for_snmp_access">
+<span class="hidden-anchor sr-only" id="_timing_settings_for_snmp_access"></span>5.3. Timing settings for SNMP access</h3>
+<div class="paragraph"><p>By default Checkmk expects a response in less than one-second for an SNMP request.
+It also tries a total of three times before giving up.
+For devices that respond very slowly, or that can only be reached over a very slow network, it may be necessary to change these parameters.
+You do this through the <span class="guihint">Timing settings for SNMP access</span> rule set:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/snmp_timing_settings.png" alt="Increasing the response timeout."></div></div>
+<div class="paragraph"><p>Please note that these settings apply to an <em>individual SNMP request</em>.
+The complete process of monitoring a host consists of many separate requests.
+The total timeout is therefore a multiple of the settings specified here.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__bulkwalk_number_of_oids_per_bulk">
+<span class="hidden-anchor sr-only" id="_bulkwalk_number_of_oids_per_bulk"></span>5.4. Bulkwalk: Number of OIDs per bulk</h3>
+<div class="paragraph"><p>By default SNMP transmits 10 responses in one packet per <code>GetBulk</code> request.
+Try the <span class="guihint">Bulk walk: Number of OIDs per bulk</span> experimental rule set to see if a higher value performs better.
+However this will only be the case when large tables are transferred to the host — e.g., if it is a switch with many ports.</p></div>
+<div class="paragraph"><p>SNMP always fills the packets up to the specified number, including any records following the actual required ones.
+And if only a few of these records are really needed, extra data is transferred uselessly and the overhead increases.</p></div>
+<div class="paragraph"><p>On the other hand, in practice it may occasionally occur that devices with the default value of 10 OIDs per bulk packet can have problems.
+In such a case it can be useful to reduce the number.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__limiting_snmp_oid_ranges">
+<span class="hidden-anchor sr-only" id="_limiting_snmp_oid_ranges"></span>5.5. Limiting SNMP OID ranges</h3>
+<div class="paragraph"><p>Checkmk normally works by always getting the information on all switch ports, even though not all are actually being monitored.
+This is a good thing anyway, since this is normally faster because single queries cannot be done with the efficient bulk queries.
+In addition, from our point of view, it is always advisable to monitor all ports in order to find faulty ports or cables with high error rates.
+If ports are not reliably UP, you can also flag the link status <span class="hstate1">DOWN</span> as being <span class="state0">OK</span>.</p></div>
+<div class="paragraph"><p>However, there are isolated cases where switches have very many ports, and which for some reason respond very slowly, or process SNMP very inefficiently, so that it is no longer possible to monitor with complete retrieval of all port information.</p></div>
+<div class="paragraph"><p>For such cases, there is the <span class="guihint">Bulk walk: Limit SNMP OID Ranges</span> rule set.
+This allows you to statically limit the list of queried data (e.g., ports).
+In the rule’s value, for each particular check plug-in you specify which indexes of the respective table are to be fetched.</p></div>
+<div class="paragraph"><p>The usual check type for switch ports is called <span class="guihint">SNMP interface check with 64 bit counters (using v2c)</span>.
+The following example shows a setting in which only the first two ports are fetched via SNMP:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/snmp_limit_oid_ranges.png" alt="Bulkwalk: limit SNMP OID ranges."></div></div>
+<div class="paragraph"><p><strong>Note:</strong> This filtering is then in effect <em>before</em> the service discovery and monitoring.
+Depending on the <span class="guihint">Network interface and switch port discovery</span> setting, this does not automatically mean that these two ports will actually be monitored.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_simulation">
+<span class="hidden-anchor sr-only" id="simulation"></span>6. Simulation through SNMP walks</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__principle">
+<span class="hidden-anchor sr-only" id="_principle"></span>6.1. Principle</h3>
+<div class="paragraph"><p>The Checkmk SNMP engine has a very handy feature — you can have a monitored device write a complete snapshot of all its SNMP data to a file, an <em>SNMP walk</em>.
+You can use this file later to simulate monitoring the device on another Checkmk server, even if this other server has no actual network connection to the device.</p></div>
+<div class="paragraph"><p>We use this feature very intensively, for example, when our support team is developing new check plug-ins for our customers.
+Our developers therefore do not need access to your devices — just an SNMP walk.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_snmpwalks">
+<span class="hidden-anchor sr-only" id="snmpwalks"></span>6.2. Creating a walk via the GUI</h3>
+<div class="paragraph"><p>You can create an SNMP walk directly from the GUI.
+The function can be found in the context menu of the Checkmk service of the hosts and also in the menu of the hosts (entry <span class="image-inline"><img src="../images/icons/icon_agent_output.png" alt="icon agent output"></span> <span class="guihint">Download SNMP walk</span>):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/snmp_download_walk.png" alt="Download SNMP walk in the context menu for the host in the monitoring overview."></div></div>
+<div class="paragraph"><p>The creation of the walk takes a few seconds in the best case, but a few minutes are not uncommon.
+When the build is done you can download the created file via the <span class="guihint">Result</span> line.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__creating_a_walk_from_the_command_line">
+<span class="hidden-anchor sr-only" id="_creating_a_walk_from_the_command_line"></span>6.3. Creating a walk from the command line</h3>
+<div class="paragraph"><p>Alternatively, you can also create walks from the command line.
+Log on to the site from which the device is being monitored.
+The creation of the walk is simply done with the <code>cmk --snmpwalk</code> command and the specified host (which must be configured in monitoring):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>--snmpwalk<span class="tok-w"> </span>switch23</code></pre></div></div>
+<div class="paragraph"><p>Also use the <code>-v</code> switch to see more detailed output on the progress:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-v<span class="tok-w"> </span>--snmpwalk<span class="tok-w"> </span>switch23
+<span class="tok-go">switch23:</span>
+<span class="tok-go">Walk on ".1.3.6.1.2.1"...3664 variables.</span>
+<span class="tok-go">Walk on ".1.3.6.1.4.1"...5791 variables.</span>
+<span class="tok-go">Wrote fetched data to /omd/sites/mysite/var/check_mk/snmpwalks/switch23.</span></code></pre></div></div>
+<div class="paragraph"><p>The file will be placed in the <code>var/check_mk/snmpwalks</code> directory, where it simply carries the name of the host.
+It is a text file.
+If you are curious you can view this — e.g., with <code>less</code> — and quit the program with the <code>Q</code> key:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>less<span class="tok-w"> </span>var/check_mk/snmpwalks/switch23
+<span class="tok-go">.1.3.6.1.2.1.1.1.0 Yoyodyne Frobolator 23 port L2 Managed Switch</span>
+<span class="tok-go">.1.3.6.1.2.1.1.2.0 .1.3.6.1.4.1.11863.1.1.3</span>
+<span class="tok-go">.1.3.6.1.2.1.1.3.0 560840147</span>
+<span class="tok-go">.1.3.6.1.2.1.1.4.0 Zoe Zhang &lt;<a href="mailto:zoe@checkmk.com">zoe@checkmk.com</a>&gt;</span>
+<span class="tok-go">.1.3.6.1.2.1.1.5.0 cmkswitch23</span>
+<span class="tok-go">.1.3.6.1.2.1.1.6.0 Data Center 42</span>
+<span class="tok-go">.1.3.6.1.2.1.1.7.0 3</span>
+<span class="tok-go">.1.3.6.1.2.1.2.1.0 27</span></code></pre></div></div>
+<div class="paragraph"><p>The command <code>cmk --snmpwalk</code> has some more useful options:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Effect</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--extraoid &lt;OID&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When Checkmk performs a walk on a host, it generally retrieves two subtrees from the SNMP data area. These are specified in the SNMP tree using so-called <em>OIDs</em> (object identifiers). These are <code>MIB-2</code> and <code>enterprises</code> — that is, on the one hand a standard area that is normalized and the same for all SNMP devices, and on the other hand a manufacturer-specific area.  If SNMP is implemented correctly, this should cause the device to send <em>all</em> data that it provides. If this is not the case and you are looking for a specific range, you can add its OID to the walk with this option, e.g. <code>cmk --snmpwalk --extraoid .1.2.3.4 switch23</code>. Don’t forget the ‘period’ at the beginning of the OID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--oid</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This option is similar to <code>--extraoid</code>, but <em>only</em> retrieves the specified OID. This is of interest for testing purposes. Note, however, that the walk will be incomplete.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-v</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>v</code> stands for <em>verbose</em> and will output some interesting information during the walk.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-vv</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>vv</code> stands for <em>very verbose</em> and outputs much more information.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__using_saved_walks_for_simulations">
+<span class="hidden-anchor sr-only" id="_using_saved_walks_for_simulations"></span>6.4. Using saved walks for simulations</h3>
+<div class="paragraph"><p>If you want to use this walk on a different (or the same) Checkmk site for a simulation, then save the walk file with the name of the host on this site under <code>var/check_mk/snmpwalks</code>.</p></div>
+<div class="paragraph"><p>Now create a rule in the <span class="guihint">Simulating SNMP by using a stored SNMP walk</span> rule set that accesses the affected host(s).</p></div>
+<div class="paragraph"><p>From now on, only the saved file will be used to monitor the host.
+There is now no network access to the host — except the ping for the host check, and possibly any configured active checks.
+You can simply redirect these to the Checkmk server by giving the IP address <code>127.0.0.1</code> to the hosts.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__files_and_directories">
+<span class="hidden-anchor sr-only" id="_files_and_directories"></span>7. Files and directories</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody><tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>var/check_mk/snmpwalks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here SNMP walk files are generated or also expected if you want to use them to simulate SNMP data.</p></td>
+</tr></tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li>
+<a href="#intro">1. What is SNMP?</a><ul class="sectlevel1">
+<li><a href="#_using_snmp_instead_of_a_checkmk_agent">1.1. Using SNMP instead of a Checkmk agent</a></li>
+<li><a href="#_snmp_versions">1.2. SNMP versions</a></li>
+<li><a href="#_snmp_traps">1.3. SNMP traps</a></li>
+</ul>
+</li>
+<li>
+<a href="#snmphost">2. Setting-up SNMP in Checkmk</a><ul class="sectlevel1">
+<li><a href="#enable_snmp">2.1. Preparing a device</a></li>
+<li>
+<a href="#add_device">2.2. Adding a device into Checkmk</a><ul class="sectlevel2"><li><a href="#snmp_cmk_agent">Monitoring via SNMP and Checkmk agent</a></li></ul>
+</li>
+<li><a href="#_diagnostics">2.3. Diagnostics</a></li>
+<li>
+<a href="#services">2.4. The service configuration</a><ul class="sectlevel2">
+<li><a href="#_special_features_of_snmp_devices">Special features of SNMP devices</a></li>
+<li><a href="#_standard_services">Standard services</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#_when_devices_create_problems">3. When devices create problems</a><ul class="sectlevel1">
+<li>
+<a href="#_a_defective_snmp_implementation">3.1. A defective SNMP implementation</a><ul class="sectlevel2">
+<li><a href="#_no_response_for_a_request_to_sysdescr">No response for a request to 'sysDescr'</a></li>
+<li><a href="#_v2c_works_but_bulk_requests_fail">V2c works, but bulk requests fail</a></li>
+<li><a href="#_devices_which_respond_very_slowly">Devices which respond very slowly</a></li>
+</ul>
+</li>
+<li>
+<a href="#_only_the_standard_services_are_found">3.2. Only the standard services are found</a><ul class="sectlevel2">
+<li><a href="#_a_there_are_no_plug_ins">a) There are no plug-ins</a></li>
+<li><a href="#_b_the_plug_ins_cannot_be_recognised">b) The plug-ins cannot be recognised</a></li>
+<li><a href="#_c_the_device_does_not_deliver_the_required_data">c) The device does not deliver the required data</a></li>
+</ul>
+</li>
+<li><a href="#_devices_that_do_not_respond_at_all_to_snmp">3.3. Devices that do not respond at all to SNMP</a></li>
+</ul>
+</li>
+<li>
+<a href="#v3">4. SNMP v3</a><ul class="sectlevel1">
+<li><a href="#_security">4.1. Security</a></li>
+<li><a href="#contexts">4.2. Contexts</a></li>
+</ul>
+</li>
+<li>
+<a href="#performance">5. Performance and timing</a><ul class="sectlevel1">
+<li><a href="#_inline_snmp">5.1. Inline-SNMP</a></li>
+<li><a href="#_check_intervals_for_snmp_checks">5.2. Check intervals for SNMP checks</a></li>
+<li><a href="#_timing_settings_for_snmp_access">5.3. Timing settings for SNMP access</a></li>
+<li><a href="#_bulkwalk_number_of_oids_per_bulk">5.4. Bulkwalk: Number of OIDs per bulk</a></li>
+<li><a href="#_limiting_snmp_oid_ranges">5.5. Limiting SNMP OID ranges</a></li>
+</ul>
+</li>
+<li>
+<a href="#simulation">6. Simulation through SNMP walks</a><ul class="sectlevel1">
+<li><a href="#_principle">6.1. Principle</a></li>
+<li><a href="#snmpwalks">6.2. Creating a walk via the GUI</a></li>
+<li><a href="#_creating_a_walk_from_the_command_line">6.3. Creating a walk from the command line</a></li>
+<li><a href="#_using_saved_walks_for_simulations">6.4. Using saved walks for simulations</a></li>
+</ul>
+</li>
+<li><a href="#_files_and_directories">7. Files and directories</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

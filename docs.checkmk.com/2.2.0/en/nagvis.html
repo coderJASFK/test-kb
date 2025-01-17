@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="The NagVis open-source tool is an integral part of Checkmk. This article provides an ideal introduction to NagVis and its integration into Checkmk.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="NagVis: status data on maps and diagrams">
+<meta name="og:description" content="The NagVis open-source tool is an integral part of Checkmk. This article provides an ideal introduction to NagVis and its integration into Checkmk.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>NagVis: status data on maps and diagrams</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/de/nagvis.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/nagvis.html">2.1.0</a><a class="dropdown-item" href="../../latest/en/nagvis.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">The Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">The Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>NagVis: status data on maps and diagrams</h1>
+<div class="details">
+<span id="revdate">Last modified on 26-Jun-2018</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/onprem/en/nagvis.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a>
+<a href="livestatus.html">Retrieving status data via Livestatus</a>
+<a href="hosts_setup.html">Host administration</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. What is NagVis?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In the article on <a href="monitoring_basics.html#parents">monitoring basics</a> you saw the map of a network’s topology based on parent-child relations.
+NagVis is responsible for such maps.
+The extension enables a visualization of, for example, infrastructures, servers, ports or processes.</p></div>
+<div class="paragraph"><p>NagVis' mode of operation is basically very simple:
+Checkmk, or to be more precise <a href="glossar.html#livestatus">Livestatus</a>, provides back-end data such as hosts, services, host groups and service groups.
+These elements from your monitoring can be placed as icons on various maps.
+These dynamic icons can then show the current status of each of the hosts and services.
+More detailed additional information can be provided by tooltips.
+And finally, the icons and other elements are also links to the Checkmk objects that they represent.
+Other available elements are lines, performance displays (gadgets) and containers for external contents.</p></div>
+<div class="paragraph"><p>To get a better conception of what can be achieved with NagVis in Checkmk, here are three examples:</p></div>
+<div class="ulist"><ul>
+<li><p>Geographic maps based on <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> for managing locations.</p></li>
+<li><p>Automatic topological maps from parent-child relations.</p></li>
+<li><p>Maps of individual switches or server rooms to enable an overview of ports and hardware.</p></li>
+</ul></div>
+<div class="paragraph"><p>Provided the <a href="monitoring_basics.html#parents">parent-child relations</a> have been defined, without further action you can call up a map in Checkmk using <span class="guihint">Monitor &gt; Overview &gt; Parent / Child topology</span>.
+Additional steps are unnecessary here.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_parents.png" alt="monitoring parents"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_setup">
+<span class="hidden-anchor sr-only" id="setup"></span>2. Setting-up NagVis</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>NagVis is fully-integrated in Checkmk and configured so that you can immediately begin adding elements from your monitoring to maps.</p></div>
+<div class="paragraph"><p>To start NagVis, first open the section with available snap-ins for the <a href="glossar.html#sidebar">sidebar</a> via <span class="image-inline"><img src="../images/icons/button_sidebar_add_snapin.png" alt="button sidebar add snapin"></span> at the bottom of the sidebar.
+Here select the <span class="guihint">NagVis maps</span> snap-in, and finally start NagVis with the <span class="image-inline"><img src="../images/icons/button_view_snapin_edit.png" alt="button view snapin edit"></span> button.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis_snapin_nagvis.png" alt="nagvis snapin nagvis" width="50%"></div></div>
+<div class="paragraph"><p>Before you create your first map you should have a look at the main configuration in <span class="guihint">Options &gt; General Configuration</span>.
+Here can be found over 100 options for the basics, such as data formats and language settings, from the displaying of objects on maps, to the weighting of the available host and service statuses.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_general_configuration.png" alt="nagvis2 general configuration"></div></div>
+<div class="paragraph"><p>At this point we would like to do without a comprehensive description for the use of NagVis, and especially its configuration options.
+NagVis itself has a very good, detailed <a href="https://www.nagvis.org/doc">documentation</a>, in which also all options of the main configuration are explained.
+In the following we will restrict ourselves to the most essential basics for generating simple, useful maps using NagVis in Checkmk.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_maps">
+<span class="hidden-anchor sr-only" id="maps"></span>3. Creating maps</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__the_various_types_of_maps">
+<span class="hidden-anchor sr-only" id="_the_various_types_of_maps"></span>3.1. The various types of maps</h3>
+<div class="paragraph"><p>NagVis provides a total of five different map types: regular, dynamic, automatic and interactive/non-interactive geographic maps.</p></div>
+<div class="ulist"><ul>
+<li><p><em>Regular map</em> is the standard type of map.
+The map can visualize any desired scenario – from switch ports, to server rooms, to complete infrastructures.
+The elements (icons, lines, etc.) are added individually to the maps from the inventories of the Checkmk hosts and services.</p></li>
+<li><p><em>Dynamic map</em> largely resembles the regular map, with a significant difference however:
+hosts, services, host groups and service groups are not explicitly specified, but instead by using filters in the form of <a href="regexes.html">regular expressions</a>;
+to put it more accurately, in the form of valid <a href="livestatus.html">Livestatus</a> filters.
+In this way new hosts and services, and likewise any alterations land automatically on the map without additional manual action being required.</p></li>
+<li><p><em>Automap</em> you have already met.
+This is the network topology map mentioned <a href="#intro">at the start of this article</a> which is generated fully-automatically from the parent-child relations defined in Checkmk.</p></li>
+<li><p><em>Geographical map</em> is a map rendered with map material from the OpenStreetMap (OSM) project for their backgrounds.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_automap">
+<span class="hidden-anchor sr-only" id="automap"></span>3.2. Creating an automap</h3>
+<div class="paragraph"><p>The quickest facility for creating a representative map is the automap.
+Create a new map of the <span class="guihint">Automap based on parent/child relations</span> type via <span class="guihint">Options &gt; Manage Maps &gt; Create Map</span>.
+In <span class="guihint">ID</span> enter the internal name <code>myautomap</code>, and in <span class="guihint">Alias</span> your name <code>My Automap</code> for the display.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_automap_create.png" alt="nagvis2 automap create"></div></div>
+<div class="paragraph"><p>The map itself will immediately appear in the content area, and its corresponding link will appear in the <span class="guihint">NagVis maps</span> snap-in.
+Automap-specific settings can next be customized in <span class="guihint">Edit Map &gt; Map Options &gt; Automap</span>.
+The <span class="guihint">render_mode</span> entry is particularly interesting as it provides the fundamental layout of the nodes on the map.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_automap_options.png" alt="nagvis2 automap options"></div></div>
+<div class="paragraph"><p>In addition the root of the map can be specified here –
+although that is simpler to achieve with a right-click on an icon on the map, and then selecting the <span class="guihint">Make root</span> context menu entry.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_automap_contextmenu.png" alt="nagvis2 automap contextmenu"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_regular_map">
+<span class="hidden-anchor sr-only" id="regular_map"></span>3.3. Creating a regular map</h3>
+<div class="paragraph"><p>Regular maps are the commonest maps in NagVis.
+So that you can to get to know NagVis' procedures and its most important elements, we will show you how to create a small map of a server rack.
+This will visualize a host on an individual background, and provide optical and acoustic warnings when the monitored host is not <span class="state0">OK</span>.</p></div>
+<div class="paragraph"><p>To create the map open the options via <span class="guihint">Options &gt; Manage Maps</span>.
+Here in <span class="guihint">Create Map</span> give the map the name <code>mymap</code> and the alias <code>My Map</code>.
+For the <span class="guihint">Map Type</span> select <span class="guihint">Regular map</span> and confirm with the <span class="guihint">Create</span> button.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_create.png" alt="nagvis2 regularmap create"></div></div>
+<div class="paragraph"><p>Next import an image of the rack being monitored as the background.
+This is achieved using <span class="guihint">Options &gt; Manage Backgrounds</span>.
+Select the local file and confirm with the <span class="guihint">Upload</span> button.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_upload-background.png" alt="nagvis2 regularmap upload background"></div></div>
+<div class="paragraph"><p>Now the imported image must be defined as the background for the current map.
+Call up the map options with <span class="guihint">Edit Map &gt; Map Options</span> and go to the <span class="guihint">Appearance</span> tab.
+Here activate the <span class="guihint">map_image</span> option and select the desired image from the menu.
+Do not save that right now – a setting from the maps options is still needed.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_background.png" alt="nagvis2 regularmap background"></div></div>
+<div class="paragraph"><p>Go to the <span class="guihint">Obj. Defaults</span> tab.
+Here you can activate the <span class="guihint">label_show</span> option.
+This option enables the host and service icons on the map to be labeled with their appropriate host/service names – otherwise the icons will only be identified via their tooltips.
+Finally, save these settings.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_show-label.png" alt="nagvis2 regularmap show label"></div></div>
+<div class="paragraph"><p>Now it is time to add the host.
+Click on <span class="guihint">Edit Map &gt; Add Icon &gt; host</span> and then with the cursor (which now appears as a cross) at the position on the map where the icon is to be placed — at this point the <span class="guihint">Create Object</span>-dialog will open.
+In the <span class="guihint">General</span> tab simply select the desired host from the drop-down menu in <span class="guihint">host_name</span> and save.
+If you operate multiple Checkmk <a href="glossar.html#site">sites</a>, an alternative data source can be used via <span class="guihint">backend_id</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_host_create.png" alt="nagvis2 regularmap host create"></div></div>
+<div class="paragraph"><p>The icon is now positioned on the map, and it provides detailed information via a tooltip.
+Clicking on the icon takes you directly to the host in Checkmk — all of the objects positioned in NagVis are links to your Checkmk objects.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_host-hover.png" alt="nagvis2 regularmap host hover"></div></div>
+<div class="paragraph"><p>The edit mode needs to be activated to be able to move or edit an icon.
+Right-click on the icon to open its context menu, and select <span class="guihint">Unlock</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_icon-menu_locked.png" alt="nagvis2 regularmap icon menu locked"></div></div>
+<div class="paragraph"><p>Now you can move the icon, or again open the context menu.
+Here a number of new options will be seen which will enable the object to be cloned, deleted or edited, or to <a href="basics_ackn.html">acknowledge</a> a problem directly from here by choosing the <span class="guihint">Acknowledge</span> option.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_icon-menu_unlocked.png" alt="nagvis2 regularmap icon menu unlocked"></div></div>
+<div class="paragraph"><p>Once the editing of a host/icon is complete, again open its context menu and select <span class="guihint">Lock</span>.
+By the way, with <span class="guihint">Edit Map &gt; Lock/Unlock all</span> the editing mode can also be activated and deactivated for the complete map.</p></div>
+<div class="paragraph"><p>You can now add further hosts to the map.
+Adding services, host groups and service groups functions in a similar way.</p></div>
+<div class="paragraph"><p>To round things off, the map can be so configured that when loading, problems will be signaled by a warning sound and blinking host icons.
+For this, call up <span class="guihint">Edit Map &gt; Map Options</span> and switch to the <span class="guihint">Events</span> tab.
+Here, at the top of the display, activate <span class="guihint">event_on_load</span>, and at the bottom check the <span class="guihint">event_sound</span> box to receive audible warnings.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_regularmap_events.png" alt="nagvis2 regularmap events"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_geographical_map">
+<span class="hidden-anchor sr-only" id="geographical_map"></span>3.4. Creating a geographical map</h3>
+<div class="paragraph"><p>Geographical maps are available in two different forms:
+The <em>interactive</em> variant can be scrolled and zoomed in the way we know from Google Maps &amp; Co., and is set automatically as background.
+Objects that have been placed on such maps will appear on every subsequent map of the same type.
+NagVis assumes that an object will always be found at a specific location regardless of the scale of the map.
+So for example, a host located in Hamburg will appear on a world map as well as on a map of Germany and of course on a map of Hamburg.</p></div>
+<div class="paragraph"><p>NagVis ultimately views the various map sections and zoom levels only as <em>viewports</em>.
+At any time viewports can be saved as a separate, new map.
+Since viewports/maps can likewise be displayed as icons on maps, to some extent maps can be nested.
+So for example, a map of Germany with its dependencies can be called-up, and then with a click a more detailed view of a state, and then as needed maps for a specific subsidiary, server room, and from there even to a map for an individual switch.</p></div>
+<div class="paragraph"><p>In contrast to manual navigation, using an interactive map is quicker and more convenient, and as well the individual maps are active so that for example,
+they can be displayed in parallel on separate monitors, or set for automatic rotation on a single monitor (more on this <a href="#rotate">later</a>).
+Also important: in this way a summary of the related maps is thus available as a tooltip.
+This also makes using them more intuitive for third parties since they do not have to click through hierarchies, or need to know where zooming is necessary.</p></div>
+<div class="paragraph"><p>The <em>non-interactive</em> geographical maps must be fed with a CSV file containing the hosts and coordinates to be rendered.
+There are no general pre-existing elements in this case.</p></div>
+<div class="paragraph"><p>In the <a href="https://www.nagvis.org/doc" target="_blank">Nagvis documentation</a> the <em>interactive</em> geographical maps are called <em>worldmaps</em>, and the <em>non-interactive</em> variants are called <em>geomaps</em>.
+Worldmaps were first added to the version 1.9 of NagVis.</p></div>
+<div class="paragraph"><p>Example: create an interactive map for all of Germany, and to this link a new viewport for North Rhine-Westphalia (NRW).
+Create an interactive geographical map – a worldmap – with <span class="guihint">Options &gt; Manage Maps &gt; Create Map</span>.
+As <span class="guihint">Map Type</span> select the <span class="guihint">Geographical Map (interactive)</span> option – the ID (<code>mygeomap</code>) and Alias (<code>My Geographical Map</code>) can also be defined here.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_create.png" alt="nagvis2 geomap create"></div></div>
+<div class="paragraph"><p>Specify the map section which is desired as the overview, and save this view using <span class="guihint">Edit Map &gt; Viewport &gt; Save view</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_save-view.png" alt="nagvis2 geomap save view"></div></div>
+<div class="paragraph"><p>Next zoom into the map until the desired detail for North Rhine-Westphalia is reached.
+This time save the view with <span class="guihint">Map &gt; Viewport &gt; Save as new map</span> as the new map <code>mygeomap_nrw</code>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_save-viewport.jpeg" alt="nagvis2 geomap save viewport"></div></div>
+<div class="paragraph"><p>The map’s alias will be adopted from the original map, so that you now have two maps named <span class="guihint">My Geographical Map</span> in the navigation bar on the left.
+Therefore now define a new alias <code>My Geographical Map NRW</code> with <span class="guihint">Edit Map &gt; Map Options</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_vieport-alias.jpeg" alt="nagvis2 geomap vieport alias"></div></div>
+<div class="paragraph"><p>Switch to the Germany map <span class="guihint">My Geographical Map</span> and add the link to the North Rhine-Westphalia map with <span class="guihint">Edit Map &gt; Add Icon &gt; Map</span>.
+In the subsequent <span class="guihint">Create Object</span> dialog you only need to select the <span class="guihint">mygeomap_nrw</span> map from the <span class="guihint">map_name</span> menu.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_map-icon_create.png" alt="nagvis2 geomap map icon create"></div></div>
+<div class="paragraph"><p>Afterwards a click on the new icon in the Germany map takes you directly to the North Rhine-Westphalia map.
+In the same way additional maps can be linked together, and of course a navigation from the North Rhine-Westphalia map back to the Germany map can also be built-in.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_geomap_map-link.png" alt="nagvis2 geomap map link"></div></div>
+<div class="paragraph"><p>The actual loading of the map contents also corresponds with the procedure for the other map types.
+But remember – all objects that you add to <em>one</em> of the worldmaps will also appear on <em>every other</em> worldmap since they are really only alternative views of the real geographic situation.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_dynamic_map">
+<span class="hidden-anchor sr-only" id="dynamic_map"></span>3.5. Creating a dynamic map</h3>
+<div class="paragraph"><p>Dynamic maps differ from the regular maps – as mentioned earlier – in the method of adding their elements.
+Instead of manual additions the dynamic maps receive their elements – hosts, services, host groups and service groups - dynamically via Livestatus filters.
+As an example, a map should automatically receive the <span class="guihint">CPU load</span> services from all hosts.</p></div>
+<div class="paragraph"><p>To create such a map, again begin with <span class="guihint">Options &gt; Manage Maps &gt; Create Map</span>, and allocate an ID (<code>mydynamicmap</code>) and alias (<code>My Dynamic Map</code>).</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_dynmap_create.png" alt="nagvis2 dynmap create"></div></div>
+<div class="paragraph"><p>Next open the map options with <span class="guihint">Edit Map &gt; Map Options</span> and select the <span class="guihint">Dynmap</span> tab.
+Here activate the <span class="guihint">dynmap_object_types</span> option and choose the services as the object type.</p></div>
+<div class="paragraph"><p>The interesting part now follows with the second option <span class="guihint">dynmap_object_filter</span>, with which the filter for the services is defined.
+Use the simple <a href="livestatus.html">Livestatus query</a> <code>Filter: description ~ CPU load\n</code>.
+With this the string <code>CPU load</code> will be searched for in the <code>description</code> column.
+This <code>\n</code> does not belong to the filter itself, rather it generates a line-break required by the Livestatus query constructed by the filter.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_dynmap_options_filter.png" alt="nagvis2 dynmap options filter"></div></div>
+<div class="paragraph"><p>If you now save, all of your monitoring’s <span class="guihint">CPU load</span> services will land on the map.
+As well, any new objects in the monitoring which match the filter will be added automatically to the map.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_dynmap_auto-icons.png" alt="nagvis2 dynmap auto icons"></div></div>
+<div class="paragraph"><p>In the NagVis documentation it is also described how the configuration functions directly by using the configuration files.</p></div>
+<div class="paragraph"><p><strong>By the way:</strong> since dynamic maps can also be saved as static maps with <span class="guihint">Actions &gt; Export to static map</span>, this method can be used as a beginner’s help to create static maps containing very many elements.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_customizing">
+<span class="hidden-anchor sr-only" id="customizing"></span>4. Customizing maps</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_lines">
+<span class="hidden-anchor sr-only" id="lines"></span>4.1. Lines</h3>
+<div class="paragraph"><p>NagVis provides various types of lines:
+there are purely decorative lines without further functions under <span class="guihint">Edit Map &gt; Add Special &gt; Stateless Line</span>,
+lines which visualize hosts and services with 'traffic light colors' in the same way as for icons, and the <em>weathermap lines</em>.
+These last visualize network bandwidths using seven distinct colors.
+To create a weathermap line proceed as follows:</p></div>
+<div class="paragraph"><p>Start with <span class="guihint">Edit Map &gt; Add Line &gt; Service</span> and select a host and a network interface in the <span class="guihint">Create Object</span> dialog.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_lines_create.png" alt="nagvis2 lines create"></div></div>
+<div class="paragraph"><p>Next, switch to the <span class="guihint">Appearance</span> tab and set the <span class="guihint">view_type</span> to <span class="guihint">line</span>.
+As <span class="guihint">line_type</span> activate the <code>--%+BW-&gt;&lt;-%+BW--</code> entry.
+With this lines will be generated for upload and download and they will include labels for percentage (<code>%</code>) and absolute (<code>BW</code>) bandwidth.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_lines_line-type.png" alt="nagvis2 lines line type"></div></div>
+<div class="paragraph"><p>Once saved the lines will appear on the map.
+Clicking on the 'lock' icon in the middle allows the end points as well as the middle point of the line to be moved.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_lines_weatherlines.png" alt="nagvis2 lines weatherlines"></div></div>
+<div class="paragraph"><p>NagVis also provides a default legend:
+using <span class="guihint">Edit Map &gt; Add Special &gt; Shape</span> insert a so-called <em>shape</em> – simply an image in NagVis.
+In the <span class="guihint">icon</span> option choose the image <span class="guihint">demo_traffic_load_legend.png</span> from the drop-down menu.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_lines_weatherlines_result.png" alt="nagvis2 lines weatherlines result"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_gadgets">
+<span class="hidden-anchor sr-only" id="gadgets"></span>4.2. Gadgets</h3>
+<div class="paragraph"><p>Gadgets, like lines and icons are aids to visualization on a map.
+They show performance data in the form of speedometers, thermometers or similar.
+Consequently these are only available for services.
+As an example, the load on a network interface can be created in the style of a speedometer:</p></div>
+<div class="paragraph"><p>Add a service as an icon to your map using <span class="guihint">Edit Map &gt; Add Icon &gt; Service</span>.
+In the <span class="guihint">General</span> tab choose a host and a suitable network interface as the service.</p></div>
+<div class="paragraph"><p>Switch to the <span class="guihint">Appearance</span> tab and set <span class="guihint">view_type</span> to <span class="guihint">gadget</span>.
+Directly below, activate <span class="guihint">gadget_url</span>.
+Here there are a number of display variations which correspond to the files in <code>~/share/nagvis/htdocs/userfiles/gadgets/</code>.
+Select <span class="guihint">std_speedometer.php</span> for the speedometer display.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis2_gadget_speedometer.png" alt="nagvis2 gadget speedometer"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_container_iframes">
+<span class="hidden-anchor sr-only" id="container_iframes"></span>4.3. Container/iframes</h3>
+<div class="paragraph"><p>An interesting possibility for showing external information is provided by <em>containers</em>.
+Here you can simply specify a URL and allow the target to be displayed in an iframe.
+As an example, a host group view restricted purely to the table should serve as an <a href="views.html#embed_views">embedded view</a>.</p></div>
+<div class="paragraph"><p>Add a container to your map using <span class="guihint">Edit Map &gt; Add Special &gt; Container</span>.
+In contrast to host and service icons, here you can not simply click on the map, rather you must draw a frame.
+This can of course be modified at any later time.
+A dialog with options will again open.</p></div>
+<div class="paragraph"><p>In the <span class="guihint">General</span> tab set the <span class="guihint">view_type</span> to <span class="guihint">iframe</span>.
+The actual work is in the <span class="guihint">url</span> option:
+The base URL can be gotten with <span class="image-inline"><img src="../images/icons/button_frameurl.png" alt="button frameurl"></span> on the page of the host group view.
+The options for the <a href="views.html#embed_views">embedded view</a> must then be added with which only the table is actually displayed (plus a bit of background).
+Thus the URL can look something like this:</p></div>
+<div class="paragraph"><p><code>/mysite/check_mk/view.py?view_name=hostgroups&amp;display_options=tbdezocf</code></p></div>
+<div class="paragraph"><p>The exact fitting and positioning of the container is also done in the <span class="guihint">General</span> tab by entering the coordinates as well as the height and width.
+If you want to open the context menu of an iframe container, you must place the mouse cursor directly over the edge so that it changes its shape for scaling.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/nagvis_modify_container.png" alt="nagvis modify container"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rotate">
+<span class="hidden-anchor sr-only" id="rotate"></span>4.4. Making maps rotate</h3>
+<div class="paragraph"><p>On NagVis' overview page you may have noticed the <span class="guihint">Rotations</span> entry at the lower left of the navigation bar, or respectively the list of maps under <span class="guihint">Rotation Pools</span> in the center.
+Maps can be set to rotate automatically at any desired interval, which for example is practical for publicly-visible information monitors.</p></div>
+<div class="paragraph"><p>You can configure this in the NagVis configuration file <code>~/etc/nagvis/nagvis.ini.php</code>.
+Open this file and scroll to line 448, where you will find the <code>Rotation pool definitions</code>.</p></div>
+<div class="paragraph"><p>Here three lines are required to define a rotation pool, the appropriate maps, and the interval — in the below example the pool <code>myrotation</code> with the maps <code>mymap1</code>, <code>mymap2</code> and <code>mymap3</code>, and with an interval of 30 seconds:</p></div>
+<div class="listingblock">
+<div class="title">~/etc/nagvis/nagvis.ini.php</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>[rotation_myrotation]
+maps="mymap1,mymap2,mymap3"
+interval=30</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. What is NagVis?</a></li>
+<li><a href="#setup">2. Setting-up NagVis</a></li>
+<li>
+<a href="#maps">3. Creating maps</a><ul class="sectlevel1">
+<li><a href="#_the_various_types_of_maps">3.1. The various types of maps</a></li>
+<li><a href="#automap">3.2. Creating an automap</a></li>
+<li><a href="#regular_map">3.3. Creating a regular map</a></li>
+<li><a href="#geographical_map">3.4. Creating a geographical map</a></li>
+<li><a href="#dynamic_map">3.5. Creating a dynamic map</a></li>
+</ul>
+</li>
+<li>
+<a href="#customizing">4. Customizing maps</a><ul class="sectlevel1">
+<li><a href="#lines">4.1. Lines</a></li>
+<li><a href="#gadgets">4.2. Gadgets</a></li>
+<li><a href="#container_iframes">4.3. Container/iframes</a></li>
+<li><a href="#rotate">4.4. Making maps rotate</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

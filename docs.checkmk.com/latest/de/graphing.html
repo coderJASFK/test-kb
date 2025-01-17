@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Checkmk bietet viele umfangreiche Metriken zum Darstellen, Kombinieren und Exportieren. Wichtiges Hintergrundwissen finden Sie am Ende des Artikels.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Messwerte und Graphing - Messwerte in Checkmk schnell und einfach auswerten">
+<meta name="og:description" content="Checkmk bietet viele umfangreiche Metriken zum Darstellen, Kombinieren und Exportieren. Wichtiges Hintergrundwissen finden Sie am Ende des Artikels.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Messwerte und Graphing - Messwerte in Checkmk schnell und einfach auswerten</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/graphing.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/graphing.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/graphing.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Messwerte und Graphing</h1>
+<div class="details">
+<span id="revdate">Last modified on 14-Dec-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/de/graphing.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="user_interface.html">Die Benutzeroberfläche</a>
+<a href="views.html">Ansichten von Hosts und Services (Views)</a>
+<a href="dashboards.html">Dashboards</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="imageblock"><div class="content"><img src="../images/example_graph.png" alt="Beispiel eines Graphen."></div></div>
+<div class="paragraph"><p>Neben dem eigentlichen System-Monitoring — nämlich der Erkennung von Problemen — ist Checkmk ein ausgezeichnetes Werkzeug zur Aufzeichnung und Analyse von unterschiedlichsten Messdaten, welche in IT-Umgebungen so anfallen können.
+Dazu gehören zum Beispiel:</p></div>
+<div class="ulist"><ul>
+<li><p>Betriebssystem-Performance (Platten-IO, CPU- und Speicherauslastung, …​)</p></li>
+<li><p>Netzwerkgrößen (genutzte Bandbreite, Paketlaufzeiten, Fehlerraten, …​)</p></li>
+<li><p>Umgebungssensoren (Temperatur, Luftfeuchte, Luftdruck, …​)</p></li>
+<li><p>Nutzungsstatistiken (angemeldete Benutzer, Seitenabrufe, Sessions, …​)</p></li>
+<li><p>Qualitätskennzahlen von Anwendungen (z.B. Antwortzeiten von Webseiten)</p></li>
+<li><p>Stromverbrauch und -qualität im Rechenzentrum (Ströme, Spannungen, Leistungen, Batteriegüte, …​)</p></li>
+<li><p>Anwendungsspezifische Daten (z.B. Länge von E-Mail-Warteschlangen von MS Exchange)</p></li>
+<li><p>und vieles mehr …​</p></li>
+</ul></div>
+<div class="paragraph"><p>Checkmk zeichnet grundsätzlich alle beim Monitoring anfallenden Messwerte über einen Zeitraum von (einstellbar) vier Jahren auf,
+so dass Sie nicht nur auf die aktuellen, sondern auch auf historische Messwerte zugreifen können.
+Um den Bedarf an Plattenplatz in Grenzen zu halten, werden die Daten mit zunehmendem Alter immer weiter verdichtet.</p></div>
+<div class="paragraph"><p>Die <a href="glossar.html#metric">Metriken</a> selbst werden von den einzelnen <a href="glossar.html#check_plugin">Check-Plugins</a> ermittelt.
+Die Plugins legen somit auch fest, welche Metriken genau bereitgestellt werden.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die Oberfläche für die Visualisierung der historischen Messdaten basiert auf HTML5 und ist in den kommerziellen Editionen und in Checkmk Raw identisch.
+Ausschließlich in den kommerziellen Editionen können Sie erweiterte Funktionen wie PDF-Export, Graphensammlungen, benutzerdefinierte Graphen und Anbindung an externe Metrik-Datenbanken nutzen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_access">
+<span class="hidden-anchor sr-only" id="access"></span>2. Zugriff über die GUI</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die Messwerte eines Services werden in der GUI in drei verschiedenen Formen
+präsentiert. Die sogenannten <strong>Perf-O-Meter</strong> tauchen direkt in der Tabelle
+der Hosts oder Services auf und bieten einen schnellen Überblick und einen
+optischen Vergleich. Allerdings beschränken sich diese aus Platzgründen
+meist auf eine einzelne ausgewählte Metrik. Bei den Dateisystemen ist dies
+z.B. der prozentual belegte Platz:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_filesystems.png" alt="Ansicht des localhost mit Perf-O-Meter-Werten."></div></div>
+<div class="paragraph"><p>Alle Metriken eines Services im <strong>Zeitverlauf</strong> erhalten Sie,
+wenn Sie mit der Maus über das <span class="image-inline"><img src="../images/icons/icon_pnp.png" alt="icon pnp"></span> Graphsymbol fahren oder es anklicken.
+Der @-Wert rechts oberhalb der Grafik zeigt dabei an, in welchem Intervall neue Daten geholt und ergänzt werden.
+<span class="guihint">@ 1m</span> steht zum Beispiel für ein Abfrageintervall von einer Minute.</p></div>
+<div class="paragraph"><p>Die gleichen Graphen finden Sie zudem auch ganz einfach in den Details zu einem Host oder Service:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_cpu_utilization.png" alt="Verlaufsgrafik der CPU-Nutzung."></div></div>
+<div class="paragraph"><p>In den Details gibt es zudem eine Tabelle mit den aktuellen präzisen Messwerten für alle Metriken:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_metrics_table.png" alt="Ausschnitt der Service-Metriken."></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_interaction">
+<span class="hidden-anchor sr-only" id="interaction"></span>3. Interaktion mit dem Graphen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sie können die Darstellung des Graphen auf verschiedene Arten interaktiv
+beeinflussen:</p></div>
+<div class="ulist"><ul>
+<li><p>Durch Ziehen mit gedrückter Maustaste (<em>panning</em> oder <em>dragging</em> im Englischen) verschieben Sie den Zeitbereich (links/rechts) oder skalieren vertikal (hoch/runter).</p></li>
+<li><p>Mit dem Mausrad zoomen Sie in die Zeit rein und raus.</p></li>
+<li><p>Durch Ziehen an der rechten unteren Ecke verändern Sie die Größe des Graphen.</p></li>
+<li><p>Ein Klick an eine Stelle im Graphen setzt eine "Stecknadel" (den <em>Pin</em>). Damit erfahren Sie die genaue zeitliche Lage eines Punkts und alle präzisen Messwerte zu diesem Zeitpunkt. Der exakte Zeitpunkt des Pins wird pro Benutzer gespeichert und in allen Graphen angezeigt.</p></li>
+<li><p>Durch Anklicken einer Spaltenüberschrift stellen Sie die angezeigten Werte auf Minimum-, Maximum- oder Durchschnittswerte ein.</p></li>
+</ul></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_pin.png" alt="Visualisierung möglicher Interaktionen in einem Graphen."></div></div>
+<div class="paragraph"><p>Wenn sich auf einer Seite mehrere Graphen befinden, so folgen auch alle anderen Graphen auf der
+Seite den gemachten Änderungen am gewählten Zeitbereich und des Pins. Somit sind die
+Werte immer vergleichbar. Auch eine Größenänderung wirkt sich auf alle Graphen
+aus. Der Abgleich geschieht allerdings erst beim nächsten Neuladen der Seite (sonst
+würde auch zwischenzeitlich ein ziemliches Chaos auf dem Bildschirm entstehen …​).</p></div>
+<div class="paragraph"><p>Sobald Sie die interaktiven Funktionen nutzen, also beispielsweise einen
+Pin setzen, erscheint auf dem Bildschirm ein großes Pause-Symbol und die
+Seitenaktualisierung setzt für 60 Sekunden aus. So wird Ihre Änderung im
+Graphen nicht sofort durch die Aktualisierung wieder rückgängig gemacht. Der
+Countdown wird immer wieder auf 60 Sekunden zurückgesetzt, wenn Sie erneut
+aktiv werden. Sie können den Countdown aber auch komplett abschalten,
+wenn Sie auf die Zahl klicken. Durch Klick auf das Pause-Symbol können Sie die Pause
+jederzeit wieder beenden.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_pause.png" alt="Das Pause-Symbol in einem Graphen."></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_graph_collections">
+<span class="hidden-anchor sr-only" id="graph_collections"></span>4. Graphensammlungen (Graph collections)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In den kommerziellen Editionen können Sie mit dem <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> Menü, das links unten im Graphen angezeigt wird, diesen an
+verschiedenen Stellen einbetten, z.B. in Berichte oder Dashboards. Sehr
+nützlich ist dabei der Menübereich <span class="guihint">Add to graph collection</span>. In so eine Graphensammlung
+können Sie beliebig viele Graphen packen und diese dann später vergleichen
+oder auch als PDF exportieren. Als Standard hat jeder Benutzer eine
+Graphensammlung mit dem Namen <span class="guihint">My graphs</span>. Sie können aber sehr einfach
+weitere anlegen und diese sogar für andere Benutzer sichtbar machen.
+Das Vorgehen ist dabei exakt das Gleiche wie bei den <a href="views.html">Tabellenansichten</a>.</p></div>
+<div class="paragraph"><p>Sie gelangen zu Ihrer Graphensammlung über <span class="guihint">Monitor &gt; Workplace &gt; My graphs.</span> Der Eintrag <span class="guihint">My graphs</span> taucht erst auf, wenn Sie auch
+tatsächlich mindestens einen Graphen hinzugefügt haben.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_monitor_menu.png" alt="Auswahl der Graphensammlung im 'Monitor'-Menü."></div></div>
+<div class="paragraph"><p>Über <span class="guihint">Customize &gt; Graphs &gt; Graph collections</span> kommen Sie zur Tabelle all Ihrer
+Graphensammlungen mit der Möglichkeit, weitere anzulegen, zu ändern usw.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_graph_tunings">
+<span class="hidden-anchor sr-only" id="graph_tunings"></span>5. Graphen anpassen (Graph tunings)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In den kommerziellen Editionen können Sie kleine Anpassungen an den eingebauten Graphen vornehmen und zwar über <span class="guihint">Customize &gt; Graphs &gt; Graph tunings.</span> Diese <span class="guihint">Graph tunings</span> ermöglichen Ihnen zum Beispiel, die Skalierung der Y-Achse für einen bestimmten Graphen zu verändern, über die Option <span class="guihint">Vertical axis scaling:</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_tunings.png" alt="Die Einstellungen zum Anpassen eines Graphen."></div></div>
+<div class="paragraph"><p>Diese Änderung ließe sich dann auch mit <span class="guihint">Apply to</span> auf bestimmte Vorkommen des Graphen beschränken, beispielsweise in Dashboards.
+Im folgenden Bild sehen Sie eine Skalierung auf den Bereich <em>0.5 bis 0.9</em> in einem PDF-Bericht:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/graphing_tunings_yaxis.png" alt="Ansicht einer eingeschränkten Skalierung."></div></div>
+<div class="paragraph"><p>Darüber hinaus stehen Ihnen zwei weitere Optionen zur Verfügung: Über <span class="guihint">Graph visibility</span> lässt sich ein Graph an bestimmten Orten explizit ein- oder ausblenden. Und <span class="guihint">Vertical axis mirroring</span> ist nützlich bei Graphen, die Daten ober- und unterhalb der Zeitleiste (X-Achse) zeigen, wie etwa der Graph <a href="#disk_throughput">Disk throughput</a> weiter unten: Dort lassen sich die Daten spiegeln, so dass also die vormals oberen Daten unterhalb der Zeitleiste angezeigt werden und umgekehrt.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Die Temperaturmaßeinheiten von Graphen und Perf-O-Metern können Nutzer individuell über ihr <a href="user_interface.html#user_menu">Profil</a> festlegen.
+Die allgemeine Anpassung für Zusammenfassungen und Detailansichten erledigen Sie über den <a href="wato_rules.html#checkparameters">Service-Regelsatz</a> <span class="guihint">Temperature.</span></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_custom_graphs">
+<span class="hidden-anchor sr-only" id="custom_graphs"></span>6. Benutzerdefinierte Graphen (Custom graphs)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die kommerziellen Editionen bieten einen grafischen Editor, mit dem Sie komplett eigene
+Graphen mit eigenen Berechnungsformeln erstellen können. Damit ist es
+auch möglich, Metriken von verschiedenen Hosts und Services in einem Graphen
+zu kombinieren.</p></div>
+<div class="paragraph"><p>Zu den benutzerdefinierten Graphen gelangen Sie z.B. über <span class="guihint">Customize &gt; Graphs &gt; Custom graphs.</span>
+Ein anderer Weg geht über die Metrik-Tabelle bei einem Service. Dort gibt es
+bei jeder Metrik ein <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> Menü mit einem Eintrag, um die Metrik zu einem benutzerdefinierten Graphen hinzuzufügen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_new_custom.png" alt="Auswahloptionen für benutzerdefinierte Graphen."></div></div>
+<div class="paragraph"><p>Folgende Abbildung zeigt die Liste der benutzerdefinierten Graphen (hier mit nur
+einem Eintrag):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/custom_graph_list.png" alt="Übersicht der beutzerdefinierten Graphen."></div></div>
+<div class="paragraph"><p>Bei jedem vorhandenen Graphen haben Sie fünf mögliche Operationen:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_custom_graph.png" alt="icon custom graph"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zeigt den Graphen an.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_insert.png" alt="icon insert"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erzeugt eine Kopie dieses Graphen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_delete.png" alt="icon delete"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Löscht den Graphen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_edit.png" alt="icon edit"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Öffnet die Eigenschaften dieses Graphen. Hier können Sie neben dem Titel auch Einstellungen zur Sichtbarkeit für andere Benutzer festlegen. Alles verhält sich exakt wie bei den <a href="views.html">Tabellenansichten</a>. Wenn Sie Fragen zu einer der Einstellungen haben, können Sie sich die kontextsensitive Hilfe einblenden lassen mit <span class="guihint">Help &gt; Show inline help.</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_custom_graph.png" alt="icon custom graph"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier gelangen Sie zum <a href="#graph_designer">Graphdesigner</a>, mit dem Sie die Inhalte verändern können.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Beachten Sie, dass jeder benutzerdefinierte Graph — analog zu den Ansichten — eine
+eindeutige ID hat. Über diese wird der Graph in Berichten und Dashboards
+angesprochen. Wenn Sie die ID eines Graphen später ändern, gehen dadurch
+solche Referenzen verloren. Alle Graphen, die nicht <span class="guihint">hidden</span> sind, werden
+standardmäßig unter <span class="guihint">Monitor &gt; Workplace</span> angezeigt.</p></div>
+<div class="sect2">
+<h3 id="heading_graph_designer">
+<span class="hidden-anchor sr-only" id="graph_designer"></span>6.1. Der Graphdesigner</h3>
+<div class="imageblock"><div class="content"><img src="../images/graphing_custom_graphs.png" alt="Gesamtansicht des Graphdesigners."></div></div>
+<div class="paragraph"><p>Der Graphdesigner ist in vier Bereiche unterteilt:</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_graph_preview">
+<span class="hidden-anchor sr-only" id="graph_preview"></span>6.2. Vorschau des Graphen</h3>
+<div class="paragraph"><p>Hier sehen Sie den Graphen exakt so, wie er auch später zu sehen sein wird. Sie können alle
+interaktiven Funktionen nutzen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_list_metrics">
+<span class="hidden-anchor sr-only" id="list_metrics"></span>6.3. Liste der Metriken</h3>
+<div class="paragraph"><p>Die im Graphen enthaltenen Kurven können hier direkt bearbeitet werden.
+Eine Änderung des Titels einer Kurve in diesem Feld bestätigen
+Sie mit der Enter-Taste. Der <span class="guihint">Style</span> legt fest, wie der Wert im Graphen
+optisch gezeichnet wird. Dabei gibt es folgende Möglichkeiten:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Line</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Wert wird als Linie eingezeichnet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Area</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Wert wird als Fläche eingezeichnet. Beachten Sie, dass die Kurven Vorrang haben, die weiter oben in der Liste stehen, und so Kurven überdecken können, die weiter unten stehen. Wenn Sie Linien und Flächen kombinieren möchten, sollten die Flächen immer unten stehen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Stacked Area</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Kurven dieses Stils werden als Flächen gezeichnet und vom Wert her aufeinander gestapelt (also quasi addiert). Die obere Grenze dieses Stapels symbolisiert also die Summe aller beteiligten Kurven.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Die weiteren drei Möglichkeiten <span class="guihint">Mirrored Line</span>, <span class="guihint">Mirrored Area</span> und <span class="guihint">Mirrored Stacked</span> funktionieren analog, nur dass
+die Kurven von der Nulllinie aus nach unten gezeichnet werden. Das ermöglicht eine Art von Graph, wie sie Checkmk
+generell für Input/Output-Graphen wie den folgenden verwendet:</p></div>
+<div class="imageblock" id="disk_throughput"><div class="content"><img src="../images/graphing_input_output.png" alt="Ein Input/Output-Graph."></div></div>
+<div class="paragraph"><p>In der Spalte <span class="guihint">Actions</span> finden Sie zu jeder angelegten Metrik einen <span class="image-inline"><img src="../images/icons/button_clone.png" alt="button clone"></span> Knopf zum Klonen derselben. So können Sie fix Kurven kopieren und schlicht etwa den Host-Namen austauschen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_adding_metrics">
+<span class="hidden-anchor sr-only" id="adding_metrics"></span>6.4. Hinzufügen einer Metrik</h3>
+<div class="paragraph"><p>Über den <span class="guihint">Metrics</span> Kasten können Sie neue Metriken zum Graphen
+hinzufügen. Sobald Sie in das erste Feld einen Host-Namen
+ausgewählt haben, wird das zweite Feld mit der Liste der Services des Hosts
+gefüllt. Eine Auswahl in dieser Liste füllt das dritte Feld mit der Liste
+der Metriken dieses Services. Im vierten und letzten Feld wählen Sie die
+<strong>Konsolidierungsfunktion</strong>. Zur Auswahl stehen <span class="guihint">Minimum</span>, <span class="guihint">Maximum</span>
+und <span class="guihint">Average</span>. Diese Funktionen kommen immer dann zur Anwendung, wenn
+die Speicherung der Daten in den <a href="#data_rrds">RRDs</a> für den gewählten Zeitraum bereits
+verdichtet ist. In einem Bereich, wo z.B. nur noch ein Wert pro halber
+Stunde zur Verfügung steht, können Sie so wählen, ob Sie den größten,
+kleinsten oder durchschnittlichen Originalmesswert dieses Zeitraums
+einzeichnen möchten.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_metrics.png" alt="Auswahl der Optionen zu einer Metrik."></div></div>
+<div class="paragraph"><p>Auf die gleiche Art blenden Sie über die Funktion <span class="guihint">Add new scalar</span>
+die Werte eines Services für <span class="state1">WARN</span>, <span class="state2">CRIT</span>, Maximum und Minimum
+als waagerechte Linien ein.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_scalar.png" alt="Ansicht einer Konstanten in einer Metrik."></div></div>
+<div class="paragraph"><p>Sie können dem Graphen auch eine <strong>Konstante</strong> hinzufügen. Diese wird
+dann zunächst als waagerechte Linie angezeigt. Konstanten sind manchmal
+nötig zur Bildung von Berechnungsformeln. Dazu später <a href="#calculation">mehr.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_graph_options">
+<span class="hidden-anchor sr-only" id="graph_options"></span>6.5. Graphoptionen</h3>
+<div class="paragraph"><p>Hier finden Sie Optionen, die den Graphen als Ganzes betreffen. Die Einheit (<span class="guihint">Unit</span>) beeinflusst die Beschriftung der Achsen und der Legende. Sie wird
+automatisch eingestellt, sobald die erste Metrik hinzugefügt wird. Beachten
+Sie, dass es zwar möglich, aber nicht sehr sinnvoll ist, zwei Metriken mit
+unterschiedlichen Einheiten in einem Graphen unterzubringen.</p></div>
+<div class="paragraph"><p>Unter <span class="guihint">Explicit vertical range</span> können Sie den vertikalen Bereich des
+Graphen voreinstellen. Normalerweise wird die Y-Achse so skaliert, dass alle
+Messwerte im gewählten Zeitraum genau in den Graphen passen. Wenn Sie einen
+Graphen für z.B. einen Prozentwert entwerfen, könnten Sie sich aber auch
+entscheiden, dass immer von 0 bis 100 dargestellt wird. Beachten Sie dabei,
+dass der Graph vom Benutzer (und auch Ihnen selbst) trotzdem mit der Maus
+skaliert werden kann und die Einstellung dann wirkungslos wird.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_calculation">
+<span class="hidden-anchor sr-only" id="calculation"></span>6.6. Rechnen mit Formeln</h3>
+<div class="paragraph"><p>Der Graphdesigner ermöglicht es Ihnen, die einzelnen Kurven durch
+Rechenoperationen zu kombinieren. Folgendes Beispiel zeigt einen Graphen mit
+zwei Kurven: CPU utilization <span class="guihint">User</span> und <span class="guihint">System</span>.</p></div>
+<div class="paragraph"><p>Nehmen wir an, dass Sie für diesen Graphen nur die Summe von beiden
+interessiert. Dazu wählen Sie zunächst die beiden Kurven durch Ankreuzen ihrer
+Checkboxen aus. Sobald Sie das tun, erscheinen im Kasten <span class="guihint">Metrics</span> in der
+Zeile <span class="guihint">Operation on selected metrics</span> Knöpfe für alle wählbaren Verknüpfungen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphdesigner_ops_1.png" alt="Zusätzliche Optionen in der Übersicht zu einem Graphen."></div></div>
+<div class="paragraph"><p>Ein Klick auf <span class="guihint">Sum</span> kombiniert die beiden gewählten Zeilen zu einer neuen
+Kurve, deren Farbe der obersten ausgewählten Metrik entspricht.
+Der Titel der neuen Kurve wird zu <span class="guihint">Sum of System, User</span>. Die Berechnungsformel
+wird in der Spalte <span class="guihint">Formula</span> angezeigt. Außerdem taucht ein neues
+<span class="image-inline"><img src="../images/icons/button_dissolve_operation.png" alt="button dissolve operation"></span> Symbol auf:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphdesigner_ops_2.png" alt="Ansicht eines Graphen für kombinierte Werte."></div></div>
+<div class="paragraph"><p>Durch einen Klick auf <span class="image-inline"><img src="../images/icons/button_dissolve_operation.png" alt="button dissolve operation"></span> machen Sie die
+Operation quasi rückgängig, in dem Sie die Formel wieder auflösen und die
+einzelnen enthaltenen Kurven wieder zum Vorschein kommen. Weitere Hinweise zu
+den Rechenoperationen:</p></div>
+<div class="ulist"><ul>
+<li><p>Manchmal ist es sinnvoll, Konstanten hinzuzufügen, um z.B. den Wert einer Kurve von der Zahl 100 abzuziehen.</p></li>
+<li><p>Skalare können ebenfalls für Berechnungen genutzt werden.</p></li>
+<li><p>Sie können die Operationen beliebig verschachteln.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_graphing_api">
+<span class="hidden-anchor sr-only" id="graphing_api"></span>7. InfluxDB, Graphite und Grafana</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Wenn Sie eine der kommerziellen Editionen einsetzen, so können Sie parallel zum in Checkmk eingebauten Graphing auch externe Metrikdatenbanken anbinden und die <a href="metrics_exporter.html">Metriken an InfluxDB oder Graphite senden.</a></p></div>
+<div class="paragraph"><p>In allen Editionen ist es außerdem möglich, <a href="grafana.html">Checkmk in Grafana zu integrieren</a> und Metriken aus Checkmk in Grafana abrufen und anzeigen zu lassen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_historical_data">
+<span class="hidden-anchor sr-only" id="historical_data"></span>8. Historische Messwerte in Tabellen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__um_was_geht_es">
+<span class="hidden-anchor sr-only" id="_um_was_geht_es"></span>8.1. Um was geht es?</h3>
+<div class="paragraph"><p>Wenn Sie die Messwerte der Vergangenheit betrachten, sind Sie manchmal nicht
+an deren genauem Verlauf interessiert, sondern eventuell nur an einer groben
+Zusammenfassung wie: <em>Die durchschnittliche CPU-Auslastung der letzten 7 Tage</em>.
+Das Ergebnis wäre dann einfach eine Zahl als Prozentwert wie 88 %.</p></div>
+<div class="paragraph"><p>Sie können in einer
+Tabelle von Hosts oder Services Spalten hinzufügen, welche den Durchschnitt, das
+Minimum, das Maximum oder andere Zusammenfassungen einer Metrik über einen bestimmten
+Zeitraum als Zahl darstellen. Das ermöglicht Ihnen dann auch Auswertungen, die
+nach diesen Spalten sortieren und so z.B. die Liste derjenigen <a href="monitoring_vmware.html">ESXi-Hosts</a>
+anzeigen, die im Vergleichszeitraum die geringste Auslastung hatten.</p></div>
+<div class="paragraph"><p>Um solche Messwerte in einer Ansicht anzuzeigen, gehen Sie so vor:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Wählen Sie eine bestehende Ansicht oder erstellen Sie eine neue.</p></li>
+<li><p>Fügen Sie eine Spalte vom Typ <span class="guihint">Services: Metric History</span> hinzu.</p></li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="heading__ansicht_erstellen">
+<span class="hidden-anchor sr-only" id="_ansicht_erstellen"></span>8.2. Ansicht erstellen</h3>
+<div class="paragraph"><p>Zunächst benötigen Sie eine Ansicht, zu welcher die Spalten hinzugefügt werden sollen.
+Dies kann entweder eine Ansicht von Hosts oder von Services sein.
+Einzelheiten zum Anlegen oder Editieren von Ansichten finden Sie in dem
+<a href="views.html#edit">Artikel über Ansichten</a>.</p></div>
+<div class="paragraph"><p>Für das folgende Beispiel wählen wir die Ansicht <span class="guihint">All hosts</span>, die Sie über <span class="guihint">Monitor &gt; Hosts &gt; All hosts</span> öffnen können.
+Wählen Sie im Menü <span class="guihint">Display &gt; Customize view</span>.
+Das führt Sie zur Seite <span class="guihint">Clone view</span>, mit der Sie sich die Ansicht nach Belieben zurechtkonfigurieren können.</p></div>
+<div class="paragraph"><p>Damit das Original <span class="guihint">All hosts</span> nicht durch die Kopie überlagert wird, wählen Sie eine neue ID und auch einen neuen Titel, unter der die Ansicht später im <span class="guihint">Monitor</span>-Menü angezeigt wird.</p></div>
+<div class="paragraph"><p>Dann entfernen Sie (optional) alle Spalten, die die Anzahl der Services in den verschiedenen Zuständen zeigen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__spalte_hinzufügen">
+<span class="hidden-anchor sr-only" id="_spalte_hinzufügen"></span>8.3. Spalte hinzufügen</h3>
+<div class="paragraph"><p>Fügen Sie nun eine neue Spalte vom Typ <span class="guihint">Services: Metric History</span> hinzu.
+Da dies eine Spalte für Services ist, benötigen Sie im Falle einer Host-Ansicht als erste Auswahl den Spaltentyp <span class="guihint">Joined column</span>, welcher das Anzeigen einer Service-Spalte in einer Host-Tabelle ermöglicht.
+Bei einer Service-Ansicht reicht es, wenn Sie eine neue <span class="guihint">Column</span> hinzufügen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_historic_metrics_2.png" alt="Optionen für das Hinzufügen einer weiteren Spalte."></div></div>
+<div class="paragraph"><p>In <span class="guihint">Metric</span> wählen Sie den Namen der Metrik aus, die historisch ausgewertet werden soll.
+Sollten Sie unsicher über den Namen der Metrik sein, finden Sie diesen in den Service-Details beim Eintrag <span class="guihint">Service Metrics</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_metrics_table.png" alt="Ansicht der Service-Details."></div></div>
+<div class="paragraph"><p>Im Beispiel wählen wir die Metrik <span class="guihint">CPU utilization</span>, welche hier <strong>zufällig</strong> gleich lautet wie der Name des Services.</p></div>
+<div class="paragraph"><p>Bei <span class="guihint">RRD consolidation</span> wählen Sie am besten den gleichen Wert wie weiter unten bei <span class="guihint">Aggregation function</span>, da es wenig sinnvoll ist, Dinge wie „das Minimum vom Maximum“ zu berechnen. Was es mit der Auswahlmöglichkeit bei RRDs auf sich hat, erfahren Sie im folgenden Kapitel über die <a href="#data_rrds">Organisation der RRD-Daten</a>.</p></div>
+<div class="paragraph"><p>Der <span class="guihint">Time range</span> ist der Zeitraum in der Vergangenheit, über den Sie etwas erfahren wollen.
+In Beispiel sind es die letzten sieben Tage, was exakt 168 Stunden entspricht.</p></div>
+<div class="paragraph"><p><span class="guihint">Column title</span> ist dann der Spaltentitel, also zum Beispiel <code>Util @ 7 days</code>.
+Wundern Sie sich nicht, dass später noch ein
+Feld mit dem Namen <span class="guihint">Title</span> kommt. Dieses sehen Sie nur dann, wenn hier
+eine <span class="guihint">Joined column</span> benutzt wird, welche immer die Angabe eines Titels
+ermöglicht. Lassen Sie den zweiten Titel einfach leer.</p></div>
+<div class="paragraph"><p>Zu guter Letzt geben Sie im Feld <span class="guihint">Of Service</span> den Namen des Services ein, zudem die oben gewählte Metrik gehört. Achten Sie auf die exakte Schreibweise des Services inklusive Groß- und Kleinschreibung.</p></div>
+<div class="paragraph"><p>Nach dem Speichern erhalten Sie jetzt eine neue Ansicht mit einer weiteren Spalte, welche die prozentuale CPU-Auslastung der letzten sieben Tage
+anzeigt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_historic_metrics_3.png" alt="Host-Übersicht mit der zusätzlichen Spalte für die CPU-Auslastung."></div></div>
+<div class="paragraph"><p><strong>Hinweise</strong></p></div>
+<div class="ulist"><ul>
+<li><p>Sie können natürlich auch mehrere Spalten auf diese Art hinzufügen, z.B. für unterschiedliche Metriken oder unterschiedliche Zeiträume.</p></li>
+<li><p>Bei Hosts, welche die Metrik oder den Service nicht haben, bleibt die Spalte leer.</p></li>
+<li><p>Falls Sie mit einer Tabelle von Services arbeiten, benötigen Sie keine <span class="guihint">Joined Column</span>. Allerdings können Sie dann pro Host in einer Zeile nur einen Service anzeigen.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_rrds">
+<span class="hidden-anchor sr-only" id="rrds"></span>9. Die Round-Robin-Datenbanken (RRDs)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk speichert alle Messwerte in dafür eigens entwickelten Datenbanken,
+sogenannten <strong>Round-Robin-Datenbanken</strong> (RRDs). Dabei kommt das
+<a href="https://oss.oetiker.ch/rrdtool/">RRDtool von Tobi Oetiker</a> zum
+Einsatz, welches in Open-Source-Projekten sehr beliebt und weit verbreitet ist.</p></div>
+<div class="paragraph"><p>Die RRDs bieten gegenüber klassischen SQL-Datenbanken bei der Speicherung
+von Messwerten wichtige Vorteile:</p></div>
+<div class="ulist"><ul>
+<li><p>RRDs speichern die Messdaten sehr kompakt und effizient.</p></li>
+<li><p>Der Platzbedarf auf der Platte pro Metrik ist statisch. RRDs können weder wachsen noch schrumpfen. Der benötigte Plattenplatz kann gut geplant werden.</p></li>
+<li><p>Die benötigte CPU- und Disk-Zeit pro Update ist immer gleich. RRDs sind (nahezu) echtzeitfähig, da es nicht zu Staus aufgrund von Reorganisationen kommen kann.</p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_data_rrds">
+<span class="hidden-anchor sr-only" id="data_rrds"></span>9.1. Organisation der Daten in den RRDs</h3>
+<div class="paragraph"><p>Checkmk ist so voreingestellt, dass der Verlauf jeder Metrik über einen Zeitraum von <strong>vier Jahren</strong> aufgezeichnet wird.
+Die Grundauflösung ist dabei eine Minute.
+Dies ist deswegen sinnvoll, weil das Check-Intervall auf eine Minute voreingestellt ist und so von jedem Service genau einmal pro Minute neue Messwerte kommen.</p></div>
+<div class="paragraph"><p>Nun kann sich allerdings jeder ausrechnen, dass die Speicherung von einem Wert
+pro Minute über vier Jahre eine enorme Menge an Plattenplatz benötigen würde
+(obwohl die RRDs pro Messwert nur genau 8 Bytes benötigen). Aus diesem Grund
+werden die Daten mit der Zeit <strong>verdichtet</strong>. Die erste Verdichtung
+findet nach 48 Stunden statt. Ab diesem Zeitpunkt wird nur noch ein Wert pro
+fünf Minuten aufbewahrt. Die übrigen Stufen werden nach 10 Tagen und 90 Tagen umgesetzt:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Phase</th>
+<th class="tableblock halign-left valign-top">Dauer</th>
+<th class="tableblock halign-left valign-top">Auflösung</th>
+<th class="tableblock halign-left valign-top">Messwerte</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 Tage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 Minute</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2880</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 Tage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5 Minuten</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2880</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90 Tage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30 Minuten</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4320</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 Jahre</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6 Stunden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5840</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Jetzt stellt sich natürlich die Frage, wie denn nun fünf Werte sinnvoll zu
+einem einzigen konsolidiert werden sollen.
+Als Konsolidierungsfunktionen bieten sich das <strong>Maximum</strong>,
+das <strong>Minimum</strong> oder der <strong>Durchschnitt</strong> an.
+Was in der Praxis
+sinnvoll ist, hängt von der Anwendung oder Betrachtungsweise ab. Möchten Sie
+z.B. den Temperaturverlauf in einem Rechenzentrum über vier Jahre beobachten,
+wird Sie wahrscheinlich eher die maximale Temperatur interessieren, die je
+erreicht wurde. Bei der Messung von Zugriffszahlen auf eine Anwendung könnte
+der Durchschnitt interessieren.</p></div>
+<div class="paragraph"><p>Um maximal flexibel bei der späteren Auswertung zu sein, sind die RRDs von Checkmk
+so voreingestellt, dass sie einfach jeweils <strong>alle drei</strong> Werte speichern — also Minimum, Maximum und Durchschnitt. Pro Verdichtungsstufe und
+Konsolidierungsfunktion enthält die RRD einen ringförmigen Speicher — ein
+sogenanntes Round-Robin-Archiv (RRA). Im Standardaufbau gibt es insgesamt
+12 RRAs. So benötigt das Standardschema von Checkmk genau 384 952 Bytes pro Metrik.
+Das ergibt sich aus 2880 + 2880 + 4320 + 5840 Messpunkten mal drei
+Konsolidierungsfunktionen mal acht Bytes pro Messwert, was genau 382 080 Bytes ergibt.
+Addiert man den Dateiheader von 2872 Bytes hinzu, ergibt sich die oben angegebene Größe von 384 952 Bytes.</p></div>
+<div class="paragraph"><p>Ein interessantes alternatives Schema wäre z.B. das Speichern von einem Wert
+pro Minute für ein komplettes Jahr. Dabei kann man einen kleinen Vorteil
+ausnutzen: Da die RRDs dann zu allen Zeiten die optimale Auflösung haben,
+können Sie auf die Konsolidierung verzichten und z.B. nur noch <em>Average</em>
+anlegen. So kommen Sie auf 365 x 24 x 60 Messwerte zu je 8 Bytes, was
+ziemlich genau 4 MB pro Metrik ergibt. Auch wenn die RRDs somit mehr als
+den zehnfachen Platz benötigen, ist die nötige "Disk I/O" sogar reduziert!
+Der Grund: Ein Update muss nicht mehr in 12 verschiedene RRAs geschrieben
+werden, sondern nur noch in eines.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_customise_rrds">
+<span class="hidden-anchor sr-only" id="customise_rrds"></span>9.2. Anpassen des RRD-Aufbaus</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Wenn Ihnen das voreingestellte Speicherschema nicht zusagt, so können Sie
+dieses über <a href="glossar.html#rule_set">Regelsätze</a> ändern (sogar für Hosts oder
+Services unterschiedlich). Den nötigen Regelsatz finden Sie am einfachsten über
+die Regelsuche — also das Menü <span class="guihint">Setup</span>. Geben Sie dort
+einfach <code>RRD</code> in das Suchfeld ein. So finden Sie den Regelsatz
+<span class="guihint">Configuration of RRD databases of services</span>. Es gibt auch einen analogen Regelsatz
+für Hosts, aber Hosts haben nur in Ausnahmefällen Messwerte. Folgendes Bild
+zeigt die Regel mit den Standardeinstellungen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/graphing_rrd_configuration.png" alt="Regeleinstellungen für eine RRD."></div></div>
+<div class="paragraph"><p>In den Abschnitten <span class="guihint">Consolidation functions</span> und <span class="guihint">RRA configuration</span>
+können Sie die Anzahl und Größe der Verdichtungsphasen bestimmen und
+festlegen, welche Konsolidierungen bereit gehalten werden sollen. Das Feld
+<span class="guihint">Step (precision)</span> bestimmt die Auflösung in Sekunden, in der Regel 60 (eine
+Minute). Für Services mit einem Check-Interval von kleiner als einer Minute
+kann es sinnvoll sein, diese Zahl kleiner einzustellen. Beachten Sie dabei,
+dass die Angaben im Feld <span class="guihint">Number of steps aggregated into one data point</span>
+dann nicht mehr Minuten bedeuten, sondern die in <span class="guihint">Step (precision)</span> eingestellte
+Zeitspanne.</p></div>
+<div class="paragraph"><p>Jede Änderung des RRD-Aufbaus hat zunächst nur Einfluss auf
+<strong>neu angelegte</strong> RRDs — sprich wenn Sie neue Hosts oder Services in das
+Monitoring aufnehmen. Sie können aber die bestehenden RRDs von Checkmk umbauen
+lassen. Dazu dient der Befehl <code>cmk --convert-rrds</code>, bei welchem sich
+immer die Option <code>-v</code> (verbose) anbietet. Checkmk kontrolliert dann
+alle vorhandenen RRDs und baut diese nach Bedarf in das eingestellte
+Zielformat um.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Um die Integrität der in den RRDs enthaltenen Daten sicherzustellen, stoppen Sie stets Ihre Instanz (mit <code>omd stop</code>) <strong>bevor</strong> Sie mit <code>cmk --convert-rrds</code> existierende RRDs konvertieren.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-v<span class="tok-w"> </span>--convert-rrds
+<span class="tok-go">myserver012:</span>
+<span class="tok-go">  Uptime (CMC).....converted, 376 KB -&gt; 159 KB</span>
+<span class="tok-go">  Filesystem / (CMC).....converted, 1873 KB -&gt; 792 KB</span>
+<span class="tok-go">  OMD mysite apache (CMC).....converted, 14599 KB -&gt; 6171 KB</span>
+<span class="tok-go">  Memory (CMC).....converted, 14225 KB -&gt; 6012 KB</span>
+<span class="tok-go">  Filesystem /home/user (CMC).....converted, 1873 KB -&gt; 792 KB</span>
+<span class="tok-go">  Interface 2 (CMC).....converted, 4119 KB -&gt; 1741 KB</span>
+<span class="tok-go">  CPU load (CMC).....converted, 1125 KB -&gt; 475 KB</span></code></pre></div></div>
+<div class="paragraph"><p>Der Befehl ist intelligent genug, um RRDs zu erkennen, die bereits den
+richtigen Aufbau haben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-v<span class="tok-w"> </span>--convert-rrds
+<span class="tok-go">myserver345:</span>
+<span class="tok-go">  Uptime (CMC).....uptodate</span>
+<span class="tok-go">  Filesystem / (CMC).....uptodate</span>
+<span class="tok-go">  OMD mysite apache (CMC).....uptodate</span>
+<span class="tok-go">  Memory (CMC).....uptodate</span>
+<span class="tok-go">  Filesystem /home/user (CMC).....uptodate</span>
+<span class="tok-go">  Interface 2 (CMC).....uptodate</span>
+<span class="tok-go">  CPU load (CMC).....uptodate</span></code></pre></div></div>
+<div class="paragraph"><p>Wenn das neue Format eine höhere Auflösung oder zusätzliche
+Konsolidierungsfunktionen hat, werden die bestehenden Daten so gut es geht
+interpoliert, so dass die RRDs mit möglichst sinnvollen Werten gefüllt
+werden. Nur ist natürlich klar, dass wenn Sie z.B ab sofort nicht 2 sondern
+5 Tage mit minutengenauen Werten haben möchten, die Genauigkeit der bestehenden
+Daten nicht nachträglich erhöht werden kann.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rrdformat">
+<span class="hidden-anchor sr-only" id="rrdformat"></span>9.3. RRD-Speicherformat</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die oben gezeigte Regel hat noch eine weitere Einstellung:
+<span class="guihint">RRD storage format</span>. Mit dieser können Sie zwischen zwei Methoden wählen, wie
+Checkmk die RRDs erzeugt. Das Format <span class="guihint">One RRD per host/service</span>
+(oder kurz Checkmk-Format) speichert dabei alle Metriken
+eines Hosts bzw. Services in einer einzigen RRD-Datei. Dies sorgt für ein
+effizienteres Schreiben der Daten, da so immer ein kompletter Satz an Metriken
+in einer einzigen Operation geschrieben werden kann. Diese Metriken liegen dann
+in benachbarten Speicherzellen, was die Anzahl der Plattenblöcke reduziert, die
+geschrieben werden müssen.</p></div>
+<div class="paragraph"><p>Sollten Ihre Checkmk-Instanzen mit einer kommerziellen Edition in einer älteren Version als
+<span class="new">1.2.8</span> erzeugt worden sein, lohnt sich gegebenenfalls ein genauer Blick
+darauf, ob ihre Messdaten jemals in das aktuelle und weitaus performantere
+Format konvertiert worden sind. Sollten die Daten noch im alten Format
+vorliegen, können Sie diese über das Anlegen einer Regel im oben gezeigten
+Regelsatz auf das Checkmk-Format umstellen.</p></div>
+<div class="paragraph"><p>Auch hier benötigen Sie anschließend den Befehl <code>cmk --convert-rrds</code>, und auch hier gilt: Stoppen Sie stets Ihre Instanz bevor Sie existierende RRDs konvertieren.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-v<span class="tok-w"> </span>--convert-rrds
+<span class="tok-go">myhost123:</span>
+<span class="tok-go">   Uptime PNP -&gt; CMC..converted.</span>
+<span class="tok-go">  WARNING: Dupliate RRDs for stable/Uptime. Use --delete-rrds for cleanup.</span>
+<span class="tok-go">   OMD mysite apache PNP -&gt; CMC..converted.</span>
+<span class="tok-go">  WARNING: Dupliate RRDs for stable/OMD mysite apache. Use --delete-rrds for cleanup.</span>
+<span class="tok-go">   fs_/home/user PNP -&gt; CMC..converted.</span>
+<span class="tok-go">  WARNING: Dupliate RRDs for stable/fs_/home/user. Use --delete-rrds for cleanup.</span>
+<span class="tok-go">   OMD mysite apache PNP -&gt; CMC..converted.</span>
+<span class="tok-go">  WARNING: Dupliate RRDs for stable/OMD mysite apache. Use --delete-rrds for cleanup.</span>
+<span class="tok-go">   Memory PNP -&gt; CMC..converted.</span>
+<span class="tok-go">...</span></code></pre></div></div>
+<div class="paragraph"><p>Wie Sie an der Warnung sehen können, lässt Checkmk die bestehenden Dateien
+im alten Format zunächst liegen. Dies ermöglicht Ihnen im Zweifel eine Rückkehr
+zu diesem Format, weil ein Konvertieren in die Rückrichtung <strong>nicht</strong>
+möglich ist. Die Option <code>--delete-rrds</code> sorgt dafür, dass diese Kopien
+nicht erzeugt bzw. nachträglich gelöscht werden. Sie können das Löschen
+bequem später mit einem weiteren Aufruf des Befehls erledigen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-v<span class="tok-w"> </span>--convert-rrds<span class="tok-w"> </span>--delete-rrds</code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rrdcached">
+<span class="hidden-anchor sr-only" id="rrdcached"></span>9.4. Der RRD-Cache-Daemon (rrdcached)</h3>
+<div class="paragraph"><p>Um die Anzahl der nötigen Schreibzugriffe auf die Platte (drastisch) zu reduzieren,
+kommt ein Hilfsprozess zum Einsatz: der RRD-Cache-Daemon (<code>rrdcached</code>). Er ist einer
+der Dienste, welche beim Start einer Instanz gestartet werden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>start
+<span class="tok-go">Temporary filesystem already mounted</span>
+<span class="tok-go">Starting agent-receiver...OK</span>
+<span class="tok-go">Starting mkeventd...OK</span>
+<span class="tok-go">Starting liveproxyd...OK</span>
+<span class="tok-go">Starting mknotifyd...OK</span>
+<span class="hll"><span class="tok-go"><strong>Starting rrdcached...OK</strong></span>
+</span><span class="tok-go">Starting cmc...OK</span>
+<span class="tok-go">Starting apache...OK</span>
+<span class="tok-go">Starting dcd...OK</span>
+<span class="tok-go">Starting redis...OK</span>
+<span class="tok-go">Initializing Crontab...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Alle neuen Messwerte für die RRDs werden zunächst vom Checkmk Micro Core (kommerzielle Editionen) bzw. von NPCD (Checkmk Raw)
+an den <code>rrdcached</code> gesendet. Dieser schreibt die Daten zunächst nicht in die RRDs, sondern
+merkt sie sich im Hauptspeicher, um sie später dann gesammelt in die jeweilige RRD
+zu schreiben. So wird die Anzahl der Schreibzugriffe auf die Platte (oder in das SAN!)
+deutlich reduziert.</p></div>
+<div class="paragraph"><p>Damit im Falle eines Neustarts keine Daten verloren gehen, werden die Updates zusätzlich
+in Journaldateien geschrieben. Dies bedeutet zwar auch Schreibzugriffe, aber da hier
+die Daten direkt hintereinander liegen, wird dadurch kaum IO erzeugt.</p></div>
+<div class="paragraph"><p>Damit der RRD-Cache-Daemon effizient arbeiten kann, benötigt er natürlich
+viel Hauptspeicher. Die benötigte Menge hängt von der Anzahl Ihrer RRDs ab
+und davon, wie lange Daten zwischengespeichert werden sollen. Letzteres können Sie in der
+Datei <code>~/etc/rrdcached.conf</code> einstellen. Die Standardeinstellung legt
+eine Speicherung von 7200 Sekunden (zwei Stunden) plus eine Zufallsspanne
+von 0-1800 Sekunden fest. Diese zufällige Verzögerung pro RRD verhindert
+ein pulsierendes Schreiben und sorgt für eine gleichmäßige Verteilung
+der IO über die Zeit:</p></div>
+<div class="listingblock">
+<div class="title">~/etc/rrdcached.conf</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># Tuning settings for the rrdcached. Please refer to rrdcached(1) for
+# details. After changing something here, you have to do a restart
+# of the rrdcached (reload is not sufficient)
+
+# Data is written to disk every TIMEOUT seconds. If this option is
+# not specified the default interval of 300 seconds will be used.
+TIMEOUT=3600
+
+# rrdcached will delay writing of each RRD for a random
+# number of seconds in the range [0,delay). This will avoid too many
+# writes being queued simultaneously. This value should be no
+# greater than the value specified in TIMEOUT.
+RANDOM_DELAY=1800
+
+# Every FLUSH_TIMEOUT seconds the entire cache is searched for old values
+# which are written to disk. This only concerns files to which
+# updates have stopped, so setting this to a high value, such as
+# 3600 seconds, is acceptable in most cases.
+FLUSH_TIMEOUT=7200
+
+# Specifies the number of threads used for writing RRD files. Increasing this
+# number will allow rrdcached to have more simultaneous I/O requests into the
+# kernel. This may allow the kernel to re-order disk writes, resulting in better
+# disk throughput.
+WRITE_THREADS=4</code></pre></div>
+</div>
+<div class="paragraph"><p>Eine Änderung der Einstellungen in dieser Datei aktivieren Sie mit:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>restart<span class="tok-w"> </span>rrdcached
+<span class="tok-go">Stopping rrdcached...waiting for termination....OK</span>
+<span class="tok-go">Starting rrdcached...OK</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>9.5. Dateien und Verzeichnisse</h3>
+<div class="paragraph"><p>Hier ist eine Übersicht über die wichtigsten Dateien und Verzeichnisse, die
+mit Messdaten und RRDs zu tun haben (alle bezogen auf das Home-Verzeichnis der Instanz):</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 65%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfadname</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/rrd</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RRDs im Checkmk-Format</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/pnp4nagios/perfdata</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RRDs im alten Format (PNP)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/rrdcached</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Journaldateien des RRD-Cache-Daemons</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/rrdcached.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logdatei des RRD-Cache-Daemons</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/cmc.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logdatei des Checkmk-Kerns (enthält ggf. Fehlermeldungen zu RRDs)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/rrdcached.conf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Einstellungen für den RRD-Cache-Daemon</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li><a href="#access">2. Zugriff über die GUI</a></li>
+<li><a href="#interaction">3. Interaktion mit dem Graphen</a></li>
+<li><a href="#graph_collections">4. Graphensammlungen (Graph collections)</a></li>
+<li><a href="#graph_tunings">5. Graphen anpassen (Graph tunings)</a></li>
+<li>
+<a href="#custom_graphs">6. Benutzerdefinierte Graphen (Custom graphs)</a><ul class="sectlevel1">
+<li><a href="#graph_designer">6.1. Der Graphdesigner</a></li>
+<li><a href="#graph_preview">6.2. Vorschau des Graphen</a></li>
+<li><a href="#list_metrics">6.3. Liste der Metriken</a></li>
+<li><a href="#adding_metrics">6.4. Hinzufügen einer Metrik</a></li>
+<li><a href="#graph_options">6.5. Graphoptionen</a></li>
+<li><a href="#calculation">6.6. Rechnen mit Formeln</a></li>
+</ul>
+</li>
+<li><a href="#graphing_api">7. InfluxDB, Graphite und Grafana</a></li>
+<li>
+<a href="#historical_data">8. Historische Messwerte in Tabellen</a><ul class="sectlevel1">
+<li><a href="#_um_was_geht_es">8.1. Um was geht es?</a></li>
+<li><a href="#_ansicht_erstellen">8.2. Ansicht erstellen</a></li>
+<li><a href="#_spalte_hinzuf%C3%BCgen">8.3. Spalte hinzufügen</a></li>
+</ul>
+</li>
+<li>
+<a href="#rrds">9. Die Round-Robin-Datenbanken (RRDs)</a><ul class="sectlevel1">
+<li><a href="#data_rrds">9.1. Organisation der Daten in den RRDs</a></li>
+<li><a href="#customise_rrds">9.2. Anpassen des RRD-Aufbaus</a></li>
+<li><a href="#rrdformat">9.3. RRD-Speicherformat</a></li>
+<li><a href="#rrdcached">9.4. Der RRD-Cache-Daemon (rrdcached)</a></li>
+<li><a href="#files">9.5. Dateien und Verzeichnisse</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

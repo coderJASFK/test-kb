@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="The FreeBSD agent is a simple shell script and therefore maximally transparent. How to use, extend and configure the agent can be found here.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Monitoring FreeBSD - The agent for FreeBSD in detail">
+<meta name="og:description" content="The FreeBSD agent is a simple shell script and therefore maximally transparent. How to use, extend and configure the agent can be found here.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Monitoring FreeBSD - The agent for FreeBSD in detail</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/agent_freebsd.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/agent_freebsd.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/agent_freebsd.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Monitoring FreeBSD</h1>
+<div class="details">
+<span id="revdate">Last modified on 07-Feb-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/en/agent_freebsd.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a>
+<a href="datasource_programs.html">Datasource programs</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are many good reasons for using <a href="https://www.freebsd.org/" target="_blank">FreeBSD</a> instead of Linux or other Unix-like systems:
+For example, the 'Jails' container feature, which has been available since 2000, its high performance even under heavy I/O loads, the robustness of the UFS2 file system, or the excellent support for the modern ZFS transactional file system.
+Checkmk provides an agent for FreeBSD which is based on the agent for Linux, but which has been adapted for FreeBSD entities, such as using different output formats of the command line tools and different path conventions.
+However, installation and functional testing must be largely manual, as there is no provision for packaging or deployment via the Agent Bakery.</p></div>
+<div class="paragraph"><p><strong>Note regarding other BSD systems:</strong> This article explains the installation and setup of the agent for <em>FreeBSD</em> — <a href="https://github.com/Checkmk/checkmk/tree/master/agents" target="_blank">Agents for <em>OpenBSD</em> and <em>NetBSD</em></a>
+are also available.
+The installation for those is similar to the that described here.
+If you use DragonFly BSD, we would welcome tests and any suggested patches for the FreeBSD agent.</p></div>
+<div class="paragraph"><p>The basic structure of the FreeBSD agent is the same as described for the <a href="agent_linux_legacy.html">Linux agent</a>:
+It is a pure shell script, which can be executed via an internet superserver (<code>inetd</code> or <code>xinetd</code>) or an SSH tunnel, which makes it lightweight and secure.</p></div>
+<div class="paragraph"><p>In general we assume in this article that you have some experience with Linux or Solaris, so here we will mainly focus on the differences.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__installation">
+<span class="hidden-anchor sr-only" id="_installation"></span>2. Installation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__prerequisites">
+<span class="hidden-anchor sr-only" id="_prerequisites"></span>2.1. Prerequisites</h3>
+<div class="paragraph"><p>In order for the Checkmk agent to be able to read all of the information useful for the monitoring, the installation of additional tools is required:</p></div>
+<div class="ulist"><ul>
+<li><p><code>sysutils/ipmitool</code></p></li>
+<li><p><code>devel/libstatgrab</code></p></li>
+<li><p><code>shells/bash</code></p></li>
+<li><p><code>lang/python3</code></p></li>
+<li><p><code>ftp/wget</code></p></li>
+</ul></div>
+<div class="paragraph"><p>Python is optional at this point, but in any case is needed for many agent plug-ins.
+A special feature is <code>bash</code>, since the agent script actually uses a syntax which is not compatible with the FreeBSD Bourne Shell.
+The <code>ipmitool</code> is needed to read hardware information.</p></div>
+<div class="paragraph"><p>You install all of these tools with the following command:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@bsd:/root # </span><strong>pkg<span class="tok-w"> </span>install<span class="tok-w"> </span>ipmitool<span class="tok-w"> </span>libstatgrab<span class="tok-w"> </span>bash<span class="tok-w"> </span>python3<span class="tok-w"> </span>wget</strong></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__installation_over_the_freebsd_ports">
+<span class="hidden-anchor sr-only" id="_installation_over_the_freebsd_ports"></span>2.2. Installation over the FreeBSD Ports</h3>
+<div class="paragraph"><p>The <a href="https://ports.freebsd.org/" target="_blank">FreeBSD Ports</a> contain a <a href="https://cgit.freebsd.org/ports/tree/net-mgmt/check_mk_agent" target="_blank">port for the Checkmk agent</a> maintained by Mark Peek, which may contain patches to make the agent compatible with newer FreeBSD-STABLE versions.
+If the version (e.g. <span class="new">2.0.0</span>) of this Checkmk agent available in the FreeBSD ports is equal to or slightly higher than your Checkmk version currently in use, you can install this agent.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@bsd:/root # </span><span class="tok-nb">cd</span><span class="tok-w"> </span>/usr/ports/net-mgmt/check_mk_agent
+<span class="tok-gp">root@bsd:/usr/ports/net-mgmt/check_mk_agent # </span>make<span class="tok-w"> </span>install</code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__manual_installation">
+<span class="hidden-anchor sr-only" id="_manual_installation"></span>2.3. Manual installation</h3>
+<div class="paragraph"><p>If the version available in the FreeBSD ports is older than that on your Checkmk server, install the latest agent from the GitHub repository.
+Since customizations to new FreeBSD versions do not always backport to agents for older Checkmk versions, it is usually a good idea to install from the most recent development branch:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@bsd:/root # </span>wget<span class="tok-w"> </span>-O<span class="tok-w"> </span>/usr/local/bin/check_mk_agent<span class="tok-w"> </span>https://checkmk.io/3EjKJlt
+<span class="tok-gp">root@bsd:/root # </span>chmod<span class="tok-w"> </span><span class="tok-m">0700</span><span class="tok-w"> </span>/usr/local/bin/check_mk_agent</code></pre></div></div>
+<div class="paragraph"><p>If you are looking for the agents for other BSD systems or want to set the development branch to a specific Checkmk version, locate the <a href="https://github.com/Checkmk/checkmk/tree/master/agents" target="_blank">agent folder in Github</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__test_at_the_command_line">
+<span class="hidden-anchor sr-only" id="_test_at_the_command_line"></span>2.4. Test at the command line</h3>
+<div class="paragraph"><p>Now call the agent on the command line and skim over the output in the pager:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@bsd:/root # </span>check_mk_agent<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>more
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.1.0i1</span>
+<span class="tok-go">AgentOS: freebsd</span>
+<span class="tok-go">Hostname: fbsd13</span>
+<span class="tok-go">AgentDirectory: /etc/check_mk</span>
+<span class="tok-go">DataDirectory:</span>
+<span class="tok-go">SpoolDirectory: /var/spool/check_mk_agent</span>
+<span class="tok-go">PluginsDirectory: /usr/local/lib/check_mk_agent/plugins</span>
+<span class="tok-go">LocalDirectory: /usr/local/lib/check_mk_agent/local</span></code></pre></div></div>
+<div class="paragraph"><p>If no output at all is produced, please check the prerequisites again, in particular that Bash is installed under <code>/usr/local/bin</code>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__setting_up_access_via_the_network">
+<span class="hidden-anchor sr-only" id="_setting_up_access_via_the_network"></span>3. Setting up access via the network</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__freebsd_inetd">
+<span class="hidden-anchor sr-only" id="_freebsd_inetd"></span>3.1. FreeBSD inetd</h3>
+<div class="paragraph"><p>The easiest way to access the agent is the <code>inetd</code> provided with FreeBSD.
+Alternatively, the Linux <code>xinetd</code> is available from the <code>security</code> section in the FreeBSD Ports.
+Its configuration is exactly the same as described in the <a href="agent_linux_legacy.html#manual">Linux agent article</a>.
+The <code>inetd</code> binds the output of the agent to TCP port 6556 and — if necessary — restricts access to certain Checkmk servers.</p></div>
+<div class="paragraph"><p>First, check if your <code>/etc/services</code> already contains an entry for port 6556:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@bsd:/root # </span><strong>grep<span class="tok-w"> </span><span class="tok-m">6556</span>/<span class="tok-w"> </span>/etc/services</strong></code></pre></div></div>
+<div class="paragraph"><p>If this is not the case, Checkmk must be identified as a service. To do this, add the following line:</p></div>
+<div class="listingblock">
+<div class="title">/etc/services</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>checkmk-agent 6556/tcp #Checkmk monitoring agent</code></pre></div>
+</div>
+<div class="paragraph"><p>Now add the following line to the <code>/etc/inetd.conf</code> configuration file:</p></div>
+<div class="listingblock">
+<div class="title">/etc/inetd.conf</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>checkmk-agent stream tcp nowait root /usr/local/bin/check_mk_agent check_mk_agent</code></pre></div>
+</div>
+<div class="paragraph"><p>The <code>inetd</code> must always be activated. To do this, append the following line to the <code>/etc/rc.conf</code> file:</p></div>
+<div class="listingblock">
+<div class="title">/etc/rc.conf</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>inetd_enable="YES"</code></pre></div>
+</div>
+<div class="paragraph"><p>If access restriction is necessary, edit the <code>/etc/hosts.allow</code> file.
+First comment out the line that allows access from anywhere, then add a line that allows access only to the Checkmk server — here with the IP address <code>10.2.3.4</code>.
+The first parameter is the name of the command executed by <code>inetd</code>:</p></div>
+<div class="listingblock">
+<div class="title">/etc/hosts.allow</div>
+<div class="content"><pre class="pygments highlight"><code><span></span># The rules here work on a "first match wins" basis.
+# ALL : ALL : allow
+sshd : ALL : allow
+check_mk_agent : 10.2.3.4 : allow</code></pre></div>
+</div>
+<div class="paragraph"><p>Once the configuration changes have been made, reboot:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@bsd:/root # </span><strong>reboot</strong></code></pre></div></div>
+<div class="paragraph"><p>Now access to the agent from the monitoring server should work.</p></div>
+<div class="paragraph"><p>The easiest way to test this is with <code>netcat</code> or <code>nc</code>.
+Run the following command as the site user on the Checkmk server to test the network connection to the agent (in this example, to the host with the IP address <code>10.2.3.5</code>).
+The command output is here abbreviated to show only the first lines:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>nc<span class="tok-w"> </span><span class="tok-m">10</span>.2.3.5<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.1.0i1</span>
+<span class="tok-go">AgentOS: freebsd</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__security">
+<span class="hidden-anchor sr-only" id="_security"></span>3.2. Security</h3>
+<div class="paragraph"><p>Since the FreeBSD agent does not currently support encryption, we recommend using an SSH tunnel in situations where it is necessary to secure the transferred data.
+We explain how to set this up in the <a href="agent_linux_legacy.html#ssh">Linux agent</a> article.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__inclusion_into_the_monitoring">
+<span class="hidden-anchor sr-only" id="_inclusion_into_the_monitoring"></span>4. Inclusion into the monitoring</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <a href="hosts_setup.html#create_hosts">inclusion into the monitoring</a> is performed by an automatic service discovery, as with all other systems.
+For a 'bare' FreeBSD with no server services configured yet, at least 12 services should be discovered, and ten additional ones for file system information if installed on ZFS:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_freebsd_discovery.png" alt="List of 12 automatically discovered services."></div>
+<div class="title">The service discovery in Checkmk will find at least 12 services.</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__plug_ins">
+<span class="hidden-anchor sr-only" id="_plug_ins"></span>5. Plug-ins</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Because of the completely manual configuration, the lack of automatic distribution and the different file paths compared to Linux, it is recommended to test the most important plug-in mechanisms.
+This is started using <a href="agent_linux.html#mrpe">MRPE.</a></p></div>
+<div class="sect2">
+<h3 id="heading__mrpe">
+<span class="hidden-anchor sr-only" id="_mrpe"></span>5.1. MRPE</h3>
+<div class="paragraph"><p>Create a configuration file <code>/etc/check_mk/mrpe.cfg</code> with the following content:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mrpe.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Flux_Comp /bin/echo 'OK - Flux compensator up and running'</code></pre></div>
+</div>
+<div class="paragraph"><p>There should now be an MRPE section in the agent’s output:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@bsd:/root # </span>check_mk_agent<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>-A1<span class="tok-w"> </span><span class="tok-s1">'^...mrpe'</span>
+<span class="tok-go">&lt;&lt;&lt;mrpe&gt;&gt;&gt;</span>
+<span class="tok-gp tok-gp-VirtualEnv">(echo)</span> <span class="tok-go">Flux_Comp 0 OK - Flux compensator up and running</span></code></pre></div></div>
+<div class="paragraph"><p>In the service discovery <span class="guihint">Flux_Comp</span> now appears as a new service:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_freebsd_mrpe.png" alt="List with the newly detected service Flux_Comp."></div>
+<div class="title">The MRPE plugin has been configured successfully</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__agent_plug_ins">
+<span class="hidden-anchor sr-only" id="_agent_plug_ins"></span>5.2. Agent plug-ins</h3>
+<div class="paragraph"><p>The installation of the agent plug-ins is the same as described in the <a href="agent_linux.html#manualplugins">Linux agent article</a>.
+Be sure to use the correct Shebang when installing any plug-ins.
+Perl and Python are installed in <code>/usr/local/bin</code> on FreeBSD, and many a shell script that works with <code>/bin/sh</code> on Linux actually requires the Bourne Again shell installed in <code>/usr/local/bin/bash</code> on FreeBSD.</p></div>
+<div class="paragraph"><p>For testing, a simple <a href="localchecks.html">local check</a> is suitable, with which the evaluation of whether the monitored service is <span class="state0">OK</span>, <span class="state1">WARN</span> or <span class="state2">CRIT</span> is done directly on the monitored host.
+While we’re at it, let’s use a two-liner to test the Python interpreter.
+Again, note the different default paths compared to Linux:</p></div>
+<div class="listingblock">
+<div class="title">/usr/local/lib/check_mk_agent/local/hello.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-ch">#!/usr/local/bin/python3</span>
+<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">"0 </span><span class="tok-se">\"</span><span class="tok-s2">Hello Beastie</span><span class="tok-se">\"</span><span class="tok-s2"> - Just check paths and Python interpreter!"</span><span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Don’t forget to make the script executable:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@bsd:/root # </span>chmod<span class="tok-w"> </span><span class="tok-m">0755</span><span class="tok-w"> </span>/usr/local/lib/check_mk_agent/local/hello.py</code></pre></div></div>
+<div class="paragraph"><p>Also in this case the service is found immediately:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_freebsd_local.png" alt="List with the newly detected service Hello Beastie."></div>
+<div class="title">The new service "Hello Beastie" was found</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__files_and_directories">
+<span class="hidden-anchor sr-only" id="_files_and_directories"></span>6. Files and directories</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading__file_paths_on_the_host_being_monitored">
+<span class="hidden-anchor sr-only" id="_file_paths_on_the_host_being_monitored"></span>6.1. File paths on the host being monitored</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/local/bin/check_mk_agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Installation location of the Checkmk agent on the target host.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/local/lib/check_mk_agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Base directory for agent extensions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/local/lib/check_mk_agent/plugins</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plug-ins, which extend the agent with additional monitoring data. Plug-ins can be written in any available programming language.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/local/lib/check_mk_agent/local</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage location for custom <a href="localchecks.html">local checks.</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/spool/check_mk_agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains data that is created by cronjobs, for example, and includes its own section. These are also appended to the agent output.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage location for the agent’s configuration files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/mrpe.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file for <a href="agent_linux.html#mrpe">MRPE</a> — for running classic Nagios compatible check plug-ins.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Attention:</strong> There are no default file paths defined for FreeBSD, as there are for Linux below <code>/var/lib/check_mk_agent</code>.
+Choose a suitable location and enter this in the agent’s script.</p></div>
+</div></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li>
+<a href="#_installation">2. Installation</a><ul class="sectlevel1">
+<li><a href="#_prerequisites">2.1. Prerequisites</a></li>
+<li><a href="#_installation_over_the_freebsd_ports">2.2. Installation over the FreeBSD Ports</a></li>
+<li><a href="#_manual_installation">2.3. Manual installation</a></li>
+<li><a href="#_test_at_the_command_line">2.4. Test at the command line</a></li>
+</ul>
+</li>
+<li>
+<a href="#_setting_up_access_via_the_network">3. Setting up access via the network</a><ul class="sectlevel1">
+<li><a href="#_freebsd_inetd">3.1. FreeBSD inetd</a></li>
+<li><a href="#_security">3.2. Security</a></li>
+</ul>
+</li>
+<li><a href="#_inclusion_into_the_monitoring">4. Inclusion into the monitoring</a></li>
+<li>
+<a href="#_plug_ins">5. Plug-ins</a><ul class="sectlevel1">
+<li><a href="#_mrpe">5.1. MRPE</a></li>
+<li><a href="#_agent_plug_ins">5.2. Agent plug-ins</a></li>
+</ul>
+</li>
+<li>
+<a href="#_files_and_directories">6. Files and directories</a><ul class="sectlevel1"><li><a href="#_file_paths_on_the_host_being_monitored">6.1. File paths on the host being monitored</a></li></ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

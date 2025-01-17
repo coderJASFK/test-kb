@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Bewährte Vorgehensweisen vermeiden Probleme in Checkmk, z.B. bei der Überwachung von Windows-Diensten, der Internetverbindung oder HTTP/HTTPS-Diensten.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Best Practices, Tipps &amp; Tricks">
+<meta name="og:description" content="Bewährte Vorgehensweisen vermeiden Probleme in Checkmk, z.B. bei der Überwachung von Windows-Diensten, der Internetverbindung oder HTTP/HTTPS-Diensten.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Best Practices, Tipps &amp; Tricks</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/intro_bestpractise.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/intro_bestpractise.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/intro_bestpractise.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Best Practices, Tipps &amp; Tricks</h1>
+<div class="details">
+<span id="revdate">Last modified on 19-Jun-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/intro_bestpractise.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="heading_cpu_single_core">
+<span class="hidden-anchor sr-only" id="cpu_single_core"></span>1. CPU-Auslastung aller Kerne einzeln überwachen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk richtet sowohl unter Linux als auch unter Windows automatisch einen Service ein, der die durchschnittliche CPU-Auslastung der letzten Minute ermittelt.
+Dies ist einerseits sinnvoll, erkennt aber andererseits einige Fehler nicht, beispielsweise den, dass ein einzelner Prozess Amok läuft und permanent <strong>eine</strong> CPU mit 100 % belastet.
+Bei einem System mit 16 CPUs trägt eine CPU aber nur mit 6,25 % zur Gesamtleistung bei, und so wird selbst im geschilderten Extremfall nur eine Auslastung von 6,25 % gemessen — was dann nicht zu einer Benachrichtigung führt.</p></div>
+<div class="paragraph"><p>Deswegen bietet Checkmk die Möglichkeit (für Linux und für Windows), alle vorhandenen CPUs einzeln zu überwachen und festzustellen, ob einer der Kerne über längere Zeit permanent ausgelastet ist.
+Diesen Check einzurichten hat sich als gute Idee herausgestellt.</p></div>
+<div class="paragraph"><p>Um diese Überprüfung für Ihre Windows-Server einzurichten, benötigen Sie für den Service <span class="guihint">CPU utilization</span> den Regelsatz <span class="guihint">CPU utilization for simple devices</span>, den Sie unter den <span class="guihint">Service monitoring rules</span> finden.
+Dieser Regelsatz ist für die Überwachung <strong>aller</strong> CPUs zuständig — hat aber auch diese Option im Angebot: <span class="guihint">Levels over an extended time period on a single core CPU utilization.</span></p></div>
+<div class="paragraph"><p>Erstellen Sie eine neue Regel und aktivieren Sie darin nur diese Option:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_cpu_single_core.png" alt="Dialog, um die Überwachung der CPU-Auslastung einzelner Kerne eines Windows-Servers festzulegen."></div></div>
+<div class="paragraph"><p>Definieren Sie die Bedingung so, dass sie nur für die Windows-Server greift, z.B. durch einen geeigneten Ordner oder ein Host-Merkmal.
+Diese Regel wird andere Regeln des gleichen Regelsatzes nicht beeinflussen, wenn diese andere Optionen festlegen, z.B. die Schwellwerte für die Gesamtauslastung.</p></div>
+<div class="paragraph"><p>Bei Linux-Servern ist dafür der Regelsatz <span class="guihint">CPU utilization on Linux/UNIX</span> zuständig, in dem Sie die gleiche Option setzen können.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_windows_services">
+<span class="hidden-anchor sr-only" id="windows_services"></span>2. Windows-Dienste überwachen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In der Voreinstellung überwacht Checkmk auf Ihren Windows-Servern keine Dienste.
+Warum nicht?
+Nun, weil Checkmk nicht weiß, welche Dienste für Sie wichtig sind.</p></div>
+<div class="paragraph"><p>Wenn Sie sich nicht die Mühe machen wollen, für jeden Server von Hand festzulegen, welche Dienste dort wichtig sind, können Sie auch einen Check einrichten, der einfach überprüft, ob alle Dienste mit der Startart „automatisch“ auch wirklich laufen.
+Zusätzlich können Sie sich informieren lassen, ob Dienste laufen, die manuell — quasi außer der Reihe — gestartet wurden.
+Diese werden nach einem Reboot nicht mehr laufen, was ein Problem sein kann.</p></div>
+<div class="paragraph"><p>Um dies umzusetzen, benötigen Sie zunächst den Regelsatz <span class="guihint">Windows Services</span>, den Sie unter den <span class="guihint">Service monitoring rules</span> finden, z.B. über die Suchfunktion <span class="guihint">Setup &gt; General &gt; Rule search</span>.
+Die entscheidende Option in der neuen Regel lautet <span class="guihint">Services states.</span>
+Aktivieren Sie diesen und fügen Sie drei neue Elemente für die Zustände der Dienste hinzu:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_windows_services_rule.png" alt="Dialog, um die zu überwachenden Windows-Server-Dienste in Abhängigkeit ihres Zustands festzulegen."></div></div>
+<div class="paragraph"><p>Dadurch erreichen Sie folgende Überwachung:</p></div>
+<div class="ulist"><ul>
+<li><p>Ein Dienst mit der Startart <span class="guihint">auto</span>, der läuft, gilt als <span class="state0">OK</span>.</p></li>
+<li><p>Ein Dienst mit der Startart <span class="guihint">auto</span>, der nicht läuft, gilt als <span class="state2">CRIT</span>.</p></li>
+<li><p>Ein Dienst mit der Startart <span class="guihint">demand</span>, der läuft, gilt als <span class="state1">WARN</span>.</p></li>
+</ul></div>
+<div class="paragraph"><p>Diese Regel gilt allerdings nur für Dienste, die auch wirklich überwacht werden.
+Daher benötigen wir noch einen zweiten Schritt und eine zweite Regel, diesmal aus dem Regelsatz <span class="guihint">Windows service discovery</span>, mit der Sie festlegen, welche Windows-Dienste Checkmk als Services überwachen soll.</p></div>
+<div class="paragraph"><p>Wenn Sie diese Regel anlegen, können Sie zunächst bei der Option <span class="guihint">Services (Regular Expressions)</span> den regulären Ausdruck <code>.*</code> eingeben, der auf alle Services zutrifft.</p></div>
+<div class="paragraph"><p>Nach dem Sichern der Regel wechseln Sie für einen passenden Host in die Service-Konfiguration.
+Dort werden Sie eine große Zahl von neuen Services finden — für jeden Windows-Dienst einen.</p></div>
+<div class="paragraph"><p>Um die Anzahl der überwachten Services auf die für Sie interessanten einzuschränken, kehren Sie zu der Regel zurück und verfeinern die Suchausdrücke nach Bedarf.
+Dabei wird Groß- und Kleinschreibung unterschieden.
+Hier ist ein Beispiel für eine angepasste Service-Auswahl:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_windows_service_discovery.png" alt="Dialog, um die Namen der zu überwachenden Windows-Dienste festzulegen."></div></div>
+<div class="paragraph"><p>Sollten Sie Services, die den neuen Suchausdrücken nicht entsprechen, zuvor schon in die Überwachung aufgenommen haben, erscheinen diese jetzt in der Service-Konfiguration als fehlend.
+Mit dem Knopf <span class="guihint">Rescan</span> können Sie reinen Tisch machen und die ganze Service-Liste neu erstellen lassen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_internet">
+<span class="hidden-anchor sr-only" id="internet"></span>3. Internetverbindung überwachen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Der Zugang Ihrer Firma zum Internet ist sicherlich für alle sehr wichtig.
+Die Überwachung der Verbindung zu „dem Internet“ ist dabei etwas schwierig umzusetzen, da es um Milliarden von Rechnern geht, die (hoffentlich) erreichbar sind — oder eben nicht.
+Sie können aber trotzdem effizient eine Überwachung einrichten, nach folgendem Bauplan:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Wählen Sie mehrere Rechner im Internet, die normalerweise per <code>ping</code>-Kommando erreichbar sein sollten, und notieren Sie deren IP-Adressen.</p></li>
+<li><p>Legen Sie in Checkmk einen neuen Host an, etwa mit dem Namen <code>internet</code> und konfigurieren diesen wie folgt:
+Als <span class="guihint">IPv4 address</span> geben Sie eine der notierten IP-Adressen ein.
+Unter <span class="guihint">Additional IPv4 addresses</span> tragen Sie die restlichen IP-Adressen ein.
+Aktivieren Sie unter <span class="guihint">Monitoring agents</span> die Option <span class="guihint">Checkmk agent / API integrations</span> und wählen dort <span class="guihint">No API integrations, no Checkmk agent</span> aus.
+Speichern Sie den Host ohne Service-Erkennung.</p></li>
+<li><p>Erstellen Sie eine neue Regel aus dem Regelsatz <span class="guihint">Check hosts with PING (ICMP Echo Request)</span>, die nur für den neuen Host <code>internet</code> greift (z.B. über die Bedingung mit <span class="guihint">Explicit hosts</span> oder einem passenden Host-Merkmal).
+Konfigurieren Sie die Regel wie folgt:
+Aktivieren Sie <span class="guihint">Service Description</span> und geben Sie <code>Internet connection</code> ein.
+Aktivieren Sie <span class="guihint">Alternative address to ping</span> und wählen Sie dort <span class="guihint">Ping all IPv4 addresses</span> aus.
+Aktivieren Sie <span class="guihint">Number of positive responses required for OK state</span> und tragen Sie <code>1</code> ein.</p></li>
+<li><p>Erstellen Sie eine weitere Regel, die ebenfalls nur für den Host <code>internet</code> gilt, diesmal aus dem Regelsatz <span class="guihint">Host Check Command</span>.
+Wählen Sie dort als <span class="guihint">Host Check Command</span> die Option <span class="guihint">Use the status of the service…​</span> und tragen Sie als Namen <code>Internet connection</code> ein, den Sie im vorherigen Schritt als Service-Namen gewählt haben.</p></li>
+</ol></div>
+<div class="paragraph"><p>Wenn Sie jetzt die Änderungen aktivieren, erhalten Sie im Monitoring den neuen Host <code>internet</code> mit dem einzigen Service <code>Internet connection</code>.</p></div>
+<div class="paragraph"><p>Wenn mindestens eines der Ping-Ziele erreichbar ist, hat der Host den Status <span class="hstate0">UP</span> und der Service den Status <span class="state0">OK</span>.
+Gleichzeitig erhalten Sie beim Service für jede der eingetragenen IP-Adressen Messdaten für die typische Paketumlaufzeit (<em>round trip time</em>) und den Paketverlust.
+Damit erhalten Sie einen Anhaltspunkt für die Qualität Ihrer Verbindung im Laufe der Zeit:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_service_internet.png" alt="Listeneintrag eines Services zur Überwachung der Internetverbindung zu mehreren IP-Adressen."></div></div>
+<div class="paragraph"><p>Der letzte und vierte Schritt ist notwendig, damit der Host nicht den Zustand <span class="hstate1">DOWN</span> erhält, falls die erste IP-Adresse nicht per <code>ping</code> erreichbar ist.
+Stattdessen übernimmt der Host den Status seines einzigen Services.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Da ein Service grundsätzlich nicht benachrichtigt, wenn sein Host <span class="hstate1">DOWN</span> ist, ist es wichtig, dass Sie die Benachrichtigungen über den Host steuern — und nicht über den Service.
+Außerdem sollten Sie in diesem speziellen Fall einen Benachrichtigungsweg verwenden, der keine Internetverbindung voraussetzt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_http">
+<span class="hidden-anchor sr-only" id="http"></span>4. HTTP/HTTPS-Dienste überwachen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Nehmen wir an, Sie wollen die Erreichbarkeit einer Website oder eines Webdienstes prüfen.
+Der <a href="wato_monitoringagents.html#agents">Checkmk-Agent</a> bietet hier keine Lösung, da er diese Information nicht anzeigt — und außerdem haben Sie vielleicht gar nicht die Möglichkeit, den Agenten auf dem Server zu installieren.</p></div>
+<div class="paragraph"><p>Die Lösung ist ein sogenannter <strong>aktiver Check.</strong>
+Das ist einer, der nicht per Agent durchgeführt wird, sondern direkt durch das Kontaktieren eines Netzwerkprotokolls beim Ziel-Host — in diesem Fall HTTP(S).</p></div>
+<div class="paragraph"><p>Das Vorgehen ist wie folgt:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Legen Sie zuerst in Checkmk einen neuen Host für den Webserver an, z.B. für <code>checkmk.com</code>.
+Aktivieren Sie unter <span class="guihint">Monitoring agents</span> die Option <span class="guihint">Checkmk agent / API integrations</span> und wählen dort <span class="guihint">No API integrations, no Checkmk agent</span> aus.
+Speichern Sie den Host ohne Service-Erkennung.</p></li>
+<li>
+<p>Erstellen Sie anschließend eine neue Regel aus dem Regelsatz <span class="guihint">Check HTTP service</span>, die nur für den neuen Host greift (z.B. über die <span class="guihint">Explicit hosts</span> Bedingung).</p>
+<div class="openblock"><div class="content">
+<div class="paragraph"><p>Im Kasten <span class="guihint">Check HTTP service</span> finden Sie zahlreiche Optionen zur Durchführung des Checks. Beachten Sie dabei die folgenden Punkte:</p></div>
+<div class="ulist"><ul>
+<li><p>Geben Sie bei <span class="guihint">Service name</span> dem Service einen Namen, z.B. <code>Homepage</code>.</p></li>
+<li><p>Bei <span class="guihint">Host settings &gt; Virtual host</span> müssen Sie eventuell die Domäne des Servers angeben, wenn dieser mehr als eine Domäne hostet.</p></li>
+<li><p><span class="guihint">Mode of the Check &gt; Use SSL/HTTPS for the connection</span> ermöglicht die Überwachung von HTTPS.</p></li>
+<li><p>Mit <span class="guihint">Mode of the Check &gt; Expected response time</span> können Sie den Service auf <span class="state1">WARN</span> oder sogar <span class="state2">CRIT</span> setzen lassen, wenn die Antwortzeit zu langsam ist.</p></li>
+<li><p>Mit <span class="guihint">Mode of the Check &gt; Fixed string to expect in the content</span> können Sie prüfen lassen, ob in der Antwort — also in der gelieferten Seite — ein bestimmter Text vorkommt.
+Damit können Sie einen relevanten Teil des Inhalts prüfen, damit nicht eine simple Fehlermeldung des Servers als positive Antwort gewertet wird.</p></li>
+</ul></div>
+</div></div>
+</li>
+<li><p>Speichern Sie die Regel und aktivieren Sie die Änderungen.</p></li>
+</ol></div>
+<div class="paragraph"><p>Sie bekommen jetzt einen neuen Host mit einem Service, der einen Zugriff per HTTP(S) prüft.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_http_service.png" alt="Listeneintrag eines Services zur Überwachung der HTTP/HTTPS-Dienste auf einem Host."></div></div>
+<div class="paragraph"><p>Sie können diesen Check natürlich auch auf einem Host durchführen, der bereits mit Checkmk per Agent überwacht wird.
+In diesem Fall entfällt das Anlegen des Hosts und Sie müssen nur die Regel für den Host erstellen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_magic_factor">
+<span class="hidden-anchor sr-only" id="magic_factor"></span>5. Dateisystem-Schwellwerte magisch anpassen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Gute Schwellwerte für die Überwachung von Dateisystemen zu finden, kann mühsam sein.
+Denn eine Schwelle von 90 % ist bei einer sehr großen Festplatte viel zu niedrig und bei einer kleinen vielleicht schon zu knapp.
+Wir hatten bereits im <a href="intro_finetune.html#filesystems">Kapitel über die Feinjustierung des Monitoring</a> die Möglichkeit vorgestellt, Schwellwerte in Abhängigkeit von der  Dateisystemgröße festzulegen — und angedeutet, dass Checkmk eine weitere, noch schlauere Option im Angebot hat: den <strong>Magic Factor.</strong></p></div>
+<div class="paragraph"><p>Den Magic Factor richten Sie so ein:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Im Regelsatz <span class="guihint">Filesystems (used space and growth)</span> legen Sie nur eine einzige Regel an.</p></li>
+<li><p>In dieser Regel aktivieren Sie <span class="guihint">Levels for used/free space</span> und lassen den Standard der Schwellwerte 80 % bzw. 90 % unverändert.</p></li>
+<li><p>Zusätzlich aktivieren Sie <span class="guihint">Magic factor (automatic level adaptation for large filesystems)</span> und akzeptieren den Standardwert von 0.80.</p></li>
+<li><p>Setzen Sie ferner <span class="guihint">Reference size for magic factor</span> auf 20 GByte.
+Da 20 GByte der Standardwert ist, wird er wirksam, auch ohne dass Sie die Option explizit aktivieren.</p></li>
+</ol></div>
+<div class="paragraph"><p>Das Ergebnis sieht dann so aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_magic_factor.png" alt="Dialog zur Festlegung des Magic Factors für Dateisystem-Schwellwerte."></div></div>
+<div class="paragraph"><p>Wenn Sie jetzt die Regel sichern und die Änderung aktivieren, erhalten Sie Schwellwerte, die automatisch von der Größe des Dateisystems abhängen:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Dateisysteme, die genau 20 GByte groß sind, erhalten die Schwellwerte 80 % / 90 %.</p></li>
+<li><p>Dateisysteme, die kleiner als 20 GByte sind, erhalten niedrigere Schwellwerte.</p></li>
+<li><p>Dateisysteme, die größer als 20 GByte sind, erhalten höhere Schwellwerte.</p></li>
+</ol></div>
+<div class="paragraph"><p>Wie hoch die Schwellwerte genau sind ist — nun ja — magisch!
+Über den Faktor (hier 0.80) bestimmen Sie, wie stark die Werte verbogen werden.
+Ein Faktor von 1.0 ändert gar nichts, und alle Dateisysteme bekommen die gleichen Werte.
+Kleinere Werte verbiegen die Schwellwerte stärker.
+Die in diesem Kapitel angewendeten Standardwerte von Checkmk haben sich in der Praxis bei sehr vielen Installationen bewährt.</p></div>
+<div class="paragraph"><p>Welche Schwellen genau gelten, können Sie bei jedem Service in seiner Zusammenfassung (<span class="guihint">Summary</span>) sehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_magic_factor_services.png" alt="Liste mit zwei Dateisystem-Services und ihren Schwellwerten."></div></div>
+<div class="paragraph"><p>Die folgende Tabelle zeigt einige Beispiele für die Auswirkung des Magic Factors (mf) bei einer Referenz von 20 GByte / 80 %:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 17%;">
+<col style="width: 13.8333%;">
+<col style="width: 13.8333%;">
+<col style="width: 13.8333%;">
+<col style="width: 13.8333%;">
+<col style="width: 13.8333%;">
+<col style="width: 13.8335%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Dateisystemgröße</th>
+<th class="tableblock halign-left valign-top">mf = 1.0</th>
+<th class="tableblock halign-left valign-top">mf = 0.9</th>
+<th class="tableblock halign-left valign-top">mf = 0.8</th>
+<th class="tableblock halign-left valign-top">mf = 0.7</th>
+<th class="tableblock halign-left valign-top">mf = 0.6</th>
+<th class="tableblock halign-left valign-top">mf = 0.5</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5 GByte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">77 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">74 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">70 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">65 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">60 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 GByte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">79 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">77 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">75 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">74 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">72 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20 GByte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50 GByte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">82 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">83 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">85 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">86 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">87 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100 GByte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">83 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">86 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">88 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">89 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">91 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">300 GByte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">85 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">88 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">91 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">93 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95 %</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">800 GByte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>80 %</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">86 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">93 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95 %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">97 %</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Mit dem Magic Factor schließen wir den Leitfaden für Einsteiger ab.
+Wir hoffen, dass Sie es geschafft haben, Ihr Checkmk grundlegend einzurichten — mit oder ohne Magie.
+Für fast alle Themen, die wir in diesem Leitfaden behandelt haben, finden Sie vertiefende Informationen in anderen Artikeln des Handbuchs.</p></div>
+<div class="paragraph"><p>Wir wünschen viel Erfolg mit Checkmk!</p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#cpu_single_core">1. CPU-Auslastung aller Kerne einzeln überwachen</a></li>
+<li><a href="#windows_services">2. Windows-Dienste überwachen</a></li>
+<li><a href="#internet">3. Internetverbindung überwachen</a></li>
+<li><a href="#http">4. HTTP/HTTPS-Dienste überwachen</a></li>
+<li><a href="#magic_factor">5. Dateisystem-Schwellwerte magisch anpassen</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

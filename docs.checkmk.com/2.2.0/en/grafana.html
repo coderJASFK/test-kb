@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Easily create Grafana dashboards with data from your Checkmk monitoring with the Checkmk plug-in for Grafana.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Integrating Checkmk in Grafana">
+<meta name="og:description" content="Easily create Grafana dashboards with data from your Checkmk monitoring with the Checkmk plug-in for Grafana.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Integrating Checkmk in Grafana</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/de/grafana.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/grafana.html">2.1.0</a><a class="dropdown-item" href="../../latest/en/grafana.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">The Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">The Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Integrating Checkmk in Grafana</h1>
+<div class="details">
+<span id="revdate">Last modified on 04-Mar-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/en/grafana.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="monitoring_kubernetes.html">Monitoring Kubernetes</a>
+<a href="monitoring_docker.html">Monitoring Docker</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/grafana_logo.png" alt="grafana logo" width="168"></div></div>
+<div class="paragraph"><p>With its integrated <a href="graphing.html">graphing system</a>, Checkmk has a powerful tool for recording and visualizing <a href="glossar.html#metric">metrics</a>.
+Nevertheless, it can be useful to connect <a href="https://grafana.com/" target="_blank">Grafana</a> as an external graphing system,
+for example, when you already use Grafana and want to merge the data from Checkmk with data from other systems into shared dashboards.</p></div>
+<div class="paragraph"><p>Since Grafana 8.x, it is possible to address Checkmk directly as a data source in all editions and to display individual metrics or even entire graphs as predefined in Checkmk.
+In addition, you can dynamically create your own graphs by using <a href="regexes.html">regular expressions</a> to define a group of hosts and services from which certain metrics are to be included in the graph.</p></div>
+<div class="paragraph"><p>This article describes how to retrieve and display your Checkmk metrics in Grafana.
+The screenshots used here were created with Grafana 10.1, earlier versions differ slightly in their user interface.
+Detailed instructions on how to use and configure Grafana can be found in the <a href="https://grafana.com/docs/" target="_blank">documentation at Grafana Labs</a>.</p></div>
+<div class="paragraph"><p>The Grafana plug-in has been developed independently of Checkmk and is maintained in its own <a href="https://github.com/Checkmk/grafana-checkmk-datasource" target="_blank">Github repository</a>.
+This article describes the installation of the plug-in in version 3.1, which interacts with Checkmk <span class="new">2.1.0</span> and <span class="new">2.2.0</span>.
+As the plug-in is installed in Grafana, it does not make sense to deliver it together with Checkmk.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_installation">
+<span class="hidden-anchor sr-only" id="installation"></span>2. Installing the plug-in in Grafana</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Depending on your Grafana server installation type and your Checkmk edition, several methods for installing the plug-in are available.
+The only restriction here is that users of the Grafana Cloud solution must use the <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Cloud Edition"></span> <strong>Checkmk Cloud Edition</strong> and activate the plug-in <a href="#installation_marketplace">via the official Grafana plug-in collection</a>.
+On-premises installations of Grafana can be connected to all Checkmk editions.</p></div>
+<div class="sect2">
+<h3 id="heading_installation_cli">
+<span class="hidden-anchor sr-only" id="installation_cli"></span>2.1. Installation using the command line (Cloud Edition, own Grafana server)</h3>
+<div class="paragraph"><p>This type of installation requires the use of the <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Cloud Edition"></span> <strong>Checkmk Cloud Edition</strong>.
+If Grafana is operated on its own server, installation from the Grafana plug-in collection is possible via the command line:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>grafana-cli<span class="tok-w"> </span>plugins<span class="tok-w"> </span>install<span class="tok-w"> </span>checkmk-cloud-datasource</code></pre></div></div>
+<div class="paragraph"><p>Restart the Grafana server service:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>systemctl<span class="tok-w"> </span>restart<span class="tok-w"> </span>grafana-server</code></pre></div></div>
+<div class="paragraph"><p>The plug-in will then be available in the Grafana interface and so can there be activated and set up.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_installation_marketplace">
+<span class="hidden-anchor sr-only" id="installation_marketplace"></span>2.2. Installation via the Grafana Cloud GUI (Cloud Edition, Grafana Cloud)</h3>
+<div class="paragraph"><p>First log in to the Grafana instance in which you want to install the Checkmk data source.
+Then open the <a href="https://grafana.com/grafana/plugins/checkmk-cloud-datasource/?tab=installation" target="_blank">page for the data source in the Grafana plug-in collection</a>.
+In the <span class="guihint">Installation</span> tab, tick the Grafana instance that is to receive the plug-in and then click on the <span class="guihint">Install</span> button.
+It may take a few minutes before the plug-in is available in the Grafana installation’s web interface.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_installation_zip">
+<span class="hidden-anchor sr-only" id="installation_zip"></span>2.3. Installation from a zip archive (all editions, own Grafana server)</h3>
+<div class="paragraph"><p>On the <a href="https://github.com/Checkmk/grafana-checkmk-datasource/releases" target="_blank">Releases page in the GitHub repository</a> you will find two variants of the plug-in as a zip archive:</p></div>
+<div class="ulist"><ul>
+<li><p>The signed variant <code>checkmk-cloud-datasource-X.Y.Z.zip</code> <a href="#installation_cli">mentioned above</a>, which can only be used with the Cloud Edition.</p></li>
+<li><p>A variant that uses the old <code>tribe-29-checkmk-datasource-X.Y.Z.zip</code> naming scheme, for all editions from Checkmk <span class="new">2.1.0</span> and newer.</p></li>
+</ul></div>
+<div class="paragraph"><p>Simply download the latest version as a zip file and copy it, for example with <code>scp</code>, to the Grafana server.</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/grafana_download_plugin.png" alt="grafana download plugin"></div></div>
+<div class="paragraph"><p>Instead of using the browser, you can of course also load the file directly from the command line.
+Note that you need to know the current version for this — in the following example, we write the version in the <code>$plugvers</code> variable.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nv">plugvers</span><span class="tok-o">=</span><span class="tok-s1">'3.1.1'</span>
+<span class="tok-gp">root@linux# </span>wget<span class="tok-w"> </span>https://github.com/Checkmk/grafana-checkmk-datasource/releases/download/v<span class="tok-si">${</span><span class="tok-nv">plugvers</span><span class="tok-si">}</span>/tribe-29-checkmk-datasource-<span class="tok-si">${</span><span class="tok-nv">plugvers</span><span class="tok-si">}</span>.zip</code></pre></div></div>
+<div class="paragraph"><p>Next, unpack the zip archive:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>unzip<span class="tok-w"> </span>tribe-29-checkmk-datasource-<span class="tok-si">${</span><span class="tok-nv">plugvers</span><span class="tok-si">}</span>.zip</code></pre></div></div>
+<div class="paragraph"><p>Create a plug-in directory, if this does not already exist, and make the Linux user under whose ID the Grafana processes are executed (usually <code>grafana</code>) its owner:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>mkdir<span class="tok-w"> </span>-p<span class="tok-w"> </span>/var/lib/grafana/plugins
+<span class="tok-gp">root@linux# </span>chown<span class="tok-w"> </span>grafana:grafana<span class="tok-w"> </span>/var/lib/grafana/plugins</code></pre></div></div>
+<div class="paragraph"><p>Move the resulting folder to the Grafana plug-in directory.
+This is usually the file path <code>/var/lib/grafana/plugins/</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>mv<span class="tok-w"> </span>-v<span class="tok-w"> </span>tribe-29-checkmk-datasource<span class="tok-w"> </span>/var/lib/grafana/plugins/tribe-29-checkmk-datasource</code></pre></div></div>
+<div class="paragraph"><p>Change the ownership to the Grafana user:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>chown<span class="tok-w"> </span>-R<span class="tok-w"> </span>grafana:grafana<span class="tok-w"> </span>/var/lib/grafana/plugins/tribe-29-checkmk-datasource</code></pre></div></div>
+<div class="paragraph"><p>An installation by cloning the Git archive (as described in older versions of this article) is no longer possible.
+If you want to participate in the development of the plug-in, read the <a href="https://github.com/Checkmk/grafana-checkmk-datasource/blob/main/DEVELOPMENT.md" target="_blank">Development Guide</a>.</p></div>
+<div class="sect3">
+<h4 id="heading_allow_unsigned">
+<span class="hidden-anchor sr-only" id="allow_unsigned"></span>Allowing unsigned plug-ins</h4>
+<div class="paragraph"><p>Since Grafana 8.0, it is no longer possible to integrate external plug-ins if they have not been signed.
+This also applies to the Checkmk plug-in, so that you will require an additional step.</p></div>
+<div class="paragraph"><p>To do this, edit the <code>/etc/grafana/grafana.ini</code> configuration file in the <code>[plugins]</code> section.
+Change the line <code>;allow_loading_unsigned_plugins =</code> as follows.
+Make sure to remove the semicolon at the beginning of the line:</p></div>
+<div class="listingblock">
+<div class="title">/etc/grafana/grafana.ini</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[plugins]</span>
+<span class="tok-na">allow_loading_unsigned_plugins</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-s">tribe-29-checkmk-datasource</span></code></pre></div>
+</div>
+<div class="paragraph"><p>With this setting, you add an exception for this one plug-in.
+If you are using Grafana in a (Docker) container, there are several ways to make changes to the Grafana configuration.
+If only small configuration changes are necessary, these can be made via the environment variables:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>sudo<span class="tok-w"> </span>docker<span class="tok-w"> </span>run<span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-se">\</span>
+-e<span class="tok-w"> </span><span class="tok-nv">GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS</span><span class="tok-o">=</span>tribe-29-checkmk-datasource<span class="tok-w"> </span><span class="tok-se">\</span>
+-p<span class="tok-w"> </span><span class="tok-m">3000</span>:3000<span class="tok-w"> </span>--name<span class="tok-w"> </span>grafana<span class="tok-w"> </span><span class="tok-se">\</span>
+-v<span class="tok-w"> </span>grafana-plugins:/var/lib/grafana/plugins<span class="tok-w"> </span><span class="tok-se">\</span>
+-v<span class="tok-w"> </span>grafana-db:/var/lib/grafana<span class="tok-w"> </span>grafana/grafana</code></pre></div></div>
+<div class="paragraph"><p>If major customizations of the INI file or the entire <code>/etc/grafana/</code> are required, either link the customized INI file to the container or create a <code>volume</code> which you map to the directory in the container (<code>/etc/grafana/</code>).
+The following is an example of how to link the INI file with <code>--mount</code>.
+Note that this is only an example and will probably not apply directly to your environment:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>sudo<span class="tok-w"> </span>docker<span class="tok-w"> </span>run<span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-se">\</span>
+<strong>--mount type=bind,source=/home/user/grafana/grafana.ini,target=/etc/grafana/grafana.ini</strong><span class="tok-w"> </span><span class="tok-se">\</span>
+-p<span class="tok-w"> </span><span class="tok-m">3000</span>:3000<span class="tok-w"> </span>--name<span class="tok-w"> </span>grafana<span class="tok-w"> </span><span class="tok-se">\</span>
+-v<span class="tok-w"> </span>grafana-plugins:/var/lib/grafana/plugins<span class="tok-w"> </span><span class="tok-se">\</span>
+-v<span class="tok-w"> </span>grafana-db:/var/lib/grafana<span class="tok-w"> </span>grafana/grafana</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading_restart">
+<span class="hidden-anchor sr-only" id="restart"></span>Restarting the Grafana service</h4>
+<div class="paragraph"><p>After installing the plug-in, updating or modifying the configuration file, restart the Grafana server service:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>systemctl<span class="tok-w"> </span>restart<span class="tok-w"> </span>grafana-server</code></pre></div></div>
+<div class="paragraph"><p>The plug-in will then be available in the Grafana interface and can there be activated and set up.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_create_user">
+<span class="hidden-anchor sr-only" id="create_user"></span>3. Creating a Grafana user in Checkmk</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The Grafana connection requires a user on the Checkmk side who has sufficient permissions and is also authenticated via an automation password (<em>automation secret</em>) instead of a password.
+Normal guest or monitoring users are not sufficient, and for security reasons you should not use an administrator.</p></div>
+<div class="paragraph"><p>The easiest way to create a 'suitable' user is to clone the <a href="wato_user.html#roles">role</a> of the guest user (<code>guest</code>) and provide it with the additional authorization <span class="guihint">User management</span> (allow read access to user information).
+If you base your Grafana user role on another role, make sure that the <span class="guihint">See all host and services</span> authorization is set in addition to <span class="guihint">User management</span>.</p></div>
+<div class="paragraph"><p>Once the role has been created, create one or more Grafana users with an automation password (<em>automation secret</em>).
+You can further restrict the authorizations assigned to the role later, for example no access to <a href="glossar.html#bi">BI</a> or the <a href="glossar.html#ec">Event Console</a> is required.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_activate">
+<span class="hidden-anchor sr-only" id="activate"></span>4. Activating and setting up the plug-in</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Once the necessary files have been installed, you can activate the plug-in in Grafana.
+To do this, switch to the configuration and select the <span class="guihint">Data sources</span> option.
+Here you can add a new data source using the <span class="guihint">Add data source</span> button:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_plugins_overview.png" alt="grafana plugins overview"></div></div>
+<div class="paragraph"><p>The entry for Checkmk can be found in the <span class="guihint">Others</span> category:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_plugin_cmk.png" alt="grafana plugin cmk"></div></div>
+<div class="paragraph"><p>The template for this data source is quite simple.
+Enter the URL for your site, the type of your edition and the <a href="#create_user">user</a> you have just created for Grafana.
+<strong>Important</strong>: If you use Checkmk in a <a href="distributed_monitoring.html">distributed environment</a>, enter the URL to your central site here:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_plugin_config.png" alt="grafana plugin config"></div></div>
+<div class="paragraph"><p>If you want to connect several Checkmk sites, you can optionally give each individual connection a unique name.
+Otherwise, simply leave the default as <code>Checkmk</code> or <code>Checkmk for Cloud Edition</code>.</p></div>
+<div class="paragraph"><p>Once you have saved the connection with the <span class="guihint">Save &amp; test</span> button, it will be available to you as a data source in Grafana and you can configure your first graphs.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_graphs">
+<span class="hidden-anchor sr-only" id="graphs"></span>5. Creating graphs</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_emptydash">
+<span class="hidden-anchor sr-only" id="emptydash"></span>5.1. Creating a blank dashboard</h3>
+<div class="paragraph"><p>Under <span class="guihint">Home &gt; Dashboards</span> you will find a drop-down menu marked with a plus sign.
+Click on <span class="guihint">New dashboard</span> to create a new dashboard:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_new_dashboard.png" alt="grafana new dashboard"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_singlemetric">
+<span class="hidden-anchor sr-only" id="singlemetric"></span>5.2. Displaying a single host metric</h3>
+<div class="paragraph"><p>The simplest dashboard shows a single graph for a host’s service.
+This can also be the metric from a <a href="glossar.html#local_check">local check</a> for which no ready-made graphs exist.
+Create a new visualization in an existing dashboard or the one you have just created.
+First select <span class="guihint">Add visualization</span> here:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_dashboard_addpanel.png" alt="grafana dashboard addpanel"></div></div>
+<div class="paragraph"><p>Creating a visualization takes you to the selection of the data source.
+After selecting <span class="guihint">Checkmk</span>, you are directly in the editing mode of the <em>Query</em> for the newly created panel.
+A panel is a container for a visualization.</p></div>
+<div class="paragraph"><p>Access to the data to be visualized differs slightly between the <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> and the commercial editions:
+In the Raw Edition you work with predefined menus — for site, host name, service and so on.
+In the commercial editions, you have the option of defining cascades of filters.
+This allows a very detailed selection, also using regular expressions.
+The following simple example has been chosen so that you can run through it with all editions.</p></div>
+<div class="paragraph"><p>First select the <span class="guihint">Site</span>, then filter for a <span class="guihint">Hostname</span> in the monitoring.
+For the first test, use any host that uses the Windows or Linux agent.
+Select <span class="guihint">Check_MK</span> as the <span class="guihint">Service</span>.
+Set the type of <span class="guihint">Aggregation</span> to <span class="guihint">Maximum</span>.
+The <span class="guihint">Graph type</span> available for selection is <span class="guihint">Single metric</span> or <span class="guihint">Predefined graph</span>:
+<span class="guihint">Predefined graphs</span> take metrics from Checkmk, which can also contain combined graphs.
+Our screenshots here show the <span class="guihint">Single metric</span>, which contains the total execution time of the agent (<span class="guihint">Time spent waiting for Checkmk agent</span>).</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/grafana_dashboard_single_config.png" alt="grafana dashboard single config"></div>
+<div class="title">Selection of metrics via filters in the commercial editions</div>
+</div>
+<div class="imageblock">
+<div class="content"><img src="../images/grafana_dashboard_single_config_cre.png" alt="grafana dashboard single config cre"></div>
+<div class="title">Selection of metrics via predefined menus in the Raw Edition</div>
+</div>
+<div class="paragraph"><p>Grafana displays the result directly.
+With the <span class="guihint">Apply</span> button you can apply the graph without saving the dashboard.
+With <span class="guihint">Save</span> you are prompted to enter a title for the new <span class="guihint">Dashboard</span> and can then save the newly created dashboard.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/grafana_dashboard_single_view.png" alt="grafana dashboard single view"></div>
+<div class="title">New dashboard with a meaningful name</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_predefined">
+<span class="hidden-anchor sr-only" id="predefined"></span>5.3. Displaying a predefined graph from Checkmk</h3>
+<div class="paragraph"><p>The developers of Checkmk have already compiled many related metrics into common graphs to make it easier for users to get an overview of the various aspects of a single resource.
+You can display the metrics from such a ready-made graph directly in Grafana.</p></div>
+<div class="paragraph"><p>The procedure is initially the same as explained in the previous section.
+However, to complete the process select the <span class="guihint">Graph type</span> entry <span class="guihint">Predefined graph</span> and the <span class="guihint">Predefined graph</span> for the service to be used.</p></div>
+<div class="paragraph"><p>If you receive an error message that the selection of combined metrics with more than 200 elements is not permitted, use additional filters to restrict the selection.
+If in doubt, move the filters that will significantly limit the result to the front of the set.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_dashboard_predefined_config.png" alt="grafana dashboard predefined config"></div></div>
+<div class="paragraph"><p>Once you are satisfied with your selection, click the <span class="guihint">Apply</span> button.
+The graph will now be available in the selected dashboard.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_dashboard_predefined_view.png" alt="grafana dashboard predefined view"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_complexgraphs">
+<span class="hidden-anchor sr-only" id="complexgraphs"></span>5.4. Creating complex graphs</h3>
+<div class="paragraph"><p>Especially in a dynamic cluster, you will often want to be able to track the entire progress of a metric across all participating hosts without having to customize a graph every time a new node is added or removed.
+To achieve this, there are various options for dynamically adapting graphs.</p></div>
+<div class="paragraph"><p>The first option is to filter by <span class="guihint">Host Labels</span> or <span class="guihint">Host Tags</span> instead of selecting individual hosts.
+Another option is to use <a href="regexes.html">regular expressions</a>.
+You can apply regular expressions to hosts or services.
+In the following example, <code>filesystem</code> matches all services that contain <code>filesystem</code> — regardless of how many file systems a host has mounted.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_dashboard_combined_config.png" alt="grafana dashboard combined config"></div></div>
+<div class="paragraph"><p>With <code>filesystem.*nvme</code> you would restrict the selection to all file systems on NVMe drives, no matter which file system type they use, since the part of the string between <code>filesystem</code> and <code>nvme</code> can be arbitrary.</p></div>
+<div class="paragraph"><p>In addition to the extended filter options, use <span class="guihint">Aggregation</span> to determine the display of the metrics in the graph and <span class="guihint">Graph</span> to determine which graph is to be used as a reference.
+Note that metrics for a host/service are only displayed if it also has the selected graph.
+A graph could then look like this, for example:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_dashboard_combined_view.png" alt="grafana dashboard combined view"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_transform">
+<span class="hidden-anchor sr-only" id="transform"></span>5.5. Renaming using regular expressions</h3>
+<div class="paragraph"><p>In each panel’s edit mode, you will find a <span class="guihint">Transform</span> tab.
+You can use the <span class="guihint">Rename by regex</span> sub-item available here to reorder the names of metrics or suppress information that is not required.
+Our following example searches for two groups of characters separated by a comma followed by a space, swaps them and explicitly places <code>Service</code> and <code>Host</code> at the front:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/grafana_series_renaming_regex.png" alt="grafana series renaming regex"></div></div>
+<div class="paragraph"><p>The variables <code>$1</code> and <code>$2</code> correspond to the strings 'captured' in the line above (<em>match groups</em> or <em>capture groups</em>).
+Grafana also allows nested match groups.
+The corresponding section in the article on  <a href="regexes.html#matchgroups">regular expressions</a> provides an overview of the possibilities available for these.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_variables">
+<span class="hidden-anchor sr-only" id="variables"></span>6. Making graphs more flexible using variables</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can use variables to flexibly add graphs to dashboards.
+This allows you to determine the host of a specific metric via a drop-down selection or you can use variables to simultaneously add graphs for multiple hosts to a dashboard.
+This article cannot and should not replace the <a href="https://grafana.com/docs/grafana/latest/dashboards/variables/" target="_blank">documentation for Grafana</a>.
+First and foremost, here we want to provide an overview of the possible applications and an introduction to the topic.</p></div>
+<div class="paragraph"><p>Variables can be created from <em>queries</em>.
+In this case, you can filter on sites, hosts or services.
+Alternatively, there is also the option of defining <em>quantities</em> or <em>free text fields</em>, which allows you to create any number of filters.</p></div>
+<div class="sect2">
+<h3 id="heading_variable_create">
+<span class="hidden-anchor sr-only" id="variable_create"></span>6.1. Creating variables</h3>
+<div class="paragraph"><p>Each variable is a property of a dashboard.
+It must be created in the dashboard settings and can then only be used within this dashboard.
+As <em>query</em> requires the most extensive configuration, we will show its use in our example.</p></div>
+<div class="paragraph"><p>The relevant properties for a variable are its type and its name; all other properties are only used for the purpose of clarity in the dashboard.
+The name should differentiate between variables.
+So if you plan to use several variables to select hosts from different subsets, use a name that references this set instead of <code>host</code> as in the example, for example <code>host_from_linuxservers</code>.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/grafana_variable_name.png" alt="grafana variable name"></div>
+<div class="title">Creation of the variable <code>host</code> in the dashboard properties</div>
+</div>
+<div class="paragraph"><p>When selecting a data source, make sure that a Checkmk connection is selected.
+You can further restrict the selected object type, for example with regular expressions.
+Any filters used are evaluated on the Checkmk server.
+In contrast, the following fields <span class="guihint">Regex</span> and <span class="guihint">Sort</span> are evaluated by Grafana.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/grafana_variable_query.png" alt="grafana variable query"></div>
+<div class="title">Filters are used to define which values the variable can take on</div>
+</div>
+<div class="paragraph"><p>The two checkboxes for <span class="guihint">Selection options</span> at the bottom of the page can be optionally used later depending on need.
+You can modify these settings at any time if required; for the first test, leave both at the (empty) default setting.
+Save the variables using <span class="guihint">Save dashboard</span> when you have made all the settings.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_variable_use">
+<span class="hidden-anchor sr-only" id="variable_use"></span>6.2. Using variables for graphs</h3>
+<div class="paragraph"><p>You can now enter the assigned variables in the appropriate fields to create a flexible graph.
+The variables can also be used in the graph’s title.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/grafana_variable_use.png" alt="grafana variable use"></div>
+<div class="title">Variable names are accessed, as in some shells, via the prefixed dollar sign</div>
+</div>
+<div class="paragraph"><p>A drop-down selection for each variable is displayed in the dashboard, which you can use to set the variable values (hosts, services…​) which you want to display on the dashboard.
+If you have activated multiple selection, you can set the <span class="guihint">Repeat by variable</span> option in the panel settings to display the panel for each selected variable’s value.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/grafana_variable_panel.png" alt="grafana variable panel"></div>
+<div class="title">Drop-down selection of the referenced hosts with the option of multiple selection</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>7. Files and directories</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The following files and directories are relevant on a self-hosted Grafana server.</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/grafana/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here Grafana searches for (new) plug-ins. Each plug-in has its own subdirectory. The plug-in from Checkmk should therefore be placed here.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/grafana/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grafana configuration directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/grafana/grafana.ini</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grafana’s central configuration file. Here you define which unsigned plug-ins you allow.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Introduction</a></li>
+<li>
+<a href="#installation">2. Installing the plug-in in Grafana</a><ul class="sectlevel1">
+<li><a href="#installation_cli">2.1. Installation using the command line (Cloud Edition, own Grafana server)</a></li>
+<li><a href="#installation_marketplace">2.2. Installation via the Grafana Cloud GUI (Cloud Edition, Grafana Cloud)</a></li>
+<li>
+<a href="#installation_zip">2.3. Installation from a zip archive (all editions, own Grafana server)</a><ul class="sectlevel2">
+<li><a href="#allow_unsigned">Allowing unsigned plug-ins</a></li>
+<li><a href="#restart">Restarting the Grafana service</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#create_user">3. Creating a Grafana user in Checkmk</a></li>
+<li><a href="#activate">4. Activating and setting up the plug-in</a></li>
+<li>
+<a href="#graphs">5. Creating graphs</a><ul class="sectlevel1">
+<li><a href="#emptydash">5.1. Creating a blank dashboard</a></li>
+<li><a href="#singlemetric">5.2. Displaying a single host metric</a></li>
+<li><a href="#predefined">5.3. Displaying a predefined graph from Checkmk</a></li>
+<li><a href="#complexgraphs">5.4. Creating complex graphs</a></li>
+<li><a href="#transform">5.5. Renaming using regular expressions</a></li>
+</ul>
+</li>
+<li>
+<a href="#variables">6. Making graphs more flexible using variables</a><ul class="sectlevel1">
+<li><a href="#variable_create">6.1. Creating variables</a></li>
+<li><a href="#variable_use">6.2. Using variables for graphs</a></li>
+</ul>
+</li>
+<li><a href="#files">7. Files and directories</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

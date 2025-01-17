@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Views are very powerful in Checkmk and can be individually created or customized. How to effectively use views is explained here.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Host and service views">
+<meta name="og:description" content="Views are very powerful in Checkmk and can be individually created or customized. How to effectively use views is explained here.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Host and service views</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/views.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/views.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/views.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Host and service views</h1>
+<div class="details">
+<span id="revdate">Last modified on 14-Mar-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/en/views.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="user_interface.html">The user interface</a>
+<a href="dashboards.html">Dashboards</a>
+<a href="graphing.html">Measured values and graphing</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The most important task performed by Checkmk’s <a href="user_interface.html">user interface</a> is displaying the current state of hosts and services.
+This is achieved largely with <em>views</em> in a table format.
+In order for the daily operations to run as efficiently as possible, these tabular views provide numerous functions, and they can be customized to meet your requirements.</p></div>
+<div class="paragraph"><p>We distinguish between <strong>global</strong> views and those that require a <strong>context</strong>.
+Global views can always be called-up directly.
+An example of a global view is the list of all current service problems.
+A context view — the <span class="guihint">Status of Host …​</span> view for example — namely needs to specify by name the host whose state is to be displayed.
+Such views can only be called-up in situations relevant to a particular host.</p></div>
+<div class="sect2">
+<h3 id="heading__global_views">
+<span class="hidden-anchor sr-only" id="_global_views"></span>1.1. Global views</h3>
+<div class="paragraph"><p>The global view is most easily accessed via the <span class="guihint">Monitor</span> menu.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/monitor_menu_less.png" alt="Monitor menu of Checkmk Raw in Show less mode."></div>
+<div class="title">The <span class="guihint">Monitor</span> menu of Checkmk Raw in Show less mode</div>
+</div>
+<div class="paragraph"><p>Alternatively, you can use the <span class="guihint">Overview</span> and <span class="guihint">Views</span> <a href="glossar.html#snapin">snap-ins</a>.
+In the <span class="guihint">Overview</span> each number is clickable and takes you to a global view that individually lists the hosts or services counted in each case.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_snapin_overview.png" alt="'Overview' snap-in of the sidebar." width="50%"></div></div>
+<div class="paragraph"><p>All global views are accessible in the <span class="guihint">Views</span> snap-in — grouped according to topics.
+In addition you will find a few entries that are not actually <span class="guihint">Views</span> — such as for example, the <a href="glossar.html#dashboard#">dashboards</a>, which are sorted under the <span class="guihint">Overview</span> topic.
+Dashboards can however <em>contain</em> views.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_snapin_views.png" alt="'Views' snap-in of the sidebar." width="50%"></div></div>
+<div class="paragraph"><p>From a global view, with a further step you can access the details for a particular host or service.
+The names of hosts and services and the individual cells in other columns are clickable …</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_all_hosts.png" alt="'All hosts' view."></div></div>
+<div class="paragraph"><p>… and bring you to a more detailed (context-dependent) view.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__context_dependent_views">
+<span class="hidden-anchor sr-only" id="_context_dependent_views"></span>1.2. Context-dependent views</h3>
+<div class="paragraph"><p>In views that relate to <em>a specific</em> host or service, you will find all sorts of entries in the menu <span class="guihint">Host</span> or respectively <span class="guihint">Service</span>,
+which will then take you to other views with the same context — i.e. for the same host or service.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_context_buttons.png" alt="View with the 'Service' menu open."></div></div>
+<div class="paragraph"><p>You can also access host- and service-specific views by <a href="intro_gui.html#search_monitor">searching within the Monitor menu</a>:</p></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../images/views_monitor_search.png" alt="The search in the Monitor menu." width="60%"></div></div>
+<div class="paragraph"><p>Another way to the detailed view is via the <span class="guihint">Quicksearch</span> snap-in in the sidebar:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_snapin_quicksearch.png" alt="'Quicksearch' snap-in of the sidebar." width="50%"></div></div>
+<div class="paragraph"><p>Which view you receive will depend on the result of the search.
+If the search identifies a host explicitly, you will reach this host’s <span class="guihint">Services of Host …​</span> page directly.
+There you will again find the menu items for the other views of this same host.
+A click on the host’s name takes you to the <span class="guihint">Status of Host</span> view.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_services_of_host.png" alt="The view of a host's services."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__effect_in_the_menu_bar">
+<span class="hidden-anchor sr-only" id="_effect_in_the_menu_bar"></span>1.3. Effect in the menu bar</h3>
+<div class="paragraph" id="menucontext"><p>The distinction between global, host-specific and service-specific views is also noticeable in the menu bar.
+Always present are the menus <span class="guihint">Commands, Add to, Export, Display</span> and <span class="guihint">Help</span>.</p></div>
+<div class="paragraph"><p>In global host views there is also the menu <span class="guihint">Hosts</span> as well as in global service views <span class="guihint">Services</span> — note the plural here!
+You can use this, for example, to call up the <a href="availability.html">availability</a> of all hosts or services of the current view.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_menu_global.png" alt="Menu bar of the 'All hosts' view."></div></div>
+<div class="paragraph"><p>Views of a single host, on the other hand, contain the menus <span class="guihint">Host</span> and <span class="guihint">Services</span> with all actions for the current host and all services for the current view.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_menu_context_host.png" alt="Menu bar of the 'Services of Host' view."></div></div>
+<div class="paragraph"><p>Views of a single service likewise contain the <span class="guihint">Host</span> menu, but additionally, now in the singular, the <span class="guihint">Service</span> menu, with actions for this one service.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_menu_context_service.png" alt="Menu bar of the view of a service."></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_using_views">
+<span class="hidden-anchor sr-only" id="using_views"></span>2. Using views</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__options_filters_and_commands">
+<span class="hidden-anchor sr-only" id="_options_filters_and_commands"></span>2.1. Options, filters and commands</h3>
+<div class="paragraph"><p>At the top left of every view there are six symbols with which you can influence the display, and trigger actions:</p></div>
+<table id="filter" class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Menu</th>
+<th class="tableblock halign-left valign-top">Function</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Commands</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here you can execute commands to the object shown (e.g., entering scheduled downtimes).
+ The commands are described in detail in their <a href="commands.html">own article</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Filter</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Opens the filter bar on the right side of the main page.
+With this you can further restrict the displayed data.
+As soon as you set a filter the symbol on <span class="image-inline"><img src="../images/icons/button_filters_set_lo.png" alt="button filters set lo"></span> changes so that it is clear that under certain circumstances not all data will be displayed.
+Conversely, some views already have predefined filters, (e.g. the list of all problems).
+Here, by removing the filters you can also have more data displayed.
+Changes to filters are not saved, rather they are reset when you quit the view.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Show checkboxes</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">With this you switch checkboxes on or off.
+Using the checkboxes you can restrict the commands to selected data sets.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Modify display options &gt; Entries per row</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the number of columns for the view.
+Views with multiple columns allow the space available on wider monitors to be fully-utilized.
+For views that only display a single data set this setting has no effect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Modify display options &gt; Refresh interval</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the view’s refresh interval.
+You can also disable the automatic refreshing.
+Be aware that in this case it is possible that you will not be informed of problems that occur in the meantime!</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Modify display options &gt; Date format</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Change the format for the date display.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Modify display options &gt; Time stamp format</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Timestamps can be displayed as absolute, relative, mixed, in combination or as ‘Unix Timestamp’.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__time_and_date">
+<span class="hidden-anchor sr-only" id="_time_and_date"></span>2.2. Time and date</h3>
+<div class="paragraph"><p>Checkmk shows time stamps as relative values in all of the views of states if these are less than 24 hours in the past or future — e.g., <span class="guihint">16 hours</span>.
+You can switch this in the menu via <span class="guihint">Display &gt; Modify display options</span> and choose between displaying only absolute, only relative or both values, or also the ‘Unix timestamp’.
+You can also specify the date format in this dialog.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_time_date.png" alt="Changing the display options."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__sorting">
+<span class="hidden-anchor sr-only" id="_sorting"></span>2.3. Sorting</h3>
+<div class="paragraph"><p>The views can be sorted by clicking on a column’s heading.
+A column has three states that can be selected through a loop of multiple clicks:</p></div>
+<div class="ulist"><ul>
+<li><p>sorted in ascending order</p></li>
+<li><p>sorted in descending order</p></li>
+<li><p>column unsorted</p></li>
+</ul></div>
+<div class="paragraph"><p>Views are initially sorted ‘naturally’ according to how the view is defined.
+In service views the sorting is alphabetic by service name — with the exception of <span class="guihint">Check_MK</span> services which are always at the top.
+The <span class="guihint">Check_MK</span> service is responsible for managing the monitoring agent.
+There are also the <span class="guihint">Check_MK Discovery</span> and <span class="guihint">Check_MK HW/SW Inventory</span> services.
+In order to sort such a list by the current state of the services a click on <span class="guihint">State</span> will suffice.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_sort_by_state.png" alt="Sorting a list by column headers."></div></div>
+<div class="paragraph"><p>Sorting by the <span class="guihint">Perf-O-Meter</span> column sometimes produces surprising results.
+This is due to the graphic display of the <a href="graphing.html">measured values</a> being partly a percentage summary of the actual values.
+The sorting is however performed according to absolute values, and is always based on the <em>first metric</em> produced by a service.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_export">
+<span class="hidden-anchor sr-only" id="export"></span>2.4. Exporting</h3>
+<div class="paragraph"><p>Data displayed in a view can be exported in various formats using the <span class="guihint">Export</span> menu:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Menu item</th>
+<th class="tableblock halign-left valign-top">Function</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Data &gt; Export CSV</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A semicolon is used as a separator.
+The individual cells are enclosed in quotes.
+The first line contains the internal abbreviations for each column.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Data &gt; Export JSON</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For an export in JSON-format, the cells also end up in quotes, separated by breaks and commas, enclosed by square brackets.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Reports &gt; This view as PDF</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only in the commercial editions: This creates a so-called <em>instant report</em>, which converts the current view into a PDF document, minus icons, navigation and so on.
+Its layout can be customized with special templates in the <a href="reporting.html">reports</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Reports</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Depending on the current view, further PDF exports are offered, e.g. for availability, as well as individually-created report templates, if available.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">REST API &gt; Query hosts/services resource</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Output of the <a href="rest_api.html">REST API</a> for host/service selection of the current (filtered) view.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_limit">
+<span class="hidden-anchor sr-only" id="limit"></span>2.5. The display limit</h3>
+<div class="paragraph"><p>In a larger monitoring environment displaying all views is no longer practical.
+When you are monitoring 50,000 services and select the <span class="guihint">All Services</span> view, not only will the display require a very long time — it will also not be very useful.</p></div>
+<div class="paragraph"><p>In such situations, in order to protect the user from long waiting times and to avoid crippling the system with absurd quantities of data,
+views are limited to 1000 entries in their display.
+Exceeding this limit produces the following warning:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_limit1.png" alt="Hint before displaying a view with more than 1000 entries." width="80%"></div></div>
+<div class="paragraph"><p>As you can see, the records being displayed are not necessarily the first 1000 corresponding to the selected sorting method!
+There is a technical reason for this:
+namely that the limit is applied to the data source in the connected site’s monitoring cores.
+This is very important, because if we accumulate one million data records from your environment spread around the world, then 99.9 % of the data will be deleted immediately.
+The sorting takes place over the interface only at the end, thus it happens <em>after</em> the limit.
+The data from all sites must, after all, be sorted together.</p></div>
+<div class="paragraph"><p>If you really want to see more than one thousand records, then you can reach the
+next level by clicking on <span class="guihint">Repeat query and allow more results</span>. Here the
+limit is 5,000 records. If this limit has again been exceeded, with
+<em>unlimited</em> you can continue. Insofar this is a potentially risky action,
+you will require <em>Administrator rights</em>. You have been warned!</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_limit2.png" alt="Hint before displaying a view with more than 5000 entries." width="80%"></div></div>
+<div class="paragraph"><p>You can define both levels under <span class="guihint">Global settings &gt; User interface</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_limit3.png" alt="Global setting for changing the two limits."></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_edit">
+<span class="hidden-anchor sr-only" id="edit"></span>3. Customizing views</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__the_basics">
+<span class="hidden-anchor sr-only" id="_the_basics"></span>3.1. The basics</h3>
+<div class="paragraph"><p>Checkmk allows you to customize its standard views, and even to create new ones that you can incorporate into <a href="reporting.html">reports</a> and <a href="glossar.html#dashboard">dashboards</a>.
+Thus you can define numerous different aspects for every view:</p></div>
+<div class="ulist"><ul>
+<li><p><strong>General items</strong> such as title, topic, etc.</p></li>
+<li><p>Which <strong>data source</strong> is to be displayed (e.g. hosts, services, events on the Event Console, etc.)?</p></li>
+<li><p>Which selection of records is to be displayed (<strong>filtering</strong>)?</p></li>
+<li><p>Which <strong>columns</strong> will be displayed?</p></li>
+<li><p>Which other views are <strong>linked</strong> to the text in the columns?</p></li>
+<li><p>What is the standard <strong>sorting</strong> method?</p></li>
+<li><p>Is there a <strong>grouping</strong>, and if so, how does it look?</p></li>
+<li><p>Where and for which user should the view be <strong>visible</strong>?</p></li>
+<li><p>Which style of <strong>table layout</strong> should be used?</p></li>
+</ul></div>
+<div class="paragraph"><p>The edit mode for views can be accessed in two ways:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>Via a menu entry in the case of an existing view. There are four variants here, depending on the origin of the view in question:</p>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Display &gt; Clone builtin view</span> — creates a clone of the provided built-in view.</p></li>
+<li><p><span class="guihint">Display &gt; Edit my view</span> — opens the edit mode for your custom view.</p></li>
+<li><p><span class="guihint">Display &gt; Clone view</span> — creates a clone of another user’s view — if you don’t have permission to edit views that are not your own.</p></li>
+<li><p><span class="guihint">Display &gt; Edit view of user X</span> and <span class="guihint">Display &gt; Clone view</span> — which lets you choose whether to edit another user’s view or instead create a clone of their view — if you have permission to edit other users' views.</p></li>
+</ul></div>
+</li>
+<li><p>In the menu <span class="guihint">Customize &gt; Visualization &gt; Views</span>. There you can create completely new views with <span class="image-inline"><img src="../images/icons/button_add_view.png" alt="button add view"></span>, or customize existing ones with <span class="image-inline"><img src="../images/icons/button_clone.png" alt="button clone"></span>:</p></li>
+</ol></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_views.png" alt="View for creating a new view."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__clone_firstthen_modify">
+<span class="hidden-anchor sr-only" id="_clone_firstthen_modify"></span>3.2. Clone first — then modify</h3>
+<div class="paragraph"><p>The views supplied as standard are a part of the software and as such cannot be changed, however Checkmk does recognize the concept of <em>cloning</em>.
+When a view is first customized a copy of that view is created automatically.
+This copy is added to your user profile.</p></div>
+<div class="paragraph"><p>This copy can then be customized as desired.
+The original view is retained but is <em>grayed-out</em> — overlaid by your new version in effect.
+You can return to the standard view later by simply deleting your clone (achieved in the table of views, as you might expect, with <span class="image-inline"><img src="../images/icons/icon_delete.png" alt="icon delete"></span>).</p></div>
+<div class="paragraph"><p>This concept has one further advantage:
+namely, that you can define whether the view should be changed <em>for all users</em> or just for yourself.
+You specify this in the <span class="guihint">General Properties</span> of the view under <span class="guihint">Visibility</span> with the <span class="guihint">Make this view available for other users</span> checkbox.
+Not surprisingly, you can only select this checkbox if you have <a href="wato_user.html#roles">administrator permissions</a>
+(or more correctly, this function has its own permission — <span class="guihint">Publish views</span>).
+Additionally, single views can be locked in the <a href="wato_user.html#roles">role definitions</a>.</p></div>
+<div class="paragraph"><p>What happens when a view has been customized and published by several users?
+Each user then has their own variant of the view.
+Which view will be visible for which user(s)?
+This can be determined with the following rules:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>When a user creates a view for themselves, this will always have priority for them.</p></li>
+<li><p>After this are views that have been customized and published by an administrator (to be precise, someone with the <span class="guihint">Modify builtin views</span> permission).</p></li>
+<li><p>If there are none here, then those views apply that another normal user with the <span class="guihint">Publish Views</span> permission has published.</p></li>
+<li><p>And when there is also nothing here then the supplied default version will be visible.</p></li>
+</ol></div>
+<div class="paragraph"><p>How can you create a <em>real copy</em> of a view, so that when done you can have both the supplied and your own views?
+This is defined by using <span class="guihint">Unique ID</span> in the <span class="guihint">General Properties</span>.
+Simply give your view a new name,
+so that it will no longer be identified as a clone of the supplied view, rather it will begin its own independent life.</p></div>
+<div class="paragraph"><p>This ID is the decisive keyword for opening views in the URL.
+The schema is very simple.
+Here for example is how the global view with its ID <code>allhosts</code> is opened:</p></div>
+<div class="paragraph"><p><code>/mysite/check_mk/view.py?view_name=allhosts</code></p></div>
+<div class="paragraph"><p>The concepts of cloning, customizing and visibility can be found at many other locations in Checkmk, namely in:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="dashboards.html">dashboards</a></p></li>
+<li><p><a href="reporting.html">reports</a></p></li>
+<li><p><a href="graphing.html#graph_collections">graph collections</a></p></li>
+<li><p><a href="graphing.html#custom_graphs">custom graphs</a></p></li>
+<li><p><a href="user_interface.html#bookmarks">bookmark lists</a></p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__integrating_a_view_into_the_sidebar">
+<span class="hidden-anchor sr-only" id="_integrating_a_view_into_the_sidebar"></span>3.3. Integrating a view into the sidebar</h3>
+<div class="paragraph"><p>How and if a view will be shown in the <span class="guihint">Monitor</span> menu of the navigation bar as well as in the <span class="guihint">Views</span> snap-in, is defined under <span class="guihint">General Properties</span> by the following characteristics:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_general_properties.png" alt="General properties of the view."></div></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Title</span> — the item’s name</p></li>
+<li><p><span class="guihint">Topic in 'Monitor menu':</span> — the view will be sorted under this topic. You can also define other topics.</p></li>
+<li><p><span class="guihint">Sort index</span> — how high up the view appears in the menu</p></li>
+<li><p><span class="guihint">Visibility</span> — Suppress item and/or share with other users</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__basic_layout">
+<span class="hidden-anchor sr-only" id="_basic_layout"></span>3.4. Basic layout</h3>
+<div class="paragraph"><p>The next block — <span class="guihint">View Properties</span> — defines a view’s general appearance:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_view_properties.png" alt="Specific properties of the view."></div></div>
+<div class="paragraph"><p>The <span class="guihint">Number of Columns</span> option sets the default for the number of columns shown in the view, the <span class="guihint">Automatic page reload</span> the default for the refresh counter.
+Both values can be modified by the user in the view itself via <span class="guihint">Display &gt; Modify display options</span>.</p></div>
+<div class="paragraph"><p>Under <span class="guihint">Basic Layout</span> there are various styles for displaying the data in tables.
+Most views use <span class="guihint">Table</span> — a normal table that can be sorted by columns — or <span class="guihint">Single dataset</span> — which has the legend on the left and which is mostly used for single data sets.
+You can however also use <span class="guihint">Single dataset</span> for views with more than one object.
+The <span class="guihint">All hosts</span> view looks something like this when altered to <span class="guihint">Single dataset</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_layout_single_dataset.png" alt="Result of the changed view."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_columns">
+<span class="hidden-anchor sr-only" id="columns"></span>3.5. Columns</h3>
+<div class="paragraph"><p>The <span class="guihint">Columns</span> box defines which columns you wish to see.
+The possible selection of columns depends on the selected data source.
+The most columns are found in services, naturally, as all information for the particular host is available here.
+The list can be quite long here, and if you are uncertain which column is the right one, there is only one thing to do — try it out:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_columns.png" alt="Properties for the view columns."></div></div>
+<div class="paragraph"><p>Depending on the column selected, there may be specific options for this.
+With the column <span class="guihint">Hosts: Hostname</span>, for example, it is possible to color the host name according to its state using the <span class="guihint">Coloring</span> option.</p></div>
+<div class="paragraph"><p>The <span class="guihint">Link</span> field offers a selection of all views and dashboards.
+If a view is selected here, then the column’s respective cell is <em>clickable</em> and takes the user to the chosen view.
+This really only makes sense if the targeted view has a context.
+The best example is the <span class="guihint">All hosts</span> view.
+The <span class="guihint">Hostname</span> column is clickable here and takes the user to this host’s <span class="guihint">Services of Host</span>.
+Alternatively, dashboards can be specified here — which obviously do not require a context.</p></div>
+<div class="paragraph"><p>Under <span class="guihint">Tooltip</span>, on the other hand, you will find a list of all columns.
+Thus you can show further information for the host or service when the user moves the mouse cursor over the respective cell (the IP address in the following example):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_hover_address.png" alt="Result of the changed view with a tooltip."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_joined_columns">
+<span class="hidden-anchor sr-only" id="joined_columns"></span>3.6. Information for services in a host view</h3>
+<div class="paragraph"><p>Let’s imagine that you would like to display information on specific services in a table of hosts.
+The following shows a very good example of such a scenario:
+For each host, the current uptime, CPU load, memory usage, and execution time of the Checkmk agent are output:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_joined_columns_example.png" alt="Host view with Perf-O-Meters for the services."></div></div>
+<div class="paragraph"><p>Here a table of hosts has been created, in which for each host the <span class="guihint">Perf-O-Meter</span> <strong>service column</strong> from each of four different services is shown.
+You can also see that for one of the three hosts the <span class="guihint">CPU, Memory</span> and <span class="guihint">Uptime</span> services do not exist and so the columns for those services are consequently empty.</p></div>
+<div class="paragraph"><p>To implement a configuration to this view, add columns of the <span class="guihint">Joined column</span> type to the view.
+Here then under <span class="guihint">Column</span> the columns for services will appear, from which you select <span class="guihint">Perf-O-Meter</span> in this example.
+With the <span class="guihint">Title</span> entry further down you can then define the heading of the column as required if the default heading does not fit.</p></div>
+<div class="paragraph"><p>Under <span class="guihint">of Service</span>, first select either <span class="guihint">Explicit match</span> or <span class="guihint">Regular expression match</span>.
+For the former, enter the <strong>exact</strong> name (upper and lower case-sensitive).
+This will determine the correct service associated with the host.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_columns_2.png" alt="Properties of a 'Joined column' with explicit specification of the service."></div></div>
+<div class="paragraph"><p>If you don’t know exactly what the service is called, or its name is slightly different on each host, specify a regular expression that matches to exactly <strong>one</strong> service per host.
+This is especially useful if you want to look at a group of hosts where there is a comparable group of services, only one of which can be present on a host at any given time.
+In the example below, this is the <span class="guihint">CPU load</span> or the <span class="guihint">Processor queue,</span> which can only exist on either Linux or Windows systems.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_columns_3.png" alt="Properties of a 'Joined column' with regular expression for the service."></div></div>
+<div class="paragraph"><p>By the way, there is no need to worry if a regular expression does in fact match more than one service.
+In such a case, the <em>first</em> match will always be displayed in the column.</p></div>
+<div class="paragraph"><p>In both variants, such a display is of course only useful if the view shows a list of similar hosts, which also all have the selected services or have similar services.
+This is also the reason why Checkmk provides only a few such views:
+Which columns are useful here depends entirely on the type of hosts selected.
+Linux servers are obviously interested in completely different information compared to UPSs, for example.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__sorting_2">
+<span class="hidden-anchor sr-only" id="_sorting_2"></span>3.7. Sorting</h3>
+<div class="paragraph"><p>The sorting within a view is configured in the fourth box.
+It’s only a matter of the predefined sorting method.
+Users can — as described above — determine the sorting order themselves with a click on the column heading.
+In the view’s configuration however you have more possibilities — you can define a <em>multi-step</em> sorting order, e.g. first by service state, and for the same state by service name.
+The order so determined is retained as a subordinate sorting when the user resorts in a specific column.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_sorting.png" alt="Properties for sorting the view."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__grouping">
+<span class="hidden-anchor sr-only" id="_grouping"></span>3.8. Grouping</h3>
+<div class="paragraph"><p>Through grouping you can divide a table into several segments — in which each segment’s data is related in some way.
+The best example of this is the <span class="guihint">Service problems</span> view, which is easily reached via the <span class="guihint">Overview</span> snap-in.</p></div>
+<div class="paragraph"><p>As you can see, this table is grouped with service <span class="guihint">State</span> (first all <span class="state2">CRIT</span>, then <span class="state3">UNKNOWN</span>, then <span class="state1">WARN</span>) - each with its own group header:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_grouping.png" alt="Grouped view."></div></div>
+<div class="paragraph"><p>The grouping in a view is configured similarly to that with the columns.
+Simply define which column the grouping should relate to.
+It is usually only one, but can be more.
+All records with the same value for all selected columns will then be displayed in a group — and the column heading will be shown as the group title.</p></div>
+<div class="paragraph"><p>It is important that you also <strong>sort</strong> the records by priority according to the group’s selected characteristic!
+Otherwise it can be possible that the same group makes multiple appearances (which may at times be desirable).</p></div>
+<div class="paragraph"><p>Incidentally, a resorting by column performed by a user has no effect on the grouping — in such a case only the group’s sequence is determined and the records sorted within the group.
+The groups themselves are unchanged.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_filter_context">
+<span class="hidden-anchor sr-only" id="filter_context"></span>3.9. Filters, contexts and searches</h3>
+<div class="paragraph"><p>An important aspect of views is the data <em>selection</em>.
+Which hosts or services should be displayed in a table?
+Checkmk uses the <strong>Filter</strong> concept for this purpose.
+Here are a couple of examples of host filters:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_filter.png" alt="Examples of host filters."></div></div>
+<div class="paragraph"><p>Every filter can be defined with search terms or other criteria by a user, thus reducing the list of results to those records meeting the criteria.
+In this way the filters are AND-linked.
+The filter criteria actually used for a view are assembled from three sources:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Filters with criteria defined as standard for the view.</p></li>
+<li><p>Filters set interactively by the user with <span class="image-inline"><img src="../images/icons/icon_filter.png" alt="icon filter"></span> in the view.</p></li>
+<li><p>Filters that can be set with variables via the URL.</p></li>
+</ol></div>
+<div class="paragraph"><p>The filters you assemble by editing in the view’s <span class="guihint">Context / Search Filters</span> box have two functions.
+Firstly, by clicking on <span class="image-inline"><img src="../images/icons/icon_filter.png" alt="icon filter"></span> you can decide which filter will be available to a user.
+Secondly, you can predefine filters using criteria, thus limiting the data to be displayed in the view (point 1 above).</p></div>
+<div class="paragraph"><p>When you create or edit a view by using <strong>context</strong> — instead of the filter for the relevant object only an optional entry field appears.
+In this an <em>exact</em> comparison always applies (upper and lower case sensitive).
+As an example we can take the <code>host</code> view, which displays all services of a specified host.
+The host name can be specified by adding a context to the view.
+You can also build a display in which the host to be displayed is effectively <strong>hard-coded</strong> directly in the view:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_context_filter.png" alt="Properties for filtering the view."></div></div>
+<div class="paragraph"><p>In this way you can call the view without context, or if desired, simply add it to the <span class="guihint">Views</span> snap-in without problem.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__special_search_views">
+<span class="hidden-anchor sr-only" id="_special_search_views"></span>3.10. Special search views</h3>
+<div class="paragraph"><p>The <span class="guihint">Host search</span> and <span class="guihint">Service search</span> (and other) views supplied as standard behave in a special way in relation to the filters.
+When you you select one of these views, it opens with a filter form, and then only shows hosts and services when this filter is activated.</p></div>
+<div class="paragraph"><p>Why is this so?
+Because it would simply be very impractical if you first had to go to <span class="guihint">All services</span>, and then be forced to wait until several thousand services are displayed
+before you could filter the result with a search entry.
+This behavior is regulated by the <span class="guihint">Show data only on search</span> option:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_view_properties_show_data.png" alt="The 'Show data only on search' option."></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_new">
+<span class="hidden-anchor sr-only" id="new"></span>4. Creating new views</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Creating a new view with <span class="image-inline"><img src="../images/icons/button_add_view.png" alt="button add view"></span> functions in principle just like the editing of an existing view — with one small difference:
+you must first select a <strong>data source</strong> and a <strong>specific object type</strong>.</p></div>
+<div class="sect2">
+<h3 id="heading_datasource">
+<span class="hidden-anchor sr-only" id="datasource"></span>4.1. Data source</h3>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_1.png" alt="Selecting a data source."></div></div>
+<div class="paragraph"><p>The data source is what you might call a table or database view under databases.
+Checkmk does not use SQL databases, but it is similarly-structured internally.
+In most cases you will be correct with <span class="guihint">All services</span> or <span class="guihint">All hosts</span>.
+There are however a few data sources that should be listed briefly here:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Data source</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host and service groups, various</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see <a href="#host_service_groups">below</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Alert Statistics</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="livestatus.html#retrieving_statistics">Status statistics</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">BI</span>, various</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bi.html">Business Intelligence</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Event Console</span>, host and service events</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="ec.html">Event Console</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Inventory</span>, various</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="inventory.html">HW/SW Inventory</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">The Logfile</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="livestatus.html#logs">Livestatus data</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="heading_host_service_groups">
+<span class="hidden-anchor sr-only" id="host_service_groups"></span>Host and service groups</h4>
+<div class="paragraph"><p>The <span class="guihint">Host groups</span> and <span class="guihint">Service groups</span> data sources — per line — provide the information on the group itself — accordingly there are no filters for individual hosts or services.
+An example of this data source is the standard <span class="guihint">Host groups</span> view.
+In distributed environments the <span class="guihint">Host groups, merged</span> and <span class="guihint">Service groups, merged</span> data sources work in exactly the same way.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_hostgroups_summary.png" alt="View for host groups."></div></div>
+<div class="paragraph"><p>However, if you want information about individual hosts, but grouped according to host groups,
+you can change the <span class="guihint">All hosts</span> default view by adding the <span class="guihint">Hosts: Host groups the host is member of</span> option in the <span class="guihint">Grouping</span> box.
+Since hosts can be assigned to multiple groups, you will then find a single area in the view for each <strong>host group combination,</strong> which applies to at least one host.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_hostgroups.png" alt="View with grouping by host groups."></div></div>
+<div class="paragraph"><p>You can proceed in the same way with services and service groups.</p></div>
+<div class="paragraph"><p>Depending on the selected data source, various columns are available for building the view.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__object_typeglobal_or_with_context">
+<span class="hidden-anchor sr-only" id="_object_typeglobal_or_with_context"></span>4.2. Object type — global or with context</h3>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_2.png" alt="Selection of a specific object type."></div></div>
+<div class="paragraph"><p>Here it can be decided whether your new view should have a context or if it will be a global view.
+The selections available to you depend on the data source.
+The most common context by far is host.
+The image above appears after selecting the <span class="guihint">All services</span> data source.</p></div>
+<div class="paragraph"><p>Selecting <span class="guihint">Show information of a single Host</span> defines that the new view describes one specific host.
+You will thus have created the basis for a view that is not globally-visible, but instead visible via a link:</p></div>
+<div class="ulist"><ul>
+<li><p>For a host view with a context</p></li>
+<li><p>As a link in a column (see above, e.g., click on a host name in a view)</p></li>
+</ul></div>
+<div class="paragraph"><p>There are two options for the service context type.
+If you select only <span class="guihint">Show information of a single Service</span>, you can build a view that displays all services with the same name on <em>different hosts</em>.
+If it should be a specific service for a single host, then select in addition <span class="guihint">Show information of a single Host</span>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_joined_inventory_columns">
+<span class="hidden-anchor sr-only" id="joined_inventory_columns"></span>5. Link inventory tables</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk provides many different data on a host or a service.
+Most of these can be displayed using the <span class="guihint">All services</span> or <span class="guihint">All hosts</span> data sources.
+The <a href="inventory.html">HW/SW inventory</a> also provides additional <a href="inventory.html#table">tables</a> (as data sources), which you can also display in your own views and structure individually.
+As of Checkmk <span class="new">2.2.0</span> you can also add columns from other tables to such views, as long as they have a column in common.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> The number of rows in the final view is the same as the number of rows in your view’s underlying data source.
+Linked tables only add selected columns.</p></div>
+<div class="paragraph"><p>In the following example you will once-only create a very compact view linking two HW/SW inventory tables.
+To begin, create a <a href="#new">new view</a> and select the desired inventory table as the basic <a href="#datasource">data source</a>.
+For the example, search for the <span class="guihint">Inventory table: Checkmk ➤ Checkmk sites</span> and then confirm with <span class="image-inline"><img src="../images/icons/button_continue.png" alt="button continue"></span> <span class="guihint">Continue</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_3.png" alt="Selection of the 'Checkmk sites' data source."></div></div>
+<div class="paragraph"><p>You can skip the following page, as it is not necessary to restrict the data source to a single host or site.
+The next step is therefore performed directly on the main configuration page, where first you enter the <span class="guihint">Unique ID</span> and a <span class="guihint">Title</span>.</p></div>
+<div class="paragraph"><p>In the <span class="guihint">Macros for joining service data or inventory tables</span> box comes the first specific configuration to later include other data sources in the view.
+For this purpose indicators are needed to identify the correct rows in the other data sources later on.
+So as in the following example, create the macros for the <span class="guihint">Version</span> and <span class="guihint">Site</span> columns:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_4.png" alt="Dialog for creating macros."></div></div>
+<div class="paragraph"><p>You can now use these macros in special <span class="guihint">Columns</span>.
+In addition to the <a href="#columns">regular columns</a>, which have already been used in customizing views, both the <a href="#joined_columns">service data source</a> (<span class="guihint">Joined columns</span>), which was described earlier, and the <span class="guihint">Joined inventory columns</span> will now be available.</p></div>
+<div class="paragraph"><p>The first two columns use default data from the data source.
+Since data from the HW/SW inventory always belongs to a specific host and site, these tables are also available if you have selected such a data source.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_5.png" alt="Dialog for selecting the columns."></div></div>
+<div class="paragraph"><p>After that you can use the defined macros not only in the <span class="guihint">Joined inventory columns</span>, but also in the <span class="guihint">Joined columns,</span>
+to display data from specific services.
+This allows you to combine a wide variety of sources — in this example, to display the Perf-O-Meter for a site’s associated performance service.</p></div>
+<div class="paragraph"><p>By the way, you can use the macros in the same way when defining regular expressions.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_6.png" alt="Selection of a 'Joined column' using a macro."></div></div>
+<div class="paragraph"><p>Displaying data from other HW/SW inventory tables works quite similarly.
+Only the table to be used has to be selected beforehand.
+In the following example you use the table <span class="guihint">Checkmk ➤ Checkmk versions</span> table, which automatically filters the <span class="guihint">Display the column</span> drop-down list to a suitable selection.</p></div>
+<div class="paragraph"><p>Afterwards you determine how Checkmk finds the correct row in the table from which the column should be displayed.
+To do this, use the <span class="guihint">Add new match criteria</span> button to add a criterion in the form of a column that Checkmk can later use to determine the matching row.
+In the example above this is the <span class="gui">Version</span>, since this is unique in the table and can only occur once.
+Conversely, this also means that while you can link any of the HW/SW inventory tables together, you must also ensure that the two tables always have a common column and that this column also always contains unique entries.
+So in the above example, the <span class="guihint">Sites</span> column would not be a suitable criterion as there could be multiple editions with the same number of sites.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_7.png" alt="Selection of a 'Joined inventory column' using a macro."></div></div>
+<div class="paragraph"><p>Of course you can also customize the title of the column in a <span class="guihint">Joined inventory column</span> if the default one doesn’t fit.
+After all of the settings have been made, save the new view with <span class="image-inline"><img src="../images/icons/button_save_and_go_to_view.png" alt="button save and go to view"></span> <span class="guihint">Save &amp; go to view</span> and you will be taken directly to the result.
+Depending on how many sites you are monitoring, a line will be inserted in the view for each site:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_8.png" alt="Finished view including columns from other sources."></div></div>
+<div class="paragraph"><p>As you can see here, there is always a default title for each column if it is not specified by you.
+A title for the <span class="guihint">Perf-O-Meter’s</span> third column was not specified, so the name of the regular expression used by Checkmk was taken as the column title.
+As with the <span class="guihint">Edition</span> column, you can customize this column title at any time.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_matrix">
+<span class="hidden-anchor sr-only" id="matrix"></span>6. The matrix</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When you specify the <span class="guihint">Matrix</span> layout in one of your views you will probably see strange things at first, and ask yourself what is going on.
+The matrix is certainly not intuitive on first viewing, but you can achieve good things with it.</p></div>
+<div class="paragraph"><p>In the supplied standard views there is e.g. <span class="guihint">Search performance data</span>, which uses this layout.
+You find this view via <span class="guihint">Customize &gt; Visualization &gt; Views</span>.</p></div>
+<div class="paragraph"><p>The following image shows the search for the expression <code>CPU|^memory|Filesystem /opt/omd/sites/mysite</code>:</p></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../images/views_matrix_filter_service.png" alt="Filter for the service search." width="55%"></div></div>
+<div class="paragraph"><p>The result is a neat table of my hosts, in which all of the service’s metrics are listed adjacent to each other.
+Not all of the hosts have the same services, so some of the fields are simply empty:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_matrix_view_1.png" alt="Result of the service search in a matrix view."></div></div>
+<div class="paragraph"><p>The result at first looks very similar to that described earlier — <a href="#joined_columns">Information for services in a host view</a>.
+There are a couple of significant differences however:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>The list of services is dynamic and has no fixed configuration.</p></li>
+<li><p>Here the hosts are the columns — not the lines.</p></li>
+</ol></div>
+<div class="paragraph"><p>With the matrix you can do much more.
+When you look at the view’s definition you can see how it is constructed:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Matrix</span> is specified in <span class="guihint">Basic layout</span>.</p></li>
+<li><p>The host name (<span class="guihint">Hosts: Hostname</span>) is specified as the only column in <span class="guihint">Grouping</span>.</p></li>
+<li><p>In <span class="guihint">Columns</span> the <span class="guihint">Service description</span> and the <span class="guihint">Service Perf-O-Meter</span> are specified.</p></li>
+</ul></div>
+<div class="paragraph"><p>The rule for the matrix layout is:</p></div>
+<div class="ulist"><ul>
+<li><p>The <strong>Grouping columns</strong> are used as headings for the vertical columns.</p></li>
+<li><p>The <strong>first normal column</strong> on the left provides the titles for the rows.</p></li>
+<li><p>All <strong>further normal columns</strong> are shown in the cells.</p></li>
+</ul></div>
+<div class="paragraph"><p>If, for example, you wish to display more information regarding the host, simply add more columns in the <span class="guihint">Grouping</span> box.
+Thus the table from above will look like this when you insert the <span class="guihint">Host icons</span> and <span class="guihint">Folder - just folder name</span> columns:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_matrix_view_2.png" alt="Matrix view with additional rows."></div></div>
+<div class="paragraph"><p>Further normal columns then land directly in the cells. The following example
+shows (abbreviated) the matrix with the additional <span class="guihint">Output of check plugin</span>
+column:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_matrix_view_3.png" alt="Matrix view with additional information in the cells."></div></div>
+<div class="sect2">
+<h3 id="heading__recognizing_outliers">
+<span class="hidden-anchor sr-only" id="_recognizing_outliers"></span>6.1. Recognizing outliers</h3>
+<div class="paragraph"><p>Why do some cells have a colored background?
+This points you to values <strong>lying outside the majority</strong>.
+This is actually not so meaningful for measured data,
+but there are, for instance, users with a specially-constructed matrix who can tell at a glance if an incorrect contact group has been entered for certain hosts or services.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_matrix_view_4.png" alt="Matrix view with color coding of cells with different content."></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_alarm_sounds">
+<span class="hidden-anchor sr-only" id="alarm_sounds"></span>7. Alarm sounds</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A view can sound an alarm tone over the browser if at least one problem appears in the table (a host that is not <span class="hstate0">UP</span>, or a service that is not <span class="state0">OK</span>).
+This primitive type of alarm is, for example, interesting for control centers where there is always a list of problems on a screen that the operator doesn’t want to have to constantly stare at.</p></div>
+<div class="paragraph"><p>The alarm sounds are by default deactivated.
+You can switch them on with the <span class="guihint">Setup &gt; General &gt; Global settings &gt; User interface &gt; Enable sounds in views</span> global switch.
+As (almost) always the search in the <span class="guihint">Setup</span> menu helps here:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/global_settings_enable_sound.png" alt="Global setting for switching on alarm sounds in views."></div></div>
+<div class="paragraph"><p>Sounds will not be heard in all views, rather only in those for which alarm sounds have been activated in <span class="guihint">View Properties</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/view_properties_sounds.png" alt="Activation of alarm sounds in a view."></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_embed_views">
+<span class="hidden-anchor sr-only" id="embed_views"></span>8. Embedding views in external websites</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Since every view is accessible via a URL you can also embed these in other websites, for example, via an <code>&lt;iframe&gt;</code>.
+A number of elements in a view could however make no sense or even be distracting in such a context.
+In a situation like this you can attach a <code>display_options=…​</code> variable to the URL, via which you can precisely control which component of the view should <strong>not</strong> be generated in HTML code.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> The Checkmk navigation is also usually rather undesirable when embedding.
+So before you manually set options in a view, let the page be displayed without navigation and sidebar by turning off <span class="guihint">Display &gt; Show page navigation</span>.</p></div>
+<div class="paragraph"><p>Every component is coded with a letter and can accordingly be excluded using these.</p></div>
+<div class="paragraph"><p>The following letters have been defined:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Effect</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Title bar (with heading, breadcrumbs, countdown symbol for page update), menu bar and actions bar are omitted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>b</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menu items and action buttons that link to other views are omitted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>f</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menu item <span class="guihint">Display &gt; Filter</span> and its corresponding <span class="image-inline"><img src="../images/icons/view_button_filters.png" alt="view button filters"></span> button are omitted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>c</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menu <span class="guihint">Commands</span> and its corresponding buttons are omitted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>o</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The options <span class="guihint">Entries per row</span> and <span class="guihint">Refresh interval</span> are omitted; otherwise callable via <span class="guihint">Display &gt; Modify display options</span>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>d</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menu item <span class="guihint">Display &gt; Modify display options</span> is omitted</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>e</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menu item <span class="guihint">Display &gt; Customize View</span> is omitted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>r</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The page refresh countdown icon in the title bar and auto-refresh JavaScript code are removed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The playing of <a href="#alarm_sounds">alarm sounds</a> for the <span class="state1">WARN</span> and <span class="state2">CRIT</span> service states is suppressed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>i</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Links to other views are omitted, e.g. the links in the <span class="guihint">Service</span> column in service views.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>m</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The target of links is by default the HTML <code>main</code> frame — with this option links are opened in new tabs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>l</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Links in column headings are omitted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>w</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limit and Livestatus error messages.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>For example — if you want to switch off all control elements and buttons and only display the actual table, a link on the <code>allhosts</code> view will look like this:</p></div>
+<div class="paragraph"><p><code>/myserver/mysite/check_mk/view.py?view_name=allhosts&amp;display_options=til</code></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__adding_your_own_icons_and_actions">
+<span class="hidden-anchor sr-only" id="_adding_your_own_icons_and_actions"></span>9. Adding your own icons and actions</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In views of hosts and services you will also see a column for icons, and in this the <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> action menu icon with which you can select host or service actions.
+You can also add your own icons to views.
+These can be used simply for visualization, or your own actions can be assigned to them.</p></div>
+<div class="paragraph"><p>For example, hosts with a graphic web interface can be quickly identified using such an individual icon and can also be controlled directly via a link.</p></div>
+<div class="paragraph"><p>The procedure for adding your own icons and actions is divided into three steps:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Upload the icons.</p></li>
+<li><p>Define the icons/actions.</p></li>
+<li><p>Assign the icons to hosts/services.</p></li>
+</ol></div>
+<div class="paragraph"><p>Start with <span class="guihint">Setup &gt; General &gt; Custom Icons</span> and upload a local file with a maximum size of 80 x 80 pixels.
+The icon will now be in the system, but will not yet be in use.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_manage_icons_upload.png" alt="Dialog for selecting and uploading your own icons."></div></div>
+<div class="paragraph"><p>Next you will need to define the icon as an object that can be addressed via <a href="glossar.html#rule">rules</a>, and optionally, an associated action.
+You can find the settings for this under <span class="guihint">Setup &gt; General &gt; Global settings &gt; User interface &gt; Custom icons and actions</span>.
+Create a new entry here using <span class="guihint">Add new element</span>, and define <span class="guihint">ID</span>, <span class="guihint">Icon</span> and a <span class="guihint">Title</span>.
+The title will later be displayed as a tooltip directly on the icon via a mouse-over-effect, and is therefore indispensable for users.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_global_settings_custom_icons_and_actions.png" alt="Properties for custom icons."></div></div>
+<div class="paragraph"><p>Now it gets interesting with the <span class="guihint">Action</span> option.
+Action is equivalent to a URL, and for this you can make use of some variables such as <code>$HOSTNAME$</code> or <code>$SERVICEDESC$</code> (service description) — you can get further information from the inline help.
+A valid action would be, for example:</p></div>
+<div class="paragraph"><p><code>view.py?host=$HOSTNAME$&amp;site=mysite&amp;view_name=host</code></p></div>
+<div class="paragraph"><p>This action simply calls the standard host view for the corresponding host on the site <code>mysite</code>.</p></div>
+<div class="paragraph"><p>With a check mark at <span class="guihint">Show in column</span> you can then display the icon as an independent icon next to <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span>,
+otherwise your action will end up in this action menu.</p></div>
+<div class="paragraph"><p>In the final step, you now determine which hosts or services the new icon is to be displayed for — specifying these using rules of course.
+You can find the two rule sets, <span class="guihint">Custom icons or actions for hosts in status GUI</span> and <span class="guihint">Custom icons or actions for services in status GUI</span> in the
+<span class="guihint">Setup</span> menu under <span class="guihint">Host monitoring rules</span> and <span class="guihint">Service monitoring rules</span>.
+The quickest way to find the two rules is to search the <span class="guihint">Setup</span> menu.</p></div>
+<div class="paragraph"><p>Create a new rule in the desired folder and set at least two options in it.
+First select the icon just created under <span class="guihint">Custom icons or actions for hosts in status GUI</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_custom_icons_or_actions.png" alt="The rule for using a custom icon."></div></div>
+<div class="paragraph"><p>Then set the filter in the <span class="guihint">Conditions</span> box for the desired hosts/services.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_custom_icons_or_actions_b.png" alt="Conditions in the rule for using a custom icon."></div></div>
+<div class="paragraph"><p>Finally, save and confirm the changes.</p></div>
+<div class="paragraph"><p>In host and service views you will now be able to see your new icon next to or in the action menu for the filtered hosts and services.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_view_with_custom_icon.png" alt="Host view with your own icon."></div></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li>
+<a href="#_introduction">1. Introduction</a><ul class="sectlevel1">
+<li><a href="#_global_views">1.1. Global views</a></li>
+<li><a href="#_context_dependent_views">1.2. Context-dependent views</a></li>
+<li><a href="#_effect_in_the_menu_bar">1.3. Effect in the menu bar</a></li>
+</ul>
+</li>
+<li>
+<a href="#using_views">2. Using views</a><ul class="sectlevel1">
+<li><a href="#_options_filters_and_commands">2.1. Options, filters and commands</a></li>
+<li><a href="#_time_and_date">2.2. Time and date</a></li>
+<li><a href="#_sorting">2.3. Sorting</a></li>
+<li><a href="#export">2.4. Exporting</a></li>
+<li><a href="#limit">2.5. The display limit</a></li>
+</ul>
+</li>
+<li>
+<a href="#edit">3. Customizing views</a><ul class="sectlevel1">
+<li><a href="#_the_basics">3.1. The basics</a></li>
+<li><a href="#_clone_firstthen_modify">3.2. Clone first — then modify</a></li>
+<li><a href="#_integrating_a_view_into_the_sidebar">3.3. Integrating a view into the sidebar</a></li>
+<li><a href="#_basic_layout">3.4. Basic layout</a></li>
+<li><a href="#columns">3.5. Columns</a></li>
+<li><a href="#joined_columns">3.6. Information for services in a host view</a></li>
+<li><a href="#_sorting_2">3.7. Sorting</a></li>
+<li><a href="#_grouping">3.8. Grouping</a></li>
+<li><a href="#filter_context">3.9. Filters, contexts and searches</a></li>
+<li><a href="#_special_search_views">3.10. Special search views</a></li>
+</ul>
+</li>
+<li>
+<a href="#new">4. Creating new views</a><ul class="sectlevel1">
+<li>
+<a href="#datasource">4.1. Data source</a><ul class="sectlevel2"><li><a href="#host_service_groups">Host and service groups</a></li></ul>
+</li>
+<li><a href="#_object_typeglobal_or_with_context">4.2. Object type — global or with context</a></li>
+</ul>
+</li>
+<li><a href="#joined_inventory_columns">5. Link inventory tables</a></li>
+<li>
+<a href="#matrix">6. The matrix</a><ul class="sectlevel1"><li><a href="#_recognizing_outliers">6.1. Recognizing outliers</a></li></ul>
+</li>
+<li><a href="#alarm_sounds">7. Alarm sounds</a></li>
+<li><a href="#embed_views">8. Embedding views in external websites</a></li>
+<li><a href="#_adding_your_own_icons_and_actions">9. Adding your own icons and actions</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

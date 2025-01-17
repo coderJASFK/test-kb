@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Sie können Benachrichtigungen von Checkmk an Jira senden lassen und damit Jira Issues erstellen und schließen. Wie Sie die Anbindung durchführen, erfahren Sie hier.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Benachrichtigungen per Jira (notifications)">
+<meta name="og:description" content="Sie können Benachrichtigungen von Checkmk an Jira senden lassen und damit Jira Issues erstellen und schließen. Wie Sie die Anbindung durchführen, erfahren Sie hier.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Benachrichtigungen per Jira (notifications)</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/notifications_jira.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/notifications_jira.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/notifications_jira.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Benachrichtigungen per Jira</h1>
+<div class="details">
+<span id="revdate">Last modified on 11-Oct-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/notifications_jira.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="notifications.html">Benachrichtigungen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__funktion">
+<span class="hidden-anchor sr-only" id="_funktion"></span>1. Funktion</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wenn Sie die Software Jira zum Projektmanagement, zur Software-Entwicklung oder zur Fehlerverfolgung verwenden, können Sie mit den <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> Benachrichtigungen aus Checkmk heraus an Jira senden und dort <em>Issues</em> erzeugen.
+Dies funktioniert für die Jira Applikationen <em>Jira Core</em>, <em>Jira Software</em> und <em>Jira Service Desk</em>.</p></div>
+<div class="paragraph"><p>Unterstützt werden dabei folgende Optionen:</p></div>
+<div class="ulist"><ul>
+<li><p>Issues für Host- und Service-Probleme erzeugen.</p></li>
+<li><p>Issues mit definierter Priorität (<em>priority</em>) erstellen.</p></li>
+<li><p>Issues mit einem definierten <em>Label</em> erstellen.</p></li>
+<li><p>Links auf Host/Services in Checkmk aus den erzeugten Jira-Issues setzen.</p></li>
+<li><p>Eine <em>Resolution</em> im Issue bei eintretenden <span class="state0">OK</span>-Zuständen setzen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Um die Anbindung von Checkmk an Jira einzurichten, legen Sie in Jira zunächst einige neue Felder (<em>Fields</em>) an und ermitteln bestimmte Jira-<em>IDs.</em>
+Anschließend konfigurieren Sie die Benachrichtigungsmethode für Jira in Checkmk.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_config_jira">
+<span class="hidden-anchor sr-only" id="config_jira"></span>2. Konfiguration Jira</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk muss bei der Interaktion mit Jira wissen, welche Benachrichtigungen bereits einen Issue erzeugt haben und welche nicht.
+Damit das möglich wird, müssen Sie in Jira zwei sogenannte <span class="guihint">Custom fields</span>, also benutzerdefinierte Felder, erstellen — eines für Benachrichtigungen über Host-Probleme, und eines über Service-Probleme.</p></div>
+<div class="paragraph"><p>Um die Host- und Service-Probleme zuordnen zu können, müssen deren IDs eindeutig sein.
+Dies ist der Fall, wenn Ihre Jira-Instanz von genau <em>einer</em> Checkmk-Instanz Benachrichtigungen erhält, da der Monitoring-Kern einer Checkmk-Instanz für die Eindeutigkeit sorgt.
+Nun kann es aber sein, dass im verteilten Monitoring mehrere Checkmk-Instanzen Benachrichtigungen senden, falls <a href="distributed_monitoring.html#notifications">dezentrale Benachrichtigungen</a> konfiguriert sind.
+Erhält Ihre Jira-Instanz also von mehreren Checkmk-Instanzen Benachrichtigungen, ist es höchstwahrscheinlich mit der Eindeutigkeit vorbei — spätestens dann, wenn die ID eines Host-Problems bereits von einer anderen Checkmk-Instanz verwendet wurde.
+In einer solchen Konfiguration benötigen Sie ein weiteres benutzerdefiniertes Feld für die Checkmk-Instanz, mit dem die eindeutige Zuordnung wieder möglich wird.</p></div>
+<div class="paragraph"><p>Für die Konfiguration in Checkmk benötigen Sie die Jira-IDs der erstellten benutzerdefinierten Felder — und zusätzlich die von einigen anderen Feldern, im Ganzen also die folgende Liste:</p></div>
+<div class="ulist"><ul>
+<li><p>Project ID</p></li>
+<li><p>Issue type ID</p></li>
+<li><p>Priority ID (optional)</p></li>
+<li><p>Host custom field ID</p></li>
+<li><p>Service custom field ID</p></li>
+<li><p>Site custom field ID (optional)</p></li>
+<li><p>(Workflow) Transition ID (optional)</p></li>
+</ul></div>
+<div class="paragraph"><p>Die allermeisten dieser IDs können mit dem unten angegebenem Skript über eine der REST APIs von Jira ausgelesen werden. Jira-Administratoren können die IDs - auch solche, die über die API und somit das Skript nicht abrufbar sind - über die GUI von Jira ermitteln.</p></div>
+<div class="sect2">
+<h3 id="heading_jira_custom_fields">
+<span class="hidden-anchor sr-only" id="jira_custom_fields"></span>2.1. Einrichten der benutzerdefinierten Felder in Jira</h3>
+<div class="sect3">
+<h4 id="heading_jira_host_field">
+<span class="hidden-anchor sr-only" id="jira_host_field"></span>Feld für Host-Probleme erstellen</h4>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>Öffnen Sie als Jira-Administrator den Punkt <span class="guihint">Administration</span> in der Kopfleiste:</p>
+<div class="imageblock border"><div class="content"><img src="../images/jira_admin_settings.png" alt="jira admin settings" width="300"></div></div>
+</li>
+<li><p>Wählen Sie nun <span class="guihint">Issues</span> und navigieren Sie im Abschnitt <span class="guihint">Fields</span> zu
+<span class="guihint">Custom Fields.</span> Über <span class="guihint">Add custom field</span> - dieser Knopf kann sich je nach Jira Produkt im oberen Drittel des rechten Bildrandes verstecken - können Sie ein neues, benutzerdefiniertes Feld anlegen.</p></li>
+<li>
+<p>Wählen Sie im nächsten Fenster <span class="guihint">All</span>, damit alle Feldarten angezeigt werden.</p>
+<div class="imageblock border"><div class="content"><img src="../images/notifications_jira_custom_field.png" alt="notifications jira custom field"></div></div>
+</li>
+<li>
+<p>Klicken Sie den Feldtyp <span class="guihint">Number Field</span> und anschließend <span class="guihint">Next</span>:</p>
+<div class="imageblock border"><div class="content"><img src="../images/jira_custom_field_2.png" alt="jira custom field 2"></div></div>
+</li>
+<li><p>Als <span class="guihint">Name</span> tragen Sie zum Beispiel <code>CMK_HOST_FIELD</code> ein. Die <span class="guihint">Description</span> können Sie optional mit einer Beschreibung des neuen Felds befüllen. Bestätigen Sie das ganze durch einen Klick auf <span class="guihint">Create</span>.</p></li>
+</ol></div>
+</div>
+<div class="sect3">
+<h4 id="heading_jira_service_field">
+<span class="hidden-anchor sr-only" id="jira_service_field"></span>Feld für Service-Probleme erstellen</h4>
+<div class="paragraph"><p>Da Sie auch für Benachrichtigungen über Service-Probleme ein solches Feld benötigen, wiederholen Sie die Prozedur von <a href="#jira_host_field">oben</a>, dieses Mal aber mit einem entsprechenden Eintrag für Services, z.B. mit dem Feldnamen <code>CMK_SVC_FIELD</code>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_jira_site_field">
+<span class="hidden-anchor sr-only" id="jira_site_field"></span>Feld für die Checkmk-Instanz erstellen</h4>
+<div class="paragraph"><p>Auch für das optionale Feld für die Instanz können Sie im Prinzip der <a href="#jira_host_field">Anleitung von oben</a> folgen.
+Wählen Sie aber diesmal als Feldtyp <span class="guihint">Text Field (single line)</span> und als Feldname z.B. <code>CMK_SITE_FIELD</code>.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_jira_ids_script">
+<span class="hidden-anchor sr-only" id="jira_ids_script"></span>2.2. Jira-IDs über externes Skript ermitteln</h3>
+<div class="paragraph"><p>Sie können die IDs gesammelt mit folgendem Skript abfragen, das die <a href="https://docs.atlassian.com/software/jira/docs/api/REST/latest" target="_blank">Jira REST-API</a> nutzt.</p></div>
+<div class="paragraph"><p>Ersetzen Sie dabei <code>JIRA_USERNAME</code>, <code>JIRA_PASSWORD</code>, <code>PROJECT_KEY</code> und <code>https://jira.server.your-domain.de</code> mit den bei Ihnen gültigen Werten.
+Den <code>PROJECT_KEY</code> können Sie auch ohne administrative Rechte aus der Jira-GUI ermitteln.</p></div>
+<div class="listingblock">
+<div class="title">example_script.py</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/usr/bin/env python3
+
+import requests
+import sys
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+user = "JIRA_USERNAME"
+password = "JIRA_PASSWORD"
+project_key = "PROJECT_KEY"
+jira_instance = "https://jira.server.your-domain.de"
+custom_field_1 = "CMK_HOST_FIELD"
+custom_field_2 = "CMK_SVC_FIELD"
+custom_field_3 = "CMK_SITE_FIELD" # don't edit if field is not used
+
+def handle_response(user, password, jira_instance, what):
+    url = "%s/rest/api/2/%s" % (jira_instance, what)
+    sess = requests.Session()
+    sess.auth = (user, password)
+    response = sess.get(url, verify=False)
+
+    return response
+
+sys.stdout.write("=== IDs for project %s ===\n" % project_key)
+infotext = ""
+for section, id_name in [ ("Project_ID", "project"),
+                          ("Issue", "issuetype"),
+                          ("Priority", "priority"),
+                          ("Field", "field"),
+                        ]:
+
+    json_response = handle_response(user,password,jira_instance,id_name).json()
+    if id_name == "project":
+        infotext = ""
+        for project in json_response:
+            if project["key"] == project_key:
+                infotext += "%s\n\n" % project.get("id", "Project ID not found")
+        if not infotext:
+            infotext += "Project ID not found, project name existing?\n\n"
+    else:
+        types = ""
+        for line in json_response:
+            if id_name == "field":
+                if line["name"].lower() == custom_field_1.lower() or \
+                    line["name"].lower() == custom_field_2.lower() or \
+                    line["name"].lower() == custom_field_3.lower():
+                    types += "%s: %s\n" % (line["name"], line["id"].split("_")[1])
+            else:
+                types += "%s: %s\n" % (line["name"], line["id"])
+
+        infotext += "=== %s types\n%s\n" % (section, types)
+
+sys.stdout.write(infotext)</code></pre></div>
+</div>
+<div class="paragraph"><p>Die Ausgabe des Skripts sieht dann ungefähr so aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">=== IDs for project MY_PROJECT ===</span>
+<span class="tok-go">10401</span>
+
+<span class="tok-go">=== Issue types</span>
+<span class="tok-go">Test case: 10600</span>
+<span class="tok-go">Epic: 10000</span>
+<span class="tok-go">Task: 10003</span>
+<span class="tok-go">Sub-task: 10004</span>
+<span class="tok-go">Bug: 10006</span>
+<span class="tok-go">Story: 10001</span>
+<span class="tok-go">Feedback: 10200</span>
+<span class="tok-go">New Feature: 10005</span>
+<span class="tok-go">Support: 10500</span>
+<span class="tok-go">Improvement: 10002</span>
+
+<span class="tok-go">=== Priority types</span>
+<span class="tok-go">Blocker: 1</span>
+<span class="tok-go">High: 2</span>
+<span class="tok-go">Medium: 3</span>
+<span class="tok-go">Low: 4</span>
+<span class="tok-go">Lowest: 5</span>
+<span class="tok-go">Informational: 10000</span>
+<span class="tok-go">Critical impact: 10101</span>
+<span class="tok-go">Significant impact: 10102</span>
+<span class="tok-go">Limited impact: 10103</span>
+<span class="tok-go">Minimal impact: 10104</span>
+
+<span class="tok-go">=== Field types</span>
+<span class="tok-go">CMK_HOST_FIELD: 11400</span>
+<span class="tok-go">CMK_SVC_FIELD: 11401</span>
+<span class="tok-go">CMK_SITE_FIELD: 11403</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_jira_ids_gui">
+<span class="hidden-anchor sr-only" id="jira_ids_gui"></span>2.3. Jira-IDs über die GUI ermitteln</h3>
+<div class="paragraph"><p>Als Alternative zur Skriptausführung können Sie die IDs auch über die Jira-GUI auslesen, wofür Sie sich aber mit einem administrativen Konto in Jira anmelden müssen.
+Atlassian, der Hersteller von Jira, hat das Vorgehen am Beispiel der Project ID in einer eigenen <a href="https://confluence.atlassian.com/jirakb/how-to-get-project-id-from-the-jira-user-interface-827341414.html" target="_blank">Anleitung</a> beschrieben.</p></div>
+<div class="paragraph"><p>Die IDs der weiteren Felder und Issues types lassen sich ablesen, in dem Sie das jeweilige Element in der Administrator-GUI von Jira editieren.
+Die ID steht dann im Regelfall als letzter Wert in der Adressleiste Ihres Browsers.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_config_cmk">
+<span class="hidden-anchor sr-only" id="config_cmk"></span>3. Konfiguration Checkmk</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wie Sie Benachrichtigungen im Allgemeinen in Checkmk einrichten, haben Sie bereits im Artikel über <a href="notifications.html">Benachrichtigungen</a> erfahren.
+Um nun die Jira-Benachrichtigungen zu nutzen, wählen Sie die Benachrichtigungsmethode <span class="guihint">JIRA (Enterprise only):</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/jira_notification_rule.png" alt="Dialog zur Festlegung der Benachrichtigungen an Jira."></div></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Im Feld <span class="guihint">JIRA URL</span> tragen Sie die URL Ihrer Jira-Instanz ein, also z.B. <code>jira.server.your-domain.com</code>.</p></li>
+<li><p>Bei <span class="guihint">User Name</span> und <span class="guihint">Password</span> hinterlegen Sie die Zugangsdaten des Jira-Kontos für den Zugriff.</p></li>
+<li><p>Für <span class="guihint">Project ID</span> und <span class="guihint">Issue type ID</span> benötigen Sie die vorher ermittelten IDs in Jira, im Beispiel <code>10401</code> für die Project ID und <code>10006</code> für den Issue-Typ <code>Bug</code>.</p></li>
+<li><p>Bei <span class="guihint">Host custom field ID</span>, <span class="guihint">Service custom field ID</span> und (optional) <span class="guihint">Site custom field ID</span> tragen Sie IDs der von Ihnen in Jira angelegten, benutzerdefinierten Felder ein.</p></li>
+<li><p>Um in den erzeugten Issues direkt nach Checkmk verlinken zu können, tragen Sie
+unter <span class="guihint">Monitoring URL</span> die URL Ihrer Checkmk-Instanz ein, also z.B.: <code>https://mycmkserver/mysite</code></p></li>
+</ol></div>
+<div class="paragraph"><p>Weiterhin haben Sie noch die folgenden optionalen Einstellungsmöglichkeiten:</p></div>
+<div class="ulist"><ul>
+<li><p>Mit der <span class="guihint">Priority ID</span> können Sie definieren, mit welcher Priorität die Issues in Jira angelegt werden. Hier können Sie eine der im Skript ausgelesenen <code>Priority types</code> eintragen, von <code>1</code> bis <code>5</code>.</p></li>
+<li><p>Die Beschreibungen, die in den Issues für Host- und Service-Probleme erzeugt werden, können Sie über die Optionen <span class="guihint">Summary for host notifications</span> und <span class="guihint">Summary for service notifications</span> ändern.</p></li>
+<li><p>Über den Punkt <span class="guihint">Label</span> können Sie definieren, ob Sie bei der Issue-Erzeugung in Jira Label mit übergeben möchten. Wenn Sie Label aktivieren, ohne einen Wert einzutragen, wird <code>monitoring</code> gesetzt.<br>
+Checkmk schreibt den Wert des Labels in das Jira-Feld <code>labels</code>, was nur gelingt, wenn dieses Feld in Ihrer Jira-Applikation existiert, was z.B. bei <em>Jira Software</em> der Fall ist, nicht aber bei <em>Jira Service Desk</em>.</p></li>
+<li><p>Wenn Sie bei Benachrichtigungen über eine Zustandsänderung auf <span class="state0">OK</span> in Checkmk auch eine <span class="guihint">Resolution</span> in den Issue in Jira eintragen lassen wollen, können Sie diese unter <span class="guihint">Activate resolution with following resolution transition ID</span> definieren.<br>
+Um hier die richtige ID ermitteln zu können, benötigen Sie ebenfalls Administrator-Rechte in Jira. Navigieren Sie wieder in den Bereich <span class="guihint">Issues</span> und klicken Sie hier auf <span class="guihint">Workflows</span>. Klicken Sie anschließend in der Zeile des Standard-Workflows des verwendeten Jira-Projekts auf <span class="guihint">View</span>. Sollten Sie nun einen Flowchart sehen, stellen Sie die Anzeige durch einen Klick auf <span class="guihint">Text</span> um. Nun können Sie die gewünschte ID in der Spalte <span class="guihint">Transitions (id)</span> ablesen.</p></li>
+<li><p>Mit <span class="guihint">Set optional timeout for connections to JIRA</span> können Sie den Timeout für Verbindungen zu Jira konfigurieren. Wenn Sie hier nichts eintragen, gilt der Standardwert von 10 Sekunden.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_diagnosis">
+<span class="hidden-anchor sr-only" id="diagnosis"></span>4. Diagnosemöglichkeiten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sollten nach der Einrichtung der Benachrichtigungsregel in Checkmk keine Tickets in Jira ankommen, prüfen Sie die zugehörige Log-Datei <code>~/var/log/notify.log</code>.
+Von Jira kommen hier im Regelfall recht brauchbare Fehlermeldungen zurück, die Ihnen bei der Diagnose tatsächlich helfen können.
+Im folgenden listen wir einige Beispiele auf.</p></div>
+<h3 id="_fehlermeldung_unable_to_create_issue_jira_response_code_400_field_labels_cannot_be_set" class="discrete">Fehlermeldung: Unable to create issue, JIRA response code 400, Field 'labels' cannot be set.</h3>
+<div class="paragraph"><p>Eventuell verfügt Ihr verwendetes Jira-Produkt nicht über Labels.
+Schalten Sie in Checkmk die Verwendung von Labels in Ihrer Benachrichtigungsregel einfach ab, indem Sie den Haken vor <span class="guihint">Label</span> wieder entfernen.</p></div>
+<h3 id="_fehlermeldung_unable_to_create_issue_jira_response_code_400_bproject_is_required" class="discrete">Fehlermeldung: Unable to create issue, JIRA response code 400, b’project is required'.</h3>
+<div class="paragraph"><p>Diese Fehlermeldung weist darauf hin, dass die ID nicht korrekt ist, welche Sie in der Benachrichtigungsregel für das betreffende Feld (hier: Project ID) eingetragen haben.</p></div>
+<h3 id="_fehlermeldung_unable_to_resolve_httpsjira_server_your_domain_debrowseissue_123_jira_response_code_500_binternal_server_error" class="discrete">Fehlermeldung: Unable to resolve https://jira.server.your-domain.de/browse/ISSUE-123, JIRA response code 500, b’Internal server error'</h3>
+<div class="paragraph"><p>Erhalten Sie diese Fehlermeldung, wenn ein Ticket in Jira von Checkmk automatisch geschlossen bzw. in einen anderen Status versetzt werden soll, dann <strong>kann</strong> dies ein Hinweis darauf sein, das die von Ihnen eingetragene Transition ID nicht korrekt ist.
+Die Transition ID steht in der Benachrichtigungsregel im Feld <span class="guihint">Activate resolution with following resolution transition ID</span>.
+Gleichen Sie diese ID in der Regel erneut mit der Weboberfläche von Jira ab.</p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_funktion">1. Funktion</a></li>
+<li>
+<a href="#config_jira">2. Konfiguration Jira</a><ul class="sectlevel1">
+<li>
+<a href="#jira_custom_fields">2.1. Einrichten der benutzerdefinierten Felder in Jira</a><ul class="sectlevel2">
+<li><a href="#jira_host_field">Feld für Host-Probleme erstellen</a></li>
+<li><a href="#jira_service_field">Feld für Service-Probleme erstellen</a></li>
+<li><a href="#jira_site_field">Feld für die Checkmk-Instanz erstellen</a></li>
+</ul>
+</li>
+<li><a href="#jira_ids_script">2.2. Jira-IDs über externes Skript ermitteln</a></li>
+<li><a href="#jira_ids_gui">2.3. Jira-IDs über die GUI ermitteln</a></li>
+</ul>
+</li>
+<li><a href="#config_cmk">3. Konfiguration Checkmk</a></li>
+<li><a href="#diagnosis">4. Diagnosemöglichkeiten</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

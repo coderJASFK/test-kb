@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Aus Sicherheitsgründen sollten Weboberflächen nur über HTTPS betrieben werden. Hier erfahren Sie, wie Sie die Verschlüsselung für eine Checkmk-Instanz aktivieren.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Weboberfläche mit HTTPS absichern">
+<meta name="og:description" content="Aus Sicherheitsgründen sollten Weboberflächen nur über HTTPS betrieben werden. Hier erfahren Sie, wie Sie die Verschlüsselung für eine Checkmk-Instanz aktivieren.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Weboberfläche mit HTTPS absichern</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/omd_https.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/omd_https.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/omd_https.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Weboberfläche mit HTTPS absichern</h1>
+<div class="details">
+<span id="revdate">Last modified on 18-Oct-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/onprem/de/omd_https.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="kerberos.html">Single Sign-On mit Kerberos</a>
+<a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wenn Sie die Weboberfläche von Checkmk über HTTPS einsetzen möchten, dann müssen Sie auf Ihrem Monitoring-Server — unabhängig von Ihren Instanzen — folgende Voraussetzungen schaffen:</p></div>
+<div class="ulist"><ul>
+<li><p>Das Apache-Modul <code>mod_ssl</code> ist installiert und aktiviert.</p></li>
+<li><p>Die Apache-Module <code>mod_rewrite</code> und <code>mod_headers</code> sind vorhanden und ebenfalls aktiviert.</p></li>
+<li><p>Sie besitzen ein gültiges Server-Zertifikat.</p></li>
+<li><p>Der Server ist über HTTPS erreichbar.</p></li>
+</ul></div>
+<div class="paragraph"><p>Was dafür zu tun ist, erklärt dieser Artikel.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__apache_module_aktivieren">
+<span class="hidden-anchor sr-only" id="_apache_module_aktivieren"></span>2. Apache-Module aktivieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die HTTPS-Absicherung der Checkmk-Oberfläche benötigt das Apache-Modul <code>mod_ssl</code>.
+Wir gehen im weiteren Verlauf der Einrichtung zudem davon aus, dass eine auf dem unverschlüsselten Port 80 eingehende Verbindung auf den SSL verschlüsselten Port 443 weitergeleitet werden soll.
+Dafür ist das Modul <code>mod_rewrite</code> nötig.
+Schließlich wird noch <code>mod_headers</code> benötigt, damit der als <a href="https://httpd.apache.org/docs/2.4/howto/reverse_proxy.html" target="_blank">Reverse Proxy</a> konfigurierte extern erreichbare Apache dem <a href="ports.html#loopback">Site Apache</a> die Request Header weiterleitet.</p></div>
+<div class="paragraph"><p>Die geladenen Apache-Module können Sie sich mit dem Kommando <code>apachectl</code> anzeigen lassen (alte CentOS- und RHEL-Versionen benötigen möglicherweise stattdessen <code>httpd</code>).
+Mit <code>grep</code> prüfen Sie gleich, ob alle drei benötigten Module vorhanden sind:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>apachectl<span class="tok-w"> </span>-M<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>-E<span class="tok-w"> </span><span class="tok-s1">'headers|rewrite|ssl'</span></strong>
+<span class="tok-go"> headers_module (shared)</span>
+<span class="tok-go"> rewrite_module (shared)</span></code></pre></div></div>
+<div class="paragraph"><p>Die Aktivierung fehlender Module gelingt auf den meisten Distributionen mit dem Skript <code>a2enmod</code>.
+Es legt Softlinks im Ordner <code>/etc/apache2/mods-enabled</code> an.
+Die Datei mit der Endung <code>.load</code> enthält dabei Anweisungen zum Laden des Moduls, und die Datei <code>.conf</code> enthält die eigentliche Konfiguration des Moduls:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>a2enmod<span class="tok-w"> </span>ssl</strong>
+<span class="tok-go">Enabling module ssl.</span>
+<span class="tok-go">To activate the new configuration, you need to run:</span>
+<span class="tok-go">  systemctl restart apache2</span></code></pre></div></div>
+<div class="paragraph"><p>Bei älteren Versionen von RHEL und darauf basierenden Distributionen ist <code>mod_ssl</code> ein eigenes Paket, das Sie separat installieren müssen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>yum<span class="tok-w"> </span>install<span class="tok-w"> </span>-y<span class="tok-w"> </span>httpd<span class="tok-w"> </span>mod_ssl</strong></code></pre></div></div>
+<div class="paragraph"><p>Ist das Kommando <code>a2enmod</code> nicht vorhanden, arbeiten Sie mit einer Distribution, welche die Apache-Konfiguration statt auf Verzeichnisse und viele Einzeldateien aufzuteilen in einer einzigen Konfigurationsdatei vorhält.
+In solch einem Fall muss in der Konfigurationsdatei <code>/etc/httpd/conf/httpd.conf</code> die auskommentierte Zeile <code>LoadModule ssl_module […​]</code> vom <code>#</code> befreit werden.
+Analog ist für die beiden anderen Module vorzugehen.</p></div>
+<div class="paragraph"><p>Ob der Apache-Webserver bereits jetzt oder erst später neu gestartet werden kann, entscheidet sich an der Frage, ob bei der Installation von Apache einfache, selbst signierte Zertifikate automatisch erzeugt wurden.</p></div>
+<div class="paragraph"><p>Dies erfahren Sie, indem Sie zunächst nach der Konfigurationsdatei suchen, welche die Pfade zu Zertifikat und Schlüsseln enthält und dann prüfen, ob diese Dateien existieren (bei RHEL ist als Startverzeichnis der Suche <code>/etc/httpd</code> anzugeben):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>find<span class="tok-w"> </span>/etc/apache2/<span class="tok-w"> </span>-type<span class="tok-w"> </span>f<span class="tok-w"> </span>-exec<span class="tok-w"> </span>grep<span class="tok-w"> </span>-Hn<span class="tok-w"> </span><span class="tok-s1">'^\s*SSLCertificate.*File'</span><span class="tok-w"> </span><span class="tok-o">{}</span><span class="tok-w"> </span><span class="tok-se">\;</span></strong>
+<span class="tok-go">/etc/apache2/sites-available/default-ssl.conf:32: SSLCertificateFile	/etc/ssl/certs/ssl-cert-snakeoil.pem</span>
+<span class="tok-go">/etc/apache2/sites-available/default-ssl.conf:33: SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key</span></code></pre></div></div>
+<div class="paragraph"><p>Prüfen Sie, ob die in der Konfigurationsdatei angegebenen Dateien existieren.
+Falls kein automatisch erstelltes Zertifikat vorhanden ist, warten Sie mit dem Neustart des Apache-Webservers, bis Sie ein Zertifikat erhalten oder selbst erstellt haben – sonst schlägt der Neustart fehl.</p></div>
+<div class="paragraph"><p>Sind Zertifikat und Schlüssel vorhanden, starten Sie den Apache-Webserver neu, beim mittlerweile standardmäßig verwendeten <code>systemd</code> mit folgendem Befehl:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>systemctl<span class="tok-w"> </span>restart<span class="tok-w"> </span>apache2</strong></code></pre></div></div>
+<div class="paragraph"><p>Wieder gilt: Einige Distributionen verwenden als Name des Dienstes nicht <code>apache2</code>, sondern das etwas generischere <code>httpd</code>.
+Passen Sie in diesem Fall den Befehl an.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> In der Checkmk-Appliance aktivieren Sie <a href="appliance_usage.html#ssl">HTTPS über die Weboberfläche!</a></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__zertifikate_erhalten">
+<span class="hidden-anchor sr-only" id="_zertifikate_erhalten"></span>3. Zertifikate erhalten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Im Wesentlichen existieren die folgenden Methoden, um an ein Server-Zertifikat zu gelangen:</p></div>
+<div class="ulist"><ul>
+<li><p>Sie greifen auf einen externen Dienstleister für die <a href="#oldschoolcsr">Zertifikatsausstellung mittels CSR</a> (<em>Certificate Signing Request</em>) zurück, dessen Root-Zertifikat von Browser- und Betriebssystemherstellern vertraut wird.
+Mit diesem Verfahren können Zertifikate nicht nur auf <a href="https://de.wikipedia.org/wiki/Zertifizierungsstelle_(Digitale_Zertifikate)#Web_PKI" target="_blank">Ebene</a> einer Domain validiert werden, sondern auch auf Organisationsebene (Organization Validation) und höher (Extended Validation), wie es in einigen Branchen aus regulatorischen Gründen verpflichtend ist.</p></li>
+<li><p>Sie nutzen <a href="#letsencrypt">kostenlose Zertifikate von <em>Let’s Encrypt</em>.</a>
+Dieses Verfahren erlaubt nur eine Validierung auf Domain-Ebene.
+Um Zertifikate anfordern zu können, muss der abzusichernde Server von außen erreichbar sein oder Sie müssen die Möglichkeit haben, (automatisiert) Einträge im öffentlichen DNS der verwendeten Domain anzulegen.</p></li>
+<li><p>Sie werden Ihre <a href="#becomeca">eigene <em>Certificate Authority</em> (CA)</a> und erzeugen Zertifikate selbst.
+Das Root-Zertifikat der eigenen CA muss auf allen Rechnern vorhanden sein, die mit Servern kommunizieren, die mit dem CA-Schlüssel signierte Zertifikate verwenden.
+Im Umgang mit der eigenen CA sollten hohe Sicherheitsstandards eingehalten werden, da mit dieser CA Zertifikate für beliebige Domains ausgestellt werden können.</p></li>
+</ul></div>
+<div class="sect2">
+<h3 id="heading_oldschoolcsr">
+<span class="hidden-anchor sr-only" id="oldschoolcsr"></span>3.1. Externe CA verwenden</h3>
+<div class="paragraph"><p>Zertifikate bei einer kommerziellen Certificate Authority signieren zu lassen, war lange Zeit der einzige Weg, von allen Browsern und Betriebssystemen akzeptierte Zertifikate zu erhalten.
+Dieses Verfahren ist heute insbesondere dann noch üblich, wenn lange Gültigkeitszeiträume erwünscht sind.</p></div>
+<div class="paragraph"><p>Die Abfolge ist, dass Sie zunächst den privaten Server-Schlüssel erzeugen und dann für diesen ein <em>Certificate Signing Request</em> (CSR) erstellen, welches Sie an den ausgewählten Anbieter übertragen.
+Dieser prüft dann die Inhaberschaft der Domain, bestätigt das CSR mit seinem Schlüssel und schickt Ihnen das resultierende Server-Zertifikat.</p></div>
+<div class="paragraph"><p>Beachten Sie — ungeachtet der nachfolgenden Beispiele — unbedingt auch die Vorgaben Ihrer Certificate Authority und ändern Sie die Kommandos gegebenenfalls entsprechend ab.</p></div>
+<div class="sect3">
+<h4 id="heading_createcsr">
+<span class="hidden-anchor sr-only" id="createcsr"></span>Schlüssel und CSR erzeugen</h4>
+<div class="paragraph"><p>Zunächst erzeugen Sie den privaten Server-Schlüssel.
+Diesen Schritt können Sie direkt auf dem Server durchführen, auf dem die abzusichernde Checkmk-Instanz läuft.</p></div>
+<div class="paragraph"><p>Der verwendete Ordner <code>/etc/certs</code> entspricht dem Standard vieler Distributionen.
+Sie können aber jeden beliebigen Ordner verwenden, auf den der Apache-Prozess lesend zugreifen kann.
+Den Schlüssel nach dem primären Domain-Namen zu benennen, für den er verwendet wird (hier <code>checkmk.mydomain.com</code>), dient hier der besseren Übersicht.
+Insbesondere wenn später weitere Server-Namen hinzukommen sollten, für die eigene Schlüssel/Zertifikate verwendet werden, erleichtert dieses Namensschema die Zuordnung.</p></div>
+<div class="paragraph"><p>Der private Schlüssel dient später der Verschlüsselung des Datenverkehrs und sollte entsprechend umsichtig behandelt werden (beispielsweise hinsichtlich der Zugriffsrechte).
+Um einen Neustart des Apache-Servers auch automatisiert durchführen zu können, vergeben die meisten Administratoren keine Passphrase.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>openssl<span class="tok-w"> </span>genrsa<span class="tok-w"> </span>-out<span class="tok-w"> </span>/etc/certs/checkmk.mydomain.com.key<span class="tok-w"> </span><span class="tok-m">2048</span></strong>
+<span class="tok-go">Generating RSA private key, 2048 bit long modulus (2 primes)</span>
+<span class="tok-go">.....++
+...............................................................++</span>
+<span class="tok-go">e is 65537 (0x010001)</span></code></pre></div></div>
+<div class="paragraph"><p>Im nächsten Schritt erstellen Sie das Certificate Signing Request (CSR) – einen digitalen Antrag auf Erstellung eines Identitäts-Zertifikats (hier: Public-Key-Zertifikat):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>openssl<span class="tok-w"> </span>req<span class="tok-w"> </span>-new<span class="tok-w"> </span>-key<span class="tok-w"> </span>checkmk.mydomain.com.key<span class="tok-w"> </span>-out<span class="tok-w"> </span>checkmk.mydomain.com.csr</strong>
+<span class="tok-go">You are about to be asked to enter information that will be incorporated</span>
+<span class="tok-go">into your certificate request.</span>
+<span class="tok-go">What you are about to enter is what is called a Distinguished Name or a DN.</span>
+<span class="tok-go">There are quite a few fields but you can leave some blank</span>
+<span class="tok-go">For some fields there will be a default value,</span>
+<span class="tok-go">If you enter '.', the field will be left blank.</span>
+<span class="tok-go">---</span>
+<span class="tok-go">Country Name (2 letter code) [AU]: <strong>DE</strong></span>
+<span class="tok-go">State or Province Name (full name) [Some-State]: <strong>Bavaria</strong></span>
+<span class="tok-go">Locality Name (eg, city) []: <strong>Munich</strong></span>
+<span class="tok-go">Organization Name (eg, company) [Internet Widgits Pty Ltd]: <strong>Yoyodyne Inc.</strong></span>
+<span class="tok-go">Organizational Unit Name (eg, section) []:</span>
+<span class="tok-go">Common Name (e.g. server FQDN or YOUR name) []: <strong>checkmk.mydomain.com</strong></span>
+<span class="tok-go">Email Address []: webmaster@mydomain.com</span>
+
+<span class="tok-go">Please enter the following 'extra' attributes</span>
+<span class="tok-go">to be sent with your certificate request</span>
+<span class="tok-go">A challenge password []:</span>
+<span class="tok-go">An optional company name []:</span></code></pre></div></div>
+<div class="paragraph"><p>Achten Sie darauf, die Angaben zum Unternehmen korrekt anzugeben und als <code>Common Name</code> den Server-Namen einzutragen.
+Die <code>Email Address</code> sollte in derselben Domain liegen und zu einem existierenden und gelesenen Postfach gehören.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__extension_datei_erstellen">
+<span class="hidden-anchor sr-only" id="_extension_datei_erstellen"></span>Extension-Datei erstellen</h4>
+<div class="paragraph"><p>Moderne Browser erfordern Zertifikate, welche die Erweiterung für <em>alternative Host-Namen</em> nutzen, selbst wenn die Zertifikate nur für einen Host-Namen ausgestellt werden.
+Dies erfordert eine Extension-Datei, welche manche Anbieter automatisch erstellen und integrieren.
+Ist das nicht der Fall oder Sie sind unsicher, erstellen Sie eine solche Datei.
+Soll ein Zertifikat für mehrere Host-Namen gültig sein, folgen unter <code>[alt_names]</code> weitere Zeilen <code>DNS.2 =</code> und so weiter:</p></div>
+<div class="listingblock">
+<div class="title">/tmp/checkmk.mydomain.com.ext</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = checkmk.mydomain.com</code></pre></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__unterlagen_einreichen">
+<span class="hidden-anchor sr-only" id="_unterlagen_einreichen"></span>Unterlagen einreichen</h4>
+<div class="paragraph"><p>Je nach angestrebter Validierungsebene kann es erforderlich sein, weitere Unterlagen wie Handelsregisterauszüge oder Bankdaten zusammenzustellen.
+Da die angeforderten Unterlagen, die Wege der Einreichung und die Wege der Bestätigung von Anbieter zu Anbieter verschieden sind, kann hier keine allgemein gültige Anleitung gegeben werden.
+So kann Extended Validation beispielsweise auch bedeuten, dass per Einschreiben ein Code an Geschäftsführer oder Prokurist verschickt wird, der über ein Webformular eingegeben werden muss.</p></div>
+<div class="paragraph"><p>Im einfachsten Fall einer Validierung nur auf Domain-Ebene wird die CSR-Datei und gegebenenfalls die EXT-Datei über eine Weboberfläche hochgeladen.
+Sie erhalten dann die Möglichkeit, eine E-Mail-Adresse auszuwählen: aus den für Admin-C (Inhaber) oder Tech-C (technisch Verantwortlicher) der Domain hinterlegten oder einer generischen E-Mail-Adresse wie <code>webmaster@domain.com</code>.
+An diese Adresse wird dann ein Bestätigungslink verschickt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__zertifikat_erhalten">
+<span class="hidden-anchor sr-only" id="_zertifikat_erhalten"></span>Zertifikat erhalten</h4>
+<div class="paragraph"><p>Der Prüfungsvorgang selbst dauert bei Validierung auf Domain-Ebene in der Regel maximal einige Minuten, bei Extended Validation manchmal mehrere Tage.
+Sobald dieser abgeschlossen ist, erhalten Sie das zu Ihrem Schlüssel gehörende Zertifikat per E-Mail oder Download.
+Neben dem Zertifikat erhalten Sie auch einen Downloadlink zur <em>Zertifikatskette</em> (<em>Certificate Chain File</em>).
+Speichern Sie diese unbedingt mit ab.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_letsencrypt">
+<span class="hidden-anchor sr-only" id="letsencrypt"></span>3.2. Let’s Encrypt</h3>
+<div class="paragraph"><p>Ist ein Server von außen erreichbar oder haben Sie Zugriff auf den Name-Server, so können Sie automatisiert Zertifikate über den zu der Electronic Frontier Foundation (EFF) gehörenden Non-Profit-Dienstleister <a href="https://letsencrypt.org/#" target="_blank">Let’s Encrypt</a> erstellen lassen.
+Es entstehen keine Kosten.
+Per DNS validierte Zertifikate erfordern alle 90 Tage wenige Minuten Aufmerksamkeit, per Server-Verzeichnis validierte Zertifikate können Jahre lang automatisch neu erzeugt werden.</p></div>
+<div class="paragraph"><p>Für Let’s Encrypt-Zertifikate stellt die EFF das Python-Programm <em>Certbot</em> in vielen verschiedenen Paketformaten bereit.
+Der Certbot übernimmt die Erstellung des Schlüssels, den Versand der CSR, die Prüfung der Inhaberschaft von Server oder Domain und lädt schließlich das Zertifikat herunter.
+Er kommuniziert hierfür über das Protokoll <a href="https://de.wikipedia.org/wiki/Automatic_Certificate_Management_Environment" target="_blank">Automatic Certificate Management Environment (ACME)</a> mit den Servern der EFF.</p></div>
+<div class="sect3">
+<h4 id="heading__installation_des_certbot_skripts">
+<span class="hidden-anchor sr-only" id="_installation_des_certbot_skripts"></span>Installation des Certbot-Skripts</h4>
+<div class="paragraph"><p>Es existieren drei Möglichkeiten, Certbot zu installieren.
+Welche Sie wählen, dürfte vor allem vom Alter der eingesetzten Distribution und den Richtlinien in Ihrem Unternehmen zur Installation aus fremden Paketquellen abhängen:</p></div>
+<div class="ulist"><ul>
+<li><p>Wenn das Paketmanagement Ihrer Linux-Distribution Certbot-Version 1.10 oder höher bereitstellt, kann diese Certbot-Version verwendet werden.</p></li>
+<li><p>Certbot ist über das Python-Paketinstallationstool <code>pip3</code> aus dem <a href="https://pypi.org/project/certbot/#" target="_blank">Python Package Index</a> installierbar.
+Der Befehl <code>pip3 install certbot</code> installiert auch alle abhängig benötigten Python-Module.</p></li>
+<li><p>Die EFF bevorzugt auf ihrer <a href="https://certbot.eff.org/instructions#" target="_blank">Certbot-Dokumentationsseite</a> die Installation aus einem Snap-Image.
+Es gelten die bekannten Vor- und Nachteile des Snap-Paketformates.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__vollautomatische_konfiguration">
+<span class="hidden-anchor sr-only" id="_vollautomatische_konfiguration"></span>Vollautomatische Konfiguration</h4>
+<div class="paragraph"><p>Falls der Checkmk-Server aus dem Internet erreichbar ist und Sie an der Konfiguration des systemweiten Apache-Webservers seit der Installation von Checkmk keine Änderung vorgenommen haben, können Sie den "Apache-Automatismus" von Certbot verwenden.
+Mit diesem können Sie Schlüssel erzeugen, Zertifikate anfordern, die Apache-Konfiguration automatisch anpassen und schließlich einen Cronjob einrichten, um regelmäßig die 90 Tage laufenden Zertifikate zu erneuern.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>certbot<span class="tok-w"> </span>--apache</strong></code></pre></div></div>
+<div class="paragraph"><p>Das Skript fragt nun interaktiv einige Informationen zu Kontaktdaten (E-Mail-Kontakt für zusätzliche Informationen wie notwendige Zertifikatsrückrufe) und Installationspfaden ab.
+Am Ende steht die funktionsfähige SSL-Konfiguration.
+Eine Anpassung der Konfigurationsdatei für <code>mod_ssl</code> ist nicht nötig, dies hat der Certbot bereits erledigt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__teilautomatisierte_konfiguration">
+<span class="hidden-anchor sr-only" id="_teilautomatisierte_konfiguration"></span>Teilautomatisierte Konfiguration</h4>
+<div class="paragraph"><p>Falls Sie, wie im vorherigen Abschnitt beschrieben, Zertifikate anfordern, aber die Apache-Konfiguration selbst anpassen wollen, verwenden Sie den Befehl:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>certbot<span class="tok-w"> </span>certonly<span class="tok-w"> </span>--apache</strong></code></pre></div></div>
+<div class="paragraph"><p>Die Konfiguration schließen Sie dann <a href="#configsample">wie unten beschrieben</a> in der Konfigurationsdatei für <code>mod_ssl</code> ab.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__weitere_möglichkeiten">
+<span class="hidden-anchor sr-only" id="_weitere_möglichkeiten"></span>Weitere Möglichkeiten</h4>
+<div class="paragraph"><p>Ist der Checkmk-Server beispielsweise nur aus dem Intranet oder per VPN erreichbar, aber der DNS-Server öffentlich, können Sie die Validierung über eine <em>DNS-Challenge</em> vornehmen.
+Hier wird die Inhaberschaft einer Domain nicht darüber geprüft, Dateien auf dem Webserver ablegen zu können, sondern darüber, dass Sie Einträge im DNS hinzufügen können.
+Dabei kommen keine Einträge zur Anwendung, die einen Host-Namen zu einer IP-Adresse auflösen, sondern sogenannte TXT-Einträge, die beliebige Zeichenketten enthalten können.
+TXT-Einträge werden beispielsweise auch verwendet, um anzugeben, welche Server E-Mails für eine Domain versenden dürfen.</p></div>
+<div class="paragraph"><p>DNS-Challenges können manuell durchgeführt werden, was bei 90 Tagen Gültigkeit meist nur für einzelne Testsysteme praktikabel ist.
+Verfügt Ihr DNS-Anbieter über ein von Let’s Encrypt unterstütztes API, kann auch eine automatische Erneuerung durchgeführt werden.
+Lesen Sie hierfür die <a href="https://letsencrypt.org/de/docs/challenge-types/" target="_blank">Übersicht der Challenge Typen</a> bei Let’s Encrypt.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_becomeca">
+<span class="hidden-anchor sr-only" id="becomeca"></span>3.3. Interne CA verwenden</h3>
+<div class="paragraph"><p>Sie können sich selbst in die Rolle einer Certificate Authority (CA) versetzen und Zertifikate für beliebige Domains (Ihre Domains, fremde Domains und Phantasie-Domains) ausstellen.
+Der Weg über die eigene CA ist vor allem für Testumgebungen oder abgeschottete Checkmk-Server mit überschaubarer Nutzerzahl sinnvoll.
+Dies ist zudem die einzige Möglichkeit, Zertifikate zu erhalten, wenn Sie intern eine der fünf reservierten Top-Level-Domains (TLD) <code>.example</code>, <code>.invalid</code>, <code>.local</code>, <code>.localhost</code> oder <code>.test</code> verwenden.
+Für diese Domains gibt es keine Registrare, folglich kann keine Inhaberschaft bestätigt werden.</p></div>
+<div class="paragraph"><p>Dieses Kapitel erklärt die Ausstellung von Zertifikaten mit solch einer internen CA.
+Als Voraussetzungen werden angenommen, dass Sie bereits über den privaten CA-Root- oder CA-Intermediate-Schlüssel verfügen und diesen nun verwenden sollen, um Zertifikate zur Absicherung eines Checkmk-Servers auszustellen.</p></div>
+<div class="paragraph"><p>Die Erstellung der CA-Schlüssel, des CA-Zertifikats und der dazugehörigen Konfigurationsdatei ist nicht Bestandteil dieser Anleitung.</p></div>
+<div class="sect3">
+<h4 id="heading__schlüssel_und_csr_erzeugen">
+<span class="hidden-anchor sr-only" id="_schlüssel_und_csr_erzeugen"></span>Schlüssel und CSR erzeugen</h4>
+<div class="paragraph"><p>Gehen Sie für die Erstellung von Server-Schlüssel, Certificate Signing Request (CSR) und Extension-Datei so vor, wie es im Abschnitt zur <a href="#createcsr">Zertifikatsausstellung über eine kommerzielle CA</a> beschrieben ist.
+Die Vorgehensweise und die benötigten Dateien sind identisch.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_signyourself">
+<span class="hidden-anchor sr-only" id="signyourself"></span>CSR signieren</h4>
+<div class="paragraph"><p>Um selbst Zertifikate zu signieren, benötigen Sie wenigstens einen privaten Schlüssel (hier <code>intermediate.key.pem</code>) und das dazugehörige Intermediate-Zertifikat <code>intermediate.pem</code>.
+Falls Sie zudem über eine Konfigurationsdatei verfügen, ist der Pfad zu dieser mit dem Parameter <code>--config</code> anzugeben.</p></div>
+<div class="paragraph"><p>Die Signatur auf Basis der CSR-Datei <code>checkmk.mydomain.com.csr</code>, Extension-Datei <code>checkmk.mydomain.com.ext</code> und der Ausgabedatei <code>checkmk.mydomain.com.crt</code> erledigen Sie dann mit folgendem Befehl:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>openssl<span class="tok-w"> </span>x509<span class="tok-w"> </span>-CAcreateserial<span class="tok-w"> </span>-req<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>-in<span class="tok-w"> </span>checkmk.mydomain.com.csr<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>-CA<span class="tok-w"> </span>intermediate.pem<span class="tok-w"> </span>-CAkey<span class="tok-w"> </span>intermediate.key.pem<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>-out<span class="tok-w"> </span>checkmk.mydomain.com.crt<span class="tok-w"> </span>-days<span class="tok-w"> </span><span class="tok-m">365</span><span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>-sha256<span class="tok-w"> </span>-extfile<span class="tok-w"> </span>checkmk.mydomain.com.ext</code></pre></div></div>
+<div class="paragraph"><p>Neben dem hier erstellten Server-Zertifikat <code>checkmk.mydomain.com.crt</code> müssen Sie Ihr CA-Zertifikat <code>intermediate.pem</code> weitergeben.
+Falls Sie nicht Root-CA sind, müssen Sie zusätzlich auch das Root-Zertifikat (im weiteren Text als <code>ca_certificate_intern.pem</code> referenziert) weitergeben.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__zertifikat_importieren">
+<span class="hidden-anchor sr-only" id="_zertifikat_importieren"></span>Zertifikat importieren</h4>
+<div class="paragraph"><p>Die Wege, ein CA-Zertifikat als vertrauenswürdig zu importieren, unterscheiden sich von Browser zu Browser.
+Meist genügt es, das Zertifikat <code>ca_certificate_intern.pem</code> unter <span class="guihint">Einstellungen &gt; Datenschutz</span> und <span class="guihint">Sicherheit &gt; Zertifikate &gt; Importieren</span> hinzuzufügen.</p></div>
+<div class="paragraph"><p>Damit die Zertifikatsverwaltung kein Stolperstein beim automatischen Agenten-Update in den kommerziellen Editionen darstellt, haben wir in der <a href="glossar.html#agent_bakery">Agentenbäckerei</a> die Möglichkeit vorgesehen, ein <a href="agent_deployment.html#certificates_for_https">eigenes CA-Zertifikat</a> zu übergeben, das nur für Agenten-Updates benutzt wird.
+Die Systemzertifikate werden hierbei nicht angetastet, und Agenten-Updates sind dennoch möglich.</p></div>
+<div class="paragraph"><p>Alternativ zur Verteilung per Agenten-Update können Sie das Root-Zertifikat in der lokalen CA-Datenbank des Hosts integrieren.
+Kopieren Sie dafür die Datei <code>ca_certificate_intern.pem</code> nach <code>/usr/local/share/ca-certificates/</code>.
+Anschließend generieren Sie den Cache neu:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>update-ca-certificates</strong></code></pre></div></div>
+<div class="paragraph"><p>Unter Windows ist es möglich, die Systemzertifikate über das MMC-Snap-In "Certificates" zu verwalten.
+Dies ist beispielsweise nötig, wenn Sie einen Microsoft-Browser verwenden wollen, um auf ein mit eigener CA abgesichertes Checkmk zuzugreifen.
+Das genaue Vorgehen können Sie im <a href="https://docs.microsoft.com/de-de/troubleshoot/windows-server/windows-security/import-third-party-ca-to-enterprise-ntauth-store#method-1---import-a-certificate-by-using-the-pki-health-tool" target="_blank">Microsoft Knowledge Base Artikel PKI</a> nachlesen.
+Alternativ können Sie Zertifikate per <a href="https://docs.microsoft.com/de-de/mem/intune/protect/certificates-configure" target="_blank">Intune</a> verteilen.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_configsample">
+<span class="hidden-anchor sr-only" id="configsample"></span>4. HTTPS-Verbindung für eine Instanz konfigurieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Zunächst müssen Sie in der SSL-Konfigurationsdatei die korrekten Pfade zu Schlüssel, Zertifikat und Intermediate-Zertifikat angeben. Beachten Sie, dass es sich hier um Konfigurationen für den Webserver <code>apache2</code> handelt und diese nicht spezifisch für Checkmk sind. Daher ist die verwendete Konfigurationsdatei unter Debian-basierten Systemen in der Regel der Standard <code>/etc/apache2/sites-enabled/default-ssl.conf</code>. Der Pfad kann jedoch bei älteren Distributionen abweichen.</p></div>
+<div class="paragraph"><p>Im Beispiel unten bezeichnet das <code>SSLCertificateKeyFile</code> den eingangs erzeugten privaten Schlüssel für diesen Server.
+<code>SSLCertificateChainFile</code> enthält das Intermediate Certificate oder gegebenenfalls aneinandergereihte Intermediate Certificates.
+Lediglich bei einer internen CA, wo direkt mit dem CA-Schlüssel signiert wird, fällt dieses weg.</p></div>
+<div class="paragraph"><p>Viele kommerzielle Anbieter verwenden eher generische Dateinamen, wenn Sie diese übernehmen, wird die Konfiguration ähnlich zu der Folgenden aussehen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/apache2/sites-enabled/default-ssl.conf</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">SSLEngine</span><span class="tok-w"> </span><span class="tok-k">on</span>
+<span class="tok-nb">SSLCertificateKeyFile</span><span class="tok-w"> </span><span class="tok-sx">/etc/certs/checkmk.mydomain.com.key</span>
+<span class="tok-nb">SSLCertificateChainFile</span><span class="tok-w"> </span><span class="tok-sx">/etc/certs/ca_bundle.crt</span>
+<span class="tok-nb">SSLCertificateFile</span><span class="tok-w"> </span><span class="tok-sx">/etc/certs/certificate.crt</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Wenn Sie Let’s Encrypt verwendet haben, um Zertifikate zu generieren, aber die Konfiguration manuell aktualisieren wollen, finden Sie die Pfade unterhalb <code>/etc/letsencrypt/live</code> heraus und tragen Sie diese ein:</p></div>
+<div class="listingblock">
+<div class="title">/etc/apache2/sites-enabled/default-ssl.conf</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">SSLEngine</span><span class="tok-w"> </span><span class="tok-k">on</span>
+<span class="tok-nb">SSLCertificateKeyFile</span><span class="tok-w"> </span><span class="tok-sx">/etc/letsencrypt/live/checkmk.mydomain.com/privkey.pem</span>
+<span class="tok-nb">SSLCertificateChainFile</span><span class="tok-w"> </span><span class="tok-sx">/etc/letsencrypt/live/checkmk.mydomain.com/chain.pem</span>
+<span class="tok-nb">SSLCertificateFile</span><span class="tok-w"> </span><span class="tok-sx">/etc/letsencrypt/live/checkmk.mydomain.com/cert.pem</span></code></pre></div>
+</div>
+<div class="sect2">
+<h3 id="heading_httpsredirect">
+<span class="hidden-anchor sr-only" id="httpsredirect"></span>4.1. HTTPS-Weiterleitung hinzufügen</h3>
+<div class="paragraph"><p>Apache arbeitet mit virtuellen Hosts, um unter einer IP-Adresse verschiedene Inhalte bereitstellen zu können.
+Wird im Apache-Kontext der Begriff "Site" verwendet, ist solch ein virtueller Host, keine Checkmk-Site gemeint.
+Auf einem reinen Checkmk-Server wird in der Regel nur ein virtueller Host mit einem Servernamen verwendet, unter dem dann alle Checkmk-Sites erreichbar sind.
+Die <code>VirtualHost</code>-Konfiguration befindet sich – je nach eingesetzter Distribution – in einer dieser Dateien:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debian, Ubuntu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/apache2/sites-enabled/000-default</code>(<code>.conf</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RHEL, CentOS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/httpd/conf.d/ssl.conf</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SLES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/apache2/httpd.conf</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Das folgende Beispiel geht davon aus, dass Sie eine einzige Konfigurationsdatei für unverschlüsselte Verbindungen auf Port 80 und verschlüsselte Verbindungen auf 443 nutzen.
+In diesem Fall ergänzen Sie im Abschnitt für den <code>VirtualHost</code> folgende Zeilen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/apache2/sites-enabled/000-default</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">RewriteEngine</span><span class="tok-w"> </span><span class="tok-k">On</span>
+<span class="tok-c"># Never forward request for .well-known (important when using Let's Encrypt)</span>
+<span class="tok-nb">RewriteCond</span><span class="tok-w"> </span>%{REQUEST_URI}<span class="tok-w"> </span>!^/.well-known
+<span class="tok-c"># Next 2 lines: Force redirection if incoming request is not on 443</span>
+<span class="tok-nb">RewriteCond</span><span class="tok-w"> </span>%{SERVER_PORT}<span class="tok-w"> </span>!^443$
+<span class="tok-nb">RewriteRule</span><span class="tok-w"> </span>(.*)<span class="tok-w"> </span>https://%{HTTP_HOST}$1<span class="tok-w"> </span>[L]
+<span class="tok-c"># This section passes the system Apaches connection mode to the</span>
+<span class="tok-c"># instance Apache. Make sure mod_headers is enabled, otherwise it</span>
+<span class="tok-c"># will be ignored and "Analyze configuration" will issue "WARN".</span>
+<span class="tok-nt">&lt;IfModule</span><span class="tok-w"> </span><span class="tok-s">headers_module</span><span class="tok-nt">&gt;</span>
+<span class="tok-w">    </span><span class="tok-nb">RequestHeader</span><span class="tok-w"> </span>set<span class="tok-w"> </span>X-Forwarded-Proto<span class="tok-w"> </span>expr=%{REQUEST_SCHEME}
+<span class="tok-w">    </span><span class="tok-nb">RequestHeader</span><span class="tok-w"> </span>set<span class="tok-w"> </span>X-Forwarded-SSL<span class="tok-w"> </span>expr=%{HTTPS}
+<span class="tok-nt">&lt;/IfModule&gt;</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Die beiden Zeilen <code>RequestHeader set X-Forwarded…​</code> stellen hier sicher, dass dem <a href="ports.html#loopback">Site Apache auf Port 5000</a>  mitgeteilt wird, dass ein Aufruf über SSL erfolgte, Sicherheitsregeln also eingehalten wurden.</p></div>
+<div class="paragraph"><p>Nach der Konfigurationsänderung muss der Webserver neu gestartet werden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>systemctl<span class="tok-w"> </span>restart<span class="tok-w"> </span>apache2</strong></code></pre></div></div>
+<div class="paragraph"><p>Erneut gilt: Einige Distributionen verwenden als Name des Dienstes nicht <code>apache2</code>, sondern das etwas generischere <code>httpd</code>.
+Passen Sie in diesem Fall den Befehl an.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__zusätzliche_optionen">
+<span class="hidden-anchor sr-only" id="_zusätzliche_optionen"></span>5. Zusätzliche Optionen</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading__hsts_einrichten">
+<span class="hidden-anchor sr-only" id="_hsts_einrichten"></span>5.1. HSTS einrichten</h3>
+<div class="paragraph"><p>Den Checkmk-Server nur noch mittels HTTPS erreichbar zu machen, ist der erste und wichtigste Schritt, um Verbindungen zum Monitoring abzusichern.
+Erhöhen kann man die Sicherheit aber mit zusätzlichen, optionalen Einstellungen.
+So kann der Webserver dem Browser mitteilen, dass er in Zukunft bitte nur noch über HTTPS angesprochen werden soll und eine ungesicherte Verbindung über HTTP immer abgelehnt wird.</p></div>
+<div class="paragraph"><p>Diese Technik nennt sich HTTP Strict Transport Security (HSTS) und wird für einen bestimmten Zeitraum in Sekunden gesetzt.
+Ist dieser Zeitraum abgelaufen, prüft der Browser erneut, ob die Limitierung über HSTS weiterhin gültig ist.</p></div>
+<div class="sect3">
+<h4 id="heading_hsts_specifics">
+<span class="hidden-anchor sr-only" id="hsts_specifics"></span>Besonderheiten</h4>
+<div class="paragraph"><p>Die Einrichtung von HSTS bietet den Vorteil, dass nur sichere Verbindungen genutzt werden.
+Der Einsatz bringt auch bestimmte Besonderheiten mit sich, derer man sich <em>vor</em> der Umstellung bewusst sein muss:</p></div>
+<div class="ulist"><ul>
+<li><p>Ist der Eintrag zu HSTS einmal vom Browser des Benutzers angelegt, kann er — zumindest vor Ablauf der Zeit — nur mit entsprechendem Detailwissen zu dem jeweiligen Browser entfernt werden. Beachten Sie, dass viele Benutzer dieses Wissen nicht haben.</p></li>
+<li><p>Die Verbindung wird u.a. dann abgelehnt, wenn das Zertifikat abgelaufen ist oder durch ein selbst-signiertes ausgetauscht wurde.
+Solche Seiten können auch nicht mit einer Ausnahme zum temporären Vertrauen eines Zertifikats aufgerufen werden.</p></li>
+<li><p>HSTS wird umgekehrt nur dann berücksichtigt, wenn dem Zertifikat beim ersten Verbindungsaufbau <strong>vertraut</strong> wird.
+Ansonsten legt der Browser keinen Eintrag zu HSTS an, so dass der zusätzliche Schutzmechanismus nicht benutzt wird.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__konfiguration_des_apache_webservers">
+<span class="hidden-anchor sr-only" id="_konfiguration_des_apache_webservers"></span>Konfiguration des Apache-Webservers</h4>
+<div class="paragraph"><p>Um die Option zu setzen, fügen Sie den folgenden Eintrag der HTTPS-Konfiguration hinzu.
+Unter Debian/Ubuntu ist das standardmäßig die Datei <code>default-ssl.conf</code>:</p></div>
+<div class="listingblock">
+<div class="title">/etc/apache2/sites-enabled/default-ssl.conf</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="apache"><span></span><span class="tok-nb">Header</span><span class="tok-w"> </span>always<span class="tok-w"> </span>set<span class="tok-w"> </span>Strict-Transport-Security<span class="tok-w"> </span><span class="tok-s2">"max-age=43200"</span></code></pre></div>
+</div>
+<div class="paragraph"><p><strong>Wichtig</strong>: Setzen Sie zunächst einen kurzen Zeitraum — z.B. 600 Sekunden --, um die Einstellung zu testen, da es sein kann, dass ansonsten die Verbindung im Fehlerfall für einen sehr langen Zeitraum abgelehnt wird!
+Mehr dazu auch bei den <a href="#hsts_specifics">Besonderheiten</a>.</p></div>
+<div class="paragraph"><p>Um zu sehen, ob die neue Einstellung funktioniert, können Sie mit Hilfe des Programms <code>curl</code> den Server abrufen.
+Hier in der Ausgabe nur die ersten 4 Zeilen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><strong>curl<span class="tok-w"> </span>-I<span class="tok-w"> </span><span class="tok-se">\h</span>ttps://mycmkserver/mysite/check_mk/login.py</strong>
+<span class="tok-go">HTTP/1.1 200 OK</span>
+<span class="tok-go"><strong>Date</strong>: Tue, 01 Jun 2021 09:30:20 GMT</span>
+<span class="tok-go"><strong>Server</strong>: Apache</span>
+<span class="tok-go"><strong>Strict-Transport-Security</strong>: max-age=3600</span></code></pre></div></div>
+</div>
+</div></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li><a href="#_apache_module_aktivieren">2. Apache-Module aktivieren</a></li>
+<li>
+<a href="#_zertifikate_erhalten">3. Zertifikate erhalten</a><ul class="sectlevel1">
+<li>
+<a href="#oldschoolcsr">3.1. Externe CA verwenden</a><ul class="sectlevel2">
+<li><a href="#createcsr">Schlüssel und CSR erzeugen</a></li>
+<li><a href="#_extension_datei_erstellen">Extension-Datei erstellen</a></li>
+<li><a href="#_unterlagen_einreichen">Unterlagen einreichen</a></li>
+<li><a href="#_zertifikat_erhalten">Zertifikat erhalten</a></li>
+</ul>
+</li>
+<li>
+<a href="#letsencrypt">3.2. Let’s Encrypt</a><ul class="sectlevel2">
+<li><a href="#_installation_des_certbot_skripts">Installation des Certbot-Skripts</a></li>
+<li><a href="#_vollautomatische_konfiguration">Vollautomatische Konfiguration</a></li>
+<li><a href="#_teilautomatisierte_konfiguration">Teilautomatisierte Konfiguration</a></li>
+<li><a href="#_weitere_m%C3%B6glichkeiten">Weitere Möglichkeiten</a></li>
+</ul>
+</li>
+<li>
+<a href="#becomeca">3.3. Interne CA verwenden</a><ul class="sectlevel2">
+<li><a href="#_schl%C3%BCssel_und_csr_erzeugen">Schlüssel und CSR erzeugen</a></li>
+<li><a href="#signyourself">CSR signieren</a></li>
+<li><a href="#_zertifikat_importieren">Zertifikat importieren</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#configsample">4. HTTPS-Verbindung für eine Instanz konfigurieren</a><ul class="sectlevel1"><li><a href="#httpsredirect">4.1. HTTPS-Weiterleitung hinzufügen</a></li></ul>
+</li>
+<li>
+<a href="#_zus%C3%A4tzliche_optionen">5. Zusätzliche Optionen</a><ul class="sectlevel1"><li>
+<a href="#_hsts_einrichten">5.1. HSTS einrichten</a><ul class="sectlevel2">
+<li><a href="#hsts_specifics">Besonderheiten</a></li>
+<li><a href="#_konfiguration_des_apache_webservers">Konfiguration des Apache-Webservers</a></li>
+</ul>
+</li></ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

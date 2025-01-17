@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Hier erfahren Sie, wie Sie Check-Plugins für SNMP mithilfe der Check-API entwickeln und in Checkmk nutzen können.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="SNMP-basierte Check-Plugins schreiben">
+<meta name="og:description" content="Hier erfahren Sie, wie Sie Check-Plugins für SNMP mithilfe der Check-API entwickeln und in Checkmk nutzen können.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>SNMP-basierte Check-Plugins schreiben</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/devel_check_plugins_snmp.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/devel_check_plugins_snmp.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/devel_check_plugins_snmp.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>SNMP-basierte Check-Plugins schreiben</h1>
+<div class="details">
+<span id="revdate">Last modified on 02-Sep-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/onprem/de/devel_check_plugins_snmp.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a>
+<a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a>
+<a href="snmp.html">Überwachen via SNMP</a>
+<a href="wato_services.html">Services verstehen und konfigurieren</a>
+<a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Check-Plugins, die mit SNMP arbeiten, werden auf ähnliche Weise entwickelt wie ihre <a href="devel_check_plugins.html">agentenbasierten Verwandten.</a>
+Der Unterschied liegt sowohl im Ablauf der <a href="glossar.html#service_discovery">Service-Erkennung</a> (<em>Discovery</em>) als auch des Checks selbst.
+Bei den agentenbasierten Check-Plugins wird mit dem <a href="glossar.html#agent_plugin">Agentenplugin</a> festgelegt, welche Daten an die Checkmk-Instanz <em>gesendet</em> werden, zudem findet auf dem Host oft bereits eine Vorfilterung (aber keine Auswertung) statt.
+Im Gegensatz dazu müssen Sie bei SNMP selbst genau festlegen, welche Datenbereiche Sie benötigen und diese explizit <em>anfordern.</em>
+Diese Bereiche (Äste eines Baumes) oder einzelne Datenfelder (Blätter) werden bei SNMP durch OIDs (<em>object identifier</em>) identifiziert.</p></div>
+<div class="paragraph"><p>Eine Komplettübertragung aller Daten wäre zwar theoretisch möglich (durch den sogenannten <em>SNMP-Walk</em>),
+dauert aber selbst bei schnellen Geräten eher im Bereich von Minuten und bei komplexen Switches gern auch über eine Stunde.
+Daher scheidet dies bereits bei der Discovery und erst recht beim Check selbst aus.
+Checkmk geht hier zielgerichteter vor.
+Für das Debugging vorhandener und die Entwicklung eigener Checks stehen in Checkmk dennoch SNMP-Walks zur Verfügung.</p></div>
+<div class="paragraph"><p>Falls Sie noch keine Erfahrung mit SNMP haben, empfehlen wir Ihnen als vorbereitende Lektüre den Artikel über das <a href="snmp.html">Überwachen via SNMP.</a></p></div>
+<div class="sect2">
+<h3 id="heading_snmp_special">
+<span class="hidden-anchor sr-only" id="snmp_special"></span>1.1. Was bei SNMP anders läuft</h3>
+<div class="paragraph"><p>Im Vergleich zu einem Check-Plugin für den Checkmk-Agenten gibt es bei SNMP einige Besonderheiten zu beachten.
+Bei einem Check-Plugin für SNMP teilt sich die Service-Erkennung in zwei Phasen auf.</p></div>
+<div class="paragraph"><p>Zunächst erfolgt mit der <strong>SNMP-Detection</strong> die Erkennung des Gerätes.
+Diese dient dazu, zu ermitteln, ob das Check-Plugin für das jeweilige Gerät denn überhaupt interessant ist und wird bei jedem Gerät durchgeführt, welches per SNMP überwacht wird.
+Dazu werden einige wenige OIDs abgerufen — und zwar einzelne, ohne SNMP-Walk.
+Die wichtigste davon ist die <code>sysDescr</code> (OID: <code>1.3.6.1.2.1.1.1.0</code>).
+Unter dieser OID hält jedes SNMP-Gerät eine Beschreibung von sich selbst bereit, zum Beispiel <code>Flintstones, Inc. Fred Router rev23</code>.</p></div>
+<div class="paragraph"><p>Im zweiten Schritt werden für jeden dieser Kandidaten die jeweils nötigen Monitoring-Daten mit SNMP-Walks geholt.
+Diese werden dann zu einer Tabelle zusammengefasst und der <strong>Discovery-Funktion</strong> des Check-Plugins in dem Argument <code>section</code> bereitgestellt, welche dann daraus die zu überwachenden Items ermittelt.
+Für jedes dieser Items wird dann ein <a href="glossar.html#service">Service</a> erzeugt.</p></div>
+<div class="paragraph"><p>Beim <strong>Check</strong> ist dann schon bekannt, ob das Plugin für das Gerät ausgeführt werden soll, und eine erneute SNMP-Detection entfällt.
+Hier werden per SNMP-Walks die für das Plugin benötigten aktuellen Monitoring-Daten geholt.</p></div>
+<div class="paragraph"><p>Was müssen Sie also bei einem Check-Plugin für SNMP anders machen als bei einem agentenbasierten?</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Sie benötigen <em>kein</em> <a href="glossar.html#agent_plugin">Agentenplugin.</a></p></li>
+<li><p>Sie legen die für die SNMP-Detection nötigen OIDs fest und die Texte, die diese enthalten sollen.</p></li>
+<li><p>Sie entscheiden, welche Äste und Blätter des SNMP-Baums für das Monitoring geholt werden müssen.</p></li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="heading_mibs">
+<span class="hidden-anchor sr-only" id="mibs"></span>1.2. Keine Angst vor MIBs!</h3>
+<div class="paragraph"><p>In diesem kurzen Einschub wollen wir auf die berüchtigten SNMP-MIBs eingehen, über die es viele Vorurteile gibt.
+Die gute Nachricht:
+Checkmk benötigt keine MIBs!
+Sie können aber eine wichtige Hilfe bei der <em>Entwicklung</em> eines Check-Plugins oder der <em>Fehlersuche</em> in vorhandenen Check-Plugins sein.</p></div>
+<div class="paragraph"><p>Was sind MIBs?
+MIB bedeutet wörtlich <em>Management Information Base,</em> was kaum mehr Information als die Abkürzung beinhaltet.
+Konkret ist eine MIB eine auch menschenlesbare Textdatei, welche Äste und Blätter im Baum der SNMP-Daten beschreibt.</p></div>
+<div class="paragraph"><p>OIDs können Äste oder Blätter identifizieren.
+In der Beschreibung der Äste finden Sie Informationen zu den System- und Subsysteminformationen, welche der Ast bereithält.
+Referenziert eine OID ein Blatt, enthalten die Informationen der MIB Hinweise zum Datentyp (Zeichenkette, Festkommazahl, Hex-String, …​), dem Wertebereich und der Repräsentation.
+So können Temperaturen beispielsweise mal als Festkommazahl mit Vorzeichen auf der Celsius-Skala in 0,1° Auflösung gespeichert werden oder mal ohne Vorzeichen in Schritten von 1,0° auf der Kelvin-Skala.</p></div>
+<div class="paragraph"><p>Checkmk liefert eine Reihe von frei verfügbaren MIB-Dateien mit aus.
+Diese beschreiben sehr allgemeine Bereiche im globalen OID-Baum, enthalten aber keine herstellerspezifischen Bereiche.
+Daher helfen sie für selbst entwickelte Check-Plugins nicht viel weiter.</p></div>
+<div class="paragraph"><p>Versuchen Sie also, die für Ihr spezielles Gerät relevanten MIB-Dateien irgendwo auf der Website des Herstellers oder sogar auf dem Management-Interface des Geräts zu finden.
+Installieren Sie diese Dateien in der Checkmk-Instanz in das Verzeichnis <code>~/local/share/check_mk/mibs/</code>.
+Dann können Sie in SNMP-Walks OID-Nummern in Namen übersetzen lassen und so schneller die für das Monitoring interessanten Daten finden.
+Wie bereits erwähnt, enthalten gut gepflegte MIBs außerdem interessante Informationen in den Kommentaren.
+Sie können eine MIB-Datei einfach mit einem Texteditor oder dem Pager <code>less</code> ansehen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_locating_oids">
+<span class="hidden-anchor sr-only" id="locating_oids"></span>2. Die richtigen OIDs finden</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die entscheidende Voraussetzung, um ein SNMP-basiertes Check-Plugin zu entwickeln, ist, dass Sie wissen, welche OIDs die relevanten Informationen enthalten.
+Für das vorgestellte Beispielszenario gehen wir davon aus, dass Sie einen Schwung Router vom Typ <em>Flintstones, Inc. Fred Router rev23</em> frisch in Betrieb genommen haben.
+Diesem fiktiven Gerät werden Sie auch häufig in Herstellerdokumentation und MIB-Kommentaren begegnen.
+Dabei haben Sie aber bei einigen Geräten vergessen, Kontakt- und Standortinformationen einzutragen.
+Ein selbst geschriebenes Check-Plugin für Checkmk soll nun helfen, diese Geräte zu identifizieren.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Das von uns vorbereitete Beispiel-Plugin ist so geschrieben, dass Sie es mit <em>beinahe jedem</em> SNMP-fähigen Gerät durchspielen können.
+Lediglich die zu vergleichende Zeichenkette müssen Sie anpassen.
+Ist gerade kein Gerät zur Hand, finden Sie im Kapitel zur <a href="#simulation">Fehlerbehebung</a> verschiedene Simulationsmöglichkeiten.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Der erste Schritt dahin ist, einen kompletten SNMP-Walk auszuführen.
+Dabei werden <em>alle</em> per SNMP verfügbaren Daten abgerufen.
+Checkmk kann das sehr einfach für Sie erledigen.
+Nehmen Sie dazu zunächst das Gerät, für das Sie ein Check-Plugin entwickeln wollen, <a href="snmp.html#add_device">in das Monitoring auf.</a>
+Stellen Sie sicher, dass es <a href="snmp.html#services">in den Grundfunktionen</a> überwacht werden kann.
+Zumindest müssen die Services <span class="guihint">SNMP Info</span> und <span class="guihint">Uptime</span> gefunden werden und wahrscheinlich auch noch mindestens ein <span class="guihint">Interface.</span>
+So stellen Sie sicher, dass der SNMP-Zugriff sauber funktioniert.</p></div>
+<div class="paragraph"><p>Wechseln Sie dann auf die Kommandozeile der Checkmk-Instanz.
+Hier können Sie mit folgendem Befehl einen kompletten Walk ziehen — im folgenden Beispiel für das Gerät mit dem Host-Namen <code>mydevice01</code>.
+Dabei empfehlen wir, zusätzlich die Option <code>-v</code> (für <em>verbose</em>) zu verwenden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-v<span class="tok-w"> </span>--snmpwalk<span class="tok-w"> </span>mydevice01
+<span class="tok-go">mydevice01:</span>
+<span class="tok-go">Walk on ".1.3.6.1.2.1"...3898 variables.</span>
+<span class="tok-go">Walk on ".1.3.6.1.4.1"...6025 variables.</span>
+<span class="tok-go">Wrote fetched data to /omd/sites/mysite/var/check_mk/snmpwalks/mydevice01.</span></code></pre></div></div>
+<div class="paragraph"><p>Wie bereits erwähnt, kann so ein kompletter SNMP-Walk Minuten oder sogar Stunden dauern (auch wenn letzteres eher selten ist).
+Werden Sie also nicht nervös, wenn es hier etwas dauert.
+Der Walk wird in der Datei <code>~/var/check_mk/snmpwalks/mydevice01</code> gespeichert.
+Es handelt sich dabei um eine gut lesbare Textdatei, die etwa so beginnt:</p></div>
+<div class="listingblock">
+<div class="title">~/var/check_mk/snmpwalks/mydevice01</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>.1.3.6.1.2.1.1.1.0 Flintstones, Inc. Fred Router rev23
+.1.3.6.1.2.1.1.2.0 .1.3.6.1.4.1.424242.2.3
+.1.3.6.1.2.1.1.3.0 546522419
+.1.3.6.1.2.1.1.4.0 barney@example.com
+.1.3.6.1.2.1.1.5.0 big-router-01
+.1.3.6.1.2.1.1.6.0 Server room 23, Stonestreet 52, Munich
+.1.3.6.1.2.1.1.7.0 72
+.1.3.6.1.2.1.1.8.0 0</code></pre></div>
+</div>
+<div class="paragraph"><p>In jeder Zeile steht eine OID und danach deren Wert.
+Gleich in der ersten Zeile finden Sie die Wichtigste, nämlich die <code>sysDescr</code>.
+Diese sollte ein Hardware-Modell eindeutig identifizieren.</p></div>
+<div class="paragraph"><p>Interessant ist auch die zweite Zeile:
+Unterhalb von <code>1.3.6.1.4.1</code> befinden sich Äste, die Hardware-Hersteller selbst belegen können, hier hat <em>Flintstones, Inc.</em> die fiktive Hersteller-ID <code>424242</code>.
+Darunter hat das Unternehmen die <code>2</code> für Router vergeben und die <code>3</code> für eben jenes Modell.
+Innerhalb dieses Astes finden Sie dann gerätespezifische OIDs.</p></div>
+<div class="paragraph"><p>Nun sind die OIDs nicht sehr aussagekräftig.
+Wenn die richtigen MIBs installiert sind, können Sie diese in einem zweiten Schritt in Namen übersetzen lassen.
+Am besten leiten Sie die Ausgabe des folgenden Befehls, die sonst im Terminal angezeigt würde, in eine Datei um:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>--snmptranslate<span class="tok-w"> </span>mydevice01<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>/tmp/translated</code></pre></div></div>
+<div class="paragraph"><p>Die Datei <code>translated</code> liest sich wie der ursprüngliche Walk, zeigt aber in jeder Zeile nach dem <code>--&gt;</code> den Namen der OID:</p></div>
+<div class="listingblock">
+<div class="title">/tmp/translated</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>.1.3.6.1.2.1.1.1.0 Flintstones, Inc. Fred Router rev23 --&gt; SNMPv2-MIB::sysDescr.0
+.1.3.6.1.2.1.1.2.0 .1.3.6.1.4.1.424242.2.3 --&gt; SNMPv2-MIB::sysObjectID.0
+.1.3.6.1.2.1.1.3.0 546522419 --&gt; DISMAN-EVENT-MIB::sysUpTimeInstance
+<span class="hll">.1.3.6.1.2.1.1.4.0 barney@example.com --&gt; SNMPv2-MIB::sysContact.0
+</span>.1.3.6.1.2.1.1.5.0 big-router-01 --&gt; SNMPv2-MIB::sysName.0
+.1.3.6.1.2.1.1.6.0 Server room 23, Stonestreet 52, Munich --&gt; SNMPv2-MIB::sysLocation.0
+.1.3.6.1.2.1.1.7.0 42 --&gt; SNMPv2-MIB::sysServices.0
+.1.3.6.1.2.1.1.8.0 27 --&gt; SNMPv2-MIB::sysORLastChange.0</code></pre></div>
+</div>
+<div class="paragraph"><p>In der obigen Ausgabe hat zum Beispiel die OID <code>1.3.6.1.2.1.1.4.0</code> den Wert <code>barney@example.com</code> und den Namen <code>SNMPv2-MIB::sysContact.0</code>.
+Die zusätzliche Angabe der Namen für die OIDs gibt wichtige Hinweise, um die interessanten OIDs zu identifizieren.
+Für das vorgestellte Beispiel genügen die OIDs <code>1.3.6.1.2.1.1.4.0</code> bis <code>1.3.6.1.2.1.1.6.0</code>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_simple_snmp_plugin">
+<span class="hidden-anchor sr-only" id="simple_snmp_plugin"></span>3. Ein einfaches Check-Plugin schreiben</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Nun haben Sie die Vorarbeit erledigt:
+Sie haben jetzt eine Liste der OIDs, die Sie auslesen und auswerten wollen.
+Jetzt geht es darum, anhand dieser Notizen Checkmk beizubringen, welche Services erzeugt werden, und wann diese auf <span class="state1">WARN</span> oder <span class="state2">CRIT</span> gehen sollen.
+Die dafür angewandte Programmierung eines Check-Plugins in Python hat viele Parallelen zum <a href="devel_check_plugins.html#write_check_plugin">agentenbasierten Check-Plugin.</a>
+Da einige Feinheiten zu beachten sind, zeigen wir den vollständigen Aufbau mit allen verwendeten Funktionen.</p></div>
+<div class="sect2">
+<h3 id="heading_scaffold">
+<span class="hidden-anchor sr-only" id="scaffold"></span>3.1. Die Datei vorbereiten</h3>
+<div class="paragraph"><p>Für Ihre eigenen Check-Plugins finden Sie das Basisverzeichnis vorbereitet in der <code>local</code>-Hierarchie des <a href="cmk_commandline.html#sitedir">Instanzverzeichnisses.</a>
+Dieses lautet <code>~/local/lib/python3/cmk_addons/plugins/</code>.
+Das Verzeichnis gehört dem Instanzbenutzer und ist daher für Sie schreibbar.</p></div>
+<div class="paragraph"><p>In diesem Verzeichnis werden die Plugins in <em>Plugin-Familien</em> organisiert, deren Verzeichnisnamen Sie frei wählen können.
+Zum Beispiel werden alle Plugins, die Cisco-Geräte betreffen, im Ordner <code>cisco</code> abgelegt — oder im Ordner <code>flintstone</code> alle Plugins, die Router des Herstellers <code>Flintstones, Inc.</code> betreffen.</p></div>
+<div class="paragraph"><p>In diesem Unterverzeichnis <code>&lt;plug-in_family&gt;</code> werden dann nach Bedarf für die verschiedenen APIs weitere Unterverzeichnisse mit vorgegebenem Namen angelegt, z.B. <code>agent_based</code> für die Check-API agentenbasierter, einschließlich SNMP-basierter Check-Plugins.</p></div>
+<div class="paragraph"><p>Erstellen Sie die beiden Unterverzeichnisse für das neue Check-Plugin und wechseln Sie am besten danach zum Arbeiten dort hinein:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>mkdir<span class="tok-w"> </span>-p<span class="tok-w"> </span>local/lib/python3/cmk_addons/plugins/flintstone/agent_based
+<span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">cd</span><span class="tok-w"> </span>local/lib/python3/cmk_addons/plugins/flintstone/agent_based</code></pre></div></div>
+<div class="paragraph"><p>Legen Sie die Datei <code>flintstone_setup_check.py</code> für das Check-Plugin hier an.
+Konvention ist, dass der Dateiname den Namen des Check-Plugins wiedergibt, wie er bei der Erstellung des Check-Plugins als Instanz der Klasse <code>CheckPlugin</code> festgelegt wird.
+<em>Pflicht</em> ist, dass die Datei mit <code>.py</code> endet, denn ab Version <span class="new">2.0.0</span> von Checkmk handelt es sich bei den Check-Plugins immer um echte Python-Module.</p></div>
+<div class="paragraph"><p>Ein lauffähiges Grundgerüst (<a href="https://github.com/Checkmk/checkmk-docs/blob/master/examples/devel_check_plugins_snmp/flintstone_setup_check_bare_minimum.py" target="_blank">Download bei GitHub</a>), das Sie im Folgenden Schritt für Schritt weiter ausbauen werden, sieht so aus:</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-ch">#!/usr/bin/env python3</span>
+
+<span class="tok-kn">from</span> <span class="tok-nn">cmk.agent_based.v2</span> <span class="tok-kn">import</span> <span class="tok-p">(</span>
+    <span class="tok-n">CheckPlugin</span><span class="tok-p">,</span>
+    <span class="tok-n">CheckResult</span><span class="tok-p">,</span>
+    <span class="tok-n">startswith</span><span class="tok-p">,</span>
+    <span class="tok-n">DiscoveryResult</span><span class="tok-p">,</span>
+    <span class="tok-n">Result</span><span class="tok-p">,</span>
+    <span class="tok-n">Service</span><span class="tok-p">,</span>
+    <span class="tok-n">SimpleSNMPSection</span><span class="tok-p">,</span>
+    <span class="tok-n">SNMPTree</span><span class="tok-p">,</span>
+    <span class="tok-n">State</span><span class="tok-p">,</span>
+    <span class="tok-n">StringTable</span><span class="tok-p">,</span>
+<span class="tok-p">)</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">parse_flintstone</span><span class="tok-p">(</span><span class="tok-n">string_table</span><span class="tok-p">):</span>
+    <span class="tok-k">return</span> <span class="tok-p">{}</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">discover_flintstone</span><span class="tok-p">(</span><span class="tok-n">section</span><span class="tok-p">):</span>
+    <span class="tok-k">yield</span> <span class="tok-n">Service</span><span class="tok-p">()</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">check_flintstone</span><span class="tok-p">(</span><span class="tok-n">section</span><span class="tok-p">):</span>
+    <span class="tok-k">yield</span> <span class="tok-n">Result</span><span class="tok-p">(</span><span class="tok-n">state</span><span class="tok-o">=</span><span class="tok-n">State</span><span class="tok-o">.</span><span class="tok-n">OK</span><span class="tok-p">,</span> <span class="tok-n">summary</span><span class="tok-o">=</span><span class="tok-s2">"Everything is fine"</span><span class="tok-p">)</span>
+
+<span class="tok-n">snmp_section_flintstone_setup</span> <span class="tok-o">=</span> <span class="tok-n">SimpleSNMPSection</span><span class="tok-p">(</span>
+    <span class="tok-n">name</span> <span class="tok-o">=</span> <span class="tok-s2">"flintstone_base_config"</span><span class="tok-p">,</span>
+    <span class="tok-n">parse_function</span> <span class="tok-o">=</span> <span class="tok-n">parse_flintstone</span><span class="tok-p">,</span>
+    <span class="tok-n">detect</span> <span class="tok-o">=</span> <span class="tok-n">startswith</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.2.1.1.1.0"</span><span class="tok-p">,</span> <span class="tok-s2">"Flintstone"</span><span class="tok-p">),</span>
+    <span class="tok-n">fetch</span> <span class="tok-o">=</span> <span class="tok-n">SNMPTree</span><span class="tok-p">(</span><span class="tok-n">base</span><span class="tok-o">=</span><span class="tok-s1">'.1.3.6.1.2.1.1'</span><span class="tok-p">,</span> <span class="tok-n">oids</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-s1">'4.0'</span><span class="tok-p">]),</span>
+<span class="tok-p">)</span>
+
+<span class="tok-n">check_plugin__flintstone_setup</span> <span class="tok-o">=</span> <span class="tok-n">CheckPlugin</span><span class="tok-p">(</span>
+    <span class="tok-n">name</span> <span class="tok-o">=</span> <span class="tok-s2">"flintstone_setup_check"</span><span class="tok-p">,</span>
+    <span class="tok-n">sections</span> <span class="tok-o">=</span> <span class="tok-p">[</span> <span class="tok-s2">"flintstone_base_config"</span> <span class="tok-p">],</span>
+    <span class="tok-n">service_name</span> <span class="tok-o">=</span> <span class="tok-s2">"Flintstone setup check"</span><span class="tok-p">,</span>
+    <span class="tok-n">discovery_function</span> <span class="tok-o">=</span> <span class="tok-n">discover_flintstone</span><span class="tok-p">,</span>
+    <span class="tok-n">check_function</span> <span class="tok-o">=</span> <span class="tok-n">check_flintstone</span><span class="tok-p">,</span>
+<span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Als erstes müssen Sie die für die Check-Plugins nötigen Funktionen und Klassen aus Python-Modulen importieren.
+Vom gelegentlich gesehenen <code>import *</code>, raten wir ab, da es zum einen unnötig viel Speicher nutzt und zum anderen verschleiert, welche Namespaces tatsächlich verfügbar gemacht werden.
+Für unser Beispiel wird nur importiert, was im weiteren Verlauf des Artikels genutzt wird oder nützlich sein kann.</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-kn">from</span> <span class="tok-nn">cmk.agent_based.v2</span> <span class="tok-kn">import</span> <span class="tok-p">(</span>
+    <span class="tok-n">CheckPlugin</span><span class="tok-p">,</span>
+    <span class="tok-n">CheckResult</span><span class="tok-p">,</span>
+    <span class="tok-n">startswith</span><span class="tok-p">,</span>
+    <span class="tok-n">DiscoveryResult</span><span class="tok-p">,</span>
+    <span class="tok-n">Result</span><span class="tok-p">,</span>
+    <span class="tok-n">Service</span><span class="tok-p">,</span>
+    <span class="tok-n">SimpleSNMPSection</span><span class="tok-p">,</span>
+    <span class="tok-n">SNMPTree</span><span class="tok-p">,</span>
+    <span class="tok-n">State</span><span class="tok-p">,</span>
+    <span class="tok-n">StringTable</span><span class="tok-p">,</span>
+<span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Im Vergleich mit dem <a href="devel_check_plugins.html#scaffold">agentenbasierten Check-Plugin</a> fallen die SNMP-spezifischen neuen Funktionen und Klassen auf: <code>SNMPTree</code>, <code>SimpleSNMPSection</code> und <code>startswith</code>.
+Selbsterklärend ist <code>SNMPTree</code>, es handelt sich um eine Klasse zur Darstellung von SNMP-Bäumen.
+Die Klasse <code>SimpleSNMPSection</code> dient zum Erstellen einer SNMP-Sektion.
+Die Funktion <code>startswith()</code> vergleicht den Inhalt eines SNMP-Blattes mit einer Zeichenkette.
+Mehr dazu später.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_snmp_section">
+<span class="hidden-anchor sr-only" id="snmp_section"></span>3.2. Die SNMP-Sektion erstellen</h3>
+<div class="paragraph"><p>Nachdem Sie die <a href="#locating_oids">richtigen OIDs</a> herausgefunden haben, geht es an die eigentliche Entwicklung des Check-Plugins.
+Beim Erstellen der SNMP-Sektion legen Sie zwei Dinge fest:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Sie identifizieren die Geräte, für welche das Check-Plugin ausgeführt werden soll.<br>
+Im folgenden Beispiel geschieht dies mit der Funktion <code>startswith()</code>, welche eine Zeichenkette mit dem Anfang des Inhalts eines OID-Blattes vergleicht.
+Weitere Zuordnungsmöglichkeiten zeigen wir weiter unten.</p></li>
+<li><p>Sie deklarieren, welche OID-Äste oder Blätter für das Monitoring geholt werden.<br>
+Dies geschieht mit dem Konstruktor der Klasse <code>SNMPTree</code>.</p></li>
+</ol></div>
+<div class="paragraph"><p>Erweitern Sie die vorbereitete Beispieldatei so, dass das Plugin nur für eine kleine Zahl von Geräten ausgeführt wird: den Modellen des <code>Flintstones, Inc. Fred Router</code>.
+Für diese Geräte werden dann die OIDs für <em>Kontakt</em>, <em>Gerätename</em> und <em>Standort</em> abgerufen.
+Diese drei OIDs stellt jedes Gerät bereit.
+Wenn Sie das Beispiel mit echten SNMP-fähigen Geräten testen wollen, genügt es daher, den zu erkennenden Modellnamen anzupassen.</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">snmp_section_flintstone_setup_check</span> <span class="tok-o">=</span> <span class="tok-n">SimpleSNMPSection</span><span class="tok-p">(</span>
+    <span class="tok-n">name</span> <span class="tok-o">=</span> <span class="tok-s2">"flintstone_base_config"</span><span class="tok-p">,</span>
+    <span class="tok-n">parse_function</span> <span class="tok-o">=</span> <span class="tok-n">parse_flintstone</span><span class="tok-p">,</span>
+    <span class="tok-n">detect</span> <span class="tok-o">=</span> <span class="tok-n">startswith</span><span class="tok-p">(</span>
+        <span class="tok-s2">".1.3.6.1.2.1.1.1.0"</span><span class="tok-p">,</span>
+        <span class="tok-s2">"Flintstones, Inc. Fred Router"</span><span class="tok-p">,</span>
+    <span class="tok-p">),</span>
+    <span class="tok-n">fetch</span> <span class="tok-o">=</span> <span class="tok-n">SNMPTree</span><span class="tok-p">(</span>
+        <span class="tok-n">base</span> <span class="tok-o">=</span> <span class="tok-s1">'.1.3.6.1.2.1.1'</span><span class="tok-p">,</span>
+        <span class="tok-n">oids</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-s1">'4.0'</span><span class="tok-p">,</span> <span class="tok-s1">'5.0'</span><span class="tok-p">,</span> <span class="tok-s1">'6.0'</span><span class="tok-p">],</span>
+    <span class="tok-p">),</span>
+<span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Das Beispiel enthält noch den Parameter <code>name</code> mit dem die erzeugte SNMP-Sektion identifiziert wird und eine Parse-Funktion, auf die wir <a href="#parse_function">später</a> noch zu sprechen kommen.</p></div>
+<div class="sect3">
+<h4 id="heading_detect">
+<span class="hidden-anchor sr-only" id="detect"></span>Die SNMP-Detection</h4>
+<div class="paragraph"><p>Mit dem Parameter <code>detect</code> geben Sie an, unter welchen Bedingungen die Discovery-Funktion überhaupt ausgeführt werden soll.
+In unserem Beispiel ist das der Fall, wenn der Wert der OID <code>1.3.6.1.2.1.1.1.0</code> (also die <code>sysDescr</code>) mit dem Text <code>Flintstones, Inc. Fred Router</code> beginnt (wobei Groß-/Kleinschreibung grundsätzlich nicht unterschieden werden).
+Neben <code>startswith</code> gibt es noch eine ganze Reihe weiterer möglicher Funktionen zur Identifikation.
+Dabei existiert von jeder auch eine negierte Form, welche mit <code>not_</code> beginnt.
+Beachten Sie, dass jede Funktion separat im <code>import</code>-Statement verfügbar gemacht werden muss.</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 50%;">
+<col style="width: 25%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Attribut</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+<th class="tableblock halign-left valign-top">Negation</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>equals(oid, "needle")</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Wert der OID ist gleich dem Text <code>needle</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>not_equals(oid, "needle")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>contains(oid, "needle")</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Wert der OID enthält an irgendeiner Stelle den Text <code>needle</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>not_contains(oid, "needle")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startswith(oid, "needle")</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Wert der OID beginnt mit dem Text <code>needle</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>not_startswith(oid, "needle")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endswith(oid, "needle")</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Wert der OID endet auf den Text <code>needle</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>not_endswith(oid, "needle")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>matches(oid, regex)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Wert der OID entspricht dem <a href="regexes.html">regulären Ausdruck</a> <code>regex</code>, und zwar hinten und vorne geankert, also mit einer exakten Übereinstimmung. Wenn Sie nur einen Teilstring benötigen, ergänzen Sie einfach vorne bzw. hinten noch ein <code>.*</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>not_matches(oid, regex)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>exists(oid)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die OID ist auf dem Gerät verfügbar. Ihr Wert darf leer sein.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>not_exists(oid)</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Daneben gibt es noch die Möglichkeit, mehrere Attribute mit <code>all_of</code> oder <code>any_of</code> zu verknüpfen.</p></div>
+<div class="paragraph"><p><code>all_of</code> erfordert mehrere erfolgreiche Prüfungen für eine positive Erkennung.
+Folgendes Beispiel ordnet Ihr Check-Plugin einem Gerät zu, wenn in der <code>sysDescr</code> der Text mit <code>foo</code> (oder <code>FOO</code> oder <code>Foo</code>) beginnt <strong>und</strong>
+die OID <code>1.3.6.1.2.1.1.2.0</code> den Text <code>.4.1.11863.</code> enthält:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">detect</span> <span class="tok-o">=</span> <span class="tok-n">all_of</span><span class="tok-p">(</span>
+    <span class="tok-n">startswith</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.2.1.1.1.0"</span><span class="tok-p">,</span> <span class="tok-s2">"foo"</span><span class="tok-p">),</span>
+    <span class="tok-n">contains</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.2.1.1.2.0"</span><span class="tok-p">,</span> <span class="tok-s2">".4.1.11863."</span><span class="tok-p">)</span>
+<span class="tok-p">)</span></code></pre></div></div>
+<div class="paragraph"><p><code>any_of</code> hingegen ist damit zufrieden, wenn auch nur eines der Kriterien erfüllt ist.
+Hier ist ein Beispiel, in dem verschiedene Werte für die <code>sysDescr</code> erlaubt sind:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">detect</span> <span class="tok-o">=</span> <span class="tok-n">any_of</span><span class="tok-p">(</span>
+    <span class="tok-n">startswith</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.2.1.1.1.0"</span><span class="tok-p">,</span> <span class="tok-s2">"foo version 3 system"</span><span class="tok-p">),</span>
+    <span class="tok-n">startswith</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.2.1.1.1.0"</span><span class="tok-p">,</span> <span class="tok-s2">"foo version 4 system"</span><span class="tok-p">),</span>
+    <span class="tok-n">startswith</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.2.1.1.1.0"</span><span class="tok-p">,</span> <span class="tok-s2">"foo version 4.1 system"</span><span class="tok-p">),</span>
+<span class="tok-p">)</span></code></pre></div></div>
+<div class="paragraph"><p>Übrigens: Kennen Sie sich gut mit <a href="regexes.html">regulären Ausdrücken</a> aus?
+Dann würden Sie wahrscheinlich das Beispiel vereinfachen und doch wieder mit einer Zeile auskommen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">detect</span> <span class="tok-o">=</span> <span class="tok-n">matches</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.2.1.1.1.0"</span><span class="tok-p">,</span> <span class="tok-s2">"FOO Version (3|4|4.1) .*"</span><span class="tok-p">)</span></code></pre></div></div>
+<div class="paragraph"><p>Und noch ein wichtiger Hinweis:
+Die OIDs, die Sie der SNMP-Detection eines Check-Plugins übergeben, werden von <strong>jedem</strong> Gerät geholt, welches per SNMP überwacht wird.
+Nur so kann Checkmk feststellen, auf welche Geräte das Check-Plugin anzuwenden ist.</p></div>
+<div class="paragraph"><p>Seien Sie daher sehr sparsam bei der Verwendung von herstellerspezifischen OIDs.
+Versuchen Sie, Ihre SNMP-Detection so zu gestalten, dass bevorzugt die <code>sysDescr</code> (<code>1.3.6.1.2.1.1.1.0</code>) und die <code>sysObjectID</code> (<code>1.3.6.1.2.1.1.2.0</code>) geprüft werden.</p></div>
+<div class="paragraph"><p>Falls Sie dennoch eine andere OID zur exakten Identifikation benötigen, verwenden Sie <code>all_of()</code> und gehen Sie wie folgt vor:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Prüfen Sie zunächst auf <code>sysDescr</code> oder <code>sysObjectID</code>.</p></li>
+<li><p>In weiteren Argumenten können Sie dann den Kreis der Geräte weiter einschränken, für die Ihr Plugin ausgeführt werden soll.</p></li>
+</ol></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">detect</span> <span class="tok-o">=</span> <span class="tok-n">all_of</span><span class="tok-p">(</span>
+    <span class="tok-n">startswith</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.2.1.1.1.0"</span><span class="tok-p">,</span> <span class="tok-s2">"Flintstone"</span><span class="tok-p">),</span>   <span class="tok-c1"># first check sysDescr</span>
+    <span class="tok-n">contains</span><span class="tok-p">(</span><span class="tok-s2">".1.3.6.1.4.1.424242.2.3.37.0"</span><span class="tok-p">,</span> <span class="tok-s2">"foo"</span><span class="tok-p">),</span>  <span class="tok-c1"># fetch vendor specific OID</span>
+<span class="tok-p">)</span></code></pre></div></div>
+<div class="paragraph"><p>Dies funktioniert dank <em>lazy evaluation</em>:
+Sobald eine der früheren Prüfungen fehlschlägt, wird keine weitere mehr durchgeführt.
+Im obigen Beispiel wird die OID <code>1.3.6.1.4.1.424242.2.3.37.0</code> nur bei solchen Geräten geholt, die auch <code>Flintstone</code> in ihrer <code>sysDescr</code> haben.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_parse_function">
+<span class="hidden-anchor sr-only" id="parse_function"></span>3.3. Die Parse-Funktion schreiben</h3>
+<div class="paragraph"><p>Wie beim <a href="devel_check_plugins.html#parse_function">agentenbasierten</a> hat auch beim SNMP-basierten Check-Plugin die Parse-Funktion die Aufgabe, die erhaltenen Agentendaten in eine gut und vor allem performant zu verarbeitende Form zu bringen.</p></div>
+<div class="paragraph"><p>Die Daten erhalten Sie hier ebenfalls als Liste.
+Allerdings gilt es einige Feinheiten zu beachten, denn es macht einen Unterschied, ob Sie Blätter abfragen oder Äste.
+Zur Erinnerung: In unserem <a href="#snmp_section">oben</a> vorgestellten Beispiel werden Blätter angefordert:</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span>    <span class="tok-n">fetch</span> <span class="tok-o">=</span> <span class="tok-n">SNMPTree</span><span class="tok-p">(</span>
+        <span class="tok-n">base</span> <span class="tok-o">=</span> <span class="tok-s1">'.1.3.6.1.2.1.1'</span><span class="tok-p">,</span>
+        <span class="tok-n">oids</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-s1">'4.0'</span><span class="tok-p">,</span> <span class="tok-s1">'5.0'</span><span class="tok-p">,</span> <span class="tok-s1">'6.0'</span><span class="tok-p">],</span>
+    <span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Wenn Sie die Parse-Funktion temporär mit der Funktion <code>print()</code> erweitern, können Sie sich beim <a href="#test">Testen des Check-Plugins</a> die Daten anzeigen lassen, die Checkmk aus dieser Abfrage zur Verfügung stellt:</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">parse_flintstone</span><span class="tok-p">(</span><span class="tok-n">string_table</span><span class="tok-p">):</span>
+    <span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-n">string_table</span><span class="tok-p">)</span>
+    <span class="tok-k">return</span> <span class="tok-p">{}</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Sie erhalten eine verschachtelte Liste, welche in der ersten Ebene nur ein Element, nämlich eine Liste der abgerufenen Werte, enthält:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">[</span>
+    <span class="tok-p">[</span><span class="tok-s1">'barney@example.com'</span><span class="tok-p">,</span> <span class="tok-s1">'big-router-01'</span><span class="tok-p">,</span> <span class="tok-s1">'Server room 23, Stonestreet 52, Munich'</span><span class="tok-p">]</span>
+<span class="tok-p">]</span></code></pre></div></div>
+<div class="paragraph"><p>Ein wenig anders sieht das Ergebnis aus, wenn Sie Äste abrufen, die mehrere Blätter enthalten.
+Angenommen, der Router kann mit einer variablen Zahl von Netzwerkkarten bestückt werden, deren Name, Verbindungsstatus und Geschwindigkeit unterhalb von <code>1.3.6.1.4.1.424242.2.3.23</code> ausgelesen werden können …</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span>    <span class="tok-n">fetch</span> <span class="tok-o">=</span> <span class="tok-n">SNMPTree</span><span class="tok-p">(</span>
+        <span class="tok-n">base</span> <span class="tok-o">=</span> <span class="tok-s1">'.1.3.6.1.4.1.424242.2.3.23'</span><span class="tok-p">,</span>
+        <span class="tok-n">oids</span> <span class="tok-o">=</span> <span class="tok-p">[</span>
+            <span class="tok-s1">'6'</span><span class="tok-p">,</span> <span class="tok-c1"># all names</span>
+            <span class="tok-s1">'7'</span><span class="tok-p">,</span> <span class="tok-c1"># all states</span>
+            <span class="tok-s1">'8'</span><span class="tok-p">,</span> <span class="tok-c1"># all speeds</span>
+        <span class="tok-p">],</span>
+    <span class="tok-p">)</span></code></pre></div></div>
+<div class="paragraph"><p>… dann sähe die zweidimensionale Liste möglicherweise so aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">[</span>
+    <span class="tok-c1"># Name, State, Speed</span>
+    <span class="tok-p">[</span><span class="tok-s1">'net0'</span><span class="tok-p">,</span> <span class="tok-s1">'1'</span><span class="tok-p">,</span> <span class="tok-s1">'1000'</span><span class="tok-p">],</span>
+    <span class="tok-p">[</span><span class="tok-s1">'net1'</span><span class="tok-p">,</span> <span class="tok-s1">'0'</span><span class="tok-p">,</span> <span class="tok-s1">'100'</span><span class="tok-p">],</span>
+    <span class="tok-p">[</span><span class="tok-s1">'net2'</span><span class="tok-p">,</span> <span class="tok-s1">'1'</span><span class="tok-p">,</span> <span class="tok-s1">'10000'</span><span class="tok-p">],</span>
+    <span class="tok-p">[</span><span class="tok-s1">'net3'</span><span class="tok-p">,</span> <span class="tok-s1">'1'</span><span class="tok-p">,</span> <span class="tok-s1">'1000'</span><span class="tok-p">],</span>
+<span class="tok-p">]</span></code></pre></div></div>
+<div class="paragraph"><p>Alle unter einer OID erhältlichen Blätter werden in eine Tabellenspalte geschrieben.
+Damit dürfte es offensichtlich sein, dass wegen der Darstellung der Daten nur zusammenpassende OIDs abgefragt werden dürfen.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Auch das zuletzt gezeigte Beispiel zum Abruf von OID-Ästen ist Bestandteil unseres auf GitHub bereitgestellten <a href="https://github.com/Checkmk/checkmk-docs/blob/master/examples/devel_check_plugins_snmp/flintstones_fred_router.txt" target="_blank">SNMP-Walks</a>, den Sie zur <a href="#simulation">Simulation</a> nutzen können.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Doch nun zurück zum Beispiel, in dem die OID-Blätter zu Kontakt, Gerätename und Standort abgefragt werden:
+Die folgende Parse-Funktion übernimmt einfach jedes Element der inneren Liste in ein Schlüssel-Wert-Paar des zurückgegebenen Dictionaries:</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">parse_flintstone</span><span class="tok-p">(</span><span class="tok-n">string_table</span><span class="tok-p">):</span>
+    <span class="tok-c1"># print(string_table)</span>
+    <span class="tok-n">result</span> <span class="tok-o">=</span> <span class="tok-p">{}</span>
+    <span class="tok-n">result</span><span class="tok-p">[</span><span class="tok-s2">"contact"</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-n">string_table</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">][</span><span class="tok-mi">0</span><span class="tok-p">]</span>
+    <span class="tok-n">result</span><span class="tok-p">[</span><span class="tok-s2">"name"</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-n">string_table</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">][</span><span class="tok-mi">1</span><span class="tok-p">]</span>
+    <span class="tok-n">result</span><span class="tok-p">[</span><span class="tok-s2">"location"</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-n">string_table</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">][</span><span class="tok-mi">2</span><span class="tok-p">]</span>
+    <span class="tok-c1"># print(result)</span>
+    <span class="tok-k">return</span> <span class="tok-n">result</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Das Resultat der Parse-Funktion sieht dann so aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">{</span>
+    <span class="tok-s1">'contact'</span><span class="tok-p">:</span> <span class="tok-s1">'barney@example.com'</span><span class="tok-p">,</span>
+    <span class="tok-s1">'name'</span><span class="tok-p">:</span> <span class="tok-s1">'big-router-01'</span><span class="tok-p">,</span>
+    <span class="tok-s1">'location'</span><span class="tok-p">:</span> <span class="tok-s1">'Server room 23, Stonestreet 52, Munich'</span>
+<span class="tok-p">}</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_check_plug-in">
+<span class="hidden-anchor sr-only" id="check_plug-in"></span>3.4. Das Check-Plugin erstellen</h3>
+<div class="paragraph"><p>Die Erstellung des Check-Plugins geschieht exakt wie bei den <a href="devel_check_plugins.html#check_plug-in">agentenbasierten Check-Plugins</a> beschrieben.</p></div>
+<div class="paragraph"><p>Da Sie in den meisten Fällen mehrere SNMP-Äste abfragen werden und daraus mehrere SNMP-Sektionen resultieren, ist der Parameter <code>sections</code> mit der Liste der auszuwertenden Sektionen in der Regel erforderlich:</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">check_plugin__flintstone_setup</span> <span class="tok-o">=</span> <span class="tok-n">CheckPlugin</span><span class="tok-p">(</span>
+    <span class="tok-n">name</span> <span class="tok-o">=</span> <span class="tok-s2">"flintstone_setup_check"</span><span class="tok-p">,</span>
+    <span class="tok-n">sections</span> <span class="tok-o">=</span> <span class="tok-p">[</span> <span class="tok-s2">"flintstone_base_config"</span> <span class="tok-p">],</span>
+    <span class="tok-n">service_name</span> <span class="tok-o">=</span> <span class="tok-s2">"Flintstone setup check"</span><span class="tok-p">,</span>
+    <span class="tok-n">discovery_function</span> <span class="tok-o">=</span> <span class="tok-n">discover_flintstone</span><span class="tok-p">,</span>
+    <span class="tok-n">check_function</span> <span class="tok-o">=</span> <span class="tok-n">check_flintstone</span><span class="tok-p">,</span>
+<span class="tok-p">)</span></code></pre></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_discovery_function">
+<span class="hidden-anchor sr-only" id="discovery_function"></span>3.5. Die Discovery-Funktion schreiben</h3>
+<div class="paragraph"><p>Auch die Discovery-Funktion entspricht dem Beispiel des <a href="devel_check_plugins.html#discovery_function">agentenbasierten Check-Plugins.</a>
+Bei Check-Plugins, die pro Host nur einen Service erzeugen, genügt ein einziges <code>yield()</code>:</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">discover_flintstone</span><span class="tok-p">(</span><span class="tok-n">section</span><span class="tok-p">):</span>
+    <span class="tok-k">yield</span> <span class="tok-n">Service</span><span class="tok-p">()</span></code></pre></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_check_function">
+<span class="hidden-anchor sr-only" id="check_function"></span>3.6. Die Check-Funktion schreiben</h3>
+<div class="paragraph"><p>Im Beispiel soll überprüft werden, ob die Informationen zu Kontakt, Gerätename und Standort vorhanden sind.
+Es reicht daher aus, in der Check-Funktion zu prüfen, welche Felder leer sind und entsprechend den Zustand auf <span class="state2">CRIT</span> zu setzen (wenn etwas fehlt) oder auf <span class="state0">OK</span> (wenn alles da ist):</p></div>
+<div class="listingblock">
+<div class="title">~/local/lib/python3/cmk_addons/plugins/flintstone/agent_based/flintstone_setup_check.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">check_flintstone</span><span class="tok-p">(</span><span class="tok-n">section</span><span class="tok-p">):</span>
+    <span class="tok-n">missing</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+    <span class="tok-k">for</span> <span class="tok-n">e</span> <span class="tok-ow">in</span> <span class="tok-p">[</span><span class="tok-s2">"contact"</span><span class="tok-p">,</span> <span class="tok-s2">"name"</span><span class="tok-p">,</span> <span class="tok-s2">"location"</span><span class="tok-p">]:</span>
+        <span class="tok-k">if</span> <span class="tok-n">section</span><span class="tok-p">[</span><span class="tok-n">e</span><span class="tok-p">]</span> <span class="tok-o">==</span> <span class="tok-s2">""</span><span class="tok-p">:</span>
+            <span class="tok-n">missing</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+            <span class="tok-k">yield</span> <span class="tok-n">Result</span><span class="tok-p">(</span><span class="tok-n">state</span><span class="tok-o">=</span><span class="tok-n">State</span><span class="tok-o">.</span><span class="tok-n">CRIT</span><span class="tok-p">,</span> <span class="tok-n">summary</span><span class="tok-o">=</span><span class="tok-sa">f</span><span class="tok-s2">"Missing information: </span><span class="tok-si">{</span><span class="tok-n">e</span><span class="tok-si">}</span><span class="tok-s2">!"</span><span class="tok-p">)</span>
+    <span class="tok-k">if</span> <span class="tok-n">missing</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-k">yield</span> <span class="tok-n">Result</span><span class="tok-p">(</span><span class="tok-n">state</span><span class="tok-o">=</span><span class="tok-n">State</span><span class="tok-o">.</span><span class="tok-n">CRIT</span><span class="tok-p">,</span> <span class="tok-n">summary</span><span class="tok-o">=</span><span class="tok-sa">f</span><span class="tok-s2">"Missing fields: </span><span class="tok-si">{</span><span class="tok-n">missing</span><span class="tok-si">}</span><span class="tok-s2">!"</span><span class="tok-p">)</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-k">yield</span> <span class="tok-n">Result</span><span class="tok-p">(</span><span class="tok-n">state</span><span class="tok-o">=</span><span class="tok-n">State</span><span class="tok-o">.</span><span class="tok-n">OK</span><span class="tok-p">,</span> <span class="tok-n">summary</span><span class="tok-o">=</span><span class="tok-s2">"All required information is available."</span><span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Mit der Erstellung der Check-Funktion ist das Check-Plugin fertig.</p></div>
+<div class="paragraph"><p>Das komplette Check-Plugin haben wir auf <a href="https://github.com/Checkmk/checkmk-docs/blob/master/examples/devel_check_plugins_snmp/flintstone_setup_check.py" target="_blank">GitHub</a> bereitgestellt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_test">
+<span class="hidden-anchor sr-only" id="test"></span>3.7. Das Check-Plugin testen und aktivieren</h3>
+<div class="paragraph"><p>Test und Aktivierung erfolgen wie beim <a href="devel_check_plugins.html#test">agentenbasierten Check-Plugin.</a></p></div>
+<div class="paragraph"><p>Als erstes ist die Service-Erkennung des Plugins an der Reihe:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-vI<span class="tok-w"> </span>--detect-plugins<span class="tok-o">=</span>flintstone_setup_check<span class="tok-w"> </span>mydevice01
+<span class="tok-go">Discovering services and host labels on: mydevice01</span>
+<span class="tok-go">mydevice01:</span>
+<span class="tok-go">+ FETCHING DATA</span>
+<span class="tok-go">No piggyback files for 'mydevice01'. Skip processing.</span>
+<span class="tok-go">No piggyback files for '127.0.0.1'. Skip processing.</span>
+<span class="tok-go">Get piggybacked data</span>
+<span class="tok-go">+ ANALYSE DISCOVERED HOST LABELS</span>
+<span class="tok-go">SUCCESS - Found no new host labels</span>
+<span class="tok-go">+ ANALYSE DISCOVERED SERVICES</span>
+<span class="hll"><span class="tok-go">+ EXECUTING DISCOVERY PLUGINS (1)</span>
+</span><span class="hll"><span class="tok-go">  1 flintstone_setup_check</span>
+</span><span class="hll"><span class="tok-go">SUCCESS - Found 1 services</span>
+</span></code></pre></div></div>
+<div class="paragraph"><p>Wie erwartet hat die Service-Erkennung funktioniert.
+Jetzt können Sie den im Check-Plugin enthaltenen Check ausprobieren:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-v<span class="tok-w"> </span>--detect-plugins<span class="tok-o">=</span>flintstone_setup_check<span class="tok-w"> </span>mydevice01
+<span class="tok-go">+ FETCHING DATA</span>
+<span class="tok-go">No piggyback files for 'mydevice01'. Skip processing.</span>
+<span class="tok-go">No piggyback files for '127.0.0.1'. Skip processing.</span>
+<span class="tok-go">Get piggybacked data</span>
+<span class="hll"><span class="tok-go">Flintstone setup check All required information is available.</span>
+</span><span class="tok-go">No piggyback files for 'mydevice01'. Skip processing.</span>
+<span class="tok-go">No piggyback files for '127.0.0.1'. Skip processing.</span>
+<span class="tok-go">[snmp] Success, [piggyback] Success ...</span></code></pre></div></div>
+<div class="paragraph"><p>Nach dem Neustart des Monitoring-Kerns …</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-R
+<span class="tok-go">Generating configuration for core (type nagios)...</span>
+<span class="tok-go">Precompiling host checks...OK</span>
+<span class="tok-go">Validating Nagios configuration...OK</span>
+<span class="tok-go">Restarting monitoring core...OK</span></code></pre></div></div>
+<div class="paragraph"><p>… ist dann der neue Service im Monitoring sichtbar:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/devel_snmp_service.png" alt="Der vom Check-Plugin erzeugte neue Service im Monitoring."></div>
+<div class="title">Da alle Felder der drei SNMP-Blätter befüllt sind, ist der Service <span class="state0">OK</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_errors">
+<span class="hidden-anchor sr-only" id="errors"></span>4. Fehler beheben</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Da die Fehlerbehebung bei <a href="devel_check_plugins.html#errors">agentenbasierten Check-Plugins</a> im Wesentlichen auch für SNMP-basierte Check-Plugin gilt, gehen wir hier nur auf SNMP-Spezifika ein.</p></div>
+<div class="sect2">
+<h3 id="heading_simulation">
+<span class="hidden-anchor sr-only" id="simulation"></span>4.1. Simulationsmöglichkeiten</h3>
+<div class="sect3">
+<h4 id="heading_savedwalk">
+<span class="hidden-anchor sr-only" id="savedwalk"></span>Gespeicherte SNMP-Walks in Checkmk nutzen</h4>
+<div class="paragraph"><p>Im Artikel zur Überwachung via SNMP <a href="snmp.html#simulation">zeigen wir detailliert,</a> wie Sie SNMP-Walks aus der GUI erstellen und wie Sie diese zur Simulation einsetzen können.
+So ist es auch möglich, Check-Plugins auf Testsystemen zu entwickeln, welche die SNMP-Hosts, für die Sie ein Plugin entwickeln, nicht erreichen können.
+In unserem GitHub-Repository finden Sie ein Beispiel eines <a href="https://github.com/Checkmk/checkmk-docs/blob/master/examples/devel_check_plugins_snmp/flintstones_fred_router.txt" target="_blank">SNMP-Walks,</a> den wir in diesem Artikel verwenden, und den Sie zur Entwicklung und zum Testen des Check-Plugins nutzen können.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_dummydaemon">
+<span class="hidden-anchor sr-only" id="dummydaemon"></span>Dummy SNMP-Daemon</h4>
+<div class="paragraph"><p>Soll sichergestellt werden, dass bestimmte OIDs sich abhängig voneinander ändern, kann es sinnvoll sein, einen Dummy SNMP-Daemon zu programmieren, der in sich konsistente Daten ausliefert.
+Ein Hilfsmittel bei der Programmierung eines solchen kann das <a href="https://pypi.org/project/snmp-agent/" target="_blank">Python-Modul <code>snmp-agent</code></a> sein.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_hwbugs">
+<span class="hidden-anchor sr-only" id="hwbugs"></span>4.2. Unkooperative Hardware</h3>
+<div class="paragraph"><p>Bevor ein Gerät mit einem neuen SNMP-basierten Check-Plugin überwacht werden kann, muss es zuerst einmal grundsätzlich über SNMP überwacht werden können.
+Die Übersicht bekannter Probleme mit Lösungsvorschlägen finden Sie daher im Artikel zur <a href="snmp.html#cursedhardware">Überwachung via SNMP.</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>5. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/local/lib/python3/cmk_addons/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Basisverzeichnis zur Ablage von Plugin-Dateien.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/local/lib/python3/cmk_addons/plugins/&lt;plug-in_family&gt;/agent_based/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ablageort für nach der Check-API V2 selbst geschriebene Check-Plugins.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/local/share/check_mk/mibs/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Legen Sie hier SNMP-MIB-Dateien ab, die automatisch geladen werden sollen.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li>
+<a href="#intro">1. Einleitung</a><ul class="sectlevel1">
+<li><a href="#snmp_special">1.1. Was bei SNMP anders läuft</a></li>
+<li><a href="#mibs">1.2. Keine Angst vor MIBs!</a></li>
+</ul>
+</li>
+<li><a href="#locating_oids">2. Die richtigen OIDs finden</a></li>
+<li>
+<a href="#simple_snmp_plugin">3. Ein einfaches Check-Plugin schreiben</a><ul class="sectlevel1">
+<li><a href="#scaffold">3.1. Die Datei vorbereiten</a></li>
+<li>
+<a href="#snmp_section">3.2. Die SNMP-Sektion erstellen</a><ul class="sectlevel2"><li><a href="#detect">Die SNMP-Detection</a></li></ul>
+</li>
+<li><a href="#parse_function">3.3. Die Parse-Funktion schreiben</a></li>
+<li><a href="#check_plug-in">3.4. Das Check-Plugin erstellen</a></li>
+<li><a href="#discovery_function">3.5. Die Discovery-Funktion schreiben</a></li>
+<li><a href="#check_function">3.6. Die Check-Funktion schreiben</a></li>
+<li><a href="#test">3.7. Das Check-Plugin testen und aktivieren</a></li>
+</ul>
+</li>
+<li>
+<a href="#errors">4. Fehler beheben</a><ul class="sectlevel1">
+<li>
+<a href="#simulation">4.1. Simulationsmöglichkeiten</a><ul class="sectlevel2">
+<li><a href="#savedwalk">Gespeicherte SNMP-Walks in Checkmk nutzen</a></li>
+<li><a href="#dummydaemon">Dummy SNMP-Daemon</a></li>
+</ul>
+</li>
+<li><a href="#hwbugs">4.2. Unkooperative Hardware</a></li>
+</ul>
+</li>
+<li><a href="#files">5. Dateien und Verzeichnisse</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Wie Sie ohne Agent Amazon S3, EC2, EBS, RDS und ELB oder ihre Kosten überwachen und nahtlos in Checkmk integrieren, wird hier beschrieben.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Amazon Web Services (AWS) überwachen">
+<meta name="og:description" content="Wie Sie ohne Agent Amazon S3, EC2, EBS, RDS und ELB oder ihre Kosten überwachen und nahtlos in Checkmk integrieren, wird hier beschrieben.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Amazon Web Services (AWS) überwachen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/monitoring_aws.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/monitoring_aws.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/monitoring_aws.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Amazon Web Services (AWS) überwachen</h1>
+<div class="details">
+<span id="revdate">Last modified on 06-Jan-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/monitoring_aws.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="monitoring_azure.html">Microsoft Azure überwachen</a>
+<a href="check_plugins_catalog.html">Katalog der Check Plugins</a>
+<a href="dcd.html">Dynamische Host-Konfiguration</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/logo_aws.png" alt="logo aws" width="140"></div></div>
+<div class="paragraph"><p>Nach einer Umfrage unter unseren Anwendern ist
+<a href="https://docs.aws.amazon.com/aws-technical-content/latest/aws-overview/introduction.html" target="_blank">Amazon Web Services</a>
+aktuell der wichtigste Anbieter von Cloud-basierten
+Services. Und dass Checkmk hier eine exzellente Überwachung bereitstellen
+muss, versteht sich von selbst.</p></div>
+<div class="paragraph"><p>Checkmk enthält daher ein umfangreiches Monitoring von AWS, welches aus einem
+Konnektor zu AWS und einer stattlichen Sammlung von Check-Plugins besteht, die
+für Sie verschiedenste Metriken und Zustände abrufen und auswerten. Aufgrund
+der Menge an Check-Plugins hier nur einzelne, um die AWS-Bereiche aufzuzeigen,
+die Checkmk derzeit überwachen kann:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="https://checkmk.de/cms_check_aws_ebs_summary.html" target="_blank">AWS EBS Summary</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_ec2.html" target="_blank">AWS EC2 Instance Status</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_elb.html" target="_blank">AWS ELB Statistics</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_elbv2_application_statistics.html" target="_blank">AWS ELB Application Statistics</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_elbv2_network_statistics.html" target="_blank">AWS ELB Network Statistics</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_rds_summary_db_status.html" target="_blank">AWS RDS Database Info</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_s3_summary.html" target="_blank">AWS S3 Summary</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_glacier_summary.html" target="_blank">AWS Glacier Summary</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_cloudwatch_alarms.html" target="_blank">AWS Cloudwatch Alarms</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_costs_and_usage.html" target="_blank">AWS Costs and Usage Summary</a></p></li>
+</ul></div>
+<div class="paragraph"><p>Eine vollständige aktuelle Liste aller Plugins finden Sie im
+<a href="https://checkmk.de/cms_check_plugins_catalog.html" target="_blank">Katalog der Check-Plugins</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__konkrete_umsetzung_der_aws_überwachung">
+<span class="hidden-anchor sr-only" id="_konkrete_umsetzung_der_aws_überwachung"></span>2. Konkrete Umsetzung der AWS-Überwachung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__hosts_und_services">
+<span class="hidden-anchor sr-only" id="_hosts_und_services"></span>2.1. Hosts und Services</h3>
+<div class="paragraph"><p>In Checkmk ordnen sich alle zu überwachenden Objekte in eine hierarchische
+Struktur von Hosts und Services ein. Nun gibt es bei Cloud-basierten Diensten
+das Konzept von Hosts nicht. Um die Einfachheit und Konsistenz von Checkmk zu
+bewahren, bilden wir dennoch AWS-Objekte auf das Schema Host/Service ab.</p></div>
+<div class="paragraph"><p>Wie das geht, zeigt am besten ein Beispiel: In einer Region sind mehrere
+EC2-Instanzen konfiguriert. Einer EC2 sind üblicherweise EBS zugeordnet. Diese
+Konstellation sieht in Checkmk wie folgt aus:</p></div>
+<div class="ulist"><ul>
+<li><p>Es gibt einen Host, der dem AWS-Account entspricht. Dieser gibt eine Übersicht aller EC2-Instanzen und deren Status als Service.</p></li>
+<li><p>Die EC2-Instanzen selbst sind wiederum eigene Hosts.</p></li>
+<li><p>Auf diesen EC2-Hosts finden Sie Services mit den eigentlichen Metriken.</p></li>
+<li><p>Die EBS werden als eine Art Festplatten interpretiert und liefern dementsprechend Metriken zu I/O (z.B. gelesene oder geschriebene Anzahl an Bytes). Dazu existieren in Checkmk eigene Services mit dem Namen <code>AWS/EBS Disk IO</code> pro EBS, die der EC2-Instanz zugeordnet werden.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__zugriff_auf_aws">
+<span class="hidden-anchor sr-only" id="_zugriff_auf_aws"></span>2.2. Zugriff auf AWS</h3>
+<div class="paragraph"><p>AWS stellt eine HTTP-basierte API bereit, über
+die auch Monitoring-Daten abrufbar sind.
+Checkmk greift auf diese API über den „Spezialagenten“ <code>agent_aws</code>
+zu, welcher an die Stelle des Checkmk-Agenten tritt, aber anders als dieser
+lokal auf dem Checkmk-Server ausgeführt wird.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__aws_vorbereiten">
+<span class="hidden-anchor sr-only" id="_aws_vorbereiten"></span>3. AWS vorbereiten</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__benutzer_anlegen">
+<span class="hidden-anchor sr-only" id="_benutzer_anlegen"></span>3.1. Benutzer anlegen</h3>
+<div class="paragraph"><p>Um die Überwachung per Checkmk zu ermöglichen, legen Sie am besten dafür einen speziellen AWS-Benutzer unterhalb Ihres Root-Accounts an.
+<a href="https://console.aws.amazon.com" target="_blank">Loggen Sie sich</a> dafür bei AWS als Root-Benutzer ein und navigieren Sie unter <span class="guihint">All services</span> zu <span class="guihint">Security, Identity, &amp; Compliance &gt; IAM</span>
+(Identity and Access Management).
+Gehen Sie hier auf <span class="guihint">Users</span> und legen Sie mit <span class="guihint">Add user</span> einen neuen Benutzer an.
+Als Benutzername wählen Sie z.B. <code>check-mk</code>.
+Wichtig ist, dass Sie bei <span class="guihint">Select AWS credential type</span> den <span class="guihint">Access key - Programmatic access</span> auswählen.</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/aws_create_user.png" alt="aws create user"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__berechtigungen">
+<span class="hidden-anchor sr-only" id="_berechtigungen"></span>3.2. Berechtigungen</h3>
+<div class="paragraph"><p>Der soeben angelegte Benutzer sollte nur für das Monitoring durch Checkmk verwendet werden und benötigt ausschließlich lesenden Zugriff auf AWS.
+Wir empfehlen diesem Benutzer ausschließlich die Policy <span class="guihint">ReadOnlyAccess</span> zuzuweisen.
+Um diese Policy zu finden, klicken Sie zuerst auf <span class="guihint">Attach existing policies directly</span> und geben anschließend <code>readonlyaccess</code> in das Suchfeld ein.
+In der Liste unter dem Suchfeld müssen Sie dennoch weit nach unten scrollen, da es eine ganze Reihe Policies gibt, die diesen String enthalten:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_create_user_policies.png" alt="aws create user policies"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__schlüssel">
+<span class="hidden-anchor sr-only" id="_schlüssel"></span>3.3. Schlüssel</h3>
+<div class="paragraph"><p>Nach dem Abschluss des Anlegens des Benutzers wird für Sie automatisch ein
+Zugangsschlüssel erzeugt.  Achtung: Das Secret des Schlüssels wird nur ein
+einziges mal — direkt nach dem Erzeugen — angezeigt. Kopieren Sie daher
+unbedingt den Schlüssel und legen ihn z.B. im Checkmk-Passwortspeicher
+ab.  Alternativ geben Sie ihn im Klartext in der Regel an (siehe unten).
+Für Checkmk benötigen Sie neben dem Secret noch die <span class="guihint">Access key ID</span>. Der
+Name des Benutzers (bei uns <code>check-mk</code>) spielt hier keine Rolle.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_create_user_key.png" alt="aws create user key"></div></div>
+<div class="paragraph"><p>Falls Sie das Secret trotzdem einmal verlieren sollten, können Sie für
+den Benutzer einen neuen Access Key anlegen und bekommen ein neues Secret:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_create_access_key.png" alt="aws create access key"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__zugriff_auf_billing_informationen">
+<span class="hidden-anchor sr-only" id="_zugriff_auf_billing_informationen"></span>3.4. Zugriff auf Billing-Informationen</h3>
+<div class="paragraph"><p>Wenn Sie möchten, dass Checkmk auch Lesezugriff auf die Abrechnungsinformationen bekommt
+(um den globalen Check <span class="guihint">Costs and Usage</span> ausführen zu können) benötigen Sie für Ihren AWS-Benutzer
+eine weitere Policy, die Sie allerdings erst selbst definieren müssen.</p></div>
+<div class="paragraph"><p>Wählen Sie dazu unter <span class="guihint">Security, Identity, &amp; Compliance &gt; IAM &gt; Policies</span> den Knopf <span class="guihint">Create Policy</span>.
+Wählen Sie unter <span class="guihint">Select a Service &gt; Service &gt; Choose a Service</span> den Service <span class="guihint">Billing</span> aus.
+Unter <span class="guihint">Actions</span> kreuzen Sie die Checkbox <span class="guihint">Read</span> an.
+Sie müssen noch eine weitere Berechtigung setzen. Fügen Sie diese mit dem Knopf <span class="guihint">Add additional permissions</span> hinzu.
+Wählen Sie in der neuen Box unter <span class="guihint">Select a Service &gt; Service &gt; Choose a Service</span> den Service <span class="guihint">Cost Explorer Service</span> aus.
+Unter <span class="guihint">Actions</span> kreuzen Sie die Checkbox <span class="guihint">Read</span> an.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_policies.png" alt="aws policies"></div></div>
+<div class="paragraph"><p>Mit dem Knopf <span class="guihint">Review</span> geht es zum Schritt zwei. Legen Sie dort als <span class="guihint">Name</span> <code>BillingViewAccess</code>
+an und speichern Sie mit dem Knopf <span class="guihint">Create policy</span>.</p></div>
+<div class="paragraph"><p>Diese neue Policy müssen Sie jetzt noch dem Benutzer hinzufügen. Dazu gehen Sie wieder
+zu <span class="guihint">Security, Identity, &amp; Compliance &gt; IAM &gt; Policies</span>, suchen im Suchfeld <span class="guihint">Filter Policies</span>
+nach <code>BillingViewAccess</code>, wählen diese durch Klick in den Kreis link aus und
+gehen dann auf <span class="guihint">Policy actions &gt; Attach</span>. Hier finden Sie Ihren <code>check-mk</code>-Benutzer, den
+Sie auswählen und mit <span class="guihint">Attach policy</span> bestätigen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__monitoring_in_checkmk_konfigurieren">
+<span class="hidden-anchor sr-only" id="_monitoring_in_checkmk_konfigurieren"></span>4. Monitoring in Checkmk konfigurieren</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__host_für_aws_in_checkmk_anlegen">
+<span class="hidden-anchor sr-only" id="_host_für_aws_in_checkmk_anlegen"></span>4.1. Host für AWS in Checkmk anlegen</h3>
+<div class="paragraph"><p>Legen Sie für die Überwachung von AWS nun einen Host in Checkmk an.
+Den Host-Namen können Sie nach Belieben vergeben. Wichtig: Da AWS als Dienst keine
+IP-Adresse oder DNS-Namen hat (den Zugriff macht der Spezialagent von selbst),
+müssen Sie die <span class="guihint">IP address family</span> auf <span class="guihint">No IP</span> einstellen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/azure_wato_no_ip.png" alt="azure wato no ip"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_agent_rule">
+<span class="hidden-anchor sr-only" id="agent_rule"></span>4.2. Regel für AWS-Agenten anlegen</h3>
+<div class="paragraph"><p>AWS kann nicht über den normalen Checkmk-Agenten abgefragt werden.
+Richten Sie daher jetzt den AWS-Spezialagenten ein.
+Dazu legen Sie unter
+<span class="guihint">Setup &gt; Agents &gt; VM, Cloud, Container &gt; Amazon Web Services (AWS)</span>
+eine Regel an, deren <a href="wato_rules.html#conditions">Bedingungen</a> ausschließlich auf den gerade angelegten AWS-Host
+greifen.</p></div>
+<div class="paragraph"><p>Beim eigentlichen Inhalt der Regel finden Sie zunächst die Angaben für den Login.
+Hier tragen Sie die „Access Key ID“ des angelegten AWS-Benutzers <code>check-mk</code> ein.
+Auch wählen Sie hier, ob Sie einen Proxy benötigen,
+um auf die Daten zuzugreifen und welche globalen Daten Sie überwachen möchten.
+Das sind solche, die unabhängig von einer Region sind.
+Aktuell sind hier lediglich die Daten über die Kosten auswählbar:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_rule_1.png" alt="aws rule 1"></div></div>
+<div class="paragraph"><p>Im obigen Bild sehen Sie außerdem die Option <span class="guihint">Use STS AssumeRole to assume a different IAM role</span>. Sollten Sie einen oder mehrere weitere Accounts bei AWS haben, können Sie mit einem einzigen Monitoring-Benutzer alle anderen ebenfalls überwachen.</p></div>
+<div class="paragraph"><p>Die eigentlich interessanten Daten aber sind einzelnen Regionen zugeordnet.
+Wählen Sie also hier Ihre AWS-Region(en) aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_rule_2.png" alt="aws rule 2"></div></div>
+<div class="paragraph"><p>Unter <span class="guihint">Services per region to monitor</span> legen Sie nun fest,
+welche Informationen Sie in diesen Regionen abrufen möchten. In
+der Standardkonfiguration sind alle AWS-Dienste und die Überwachung
+derer <a href="#limits">Limits</a> uneingeschränkt aktiviert. Der
+Übersichtlichkeit halber wurden im folgenden Bild aber alle bis auf einen deaktiviert:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_rule_3.png" alt="aws rule 3"></div></div>
+<div class="paragraph"><p>Diese können Sie dann pro Webdienst oder global mit
+<span class="guihint">Restrict monitoring services by one of these AWS tags</span> wieder einschränken.
+Wenn Sie pro Webdienst einschränken, wird damit immer die globale Option
+überschrieben. Ihnen steht hier zusätzlich zu den AWS Tags auch noch die
+Möglichkeit zur Verfügung, explizite Namen anzugeben:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_rule_4.png" alt="aws rule 4"></div></div>
+<div class="paragraph"><p>Letztendlich müssen Sie noch den Spezialagenten dem vorher erstellten Host zuordnen, indem
+Sie den Host-Namen in <span class="guihint">Conditions &gt; Explicit hosts</span> eintragen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__services_auf_dem_aws_host_selbst">
+<span class="hidden-anchor sr-only" id="_services_auf_dem_aws_host_selbst"></span>4.3. Services auf dem AWS-Host selbst</h3>
+<div class="paragraph"><p>Wechseln Sie nun in Checkmk zur Service-Erkennung des neu angelegten AWS-Hosts, wo Checkmk nun etliche Services finden sollte.
+Nachdem Sie die Services hinzugefügt haben, sieht das nach einem <a href="wato.html#activate_changes">Aktivieren der Änderungen</a> etwa so im Monitoring aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/aws_services_ec.png" alt="aws services ec"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__hosts_für_die_ec2_instanzen_anlegen">
+<span class="hidden-anchor sr-only" id="_hosts_für_die_ec2_instanzen_anlegen"></span>4.4. Hosts für die EC2-Instanzen anlegen</h3>
+<div class="paragraph"><p>Services, die EC2-Instanzen zugeordnet sind, werden nicht dem AWS-Host
+zugeordnet, sondern sogenannten <a href="piggyback.html">Piggyback-Hosts</a>. Dies funktioniert
+so, dass Daten, die vom AWS-Host abgerufen wurden, an diese Piggyback-Hosts verteilt
+werden, die ohne eigene Monitoring-Agenten arbeiten. Dabei wird jeder
+EC2-Instanz ein Piggyback-Host zugeordnet, welche nach dem privaten DNS-Namen
+der EC2-Instanz benannt sind.</p></div>
+<div class="paragraph"><p>Die Piggyback-Hosts werden von Checkmk nicht automatisch angelegt.
+Legen Sie diese Hosts entweder von Hand an oder optional mit dem <a href="dcd.html">Dynamic Configuration Daemon (DCD)</a>.
+Wichtig dabei
+ist, dass die Namen der Hosts exakt mit den privaten DNS-Namen der EC2-Instanz
+übereinstimmen — und zwar auch die Groß-/Kleinschreibung!</p></div>
+<div class="paragraph"><p><strong>Tipp:</strong> Mit dem Hilfsskript <code>find_piggy_orphans</code> aus dem Treasures-Verzeichnis finden Sie alle Piggyback-Hosts, für die es zwar Daten gibt, die aber noch nicht als Host im Checkmk angelegt sind:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>share/doc/check_mk/treasures/find_piggy_orphans
+<span class="tok-go">ip-172-31-44-50.eu-central-1.compute.internal</span>
+<span class="tok-go">ip-172-31-44-51.eu-central-1.compute.internal</span></code></pre></div></div>
+<div class="paragraph"><p>Konfigurieren Sie die EC2-Hosts ohne IP-Adresse (analog zum
+AWS-Host) und wählen Sie als Agent <span class="guihint">No API integrations, no Checkmk agent</span> aus.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_host_no_agent.png" alt="wato host no agent"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__hosts_für_elb_classic_load_balancer">
+<span class="hidden-anchor sr-only" id="_hosts_für_elb_classic_load_balancer"></span>4.5. Hosts für ELB (Classic Load Balancer)</h3>
+<div class="paragraph"><p>Auch die Services für die ELB werden Piggyback-Hosts zugeordnet. Die Namen dafür entsprechen
+deren DNS-Namen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_limits">
+<span class="hidden-anchor sr-only" id="limits"></span>4.6. Limits überwachen</h3>
+<div class="paragraph"><p>Einige Webdienste von AWS bringen Limits mit und Checkmk kann diese auch
+überwachen. Dazu gehören zum Beispiel diese:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="https://checkmk.com/de/integrations/aws_ebs_limits" target="_blank">AWS EBS Limits</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_ec2_limits.html" target="_blank">AWS EC2 Limits</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_elb_limits.html" target="_blank">AWS ELB Limits</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_elbv2_limits.html" target="_blank">AWS Application and Network Limits</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_glacier_limits.html" target="_blank">AWS Galcier Limits</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_rds_limits.html" target="_blank">AWS RDS Limits</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_s3_limits.html" target="_blank">AWS S3 Limits</a></p></li>
+<li><p><a href="https://checkmk.de/cms_check_aws_cloudwatch_alarms_limits.html" target="_blank">AWS Cloudwatch Alarm Limits</a></p></li>
+</ul></div>
+<div class="paragraph"><p>Sobald ein solches Check-Plugin Services erzeugt und diese später prüft,
+werden immer <strong>alle</strong> Elemente des Webdienstes geholt. Nur so kann Checkmk
+sinnvoll die aktuelle Auslastung zu diesen Limits berechnen und entsprechend
+Schwellwerte prüfen. Das gilt auch dann, wenn Sie in der Konfiguration die
+Daten auf bestimmte Namen oder Tags einschränken.</p></div>
+<div class="paragraph"><p>In der Grundkonfiguration sind die Limits automatisch aktiviert. Wenn Sie
+also die zu holenden Daten in der
+<a href="#agent_rule">Regel zu dem Spezialagenten</a> einschränken, weil Sie
+die zu übertragenden Daten reduzieren wollen, schalten Sie ebenfalls die
+Limits ab.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__weitere_services">
+<span class="hidden-anchor sr-only" id="_weitere_services"></span>4.7. Weitere Services</h3>
+<div class="paragraph"><p>Die weiteren Services von AWS werden wie folgt zugeordnet:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 45%;">
+<col style="width: 45%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Service</th>
+<th class="tableblock halign-left valign-top">Zuordnung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Costs &amp; Usage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Beim AWS-Host</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EBS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Block Storages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Werden der EC2-Instanz angefügt, sofern diese der Instanz gehören, ansonsten dem AWS-Host</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simple Storages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Beim AWS-Host</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Relational Databases</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Beim AWS-Host</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#_konkrete_umsetzung_der_aws_%C3%BCberwachung">2. Konkrete Umsetzung der AWS-Überwachung</a><ul class="sectlevel1">
+<li><a href="#_hosts_und_services">2.1. Hosts und Services</a></li>
+<li><a href="#_zugriff_auf_aws">2.2. Zugriff auf AWS</a></li>
+</ul>
+</li>
+<li>
+<a href="#_aws_vorbereiten">3. AWS vorbereiten</a><ul class="sectlevel1">
+<li><a href="#_benutzer_anlegen">3.1. Benutzer anlegen</a></li>
+<li><a href="#_berechtigungen">3.2. Berechtigungen</a></li>
+<li><a href="#_schl%C3%BCssel">3.3. Schlüssel</a></li>
+<li><a href="#_zugriff_auf_billing_informationen">3.4. Zugriff auf Billing-Informationen</a></li>
+</ul>
+</li>
+<li>
+<a href="#_monitoring_in_checkmk_konfigurieren">4. Monitoring in Checkmk konfigurieren</a><ul class="sectlevel1">
+<li><a href="#_host_f%C3%BCr_aws_in_checkmk_anlegen">4.1. Host für AWS in Checkmk anlegen</a></li>
+<li><a href="#agent_rule">4.2. Regel für AWS-Agenten anlegen</a></li>
+<li><a href="#_services_auf_dem_aws_host_selbst">4.3. Services auf dem AWS-Host selbst</a></li>
+<li><a href="#_hosts_f%C3%BCr_die_ec2_instanzen_anlegen">4.4. Hosts für die EC2-Instanzen anlegen</a></li>
+<li><a href="#_hosts_f%C3%BCr_elb_classic_load_balancer">4.5. Hosts für ELB (Classic Load Balancer)</a></li>
+<li><a href="#limits">4.6. Limits überwachen</a></li>
+<li><a href="#_weitere_services">4.7. Weitere Services</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

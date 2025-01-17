@@ -1,0 +1,2181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Here you will learn how to set up a distributed monitoring with a central site and several remote sites using Checkmk.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Distributed monitoring - Scaling and distributing Checkmk">
+<meta name="og:description" content="Here you will learn how to set up a distributed monitoring with a central site and several remote sites using Checkmk.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Distributed monitoring - Scaling and distributing Checkmk</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/de/distributed_monitoring.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/en/distributed_monitoring.html">2.2.0</a><a class="dropdown-item" href="../../latest/en/distributed_monitoring.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host and service parameters</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Introduction to notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMWare ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Performance data and graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Configuration via the Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Configuration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Command reference for the HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Writing your own check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Distributed monitoring</h1>
+<div class="details">
+<span id="revdate">Last modified on 30-Jan-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/en/distributed_monitoring.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="livestatus.html">Retrieving status data via Livestatus</a>
+<a href="cmc.html">The Checkmk micro core (CMC)</a>
+<a href="omd_basics.html">Site administration with omd</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Probably not everybody has the same understanding of the term ‘distributed monitoring’.
+In fact monitoring is always distributed over multiple computers, unless the
+monitoring system is only monitoring itself – which wouldn’t be very useful.</p></div>
+<div class="paragraph"><p>In this User guide we therefore always refer to a distributed monitoring when the
+monitoring system as a whole consists of <em>more than a single Checkmk site</em>.
+There are a number of good reasons for splitting monitoring over multiple sites:</p></div>
+<div class="ulist"><ul>
+<li><p>Performance: The processor load should, or must be shared over multiple machines.</p></li>
+<li><p>Organization: Various different groups should be able to administer their own sites independently.</p></li>
+<li><p>Availability: The monitoring at one location should function independently of other locations.</p></li>
+<li><p>Security: Data streams between two security domains should be separately and precisely controlled (DMZ, etc.)</p></li>
+<li><p>Network: Locations that have only narrow band or unreliable connections cannot be remotely-monitored reliably.</p></li>
+</ul></div>
+<div class="paragraph"><p>Checkmk supports various procedures for implementing a distributed monitoring.
+Checkmk controls some of these as it is largely compatible with, or based on
+Nagios (if Nagios has been installed as the core). Also covered are the
+old <em>NSCA</em> process and the somewhat more modern <code>mod_gearman</code>.
+Compared to Checkmk’s own system they offer no advantages and are also more
+cumbersome to implement. For these reasons we don’t recommend them.</p></div>
+<div class="paragraph"><p>The procedure preferred by Checkmk is based on <strong><a href="#livestatus">Livestatus</a></strong> and a distributed configuration environment.
+For situations with very separated networks, or even a <em>strict one-way data transfer</em> from the periphery to the center there is a method using <strong><a href="#livedump">Livedump, or respectively, CMCDump</a></strong>.
+Both methods can be combined.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_livestatus">
+<span class="hidden-anchor sr-only" id="livestatus"></span>2. Distributed monitoring with Livestatus</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__basic_principles">
+<span class="hidden-anchor sr-only" id="_basic_principles"></span>2.1. Basic principles</h3>
+<div class="sect3">
+<h4 id="heading_central_status">
+<span class="hidden-anchor sr-only" id="central_status"></span>Central status</h4>
+<div class="paragraph"><p><a href="livestatus.html">Livestatus</a> is an interface integrated into the <a href="cmc.html">monitoring core</a>
+which enables other external programs to query <em>status data</em> and
+execute <em>commands</em>. Livestatus can be made available over the network
+so that it can be accessed by a remote Checkmk site.
+Checkmk’s <a href="user_interface.html">user interface</a> uses Livestatus to combine all
+tethered sites into a general overview. This then feels like a
+‘large’ monitoring system.</p></div>
+<div class="paragraph"><p>The following diagram schematically shows the structure of a monitoring
+with Livestatus distributed over three locations.
+The Checkmk <em>Central Site</em> is found in the central processing site.
+From here central systems will be directly controlled. Additionally, there are
+the <em>Remote Site 1</em> and <em>Remote Site 2</em> which are located in
+other networks and controlled by their local systems:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_overview_en.png" alt="distributed monitoring overview en"></div></div>
+<div class="paragraph"><p>What makes this method special is that the monitoring status of the remote sites
+is <em>not</em> sent continuously to the central site. The GUI always only retrieves
+data <em>live</em> from the remote sites when it is required by a user
+in the control center.
+The data is then compiled into a centralized view.
+There is thus <em>no central data holding</em>, which means it offers huge
+advantages for scaling-up!</p></div>
+<div class="paragraph"><p>Here are some of the advantages of this method:</p></div>
+<div class="ulist"><ul>
+<li><p><strong>Scalability</strong>: The monitoring itself generates no network traffic at all between central and remote site. In this way hundreds of locations, or more, can be connected.</p></li>
+<li><p><strong>Reliability</strong>: If a network connection to a remote site fails the local monitoring nonetheless continues operating normally. There is no ‘hole’ in the data recording and also no data ‘jam’. A local notification will still function.</p></li>
+<li><p><strong>Simplicity</strong>: Sites can be very easily incorporated or removed.</p></li>
+<li><p><strong>Flexibility</strong>: The remote sites are still self-contained and can be used for the operating in their respective location. This is then particularly interesting if the ‘location’ should never be permitted to access the rest of the monitoring.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading_distr_wato">
+<span class="hidden-anchor sr-only" id="distr_wato"></span>Centralized configuration</h4>
+<div class="paragraph"><p>In a system distributed using Livestatus as described above, it is quite possible
+that the individual sites can be independently maintained by different teams,
+and the central site only has the task of providing a centralized dashboard.</p></div>
+<div class="paragraph"><p>In the case of multiple, or all sites needing to be administered by the same team, a central configuration is much easier to handle.
+Checkmk supports this and refers to such a configuration as a distributed configuration environment.
+With this all hosts and services, users and permissions, time periods, and notifications, etc., will be maintained and configured on the central site, and then depending on their tasks, be automatically distributed to the remote sites.</p></div>
+<div class="paragraph"><p>Such a system not only has a common status overview but also a common configuration, and effectively ‘feels like a large system’.</p></div>
+<div class="paragraph"><p>You can even extend such a system with dedicated <a href="#viewer">viewer sites</a>, for example, that serve only as status interfaces for sub-areas or specific user groups.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_distr_wato_config">
+<span class="hidden-anchor sr-only" id="distr_wato_config"></span>2.2. Installing a distributed monitoring</h3>
+<div class="paragraph"><p>Installing a distributed monitoring using Livestatus/distributed configuration environment is achieved in the following steps:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>First install the central site as is usually done for a single site</p></li>
+<li><p>Install remote sites, and enable Livestatus via the network</p></li>
+<li><p>Integrate the remote sites into the central site using <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span></p></li>
+<li><p>For the hosts and services, specify from which site they are to be monitored</p></li>
+<li><p>Execute a service discovery for the migrated hosts, and then activate the fresh changes</p></li>
+</ol></div>
+<div class="sect3">
+<h4 id="heading__installing_a_central_site">
+<span class="hidden-anchor sr-only" id="_installing_a_central_site"></span>Installing a central site</h4>
+<div class="paragraph"><p>No special requirements are placed on the central site.
+This means that a long-established site can be expanded into a distributed monitoring without requiring additional modifications.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__installing_remote_sites_and_enabling_livestatus_via_the_network">
+<span class="hidden-anchor sr-only" id="_installing_remote_sites_and_enabling_livestatus_via_the_network"></span>Installing remote sites and enabling Livestatus via the network</h4>
+<div class="paragraph"><p>The remote sites are then generated as new sites in the usual way with <code>omd create</code>.
+This will naturally take place on the (remote) server intended for the respective remote site.</p></div>
+<div class="paragraph"><p><strong>Special notes</strong>:</p></div>
+<div class="ulist"><ul>
+<li><p>For the remote sites, use IDs <em>unique</em> to your distributed monitoring.</p></li>
+<li><p>The Checkmk-version (e.g. <span class="new">2.0.0</span>) of the remote and the central site is the same — mixed versions are not supported. The patch level (e.g. p11) may be different in the most cases. But in rare cases there will be an incompatibility even here. You are then obligated to stick to the exact version (e.g. <span class="new">2.0.0</span>p11) on all sites to allow both sites to work with each other without any problems. Please notice because of that always the incompatible changes at each patch version in the <a href="https://checkmk.com/werks" target="_blank">Werk list</a>.</p></li>
+<li><p>In the same way as Checkmk supports multiple sites on a server, remote sites can also run on the same server.
+Here is an example for creating a remote site with the name <code>remote1</code>:</p></li>
+</ul></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>omd<span class="tok-w"> </span>create<span class="tok-w"> </span>remote1
+<span class="tok-go">Adding /opt/omd/sites/remote1/tmp to /etc/fstab.</span>
+<span class="tok-go">Creating temporary filesystem /omd/sites/remote1/tmp...<span class="green">OK</span></span>
+<span class="tok-go">Updating core configuration...</span>
+<span class="tok-go">Generating configuration for core (type cmc)...</span>
+<span class="tok-go">Starting full compilation for all hosts Creating global helper config...<span class="green">OK</span></span>
+<span class="tok-go"> Creating cmc protobuf configuration...OK</span>
+<span class="tok-go">Executing post-create script "01_create-sample-config.py"...<span class="green">OK</span></span>
+<span class="tok-go">Restarting Apache...<span class="green">OK</span></span>
+<span class="tok-go">Created new site remote1 with version 2.1.0p17.cee.</span>
+
+<span class="tok-go">  The site can be started with <strong>omd start remote1</strong>.</span>
+<span class="tok-go">  The default web UI is available at <strong>http://myserver/remote1/</strong></span>
+
+<span class="tok-go">  The admin user for the web applications is <strong>cmkadmin</strong> with password: <strong>lEnM8dUV</strong></span>
+<span class="tok-go">  For command line administration of the site, log in with <strong>'omd su remote1'</strong></span>
+<span class="tok-go">  After logging in, you can change the password for cmkadmin with <strong>'cmk-passwd cmkadmin'</strong>.</span></code></pre></div></div>
+<div class="paragraph"><p>The most important step is now to enable Livestatus via TCP on the network.
+Please note that Livestatus is not <em>per se</em> a secure protocol and should only be
+used within a secure network (secured LAN, VPN, etc.). The enabling appears
+per <code>omd config</code> as an
+site user on a stopped site:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>su<span class="tok-w"> </span>-<span class="tok-w"> </span>remote1
+<span class="tok-gp">OMD[remote1]:~$ </span>omd<span class="tok-w"> </span>config</code></pre></div></div>
+<div class="paragraph"><p>Now select <span class="guihint">Distributed Monitoring</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_omd_config.png" alt="distributed monitoring omd config" width="46%"></div></div>
+<div class="paragraph"><p>Set <span class="guihint">LIVESTATUS_TCP</span> to <span class="guihint">‘on’</span> and enter an available port number for
+<span class="guihint">LIVESTATUS_TCP_PORT</span> that is explicit on this server. The default is 6557:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livestatus_tcp_activated.png" alt="distributed monitoring livestatus tcp activated" width="380"></div></div>
+<div class="paragraph"><p>After saving, start the site as normal with <code>omd start</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>omd<span class="tok-w"> </span>start
+<span class="tok-go">Temporary filesystem already mounted</span>
+<span class="tok-go">Starting mkeventd...OK</span>
+<span class="tok-go">Starting liveproxyd...OK</span>
+<span class="tok-go">Starting mknotifyd...OK</span>
+<span class="tok-go">Starting rrdcached...OK</span>
+<span class="tok-go">Starting cmc...OK</span>
+<span class="tok-go">Starting apache...OK</span>
+<span class="tok-go">Starting dcd...OK</span>
+<span class="tok-go">Starting redis...OK</span>
+<span class="tok-go">Starting xinetd...OK</span>
+<span class="tok-go">Initializing Crontab...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Retain the password for <code>cmkadmin</code>.
+Once the remote has been subordinated to the central site,
+all users will likewise be replaced by those from the central site.</p></div>
+<div class="paragraph"><p>The remote is now ready. Verify with <code>netstat</code> which should show that
+Port 6557 is open. The connection to this port is performed by a site
+of the auxiliary daemon <code>xinetd</code>, which runs directly in the site:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>netstat<span class="tok-w"> </span>-lnp<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-m">6557</span>
+<span class="tok-go">tcp6       0      0 :::6557               :::*          LISTEN      10719/xinetd</span></code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading_connect_remote_sites">
+<span class="hidden-anchor sr-only" id="connect_remote_sites"></span>Assigning remote sites to the central site</h4>
+<div class="paragraph"><p>The configuration of the distributed monitoring takes place exclusively on the central site in the menu <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span>, and this serves to manage the connections to the individual sites.
+For this function the central site itself counts as a site and is already present in the list:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_central_site.png" alt="distributed monitoring central site"></div></div>
+<div class="paragraph"><p>Using <span class="image-inline"><img src="../images/icons/button_new.png" alt="button new"></span> <span class="guihint">Add connection</span>, now define the connection to the first remote site:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_basic_settings.png" alt="distributed monitoring basic settings"></div></div>
+<div class="paragraph"><p>In the <span class="guihint">Basic settings</span> it is important to use the remote site’s EXACT name — as defined with <code>omd create</code> — as the <span class="guihint">Site ID</span>.
+As always the alias can be defined as desired and also be later changed.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_status_connection.png" alt="distributed monitoring status connection"></div></div>
+<div class="paragraph"><p>The settings of the <span class="guihint">Status connection</span> determine how the central queries the status of the remote sites via Livestatus.
+The example in the screenshot shows a connection with the <span class="guihint">Connect via TCP(IPv4)</span> method.
+This is the optimal for stable connections with short latency periods (such as, e.g. in a LAN).
+We will discuss the optimal settings for WAN connections <a href="#wan">later</a>.</p></div>
+<div class="paragraph"><p>Enter the HTTP-URL to the remote’s web interface here (only the part preceding the <code>check_mk/</code> component).
+If you basically access Checkmk per HTTPS, then substitute the <code>http</code> here with <code>https</code>.
+Further information can be found in the online help <span class="image-inline"><img src="../images/icons/icon_help.png" alt="icon help"></span> or the article on <a href="omd_https.html">securing the web interface with HTTPS</a>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_configuration_connection.png" alt="distributed monitoring configuration connection"></div></div>
+<div class="paragraph"><p>Replicating the configuration and thus using the distributed configuration environment is, as we discussed in the introduction, optional.
+Activate this if you wish to configure the remote with and from the central site.
+In such a case select the exact settings as shown in the image above.</p></div>
+<div class="paragraph"><p>A correct setting for the <span class="guihint">URL of remote site</span> is very important.
+The URL must always end with <code>/check_mk/</code>. A connection with HTTPS is recommended, provided that the remote site’s Apache supports HTTPS.
+This must be installed <a href="omd_https.html">manually</a> on the remote at the Linux level.
+For the Checkmk Appliance, <a href="appliance_usage.html#ssl">HTTPS can be set up using the web-based configuration interface</a>.
+If you utilize a self-signed certificate, you will require the <span class="guihint">Ignore SSL certificate errors</span> check box.</p></div>
+<div class="paragraph"><p>Once the mask has been saved a second site will appear in the overview:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_before_login.png" alt="distributed monitoring before login"></div></div>
+<div class="paragraph"><p>The (so far) empty remote site’s monitoring status is now correctly integrated.
+In oder to use the distributed configuration environment you still need a <span class="guihint">login</span> for the remote Checkmk site.
+To this end, the central site exchanges a randomly-generated login secret with the remote site, through which all future communication will take place.
+The <code>cmkadmin</code> access on the remote site will subsequently no longer be used.</p></div>
+<div class="paragraph"><p>To login use the access data <code>cmkadmin</code> and the according password of the remote site. Do not forget to the box <span class="guihint">Confirm overwrite</span>, before you click the <span class="guihint">Login</span> button:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_login_credentials.png" alt="distributed monitoring login credentials"></div></div>
+<div class="paragraph"><p>A successful login will be so acknowledged:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_successful_login.png" alt="distributed monitoring successful login"></div></div>
+<div class="paragraph"><p>Should an error occur with the login, this could be due to a number of reasons –
+for example:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>The remote site is currently stopped.</p></li>
+<li><p>The <span class="guihint">Multisite-URL of the remote site</span> has not been correctly set up.</p></li>
+<li><p>The remote is not reachable under the host name <em>‘from central site’</em> specified in the URL.</p></li>
+<li><p>The Checkmk versions of the central and the remote site are (too) incompatible.</p></li>
+<li><p>An invalid user ID and/or password have been entered.</p></li>
+</ol></div>
+<div class="paragraph"><p>Points 1. and 2. can be easily tested by manually calling the remote’s URL
+in your browser.</p></div>
+<div class="paragraph"><p>When everything has been successful run <span class="guihint">Activate Changes</span>.
+This will, as always, bring you to an overview of the not yet activated changes.
+Simultaneously the overview will also show the states of the Livestatus connections, likewise the synchronization states of the distributed configuration environment of the individual sites:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_activate_pending_changes.png" alt="distributed monitoring activate pending changes"></div></div>
+<div class="paragraph"><p>The <span class="guihint">Version</span> column shows the Livestatus-version of the respective site.
+When using the <a href="cmc.html">CMC</a> as the Checkmk’s core (Enterprise Editions), the core’s version number
+(shown in the <span class="guihint">‘Core’</span> column) is identical to that of the livestatus.
+If you are using Nagios as the core (<span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong>), the Nagios version number will be seen here.</p></div>
+<div class="paragraph"><p>The following symbols show replication status of the configuration environment:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_need_restart.png" alt="icon need restart"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This site has outstanding changes. The configuration matches the central site, but not all changes have been activated. With the <span class="image-inline"><img src="../images/icons/icon_need_restart.png" alt="icon need restart"></span> button a targeted activation for this site can be performed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_need_replicate.png" alt="icon need replicate"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration for this site is not synchronous and must be carried over. A restart will then of course be necessary to activate it. Both functions can be performed with a click of the <span class="image-inline"><img src="../images/icons/icon_need_replicate.png" alt="icon need replicate"></span> button.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>In the <span class="guihint">Status</span> column the state of the Livestatus connection for
+the respective site can be seen. This is shown purely for information
+since the configuration is not transmitted via Livestatus, but rather over HTTP.
+The following values are possible:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_status_label_online.png" alt="icon status label online" width="80px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The site is reachable via Livestatus.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_status_label_dead.png" alt="icon status label dead" width="80px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The site is currently not reachable. Livestatus queries are running in a <em>Timeout</em>. This delays the page loading. Status data for this site is not visible in the GUI.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_status_label_down.png" alt="icon status label down" width="80px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The site is currently not reachable, but this is due to the setting up of a status host or is known through the <a href="#livestatusproxy">Livestatus proxy</a> (see <a href="#wan">below</a>). The inaccessibility does <strong>not</strong> lead to Timeouts. Status data for this site is not visible in the GUI.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_status_label_disabled.png" alt="icon status label disabled" width="80px"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Livestatus connection to this site has been temporarily deactivated by the (central site’s) administrator. The setting matches the <em>‘Temporarily disable this connection’</em> check box in the settings for this connection.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Clicking the <span class="image-inline"><img src="../images/icons/icon_activate_changes.png" alt="icon activate changes"></span> <span class="guihint">Activate on selected sites</span> button will now synchronize all sites and activate the changes.
+This is performed in parallel, so that the overall time equates to the time required by the slowest site.
+Included in the time is the creation of a configuration snapshot for the respective site, the transmission over HTTP, the unpacking of the snapshot on the remote site, and the activation of the changes.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> Do not leave the page before the synchronization has been
+completed on all sites – leaving the page will interrupt the synchronization.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__specifying_to_the_hosts_and_folders_which_site_should_monitor_them">
+<span class="hidden-anchor sr-only" id="_specifying_to_the_hosts_and_folders_which_site_should_monitor_them"></span>Specifying to the hosts and folders which site should monitor them</h4>
+<div class="paragraph"><p>Once your distributed environment has been installed you can begin to use it.
+You actually only need to tell each host by which site it should be monitored.
+The central site is specified by default.</p></div>
+<div class="paragraph"><p>The required attribute for this is <span class="guihint">‘Monitored on site’</span>.
+You can set this individually for each host.
+This can naturally also be performed at the folder level:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_monitored_on_site.png" alt="distributed monitoring monitored on site"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__executing_a_fresh_service_discovery_and_activating_changes_for_migrated_hosts">
+<span class="hidden-anchor sr-only" id="_executing_a_fresh_service_discovery_and_activating_changes_for_migrated_hosts"></span>Executing a fresh service discovery and activating changes for migrated hosts</h4>
+<div class="paragraph"><p>Adding hosts functions as usual – apart from the fact that the surveillance
+as well as the service discovery will be run from the respective remote
+site, there are no special considerations.</p></div>
+<div class="paragraph"><p>When <strong>migrating</strong> hosts from one site to another there are a couple of points to be aware of.
+<em>Neither current nor historic status data from the host will be carried over.</em>
+Only the host’s configuration is retained in the configuration environment.
+In effect it is as if the host has been removed from one site and <em>freshly-installed</em> on the other site:</p></div>
+<div class="ulist"><ul>
+<li><p>Automatically discovered services will not be migrated. Run a <a href="wato_services.html">Service discovery</a> after the migration.</p></li>
+<li><p>Once restarted, hosts and services will show <span class="statep">PEND</span>. Currently existing problems may as a result be newly notified.</p></li>
+<li><p>Historic <a href="graphing.html">graphing</a> will be lost. This can be avoided by manually moving the relevant RRD-files. The location of the files can be found in <a href="#files">Files and directories</a>.</p></li>
+<li><p>Data for availability and from historic events will be lost. These are unfortunately not easy to migrate as the data consists of single lines in the monitoring log.</p></li>
+</ul></div>
+<div class="paragraph"><p>If the continuity of the history is important to you, when implementing the monitoring
+you should carefully plan which host is to be monitored, and from where.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_livestatus_tls">
+<span class="hidden-anchor sr-only" id="livestatus_tls"></span>2.3. Connecting Livestatus with encryption</h3>
+<div class="paragraph"><p>From version <span class="new">1.6.0</span> Livestatus connections between the central site and a remote can be encrypted.
+For newly-created sites nothing further needs to done, as Checkmk takes care of the necessary steps automatically.
+As soon as you then use <a href="#distr_wato_config"><code>omd config</code></a> to activate Livestatus, encryption is also automatically activated by TLS:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livestatus_tcp_tls_activated.png" alt="distributed monitoring livestatus tcp tls activated" width="64%"></div></div>
+<div class="paragraph"><p>The configuration of distributed monitoring therefore remains as simple as
+it has been up to now. For new connections to other sites the option
+<span class="guihint">Encryption</span> is then automatically enabled.</p></div>
+<div class="paragraph"><p>After you add the remote site, you will notice two things – firstly,
+the connection is marked as encrypted by this new <span class="image-inline"><img src="../images/icons/icon_encrypted.png" alt="icon encrypted"></span> icon.
+And secondly, Checkmk will tell you that the CA will no longer trust the remote site. Click on <span class="image-inline"><img src="../images/icons/icon_encrypted.png" alt="icon encrypted"></span> to get to the
+details of the certificates used.  A click on <span class="image-inline"><img src="../images/icons/icon_trust.png" alt="icon trust"></span> lets you
+conveniently add the CA via the web interface. Then both certificates will
+be listed as trusted:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_certificate_details.png" alt="distributed monitoring certificate details"></div></div>
+<div class="sect3">
+<h4 id="heading__details_of_the_technologies_used">
+<span class="hidden-anchor sr-only" id="_details_of_the_technologies_used"></span>Details of the technologies used</h4>
+<div class="paragraph"><p>To achieve the encryption Checkmk uses the <code>stunnel</code> program along with
+its own certificate and its own <em>Certificate Authority</em> (CA) to sign
+the certificate.  These will be individually generated automatically with
+a new site and they are therefore <strong>not</strong> predefined static CAs
+or certificates. That is a very important safety factor to prevent fake
+certificates from being used by attackers, because any attackers could then
+gain access to a publicly-available CA.</p></div>
+<div class="paragraph"><p>The generated certificates also have the following properties:</p></div>
+<div class="ulist"><ul>
+<li><p>Both certificates are in the PEM format. The signed certificates for the site also contain the complete certificate chain.</p></li>
+<li><p>The keys use 2048-bit RSA, and the certificate is signed using SHA512</p></li>
+<li><p>The site’s certificate is valid for 999 years.</p></li>
+</ul></div>
+<div class="paragraph"><p>The fact that the standard certificate is valid for so long very effectively
+prevents you from getting connection problems that you cannot classify.
+At the same time it is of course possible that once a certificate has been
+compromised it is accordingly long open to abuse.  So if you fear that an
+attacker will gain access to the CA or to the site certificate signed
+with it, always replace both certificates (CA and site)!</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__migrating_from_older_versions">
+<span class="hidden-anchor sr-only" id="_migrating_from_older_versions"></span>Migrating from older versions</h4>
+<div class="paragraph"><p>For compatibility reasons the <code>LIVESTATUS_TCP_TLS</code> option will not be automatically activated after an update from an older version to <span class="new">1.6.0</span>, since in the new version it is only possible to use the
+connection with encryption.
+After the update, to make use of the new feature in your monitoring sites, stop the site and activate the option mentioned:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>config<span class="tok-w"> </span><span class="tok-nb">set</span><span class="tok-w"> </span>LIVESTATUS_TCP_TLS<span class="tok-w"> </span>on</code></pre></div></div>
+<div class="paragraph"><p>Since the certificates were generated automatically during the update, the site then immediately uses the new encryption feature.
+So that you can still access the site from the central site, please verify that the option <span class="guihint">Encryption</span> is set to <span class="guihint">Encrypt data using TLS</span> in the menu under <span class="guihint">Setup &gt; General &gt; Distributed Monitoring</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_enable_encryption.png" alt="distributed monitoring enable encryption"></div></div>
+<div class="paragraph"><p>The last step is as described above — again here you first have to mark
+the CA of the remote site as trusted.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__special_features_of_a_distributed_setup">
+<span class="hidden-anchor sr-only" id="_special_features_of_a_distributed_setup"></span>2.4. Special features of a distributed setup</h3>
+<div class="paragraph"><p>A distributed monitoring operates via Livestatus much like a single system, but it does have a couple of special characteristics:</p></div>
+<div class="sect3">
+<h4 id="heading__access_to_the_monitored_hosts">
+<span class="hidden-anchor sr-only" id="_access_to_the_monitored_hosts"></span>Access to the monitored hosts</h4>
+<div class="paragraph"><p>All accesses of a monitored host are consistently carried out from the
+site to which the host is assigned.
+This applies not only to the actual monitoring, but also to the service discovery,
+the <a href="wato_monitoringagents.html#diagnosticpage">Diagnostics page</a>, the
+<a href="notifications.html">Notifications</a>, <a href="alert_handlers.html">Alert handlers</a> and everything else.
+This point is very important as it is not assumed that the central site
+actually has access to this host.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__specifying_the_site_in_views">
+<span class="hidden-anchor sr-only" id="_specifying_the_site_in_views"></span>Specifying the site in views</h4>
+<div class="paragraph"><p>Some of the standard views are grouped according the site from which
+the host will be monitored – this applies for, e.g. <span class="guihint">All hosts</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_all_hosts.png" alt="distributed monitoring all hosts"></div></div>
+<div class="paragraph"><p>The site will likewise be shown in the host’s or service’s details:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_service_check_mk.png" alt="distributed monitoring service check mk"></div></div>
+<div class="paragraph"><p>This information is generally available for use in a column when
+<a href="views.html#edit">creating your own views</a>. There is also a filter with which a view of
+hosts on a specific site can be filtered:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_filter_by_site.png" alt="distributed monitoring filter by site" width="60%"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__site_status_snapin">
+<span class="hidden-anchor sr-only" id="_site_status_snapin"></span>Site status snapin</h4>
+<div class="paragraph"><p>There is a <span class="guihint">Site status</span> snapin for the side bar which can be added using <span class="image-inline"><img src="../images/icons/button_sidebar_add_snapin.png" alt="Icon to show all snapins."></span>.
+This displays the status of the individual sites.
+It also provides the option to temporarily disable and re-enable a single site by clicking on the status — or all sites at once by clicking <span class="guihint">Disable all</span> or <span class="guihint">Enable all</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_snapin_site_status.png" alt="distributed monitoring snapin site status" width="50%"></div></div>
+<div class="paragraph"><p>Disabled sites will be flagged with the <span class="image-inline"><img src="../images/icons/icon_status_label_disabled.png" alt="icon status label disabled" width="70px"></span> status.
+With this you can also disable a <span class="image-inline"><img src="../images/icons/icon_status_label_dead.png" alt="icon status label dead" width="70px"></span> site that is generating timeouts, thus avoiding superfluous timeouts.
+This disabling is <strong>not</strong> the same as disabling the Livestatus connection using the connection configuration in the <span class="guihint">Setup</span>.
+Here the ‘disabling’ only affects the currently logged-in user and has a purely visual function.
+Clicking on a site’s name will display a view of all of its hosts.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__master_control_snapin">
+<span class="hidden-anchor sr-only" id="_master_control_snapin"></span>Master control snapin</h4>
+<div class="paragraph"><p>In a distributed monitoring the <span class="guihint">Master control</span> snapin has a different appearance.
+<em>Each site</em> has its <em>own</em> global switch:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_master_control.png" alt="distributed monitoring master control" width="50%"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__checkmk_cluster_hosts">
+<span class="hidden-anchor sr-only" id="_checkmk_cluster_hosts"></span>Checkmk cluster hosts</h4>
+<div class="paragraph"><p>If you monitor with Checkmk <a href="clustered_services.html">HA-Cluster</a>, the cluster’s individual nodes
+must be assigned to the same site as the cluster itself.
+This is because determining the clustered services’ status accesses cache
+files generated through monitoring the node.
+This data is located locally on the respective site.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__piggyback_data_e_g_esx">
+<span class="hidden-anchor sr-only" id="_piggyback_data_e_g_esx"></span>Piggyback data (e.g., ESX)</h4>
+<div class="paragraph"><p>Some check plug-ins use ‘Piggyback’ data, for example, for allocating monitoring data
+retrieved from an ESX-host to the individual virtual machines. For the same reason
+as with cluster monitoring, in distributed monitoring the ‘piggy’ (carrying) host as
+well as its dependent hosts must be monitored from the same site.
+In the case of ESX this means that the virtual machines must be assigned to the
+same site in Checkmk as the ESX-System from which the monitoring data is collected.
+This can mean that it is better to poll the ESX-host system directly rather than
+to poll a global vCenter.
+Details for this can be found in the documentation on ESX-monitoring.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__hardwaresoftware_inventory">
+<span class="hidden-anchor sr-only" id="_hardwaresoftware_inventory"></span>Hardware/Software inventory</h4>
+<div class="paragraph"><p>The <a href="inventory.html">Checkmk Hardware/Software inventory</a> also functions in distributed
+environments. In doing so the inventory data from the
+<code>var/check_mk/inventory</code> directory must be regularly transmitted from the
+remotes to the central site. For performance reasons the user interface always
+accesses this directory locally.</p></div>
+<div class="paragraph"><p>In the <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> the synchronization is carried out automatically on all sites that
+are connected using the <a href="#livestatusproxy">Livestatus proxy</a>.</p></div>
+<div class="paragraph"><p>If you run inventories using the <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> in distributed systems, the directory must
+be regularly mirrored to the central site with your own tools (e.g., with <code>rsync</code>).</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__changing_a_password">
+<span class="hidden-anchor sr-only" id="_changing_a_password"></span>Changing a password</h4>
+<div class="paragraph"><p>Even when all sites are being centrally monitored, a login on an individual
+site’s interface is quite possible and often also appropriate.
+For this reason Checkmk ensures that a user’s password is always the same for all sites.</p></div>
+<div class="paragraph"><p>A password change made by the administrator will take effect automatically as
+soon as it is shared to all sites with <span class="guihint">Activate Changes</span>.</p></div>
+<div class="paragraph"><p>A change made by a user themselves using the <span class="image-inline"><img src="../images/icons/button_sidebar_settings.png" alt="button sidebar settings"></span>
+sidebar in their personal settings works somewhat differently.
+This cannot execute an <span class="guihint">Activate changes</span> since the user of course
+has no general authority for this function.
+In such a case Checkmk will automatically share the changed password across
+all sites – directly after it has been saved in fact.</p></div>
+<div class="paragraph"><p>As we all know, networks are never 100 % available.
+If a site is unreachable at the time of a password change,
+it will <em>not</em> receive the new password.
+Until the administrator successfully runs an <span class="guihint">Activate changes</span>,
+or respectively, the next successful password change, this site will
+retain the old password for the user.
+A status symbol will inform the user of the status of the password
+sharing to the individual sites.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_replicate_user_profile.png" alt="distributed monitoring replicate user profile"></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__tethering_existing_sites">
+<span class="hidden-anchor sr-only" id="_tethering_existing_sites"></span>2.5. Tethering existing sites</h3>
+<div class="paragraph"><p>As mentioned above, existing sites can also be retrospectively
+tethered to a distributed monitoring.
+As long as the preconditions described above have been satisfied (compatible Checkmk versions), this will be completed exactly as for setting up a new remote site.
+Share Livestatus with TCP, then add the site to via <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span> – and you’re done!</p></div>
+<div class="paragraph"><p>The second stage – the changeover to a centralized configuration – is somewhat trickier.
+Before integrating the site into the distributed configuration environment as described above, you should be aware that in doing so the site’s entire local configuration will be <strong>overwritten!</strong></p></div>
+<div class="paragraph"><p>Should you wish to take over existing hosts, and possibly rules as well, three steps will be required:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Match the host tags’ scheme</p></li>
+<li><p>Copy the (host) directories</p></li>
+<li><p>Edit the characteristics in the parent folder</p></li>
+</ol></div>
+<div class="sect3">
+<h4 id="heading__1_host_tags">
+<span class="hidden-anchor sr-only" id="_1_host_tags"></span>1. Host tags</h4>
+<div class="paragraph"><p>It is self-evident that the host tags used in the remote must also be known to the central site in order that they can be carried over.
+Check these before the migration and add any missing tags to the central site manually.
+Here it is essential that the Tag-IDs match – the tag’s title is irrelevant.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__2_folders">
+<span class="hidden-anchor sr-only" id="_2_folders"></span>2. Folders</h4>
+<div class="paragraph"><p>Next, move the hosts and rules into the configuration environment on the central site.
+This only works for hosts and rules in sub-folders (i.e., not in the <span class="guihint">Main</span> folder).
+Hosts in the main folder should first simply be moved into a remote site’s sub-folder via <span class="guihint">Setup &gt; Hosts &gt; Hosts</span>.</p></div>
+<div class="paragraph"><p>The actual migration can then be achieved quite simply by copying the appropriate directories.
+Each folder in configuration environment corresponds to a directory within <code>~/etc/check_mk/conf.d/wato/</code>.
+These can be copied using a tool of your choice (e.g. <code>scp</code>) from the tethered site to the same location in the central site.
+If a directory with the same name already exists there, simply rename it.
+Please note that Linux users and groups are also used by the central site.</p></div>
+<div class="paragraph"><p>Following the copying the hosts will appear in the central site’s <span class="guihint">Setup</span> – as well as the rules you have created in these folders.
+The folders’ properties will also be included with the copying.
+These can be found in the directory in the hidden <code>.wato</code> file.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__3_one_time_editing_and_saving">
+<span class="hidden-anchor sr-only" id="_3_one_time_editing_and_saving"></span>3. One-time editing and saving</h4>
+<div class="paragraph"><p>So that the attributes of the central site’s parent folder’s functions are correctly inherited, as a final step following the migration the parent folders’ characteristics must be opened and saved once – the host’s attributes will thereby be freshly defined.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_sitespecific">
+<span class="hidden-anchor sr-only" id="sitespecific"></span>2.6. Site-specific global settings</h3>
+<div class="paragraph"><p>A centralized configuration means first and foremost, that all sites have a common and (apart from the hosts) the same configuration.
+What is the situation however, when individual sites require different global settings?
+An example could be the <a href="cmc.html">CMC</a> setting <span class="guihint">Maximum concurrent Checkmk checks</span>.
+It could be that a customized setting is required for a particularly small or a particularly large site.</p></div>
+<div class="paragraph"><p>For such cases there is a site-specific global setting.
+This is reached via the <span class="image-inline"><img src="../images/icons/button_configuration.png" alt="button configuration"></span> symbol in the menu under <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_site_specific_global_configuration.png" alt="distributed monitoring site specific global configuration"></div></div>
+<div class="paragraph"><p>Via this symbol you will find a selection of all global settings –
+although anything you define here will only be effective for the chosen site.
+A value that diverges from the standard will be visually-highlighted,
+and it will apply only to this site:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_site_specific_global_configuration_2.png" alt="distributed monitoring site specific global configuration 2"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ec">
+<span class="hidden-anchor sr-only" id="ec"></span>2.7. Distributed Event Console</h3>
+<div class="paragraph"><p>The <a href="ec.html">Event Console</a> processes syslog-messages, SNMP traps and other
+types of events of an asynchronous nature.</p></div>
+<div class="paragraph"><p>Checkmk also provides the option of running a distributed Event Console.
+Then every site will run its own event processing which captures the events from all of the hosts being
+monitored from the site.
+The events will thus <em>not</em> be sent to the central system, rather they will remain at the sites and be only centrally-retrieved.
+This is effected in a similar way to that for the active states via Livestatus, and functions with both the <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> and the <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong>.</p></div>
+<div class="paragraph"><p>Converting to a distributed Event Console according to the new scheme requires the following steps:</p></div>
+<div class="ulist"><ul>
+<li><p>In the connection settings, activate the option(<span class="guihint">Replicate Event Console configuration to this site</span>).</p></li>
+<li><p>Switch the Syslog location and SNMP-Trap-destinations for the affected hosts to the remote site. This is the most laborious task.</p></li>
+<li><p>If you use the <span class="guihint">Check event state in Event Console</span> rule set, switch this back to <span class="guihint">Connect to the local Event Console</span>.</p></li>
+<li><p>If you use the <span class="guihint">Logwatch Event Console Forwarding</span> rule set, switch this likewise to the local Event Console.</p></li>
+<li><p>In the Event Console <span class="guihint">Settings</span>, switch the <span class="guihint">Access to event status via TCP</span> back to <span class="guihint">no access via TCP</span>.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__nagvis">
+<span class="hidden-anchor sr-only" id="_nagvis"></span>2.8. NagVis</h3>
+<div class="imageblock inline-image"><div class="content"><img src="../images/nagvis.png" alt="nagvis" width="170"></div></div>
+<div class="paragraph"><p>The <a href="https://www.nagvis.org" target="_blank">NagVis</a> open source program visualizes status data from monitoring on self-produced maps, diagrams and other charts.
+NagVis is integrated in Checkmk and can be used immediately.
+The access is easiest over the <span class="guihint">NagVis Maps</span> <a href="user_interface.html#sidebar">sidebar element</a>.
+The integration of NagVis in Checkmk is described in its <a href="nagvis.html">own article</a>.</p></div>
+<div class="paragraph"><p>NagVis supports distributed monitoring via Livestatus in pretty much the same way as Checkmk does.
+The links to the individual sites are referred to as <span class="guihint">Backends</span>.
+The back-ends are automatically set up correctly by Checkmk so that one can immediately begin generating NagVis-charts – also in distributed monitoring.</p></div>
+<div class="paragraph"><p>Select the correct back-end for each object that you place on a chart – i.e., the Checkmk site from which the object is to be monitored.
+NagVis cannot find the host or service automatically, above all for performance reasons.
+Therefore if you move hosts to a different remote site you will need to update the NagVis-charts accordingly.</p></div>
+<div class="paragraph"><p>Details on back-ends can be found in the documentation here:
+<a href="http://docs.nagvis.org/1.9/en_US/backends.html" target="_blank">NagVis</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_wan">
+<span class="hidden-anchor sr-only" id="wan"></span>3. Unstable or slow connections</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The general status overview in the user interface enables an always available, and reliable access to all of the connected sites.
+The one snag with this is that a view can only be displayed when <em>all</em> sites have responded.
+The process is always that first a Livestatus query is sent (for example, "List all services whose state is not <span class="state0">OK</span>.").
+The view can then only be displayed once the last site has responded.</p></div>
+<div class="paragraph"><p>It is annoying when a site doesn’t answer at all. To tolerate brief outages (e.g., due to restarting a site or a lost TCP-Packet), the GUI waits for a given time before a site is declared to be <span class="image-inline"><img src="../images/icons/icon_status_label_dead.png" alt="icon status label dead" width="70px"></span>, and then continues processing the responses from the remaining sites.
+This results in a ‘hanging’ GUI. The timeout is set to 10 seconds by default.</p></div>
+<div class="paragraph"><p>If this occasionally happens in your network you should set up either Status hosts
+or (even better) the Livestatus proxy.</p></div>
+<div class="sect2">
+<h3 id="heading__status_hosts">
+<span class="hidden-anchor sr-only" id="_status_hosts"></span>3.1. Status hosts</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+The configuration of <em>Status hosts</em> is the recommended procedure with the <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> in order to recognize defective connections reliably.
+The idea is simple: The central site actively monitors the connection to each individual remote site. At least we will then have a monitoring system available!
+The GUI will then be aware of unreachable sites and can immediately exclude and flag them as  <span class="image-inline"><img src="../images/icons/icon_status_label_down.png" alt="icon status label down" width="70px"></span>.
+Timeouts are thus minimized.</p></div>
+<div class="paragraph"><p>Here is how to set up a status host for a connection:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Add the host on which the remote site is running to the central site in monitoring.</p></li>
+<li><p>Enter this as the status host in the connection to the remote:</p></li>
+</ol></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_status_host.png" alt="distributed monitoring status host"></div></div>
+<div class="paragraph"><p>A failed connection to a remote site can now only lead to a brief hangup of the GUI – namely until the monitoring has recognized it.
+By reducing the status host’s proof interval from the default of sixty seconds to, e.g. five seconds, you can minimize the duration of a hangup.</p></div>
+<div class="paragraph"><p>If you have set up a status host, there are further possible states for connections:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/pill_site_status_unreach.png" alt="pill site status unreach"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The computer on which the remote site is running is just now unreachable to the monitoring because a router is down (the status host has an <span class="hstate2">UNREACH</span> state).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/pill_site_status_waiting.png" alt="pill site status waiting"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The status host that monitors the connection to the remote system has not yet been verified by the monitoring (it still has a <span class="statep">PEND</span> state).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/pill_site_status_unknown.png" alt="pill site status unknown"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The status host’s state has an invalid value (this should never occur).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>In all three cases the connection to the site will be excluded and timeouts thus avoided.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__persistent_connections">
+<span class="hidden-anchor sr-only" id="_persistent_connections"></span>3.2. Persistent connections</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+With the <span class="guihint">Use persistent connections</span> check box you can prompt the GUI
+to maintain established Livestatus connections to remote sites permanently
+in an ‘up’ state, and to continue using them for queries.
+Especially for connections with longer packet turnarounds (e.g. intercontinental),
+this can make the GUI noticeably more responsive.</p></div>
+<div class="paragraph"><p>Because the Apache GUI is shared over multiple independent processes a connection
+is required for each Apache-Client process running simultaneously.
+If you have many simultaneous users, please ensure the configuration
+has a sufficient number of Livestatus connections in the remote’s Nagios core.
+These are configured in the <code>etc/mk-livestatus/nagios.cfg</code> file.
+The default is twenty (<code>num_client_threads=20</code>).</p></div>
+<div class="paragraph"><p>By default, Apache is so configured in Checkmk that it permits up to 128
+simultaneous user connections. This is configured in the following section
+of the <code>etc/apache/apache.conf</code> file:</p></div>
+<div class="listingblock">
+<div class="title">etc/apache/apache.conf</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>&lt;IfModule prefork.c&gt;
+StartServers         1
+MinSpareServers      1
+MaxSpareServers      5
+ServerLimit          128
+MaxClients           128
+MaxRequestsPerChild  4000
+&lt;/IfModule&gt;</code></pre></div>
+</div>
+<div class="paragraph"><p>This means that under high load up to 128 Apache processes can start which then
+also generate and sustain up to 128 Livestatus connections.
+Not setting the <code>num_client_threads</code> high enough can result in errors or a
+very slow response time in the GUI.</p></div>
+<div class="paragraph"><p>For connections with LAN or with fast WAN-Networks we advise <strong>not</strong>
+utilizing persistent connections.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_livestatusproxy">
+<span class="hidden-anchor sr-only" id="livestatusproxy"></span>3.3. The Livestatus proxy</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+With the <em>Livestatus proxy</em> the <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> features
+a sophisticated mechanism for detecting dead connections.
+Additionally, it especially optimizes the performance of connections
+with long round-trip-times. The Livestatus proxy’s advantages are:</p></div>
+<div class="ulist"><ul>
+<li><p>Very fast, proactive detection of unresponding sites</p></li>
+<li><p>Local caching of queries that deliver static data</p></li>
+<li><p>Standing TCP-connections – which require fewer round trips and consequently allow much faster responses from distant sites (e.g. USA ⇄ China)</p></li>
+<li><p>Precise control of the maximum number of Livestatus connections required</p></li>
+<li><p>Enables <a href="inventory.html">Hardware/Software inventory</a> in distributed environments</p></li>
+</ul></div>
+<div class="sect3">
+<h4 id="heading__installation">
+<span class="hidden-anchor sr-only" id="_installation"></span>Installation</h4>
+<div class="paragraph"><p>Installing the Livestatus proxy is very simple. It is activated by default in
+the CEE – which can be seen when starting a site:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>omd<span class="tok-w"> </span>start
+<span class="tok-go">Temporary filesystem already mounted</span>
+<span class="tok-go">Starting mkeventd...OK</span>
+<span class="tok-go">Starting liveproxyd...OK</span>
+<span class="tok-go">Starting mknotifyd...OK</span>
+<span class="tok-go">Starting rrdcached...OK</span>
+<span class="tok-go">Starting cmc...OK</span>
+<span class="tok-go">Starting apache...OK</span>
+<span class="tok-go">Starting dcd...OK</span>
+<span class="tok-go">Starting redis...OK</span>
+<span class="tok-go">Starting stunnel...OK</span>
+<span class="tok-go">Starting xinetd...OK</span>
+<span class="tok-go">Initializing Crontab...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Select the setting ‘<span class="guihint">Use Livestatus Proxy-Daemon</span>’ for the connection to
+the remote sites instead of ‘Connect via TCP’:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livestatus_proxy_daemon.png" alt="distributed monitoring livestatus proxy daemon"></div></div>
+<div class="paragraph"><p>The details for host and port are as always. No changes must be made on the remote site.
+In <span class="guihint">Number of channels to keep open</span> enter the number of parallel
+TCP-connections the proxy should establish <em>and sustain</em> to the target site.</p></div>
+<div class="paragraph"><p>The TCP-connections pool is shared by all GUI inquiries. The number of connections
+limits the maximum number of queries that can be processed concurrently.
+This indirectly limits the number of users. In situations in which all channels are
+reserved this will not immediately lead to an error. The GUI waits a given time for
+a free channel. Most queries actually require only a few milliseconds.</p></div>
+<div class="paragraph"><p>If the GUI must wait longer than <span class="guihint">Timeout waiting for a free channel</span> for a channel,
+it will be interrupted with an error and the user will receive an error message.
+In such a case the number of connections should be increased. Be aware however
+that on the remote site sufficient parallel incoming connections must be allowed
+– this is set to 20 by default. This setting can be found in the global options under
+<span class="guihint">Monitoring core &gt; Maximum concurrent Livestatus connections</span>.</p></div>
+<div class="paragraph"><p>The <span class="guihint">Regular heartbeat</span> provides a constantly active monitoring of the connections
+directly at the protocol level. In the process the proxy regularly sends a simple
+Livestatus query which must be answered by the remote site within the predetermined time
+(default: 2 seconds). With this method a situation where the target server and the
+TCP-port are actually reachable, but the monitoring core no longer responds,
+will also be detected.</p></div>
+<div class="paragraph"><p>If a response fails to appear, all connections will be declared ‘dead’,
+and following a ‘cooldown’ time (default: 4 seconds) will be newly established.
+All this takes place proactively – i.e. <em>without</em> a user needing to
+open a GUI-window.
+In this way outages can be quickly detected, and via a recovery the connections
+can be immediately reestablished and in the best case be available before a
+user even notices the outage.</p></div>
+<div class="paragraph"><p>The <span class="guihint">Caching</span> ensures that static queries need only be responded-to once by the remote site,
+and from that point of time can be responded to directly and locally, without delay.
+An example of this is the list of monitored hosts required by <span class="guihint">Quicksearch</span>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__error_diagnosis">
+<span class="hidden-anchor sr-only" id="_error_diagnosis"></span>Error diagnosis</h4>
+<div class="paragraph"><p>The Livestatus proxy has its own log file
+which can be found under <code>var/log/liveproxyd.log</code>.
+On a correctly-configured remote site with five channels (standard)
+it will look something like this:</p></div>
+<div class="listingblock">
+<div class="title">var/log/liveproxyd.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-12-01 15:58:30,624 [20] ----------------------------------------------------------
+2021-12-01 15:58:30,627 [20] [cmk.liveproxyd] Livestatus Proxy-Daemon (2.0.0p15) starting...
+2021-12-01 15:58:30,638 [20] [cmk.liveproxyd] Configured 1 sites
+2021-12-01 15:58:36,690 [20] [cmk.liveproxyd.(3236831).Manager] Reload initiated. Checking if configuration changed.
+2021-12-01 15:58:36,692 [20] [cmk.liveproxyd.(3236831).Manager] No configuration changes found, continuing.
+2021-12-01 16:00:16,989 [20] [cmk.liveproxyd.(3236831).Manager] Reload initiated. Checking if configuration changed.
+2021-12-01 16:00:16,993 [20] [cmk.liveproxyd.(3236831).Manager] Found configuration changes, triggering restart.
+2021-12-01 16:00:17,000 [20] [cmk.liveproxyd.(3236831).Manager] Restart initiated. Terminating site processes...
+2021-12-01 16:00:17,028 [20] [cmk.liveproxyd.(3236831).Manager] Restart master process</code></pre></div>
+</div>
+<div class="paragraph"><p>The Livestatus proxy regularly records its state in the <code>var/log/liveproxyd.state</code> file:</p></div>
+<div class="listingblock">
+<div class="title">var/log/liveproxyd.state</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Current state:
+[remote1]
+  State:                   ready
+  State dump time:         2021-12-01 15:01:15 (0:00:00)
+  Last reset:              2021-12-01 14:58:49 (0:02:25)
+  Site's last reload:      2021-12-01 14:26:00 (0:35:15)
+  Last failed connect:     Never
+  Last failed error:       None
+  Cached responses:        1
+  Channels:
+       9 - ready             -  client: none - since: 2021-12-01 15:01:00 (0:00:14)
+      10 - ready             -  client: none - since: 2021-12-01 15:01:10 (0:00:04)
+      11 - ready             -  client: none - since: 2021-12-01 15:00:55 (0:00:19)
+      12 - ready             -  client: none - since: 2021-12-01 15:01:05 (0:00:09)
+      13 - ready             -  client: none - since: 2021-12-01 15:00:50 (0:00:24)
+  Clients:
+  Heartbeat:
+    heartbeats received: 29
+    next in 0.2s
+  Inventory:
+    State: not running
+    Last update: 2021-12-01 14:58:50 (0:02:25)</code></pre></div>
+</div>
+<div class="paragraph"><p>And when a site is currently stopped the state will look like this:</p></div>
+<div class="listingblock">
+<div class="title">var/log/liveproxyd.state</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>----------------------------------------------
+Current state:
+[remote1]
+  State:                   starting
+  State dump time:         2021-12-01 16:11:35 (0:00:00)
+  Last reset:              2021-12-01 16:11:29 (0:00:06)
+  Site's last reload:      2021-12-01 16:11:29 (0:00:06)
+  Last failed connect:     2021-12-01 16:11:33 (0:00:01)
+  Last failed error:       [Errno 111] Connection refused
+  Cached responses:        0
+  Channels:
+  Clients:
+  Heartbeat:
+    heartbeats received: 0
+    next in -1.0s
+  Inventory:
+    State: not running
+    Last update: 2021-12-01 16:00:45 (0:10:50)</code></pre></div>
+</div>
+<div class="paragraph"><p>Here the state is <code>‘starting’</code>.
+The proxy is thus attempting to establish connections.
+There are no channels yet.
+During this state queries to the site will be answered with an error.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_viewer">
+<span class="hidden-anchor sr-only" id="viewer"></span>4. Cascading Livestatus</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>As already mentioned in the introduction, it is possible to extend a distributed monitoring to include dedicated Checkmk viewer sites that display the monitoring data from remote sites that by themselves are not directly accessible.
+The only prerequisite for this is that the central site must of course be accessible.
+Technically, this is implemented via the Livestatus proxy. The central site receives data from the remote site via Livestatus and itself acts as a proxy — i.e. it can pass the data on to third sites.
+You can extend this chain as you wish, for instance, by connecting a second viewer site via the first.</p></div>
+<div class="paragraph"><p>This is practical, for example, in a scenario such as the following:
+The central site supports three independent networks — <em>customer1</em>, <em>customer2</em> and <em>customer3</em>, and is itself operated in the network <em>operator1</em>.
+If the management of the operator from the <em>operator1</em> network would like to see the monitoring status from the customer sites, this could of course be regulated via an access from the central site.
+For technical and legal reasons, however, the central site could be reserved exclusively for the personnel responsible for it.
+A direct access can thus be avoided by setting up a viewer site dedicated to viewing remote sites.
+The viewer site then shows the hosts and services on connected sites, but its own configuration remains completely empty.</p></div>
+<div class="paragraph"><p>The setup is done in the connection settings on the distributed monitoring, first on the central site, then on the viewer site (which does not actually have to exist yet).</p></div>
+<div class="paragraph"><p>On the central site, open the connection settings for the desired remote site via <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span>.
+Under <span class="guihint">Use Livestatus Proxy Daemon</span> activate the <span class="guihint">Allow access via TCP</span> option and enter an available port (here <code>6560</code>).
+In this way, the Livestatus proxy on the central site connects to the remote site and opens a port for requests from the viewer site — which are then forwarded to the remote site.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_livestatus_cascading_master.png" alt="Connection settings in distributed monitoring with TCP access enabled for viewer sites."></div></div>
+<div class="paragraph"><p>Now create a viewer site and again open the connection settings via <span class="guihint">Setup &gt; General &gt; Distributed monitoring</span>.
+In the <span class="guihint">Basic settings</span> enter — as always for connections in distributed monitoring — the exact name of the central site as the <span class="guihint">Site ID</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_livestatus_cascading_viewer_01.png" alt="Site ID in the connection settings."></div></div>
+<div class="paragraph"><p>In the <span class="guihint">Status connection</span> panel, enter the central site as the host — as well as the manually assigned free port (here <code>6560</code>).</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_livestatus_cascading_viewer_02.png" alt="Connection settings with a central site and free port for Livestatus."></div></div>
+<div class="paragraph"><p>As soon as the connection is established, you will see the desired hosts and services on the remote site in the monitoring views for the viewer site.</p></div>
+<div class="paragraph"><p>If you want to cascade further, you must also allow TCP access to the Livestatus proxy on the viewer site, as done before on the central site, this time with a different free port.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_livedump">
+<span class="hidden-anchor sr-only" id="livedump"></span>5. Livedump and CMCDump</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__motivation">
+<span class="hidden-anchor sr-only" id="_motivation"></span>5.1. Motivation</h3>
+<div class="paragraph"><p>The concept of a distributed monitoring with Checkmk that has been described
+up until now is a good and simple solution in most cases.
+It does however require network access <em>from the central to the remote sites</em>.
+There are situations in which access is either not possible or
+not desired, because, for example:</p></div>
+<div class="ulist"><ul>
+<li><p>The remote sites are in your customer’s network for which you have no access.</p></li>
+<li><p>The remote sites are in a security area to which access is strictly forbidden.</p></li>
+<li><p>The remote sites have no permanent network connection or no fixed IP-addresses and methods like <a href="https://de.wikipedia.org/wiki/Dynamisches_DNS" target="_blank">Dynamic DNS</a> are no option.</p></li>
+</ul></div>
+<div class="paragraph"><p>Distributed monitoring with Livedump, or respectively,
+CMCDump takes a quite different approach.
+Firstly, the remote sites are so attached so that they operate completely independently of
+the central site and are <em>administered decentralized</em>.
+A distributed configuration environment will be dispensed with.</p></div>
+<div class="paragraph"><p>All of the remote site’s hosts and services will then be replicated as <em>copies</em> in the central site.
+Livedump/CMCDump can help by generating a copy of the remote sites’ configuration which can then be loaded into the central site.</p></div>
+<div class="paragraph"><p>Now during the monitoring, on every remote site a copy of the current status will be
+written to a file at predetermined intervals (e.g. every minute).
+This will be transmitted to the central site via a user-defined method and will be
+saved there as a status update. No particular protocol has been provided or specified
+for this data transfer.
+Any automatable transfer protocol could be used. It is not essential to use <code>scp</code> –
+even a transfer by email is conceivable!</p></div>
+<div class="paragraph"><p>Such a setup differs from a ‘normal’ distributed monitoring in the following ways:</p></div>
+<div class="ulist"><ul>
+<li><p>Actualization of the states and performance data in the central site will be delayed.</p></li>
+<li><p>Calculation of availability on the central site will give minimally different results to a calculation on the remote site.</p></li>
+<li><p>State changes that occur more quickly than the actualization interval will be invisible to the central site.</p></li>
+<li><p>If a remote site is ‘dead’, the states will become obsolete on the central site – the services will be ‘stale’, but nonetheless still visible.
+Performance and availability data for this time period will be ‘lost’ (but they will still be available on the remote site).</p></li>
+<li><p>Commands on the central site such as <span class="guihint">Schedule downtimes</span> and <span class="guihint">Acknowledge problems</span> <em>cannot</em> be transmitted to the remote site.</p></li>
+<li><p>The central site can never access the remote sites.</p></li>
+<li><p>Access to log file details by Logwatch is impossible.</p></li>
+<li><p>The Event Console will not be supported by Livedump/CMCDump.</p></li>
+</ul></div>
+<div class="paragraph"><p>Since brief state changes – depending on the periodic interval selected on the central site –
+may not be visible, a <a href="notifications.html">notification</a> through the central site is not ideal.
+If however the central site is utilized as a purely <em>display site</em> – as a central
+overview of all customers for example – this method definitely has its advantages.</p></div>
+<div class="paragraph"><p>Incidentally, Livedump/CMCDump can be used <em>simultaneously</em>
+alongside distributed monitoring over Livestatus without problems.
+Some sites are are simply connected via Livestatus directly – others use Livedump.
+Livedump can also be added to one of the Livestatus remote sites.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__installing_livedump">
+<span class="hidden-anchor sr-only" id="_installing_livedump"></span>5.2. Installing Livedump</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+If you are installing the <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> (or the CEE with a Nagios core),
+use the <strong><code>livedump</code></strong> tool. The name is derived from <em>Livestatus</em> and
+<em>Status-Dump</em>. From the Checkmk Version <span class="new">1.2.8</span>p12
+<code>livedump</code> is located directly in the search path and is thus available
+as a command.
+In older versions you can find it under <code>~/share/doc/check_mk/treasures/livedump/livedump</code>.</p></div>
+<div class="paragraph"><p>We will make the following assumptions:</p></div>
+<div class="ulist"><ul>
+<li><p>the remote site has been fully set up and is actively monitoring hosts and services,</p></li>
+<li><p>the central site has been started and is running,</p></li>
+<li><p><em>at least one host</em> is being locally monitored on the central site (because the central monitors itself).</p></li>
+</ul></div>
+<div class="sect3">
+<h4 id="heading__transferring_the_configuration">
+<span class="hidden-anchor sr-only" id="_transferring_the_configuration"></span>Transferring the configuration</h4>
+<div class="paragraph"><p>First, on the remote site, create a copy of its host’s and service’s configurations in
+Nagios-configuration format. Also redirect the output from <code>livedump -TC</code> to a file:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>livedump<span class="tok-w"> </span>-TC<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>config-remote1.cfg</code></pre></div></div>
+<div class="paragraph"><p>The start of the file will look something like this:</p></div>
+<div class="listingblock">
+<div class="title">config-remote1.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>define host {
+    name                    livedump-host
+    use                     check_mk_default
+    register                0
+    active_checks_enabled   0
+    passive_checks_enabled  1
+
+}
+
+define service {
+    name                    livedump-service
+    register                0
+    active_checks_enabled   0
+    passive_checks_enabled  1
+    check_period            0x0
+
+}</code></pre></div>
+</div>
+<div class="paragraph"><p>Transmit the file to the central site, (e.g. with <code>scp</code>) and save them there in
+the <code>~/etc/nagios/conf.d/</code> directory – here Nagios expects to find the
+configuration data for hosts and services. Select a file name that ends with
+<code>.cfg</code>, for example <code>~/etc/nagios/conf.d/config-remote1.cfg</code>.
+If an SSH-access from remote to central site is possible it can be done, for example, as below:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>scp<span class="tok-w"> </span>config-remote1.cfg<span class="tok-w"> </span>central@myserver.mydomain:etc/nagios/conf.d/
+<span class="tok-go">central@myserver.mydomain's password:</span>
+<span class="tok-go">config-remote1.cfg                                             100% 8071     7.9KB/s   00:00</span></code></pre></div></div>
+<div class="paragraph"><p>Now log in to the central site and activate the changes:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>cmk<span class="tok-w"> </span>-R
+<span class="tok-go">Generating configuration for core (type nagios)...OK</span>
+<span class="tok-go">Validating Nagios configuration...OK</span>
+<span class="tok-go">Precompiling host checks...OK</span>
+<span class="tok-go">Restarting monitoring core...OK</span></code></pre></div></div>
+<div class="paragraph"><p>Now all of the remote’s hosts and services should appear in the central site –
+initially with the <span class="statep">PEND</span> state, which they will retain for the time being:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livedump_pending.png" alt="distributed monitoring livedump pending"></div></div>
+<div class="paragraph"><p><strong>Note</strong>:</p></div>
+<div class="ulist"><ul>
+<li><p>With the <code>-T</code> option in <code>livedump</code> template definitions are created in Livedump from which it draws the configuration. Without these Nagios cannot be started. <em>Only one</em> of these may be present however. If you import a configuration from another remote site it <strong>must not</strong> use the <code>-T</code> option!</p></li>
+<li><p>A dump of the configuration is also possible on a <a href="cmc.html">Checkmk Micro core (CMC)</a> — the importing of which requires Nagios. If the CMC is running on your central site use <a href="#cmcdump">CMCDump</a>.</p></li>
+<li><p>The copying and transferring of the configuration must be repeated for every change to hosts or services on the remote site.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__transferring_the_status">
+<span class="hidden-anchor sr-only" id="_transferring_the_status"></span>Transferring the status</h4>
+<div class="paragraph"><p>Once the hosts are visible in the central site, we will need to setup a (regular) transmission
+of the remotes' monitoring status. Again create a file with <code>livedump</code>,
+but this time without secondary options:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>livedump<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>state</code></pre></div></div>
+<div class="paragraph"><p>This file contains the states of all hosts and services in a format which Nagios can
+read directly from check results. The start of this file looks something like this:</p></div>
+<div class="listingblock">
+<div class="title">state</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>host_name=myhost1900
+check_type=1
+check_options=0
+reschedule_check
+latency=0.13
+start_time=1615521257.2
+finish_time=16175521257.2
+return_code=0
+output=OK - 10.1.5.44: rta 0.066ms, lost 0%|rta=0.066ms;200.000;500.000;0; pl=0%;80;100;; rtmax=0.242ms;;;; rtmin=0.017ms;;;;</code></pre></div>
+</div>
+<div class="paragraph"><p>Copy this file to the central site into the <code>~/tmp/nagios/checkresults</code> directory.
+<strong>Important:</strong> This file’s name must begin with <code>c</code> and be seven characters long.
+With <code>scp</code> it will look something like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>scp<span class="tok-w"> </span>state<span class="tok-w"> </span>central@mycentral.mydomain:tmp/nagios/checkresults/caabbcc
+<span class="tok-go">central@mycentral.mydomain’s password:</span>
+<span class="tok-go">state                                                  100%   12KB  12.5KB/s   00:00</span></code></pre></div></div>
+<div class="paragraph"><p>Finally, create an empty file on the central site with the same name and the <code>.ok</code> extension.
+With this Nagios will know that the status file has been transferred completely and can
+now be read in:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>touch<span class="tok-w"> </span>tmp/nagios/checkresults/caabbcc.ok</code></pre></div></div>
+<div class="paragraph"><p>The status of the remotes’ hosts/services will now be immediately updated on the central site:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_livedump_status.png" alt="distributed monitoring livedump status"></div></div>
+<div class="paragraph"><p>The transmission of the status must from now on be made regularly.
+Livedump unfortunately doesn’t support this task and you will need to script it yourself.
+The <code>livedump-ssh-recv</code> script can be found
+in <code>~/share/check_mk/doc/treasures/livedump</code>, which you can employ
+in order to receive Livedump updates (including those from the configuration)
+on the central site per SSH. Details about this can be found in the script itself.</p></div>
+<div class="paragraph"><p>The configuration and status dump can also be restricted by using Livestatus filters.
+For example, you could limit the hosts to the members of the <code>mygroup</code> host group:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$</span>:<span class="tok-w"> </span>livedump<span class="tok-w"> </span>-H<span class="tok-w"> </span><span class="tok-s2">"Filter: host_groups &gt;= mygroup"</span><span class="tok-w"> </span>&gt;<span class="tok-w"> </span>state</code></pre></div></div>
+<div class="paragraph"><p>Further information on Livedump can be found in the <code>README</code> file in the directory <code>~/share/doc/check_mk/treasures/livedump</code>.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_cmcdump">
+<span class="hidden-anchor sr-only" id="cmcdump"></span>5.3. Implementing CMCDump</h3>
+<div class="paragraph"><p>CMCDump is for the <a href="cmc.html">Checkmk Micro Core</a> what <a href="#livedump">Livedump</a>
+is for Nagios – and it is thus the tool of choice for the <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong>.
+In contrast to Livedump, CMCDump can replicate the <em>complete</em> status
+of hosts and services (Nagios doesn’t have the required interfaces for this task).</p></div>
+<div class="paragraph"><p>To compare: Livedump transfers the following data:</p></div>
+<div class="ulist"><ul>
+<li><p>The current states – i.e. <span class="statep">PEND</span>, <span class="state0">OK</span>, <span class="state1">WARN</span>, <span class="state2">CRIT</span>, <span class="state3">UNKNOWN</span>, <span class="hstate0">UP</span>, <span class="hstate1">DOWN</span> or <span class="hstate2">UNREACH</span></p></li>
+<li><p>The output from Check plug-ins</p></li>
+<li><p>The performance data</p></li>
+</ul></div>
+<div class="paragraph"><p>CMCDump additionally synchronizes:</p></div>
+<div class="ulist"><ul>
+<li><p>The <em>long</em> output from the plug-in</p></li>
+<li><p>Whether the object is currently <span class="image-inline"><img src="../images/icons/icon_flapping.png" alt="icon flapping"></span> flapping</p></li>
+<li><p>The time stamps for the last check execution and the last state change</p></li>
+<li><p>The duration of the check execution</p></li>
+<li><p>The latency of the check execution</p></li>
+<li><p>The sequence number of the current check attempt and whether the current state is ‘hard’ or ‘soft’</p></li>
+<li><p><span class="image-inline"><img src="../images/icons/icon_ack.png" alt="icon ack"></span> <a href="basics_ackn.html">acknowledged</a>, if present</p></li>
+<li><p>Whether the object is currently in a <span class="image-inline"><img src="../images/icons/icon_downtime.png" alt="icon downtime"></span> <a href="basics_downtimes.html">planned maintenance</a>.</p></li>
+</ul></div>
+<div class="paragraph"><p>This provides a much more precise reflection of the monitoring.
+When importing the status the CMC doesn’t just simulate a check execution,
+rather by using an interface designed for this task it transmits an accurate status.
+Among other things, this means that at any time the operations center can see
+whether problems have been acknowledged or if maintenance times have been entered.</p></div>
+<div class="paragraph"><p>The installation is almost identical to that for Livedump, but is however somewhat
+simpler since there is no need to be concerned about possible duplicated templates
+or similar.</p></div>
+<div class="paragraph"><p>The copy of the configuration is made with <code>cmcdump -C</code>. Store this file on
+the central site in <code>etc/check_mk/conf.d/</code>. The <code>.mk</code> file extension must be used:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>cmcdump<span class="tok-w"> </span>-C<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>config.mk
+<span class="tok-gp">OMD[remote1]:~$ </span>scp<span class="tok-w"> </span>config.mk<span class="tok-w"> </span>central@mycentral.mydomain:etc/check_mk/conf.d/remote1.mk</code></pre></div></div>
+<div class="paragraph"><p>Activate the configuration on the central site:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>cmk<span class="tok-w"> </span>-O</code></pre></div></div>
+<div class="paragraph"><p>As with Livedump the hosts and services will now appear on the central site in the
+<span class="statep">PEND</span> state. You will however see by the <span class="image-inline"><img src="../images/icons/icon_shadow.png" alt="icon shadow"></span> symbol that we
+are dealing with a <em>shadow object</em>. In this way it can be distinguished
+from an object being monitored directly on the central site or on a ‘normal’ remote site:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_cmcdump_pending.png" alt="distributed monitoring cmcdump pending"></div></div>
+<div class="paragraph"><p>The regular generation of the status is achieved with <code>cmcdump</code> without
+additional arguments:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>cmcdump<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>state
+<span class="tok-gp">OMD[remote1]:~$ </span>scp<span class="tok-w"> </span>state<span class="tok-w"> </span>central@mycentral.mydomain:tmp/state_remote1</code></pre></div></div>
+<div class="paragraph"><p>To import the status to the central site the file content must be written into the
+<code>tmp/run/live</code> UNIX-Socket with the help of the <code>unixcat</code> tool.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[central]:~$ </span>unixcat<span class="tok-w"> </span>tmp/run/live<span class="tok-w"> </span>&lt;<span class="tok-w"> </span>tmp/state_remote1</code></pre></div></div>
+<div class="paragraph"><p>If you have a connection from the remote to the central site via SSH without a password
+all three commands can be combined into a single one – and when so doing not even
+a temporary file is created:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[remote1]:~$ </span>cmcdump<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>ssh<span class="tok-w"> </span>central@mycentral.mydomain<span class="tok-w"> </span><span class="tok-s2">"unixcat tmp/run/live"</span></code></pre></div></div>
+<div class="paragraph"><p>It really is so simple! But, as already mentioned, <code>ssh</code>/<code>scp</code> is
+is not the only method for transferring files, and a configuration or status
+can be transferred just as well using email or another desired protocol.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_notifications">
+<span class="hidden-anchor sr-only" id="notifications"></span>6. Notifications in distributed environments</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__centralized_or_decentralized">
+<span class="hidden-anchor sr-only" id="_centralized_or_decentralized"></span>6.1. Centralized or decentralized?</h3>
+<div class="paragraph"><p>In a distributed environment the question arises – from which site should the
+notifications (e.g. emails) be sent: from the individual remotes or from the central site?
+There are arguments in favor of both procedures.</p></div>
+<div class="paragraph"><p>Arguments for sending from the remotes:</p></div>
+<div class="ulist"><ul>
+<li><p>Simpler to set up</p></li>
+<li><p>A local notification is still possible if the link to the central site is not available</p></li>
+<li><p>Also works with the <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong></p></li>
+</ul></div>
+<div class="paragraph"><p>Arguments for sending from the central site:</p></div>
+<div class="ulist"><ul>
+<li><p>Notifications can be further processed at a central location (e.g. be forwarded to a ticket system)</p></li>
+<li><p>remote sites require no setting up for email or SMS</p></li>
+<li><p>For sending an SMS over hardware this is only required once – on the central site</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__decentralized_notification">
+<span class="hidden-anchor sr-only" id="_decentralized_notification"></span>6.2. Decentralized notification</h3>
+<div class="paragraph"><p>No special steps are required for a decentralized notification since this is
+the standard setting. Every notification that is generated on a remote site
+runs through the chain of <a href="notifications.html#rules">notifications rules</a> there.
+If you implement a distributed configuration environment these rules are the same on all sites.
+Notifications resulting from these rules will be delivered as usual,
+for which the appropriate notification scripts will have been run locally.</p></div>
+<div class="paragraph"><p>It must simply be ensured that the appropriate service has been correctly
+installed on the sites – that a smart host has been defined for emails for
+example – in other words the same procedure as for setting up an individual Checkmk site.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__centralized_notification">
+<span class="hidden-anchor sr-only" id="_centralized_notification"></span>6.3. Centralized notification</h3>
+<div class="sect3">
+<h4 id="heading__fundamentals">
+<span class="hidden-anchor sr-only" id="_fundamentals"></span>Fundamentals</h4>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+The <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> provide a built-in mechanism for centralized notifications which can be individually activated for each remote site.
+Such remotes then route all notifications to the central site for further processing.
+The centralized notification is thereby independent of whether the distributed monitoring has been set up in the standard way, or with <a href="#cmcdump">CMCDump</a>, or by using a blend of these procedures.
+Technically speaking, the central notification server does not even need to be the ‘central’. This task can be taken on by any Checkmk site.</p></div>
+<div class="paragraph"><p>If a remote site has been set to ‘forwarding’, all notifications will be
+forwarded directly to the central site as they would be from the core –
+effectively in a <em>raw format</em>.
+Once there the notification rules will be evaluated which actually decide
+who should be notified and how.
+The required notification scripts will be invoked on the central site.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__setting_up_the_tcp_connections">
+<span class="hidden-anchor sr-only" id="_setting_up_the_tcp_connections"></span>Setting up the TCP-connections</h4>
+<div class="paragraph"><p>The remote and (notification-)central notification spoolers communicate with
+each other via TCP. Notifications are sent from remote to central site. The central
+acknowledges to the remotes that the notifications have been received, which
+prevents notifications being lost even if the TCP connection is broken.</p></div>
+<div class="paragraph"><p>There are two alternatives for the <em>construction</em> of a TCP-connection:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>A TCP-connection is configured from central to remote site. Here the remote is the <em>TCP-server</em>.</p></li>
+<li><p>A TCP-connection is configured from remote to central site. Here the central is the <em>TCP-server</em>.</p></li>
+</ol></div>
+<div class="paragraph"><p>Consequently there is nothing standing in the way of forwarding notifications if
+for network reasons establishing connections is only possible in a specific direction.
+The TCP-connections are supervised by the spooler with a heartbeat signal and are
+immediately reestablished as needed – not only in the event of a notification.</p></div>
+<div class="paragraph"><p>Since remote and central site require different global settings you must make
+<a href="#sitespecific">site specific settings</a> for <em>all</em> remotes.
+Configuring the central site is performed using the normal global settings.
+Please note – these settings will be automatically inherited by all remotes for
+which <em>no</em> specific settings have been defined.</p></div>
+<div class="paragraph"><p>Let us look first at an example where the central site establishes the TCP-connections
+to the remote sites.</p></div>
+<div class="paragraph"><p>Step 1: <strong>On the remote site</strong>, edit the site specific global setting
+<span class="guihint">Notifications &gt; Notification Spooler Configuration</span> and activate
+<span class="guihint">Accept incoming TCP connections</span>.
+TCP-Port 6555 will be recommended for incoming connections.
+If there are no objections, adopt these settings.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_spooler_configuration.png" alt="distributed monitoring notification spooler configuration"></div></div>
+<div class="paragraph"><p>Step 2: Now, likewise, in the <span class="guihint">Notification Spooling</span> submenu
+<strong>only on the remote site</strong>, select the option
+<span class="guihint">Forward to remote site by notification spooler</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_spooling.png" alt="distributed monitoring notification spooling"></div></div>
+<div class="paragraph"><p>Step 3: Now, <strong>on the central site</strong> – i.e. in the normal global settings – configure
+the connection to the remote site (and then to additional remotes as needed):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_spooler_central_configuration.png" alt="distributed monitoring notification spooler central configuration"></div></div>
+<div class="paragraph"><p>Step 4: Set the global setting <span class="guihint">Notification Spooling</span> to
+<span class="guihint">Asynchronous local delivery by notification spooler</span>, so that the central site’s
+communications will also be processed over the same central spooler.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_spooling_central.png" alt="distributed monitoring notification spooling central"></div></div>
+<div class="paragraph"><p>Step 5: Activate the changes.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__establishing_connections_from_a_remote_site">
+<span class="hidden-anchor sr-only" id="_establishing_connections_from_a_remote_site"></span>Establishing connections from a remote site</h4>
+<div class="paragraph"><p>If the TCP-connection should be established from the remote outwards,
+the procedure is identical, differing only from the description above by
+simply exchanging the roles of central and remote site.</p></div>
+<div class="paragraph"><p>A blend of the two procedures is also possible. In such a case the central site must
+be installed so that it listens to incoming connections as well as
+connecting to remote sites. However in every central/remote relationship
+<em>only one of the pair</em> is permitted to establish the connection!</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__test_and_diagnose">
+<span class="hidden-anchor sr-only" id="_test_and_diagnose"></span>Test and diagnose</h4>
+<div class="paragraph"><p>The notification spooler logs to the <code>var/log/mknotifyd.log</code> file.
+In the spooler configuration the log level can be raised so that more messages are received.
+With a standard log level one should see something like this on the central site:</p></div>
+<div class="listingblock">
+<div class="title">var/log/mknotifyd.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-11-17 07:11:40,023 [20] [cmk.mknotifyd] -----------------------------------------------------------------
+2021-11-17 07:11:40,023 [20] [cmk.mknotifyd] Check_MK Notification Spooler version 2.0.0p15 starting
+2021-11-17 07:11:40,024 [20] [cmk.mknotifyd] Log verbosity: 0
+2021-11-17 07:11:40,025 [20] [cmk.mknotifyd] Daemonized with PID 31081.
+2021-11-17 07:11:40,029 [20] [cmk.mknotifyd] Connection to 10.1.8.44 port 6555 in progress
+2021-11-17 07:11:40,029 [20] [cmk.mknotifyd] Successfully connected to 10.1.8.44:6555</code></pre></div>
+</div>
+<div class="paragraph"><p>At all times the <code>var/log/mknotifyd.state</code> file contains the current status of
+the spooler and all of its connections:</p></div>
+<div class="listingblock">
+<div class="title">central:var/log/mknotifyd.state (extract)</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Connection:               10.1.8.44:6555
+Type:                     outgoing
+State:                    established
+Status Message:           Successfully connected to 10.1.8.44:6555
+Since:                    1637129500 (2021-11-17 07:11:40, 140 sec ago)
+Connect Time:             0.002 sec</code></pre></div>
+</div>
+<div class="paragraph"><p>A version of the same file is also present on the remote site.
+There the connection will look something like this:</p></div>
+<div class="listingblock">
+<div class="title">remote:var/log/mknotifyd.state (extract)</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Connection:               10.22.4.12:56546
+Type:                     incoming
+State:                    established
+Since:                    1637129500 (2021-11-17 07:11:40, 330 sec ago)</code></pre></div>
+</div>
+<div class="paragraph"><p>To test, select any monitored remote service and set it manually to <span class="state2">CRIT</span> with the <span class="guihint">Fake check results</span> command.</p></div>
+<div class="paragraph"><p>Now on the <em>central site</em> an incoming notification should appear in the notifications log file (<code>notify.log</code>):</p></div>
+<div class="listingblock">
+<div class="title">central:var/log/notify.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-11-17 07:59:36,231 ----------------------------------------------------------------------
+2021-11-17 07:59:36,232 [20] [cmk.base.notify] Got spool file 307ad477 (myremotehost123;Check_MK) from remote host for local delivery.</code></pre></div>
+</div>
+<div class="paragraph"><p>The same event will look like this on the remote site:</p></div>
+<div class="listingblock">
+<div class="title">remote:var/log/notify.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-11-17 07:59:28,161 [20] [cmk.base.notify] ----------------------------------------------------------------------
+2021-11-17 07:59:28,161 [20] [cmk.base.notify] Got raw notification (myremotehost123;Check_MK) context with 71 variables
+2021-11-17 07:59:28,162 [20] [cmk.base.notify] Creating spoolfile: /omd/sites/remote1/var/check_mk/notify/spool/307ad477-b534-4cc0-99c9-db1c517b31f</code></pre></div>
+</div>
+<div class="paragraph"><p>In the global settings, as well as the normal notifications log (<code>notify.log</code>)
+you can also alter the notification spooler’s log to a higher log level.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__monitoring_the_spooling">
+<span class="hidden-anchor sr-only" id="_monitoring_the_spooling"></span>Monitoring the spooling</h4>
+<div class="paragraph"><p>Once you have set up everything as described you will notice that on the central site,
+and respectively on the remotes, a new service will be found that must definitely
+be taken into the monitoring. This monitors the notification spooler and its TCP-connections.
+Every connection will thereby be monitored twice: once by the central, and once by the remote site:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/distributed_monitoring_notification_services.png" alt="distributed monitoring notification services"></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>7. Files and directories</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading__configurations_files">
+<span class="hidden-anchor sr-only" id="_configurations_files"></span>7.1. Configurations files</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 44%;">
+<col style="width: 56%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/multisite.d/sites.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here Checkmk stores the configuration for the connections to the individual sites. If the interface ‘hangs’ due to an error in the configuration, so that it becomes inoperable, you can edit the disruptive entry directly in the file. If the Livestatus proxy is activated however, it will subsequently be necessary to edit and save at least one connection, since only with this action will a suitable configuration be generated for this daemon.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/liveproxyd.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration for the Livestatus proxy. This file will be freshly-generated by Checkmk with every alteration in the configuration of a distributed monitoring.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/mknotifyd.d/wato/global.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration for the notification spooler. This file will be generated by Checkmk when saving the global settings.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/conf.d/distributed_wato.mk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is created on the remote sites and ensures that they only monitor their own hosts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/nagios/conf.d/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage location for customer-created Nagios-configurations files with hosts and services. These are required for the use of <a href="#livedump">Livedump</a> on the central site.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/mk-livestatus/nagios.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration of Livestatus for the use of Nagios as the core. Here you can configure the maximum number of simultaneous connections allowed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/etc/check_mk/conf.d/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration of hosts and rules for Checkmk. Store configurations files that are generated by <a href="#cmcdump">CMCDump</a> here. Only the <code>wato/</code> subdirectory is managed by, and will be visible in configuration environment.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/autochecks/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For services found by the service discovery. These are always stored locally on the remote site.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/rrds/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location of the Round-Robin-Database for archiving the performance data when using the Checkmk-RRD-format (the default with the Enterprise Editions)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/pnp4nagios/perfdata/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location of the Round-Robin-Database with the PNP4Nagios-format (<span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/liveproxyd.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log file for the Livestatus proxies.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/liveproxyd.state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current state of the Livestatus proxies in a readable form. This file is updated every 5 seconds.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/notify.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log file for the Checkmk notification system.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/mknotifyd.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log file for the notification spooler.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/mknotifyd.state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current state of the notification spooler in a readable form. This file is updated every 20 seconds.</p></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li>
+<a href="#livestatus">2. Distributed monitoring with Livestatus</a><ul class="sectlevel1">
+<li>
+<a href="#_basic_principles">2.1. Basic principles</a><ul class="sectlevel2">
+<li><a href="#central_status">Central status</a></li>
+<li><a href="#distr_wato">Centralized configuration</a></li>
+</ul>
+</li>
+<li>
+<a href="#distr_wato_config">2.2. Installing a distributed monitoring</a><ul class="sectlevel2">
+<li><a href="#_installing_a_central_site">Installing a central site</a></li>
+<li><a href="#_installing_remote_sites_and_enabling_livestatus_via_the_network">Installing remote sites and enabling Livestatus via the network</a></li>
+<li><a href="#connect_remote_sites">Assigning remote sites to the central site</a></li>
+<li><a href="#_specifying_to_the_hosts_and_folders_which_site_should_monitor_them">Specifying to the hosts and folders which site should monitor them</a></li>
+<li><a href="#_executing_a_fresh_service_discovery_and_activating_changes_for_migrated_hosts">Executing a fresh service discovery and activating changes for migrated hosts</a></li>
+</ul>
+</li>
+<li>
+<a href="#livestatus_tls">2.3. Connecting Livestatus with encryption</a><ul class="sectlevel2">
+<li><a href="#_details_of_the_technologies_used">Details of the technologies used</a></li>
+<li><a href="#_migrating_from_older_versions">Migrating from older versions</a></li>
+</ul>
+</li>
+<li>
+<a href="#_special_features_of_a_distributed_setup">2.4. Special features of a distributed setup</a><ul class="sectlevel2">
+<li><a href="#_access_to_the_monitored_hosts">Access to the monitored hosts</a></li>
+<li><a href="#_specifying_the_site_in_views">Specifying the site in views</a></li>
+<li><a href="#_site_status_snapin">Site status snapin</a></li>
+<li><a href="#_master_control_snapin">Master control snapin</a></li>
+<li><a href="#_checkmk_cluster_hosts">Checkmk cluster hosts</a></li>
+<li><a href="#_piggyback_data_e_g_esx">Piggyback data (e.g., ESX)</a></li>
+<li><a href="#_hardwaresoftware_inventory">Hardware/Software inventory</a></li>
+<li><a href="#_changing_a_password">Changing a password</a></li>
+</ul>
+</li>
+<li>
+<a href="#_tethering_existing_sites">2.5. Tethering existing sites</a><ul class="sectlevel2">
+<li><a href="#_1_host_tags">1. Host tags</a></li>
+<li><a href="#_2_folders">2. Folders</a></li>
+<li><a href="#_3_one_time_editing_and_saving">3. One-time editing and saving</a></li>
+</ul>
+</li>
+<li><a href="#sitespecific">2.6. Site-specific global settings</a></li>
+<li><a href="#ec">2.7. Distributed Event Console</a></li>
+<li><a href="#_nagvis">2.8. NagVis</a></li>
+</ul>
+</li>
+<li>
+<a href="#wan">3. Unstable or slow connections</a><ul class="sectlevel1">
+<li><a href="#_status_hosts">3.1. Status hosts</a></li>
+<li><a href="#_persistent_connections">3.2. Persistent connections</a></li>
+<li>
+<a href="#livestatusproxy">3.3. The Livestatus proxy</a><ul class="sectlevel2">
+<li><a href="#_installation">Installation</a></li>
+<li><a href="#_error_diagnosis">Error diagnosis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#viewer">4. Cascading Livestatus</a></li>
+<li>
+<a href="#livedump">5. Livedump and CMCDump</a><ul class="sectlevel1">
+<li><a href="#_motivation">5.1. Motivation</a></li>
+<li>
+<a href="#_installing_livedump">5.2. Installing Livedump</a><ul class="sectlevel2">
+<li><a href="#_transferring_the_configuration">Transferring the configuration</a></li>
+<li><a href="#_transferring_the_status">Transferring the status</a></li>
+</ul>
+</li>
+<li><a href="#cmcdump">5.3. Implementing CMCDump</a></li>
+</ul>
+</li>
+<li>
+<a href="#notifications">6. Notifications in distributed environments</a><ul class="sectlevel1">
+<li><a href="#_centralized_or_decentralized">6.1. Centralized or decentralized?</a></li>
+<li><a href="#_decentralized_notification">6.2. Decentralized notification</a></li>
+<li>
+<a href="#_centralized_notification">6.3. Centralized notification</a><ul class="sectlevel2">
+<li><a href="#_fundamentals">Fundamentals</a></li>
+<li><a href="#_setting_up_the_tcp_connections">Setting up the TCP-connections</a></li>
+<li><a href="#_establishing_connections_from_a_remote_site">Establishing connections from a remote site</a></li>
+<li><a href="#_test_and_diagnose">Test and diagnose</a></li>
+<li><a href="#_monitoring_the_spooling">Monitoring the spooling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#files">7. Files and directories</a><ul class="sectlevel1"><li><a href="#_configurations_files">7.1. Configurations files</a></li></ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

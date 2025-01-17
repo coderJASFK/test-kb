@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="In this article you will learn how to handle the licensing of the software in Checkmk and how to collect and transmit information about the current licence state.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Managing licenses - collect and send license information">
+<meta name="og:description" content="In this article you will learn how to handle the licensing of the software in Checkmk and how to collect and transmit information about the current licence state.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Managing licenses - collect and send license information</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/license.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/license.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/license.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Managing licenses</h1>
+<div class="details">
+<span id="revdate">Last modified on 02-May-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/en/license.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+If you use one of the commercial editions, i.e. <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Enterprise"></span> <strong>Checkmk Enterprise</strong>, <span class="image-inline"><img src="../images/icons/CME.png" alt="CME" width="20" title="Checkmk MSP"></span> <strong>Checkmk MSP</strong> or <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Cloud"></span> <strong>Checkmk Cloud</strong> (exceeding the limits of the "Free" license state: 750 services, one site), you are obliged to regularly provide an overview of the use of Checkmk in your organization to Checkmk GmbH.</p></div>
+<div class="paragraph"><p>Following the initial setup — and in the case of Checkmk Cloud the import of a suitable license at the end of the trial period (license state "Trial") — Checkmk can do the rest of this administrative work for you.</p></div>
+<div class="paragraph"><p>Every day at a random time Checkmk collects the current service numbers for all connected Checkmk sites.
+These numbers are displayed clearly and transparently in the license usage.</p></div>
+<div class="paragraph"><p>Checkmk stores this collected information for a period of 400 days. Older data will be deleted.</p></div>
+<div class="paragraph"><p>An administrator of Checkmk leaves the communication with the Checkmk customer portal entirely to Checkmk, both for licensing and for the transmission of usage information.
+If this is not technically possible for you, as an alternative the communication can be carried out manually.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_generate_application_password">
+<span class="hidden-anchor sr-only" id="generate_application_password"></span>2. Reading subscription data from the customer portal</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Go to the <a href="https://portal.checkmk.com/" target="_blank">Checkmk customer portal</a>.
+Log in there with your credentials to create the <span class="guihint">Licensing Credentials</span>, which you will need to enter into Checkmk in the next step.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> With the purchase of a Checkmk edition you have received the credentials for the Checkmk customer portal.
+If you do not have these (anymore), please contact the <a href="https://checkmk.com/contact" target="_blank">Checkmk Sales department</a>.</p></div>
+<div class="paragraph"><p>Select your subscription.
+The display of license information will then look like this, for example:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_subscription.png" alt="A icense subscription display in the customer portal."></div></div>
+<div class="paragraph"><p><strong>Note:</strong> If the highlighted buttons are not visible, your user account may not have the appropriate rights in the Checkmk customer portal.
+In such a case, contact the administrator responsible for license renewal in your organization.</p></div>
+<div class="paragraph"><p>Now click <span class="guihint">Generate Licensing Credentials</span> to create the password for the transmission.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_generate_password.png" alt="Create a password in the customer portal." width="78%"></div></div>
+<div class="paragraph"><p>Copy the <span class="guihint">Licensing ID</span> and the <span class="guihint">Password</span> and close this window with <span class="guihint">Confirm</span>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_license_cce">
+<span class="hidden-anchor sr-only" id="license_cce"></span>3. Licensing Checkmk Cloud and Checkmk MSP</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Once the trial period has expired, at the beginning of the first license phase, you must submit a verification request to the <a href="https://portal.checkmk.com/" target="_blank">Checkmk customer portal</a> and obtain a suitable license key.
+This license key is stored in Checkmk. At the same time, upload the verification response to Checkmk. With these two steps you license your Checkmk Cloud or Checkmk MSP and unlock it for further use.</p></div>
+<div class="paragraph"><p>This of course only applies for Checkmk Cloud if you have exceeded the limits of the "Free" license state.
+Otherwise you can continue to use your Checkmk Cloud in the "Free" license state without needing to obtain a license.</p></div>
+<div class="sect2">
+<h3 id="heading_setup_cce">
+<span class="hidden-anchor sr-only" id="setup_cce"></span>3.1. Entering subscription data into Checkmk</h3>
+<div class="paragraph"><p>As a <a href="wato_user.html#roles">Checkmk administrator</a>, open <span class="guihint">Setup &gt; Maintenance &gt; Licensing</span>.
+This page will be empty if no subscription data has been stored yet.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_licensing_ce_ausschnitt.png" alt="The 'Edit settings' button to open the subscription settings page."></div></div>
+<div class="paragraph"><p>Use the <span class="guihint">Edit settings</span> button to open the page with the same name:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_edit_settings_ce.png" alt="Form to enter license usage settings."></div></div>
+<div class="paragraph"><p>Now choose whether you want to submit the subscription information online or offline.
+We recommend using the online submission option. Checkmk can then take care of all further licensing procedures for you.
+For online submission, first complete the <span class="guihint">Licensing ID</span> and <span class="guihint">Password</span> fields with the <a href="#generate_application_password">information from the customer portal</a>.</p></div>
+<div class="paragraph"><p>Finally, click <span class="guihint">Save</span> to store your information.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_submit_usage_cce">
+<span class="hidden-anchor sr-only" id="submit_usage_cce"></span>3.2. Submitting license usage information to Checkmk GmbH/Inc.</h3>
+<div class="paragraph"><p>As a user of Checkmk Cloud or Checkmk MSP, have Checkmk transfer your license information via online communication.
+You will only need to <a href="#manualtrans">transmit the license data manually</a> if for technical reasons the Checkmk server in your organization cannot access the Checkmk customer portal.</p></div>
+<div class="paragraph"><p>Your license information is transparent for you to view at any time.
+The information you see on the <span class="guihint">License usage</span> and <span class="guihint">Edit settings</span> pages will be used.</p></div>
+<div class="paragraph"><p>The licensing credentials must have been deposited in Checkmk before the first transmission (see <a href="#setup_cce">enter subscription data in Checkmk</a>).</p></div>
+<div class="paragraph"><p>If you have chosen the online transfer method, click on the active <span class="guihint">Online verification</span> button.
+You will then receive a message verifying a successful transmission in Checkmk.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_online_success_cce.png" alt="Display of submitted license information."></div></div>
+<div class="paragraph"><p>This is the first time you have enabled your Checkmk Cloud / Checkmk MSP for licensed use.</p></div>
+<div class="paragraph"><p>From now on, Checkmk will regularly report your current license usage to Checkmk GmbH/Inc.
+Following each successful transfer, you will see a confirmation as well as a summary of the information transferred.
+As a part of this process, Checkmk will also automatically fetch new license information from the Checkmk customer portal if you have extended or renewed your license in the meantime.</p></div>
+<div class="paragraph"><p>You can initiate a resynchronization of your data with the Checkmk customer portal at any time by clicking the <span class="guihint">Online verification</span> button.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__license_verification">
+<span class="hidden-anchor sr-only" id="_license_verification"></span>3.3. License verification</h3>
+<div class="paragraph"><p>What happens when the period of validity for your license is approaching expiration?
+A sequence of various escalation levels begins to take effect.
+As soon as a new license has been uploaded, the escalation sequence stops.</p></div>
+<div class="paragraph"><p>Only the runtime of the license is checked.
+At the same time, however, your monitoring continues to run normally, and notifications are also sent regularly.
+However, in the event of a violation of the agreed license policy the 'Activate changes' function in Checkmk will be disabled.
+An overrun of the currently licensed services and modules, on the other hand, is only recorded and invoiced retroactively with the next billing.</p></div>
+<div class="paragraph"><p>The following escalation levels currently apply:</p></div>
+<div class="ulist"><ul>
+<li><p>30 days before a license expires, Checkmk sends an email to the administrators to inform them of the upcoming license expiration.</p></li>
+<li><p>14 days before the license expires, Checkmk sends another email to the administrators. At the same time, a reminder banner will be visible to the administrators in Checkmk.</p></li>
+<li><p>7 days before the license expires Checkmk sends a further email to the administrators. In addition, a reminder banner is now permanently visible in Checkmk for all users.</p></li>
+<li><p>After a grace period, Checkmk blocks the the ability to activate changes, as described above. The reminder banner will remain permanently visible to all users.</p></li>
+</ul></div>
+<div class="paragraph"><p>If your Checkmk is in a blocked state, contact Checkmk sales who will be able to assist you.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__licensing_checkmk_enterprise">
+<span class="hidden-anchor sr-only" id="_licensing_checkmk_enterprise"></span>4. Licensing Checkmk Enterprise</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you start with Checkmk Enterprise, you initially simply activate your license.
+The transmission of the usage data only starts at the end of the first license period.</p></div>
+<div class="sect2">
+<h3 id="heading_setup_cee">
+<span class="hidden-anchor sr-only" id="setup_cee"></span>4.1. Entering subscription data into Checkmk</h3>
+<div class="paragraph"><p>As a <a href="wato_user.html#roles">Checkmk administrator</a>, open <span class="guihint">Setup &gt; Maintenance &gt; Licensing.</span>
+This page will be empty if no subscription data has been stored yet.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_licensing_ausschnitt.png" alt="The 'Edit settings' button to open the subscription settings page."></div></div>
+<div class="paragraph"><p>Use the <span class="guihint">Edit settings</span> button to open the page with the same name:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_edit_settings.png" alt="Form to enter license usage settings."></div></div>
+<div class="paragraph"><p>Now choose whether you want to submit the subscription information online or offline.
+We recommend using the online submission option. Checkmk can then take care of all further licensing procedures for you.
+For online submission, first complete the <span class="guihint">Licensing ID</span> and <span class="guihint">Password</span> fields with the <a href="#generate_application_password">information from the customer portal</a>.</p></div>
+<div class="paragraph"><p>Finally, click <span class="guihint">Save</span> to store your information.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_submit_usage_cee">
+<span class="hidden-anchor sr-only" id="submit_usage_cee"></span>4.2. Submitting license usage information to Checkmk GmbH/Inc.</h3>
+<div class="paragraph"><p>Once set, Checkmk does most of the work of transferring your license information online.
+The data transfer only needs to be triggered once at the beginning and end of each valid usage period.
+You will only need to <a href="#manualtrans">transmit the license data manually</a> if for technical reasons the Checkmk server in your organization cannot access the Checkmk customer portal.</p></div>
+<div class="paragraph"><p>Your license information can be viewed transparently at any time.
+The information shown on the <span class="guihint">License usage</span> and <span class="guihint">Edit settings</span> pages is used.</p></div>
+<div class="paragraph"><p>The <span class="guihint">Licensing credentials</span> must be stored in Checkmk before the first transfer (see <a href="#setup_cee">Entering subscription data into Checkmk</a>).</p></div>
+<div class="paragraph"><p>If you have decided to submit online (the corresponding button is active), click <span class="guihint">Submit license usage online</span>.
+Checkmk will take care of the rest and there will be no further work for you during the entire usage period.
+After each successful transfer you will receive a confirmation and a summary of the transferred information.
+The license data summary will look like this, for example:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_online_success_cee.png" alt="Display of transferred license information."></div></div>
+<div class="paragraph"><p>You have now successfully submitted the usage data for the first license period to Checkmk GmbH/Inc..</p></div>
+<div class="paragraph"><p>From now on, at the end of a license period, submit the respective license usage data to the Checkmk customer portal by clicking <span class="guihint">Submit license usage online</span>.
+Whenever the contract has been renewed or amended, get the new license information back into Checkmk with <span class="guihint">Submit license usage online</span>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__displaying_license_usage_information">
+<span class="hidden-anchor sr-only" id="_displaying_license_usage_information"></span>5. Displaying license usage information</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Once the license has commenced, Checkmk will start displaying the license related information in the form of a colored chart.</p></div>
+<div class="paragraph"><p>If license management has been running for at least two full days, you will see a graph of this type:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_usage.png" alt="Graphical overview of current license usage."></div></div>
+<div class="paragraph"><p>The various colored graphic elements provide the following information:</p></div>
+<div class="ulist"><ul>
+<li><p>The red line shows the current contracted license limit.
+This makes it easy to see if the number of services has been exceeded.</p></li>
+<li><p>The light blue line shows the average number of services per month.
+This smooths out peaks caused, for example, by a misconfiguration.</p></li>
+<li><p>The dark blue line shows for each day the total number of monitored services across all connected sites.</p></li>
+<li><p>The green column shows the average service count in the current month.</p></li>
+<li><p>The yellow column shows the first month in which the license limit has been exceeded.</p></li>
+<li><p>The purple column shows the month with the highest license overrun.</p></li>
+</ul></div>
+<div class="paragraph"><p>In a table below this graphic, an overview of the services and hosts as they are reported to Checkmk GmbH is shown:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/license_usage_unten.png" alt="Overview of services and hosts in the various states."></div></div>
+<div class="paragraph"><p>In licensing, a distinction is made between:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Licensable services / hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of services or hosts that are included in the license size calculation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Excluded services / hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Services or hosts that are not included in the license size. These are e.g. services / hosts that are only used for internal testing scenarios within your organization. To mark services or hosts as excluded, set labels of type <code>cmk/licensing:excluded</code> according to the description in <a href="labels.html#create_labels">Creating labels</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shadow services/hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Services or hosts that are created automatically and for technical reasons as <a href="distributed_monitoring.html#cmcdump">shadow services or hosts</a>. These are not included in the license calculation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud services / hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud-based services or hosts that are used for the calculation of the license size.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_manualtrans">
+<span class="hidden-anchor sr-only" id="manualtrans"></span>6. Manual transfer</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If for technical reasons you are compelled to manually upload your licensing information to the customer portal, do so as follows:</p></div>
+<div class="paragraph"><p>Open <span class="guihint">Setup &gt; Maintenance &gt; Licensing</span>.
+Then click on the <span class="image-inline"><img src="../images/icons/icon_assume_0.png" alt="Icon for offline transfer of license data."></span> <span class="guihint">Offline verification</span> button in Checkmk Cloud, or <span class="guihint">Submit license usage offline</span> in the other commercial editions.</p></div>
+<div class="paragraph"><p>One of the following pages will be opened:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/license_offline_verification.png" alt="Page for offline verification of license information in Checkmk Cloud." width="85%"></div>
+<div class="title">Offline verification of the license in Checkmk Cloud</div>
+</div>
+<div class="imageblock">
+<div class="content"><img src="../images/license_offline_submission.png" alt="Page for offline submission of license information in Checkmk Enterprise." width="85%"></div>
+<div class="title">Offline submission of license information in Checkmk Enterprise</div>
+</div>
+<div class="paragraph"><p>Follow the instructions on this page.
+First download the requested data from Checkmk.
+Next, upload the associated file to the customer portal.
+Finally, upload the response file received to Checkmk to complete the process.</p></div>
+<div class="paragraph"><p><strong>Note</strong> that in a <a href="glossar.html#distributed_monitoring">distributed monitoring</a> environment, you will need to run transmissions <em>to</em> the customer portal as well as those <em>from</em> the customer portal, not only on the central site, but also on all remote sites.
+For a <a href="glossar.html#distributed_setup">distributed setup</a>, all licensing is handled by the central site.</p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li><a href="#generate_application_password">2. Reading subscription data from the customer portal</a></li>
+<li>
+<a href="#license_cce">3. Licensing Checkmk Cloud and Checkmk MSP</a><ul class="sectlevel1">
+<li><a href="#setup_cce">3.1. Entering subscription data into Checkmk</a></li>
+<li><a href="#submit_usage_cce">3.2. Submitting license usage information to Checkmk GmbH/Inc.</a></li>
+<li><a href="#_license_verification">3.3. License verification</a></li>
+</ul>
+</li>
+<li>
+<a href="#_licensing_checkmk_enterprise">4. Licensing Checkmk Enterprise</a><ul class="sectlevel1">
+<li><a href="#setup_cee">4.1. Entering subscription data into Checkmk</a></li>
+<li><a href="#submit_usage_cee">4.2. Submitting license usage information to Checkmk GmbH/Inc.</a></li>
+</ul>
+</li>
+<li><a href="#_displaying_license_usage_information">5. Displaying license usage information</a></li>
+<li><a href="#manualtrans">6. Manual transfer</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

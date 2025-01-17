@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="The Bakery API provides an interface for extending agent packages in the Agent Bakery, e.g. with agent plug-ins and their configuration.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="The Bakery API">
+<meta name="og:description" content="The Bakery API provides an interface for extending agent packages in the Agent Bakery, e.g. with agent plug-ins and their configuration.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>The Bakery API</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/de/bakery_api.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/bakery_api.html">2.1.0</a><a class="dropdown-item" href="../../latest/en/bakery_api.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">The Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">The Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>The Bakery API</h1>
+<div class="details">
+<span id="revdate">Last modified on 05-Jan-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/onprem/en/bakery_api.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="agent_deployment.html">Automatic agent updates</a>
+<a href="devel_intro.html">Developing extensions for Checkmk for Checkmk</a>
+<a href="mkps.html">Checkmk extension packages (MKPs)</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span> In the commercial editions you can use the Bakery API to write your own, so-called <em>Bakery plug-ins</em>, which include functions in the agent packages from the <a href="wato_monitoringagents.html#bakery">Agent Bakery</a>.
+In most cases, these functions are agent plug-ins, i.e. additional scripts to be executed by the Checkmk agent, and the plug-ins' configuration files.
+However, they can also affect the package manager functions if they can be mapped by including files, running package scriptlets (for RPM, DEB and Solaris PKG package formats), or if they define specific configuration entries for the Windows agent (in YAML).
+All of these 'artifacts' can be described in the Bakery API using a uniform syntax.</p></div>
+<div class="paragraph"><p>For example, one real-world application scenario is as follows:
+You read the introduction to <a href="devel_intro.html">developing extensions for Checkmk</a> and, inspired by it, wrote your own <a href="devel_check_plugins.html">agent-based check plug-in</a> with its associated agent plug-in.
+You then combined these two into a single <a href="mkps.html">Checkmk extension package (MKP)</a>.
+In the Checkmk exchange, we have stored the MKP <a href="https://exchange.checkmk.com/p/hello-world" target="_blank">Hello world!</a> as a simple template for this example.</p></div>
+<div class="paragraph"><p>Now you want to make the agent plug-in configurable (e.g., enable it to be run only by certain users or on certain hosts) and additionally perform actions when installing or uninstalling the agent package.
+To do this, you can use the Bakery API — as a packaging and distribution aid, as we will show in this article with an example scenario.
+This creates two new files, which can then be packaged together with the existing plug-in files to create a new MKP.
+You can also find a thoroughly commented example of this procedure in the Checkmk Exchange: the <a href="https://exchange.checkmk.com/p/hello-bakery" target="_blank">Hello bakery!</a> MKP, which is closely based on the example scenario presented in this article.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> The Bakery API does not provide functions for configuring the Bakery plug-in, i.e. for creating the associated rule set, nor for the <em>contents</em> of the files provided with the plug-in, e.g. the agent plug-ins.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_api_doc">
+<span class="hidden-anchor sr-only" id="api_doc"></span>2. The API documentation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_versioning">
+<span class="hidden-anchor sr-only" id="versioning"></span>2.1. Versioning</h3>
+<div class="paragraph"><p>Bakery API software and documentation come from the same source, so the API documentation always matches the software and describes exactly what the API can do,
+and it is therefore not necessary to describe the reference part of the available functions, classes, parameters, etc. in the Checkmk User guide.
+Instead, you can find the API documentation outside this User guide, directly in its Checkmk site.</p></div>
+<div class="paragraph"><p>The API with its documentation is versioned using two-level numbering conforming to the <a href="https://semver.org/lang/de/" target="_blank">Semantic Versioning 2.x</a> standard in the format <code>X.Y</code>, where <code>X</code> stands for a major version and <code>Y</code> for a minor version.
+A new minor version contains new, backward compatible features.
+A new major version, on the other hand, may contain changes that make the API incompatible with the previous major version.</p></div>
+<div class="paragraph"><p>Version <code>1</code> is the current version of the Bakery API described in this article.
+Each plug-in explicitly declares the API version it is based on at the <a href="#access_api">access to the API</a>.</p></div>
+<div class="paragraph"><p>The API follows a different versioning scheme to the Checkmk software.
+Nevertheless, mapping the versions of API documentation and Checkmk software is very simple, as you will learn in the next chapter.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_access_doc">
+<span class="hidden-anchor sr-only" id="access_doc"></span>2.2. Access to the API documentation</h3>
+<div class="paragraph"><p>The Bakery API documentation is available in HTML format for viewing in a web browser and can be opened from the Checkmk GUI: from the navigation bar in the <span class="guihint">Help &gt; APIs &gt; Plugin API reference</span> menu:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/bakeryapi_help_menu.png" alt="Help menu in the navigation bar." width="65%"></div></div>
+<div class="paragraph"><p>The plug-in API documentation is displayed in a new browser window (or browser tab):</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/bakeryapi_sphinx.png" alt="Example page of Bakery API documentation."></div></div>
+<div class="paragraph"><p>This window displays API documentation relevant to the development of Checkmk plug-ins,
+i.e. here you will find the documentation for the Check API in addition to the Bakery API documentation.
+The API documentation is generated and displayed with <a href="https://www.sphinx-doc.org/" target="_blank">Sphinx</a>.</p></div>
+<div class="paragraph"><p>You can find the Bakery API documentation in the versions supported by the Checkmk version installed in your site.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_using">
+<span class="hidden-anchor sr-only" id="using"></span>3. Using the API</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_example">
+<span class="hidden-anchor sr-only" id="example"></span>3.1. A sample scenario</h3>
+<div class="paragraph"><p>We will demonstrate the use of the API with the following sample scenario:</p></div>
+<div class="ulist"><ul>
+<li><p>A plug-in with the name <code>hello_bakery</code> is provided for the Checkmk agent.</p></li>
+<li><p>The agent plug-in exists in three variants — for Linux, Solaris and Windows — and is to be included in the agent packages for these three operating systems as well.The corresponding files are also available and are called <code>hello_bakery</code> (for Linux), <code>hello_bakery.solaris.ksh</code> (for Solaris) and <code>hello_bakery.cmd</code> (for Windows).<br>
+The Python, shell and CMD scripts are only examples. An agent plug-in can be any file executable on the target system.<br>
+We are not interested in the actual content of the files in this context.
+The function of agent plug-ins is not the subject of the Bakery API.
+You can learn more about this in the introduction to <a href="devel_check_plugins.html">writing your own agent-based check plug-ins</a>.</p></li>
+<li><p>It should be configurable whether the plug-in’s output should be <em>cached</em>, i.e. in this case the plug-in will only be executed again by the agent once the configured time has elapsed.</p></li>
+<li><p>The plug-in is to be configured in the <a href="wato.html">Setup menu</a> via Agent Bakery settings with the variables <code>user</code> and <code>content</code>.
+The Linux plug-in reads the configuration from the <code>hello_bakery.json</code> configuration file, and the Solaris plug-in reads it from the <code>hello_bakery.cfg</code> file.
+The Windows plug-in reads the <code>hello_bakery.user</code> and <code>hello_bakery.content</code> entries from the YAML configuration file in the Windows agent.<br>
+In each case, access to these resources must be implemented in the agent plug-in and is not handled by the Bakery API.</p></li>
+<li><p>For Linux and Solaris there is an additional program <code>some_binary</code>, which should be delivered e.g. a small shell script, to also be able to start the plug-in by a command independently of the Checkmk agent.</p></li>
+<li><p>Under Linux and Solaris, after installing the agent, it should be written to the syslog via a package manager routine that <code>hello_bakery</code> has been installed.
+After uninstalling the agent, analogously, it should be written to syslog that <code>hello_bakery</code> has been uninstalled.<br>
+Common under Linux are <code>postinst</code> and <code>prerm</code> scripts: in the <code>postinst</code> script you create for example a cache and start a daemon, in the <code>prerm</code> script you can then stop the daemon again and clear the cache. For more information on how to use <code>maintainer scripts</code>, see the <a href="https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html" target="_blank">Debian documentation</a>.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_create_plugin">
+<span class="hidden-anchor sr-only" id="create_plugin"></span>3.2. Creating a plug-in file</h3>
+<div class="paragraph"><p>The <code>hello_bakery.py</code> plug-in file is created in the local part of the site directory structure at <code>local/lib/check_mk/base/cee/plugins/bakery/</code>.</p></div>
+<div class="paragraph"><p>A Bakery plug-in is created in the form of a file that is imported as a Python 3 module.
+Therefore, following Checkmk convention, plug-in files also start with the following lines:</p></div>
+<div class="listingblock">
+<div class="title">hello_bakery.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-ch">#!/usr/bin/env python3</span>
+<span class="tok-c1"># -*- coding: utf-8 -*-</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Since this is a module, all required names must be imported at the beginning.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_access_api">
+<span class="hidden-anchor sr-only" id="access_api"></span>3.3. Accessing the API</h3>
+<div class="paragraph"><p>All objects in the Bakery API are available under <code>cmk.base.cee.plugins.bakery.bakery_api.vX</code>, where X denotes the API version number, in the example <code>1</code>.
+Since the plug-in file itself is located in the <code>cmk.base.cee.plugins.bakery</code> namespace, a relative import from <code>.bakery_api.v1</code> will also work:</p></div>
+<div class="listingblock">
+<div class="title">hello_bakery.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-kn">from</span> <span class="tok-nn">.bakery_api.v1</span> <span class="tok-kn">import</span> <span class="tok-p">(</span>
+   <span class="tok-n">OS</span><span class="tok-p">,</span>
+   <span class="tok-n">DebStep</span><span class="tok-p">,</span>
+   <span class="tok-n">RpmStep</span><span class="tok-p">,</span>
+   <span class="tok-n">SolStep</span><span class="tok-p">,</span>
+   <span class="tok-n">Plugin</span><span class="tok-p">,</span>
+   <span class="tok-n">PluginConfig</span><span class="tok-p">,</span>
+   <span class="tok-n">SystemBinary</span><span class="tok-p">,</span>
+   <span class="tok-n">scriptlet</span><span class="tok-p">,</span>
+   <span class="tok-n">WindowsConfigEntry</span><span class="tok-p">,</span>
+   <span class="tok-n">register</span><span class="tok-p">,</span>
+   <span class="tok-n">FileGenerator</span><span class="tok-p">,</span>
+   <span class="tok-n">ScriptletGenerator</span><span class="tok-p">,</span>
+   <span class="tok-n">WindowsConfigGenerator</span><span class="tok-p">,</span>
+   <span class="tok-n">quote_shell_string</span><span class="tok-p">,</span>
+<span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>In the above example, only the names that are needed for the example scenario are imported.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_objects">
+<span class="hidden-anchor sr-only" id="objects"></span>3.4. The objects available in the API</h3>
+<div class="paragraph"><p>The names available in the Bakery API are described in detail in the <a href="#api_doc">API documentation</a>.
+In this chapter, the objects are nevertheless briefly introduced, as this is helpful for being able to understand the implementation of the example scenario.</p></div>
+<div class="sect3">
+<h4 id="heading_enums">
+<span class="hidden-anchor sr-only" id="enums"></span>Identifier / Enumerations</h4>
+<div class="paragraph"><p>For the specification of the individual plug-in <a href="#artefacts">artifacts</a>, enumerations (<code>Enum</code>) are available, which can be used to specify various properties, usually in the form of an argument:</p></div>
+<div class="ulist"><ul>
+<li><p><code>OS</code> - The operating system in the context of the Bakery API.</p></li>
+<li><p><code>DebStep</code> - A transaction step for a DEB 'maintainer script'</p></li>
+<li><p><code>RpmStep</code> - A transaction step for an RPM 'scriptlet'.</p></li>
+<li><p><code>SolStep</code> - A transaction step for a Solaris PKG 'installation script'.</p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading_artefacts">
+<span class="hidden-anchor sr-only" id="artefacts"></span>Artifacts</h4>
+<div class="paragraph"><p>The files and file contents that are the actual components of a plug-in are referred to as artifacts.
+These are described using appropriate classes, which can be divided into the following categories:</p></div>
+<div class="ulist"><ul>
+<li><p>Files (<code>Plugin</code>, <code>SystemBinary</code>, <code>PluginConfig</code>, <code>SystemConfig</code>) -
+Each file to be provided to the Checkmk agent is described with an object.
+The file type is described by the class.
+A separate object must be defined for each operating system on which the file is to be deployed.</p></li>
+<li><p>Scriptlets (<code>Scriptlet</code>) -
+A DEB 'maintainer script', RPM 'scriptlet' or Solaris PKG 'installation script' to be executed when installing, uninstalling or updating the agent package at the specified transaction step (e.g. <code>preinstall</code>, <code>postremove</code>).</p></li>
+<li><p>Windows configuration entries (<code>WindowsConfigEntry</code>, <code>WindowsConfigItems</code>, <code>WindowsGlobalConfigEntry</code>, <code>WindowsSystemConfigEntry</code>) -
+Entries in the YAML configuration file for the Windows agent are also described using appropriate classes.</p></li>
+</ul></div>
+<div class="paragraph"><p>These artifacts are each described in callback functions corresponding to their category.
+The individual functions are passed to the <a href="#register_function">register function</a> with the arguments <code>files_function</code>, <code>scriptlets_function</code>, <code>windows_config_function</code>.
+These are generator functions that return the individual specified artifacts.
+The evaluation is done by the Agent Bakery.</p></div>
+<div class="paragraph"><p>The functions receive various parameters as arguments that can be evaluated in order to construct and determine the returned artifacts.
+The parameters are on the one hand the GUI configuration of the respective agent that is to be baked (<code>conf</code>), and on the other hand the hash of the current agent configuration and plug-in files (<code>aghash</code>).</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_register_function">
+<span class="hidden-anchor sr-only" id="register_function"></span>The register function</h4>
+<div class="paragraph"><p>The registration is performed with the <code>register</code> function, which is called when importing the Bakery plug-in as a module.</p></div>
+<div class="paragraph"><p>The function receives the individual components of the Bakery plug-in as arguments:
+the plug-in’s name (<code>name</code>) and its functions (<code>files_function</code>, <code>scriptlets_function</code>, <code>windows_config_function</code>), each of which returns a category of artifact.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_annotations">
+<span class="hidden-anchor sr-only" id="annotations"></span>Type annotations</h4>
+<div class="paragraph"><p>Names for type annotations (<code>FileGenerator</code>, <code>ScriptletGenerator</code>, <code>WindowsConfigGenerator</code>, <code>WindowsConfigContent</code>) can optionally be used to identify the type of the function specified, e.g. like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">get_files</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-nb">dict</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">FileGenerator</span><span class="tok-p">:</span>
+  	<span class="tok-k">yield</span> <span class="tok-n">Plugin</span><span class="tok-p">(</span><span class="tok-o">...</span><span class="tok-p">)</span>
+  	<span class="tok-k">yield</span> <span class="tok-n">PluginConfig</span><span class="tok-p">(</span><span class="tok-o">...</span><span class="tok-p">)</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">get_scriptlets</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-nb">dict</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">ScriptletGenerator</span><span class="tok-p">:</span>
+  	<span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-o">...</span><span class="tok-p">)</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">get_windows_config</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-nb">dict</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">WindowsConfigGenerator</span><span class="tok-p">:</span>
+  	<span class="tok-n">content</span><span class="tok-p">:</span> <span class="tok-n">WindowsConfigContent</span> <span class="tok-o">=</span> <span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s2">"some_entry"</span><span class="tok-p">]</span>
+   <span class="tok-k">yield</span> <span class="tok-n">WindowsGlobalConfigEntry</span><span class="tok-p">(</span><span class="tok-n">name</span><span class="tok-o">=</span><span class="tok-s2">"some_name"</span><span class="tok-p">,</span><span class="tok-n">content</span><span class="tok-o">=</span><span class="tok-n">content</span><span class="tok-p">)</span></code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading_utilities">
+<span class="hidden-anchor sr-only" id="utilities"></span>Helper functions</h4>
+<div class="paragraph"><p>The following helper functions can be used:</p></div>
+<div class="ulist"><ul>
+<li><p><code>quote_shell_string</code> - This function can be used to convert a string expression so that it is correctly recognized as an expression by the shell in the resulting file — without having to manually mask the quotes in the Python code.</p></li>
+<li><p><code>password_store</code> - This module allows access to passwords stored in the Checkmk password store.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_register">
+<span class="hidden-anchor sr-only" id="register"></span>3.5. Registration</h3>
+<div class="paragraph"><p>Registering the plug-in with Checkmk with a plug-in name and its functions is accomplished with the <code>register.bakery_plugin</code> function:</p></div>
+<div class="listingblock">
+<div class="title">hello_bakery.py</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>register.bakery_plugin(
+   name="hello_bakery",
+   files_function=get_hello_bakery_plugin_files,
+   scriptlets_function=get_hello_bakery_scriptlets,
+   windows_config_function=get_hello_bakery_windows_config,
+)</code></pre></div>
+</div>
+<div class="paragraph"><p>The <code>get_hello_bakery_windows_config</code>, <code>get_hello_bakery_scriptlets</code> and <code>get_hello_bakery_plugin_files</code> functions specified here are explained in more detail in the following chapters.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_windows_config_function">
+<span class="hidden-anchor sr-only" id="windows_config_function"></span>3.6. Configuration for the Windows agent</h3>
+<div class="paragraph"><p>In our example, the interval for execution must be be defined, and the configuration of the plug-in should be able to be done via two variables:</p></div>
+<div class="listingblock">
+<div class="title">hello_bakery.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">class</span> <span class="tok-nc">HelloBakeryConfig</span><span class="tok-p">(</span><span class="tok-n">TypedDict</span><span class="tok-p">,</span> <span class="tok-n">total</span><span class="tok-o">=</span><span class="tok-kc">False</span><span class="tok-p">):</span>
+   <span class="tok-n">interval</span><span class="tok-p">:</span> <span class="tok-nb">int</span>
+   <span class="tok-n">user</span><span class="tok-p">:</span> <span class="tok-nb">str</span>
+   <span class="tok-n">content</span><span class="tok-p">:</span> <span class="tok-nb">str</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">get_hello_bakery_windows_config</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-n">HelloBakeryConfig</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">WindowsConfigGenerator</span><span class="tok-p">:</span>
+   <span class="tok-k">yield</span> <span class="tok-n">WindowsConfigEntry</span><span class="tok-p">(</span><span class="tok-n">path</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-s2">"hello_bakery"</span><span class="tok-p">,</span> <span class="tok-s2">"user"</span><span class="tok-p">],</span> <span class="tok-n">content</span><span class="tok-o">=</span><span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s2">"user"</span><span class="tok-p">])</span>
+   <span class="tok-k">yield</span> <span class="tok-n">WindowsConfigEntry</span><span class="tok-p">(</span><span class="tok-n">path</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-s2">"hello_bakery"</span><span class="tok-p">,</span> <span class="tok-s2">"content"</span><span class="tok-p">],</span> <span class="tok-n">content</span><span class="tok-o">=</span><span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s2">"content"</span><span class="tok-p">])</span>
+<span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>In the <code>get_hello_bakery_windows_config</code> function, we use the <code>conf</code> argument to access the configuration set via the <a href="#ruleset">rule set</a> in the Setup GUI:
+The time interval for re-execution on cached output (<code>interval</code>) and the two variables that can be used to configure the plug-in (<code>user</code>, <code>content</code>).
+Here we assume that the rule set configuration is supplied as a <code>dict</code>. Using the <code>TypedDict</code> of the class <code>HelloBakeryConfig</code> we can set up a standardized access to it.</p></div>
+<div class="paragraph"><p>Then <code>WindowsConfigEntry</code> is used to specify the entries in the YAML-<a href="agent_windows.html#agent_architecture">Windows agent configuration file</a> from which the values for <code>user</code> and <code>content</code> are read.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_scriptlets_function">
+<span class="hidden-anchor sr-only" id="scriptlets_function"></span>3.7. Installation script for Linux</h3>
+<div class="paragraph"><p>On Linux and Solaris, syslog messages should be written when installing and uninstalling the agent.
+Here we show only an implementation of the Debian Linux distribution:</p></div>
+<div class="listingblock">
+<div class="title">hello_bakery.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">get_hello_bakery_scriptlets</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-n">HelloBakeryConfig</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">ScriptletGenerator</span><span class="tok-p">:</span>
+   <span class="tok-n">installed_lines</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-s1">'logger -p local3.info "Installed hello_bakery"'</span><span class="tok-p">]</span>
+   <span class="tok-n">uninstalled_lines</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-s1">'logger -p local3.info "Uninstalled hello_bakery"'</span><span class="tok-p">]</span>
+   <span class="tok-c1"># Adjust the priority -p according to your needs.</span>
+
+   <span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-n">step</span><span class="tok-o">=</span><span class="tok-n">DebStep</span><span class="tok-o">.</span><span class="tok-n">POSTINST</span><span class="tok-p">,</span> <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">installed_lines</span><span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-n">step</span><span class="tok-o">=</span><span class="tok-n">DebStep</span><span class="tok-o">.</span><span class="tok-n">POSTRM</span><span class="tok-p">,</span> <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">uninstalled_lines</span><span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>First the commands for the syslog messages are defined and then the installation scripts for Debian (<code>DebStep</code>) which should be executed after the installation (<code>POSTINST</code>) and after the uninstallation (<code>POSTRM</code>).
+In the comments below you will also find the corresponding lines for distributions that use RPM and for Solaris.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> Following the command lines that you have included, the installation scripts are loaded with additional commands by Checkmk.
+Therefore, to ensure that all of the commands in the scripts are executed, do not end your command set with an <code>exit 0</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_files_function">
+<span class="hidden-anchor sr-only" id="files_function"></span>3.8. The agent plug-in for Linux</h3>
+<div class="paragraph"><p>The configuration for the Linux agent plug-in looks like this:</p></div>
+<div class="listingblock">
+<div class="title">hello_bakery.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">get_hello_bakery_plugin_files</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-n">HelloBakeryConfig</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">FileGenerator</span><span class="tok-p">:</span>
+   <span class="tok-n">interval</span> <span class="tok-o">=</span> <span class="tok-n">conf</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-s1">'interval'</span><span class="tok-p">)</span>
+
+   <span class="tok-k">yield</span> <span class="tok-n">Plugin</span><span class="tok-p">(</span>
+      <span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">LINUX</span><span class="tok-p">,</span>
+      <span class="tok-n">source</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery'</span><span class="tok-p">),</span>
+      <span class="tok-n">target</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery'</span><span class="tok-p">),</span>
+      <span class="tok-n">interval</span><span class="tok-o">=</span><span class="tok-n">interval</span><span class="tok-p">,</span>
+   <span class="tok-p">)</span>
+
+   <span class="tok-k">yield</span> <span class="tok-n">PluginConfig</span><span class="tok-p">(</span><span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">LINUX</span><span class="tok-p">,</span>
+                     <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">_get_linux_cfg_lines</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s1">'user'</span><span class="tok-p">],</span> <span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s1">'content'</span><span class="tok-p">]),</span>
+                     <span class="tok-n">target</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery.json'</span><span class="tok-p">),</span>
+                     <span class="tok-n">include_header</span><span class="tok-o">=</span><span class="tok-kc">False</span><span class="tok-p">)</span>
+
+   <span class="tok-k">for</span> <span class="tok-n">base_os</span> <span class="tok-ow">in</span> <span class="tok-p">[</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">LINUX</span><span class="tok-p">]:</span>
+      <span class="tok-k">yield</span> <span class="tok-n">SystemBinary</span><span class="tok-p">(</span>
+            <span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">base_os</span><span class="tok-p">,</span>
+            <span class="tok-n">source</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'some_binary'</span><span class="tok-p">),</span>
+      <span class="tok-p">)</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">_get_linux_cfg_lines</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">,</span> <span class="tok-n">content</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">List</span><span class="tok-p">[</span><span class="tok-nb">str</span><span class="tok-p">]:</span>
+   <span class="tok-n">config</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">dumps</span><span class="tok-p">({</span><span class="tok-s1">'user'</span><span class="tok-p">:</span> <span class="tok-n">user</span><span class="tok-p">,</span> <span class="tok-s1">'content'</span><span class="tok-p">:</span> <span class="tok-n">content</span><span class="tok-p">})</span>
+   <span class="tok-k">return</span> <span class="tok-n">config</span><span class="tok-o">.</span><span class="tok-n">split</span><span class="tok-p">(</span><span class="tok-s1">'</span><span class="tok-se">\n</span><span class="tok-s1">'</span><span class="tok-p">)</span></code></pre></div>
+</div>
+<div class="paragraph"><p>In the <code>get_hello_bakery_plugin_files</code> function, first the Python file <code>hello_bakery</code> is defined as a <code>plugin</code>, i.e. as an executable file to be run by the Checkmk agent as an agent plug-in.
+Then <code>PluginConfig</code> is used to specify the <code>hello_bakery.json</code> configuration file to be generated for the Linux agent plug-in with the <code>user</code> and <code>content</code> entries.</p></div>
+<div class="paragraph"><p>With the second function <code>_get_linux_cfg_lines</code> these lines are written in JSON format.
+Here, the Python dictionary <code>conf</code> contains the values set with the <a href="#ruleset">rule set</a> of the Setup GUI, which are then packed into a JSON file via a small detour.</p></div>
+<div class="paragraph"><p>Finally, the additional shell script <code>some_binary</code> to be delivered is to be placed as <code>SystemBinary</code> on the target system in the directory for user programs (by default <code>/usr/bin</code>).</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_plugin_code">
+<span class="hidden-anchor sr-only" id="plugin_code"></span>3.9. The plug-in file for our example scenario</h3>
+<div class="paragraph"><p>Putting the all of the parts presented so far together — and completing them — a plug-in for our <a href="#example">example scenario</a> might look like this when finished:</p></div>
+<div class="listingblock">
+<div class="title">hello_bakery.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-ch">#!/usr/bin/env python3</span>
+<span class="tok-c1"># -*- coding: utf-8 -*-</span>
+
+<span class="tok-kn">import</span> <span class="tok-nn">json</span>
+<span class="tok-kn">from</span> <span class="tok-nn">pathlib</span> <span class="tok-kn">import</span> <span class="tok-n">Path</span>
+<span class="tok-kn">from</span> <span class="tok-nn">typing</span> <span class="tok-kn">import</span> <span class="tok-n">Iterable</span><span class="tok-p">,</span> <span class="tok-n">TypedDict</span><span class="tok-p">,</span> <span class="tok-n">List</span>
+
+<span class="tok-kn">from</span> <span class="tok-nn">.bakery_api.v1</span> <span class="tok-kn">import</span> <span class="tok-p">(</span>
+   <span class="tok-n">OS</span><span class="tok-p">,</span>
+   <span class="tok-n">DebStep</span><span class="tok-p">,</span>
+   <span class="tok-n">RpmStep</span><span class="tok-p">,</span>
+   <span class="tok-n">SolStep</span><span class="tok-p">,</span>
+   <span class="tok-n">Plugin</span><span class="tok-p">,</span>
+   <span class="tok-n">PluginConfig</span><span class="tok-p">,</span>
+   <span class="tok-n">SystemBinary</span><span class="tok-p">,</span>
+   <span class="tok-n">Scriptlet</span><span class="tok-p">,</span>
+   <span class="tok-n">WindowsConfigEntry</span><span class="tok-p">,</span>
+   <span class="tok-n">register</span><span class="tok-p">,</span>
+   <span class="tok-n">FileGenerator</span><span class="tok-p">,</span>
+   <span class="tok-n">ScriptletGenerator</span><span class="tok-p">,</span>
+   <span class="tok-n">WindowsConfigGenerator</span><span class="tok-p">,</span>
+   <span class="tok-n">quote_shell_string</span><span class="tok-p">,</span>
+<span class="tok-p">)</span>
+
+<span class="tok-k">class</span> <span class="tok-nc">HelloBakeryConfig</span><span class="tok-p">(</span><span class="tok-n">TypedDict</span><span class="tok-p">,</span> <span class="tok-n">total</span><span class="tok-o">=</span><span class="tok-kc">False</span><span class="tok-p">):</span>
+   <span class="tok-n">interval</span><span class="tok-p">:</span> <span class="tok-nb">int</span>
+   <span class="tok-n">user</span><span class="tok-p">:</span> <span class="tok-nb">str</span>
+   <span class="tok-n">content</span><span class="tok-p">:</span> <span class="tok-nb">str</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">get_hello_bakery_plugin_files</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-n">HelloBakeryConfig</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">FileGenerator</span><span class="tok-p">:</span>
+   <span class="tok-n">interval</span> <span class="tok-o">=</span> <span class="tok-n">conf</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-s1">'interval'</span><span class="tok-p">)</span>
+
+   <span class="tok-k">yield</span> <span class="tok-n">Plugin</span><span class="tok-p">(</span>
+      <span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">LINUX</span><span class="tok-p">,</span>
+      <span class="tok-n">source</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery'</span><span class="tok-p">),</span>
+      <span class="tok-n">target</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery'</span><span class="tok-p">),</span>
+      <span class="tok-n">interval</span><span class="tok-o">=</span><span class="tok-n">interval</span><span class="tok-p">,</span>
+   <span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">Plugin</span><span class="tok-p">(</span>
+      <span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">SOLARIS</span><span class="tok-p">,</span>
+      <span class="tok-n">source</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery.solaris.ksh'</span><span class="tok-p">),</span>
+      <span class="tok-n">target</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery'</span><span class="tok-p">),</span>
+      <span class="tok-n">interval</span><span class="tok-o">=</span><span class="tok-n">interval</span><span class="tok-p">,</span>
+   <span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">Plugin</span><span class="tok-p">(</span>
+      <span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">WINDOWS</span><span class="tok-p">,</span>
+      <span class="tok-n">source</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery.cmd'</span><span class="tok-p">),</span>
+      <span class="tok-n">target</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery.bat'</span><span class="tok-p">),</span>
+      <span class="tok-n">interval</span><span class="tok-o">=</span><span class="tok-n">interval</span><span class="tok-p">,</span>
+   <span class="tok-p">)</span>
+
+   <span class="tok-k">yield</span> <span class="tok-n">PluginConfig</span><span class="tok-p">(</span><span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">LINUX</span><span class="tok-p">,</span>
+                     <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">_get_linux_cfg_lines</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s1">'user'</span><span class="tok-p">],</span> <span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s1">'content'</span><span class="tok-p">]),</span>
+                     <span class="tok-n">target</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery.json'</span><span class="tok-p">),</span>
+                     <span class="tok-n">include_header</span><span class="tok-o">=</span><span class="tok-kc">False</span><span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">PluginConfig</span><span class="tok-p">(</span><span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">SOLARIS</span><span class="tok-p">,</span>
+                     <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">_get_solaris_cfg_lines</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s1">'user'</span><span class="tok-p">],</span> <span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s1">'content'</span><span class="tok-p">]),</span>
+                     <span class="tok-n">target</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'hello_bakery.cfg'</span><span class="tok-p">),</span>
+                     <span class="tok-n">include_header</span><span class="tok-o">=</span><span class="tok-kc">True</span><span class="tok-p">)</span>
+
+   <span class="tok-k">for</span> <span class="tok-n">base_os</span> <span class="tok-ow">in</span> <span class="tok-p">[</span><span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">LINUX</span><span class="tok-p">,</span> <span class="tok-n">OS</span><span class="tok-o">.</span><span class="tok-n">SOLARIS</span><span class="tok-p">]:</span>
+      <span class="tok-k">yield</span> <span class="tok-n">SystemBinary</span><span class="tok-p">(</span>
+            <span class="tok-n">base_os</span><span class="tok-o">=</span><span class="tok-n">base_os</span><span class="tok-p">,</span>
+            <span class="tok-n">source</span><span class="tok-o">=</span><span class="tok-n">Path</span><span class="tok-p">(</span><span class="tok-s1">'some_binary'</span><span class="tok-p">),</span>
+      <span class="tok-p">)</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">_get_linux_cfg_lines</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">,</span> <span class="tok-n">content</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">List</span><span class="tok-p">[</span><span class="tok-nb">str</span><span class="tok-p">]:</span>
+   <span class="tok-n">config</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">dumps</span><span class="tok-p">({</span><span class="tok-s1">'user'</span><span class="tok-p">:</span> <span class="tok-n">user</span><span class="tok-p">,</span> <span class="tok-s1">'content'</span><span class="tok-p">:</span> <span class="tok-n">content</span><span class="tok-p">})</span>
+   <span class="tok-k">return</span> <span class="tok-n">config</span><span class="tok-o">.</span><span class="tok-n">split</span><span class="tok-p">(</span><span class="tok-s1">'</span><span class="tok-se">\n</span><span class="tok-s1">'</span><span class="tok-p">)</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">_get_solaris_cfg_lines</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">,</span> <span class="tok-n">content</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">List</span><span class="tok-p">[</span><span class="tok-nb">str</span><span class="tok-p">]:</span>
+   <span class="tok-c1"># To be loaded with 'source' in Solaris shell script</span>
+   <span class="tok-k">return</span> <span class="tok-p">[</span>
+      <span class="tok-sa">f</span><span class="tok-s1">'USER=</span><span class="tok-si">{</span><span class="tok-n">quote_shell_string</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">)</span><span class="tok-si">}</span><span class="tok-s1">'</span><span class="tok-p">,</span>
+      <span class="tok-sa">f</span><span class="tok-s1">'CONTENT=</span><span class="tok-si">{</span><span class="tok-n">quote_shell_string</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">)</span><span class="tok-si">}</span><span class="tok-s1">'</span><span class="tok-p">,</span>
+   <span class="tok-p">]</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">get_hello_bakery_scriptlets</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-n">HelloBakeryConfig</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">ScriptletGenerator</span><span class="tok-p">:</span>
+   <span class="tok-n">installed_lines</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-s1">'logger -p local3.info "Installed hello_bakery"'</span><span class="tok-p">]</span>
+   <span class="tok-n">uninstalled_lines</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-s1">'logger -p local3.info "Uninstalled hello_bakery"'</span><span class="tok-p">]</span>
+
+   <span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-n">step</span><span class="tok-o">=</span><span class="tok-n">DebStep</span><span class="tok-o">.</span><span class="tok-n">POSTINST</span><span class="tok-p">,</span> <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">installed_lines</span><span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-n">step</span><span class="tok-o">=</span><span class="tok-n">DebStep</span><span class="tok-o">.</span><span class="tok-n">POSTRM</span><span class="tok-p">,</span> <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">uninstalled_lines</span><span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-n">step</span><span class="tok-o">=</span><span class="tok-n">RpmStep</span><span class="tok-o">.</span><span class="tok-n">POST</span><span class="tok-p">,</span> <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">installed_lines</span><span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-n">step</span><span class="tok-o">=</span><span class="tok-n">RpmStep</span><span class="tok-o">.</span><span class="tok-n">POSTUN</span><span class="tok-p">,</span> <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">uninstalled_lines</span><span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-n">step</span><span class="tok-o">=</span><span class="tok-n">SolStep</span><span class="tok-o">.</span><span class="tok-n">POSTINSTALL</span><span class="tok-p">,</span> <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">installed_lines</span><span class="tok-p">)</span>
+   <span class="tok-k">yield</span> <span class="tok-n">Scriptlet</span><span class="tok-p">(</span><span class="tok-n">step</span><span class="tok-o">=</span><span class="tok-n">SolStep</span><span class="tok-o">.</span><span class="tok-n">POSTREMOVE</span><span class="tok-p">,</span> <span class="tok-n">lines</span><span class="tok-o">=</span><span class="tok-n">uninstalled_lines</span><span class="tok-p">)</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">get_hello_bakery_windows_config</span><span class="tok-p">(</span><span class="tok-n">conf</span><span class="tok-p">:</span> <span class="tok-n">HelloBakeryConfig</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">WindowsConfigGenerator</span><span class="tok-p">:</span>
+   <span class="tok-k">yield</span> <span class="tok-n">WindowsConfigEntry</span><span class="tok-p">(</span><span class="tok-n">path</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-s2">"hello_bakery"</span><span class="tok-p">,</span> <span class="tok-s2">"user"</span><span class="tok-p">],</span> <span class="tok-n">content</span><span class="tok-o">=</span><span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s2">"user"</span><span class="tok-p">])</span>
+   <span class="tok-k">yield</span> <span class="tok-n">WindowsConfigEntry</span><span class="tok-p">(</span><span class="tok-n">path</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-s2">"hello_bakery"</span><span class="tok-p">,</span> <span class="tok-s2">"content"</span><span class="tok-p">],</span> <span class="tok-n">content</span><span class="tok-o">=</span><span class="tok-n">conf</span><span class="tok-p">[</span><span class="tok-s2">"content"</span><span class="tok-p">])</span>
+
+<span class="tok-n">register</span><span class="tok-o">.</span><span class="tok-n">bakery_plugin</span><span class="tok-p">(</span>
+   <span class="tok-n">name</span><span class="tok-o">=</span><span class="tok-s2">"hello_bakery"</span><span class="tok-p">,</span>
+   <span class="tok-n">files_function</span><span class="tok-o">=</span><span class="tok-n">get_hello_bakery_plugin_files</span><span class="tok-p">,</span>
+   <span class="tok-n">scriptlets_function</span><span class="tok-o">=</span><span class="tok-n">get_hello_bakery_scriptlets</span><span class="tok-p">,</span>
+   <span class="tok-n">windows_config_function</span><span class="tok-o">=</span><span class="tok-n">get_hello_bakery_windows_config</span><span class="tok-p">,</span>
+<span class="tok-p">)</span></code></pre></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_ruleset">
+<span class="hidden-anchor sr-only" id="ruleset"></span>3.10. Create a rule set</h3>
+<div class="paragraph"><p>For a Bakery plug-in there must be a set of rules for the Setup, with which the plug-in can be configured via the GUI.
+In the simplest case this is the activation of the plug-in.
+In the most general case the configuration within the functions <code>files_function</code>, <code>scriptlets_function</code> and <code>windows_config_function</code> can be evaluated arbitrarily and influence the returned <a href="#artefacts">artifacts</a>, e.g. to write the user name into the configuration.
+To the functions just mentioned, the configuration of the plug-in is available through the <code>conf</code> argument.</p></div>
+<div class="paragraph"><p>The required rule set must be specified as a plug-in file and also stored.
+The file name must match the plug-in name and end with the <code>.py</code> suffix.</p></div>
+<div class="paragraph"><p>The creation of a rule set is not part of the Bakery API.
+You can find an introduction to this topic in the <a href="devel_check_plugins.html#rule_set">writing your own agent-based check plug-ins</a> article.
+However, since the rule set is closely related to the Bakery plug-in, we will show a possible implementation accompanying this example scenario:</p></div>
+<div class="listingblock">
+<div class="title">hellobakery_bakery.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-ch">#!/usr/bin/env python3</span>
+<span class="tok-c1"># -*- coding: utf-8 -*-</span>
+
+<span class="tok-kn">from</span> <span class="tok-nn">cmk.gui.i18n</span> <span class="tok-kn">import</span> <span class="tok-n">_</span>
+<span class="tok-kn">from</span> <span class="tok-nn">cmk.gui.plugins.wato</span> <span class="tok-kn">import</span> <span class="tok-p">(</span>
+   <span class="tok-n">HostRulespec</span><span class="tok-p">,</span>
+   <span class="tok-n">rulespec_registry</span><span class="tok-p">,</span>
+<span class="tok-p">)</span>
+<span class="tok-kn">from</span> <span class="tok-nn">cmk.gui.cee.plugins.wato.agent_bakery.rulespecs.utils</span> <span class="tok-kn">import</span> <span class="tok-n">RulespecGroupMonitoringAgentsAgentPlugins</span>
+<span class="tok-kn">from</span> <span class="tok-nn">cmk.gui.valuespec</span> <span class="tok-kn">import</span> <span class="tok-p">(</span>
+   <span class="tok-n">Age</span><span class="tok-p">,</span>
+   <span class="tok-n">Dictionary</span><span class="tok-p">,</span>
+   <span class="tok-n">TextAscii</span><span class="tok-p">,</span>
+<span class="tok-p">)</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">_valuespec_hello_bakery</span><span class="tok-p">():</span>
+   <span class="tok-k">return</span> <span class="tok-n">Dictionary</span><span class="tok-p">(</span>
+      <span class="tok-n">title</span><span class="tok-o">=</span><span class="tok-n">_</span><span class="tok-p">(</span><span class="tok-s2">"Hello bakery! (Linux, Solaris, Windows)"</span><span class="tok-p">),</span>
+      <span class="tok-n">help</span><span class="tok-o">=</span><span class="tok-n">_</span><span class="tok-p">(</span><span class="tok-s2">"This will deploy my example plugin."</span><span class="tok-p">),</span>
+      <span class="tok-n">elements</span><span class="tok-o">=</span><span class="tok-p">[</span>
+         <span class="tok-p">(</span><span class="tok-s2">"user"</span><span class="tok-p">,</span> <span class="tok-n">TextAscii</span><span class="tok-p">(</span>
+            <span class="tok-n">title</span><span class="tok-o">=</span><span class="tok-n">_</span><span class="tok-p">(</span><span class="tok-s2">"User for example plugin"</span><span class="tok-p">),</span>
+            <span class="tok-n">allow_empty</span><span class="tok-o">=</span><span class="tok-kc">False</span><span class="tok-p">,</span>
+         <span class="tok-p">)),</span>
+         <span class="tok-p">(</span><span class="tok-s2">"content"</span><span class="tok-p">,</span> <span class="tok-n">TextAscii</span><span class="tok-p">(</span>
+            <span class="tok-n">title</span><span class="tok-o">=</span><span class="tok-n">_</span><span class="tok-p">(</span><span class="tok-s2">"The actual content"</span><span class="tok-p">),</span>
+            <span class="tok-n">allow_empty</span><span class="tok-o">=</span><span class="tok-kc">False</span><span class="tok-p">,</span>
+         <span class="tok-p">)),</span>
+         <span class="tok-p">(</span><span class="tok-s2">"interval"</span><span class="tok-p">,</span>
+          <span class="tok-n">Age</span><span class="tok-p">(</span>
+            <span class="tok-n">title</span><span class="tok-o">=</span><span class="tok-n">_</span><span class="tok-p">(</span><span class="tok-s2">"Run asynchronously"</span><span class="tok-p">),</span>
+            <span class="tok-n">label</span><span class="tok-o">=</span><span class="tok-n">_</span><span class="tok-p">(</span><span class="tok-s2">"Interval for collecting data"</span><span class="tok-p">),</span>
+            <span class="tok-n">default_value</span><span class="tok-o">=</span><span class="tok-mi">300</span><span class="tok-p">,</span> <span class="tok-c1"># default: 5 minutes</span>
+          <span class="tok-p">)),</span>
+      <span class="tok-p">],</span>
+      <span class="tok-n">optional_keys</span><span class="tok-o">=</span><span class="tok-p">[</span><span class="tok-s2">"interval"</span><span class="tok-p">],</span>
+   <span class="tok-p">)</span>
+
+<span class="tok-n">rulespec_registry</span><span class="tok-o">.</span><span class="tok-n">register</span><span class="tok-p">(</span>
+   <span class="tok-n">HostRulespec</span><span class="tok-p">(</span>
+      <span class="tok-n">group</span><span class="tok-o">=</span><span class="tok-n">RulespecGroupMonitoringAgentsAgentPlugins</span><span class="tok-p">,</span>
+      <span class="tok-n">name</span><span class="tok-o">=</span><span class="tok-s2">"agent_config:hello_bakery"</span><span class="tok-p">,</span>
+      <span class="tok-n">valuespec</span><span class="tok-o">=</span><span class="tok-n">_valuespec_hello_bakery</span><span class="tok-p">,</span>
+   <span class="tok-p">))</span></code></pre></div>
+</div>
+<div class="paragraph"><p><strong>Important:</strong> The Agent Bakery ignores a definition of <code>match_type</code> in the linked rule set and always sets <code>match_type</code> to 'first', which means that the first matching rule will be executed.</p></div>
+<div class="paragraph"><p>The GUI resulting from this rule set is shown in the following image:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/bakeryapi_settings.png" alt="GUI of the rule set used to configure the plug-in."></div></div>
+<div class="paragraph"><p>The configuration finds its way to the Bakery plug-in via the name under which the rule set is registered and the prefix <code>agent_config:</code>.
+In this case, the rule set must be registered under the same name as the Bakery plug-in, but with the additional prefix <code>agent_config:</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_deploy">
+<span class="hidden-anchor sr-only" id="deploy"></span>3.11. Making the files available</h3>
+<div class="paragraph"><p>For a Bakery plug-in to work properly, all of the files involved must be placed or written in the correct location in the site directory’s local structure.</p></div>
+<div class="paragraph"><p>These are on the one hand the plug-in file itself and on the other hand the objects returned by the <code>files_function</code>. These objects either describe configuration files that are created directly by the Bakery plug-in, or they refer to files that must be stored correctly so that they can be found when packaging the agent packages.</p></div>
+<div class="paragraph"><p>Objects of the <code>Plugin</code> and <code>SystemBinary</code> classes denote existing files that must be stored.
+The files described as <code>PluginConfig</code> and <code>SystemConfig</code> are yet to be generated based on the <code>lines</code> argument, so no files need to be stored here.</p></div>
+<div class="paragraph"><p>Finally, the set of files also includes the <a href="#ruleset">rule set file</a> for the plug-in.</p></div>
+<div class="paragraph"><p>In the next and last chapter you will find the compilation of all directories.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>4. Files and directories</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Files for deploying a Bakery plug-in must be placed in the following directories.
+As always, all specifications here are relative to the site’s directory (e.g. <code>/omd/sites/mysite</code>).</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>local/lib/check_mk/base/cee/plugins/bakery/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory for the Bakery plug-in (in our example <code>hello_bakery.py</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>local/share/check_mk/agents/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory for storing the unix-type agent plug-ins.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>local/share/check_mk/agents/windows/plugins</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory for storing the Windows agent plug-ins.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>local/share/check_mk/agents/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory for included programs or shell scripts for unix-type operating systems (<code>some_binary</code> in the example).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>local/share/check_mk/agents/windows/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory for supplied programs or shell scripts for Windows.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>local/share/check_mk/web/plugins/wato</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory for the rule set files for configuring the agent plug-in (in the example <code>hellobakery_bakery.py</code>) and also the associated check plug-in (e.g. for setting thresholds). Therefore, choose meaningful names to be able to tell the files apart.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Introduction</a></li>
+<li>
+<a href="#api_doc">2. The API documentation</a><ul class="sectlevel1">
+<li><a href="#versioning">2.1. Versioning</a></li>
+<li><a href="#access_doc">2.2. Access to the API documentation</a></li>
+</ul>
+</li>
+<li>
+<a href="#using">3. Using the API</a><ul class="sectlevel1">
+<li><a href="#example">3.1. A sample scenario</a></li>
+<li><a href="#create_plugin">3.2. Creating a plug-in file</a></li>
+<li><a href="#access_api">3.3. Accessing the API</a></li>
+<li>
+<a href="#objects">3.4. The objects available in the API</a><ul class="sectlevel2">
+<li><a href="#enums">Identifier / Enumerations</a></li>
+<li><a href="#artefacts">Artifacts</a></li>
+<li><a href="#register_function">The register function</a></li>
+<li><a href="#annotations">Type annotations</a></li>
+<li><a href="#utilities">Helper functions</a></li>
+</ul>
+</li>
+<li><a href="#register">3.5. Registration</a></li>
+<li><a href="#windows_config_function">3.6. Configuration for the Windows agent</a></li>
+<li><a href="#scriptlets_function">3.7. Installation script for Linux</a></li>
+<li><a href="#files_function">3.8. The agent plug-in for Linux</a></li>
+<li><a href="#plugin_code">3.9. The plug-in file for our example scenario</a></li>
+<li><a href="#ruleset">3.10. Create a rule set</a></li>
+<li><a href="#deploy">3.11. Making the files available</a></li>
+</ul>
+</li>
+<li><a href="#files">4. Files and directories</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Rules and host tags are important and powerful tools for configuration and to avoid  a whole range of false alarms in Checkmk.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Fine-tuning the monitoring">
+<meta name="og:description" content="Rules and host tags are important and powerful tools for configuration and to avoid  a whole range of false alarms in Checkmk.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Fine-tuning the monitoring</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/de/intro_finetune.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/intro_finetune.html">2.1.0</a><a class="dropdown-item" href="../../latest/en/intro_finetune.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">The Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">The Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Fine-tuning the monitoring</h1>
+<div class="details">
+<span id="revdate">Last modified on 01-Jun-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/en/intro_finetune.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="intro_users.html">Working with multiple users</a>
+<a href="wato_rules.html">Rules</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_false_positives">
+<span class="hidden-anchor sr-only" id="false_positives"></span>1. False alarms — fatal to any monitoring</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Monitoring is only really useful if it is precise.
+The biggest obstacle to acceptance by colleagues (and probably by yourself) are <em>false positives</em> — or, in plain English, <strong>false alarms</strong>.</p></div>
+<div class="paragraph"><p>With some Checkmk beginners, we have seen how they have added many systems to the monitoring in a short space of time — perhaps because it is so easy to do so in Checkmk.
+When they then shortly afterwards activated the notifications for all users, their colleagues were flooded with hundreds of emails per day, and after only a few days their enthusiasm for monitoring was effectively destroyed.</p></div>
+<div class="paragraph"><p>Even if Checkmk makes a real effort to define appropriate and sound default values for all possible settings, it simply cannot know precisely enough how things should be in your IT environment under normal conditions.
+Therefore, a bit of manual work is required on your part to <em>fine-tune</em> the monitoring until even the last false alarm will not be sent.
+Apart from that, Checkmk will also find quite a few real problems that you and your colleagues have not yet suspected.
+These, too, must first be properly remedied — in reality, not in the monitoring!</p></div>
+<div class="paragraph"><p>The following principle has proven itself - first quality, then quantity — or in other words:</p></div>
+<div class="ulist"><ul>
+<li><p>Do not include too many hosts in the monitoring all at once.</p></li>
+<li><p>Make sure that all services that do not really have a problem are reliably on <span class="state0">OK</span>.</p></li>
+<li><p>Activate the notifications by email or SMS only after Checkmk has been running reliably for a while with no or very few false alarms.</p></li>
+</ul></div>
+<div class="paragraph"><p><strong>Note:</strong> False alarms can of course only occur when the notification function is switched on.
+So basically, what we need to do here is to turn off the preliminary stage of notifications and to avoid the critical states <span class="hstate1">DOWN</span>, <span class="state1">WARN</span> or <span class="state2">CRIT</span> for non-critical problems.</p></div>
+<div class="paragraph"><p>In the following chapters on configuration, we will show you what fine-tuning options you have — so that everything that does not cause problems will be green — and how to get any occasional drop-outs under control.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_rules">
+<span class="hidden-anchor sr-only" id="rules"></span>2. Rule-based configuration</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Before we start configuring, we must first briefly look at the settings of hosts and services in Checkmk.
+Since Checkmk was developed for large and complex environments, this is done using <strong>rules</strong>.
+This concept is very powerful and brings many advantages to smaller environments as well.</p></div>
+<div class="paragraph"><p>The basic idea is that you don’t explicitly specify every single parameter for every service, but implement something like:
+'<em>On all production Oracle servers, file systems with the prefix <code>/var/ora/</code> at 90 % filled will be</em> <span class="state1">WARN</span> <em>and at 95 % will be</em> <span class="state2">CRIT</span>'.</p></div>
+<div class="paragraph"><p>Such a rule can set thresholds for thousands of file systems with a single action.
+At the same time, it also documents very clearly which monitoring policies apply in your company.</p></div>
+<div class="paragraph"><p>Based on a basic rule, you can then define exceptions for individual cases separately.
+A suitable rule might look like this:
+<em>'On the Oracle server <code>srvora123</code>, the file system <code>/var/ora/db01/</code> at 96 % filled will be</em> <span class="state1">WARN</span> <em>and at 98 % will be</em> <span class="state2">CRIT</span>'.
+This exception rule is set in Checkmk in the same way as the basic rule.</p></div>
+<div class="paragraph"><p>Each rule has the same structure.
+It always consists of a <strong>condition</strong> and a <strong>value</strong>.
+You can also add a description and a comment to document the purpose of the rule.</p></div>
+<div class="paragraph"><p>The rules are organized in <em>rule sets</em>.
+For each type of parameter, Checkmk has a suitable rule set ready, so you can choose from several hundred rule sets.
+For example, there is one called <span class="guihint">Filesystems (used space and growth)</span> that sets the thresholds for all services that monitor file systems.
+To implement the above example, you would set the basic rule and the exception rule from this rule set.
+To determine which thresholds are valid for a particular file system, Checkmk goes in sequence through all the rules valid for the check.
+The first rule for which the condition applies sets the value — in this case, the percentage value at which the file system check becomes <span class="state1">WARN</span> or <span class="state2">CRIT</span>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_find_rules">
+<span class="hidden-anchor sr-only" id="find_rules"></span>3. Finding rules</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You have various options for accessing the rule sets in Checkmk.</p></div>
+<div class="paragraph"><p>On the one hand, you can find the rule sets in the <span class="guihint">Setup</span> menu under the topics of the objects for which there are rule sets (<span class="guihint">Hosts</span>, <span class="guihint">Services</span> and <span class="guihint">Agents</span>)
+in different categories.
+For example, there are the following rule set entries for services:
+<span class="guihint">Service monitoring rules</span>, <span class="guihint">Discovery rules</span>, <span class="guihint">Enforced services</span>, <span class="guihint">HTTP, TCP, Email, …​</span> and <span class="guihint">Other Services</span>.
+If you select one of these entries, the associated rule sets will be listed on the main page.
+This can be only a handful, or very, very many as with the <span class="guihint">Service monitoring rules</span>.
+Therefore, you have the possibility to filter on the results page — in the <span class="guihint">Filter</span> field of the menu bar.</p></div>
+<div class="paragraph"><p>If you are unsure in which category the rule set can be found, you can also search through <strong>all</strong> rules in one go, either by using the <a href="intro_gui.html#search_setup">search field in the Setup menu</a> or by opening the rule search page via <span class="guihint">Setup &gt; General &gt; Rule search</span>.
+We will take the latter route in the following chapter, in which we will introduce the process of rule creation.</p></div>
+<div class="paragraph"><p>With the large number of rule sets available, it is not always easy to find the right one, with or without a search.
+However, there is another way that you can access the appropriate rules for an existing service.
+In a view that includes the service, click on the <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="Icon for opening the action menu."></span> menu option and select the <span class="guihint">Parameters for this service</span> entry:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_service_rule_icon.png" alt="List entry of a service with open action menu."></div></div>
+<div class="paragraph"><p>You will receive a page from which you can access all the rule sets for this service:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_parameters_of_this_service.png" alt="List of all rule sets for a service."></div></div>
+<div class="paragraph"><p>In the first box entitled <span class="guihint">Check origin and parameters</span>, the <span class="guihint">Filesystems (used space and growth)</span> entry takes you directly to the set of rules for the file system monitoring thresholds.
+However, you can see in the overview that Checkmk has already set default values, so you only need to create a rule if you want to modify those defaults.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_create_rules">
+<span class="hidden-anchor sr-only" id="create_rules"></span>4. Creating rules</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>What does a rule look like in practice?
+The best way to start is to formulate the rule you want to implement in a sentence, like this:
+'<em>On all production Oracle servers, tablespaces DW20 and DW30 at 90 % full will have a <span class="state1">WARN</span> status and at 95 % a <span class="state2">CRIT</span>' status</em>.</p></div>
+<div class="paragraph"><p>You can then search for an appropriate rule set — in this example via the rule search: <span class="guihint">Setup &gt; General &gt; Rule search</span>.
+This opens a page in which you can search for 'Oracle' or for 'tablespace' (case-insensitive) and find all of the rule sets that contain this text in their name or in their description (not shown here):</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/intro_ruleset_search_tablespace.png" alt="Result of the search for 'tablespace' in rules."></div>
+<div class="title">Result of the rule search for 'tablespace'</div>
+</div>
+<div class="paragraph"><p>The <span class="guihint">Oracle Tablespaces</span> rule set is found in two categories.
+The number following the title (here everywhere <code>0</code>) shows the number of rules that have already been created from this rule set.</p></div>
+<div class="paragraph"><p>In this example, we <em>do not</em> want the <a href="wato_services.html#enforced_services">enforced service setup</a>.
+Therefore, click on the name in the <span class="guihint">Service monitoring rules</span> category to open the rule set overview page:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_ruleset_oracle_tablespaces.png" alt="Dialog for creating a rule from the 'Oracle Tablespaces' rule set."></div></div>
+<div class="paragraph"><p>This rule set does not yet contain any rules.
+You can create the first rule with the <span class="guihint">Add rule</span> button.
+Creating — and later editing — this rule opens a form with three boxes: <span class="guihint">Rule properties</span>, <span class="guihint">Value</span> and <span class="guihint">Conditions</span>.
+We will look at each of these three in turn.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_rule_ora_properties.png" alt="Dialog for setting the properties for the new rule."></div></div>
+<div class="paragraph"><p>In the <span class="guihint">Rule properties</span> box, all entries are optional.
+In addition to the informative texts, here you also have the option of temporarily deactivating a rule.
+This is practical because you can sometimes avoid deleting and recreating a rule if you temporarily do not need it.</p></div>
+<div class="paragraph"><p>What you find in the <span class="guihint">Value</span> box depends in each specific case on the content of what is being regulated:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_rule_ora_value.png" alt="Dialog for setting the values for the new rule."></div></div>
+<div class="paragraph"><p>As you can see, this can be quite a number of parameters.
+The example shows a typical case — each individual parameter can be activated by a checkbox, and the rule will then only apply to this parameter.
+You can, for example, let another parameter be determined by a different rule if that simplifies your configuration.
+In this example, only the threshold values for the percentage of free space in the tablespace will be defined.</p></div>
+<div class="paragraph"><p>The <span class="guihint">Conditions</span> box for setting the conditions looks a little more confusing at first glance:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_rule_ora_condition.png" alt="Dialog for setting the conditions for the new rule."></div></div>
+<div class="paragraph"><p>In this example we will only go into the parameters that we absolutely need for defining this specific rule:</p></div>
+<div class="paragraph"><p>With <span class="guihint">Folder</span> you specify in which folder the rule should apply.
+For example, if you change the default <span class="guihint">Main</span> to <span class="guihint">Windows</span>, the new rule will apply only to hosts located directly in or below the <span class="guihint">Windows</span> folder.</p></div>
+<div class="paragraph"><p>The <span class="guihint">Host tags</span> are a very important feature in Checkmk, so we will be devoting a separate chapter to them right after this chapter.
+At this point, you use one of the predefined host tags to specify that the rule should only apply to production systems.
+First select the host tag group <span class="guihint">Criticality</span> from the list, then click <span class="guihint">Add tag condition</span> and select the value <span class="guihint">Productive system</span>.</p></div>
+<div class="paragraph"><p>Very important in this example are the <span class="guihint">Explicit tablespaces</span>, which restrict the rule to very specific services.
+Two points are important here:</p></div>
+<div class="ulist"><ul>
+<li><p>The name of this condition adapts to the rule type.
+If it says <span class="guihint">Explicit services</span>, specify the <strong>names</strong> of the services concerned.
+For example, one such could be <code>Tablespace DW20</code> — that is, including the word <code>Tablespace</code>.
+In the example shown, however, Checkmk only wants to know the name of the tablespace itself, thus <code>DW20</code>.</p></li>
+<li><p>The entered texts are always matched against the beginning.
+The input of <code>DW20</code> therefore also accesses a fictitious tablespace <code>DW20A</code>.
+If you want to prevent this, append the <code>$</code> character to the end, i.e. <code>DW20$</code>, because these are so-called <a href="regexes.html">regular expressions</a>.</p></li>
+</ul></div>
+<div class="paragraph"><p><strong>Note:</strong> A detailed description of all of the other parameters and a detailed explanation of the important concept of rules can be found in the <a href="wato_rules.html">article on rules</a>.
+By the way, you can learn more about the <span class="guihint">Service labels</span>, the last parameter in the image above, in the <a href="labels.html">article on labels</a>.</p></div>
+<div class="paragraph"><p>After all entries for the definition are complete, save the rule with <span class="guihint">Save</span>.
+After saving, there will be exactly one new rule in the rule set:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_ruleset_ora_one_rule.png" alt="List of rules with the new rule created."></div></div>
+<div class="paragraph"><p><strong>Tip:</strong> If rather than with one rule, you later work with hundreds, there is a danger of losing an overall view.
+So in order to help you maintain an overview, Checkmk provides very helpful entries in the <span class="guihint">Related</span> menu on every page that lists rules.
+With this you can display the rules used in the current site (<span class="guihint">Used rulesets</span>) and, similarly, those that are not used at all (<span class="guihint">Ineffective rules</span>).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_host_tags">
+<span class="hidden-anchor sr-only" id="host_tags"></span>5. Host tags</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__how_host_tags_work">
+<span class="hidden-anchor sr-only" id="_how_host_tags_work"></span>5.1. How host tags work</h3>
+<div class="paragraph"><p>In the previous chapter we saw an example of a rule that should only apply to production systems.
+More specifically, in that rule we defined a condition using the <span class="guihint">Productive system</span> <em>host tag</em>.
+Why did we define the condition as a tag and not simply set it for the folder?
+Well, you can only define a single folder structure, and each host can only be in one folder.
+But a host can have many different tags, and the folder structure is simply too limited and not flexible enough for that.</p></div>
+<div class="paragraph"><p>In contrast, you can assign host tags to the hosts as freely and arbitrarily as you like — regardless of the folder in which the hosts are located.
+You can then refer to these tags in your rules.
+This makes the configuration not only simpler, but also easier to understand and less error-prone than if you were to define everything explicitly for each host.</p></div>
+<div class="paragraph"><p>But how and where do you define which hosts should have which tag?
+And how can you define your own customized tags?</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__defining_host_tags">
+<span class="hidden-anchor sr-only" id="_defining_host_tags"></span>5.2. Defining host tags</h3>
+<div class="paragraph"><p>Let’s start with the answer to the second question about customized tags.
+First of all, you need to know that tags are organized in groups called <em>host tag groups</em>.
+Let’s take <em>location</em> as an example.
+A tag group could be named <em>Location</em>, and this group could contain the tags <em>Munich</em>, <em>Austin</em>, and <em>Singapore</em>.
+Basically, each host is assigned <strong>exactly one tag</strong> from each tag group.
+So as soon as you define your own tag group, <strong>each</strong> host will carry one of the tags from this group.
+Hosts for which you have not selected a tag from the group are simply assigned the first one by default.</p></div>
+<div class="paragraph"><p>For the definition of host tag groups, see <span class="guihint">Setup &gt; Hosts &gt; Tags</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_tags_default.png" alt="List of all predefined host tag groups."></div></div>
+<div class="paragraph"><p>As can be seen, some tag groups have already been predefined.
+You cannot change most of these.
+We also recommend that you do not touch the two predefined example groups <span class="guihint">Criticality</span> and <span class="guihint">Networking Segment</span>.
+It is better to define your own groups:</p></div>
+<div class="paragraph"><p>Click <span class="guihint">Add tag group</span>.
+This opens the page for creating a new tag group.
+In the first box <span class="guihint">Basic settings</span> you assign — as so often in Checkmk — an internal ID that serves as a key and which cannot be changed later.
+In addition to the ID, you define a descriptive title, which you can change at any later time.
+With <span class="guihint">Topic</span> you can determine where the tag will be offered later in the host properties.
+If you create a new topic here, the tag will be displayed in a separate box in the host properties.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_new_taggroup_basic.png" alt="[alt=" dialog for defining the settings new host tag group.></div></div>
+<div class="paragraph"><p>The second box <span class="guihint">Tag choices</span> is about the actual tags, i.e. the selection options in the group.
+Click <span class="guihint">Add tag choice</span> to create a tag and assign an internal ID and a title for each tag:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_new_taggroup_choices.png" alt="Dialog for setting the tags for the new host tag group."></div></div>
+<div class="paragraph"><p>Notes:</p></div>
+<div class="ulist"><ul>
+<li><p>Groups with only one selection are also allowed and can even be useful.
+The tag contained therein is known as a <em>checkbox tag</em> and it then appears in the host properties as just a checkbox.
+Each host will then have the tag — or not, because checkbox tags are disabled by default.</p></li>
+<li><p>At this point, you can ignore the <em>auxiliary tags</em> for now.
+You can get all the information on auxiliary tags in particular and on host tags in general in the <a href="host_tags.html">article on host tags</a>.</p></li>
+</ul></div>
+<div class="paragraph"><p>Once you have saved this new host tags group with <span class="guihint">Save</span>, you can start using it.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__assigning_a_tag_to_a_host">
+<span class="hidden-anchor sr-only" id="_assigning_a_tag_to_a_host"></span>5.3. Assigning a tag to a host</h3>
+<div class="paragraph"><p>You have already seen how to assign tags to a host — in the host properties when creating or editing a host.
+In the <span class="guihint">Custom attributes</span> box — or in a separate one if you have created a <span class="guihint">Topic</span>  — the new host tag group will appear and there you can make your selection and set the tag for the host:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_host_custom_attributes.png" alt="Dialog with properties of a host with the new host tag group."></div></div>
+<div class="paragraph"><p>Now that you have learned the important principles of configuration with rules and host tags, in the remaining chapters we would like to give you some practical guidelines on how to reduce false alarms in a new Checkmk system.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_filesystems">
+<span class="hidden-anchor sr-only" id="filesystems"></span>6. Customizing file system thresholds</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Check the threshold values for monitoring file systems and adjust them if necessary.
+We have already briefly shown the default values above at the <a href="#find_rules">search for rules</a>.</p></div>
+<div class="paragraph"><p>By default, Checkmk takes the thresholds 80 % for <span class="state1">WARN</span> and 90 % for <span class="state2">CRIT</span> for the fill level of file systems.
+Now 80 % for a 2 Tbyte hard disk is 400 Gbyte after all — perhaps a bit much buffer for a warning.
+So here are a few tips on the subject of file systems:</p></div>
+<div class="ulist"><ul>
+<li><p>Create your own rules in the <span class="guihint">Filesystems (used space and growth)</span> rule set.</p></li>
+<li><p>The parameters allow thresholds that depend on the size of the file system.
+To do this, select <span class="guihint">Levels for used/free space &gt; Levels for used space &gt; Dynamic levels</span>.
+With the <span class="guihint">Add new element</span> button you can now define your own threshold values per disk size.</p></li>
+<li><p>It is even easier with the <span class="guihint">Magic factor</span>, which we will introduce in the <a href="intro_bestpractise.html#magic_factor">final chapter</a>.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_hosts_downtime">
+<span class="hidden-anchor sr-only" id="hosts_downtime"></span>7. Sending hosts into downtime</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Some servers are restarted on a regular basis — either to apply patches or simply because they are supposed to be.
+You can avoid false alarms at these times in two ways:</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+In the Raw Edition you first define a <em>time period</em> that covers the times of the reboot.
+You can find out how to do this in the <a href="timeperiods.html">article on time periods</a>.
+Then create a rule in each of the rule sets <span class="guihint">Notification period for hosts</span> and <span class="guihint">Notification period for services</span> for the affected hosts and select the
+previously-defined time period there.
+The second rule for the services is necessary so that any services that go to <span class="state2">CRIT</span> during this time do not trigger a notification.
+If problems occur within this time frame — and are also resolved within the same time frame — no notification will be triggered.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In the commercial editions there are regular scheduled downtimes for this purpose that you can set for any affected hosts.</p></div>
+<div class="paragraph"><p><strong>Tip:</strong> An alternative to creating downtimes for hosts, which we have already described in the <a href="intro_monitor.html#downtimes">chapter on scheduled downtimes</a>, is the <span class="guihint">Recurring downtimes for hosts</span> rule set in the commercial editions.
+This has the great advantage that hosts that are added to the monitoring later automatically receive these scheduled downtimes.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_hosts_down">
+<span class="hidden-anchor sr-only" id="hosts_down"></span>8. Ignoring switched-off hosts</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>It is not always a problem when a computer is switched off.
+Printers are a classic example.
+Monitoring these with Checkmk makes perfect sense — some users even organize the reordering of toner using Checkmk.
+As a rule, however, switching off a printer before closing time is not a problem.
+It is simply senseless, however, when at this point Checkmk notifies due to the printer’s corresponding host going <span class="hstate1">DOWN</span>.</p></div>
+<div class="paragraph"><p>You can tell Checkmk that it is perfectly OK for a host to be powered off.
+To do this, find the <span class="guihint">Host check command</span> rule set, create a new rule, and set its value to <span class="guihint">Always assume host to be up</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_host_check_command.png" alt="Dialog for setting the 'Host Check Command' in the rule of the same name."></div></div>
+<div class="paragraph"><p>In the <span class="guihint">Conditions</span> box, make sure that this rule is really only applied to the appropriate hosts — depending on the structure you have chosen.
+For instance, you can define a host tag and use it here, or you can set the rule for a folder in which all the printers are located.</p></div>
+<div class="paragraph"><p>Now, all printers will always be displayed as <span class="hstate0">UP</span> — no matter what their actual status is.</p></div>
+<div class="paragraph"><p>However, the services of the printer will continue to be checked, and any timeout would result in a <span class="state2">CRIT</span> state.
+To avoid this as well, configure a rule for the affected hosts in the <span class="guihint">Status of the Checkmk services</span> rule set, in which you set timeouts and connection problems to <span class="state0">OK</span> respectively:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_rule_status_of_cmk_services.png" alt="Dialog for setting the state of 'Checkmk services' in a rule."></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_switchports">
+<span class="hidden-anchor sr-only" id="switchports"></span>9. Configuring switch ports</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you monitor a switch with Checkmk, you will notice that during the service configuration, a service is automatically created for each port that is <em>up</em> at the time.
+This is a sensible default setting for core and distribution switches — i.e. those to which only infrastructure devices or servers are connected.
+However, for switches to which end devices such as workstations or printers are connected, this leads on the one hand to continuous notifications if a port goes <em>down</em>, and on the other hand to new services being continuously found because a previously unmonitored port goes <em>up</em>.</p></div>
+<div class="paragraph"><p>Two approaches have proven successful for such situations.
+Firstly, you can restrict the monitoring to the uplink ports.
+To do this, create a rule for the <a href="#services_disabled">disabled services</a> that excludes the other ports from monitoring.</p></div>
+<div class="paragraph"><p>However, the second method is much more interesting.
+With this method you monitor all ports, but allow <em>down</em> to be a valid state.
+The advantage is that you will have transmission-error monitoring even for ports to which end devices are connected and can thus very quickly detect bad patch cables or errors in auto-negotiation.
+To implement this function, you need two rules:</p></div>
+<div class="paragraph"><p>The first rule set <span class="guihint">Network interface and switch port discovery</span> defines the conditions under which switch ports are to be monitored.
+Create a rule for the desired switches and select whether individual interfaces (<span class="guihint">Configure discovery of single interfaces</span>), or groups (<span class="guihint">Configure grouping of interfaces</span>) are to be discovered.
+Then, under <span class="guihint">Conditions for this rule to apply &gt; Match port states</span>, activate <span class="guihint">2 - down</span> in addition to <span class="guihint">1 - up</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_rule_switch_port_discovery.png" alt="Dialog for defining the monitoring of switch ports in a rule."></div></div>
+<div class="paragraph"><p>In the service configuration of the switches, the ports with the <em>down</em> state will now also be presented, and you can add these to the list of monitored services.</p></div>
+<div class="paragraph"><p>Before you activate the change, you will still need the second rule that ensures that this state is evaluated as <span class="state0">OK</span>.
+This rule set is called <span class="guihint">Network interfaces and switch ports</span>.
+Create a new rule and activate the <span class="guihint">Operational state</span> option, deactivate <span class="guihint">Ignore the operational state</span> below it and then activate the <span class="guihint">1 - up</span> and <span class="guihint">2 - down</span> states for the <span class="guihint">Allowed operational states</span> (and any other states as may be required).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_services_disabled">
+<span class="hidden-anchor sr-only" id="services_disabled"></span>10. Disabling services permanently</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>For some services that simply cannot be reliably set to <span class="state0">OK</span>, it is better not to monitor them at all.
+In this case, you could simply manually remove the services from the monitoring for the affected hosts in the service configuration (on the <span class="guihint">Services of host</span> page) by setting them to <span class="guihint">Disabled</span> or <span class="guihint">Undecided</span>.
+However, this method is cumbersome and error-prone.</p></div>
+<div class="paragraph"><p>It is much better to define rules according to which specific services will <strong>systematically</strong> not be monitored.
+For this purpose there is the <span class="guihint">Disabled services</span> rule set.
+Here you can, for example, create a rule and specify in the condition that file systems with the <code>/var/test/</code> mount point are by definition not to be monitored.</p></div>
+<div class="paragraph"><p><strong>Tip:</strong> If you disable an individual service in the service configuration of a host by clicking on <span class="image-inline"><img src="../images/icons/icon_move_to_disabled.png" alt="Icon for disabling a service."></span>, a rule is automatically created for the host in this very rule set.
+You can edit this rule manually and, for example, remove the explicit host name.
+The affected service will then be disabled on all hosts.</p></div>
+<div class="paragraph"><p>You can read more information about this in the <a href="wato_services.html#remove_unwanted_services">article on configuring services</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_average_value">
+<span class="hidden-anchor sr-only" id="average_value"></span>11. Catching outliers using mean values</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sporadic notifications are often generated by threshold values on utilization metrics — such as <em>CPU utilization</em> — which are only exceeded for a short time.
+As a rule, such brief peaks are not a problem and should not be faulted by the monitoring.</p></div>
+<div class="paragraph"><p>For this reason, quite a number of check plug-ins have the option in their configuration that their metrics are averaged over a longer period of time before the thresholds are applied.
+An example of this is the rule set for CPU utilization for non-Unix systems called <span class="guihint">CPU utilization for simple devices</span>.
+For this there is the <span class="guihint">Averaging for total CPU utilization</span> parameter:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_rule_cpu_util_average.png" alt="Dialog for setting mean values for CPU utilization in a rule."></div></div>
+<div class="paragraph"><p>If you activate this and enter <code>15</code>, the CPU utilization will first be averaged over a period of 15 minutes and only afterwards will the threshold values be applied to this average value.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_sporadic_errors">
+<span class="hidden-anchor sr-only" id="sporadic_errors"></span>12. Managing sporadic errors</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When nothing else helps and services continue going occasionally to <span class="state1">WARN</span> or <span class="state2">CRIT</span> for a single check interval — i.e. for one minute — there is one last method for preventing false alarms — the <span class="guihint">Maximum number of check attempts for service</span> rule set.</p></div>
+<div class="paragraph"><p>If you create a rule in that rule set and set its value to, say, <code>3</code>, a service that goes from <span class="state0">OK</span> to <span class="state1">WARN</span>, for example, will not yet trigger a notification and will not yet be displayed as a problem in the <a href="intro_tools.html#overview"><span class="guihint">Overview</span></a>.
+The intermediate state in which the service will now be in is called the <em>soft state</em>.
+Only when the state remains not <span class="state0">OK</span> for three consecutive checks — which is a total duration of just over two minutes — will a persistent problem be reported.
+Only a <em>hard state</em> will trigger a notification.</p></div>
+<div class="paragraph"><p>This is admittedly not an attractive solution.
+You should always try to get to the root of any problem, but sometimes things are just the way they are, and with the number of check attempts you at least have a viable way around such situations.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_discovery">
+<span class="hidden-anchor sr-only" id="discovery"></span>13. Keeping the list of services up to date</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In any data center, work is constantly being carried out, and so the list of services to be monitored will never remain static.
+To make sure you don’t miss anything, Checkmk automatically sets up a special service for you on each host — this service is known as the <span class="guihint">Check_MK Discovery</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/intro_service_discovery.png" alt="Service list with the 'Check_MK Discovery' service."></div></div>
+<div class="paragraph"><p>By default, every two hours this service checks whether new — not yet monitored — services have been found or existing services have been dropped.
+If this is the case, the service go to <span class="state1">WARN</span>.
+You can then call up the service configuration (on the <span class="guihint">Services of host</span> page) and bring the services list back up to the current status.</p></div>
+<div class="paragraph"><p>Detailed information on this <em>discovery check</em> can be found in the <a href="wato_services.html#discovery_check">article on configuring services</a>.
+There you can also learn how you can have unmonitored services added automatically, which makes the work in a large configuration much easier.</p></div>
+<div class="paragraph"><p><strong>Tip:</strong> With <span class="guihint">Monitor &gt; System &gt; Unmonitored services</span> you can call up a view that shows you any new or dropped services.</p></div>
+<div class="paragraph"><p><a href="intro_users.html">Continue with multiple users</a></p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#false_positives">1. False alarms — fatal to any monitoring</a></li>
+<li><a href="#rules">2. Rule-based configuration</a></li>
+<li><a href="#find_rules">3. Finding rules</a></li>
+<li><a href="#create_rules">4. Creating rules</a></li>
+<li>
+<a href="#host_tags">5. Host tags</a><ul class="sectlevel1">
+<li><a href="#_how_host_tags_work">5.1. How host tags work</a></li>
+<li><a href="#_defining_host_tags">5.2. Defining host tags</a></li>
+<li><a href="#_assigning_a_tag_to_a_host">5.3. Assigning a tag to a host</a></li>
+</ul>
+</li>
+<li><a href="#filesystems">6. Customizing file system thresholds</a></li>
+<li><a href="#hosts_downtime">7. Sending hosts into downtime</a></li>
+<li><a href="#hosts_down">8. Ignoring switched-off hosts</a></li>
+<li><a href="#switchports">9. Configuring switch ports</a></li>
+<li><a href="#services_disabled">10. Disabling services permanently</a></li>
+<li><a href="#average_value">11. Catching outliers using mean values</a></li>
+<li><a href="#sporadic_errors">12. Managing sporadic errors</a></li>
+<li><a href="#discovery">13. Keeping the list of services up to date</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

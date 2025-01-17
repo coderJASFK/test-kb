@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="In diesem Artikel werden grundlegende Begriffe und Konzepte in Checkmk erläutert, wie z.B. Host, Service, Benutzer, Kontaktgruppe, Benachrichtigung, Zeitraum, Wartungszeit.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Grundlagen des Monitorings mit Checkmk - Begriffe in Checkmk verstehen">
+<meta name="og:description" content="In diesem Artikel werden grundlegende Begriffe und Konzepte in Checkmk erläutert, wie z.B. Host, Service, Benutzer, Kontaktgruppe, Benachrichtigung, Zeitraum, Wartungszeit.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Grundlagen des Monitorings mit Checkmk - Begriffe in Checkmk verstehen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/monitoring_basics.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/monitoring_basics.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/monitoring_basics.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Grundlagen des Monitorings mit Checkmk</h1>
+<div class="details">
+<span id="revdate">Last modified on 14-Nov-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/monitoring_basics.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="hosts_setup.html">Verwaltung der Hosts</a>
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_states_events">
+<span class="hidden-anchor sr-only" id="states_events"></span>1. Zustände und Ereignisse</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Bisher haben wir uns damit befasst, wie man Checkmk installiert und in Betrieb nimmt.
+Nun ist es an der Zeit, die grundlegenden Konzepte und Begriffe des Monitorings (mit Checkmk) zu erläutern.</p></div>
+<div class="paragraph"><p>Zunächst ist es wichtig, die grundlegenden Unterschiede zwischen <em>Zuständen</em> und <em>Ereignissen</em> zu verstehen — und zwar aus ganz praktischem Nutzen.
+Die meisten klassischen IT-Monitoring-Systeme drehen sich um Ereignisse (Events).
+Ein Ereignis ist etwas zu einem ganz bestimmten Zeitpunkt einmalig Geschehenes.
+Ein gutes Beispiel wäre <em>Fehler beim Zugriff auf Platte X.</em>
+Übliche Quellen von Ereignissen sind Syslog-Meldungen, SNMP-Traps, das Windows-Event-Log und Einträge in Log-Dateien.
+Ereignisse passieren quasi spontan (von selbst, asynchron).</p></div>
+<div class="paragraph"><p>Dagegen beschreibt ein <em>Zustand</em> eine anhaltende Situation, z.B. <em>Platte X ist online.</em>.
+Um den aktuellen Zustand von etwas zu überwachen, muss das Monitoring-System diesen regelmäßig abfragen.
+Wie das Beispiel zeigt, gibt es beim Monitoring oft die Wahl, ob man mit Ereignissen oder mit Zuständen arbeitet.</p></div>
+<div class="paragraph"><p>Checkmk beherrscht beide Disziplinen, gibt jedoch immer dort, wo die Wahl besteht, dem <em>zustandsbasierten Monitoring</em> den Vorzug.
+Der Grund liegt in den zahlreichen Vorteilen dieser Methode.
+Einige davon sind:</p></div>
+<div class="ulist"><ul>
+<li><p>Ein Fehler in der Überwachung selbst wird sofort erkannt, weil es natürlich auffällt, wenn das Abfragen des Zustands nicht mehr funktioniert.
+Die Abwesenheit einer <em>Meldung</em> dagegen gibt keine Sicherheit, ob das Monitoring noch funktioniert.</p></li>
+<li><p>Das Monitoring kann selbst steuern, mit welcher Rate Zustände abgerufen werden.
+Es gibt keine Gefahr eines Sturms an Event-Meldungen in systemweiten Problemsituationen.</p></li>
+<li><p>Das regelmäßige Abfragen in einem festen Zeitraster ermöglicht das Erfassen von <a href="glossar.html#metric">Metriken</a>, um deren Zeitverlauf aufzuzeichnen.</p></li>
+<li><p>Auch nach chaotischen Situationen — z.B. Stromausfall im Rechenzentrum — hat man immer einen zuverlässigen Gesamtzustand.</p></li>
+</ul></div>
+<div class="paragraph"><p>Man kann also sagen, dass das zustandsbasierte Monitoring bei Checkmk das <em>normale</em> ist.
+Für das Verarbeiten von Ereignissen gibt es daneben die <a href="glossar.html#ec">Event Console</a>.
+Diese ist auf das Korrelieren und Bewerten von großen Mengen an Ereignissen spezialisiert und nahtlos in das Monitoring mit Checkmk integriert.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_hosts_services">
+<span class="hidden-anchor sr-only" id="hosts_services"></span>2. Hosts und Services</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_hosts">
+<span class="hidden-anchor sr-only" id="hosts"></span>2.1. Hosts</h3>
+<div class="paragraph"><p>Alles in der Überwachung dreht sich um <em>Hosts</em> und <em>Services.</em>
+Wir haben uns lange Gedanken gemacht, wie man Host ins Deutsche übersetzen könnte und am Ende entschieden, dass wir den Begriff so belassen, um keine unnötige Verwirrung zu stiften.
+Denn ein Host kann vieles sein, z.B.:</p></div>
+<div class="ulist"><ul>
+<li><p>Ein Server</p></li>
+<li><p>Ein Netzwerkgerät (Switch, Router, Load Balancer)</p></li>
+<li><p>Ein Messgerät mit IP-Anschluss (Thermometer, Luftfeuchtesensor)</p></li>
+<li><p>Irgendetwas anderes mit einer IP-Adresse</p></li>
+<li><p>Ein Cluster aus mehreren Hosts</p></li>
+<li><p>Eine virtuelle Maschine</p></li>
+<li><p>Ein Docker-Container</p></li>
+</ul></div>
+<div class="paragraph"><p>Im Monitoring hat ein Host immer einen der folgenden Zustände:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 10%;">
+<col style="width: 80%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Zustand</th>
+<th class="tableblock halign-left valign-top">Farbe</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="hstate0">UP</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">grün</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Host ist über das Netzwerk erreichbar (in der Regel heißt das, dass er auf PING antwortet).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="hstate1">DOWN</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Host antwortet nicht auf Anfragen aus dem Netzwerk, ist nicht erreichbar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="hstate2">UNREACH</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orange</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der <em>Weg</em> zu dem Host ist aktuell für das Monitoring versperrt, weil ein Router oder Switch auf dem Weg dorthin ausgefallen ist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="statep">PEND</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">grau</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Host wurde frisch in die Überwachung aufgenommen und noch nie abgefragt. Genau genommen ist das aber kein Zustand.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Neben dem Zustand hat ein Host noch einige Attribute, die vom Benutzer konfiguriert werden, z.B.:</p></div>
+<div class="ulist"><ul>
+<li><p>Einen eindeutigen Namen</p></li>
+<li><p>Eine IP-Adresse</p></li>
+<li><p>Optional einen Alias-Namen, welcher nicht eindeutig sein muss</p></li>
+<li><p>Optional einen oder mehrere <em>Parents</em></p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_parents">
+<span class="hidden-anchor sr-only" id="parents"></span>2.2. Parents</h3>
+<div class="paragraph"><p>Damit das Monitoring den Zustand <span class="hstate2">UNREACH</span> berechnen kann, muss es wissen, über welchen Weg es jeden einzelnen Host erreichen kann.
+Dazu kann man bei jedem Host einen oder mehrere sogenannte <em>Parent-Hosts</em> angeben.
+Wenn z.B. ein Server A <em>vom Monitoring aus gesehen</em> nur über einen Router B erreichbar ist, dann ist B ein Parent-Host von A.
+In <a href="hosts_structure.html#parents">Checkmk konfiguriert</a> werden dabei nur <em>direkte</em> Parents.
+Daraus ergibt sich dann eine baumartige Struktur mit der Checkmk-Instanz in der Mitte (hier dargestellt als <span class="image-inline"><img src="../images/icons/parent_map_root.png" alt="Symbol für die Checkmk-Instanz."></span>):</p></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../images/monitoring_basics_parents.png" alt="Netzwerktopologie mit einem konfigurierten Parent." width="43%"></div></div>
+<div class="paragraph"><p>Nehmen wir an, dass in der oben gezeigten beispielhaften Netzwerktopologie die Hosts <em>myhost</em> und <em>myhost4</em> nicht mehr erreichbar sind.
+Der Ausfall von <em>myhost4</em> ist dadurch erklärbar, dass <em>myhost</em> ausgefallen ist.
+Daher wird <em>myhost4</em> im Monitoring als <span class="hstate2">UNREACH</span> klassifiziert.
+Es ist schlicht nicht eindeutig feststellbar, weswegen Checkmk <em>myhost4</em> nicht mehr erreichen kann und der Status <span class="hstate1">DOWN</span> wäre daher unter Umständen irreführend.
+Stattdessen bewirkt das <span class="hstate2">UNREACH</span> standardmäßig die Unterdrückung einer <a href="notifications.html">Benachrichtigung</a>.
+Denn das ist die wichtigste Aufgabe des Konzepts der Parents:
+Die Vermeidung massenhafter Benachrichtigungen, falls ein ganzes Netzwerksegment aufgrund einer Unterbrechung für das Monitoring nicht mehr erreichbar ist.</p></div>
+<div class="paragraph"><p>Der Vermeidung von Fehlalarmen dient auch ein <a href="cmc_differences.html#no_on-demand_host_checks">Feature</a> des in den <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> verwendeten Checkmk Micro Core (CMC).
+Hier wird der Statuswechsel über einen ausgefallenen Host wenige Augenblicke zurückgehalten und findet erst dann statt, wenn <em>gesichert</em> ist, dass der Parent noch erreichbar ist.
+Falls der Parent dagegen sicher <span class="hstate1">DOWN</span> ist, wechselt der Host nach <span class="hstate2">UNREACH</span> — ohne dass benachrichtigt wird.</p></div>
+<div class="paragraph"><p>In manchen Fällen hat ein Host mehrere Parents, zum Beispiel, wenn ein Router hochverfügbar in einem Cluster betrieben wird.
+Für Checkmk reicht es, wenn einer dieser Parents erreichbar ist, um den Status des Hosts eindeutig zu bestimmen.
+Falls ein Host also <em>mehrere</em> Parents hat und zumindest einer dieser Parents <span class="hstate0">UP</span> ist, wird der Host im Monitoring als erreichbar betrachtet.
+Mit anderen Worten: In diesem Fall wird der Host nicht automatisch in den Zustand <span class="hstate2">UNREACH</span> wechseln.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_services">
+<span class="hidden-anchor sr-only" id="services"></span>2.3. Services</h3>
+<div class="paragraph"><p>Ein Host hat eine Menge von <em>Services.</em>
+Ein Service kann alles Mögliche sein, bitte verwechseln Sie das nicht mit den Diensten (<em>services</em>) von Windows.
+Ein Service ist irgendein Teil oder Aspekt des Hosts, der <span class="state0">OK</span> sein kann oder eben nicht.
+Der Zustand von Services kann natürlich immer nur dann abgefragt werden, wenn der Host im Zustand <span class="hstate0">UP</span> ist.</p></div>
+<div class="paragraph"><p>Folgende Zustände kann ein Service im Monitoring haben:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 10%;">
+<col style="width: 80%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Zustand</th>
+<th class="tableblock halign-left valign-top">Farbe</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="state0">OK</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">grün</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Service ist vollständig in Ordnung. Alle Messwerte liegen im erlaubten Bereich.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="state1">WARN</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gelb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Service funktioniert normal, aber seine Parameter liegen außerhalb des optimalen Bereichs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="state2">CRIT</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Service ist ausgefallen, defekt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="state3">UNKNOWN</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orange</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Zustand des Services konnte nicht korrekt ermittelt werden. Der Monitoring-Agent hat fehlerhafte Daten geliefert oder die zu überwachende Sache ist ganz verschwunden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="statep">PEND</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">grau</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Service ist gerade in die Überwachung aufgenommen worden und es gibt noch keine Monitoring-Daten.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Wenn es darum geht, welcher Zustand „schlimmer“ ist, verwendet Checkmk folgende Reihenfolge:</p></div>
+<div class="paragraph"><p><span class="state0">OK</span> → <span class="state1">WARN</span> → <span class="state3">UNKNOWN</span> → <span class="state2">CRIT</span></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_checks">
+<span class="hidden-anchor sr-only" id="checks"></span>2.4. Checks</h3>
+<div class="paragraph"><p>Ein <a href="glossar.html#check">Check</a> sorgt dafür, dass ein Host oder ein Service einen Zustand erhält.
+Welche Zustände das sein können, ist im vorherigen Abschnitt beschrieben.
+Services und Checks hängen eng miteinander zusammen.
+Daher werden sie manchmal, vielleicht sogar in diesem Handbuch, synonym verwendet, obwohl es doch verschiedene Dinge sind.</p></div>
+<div class="paragraph"><p>Im Setup können Sie sich anzeigen lassen, welches <a href="glossar.html#check_plugin">Check-Plugin</a> für welchen Service zuständig ist.
+Öffnen Sie mit <span class="guihint">Setup &gt; Hosts</span> die Eigenschaften eines Hosts und dann im Menü <span class="guihint">Hosts &gt; Service Configuration</span> die Liste der Services dieses Hosts.
+Dann blenden Sie mit <span class="guihint">Display &gt; Show plugin names</span> eine neue Spalte ein, die Ihnen für jeden Service das zuständige Check-Plugin anzeigt:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/monitoring_basics_services_checks.png" alt="monitoring basics services checks"></div>
+<div class="title">Die hier nicht relevante Tabellenspalte <span class="guihint">Status detail</span> haben wir weggelassen</div>
+</div>
+<div class="paragraph"><p>Wie Sie am Beispiel des Check-Plugins <span class="guihint">df</span> sehen, kann ein Check-Plugin für mehrere Services verantwortlich sein.
+Übrigens sind in der eingeblendeten Spalte die Namen der Check-Plugins Links, die Sie zur Beschreibung des Check-Plugins führen.</p></div>
+<div class="paragraph"><p>Der Zusammenhang und die Abhängigkeit von Services und Checks sind auch im Monitoring zu sehen.
+In der Service-Liste eines Hosts im Monitoring können Sie feststellen, dass im <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> Aktionsmenü beim Eintrag <span class="guihint">Reschedule</span> bei einigen Services ein gelber Pfeil steht (<span class="image-inline"><img src="../images/icons/icon_reload.png" alt="icon reload"></span>), bei den meisten anderen aber ein grauer Pfeil (<span class="image-inline"><img src="../images/icons/icon_reload_cmk.png" alt="icon reload cmk"></span>).
+Ein Service mit dem gelben Pfeil basiert auf einem <a href="glossar.html#active_check">aktiven Check:</a></p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_basics_check_mk_service.png" alt="monitoring basics check mk service"></div></div>
+<div class="paragraph"><p>Solch ein aktiver Check wird von Checkmk direkt ausgeführt.
+Services mit dem grauen Pfeil basieren auf passiven Checks, deren Daten von einem anderen Service, dem Service <span class="guihint">Check_MK</span>, geholt werden.
+Dies geschieht aus Gründen der Performance und stellt eine Besonderheit von Checkmk dar.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_host_service_groups">
+<span class="hidden-anchor sr-only" id="host_service_groups"></span>3. Host- und Service-Gruppen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Hosts und Services können zur Übersicht gruppiert werden.
+Dabei kann ein Host/Service auch in mehreren Gruppen sein.
+Diese Gruppen sind rein optional und für die Konfiguration nicht notwendig.</p></div>
+<div class="paragraph"><p>Host-Gruppen können nützlich sein, wenn Sie eine zusätzliche Gruppierung quer zu der Ordnerstruktur wünschen, in der Sie die Hosts verwalten.
+Haben Sie die Ordnerstruktur z.B. nach geographischen Gesichtspunkten aufgebaut, dann kann eine Host-Gruppe <em>Linux-Server</em> sinnvoll sein, die alle Linux-Server zusammenfasst, egal an welchen Standorten diese stehen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_contacts">
+<span class="hidden-anchor sr-only" id="contacts"></span>4. Kontakte und Kontaktgruppen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><a href="glossar.html#contact">Kontakte</a> und Kontaktgruppen bieten die Möglichkeit, Hosts und Services Personen zuzuordnen.
+Ein Kontakt entspricht einer Benutzerkennung der Weboberfläche.
+Die Zuordnung zu Hosts und Services geschieht jedoch nicht direkt, sondern über Kontaktgruppen.</p></div>
+<div class="paragraph"><p>Zunächst wird ein Kontakt (z.B. <code>harri</code>) einer Kontaktgruppe (z.B. <code>linux-admins</code>) zugeordnet.
+Der Kontaktgruppe werden dann wieder Hosts oder nach Bedarf auch einzelne Services zugeordnet.
+Dabei können sowohl Benutzer als auch Hosts und Services jeweils mehreren Kontaktgruppen zugeordnet sein.</p></div>
+<div class="paragraph"><p>Diese Zuordnung ist für mehrere Aspekte nützlich:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Wer darf was <em>sehen?</em></p></li>
+<li><p>Wer darf welche Hosts und Services <em>konfigurieren und steuern?</em></p></li>
+<li><p>Wer wird bei welchen Problemen <em>benachrichtigt?</em></p></li>
+</ol></div>
+<div class="paragraph"><p>Der Benutzer <code>cmkadmin</code>, der beim Erzeugen einer Instanz automatisch angelegt wird, darf übrigens immer alle Hosts und Services sehen, auch wenn er kein Kontakt ist.
+Dies ist durch seine Rolle als Administrator bedingt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_users_roles">
+<span class="hidden-anchor sr-only" id="users_roles"></span>5. Benutzer und Rollen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Während über Kontakte und Kontaktgruppen gesteuert wird, welche Personen für einen bestimmten Host oder Service zuständig oder berechtigt sind,
+werden die Privilegien über <em>Rollen</em> gesteuert.
+Checkmk wird dabei mit drei Rollen ausgeliefert, von denen Sie später weitere Rollen ableiten können.
+Jede Rolle definiert eine Reihe von Rechten, welche Sie anpassen können.
+Die Bedeutung der Standardrollen sind:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 5%;">
+<col style="width: 10%;">
+<col style="width: 85%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Rolle</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_roles.png" alt="icon roles"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>admin</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Darf alles sehen, hat alle Privilegien.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_roles.png" alt="icon roles"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>user</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Darf nur sehen, wofür er Kontakt ist. Darf Hosts verwalten in Ordnern, die ihm zugewiesen sind. Darf keine globalen Einstellungen machen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_roles.png" alt="icon roles"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>guest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Darf alles sehen, aber nichts konfigurieren und auch nicht in das Monitoring eingreifen.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__probleme_ereignisse_und_benachrichtigungen">
+<span class="hidden-anchor sr-only" id="_probleme_ereignisse_und_benachrichtigungen"></span>6. Probleme, Ereignisse und Benachrichtigungen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_problems">
+<span class="hidden-anchor sr-only" id="problems"></span>6.1. Bearbeitete und unbehandelte Probleme</h3>
+<div class="paragraph"><p>Checkmk bezeichnet jeden Host der nicht <span class="hstate0">UP</span> und jeden Service, der nicht <span class="state0">OK</span> ist, als ein <em>Problem.</em>
+Dabei kann ein Problem zwei Zustände haben: unbehandelt (<em>unhandled</em>) und bearbeitet (<em>handled</em>).
+Der Ablauf ist so, dass ein neues Problem zunächst als unbehandelt gilt.
+Sobald jemand das Problem im Monitoring bestätigt (quittiert, <em>acknowledge</em>), gilt es als bearbeitet.
+Man könnte auch sagen, dass die unbehandelten Probleme solche sind, um die sich noch niemand gekümmert hat.
+Der <a href="user_interface.html#overview">Overview</a> in der Seitenleiste unterscheidet deswegen diese beiden Arten von Problemen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/overview_more.png" alt="Snapin Overview im Show-more-Modus." width="50%"></div></div>
+<div class="paragraph"><p>Übrigens: Service-Probleme von Hosts, die gerade nicht <span class="hstate0">UP</span> sind, werden hier nicht als Problem angezeigt.</p></div>
+<div class="paragraph"><p>Weitere Details zu den Quittierungen finden Sie in einem <a href="basics_ackn.html">eigenen Artikel.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_notifications">
+<span class="hidden-anchor sr-only" id="notifications"></span>6.2. Benachrichtigungen</h3>
+<div class="paragraph"><p>Wann immer sich der Zustand eines Hosts oder Services ändert (z.B. von <span class="state0">OK</span> auf <span class="state2">CRIT</span>), spricht Checkmk von einem <em>Monitoring-Ereignis.</em>
+So ein Ereignis kann — muss aber nicht — zu einer <a href="glossar.html#notification">Benachrichtigung</a> führen.
+Checkmk ist so voreingestellt, dass im Falle eines Problems von einem Host oder Service jeder Kontakt dieses Objekts per E-Mail benachrichtigt wird
+(bitte beachten Sie hierbei, dass der Benutzer <code>cmkadmin</code> erst einmal <em>kein</em> Kontakt von irgendeinem Objekt ist).
+Dies kann aber sehr flexibel angepasst werden.
+Auch hängen die Benachrichtigungen von einigen Rahmenbedingungen ab.
+Am einfachsten ist es, wenn wir uns ansehen, in welchen Fällen <em>nicht</em> benachrichtigt wird.
+Benachrichtigungen werden unterdrückt, wenn:</p></div>
+<div class="ulist"><ul>
+<li><p>Benachrichtigungen global im <a href="user_interface.html#master_control">Master control</a> ausgeschaltet wurden,</p></li>
+<li><p>Benachrichtigungen bei dem Host/Service ausgeschaltet wurden,</p></li>
+<li><p>der jeweilige Zustand bei dem Host/Service für Benachrichtigungen abgeschaltet ist (z.B. keine Benachrichtigung bei <span class="state1">WARN</span>),</p></li>
+<li><p>das Problem einen Service betrifft, dessen Host <span class="hstate1">DOWN</span> oder <span class="hstate2">UNREACH</span> ist,</p></li>
+<li><p>das Problem einen Host betrifft, dessen Parents alle <span class="hstate1">DOWN</span> oder <span class="hstate2">UNREACH</span> sind,</p></li>
+<li><p>für den Host/Service ein Benachrichtigungszeitraum (<em>notification period</em>) definiert wurde, der gerade nicht aktiv ist,</p></li>
+<li><p>der Host/Service gerade <a href="#flapping">unstetig</a> <span class="image-inline"><img src="../images/icons/icon_flapping.png" alt="icon flapping"></span> (<em>flapping</em>) ist,</p></li>
+<li><p>sich der Host/Service gerade in einer <a href="#downtimes">Wartungszeit</a> (<em>scheduled downtime</em>) befindet.</p></li>
+</ul></div>
+<div class="paragraph"><p>Wenn keine dieser Bedingungen für eine Unterdrückung erfüllt ist, erzeugt der Monitoring-Kern eine Benachrichtigung,
+welche dann im zweiten Schritt eine Kette von Regeln durchläuft.
+Dort können Sie dann noch weitere Ausschlusskriterien festlegen und entscheiden, wer auf welchem Wege benachrichtigt werden soll (E-Mail, SMS etc.).</p></div>
+<div class="paragraph"><p>Alle Einzelheiten rund um die Benachrichtigungen finden Sie in einem <a href="notifications.html">eigenen Artikel</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_flapping">
+<span class="hidden-anchor sr-only" id="flapping"></span>6.3. Unstetige Hosts und Services (Flapping)</h3>
+<div class="paragraph"><p>Manchmal kommt es vor, dass sich der Zustand von einem Service in kurzen Abständen immer wieder ändert.
+Um ständige Benachrichtigungen zu vermeiden, schaltet Checkmk so einen Service in den Zustand „unstetig“ (<em>flapping</em>).
+Dies wird durch das Symbol <span class="image-inline"><img src="../images/icons/icon_flapping.png" alt="icon flapping"></span> illustriert.
+Wenn ein Service in diesen Flapping-Zustand eintritt, wird eine Benachrichtigung generiert.
+Diese informiert, dass eben dieser Zustand eingetreten ist, und danach ist Ruhe.
+Wenn für eine angemessene Zeit kein weiterer Zustandswechsel geschieht — sich also alles beruhigt und endgültig zum Guten oder zum Schlechten gewendet hat — verschwindet dieser Zustand wieder und die normalen Benachrichtigungen setzen wieder ein.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_downtimes">
+<span class="hidden-anchor sr-only" id="downtimes"></span>6.4. Wartungszeiten (Scheduled downtimes)</h3>
+<div class="paragraph"><p>Wenn Sie an einem Server, Gerät oder an einer Software Wartungsarbeiten vornehmen möchten,
+möchten Sie in der Regel Benachrichtigungen über eventuelle Probleme in dieser Zeit vermeiden.
+Außerdem möchten Sie Ihren Kollegen eventuell signalisieren, dass Probleme, die das Monitoring anzeigt, vorübergehend ignoriert werden sollen.</p></div>
+<div class="paragraph"><p>Zu diesem Zweck können Sie zu einem Host oder Service Wartungszeiten (<em>scheduled downtimes</em>) eintragen.
+Diese können Sie entweder direkt beim Beginn der Arbeiten oder auch schon im Vorfeld eintragen.
+Wartungszeiten werden durch Symbole illustriert:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 5%;">
+<col style="width: 95%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_downtime.png" alt="Symbol zur Anzeige der Wartungszeit bei Services."></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Service befindet sich in einer Wartungszeit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_derived_downtime.png" alt="Symbol zur Anzeige der Wartungszeit bei Hosts."></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Host befindet sich in einer Wartungszeit.
+Auch Services, deren Host sich in einer Wartung befinden, werden mit diesem Symbol gekennzeichnet.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Während ein Host oder Service in Wartungszeit ist,</p></div>
+<div class="ulist"><ul>
+<li><p>werden keine Benachrichtigungen versendet,</p></li>
+<li><p>werden Probleme nicht im Snapin <span class="guihint">Overview</span> angezeigt.</p></li>
+</ul></div>
+<div class="paragraph"><p>Auch wenn Sie später Auswertungen über die Verfügbarkeit von Hosts oder Services machen möchten,
+ist es eine gute Idee Wartungszeiten einzutragen.
+Diese können dann später bei der Berechnung berücksichtigt werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_stale">
+<span class="hidden-anchor sr-only" id="stale"></span>6.5. Veraltete Hosts und Services (Stale)</h3>
+<div class="paragraph"><p>Wenn Sie eine Weile mit Checkmk gearbeitet haben, kann es passieren, dass in Ihren Host- und Service-Ansichten Spinnennetze angezeigt werden.
+Für Services sieht das dann zum Beispiel so aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_basics_stale.png" alt="Ansicht zweier Services im Zustand stale."></div></div>
+<div class="paragraph"><p>Diese Spinnennetze symbolisieren den Zustand veraltet (<em>stale</em>).
+Sobald es einen veralteten Host oder Service gibt, wird das auch im Snapin <a href="user_interface.html#overview"><span class="guihint">Overview</span></a> angezeigt, das um die Spalte <span class="guihint">Stale</span> erweitert wird.</p></div>
+<div class="paragraph"><p>Doch was bedeutet der Zustand <em>stale</em> genau?
+Generell wird ein Host oder Service als <em>stale</em> gekennzeichnet, wenn Checkmk über eine längere Zeitdauer keine aktuellen Informationen über dessen Zustand mehr bekommt:</p></div>
+<div class="ulist"><ul>
+<li><p>Ein Service wird <em>stale</em>:
+Fällt ein Agent oder auch nur ein Agentenplugin - aus welchen Gründen auch immer - über längere Zeit aus, so liefert der Agent keine aktuellen Daten mehr für die Auswertung.
+Services, deren Zustand von passiven Checks ermittelt wird, können nicht aktualisiert werden, da sie auf die Daten des Agenten angewiesen sind.
+Die Services verbleiben im jeweils letzten Status, werden aber nach Ablauf einer bestimmten Zeit als <em>stale</em> markiert.</p></li>
+<li><p>Ein Host wird <em>stale</em>:
+Liefert das <span class="guihint">Host Check Command</span>, mit dem die Erreichbarkeit des Hosts überprüft wird, keine aktuelle Antwort, behält der Host den letzten ermittelten Zustand bei — und wird dann aber als <em>stale</em> gekennzeichnet.</p></li>
+</ul></div>
+<div class="paragraph"><p>Sie können den Zeitraum anpassen, ab wann Hosts und Services <em>stale</em> werden.
+Lesen Sie hierzu den Abschnitt über <a href="#checkinterval">Check-Intervalle.</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_time_periods">
+<span class="hidden-anchor sr-only" id="time_periods"></span>7. Zeiträume (Time periods)</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/timeperiods.png" alt="timeperiods" width="8%"></div></div>
+<div class="paragraph"><p>Wöchentlich wiederkehrende Zeiträume kommen an verschiedenen Stellen in der Konfiguration zum Einsatz.
+Ein typischer Zeitraum könnte <code>work hours</code> heißen und die Zeiten von jeweils 8:00 bis 17:00 Uhr beinhalten, an allen Wochentagen außer Samstag und Sonntag.
+Vordefiniert ist der Zeitraum <code>24X7</code>, welcher einfach alle Zeiten einschließt.
+Zeiträume können auch Ausnahmen für bestimmte Kalendertage enthalten — z.B. für die bayerischen Feiertage.</p></div>
+<div class="paragraph"><p>Einige wichtige Stellen, an denen Zeiträume zum Einsatz kommen, sind:</p></div>
+<div class="ulist"><ul>
+<li><p>Begrenzung der Zeiten, innerhalb derer benachrichtigt wird (Benachrichtigungszeitraum, <em>notification period</em>).</p></li>
+<li><p>Begrenzung der Zeiten, innerhalb derer Checks ausgeführt werden (<a href="#checkperiod">Check-Zeitraum</a>, <em>check period</em>).</p></li>
+<li><p>Service-Zeiten für die Berechnung von Verfügbarkeit (Service-Zeitraum, <em>service period</em>).</p></li>
+<li><p>Zeiten, innerhalb derer bestimmte Regeln in der <a href="glossar.html#ec">Event Console</a> greifen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Wie Sie Zeiträume einstellen können, lesen Sie im Artikel <a href="timeperiods.html">Zeitperioden (Time Periods).</a></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_check_period_interval_attempt">
+<span class="hidden-anchor sr-only" id="check_period_interval_attempt"></span>8. Check-Zeiträume, Check-Intervalle und Check-Versuche</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_checkperiod">
+<span class="hidden-anchor sr-only" id="checkperiod"></span>8.1. Check-Zeiträume festlegen</h3>
+<div class="paragraph"><p>Sie können die Zeiträume einschränken, in denen Checks ausgeführt werden.
+Dazu dienen die Regelsätze <span class="guihint">Check period for hosts</span>, <span class="guihint">Check period for active services</span> und <span class="guihint">Check period for passive Checkmk services.</span>
+Mit diesen Regeln wählen Sie einen der verfügbaren <a href="#time_periods">Zeiträume</a> (<em>time periods</em>) als Check-Zeitraum (<em>check period</em>) aus.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_checkinterval">
+<span class="hidden-anchor sr-only" id="checkinterval"></span>8.2. Check-Intervalle einstellen</h3>
+<div class="paragraph"><p>Das Ausführen von Checks geschieht beim zustandsbasierten Monitoring in festen Intervallen.
+Checkmk verwendet als Standard für Service-Checks eine Minute, für Host-Checks mit Smart Ping 6 Sekunden.</p></div>
+<div class="paragraph"><p>Mit Hilfe der Regelsätze <span class="guihint">Normal check interval for service checks</span> und <span class="guihint">Normal check interval for host checks</span> kann dies geändert werden:</p></div>
+<div class="ulist"><ul>
+<li><p>Auf einen längeren Wert, um CPU-Ressourcen auf dem Checkmk-Server und dem Zielsystem zu sparen.</p></li>
+<li><p>Auf einen kürzeren Wert, um schneller Benachrichtigungen zu bekommen und Messdaten in einer höheren Auflösung einzusammeln.</p></li>
+</ul></div>
+<div class="paragraph"><p>Kombinieren Sie nun einen Check-Zeitraum mit einem Check-Intervall, so können Sie dafür sorgen, dass ein aktiver Check genau einmal am Tag zu einer ganz bestimmten Zeit ausgeführt wird.
+Setzen Sie z.B. das Check-Intervall auf 24 Stunden und den Check-Zeitraum auf 2:00 bis 2:01 Uhr an jedem Tag (also nur eine Minute pro Tag), dann wird Checkmk dafür sorgen, dass der Check auch wirklich in dieses kurze Zeitfenster verschoben wird.</p></div>
+<div class="paragraph"><p>Der Zustand der Services wird außerhalb des festgelegten Check-Zeitraums nicht mehr aktualisiert und die Services werden dann mit dem Symbol <span class="image-inline"><img src="../images/icons/icon_stale.png" alt="icon stale"></span> als <a href="#stale">veraltet (<em>stale</em>)</a> gekennzeichnet.
+Mit der globalen Einstellung <span class="guihint">Staleness value to mark hosts / services stale</span> können Sie definieren, wie viel Zeit vergehen soll, bis ein Host/Service auf <em>stale</em> geht.
+Diese Einstellung finden Sie unter <span class="guihint">Setup &gt; General &gt; Global settings &gt; User interface:</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_basics_staleness.png" alt="Festlegung des Faktors für Staleness."></div></div>
+<div class="paragraph"><p>Dieser Faktor stellt das <strong>n</strong>-fache des Check-Intervalls dar.
+Ist also Ihr Check-Intervall auf eine Minute (60 Sekunden) eingestellt, so geht ein Service, für den es keine neuen Check-Ergebnisse gibt, nach der 1,5-fachen Zeit, somit nach 90 Sekunden, auf <em>stale</em>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_max_check_attempts">
+<span class="hidden-anchor sr-only" id="max_check_attempts"></span>8.3. Check-Versuche anpassen</h3>
+<div class="paragraph"><p>Mit Hilfe der Check-Versuche (<em>check attempts</em>) können Sie Benachrichtigungen bei sporadischen Fehlern vermeiden.
+Sie machen einen Check damit quasi weniger sensibel.
+Dazu können Sie die Regelsätze <span class="guihint">Maximum number of check attempts for host</span> und <span class="guihint">Maximum number of check attempts for service</span> nutzen.</p></div>
+<div class="paragraph"><p>Sind die Check-Versuche z.B. auf 3 eingestellt, und der entsprechende Service wird <span class="state2">CRIT</span>, dann wird zunächst noch keine Benachrichtigung ausgelöst.
+Erst wenn auch die nächsten beiden Checks ein Resultat liefern, das nicht <span class="state0">OK</span> ist, steigt die Nummer des aktuellen Versuchs auf 3 und die Benachrichtigung wird versendet.</p></div>
+<div class="paragraph"><p>Ein Service, der sich in diesem Zwischenzustand befindet — also nicht <span class="state0">OK</span> ist, aber die maximalen Anzahl der Check-Versuche noch nicht erreicht hat — hat einen „weichen Zustand“ (<em>soft state</em>).
+Nur ein „harter Zustand“ (<em>hard state</em>) löst eine Benachrichtigung aus.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__übersicht_über_die_wichtigsten_host_und_service_icons">
+<span class="hidden-anchor sr-only" id="_übersicht_über_die_wichtigsten_host_und_service_icons"></span>9. Übersicht über die wichtigsten Host- und Service-Icons</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Folgende Tabelle gibt eine kurze Übersicht der wichtigsten Icons, die Sie als Status neben Hosts und Services finden:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 5%;">
+<col style="width: 95%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_downtime.png" alt="Symbol zur Anzeige der Wartungszeit bei Services."></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dieser Service ist in einer Wartungszeit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_derived_downtime.png" alt="Symbol zur Anzeige der Wartungszeit bei Hosts."></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dieser Host ist in einer Wartungszeit.
+Auch Services, deren Host sich in einer Wartung befindet, werden mit diesem Symbol gekennzeichnet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_outofnot.png" alt="icon outofnot"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dieser Host/Service ist gerade außerhalb seines Benachrichtigungszeitraums.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_notif_man_disabled.png" alt="icon notif man disabled"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Benachrichtigungen für diesen Host/Service sind gerade abgeschaltet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_disabled.png" alt="icon disabled"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks dieses Services sind gerade abgeschaltet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_stale.png" alt="icon stale"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Zustand dieses Hosts/Services ist veraltet (stale).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_flapping.png" alt="icon flapping"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Zustand dieses Hosts/Services ist unstetig (flapping).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_ack.png" alt="icon ack"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dieser Host/Service hat ein Problem, das bestätigt wurde.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_comment.png" alt="icon comment"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zu diesem Host/Service gibt es einen Kommentar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_aggr.png" alt="icon aggr"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dieser Host/Service ist Teil einer BI-Aggregat.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_check_parameters.png" alt="icon check parameters"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier gelangen Sie direkt zur Einstellung der Check-Parameter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_logwatch.png" alt="icon logwatch"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nur bei Logwatch-Services: Hier gelangen Sie zu den gespeicherten Log-Dateien.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_pnp.png" alt="icon pnp"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier gelangen Sie zum Zeitverlauf der aufgezeichneten Messwerte.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_inventory.png" alt="icon inventory"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dieser Host besitzt HW/SW-Inventurdaten. Ein Klickt bringt Sie zu deren Ansicht.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/icon_crash.png" alt="icon crash"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bei diesem Check ist ein Fehler aufgetreten. Über einen Klick können Sie einen Fehlerreport einsehen und absenden.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#states_events">1. Zustände und Ereignisse</a></li>
+<li>
+<a href="#hosts_services">2. Hosts und Services</a><ul class="sectlevel1">
+<li><a href="#hosts">2.1. Hosts</a></li>
+<li><a href="#parents">2.2. Parents</a></li>
+<li><a href="#services">2.3. Services</a></li>
+<li><a href="#checks">2.4. Checks</a></li>
+</ul>
+</li>
+<li><a href="#host_service_groups">3. Host- und Service-Gruppen</a></li>
+<li><a href="#contacts">4. Kontakte und Kontaktgruppen</a></li>
+<li><a href="#users_roles">5. Benutzer und Rollen</a></li>
+<li>
+<a href="#_probleme_ereignisse_und_benachrichtigungen">6. Probleme, Ereignisse und Benachrichtigungen</a><ul class="sectlevel1">
+<li><a href="#problems">6.1. Bearbeitete und unbehandelte Probleme</a></li>
+<li><a href="#notifications">6.2. Benachrichtigungen</a></li>
+<li><a href="#flapping">6.3. Unstetige Hosts und Services (Flapping)</a></li>
+<li><a href="#downtimes">6.4. Wartungszeiten (Scheduled downtimes)</a></li>
+<li><a href="#stale">6.5. Veraltete Hosts und Services (Stale)</a></li>
+</ul>
+</li>
+<li><a href="#time_periods">7. Zeiträume (Time periods)</a></li>
+<li>
+<a href="#check_period_interval_attempt">8. Check-Zeiträume, Check-Intervalle und Check-Versuche</a><ul class="sectlevel1">
+<li><a href="#checkperiod">8.1. Check-Zeiträume festlegen</a></li>
+<li><a href="#checkinterval">8.2. Check-Intervalle einstellen</a></li>
+<li><a href="#max_check_attempts">8.3. Check-Versuche anpassen</a></li>
+</ul>
+</li>
+<li><a href="#_%C3%BCbersicht_%C3%BCber_die_wichtigsten_host_und_service_icons">9. Übersicht über die wichtigsten Host- und Service-Icons</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

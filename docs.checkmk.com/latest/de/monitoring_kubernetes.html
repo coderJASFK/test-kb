@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Mit Checkmk können Sie auch die Container-Orchestrierungssoftware Kubernetes überwachen. Lesen Sie hier die Details zur Einrichtung.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Kubernetes überwachen">
+<meta name="og:description" content="Mit Checkmk können Sie auch die Container-Orchestrierungssoftware Kubernetes überwachen. Lesen Sie hier die Details zur Einrichtung.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Kubernetes überwachen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/monitoring_kubernetes.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/monitoring_kubernetes.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/monitoring_kubernetes.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Kubernetes überwachen</h1>
+<div class="details">
+<span id="revdate">Last modified on 31-May-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/de/monitoring_kubernetes.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+<a href="monitoring_docker.html">Docker überwachen</a>
+<a href="https://checkmk.com/de/integrations" target="_blank">Katalog der Check-Plugins</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="imageblock inline-image"><div class="content"><img src="../images/kubernetes_logo.jpg" alt="kubernetes logo" width="140"></div></div>
+<div class="paragraph"><p>Kubernetes ist seit geraumer Zeit das am meisten verwendete Werkzeug für die Orchestrierung von Containern.
+Checkmk unterstützt Sie bei der Überwachung Ihrer Kubernetes-Umgebungen.</p></div>
+<div class="paragraph"><p>Ab Version <span class="new">2.1.0</span> können Sie mit Checkmk die folgenden Kubernetes-Objekte überwachen:</p></div>
+<div class="ulist"><ul>
+<li><p>Cluster</p></li>
+<li><p>Nodes</p></li>
+<li><p>Deployments</p></li>
+<li><p>Pods</p></li>
+<li><p>DaemonSets</p></li>
+<li><p>StatefulSets</p></li>
+<li><p>Persistent Volume Claims</p></li>
+<li><p>CronJobs (ab Checkmk <span class="new">2.2.0</span>)</p></li>
+</ul></div>
+<div class="paragraph"><p>Eine vollständige Auflistung aller verfügbaren Check-Plugins für die Überwachung von Kubernetes finden Sie in unserem <a href="https://checkmk.com/de/integrations?tags=kubernetes" target="_blank">Katalog der Check-Plugins.</a></p></div>
+<div class="sect2">
+<h3 id="heading__unterstützte_distributionen_und_versionen">
+<span class="hidden-anchor sr-only" id="_unterstützte_distributionen_und_versionen"></span>1.1. Unterstützte Distributionen und Versionen</h3>
+<div class="paragraph"><p>Beginnend mit Version <span class="new">2.2.0</span> unterstützt Checkmk die folgenden Distributionen bzw. Kubernetes-Dienste:</p></div>
+<div class="ulist"><ul>
+<li><p>Vanilla Kubernetes</p></li>
+<li><p>Amazon Elastic Kubernetes Service (Amazon EKS)</p></li>
+<li><p>Azure Kubernetes Service (AKS)</p></li>
+<li><p>Google Kubernetes Engine (GKE) inkl. Autopilot-Modus</p></li>
+<li><p><a href="monitoring_openshift.html">OpenShift</a></p></li>
+<li><p>Tanzu Kubernetes (ab Checkmk <span class="new">2.2.0</span>p9)</p></li>
+</ul></div>
+<div class="paragraph"><p>Unser Ziel ist die Unterstützung der jeweils letzten 5 veröffentlichten (Minor-)Versionen von Kubernetes.
+Wir unterstützen somit auch Versionen von Kubernetes, die aus dem Lifecycle von (Vanilla) Kubernetes bereits herausgefallen sind.
+Damit stellen wir vor allen Dingen die reibungslose Zusammenarbeit mit denjenigen Cloud-Anbietern sicher, die für ihre Dienste ebenfalls längere Support-Zeiträume anbieten.
+Unmittelbar nach dem Release einer neuen Version von Kubernetes kann es — je nach Umfang der Neuerungen und Zeitpunkt — etwas dauern, bis auch diese vollständig in Checkmk unterstützt wird.
+Sobald Checkmk mit dieser neuen Version reibungslos zusammenarbeiten kann, werden wir dies in einem Werk (wie beispielsweise <a href="https://checkmk.com/werk/14584" target="_blank">Werk #14584</a>) kundtun.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__einstieg_in_das_kubernetes_monitoring">
+<span class="hidden-anchor sr-only" id="_einstieg_in_das_kubernetes_monitoring"></span>1.2. Einstieg in das Kubernetes-Monitoring</h3>
+<div class="paragraph"><p>Für einen Einstieg in das neue Monitoring von Kubernetes empfehlen wir unsere beiden Videos <a href="https://www.youtube.com/watch?v=H9AlO98afUE" target="_blank">Kubernetes Monitoring with Checkmk</a> und <a href="https://www.youtube.com/watch?v=2H-cLhyfYbc" target="_blank">Detecting issues and configuring alerts for Kubernetes clusters.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__aufbau_der_monitoring_umgebung">
+<span class="hidden-anchor sr-only" id="_aufbau_der_monitoring_umgebung"></span>1.3. Aufbau der Monitoring-Umgebung</h3>
+<div class="paragraph"><p>Da es in Kubernetes-Clustern sehr schnell auch zu größeren Veränderungen kommen kann, was die Anzahl und Verortung der einzelnen Komponenten angeht, empfehlen wir für das Monitoring Ihrer Kubernetes-Umgebung eine eigene Instanz zu erstellen.
+Diese können Sie dann wie üblich über das <a href="distributed_monitoring.html">verteilte Monitoring</a> an Ihre Zentralinstanz anbinden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__ablauf_des_kubernetes_monitorings_in_checkmk">
+<span class="hidden-anchor sr-only" id="_ablauf_des_kubernetes_monitorings_in_checkmk"></span>1.4. Ablauf des Kubernetes-Monitorings in Checkmk</h3>
+<div class="paragraph"><p>Checkmk überwacht Ihre Kubernetes-Cluster auf zwei Wegen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_architecture.png" alt="monitoring kubernetes architecture"></div></div>
+<div class="paragraph"><p>Grundlegende Informationen holt sich der Kubernetes-<a href="glossar.html#special_agent">Spezialagent</a> einfach über den API-Server Ihres Clusters ab.
+Hierüber lassen sich bereits die Zustände von Nodes und Containern abrufen. Auch die meisten Metadaten über Ihre Pods und Deployment werden auf diesem Wege gewonnen.</p></div>
+<div class="paragraph"><p>Für ein umfängliches Monitoring fehlt bis zum diesem Punkt allerdings noch etwas.
+Die Fragen, wie viel Last beispielsweise ein bestimmtes Deployment auf der CPU erzeugt, oder wie viel Arbeitsspeicher ein DaemonSet gerade bindet, lassen sich so nicht beantworten.</p></div>
+<div class="paragraph"><p>An dieser Stelle kommen unser Checkmk Node Collector und unser Checkmk Cluster Collector ins Spiel.
+Diese sind ein unerlässlicher Teil des Kubernetes-Monitorings in Checkmk.
+Ein nicht unerheblicher Teil der folgenden Ausführungen drehen sich dann auch darum, diese zu installieren und einzurichten.
+Auch ist die Verwendung der <a href="#dashboards">Kubernetes-Dashboards</a> in den kommerziellen Editionen nur dann sinnvoll, wenn Node und Cluster Collector hierfür Daten zur Auslastung liefern können.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__unterschiede_zum_übrigen_monitoring_in_checkmk">
+<span class="hidden-anchor sr-only" id="_unterschiede_zum_übrigen_monitoring_in_checkmk"></span>1.5. Unterschiede zum übrigen Monitoring in Checkmk</h3>
+<div class="paragraph"><p>Beim Monitoring von Pods und Replicas in Ihren Kubernetes-Clustern kommt es mitunter wesentlich häufiger zu Statusänderungen bzw. zu Verzögerungen.
+Um dem Rechnung zu tragen, ändern die Checks bei bestimmten Zuständen dieser Objekte erst nach 10 Minuten ihren Status in Checkmk.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__unterschiede_zum_bisherigen_kubernetes_monitoring">
+<span class="hidden-anchor sr-only" id="_unterschiede_zum_bisherigen_kubernetes_monitoring"></span>1.6. Unterschiede zum bisherigen Kubernetes-Monitoring</h3>
+<div class="paragraph"><p>Das Kubernetes-Monitoring in Checkmk wurde von Grund auf neu geschrieben.
+Der Umfang der überwachbaren Daten ist stark gewachsen.
+Da die technische Grundlage für das Kubernetes-Monitoring in Checkmk <span class="new">2.1.0</span> grundlegend anders ist, ist eine Übernahme oder auch eine Weiterschreibung bisheriger Monitoring-Daten Ihrer Kubernetes-Objekte nicht möglich.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__voraussetzungen_im_cluster_schaffen">
+<span class="hidden-anchor sr-only" id="_voraussetzungen_im_cluster_schaffen"></span>2. Voraussetzungen im Cluster schaffen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Um Ihr Kubernetes-Cluster in Checkmk überwachen zu können, schaffen Sie zuerst die Voraussetzungen in Ihrem Cluster.
+Vor allem, indem Sie dem Cluster mitteilen, welche Pods/Container bereitgestellt werden sollen und wie die Konfiguration derselben aussehen muss.</p></div>
+<div class="sect2">
+<h3 id="heading_setup_helm_repo">
+<span class="hidden-anchor sr-only" id="setup_helm_repo"></span>2.1. Helm-Repository einrichten</h3>
+<div class="paragraph"><p>Die Installation des Kubernetes-Monitoring geschieht mit Hilfe des Tools <code>helm</code>.
+Helm eignet sich auch für weniger versierte Nutzer und standardisiert die Verwaltung der Konfigurationen.
+Helm ist eine Art Paketmanager für Kubernetes.
+Sollten Sie Helm noch nicht verwenden, so erhalten Sie es im Regelfall über die Paketverwaltung Ihrer Linux-Distribution oder über <a href="https://helm.sh/docs/intro/install/" target="_blank">die Website des Helm-Projekts</a>.</p></div>
+<div class="paragraph"><p>Sie können darüber <em>Repositories</em>  als Quellen einbinden und die darin enthaltenen <em>Helm-Charts</em> wie Pakete ganz einfach Ihrem Cluster hinzufügen.
+Machen Sie dafür zuallererst das Repository bekannt.
+In dem folgenden Beispiel nutzen wir den Namen <code>checkmk-chart</code>, um später einfacher auf das Repository zugreifen zu können.
+Sie können aber selbstverständlich auch jeden anderen Namen nutzen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>helm<span class="tok-w"> </span>repo<span class="tok-w"> </span>add<span class="tok-w"> </span>checkmk-chart<span class="tok-w"> </span>https://checkmk.github.io/checkmk_kube_agent</code></pre></div></div>
+<div class="paragraph"><p>Wir aktualisieren unsere Helm-Charts immer dann, wenn neue Gegebenheiten in Kubernetes dies erfordern.
+Deshalb lohnt sich von Zeit zu Zeit eine Prüfung, ob im Repository neue Versionen verfügbar sind.
+Wenn Sie ihre lokale Kopie unseres Repositories, wie in dem vorherigen Befehl, mit <code>checkmk-chart</code> bezeichnet haben, können Sie sich mit dem folgenden Befehl alle im Repository vorliegenden Versionen der Charts anzeigen lassen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>helm<span class="tok-w"> </span>search<span class="tok-w"> </span>repo<span class="tok-w"> </span>checkmk-chart<span class="tok-w"> </span>--versions
+<span class="tok-go">NAME           	CHART VERSION   APP VERSION   DESCRIPTION</span>
+<span class="tok-go">checkmk-chart/checkmk	1.2.0        	  1.2.0         Helm chart for Checkmk - Your complete IT monit...</span>
+<span class="tok-go">checkmk-chart/checkmk	1.1.0        	  1.1.0         Helm chart for Checkmk - Your complete IT monit...</span>
+<span class="tok-go">checkmk-chart/checkmk	1.0.1        	  1.0.1       	Helm chart for Checkmk - Your complete IT monit...</span>
+<span class="tok-go">checkmk-chart/checkmk	1.0.0        	  1.0.0       	Helm chart for Checkmk - Your complete IT monit...</span></code></pre></div></div>
+<div class="paragraph"><p>Wenn eine neue Version für Sie vorliegt, können Sie das Update mit <code>helm repo update</code> durchführen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__konfiguration_auf_ihre_umgebung_anpassen">
+<span class="hidden-anchor sr-only" id="_konfiguration_auf_ihre_umgebung_anpassen"></span>2.2. Konfiguration auf Ihre Umgebung anpassen</h3>
+<div class="paragraph"><p>Da wir im Vorfeld nicht wissen können, wie Ihr Kubernetes-Cluster aufgebaut ist, haben wir die sicherste Variante gewählt, wie die Cluster Collectors gestartet werden:
+Sie stellen standardmäßig keine Ports bereit, die von außen erreicht werden können.
+Damit Sie später auf die Collectors zugreifen können, müssen Sie diese Einstellungen an Ihr jeweiliges Cluster anpassen.</p></div>
+<div class="paragraph"><p>Wir unterstützen standardmäßig zwei Kommunikationspfade: Die Abfrage über <em>Ingress</em> und die Abfrage über <em>NodePort</em>.
+Je nachdem, welche Variante Sie in Ihrem Cluster unterstützen, ist die Konfiguration unterschiedlich.</p></div>
+<div class="paragraph"><p>Um bestimmte Parameter über alle Konfigurationen hinweg selbst bestimmen zu können, geben Sie dabei eine Steuerdatei mit, die sogenannte <code>values.yaml</code>.</p></div>
+<div class="paragraph"><p>Um eine solche <code>values.yaml</code> zu erstellen bieten sich zwei Wege an.
+Sie können entweder die von uns in den Helm-Charts mitgelieferte Datei extrahieren und anpassen oder Sie erstellen eine minimale Version einfach selbst.</p></div>
+<div class="paragraph"><p>Immer wenn Sie Änderungen an dieser Datei in Ihrem Cluster bereitstellen möchten, können Sie erneut den später folgenden Befehl zur <a href="#install_helm_charts">Installation</a> der Helm Chart verwenden.</p></div>
+<div class="sect3">
+<h4 id="heading__minimale_values_yaml_selbst_anlegen">
+<span class="hidden-anchor sr-only" id="_minimale_values_yaml_selbst_anlegen"></span>Minimale values.yaml selbst anlegen</h4>
+<div class="paragraph"><p>Sie können eine <code>values.yaml</code> anlegen, in die Sie nur die Werte eintragen, die Sie auch ändern wollen.
+In unserer Helm Chart ist der Servicetyp des Cluster Collectors bspw. auf <code>ClusterIP</code> voreingestellt.
+Wenn Sie nun ausschließlich diesen Servicetyp auf <code>NodePort</code> und den Port auf 30035 umstellen möchten, genügt es auch eine <code>values.yaml</code> wie folgt zu erzeugen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s1">'clusterCollector: {service: {type: NodePort, nodePort: 30035}}'</span><span class="tok-w"> </span>&gt;<span class="tok-w"> </span>values.yaml</code></pre></div></div>
+<div class="paragraph"><p>Eine Aktivierung von <em>Ingress</em> könnte bspw. so aussehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s1">'clusterCollector: {ingress: { enabled: true }}'</span><span class="tok-w"> </span>&gt;<span class="tok-w"> </span>values.yaml</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__values_yaml_aus_helm_charts_extrahieren">
+<span class="hidden-anchor sr-only" id="_values_yaml_aus_helm_charts_extrahieren"></span>values.yaml aus Helm-Charts extrahieren</h4>
+<div class="paragraph"><p>Die vollständige von uns mitgelieferte <code>values.yaml</code> lässt sich ganz einfach mit dem folgenden Befehl extrahieren:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>helm<span class="tok-w"> </span>show<span class="tok-w"> </span>values<span class="tok-w"> </span>checkmk-chart/checkmk<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>values.yaml</code></pre></div></div>
+<div class="paragraph"><p>Die so erzeugte Datei können Sie nun nach Ihren Bedürfnissen anpassen und bei der <a href="#install_helm_charts">Installation</a> oder einem späteren Upgrade mit dem Parameter <code>-f values.yaml</code> an <code>helm</code> übergeben.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__kommunikation_per_ingress_bereitstellen">
+<span class="hidden-anchor sr-only" id="_kommunikation_per_ingress_bereitstellen"></span>Kommunikation per Ingress bereitstellen</h4>
+<div class="paragraph"><p>Falls Sie <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/" target="_blank">Ingress</a> verwenden, um die Zugriffe zu Ihren Diensten zu steuern, passen Sie entsprechend die bereits vorbereiteten Teile in der <code>values.yaml</code> an.
+Zur besseren Übersicht ist in dem folgenden Beispiel nur der relevante Ausschnitt gezeigt.
+Den Parameter <code>enabled</code> setzen Sie auf <code>true</code>.
+Die restlichen Parameter passen Sie entsprechend Ihrer Umgebung an:</p></div>
+<div class="listingblock">
+<div class="title">values.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-w">  </span><span class="tok-nt">ingress</span><span class="tok-p">:</span>
+<span class="tok-w">    </span><span class="tok-nt">enabled</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">true</span>
+<span class="tok-w">    </span><span class="tok-nt">className</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-s">""</span>
+<span class="tok-w">    </span><span class="tok-nt">annotations</span><span class="tok-p">:</span>
+<span class="tok-w">      </span><span class="tok-nt">nginx.ingress.kubernetes.io/rewrite-target</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">/</span>
+<span class="tok-w">    </span><span class="tok-nt">hosts</span><span class="tok-p">:</span>
+<span class="tok-w">      </span><span class="tok-p tok-p-Indicator">-</span><span class="tok-w"> </span><span class="tok-nt">host</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">checkmk-cluster-collector.local</span>
+<span class="tok-w">        </span><span class="tok-nt">paths</span><span class="tok-p">:</span>
+<span class="tok-w">          </span><span class="tok-p tok-p-Indicator">-</span><span class="tok-w"> </span><span class="tok-nt">path</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">/</span>
+<span class="tok-w">            </span><span class="tok-nt">pathType</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">Prefix</span>
+<span class="tok-w">    </span><span class="tok-nt">tls</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-p tok-p-Indicator">[]</span>
+<span class="tok-w">    </span><span class="tok-c1">#  - secretName: chart-example-tls</span>
+<span class="tok-w">    </span><span class="tok-c1">#    hosts:</span>
+<span class="tok-w">    </span><span class="tok-c1">#      - chart-example.local</span></code></pre></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__kommunikation_per_nodeport_bereitstellen">
+<span class="hidden-anchor sr-only" id="_kommunikation_per_nodeport_bereitstellen"></span>Kommunikation per NodePort bereitstellen</h4>
+<div class="paragraph"><p>Sie können den Zugriff auf die Dienste auch direkt über einen Port bereitstellen.
+Das ist dann notwendig, wenn Sie kein Ingress verwenden.
+Auch in dem nachfolgenden Beispiel wird nur der relevante Ausschnitt gezeigt.
+Sie setzen dabei den Wert <code>type</code> auf <code>NodePort</code> und entfernen die Auskommentierung zu dem Wert <code>nodePort</code>:</p></div>
+<div class="listingblock">
+<div class="title">values.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-w">  </span><span class="tok-nt">service</span><span class="tok-p">:</span>
+<span class="tok-w">    </span><span class="tok-c1"># if required specify "NodePort" here to expose the cluster-collector via the "nodePort" specified below</span>
+<span class="tok-w">    </span><span class="tok-nt">type</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">NodePort</span>
+<span class="tok-w">    </span><span class="tok-nt">port</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">8080</span>
+<span class="tok-w">    </span><span class="tok-nt">nodePort</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">30035</span></code></pre></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__cluster_collector_auf_https_umstellen">
+<span class="hidden-anchor sr-only" id="_cluster_collector_auf_https_umstellen"></span>Cluster Collector auf HTTPS umstellen</h4>
+<div class="paragraph"><p>Wenn Sie die Kommunikation mit dem und zwischen den Cluster Collectors auf HTTPS umstellen möchten, müssen Sie hierzu ebenfalls Änderungen in der Datei <code>values.yaml</code> vornehmen.</p></div>
+<div class="paragraph"><p>Folgend sehen Sie den Abschnitt in unserer mitgelieferten <code>values.yaml</code> den Sie bearbeiten müssen, um HTTPS zu aktivieren:</p></div>
+<div class="listingblock">
+<div class="title">values.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">tlsCommunication</span><span class="tok-p">:</span>
+<span class="tok-w">  </span><span class="tok-nt">enabled</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">false</span>
+<span class="tok-w">  </span><span class="tok-nt">verifySsl</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">false</span>
+<span class="tok-w">  </span><span class="tok-c1"># clusterCollectorKey: |-</span>
+<span class="tok-w">  </span><span class="tok-c1">#   -----BEGIN EC PRIVATE KEY-----</span>
+<span class="tok-w">  </span><span class="tok-c1">#   XYZ</span>
+<span class="tok-w">  </span><span class="tok-c1">#   -----END EC PRIVATE KEY-----</span>
+<span class="tok-w">  </span><span class="tok-c1"># clusterCollectorCert: |-</span>
+<span class="tok-w">  </span><span class="tok-c1">#   -----BEGIN CERTIFICATE-----</span>
+<span class="tok-w">  </span><span class="tok-c1">#   XYZ</span>
+<span class="tok-w">  </span><span class="tok-c1">#   -----END CERTIFICATE-----</span>
+<span class="tok-w">  </span><span class="tok-c1"># checkmkCaCert: |-</span>
+<span class="tok-w">  </span><span class="tok-c1">#   -----BEGIN CERTIFICATE-----</span>
+<span class="tok-w">  </span><span class="tok-c1">#   XYZ</span>
+<span class="tok-w">  </span><span class="tok-c1">#   -----END CERTIFICATE-----</span></code></pre></div>
+</div>
+<div class="paragraph"><p>In den Zeilen, die mit <code>enabled</code> bzw. <code>verifySsl</code> beginnen, müssen Sie <code>false</code> durch <code>true</code> ersetzen.
+Entfernen Sie als nächstes vor den drei Abschnitten <code>clusterCollectorKey</code>, <code>clusterCollectorCert</code> und <code>checkmkCaCert</code> die Rautezeichen und fügen Sie dahinter die entsprechenden Daten ein.
+Ob Sie hierfür selbst signierte Zertifikate nutzen oder sich Zertifikate von einer Certificate Authority (CA) besorgen, dürfte in erster Linie durch Ihre Organisation vorgegeben sein.</p></div>
+<div class="paragraph"><p>Bitte beachten Sie dabei nur die folgenden Voraussetzungen, die die Zertifikate erfüllen müssen:</p></div>
+<div class="ulist"><ul>
+<li><p>Das CA-Zertifikat muss den Host-Namen bzw. den Namen des Ingress als FQDN enthalten.</p></li>
+<li><p>Beim Server-Zertifikat muss der FQDN dem folgenden Muster entsprechen: <code>&lt;service_name&gt;.&lt;namespace&gt;.cluster.local</code></p></li>
+<li><p>Im Abschnitt <code>[ v3_ext ]</code> der Konfigurationsdatei für die Erzeugung Ihres Certificate Signing Requests muss der <code>subjectAltName</code> dem folgenden Muster entsprechen:
+<code>subjectAltName: DNS:&lt;service_name&gt;.&lt;namespace&gt;.cluster.local, IP:&lt;service ip&gt;</code></p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading__eigenen_service_account_verwenden">
+<span class="hidden-anchor sr-only" id="_eigenen_service_account_verwenden"></span>Eigenen Service-Account verwenden</h4>
+<div class="paragraph"><p>Mithilfe unserer Helm-Charts würde standardmäßig ein Service-Account in Ihrem Cluster erstellt.
+Wenn Sie bereits über einen passenden Service-Account verfügen, genügt es, wenn Sie diesen in der <code>values.yaml</code> hinzufügen und die Erstellung eines neuen Accounts unterbinden.</p></div>
+<div class="listingblock">
+<div class="title">values.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">serviceAccount</span><span class="tok-p">:</span>
+<span class="tok-w">  </span><span class="tok-nt">create</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">false</span>
+<span class="tok-w">  </span><span class="tok-nt">name</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-s">"myserviceaccount"</span></code></pre></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__voraussetzung_für_monitoring_von_gke_autopilot">
+<span class="hidden-anchor sr-only" id="_voraussetzung_für_monitoring_von_gke_autopilot"></span>Voraussetzung für Monitoring von GKE Autopilot</h4>
+<div class="paragraph"><p>Falls Sie Ihr GKE-Cluster (Google Kubernetes Engine) im Autopilot-Modus betreiben, so ist das Monitoring mit Checkmk problemlos möglich, da Checkmk ein sogenannter <a href="https://cloud.google.com/kubernetes-engine/docs/resources/autopilot-partners?hl=de#allowlisted-partner-workloads">Autopilot Partner</a> ist.</p></div>
+<div class="paragraph"><p>Sie müssen in der <code>values.yaml</code> lediglich <code>var_run</code> auf <code>readOnly</code> setzen:</p></div>
+<div class="listingblock">
+<div class="title">values.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">volumeMountPermissions</span><span class="tok-p">:</span>
+<span class="tok-w">      </span><span class="tok-nt">var_run</span><span class="tok-p">:</span>
+<span class="tok-w">        </span><span class="tok-nt">readOnly</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">true</span></code></pre></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading_pod_security_standards">
+<span class="hidden-anchor sr-only" id="pod_security_standards"></span>Pod Security Admission Controller konfigurieren</h4>
+<div class="paragraph"><p>Wenn Sie in Ihrem Cluster Pod Security Standards einsetzen, müssen Sie den Checkmk Cluster Collector so einrichten, dass dieser ungehinderten Zugriff im entsprechenden Namespace erhält.
+Idealerweise erstellen Sie einen Namespace mit den folgenden Spezifikationen:</p></div>
+<div class="listingblock">
+<div class="title">namespace.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">apiVersion</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">v1</span>
+<span class="tok-nt">kind</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">Namespace</span>
+<span class="tok-nt">metadata</span><span class="tok-p">:</span>
+<span class="tok-w">  </span><span class="tok-nt">name</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">checkmk-monitoring</span>
+<span class="tok-w">  </span><span class="tok-nt">labels</span><span class="tok-p">:</span>
+<span class="tok-w">    </span><span class="tok-nt">pod-security.kubernetes.io/enforce</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">privileged</span>
+<span class="tok-w">    </span><span class="tok-nt">pod-security.kubernetes.io/enforce-version</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">latest</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Den Namespace können Sie erzeugen, indem Sie beispielsweise <code>kubectl apply -f namespace.yaml</code> aufrufen.
+Denken Sie daran, dass Sie dann die Option <code>--create-namespace</code> nicht verwenden müssen, wenn Sie später den Befehl <code>helm upgrade</code> ausführen.</p></div>
+<div class="paragraph"><p>Wenn der Cluster Collector bereits läuft bzw. der Namespace bereits existiert, können Sie die obigen Labels auch mit dem folgenden Befehl setzen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>kubectl<span class="tok-w"> </span>label<span class="tok-w"> </span>--overwrite<span class="tok-w"> </span>ns<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>pod-security.kubernetes.io/enforce<span class="tok-o">=</span>privileged<span class="tok-w"> </span>pod-security.kubernetes.io/enforce-version<span class="tok-o">=</span>latest</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading_pod_security_policies">
+<span class="hidden-anchor sr-only" id="pod_security_policies"></span>Pod Security Policies und Network Policies</h4>
+<div class="paragraph"><p>Die Policies <em>PodSecurityPolicy</em> (kurz: PSP) und <em>NetworkPolicy</em> sind in erster Linie aus Gründen der Kompatibilität in unserer Helm-Chart enthalten.
+Da die PSP mit dem Erscheinen von Kubernetes <code>v1.25</code> entfernt wurden, haben wir diese ab Version <code>1.3.0</code> unserer Helm-Chart standardmäßig deaktiviert.</p></div>
+<div class="paragraph"><p>Der entsprechende Abschnitt sieht nun folgendermaßen aus:</p></div>
+<div class="listingblock">
+<div class="title">values.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">rbac</span><span class="tok-p">:</span>
+<span class="tok-w">  </span><span class="tok-nt">pspEnabled</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">false</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Sollten Sie die PSP in Ihrem Cluster noch einsetzen, ist es unbedingt erforderlich, diese Option in der <code>values.yaml</code> auf <code>true</code> zu setzen:</p></div>
+<div class="listingblock">
+<div class="title">values.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">rbac</span><span class="tok-p">:</span>
+<span class="tok-w">  </span><span class="tok-nt">pspEnabled</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">true</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Sollten wir zu einem späteren Zeitpunkt feststellen, dass dieser Eintrag auch im deaktivierten Zustand nicht mehr korrekt verarbeitet wird, werden wir diesen gänzlich entfernen.</p></div>
+<div class="paragraph"><p>Ähnliches gilt für die <em>NetworkPolicy</em>.
+Wenn Sie diese in Ihrem Cluster einsetzen, müssen die Stelle in der <code>values.yaml</code> von <code>enabled: false</code> auf <code>enabled: true</code> umstellen.
+Bitte beachten Sie in diesem Fall die folgende Dokumentation innerhalb der <code>values.yaml</code>, um die <em>NetworkPolicy</em> korrekt zu konfigurieren.</p></div>
+<div class="listingblock">
+<div class="title">values.yaml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-c1">## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/</span>
+<span class="tok-nt">networkPolicy</span><span class="tok-p">:</span>
+<span class="tok-w">  </span><span class="tok-c1"># keep in mind: your cluster network plugin has to support NetworkPolicies, otherwise they won't have any effect</span>
+<span class="tok-w">  </span><span class="tok-nt">enabled</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">false</span>
+
+<span class="tok-w">  </span><span class="tok-c1"># specify ipBlock cidrs here to allow ingress to the cluster-collector</span>
+<span class="tok-w">  </span><span class="tok-c1"># this is required for the checkmk servers to be able to scrape data from checkmk, so include the resprective ip range(s) here</span>
+<span class="tok-w">  </span><span class="tok-nt">allowIngressFromCIDRs</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-p tok-p-Indicator">[]</span>
+<span class="tok-w">  </span><span class="tok-c1"># - 127.0.0.1/32 # e.g. Checkmk Server</span>
+<span class="tok-w">  </span><span class="tok-c1"># - 127.0.0.1/24 # e.g. Metallb speakers</span>
+
+<span class="tok-w">  </span><span class="tok-c1"># the cluster-collector needs to be able to contact the kube-apiserver</span>
+<span class="tok-w">  </span><span class="tok-c1"># you have three options here to choose from, depending on your cluster setup:</span>
+<span class="tok-w">  </span><span class="tok-c1"># 1) if your apiserver resides outside the cluster, resp. you have a kubernetes endpoint available (check via "kubectl -n default get ep kubernetes")</span>
+<span class="tok-w">  </span><span class="tok-c1">#    we can make use of helm lookup to automatically inject the endpoint (cidr + port) here.</span>
+<span class="tok-w">  </span><span class="tok-c1">#    This is the most comfortable one, just note that helm lookup won't work on a "helm template" or "helm diff" command.</span>
+<span class="tok-w">  </span><span class="tok-c1">#    (see also: https://helm.sh/docs/chart_template_guide/functions_and_pipelines/#using-the-lookup-function)</span>
+<span class="tok-w">  </span><span class="tok-c1"># 2) similar to 1) you can also specify the "ipBlockCidr" directly. Make sure to disable "enableCidrLookup", and also fill the "port".</span>
+<span class="tok-w">  </span><span class="tok-c1"># 3) if the apiserver resides inside the cluster, disable "enableCidrLookup", unset "ipBlockCidr", and fill the "labelSelectors" section</span>
+<span class="tok-w">  </span><span class="tok-c1">#    with the name of the namespace where the kube-apiserver is availabe, and the label key and label value that defines your kube-apiserver pod.</span>
+<span class="tok-w">  </span><span class="tok-nt">egressKubeApiserver</span><span class="tok-p">:</span>
+<span class="tok-w">    </span><span class="tok-nt">enableCidrLookup</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">true</span>
+<span class="tok-w">    </span><span class="tok-c1"># ipBlockCidr: 172.31.0.3/32</span>
+<span class="tok-w">    </span><span class="tok-c1"># port: 6443</span>
+<span class="tok-w">    </span><span class="tok-c1"># labelSelectors:</span>
+<span class="tok-w">    </span><span class="tok-c1">#   namespace: kube-system</span>
+<span class="tok-w">    </span><span class="tok-c1">#   key: app</span>
+<span class="tok-w">    </span><span class="tok-c1">#   value: kube-apiserver</span></code></pre></div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_install_helm_charts">
+<span class="hidden-anchor sr-only" id="install_helm_charts"></span>2.3. Helm-Charts installieren</h3>
+<div class="paragraph"><p>Nachdem Sie die <code>values.yaml</code> angepasst oder eine eigene erstellt haben, installieren Sie mit dem folgenden Kommando alle notwendigen Komponenten in Ihrem Cluster, um es in Checkmk überwachen zu können:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>helm<span class="tok-w"> </span>upgrade<span class="tok-w"> </span>--install<span class="tok-w"> </span>--create-namespace<span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>myrelease<span class="tok-w"> </span>checkmk-chart/checkmk<span class="tok-w"> </span>-f<span class="tok-w"> </span>values.yaml</code></pre></div></div>
+<div class="paragraph"><p>Da das Kommando nicht selbsterklärend ist, bieten wir Ihnen nachfolgend eine Erläuterung zu den einzelnen Optionen:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Befehlsteil</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm upgrade --install</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dieser Teil ist der Basisbefehl, um dem Kubernetes-Cluster die Konfiguration zu übermitteln.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--create-namespace</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In Kubernetes geben Sie immer an, zu welchem <em>Namespace</em> die Konfiguration hinzugefügt werden soll. Diese Option benötigen Sie, falls es den Namespace noch nicht gibt. Helm wird ihn in diesem Fall mit anlegen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-n checkmk-monitoring</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Option bestimmt den Namespace, zu dem die Konfiguration hinzugefügt werden soll. <code>checkmk-monitoring</code> ist dabei nur ein Beispiel, wie dieser heißen könnte.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myrelease</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myrelease</code> bezeichnet hier das Release. Jede Instanz einer Helm-Chart, die in Ihrem Kubernetes-Cluster läuft wird als Release bezeichnet. Diesen Namen können Sie frei wählen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>checkmk-chart/checkmk</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der erste Teil dieser Option beschreibt das Repository, welches Sie <a href="#setup_helm_repo">zuvor</a> angelegt haben. Der zweite Teil — nach dem Schrägstrich — ist das <em>Paket</em>, in dem die notwendigen Informationen liegen, um die Konfiguration ihres Kubernetes-Monitoring erstellen zu können.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-f values.yaml</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zuletzt geben Sie die Konfigurationsdatei an, die Sie zuvor erstellt bzw. angepasst haben. Sie enthält alle Anpassungen, die in den Konfigurationsdateien berücksichtigt werden sollen, die mit <code>helm</code> erstellt werden.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Nachdem Sie das Kommando ausgeführt haben, ist Ihr Kubernetes-Cluster vorbereitet, um mit Checkmk überwacht zu werden.
+Das Cluster wird sich nun selbstständig darum kümmern, dass die notwendigen Pods und die darin enthaltenen Container laufen und erreichbar sind.</p></div>
+<div class="sect3">
+<h4 id="heading_helm_output">
+<span class="hidden-anchor sr-only" id="helm_output"></span>Ausgabe der Helm-Charts</h4>
+<div class="paragraph"><p>Als nächstes steht nun die Einrichtung in Checkmk an.
+Um Ihnen diese Einrichtung so einfach wie möglich zu machen, haben wir den Output unserer Helm-Charts mit einer ganzen Reihe an Kommandos ausgestattet.
+Dieser Output passt sich auch automatisch an die von Ihnen eingestellten Werte in der Datei <code>values.yaml</code> an.
+Verwenden Sie also den NodePort, bekommen Sie hier unter anderem die Befehle um IP und Port des NodePort anzuzeigen.
+Verwenden Sie stattdessen Ingress, wird die Ausgabe entsprechend angepasst.
+Im Folgenden zeigen wir die - leicht gekürzte - Ausgabe nach erfolgreicher Installation bei der Verwendung des NodePort:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>helm<span class="tok-w"> </span>upgrade<span class="tok-w"> </span>--install<span class="tok-w"> </span>--create-namespace<span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>myrelease<span class="tok-w"> </span>checkmk-chart/checkmk<span class="tok-w"> </span>-f<span class="tok-w"> </span>values.yaml
+<span class="tok-go">Release "myrelease" has been upgraded. Happy Helming!</span>
+<span class="tok-go">NAME: myrelease</span>
+<span class="tok-go">LAST DEPLOYED: Sat Dec 16 19:00:11 2022</span>
+<span class="tok-go">NAMESPACE: checkmk-monitoring</span>
+<span class="tok-go">STATUS: deployed</span>
+<span class="tok-go">REVISION: 1</span>
+<span class="tok-go">TEST SUITE: None</span>
+<span class="tok-go">NOTES:</span>
+<span class="tok-go">You can access the checkmk <code>cluster-collector</code> via:</span>
+<span class="tok-go">NodePort:</span>
+<span class="hll"><span class="tok-go">  export NODE_PORT=$(kubectl get --namespace checkmk-monitoring -o jsonpath="{.spec.ports[0].nodePort}" services myrelease-checkmk-cluster-collector);</span>
+</span><span class="hll"><span class="tok-go">  export NODE_IP=$(kubectl get nodes --namespace checkmk-monitoring -o jsonpath="{.items[0].status.addresses[0].address}");</span>
+</span><span class="hll"><span class="tok-go">  echo http://$NODE_IP:$NODE_PORT</span>
+</span><span class="tok-gp">  # </span>Cluster-internal<span class="tok-w"> </span>DNS<span class="tok-w"> </span>of<span class="tok-w"> </span><span class="tok-sb"><code></code></span>cluster-collector<span class="tok-sb"></span></code>:<span class="tok-w"> </span>myrelease-checkmk-cluster-collector.checkmk-monitoring
+<span class="tok-go">With the token of the service account named <code>myrelease-checkmk-checkmk</code> in the namespace <code>checkmk-monitoring</code> you can now issue queries against the <code>cluster-collector</code>.</span>
+<span class="tok-go">Run the following to fetch its token and the ca-certificate of the cluster:</span>
+<span class="hll"><span class="tok-go">  export TOKEN=$(kubectl get secret myrelease-checkmk-checkmk -n checkmk-monitoring -o=jsonpath='{.data.token}' | base64 --decode);</span>
+</span><span class="hll"><span class="tok-go">  export CA_CRT="$(kubectl get secret myrelease-checkmk-checkmk -n checkmk-monitoring -o=jsonpath='{.data.ca\.crt}' | base64 --decode)";</span>
+</span><span class="tok-gp">  # </span>Note:<span class="tok-w"> </span>Quote<span class="tok-w"> </span>the<span class="tok-w"> </span>variable<span class="tok-w"> </span>when<span class="tok-w"> </span>echo<span class="tok-err">'</span>ing<span class="tok-w"> </span>to<span class="tok-w"> </span>preserve<span class="tok-w"> </span>proper<span class="tok-w"> </span>line<span class="tok-w"> </span>breaks:<span class="tok-w"> </span><span class="tok-sb"><code></code></span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">"</span><span class="tok-nv">$CA_CRT</span><span class="tok-s2">"</span><span class="tok-sb"></span>
+<span class="tok-go">To test access you can run:</span>
+<span class="hll"><span class="tok-go">  curl -H "Authorization: Bearer $TOKEN" http://$NODE_IP:$NODE_PORT/metadata | jq</span>
+</span></pre></div></div>
+<div class="paragraph"><p>Kopieren Sie aus dieser Ausgabe einfach die farblich markierten Zeilen und führen Sie die Befehle aus.</p></div>
+<div class="paragraph"><p>Der erste Block zeigt Ihnen Informationen zum NodePort an:</p></div>
+<div class="listingblock" id="token_ca_crt"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">NODE_PORT</span><span class="tok-o">=</span><span class="tok-k">$(</span>kubectl<span class="tok-w"> </span>get<span class="tok-w"> </span>--namespace<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>-o<span class="tok-w"> </span><span class="tok-nv">jsonpath</span><span class="tok-o">=</span><span class="tok-s2">"{.spec.ports[0].nodePort}"</span><span class="tok-w"> </span>services<span class="tok-w"> </span>myrelease-checkmk-cluster-collector<span class="tok-k">)</span><span class="tok-p">;</span>
+<span class="tok-gp">user@host:~$ </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">NODE_IP</span><span class="tok-o">=</span><span class="tok-k">$(</span>kubectl<span class="tok-w"> </span>get<span class="tok-w"> </span>nodes<span class="tok-w"> </span>--namespace<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>-o<span class="tok-w"> </span><span class="tok-nv">jsonpath</span><span class="tok-o">=</span><span class="tok-s2">"{.items[0].status.addresses[0].address}"</span><span class="tok-k">)</span><span class="tok-p">;</span>
+<span class="tok-gp">user@host:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span>http://<span class="tok-nv">$NODE_IP</span>:<span class="tok-nv">$NODE_PORT</span>
+<span class="tok-go">http://10.184.38.103:30035</span></code></pre></div></div>
+<div class="paragraph"><p>Genau diese Adresse müssen Sie in Checkmk später in der Kubernetes-Regel im Feld <span class="guihint">Collector NodePort / Ingress endpoint</span> eintragen.</p></div>
+<div class="paragraph"><p>Mit den Befehlen aus dem nächsten Block erhalten Sie sowohl den Token and auch das Zertifikat des Service-Accounts.
+Die Daten werden so in den Umgebungsvariablen <code>TOKEN</code> und <code>CA_CRT</code> gespeichert.
+Achten Sie bei der Ausgabe der Variable <code>CA_CRT</code> unbedingt darauf diese in Hochkommata einzuschließen, da ansonsten die wichtigen Zeilenumbrüche des Zertifikats verloren gehen.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">TOKEN</span><span class="tok-o">=</span><span class="tok-k">$(</span>kubectl<span class="tok-w"> </span>get<span class="tok-w"> </span>secret<span class="tok-w"> </span>myrelease-checkmk-checkmk<span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>-o<span class="tok-o">=</span><span class="tok-nv">jsonpath</span><span class="tok-o">=</span><span class="tok-s1">'{.data.token}'</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>base64<span class="tok-w"> </span>--decode<span class="tok-k">)</span><span class="tok-p">;</span>
+<span class="tok-gp">user@host:~$ </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">CA_CRT</span><span class="tok-o">=</span><span class="tok-s2">"</span><span class="tok-k">$(</span>kubectl<span class="tok-w"> </span>get<span class="tok-w"> </span>secret<span class="tok-w"> </span>myrelease-checkmk-checkmk<span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>-o<span class="tok-o">=</span><span class="tok-nv">jsonpath</span><span class="tok-o">=</span><span class="tok-s1">'{.data.ca\.crt}'</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>base64<span class="tok-w"> </span>--decode<span class="tok-k">)</span><span class="tok-s2">"</span><span class="tok-p">;</span>
+<span class="tok-gp">user@host:~$ echo $</span>TOKEN
+<span class="tok-go">eyJhbGciOiJSUzI1NiIsImtpZCI6InR6VXhGSU ...</span>
+<span class="tok-gp">user@host:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">"</span><span class="tok-nv">$CA_CRT</span><span class="tok-s2">"</span>
+<span class="tok-go">-----BEGIN CERTIFICATE-----</span>
+<span class="tok-go">MIIBdjCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy</span>
+<span class="tok-go">dmVyLWNhQDE2NjIxNDc5NTMwHhcNMjIwOTAyMTk0NTUzWhcNMzIwODMwMTk0NTUz</span>
+<span class="tok-go">...</span>
+<span class="tok-go">-----END CERTIFICATE-----</span></code></pre></div></div>
+<div class="paragraph"><p>Bei der Einrichtung in Checkmk müssen Sie sowohl <a href="#token">den Token</a> als auch das <a href="#certimport">das Zertifikat</a> hinterlegen.
+Lassen Sie die Shell mit diesen Informationen geöffnet oder kopieren Sie Token und Zertifikat an einen Ort, an dem Sie während der folgenden Einrichtung in Checkmk zugreifen können.</p></div>
+<div class="paragraph"><p>Wenn Sie die beiden vorherigen Export-Befehle ausgeführt haben, können Sie mit dem letzten Befehl prüfen, ob die Einrichtung erfolgreich war:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">curl -H "Authorization: Bearer $TOKEN" http://$NODE_IP:$NODE_PORT/metadata | jq</span>
+<span class="tok-gp">  % </span>Total<span class="tok-w">    </span>%<span class="tok-w"> </span>Received<span class="tok-w"> </span>%<span class="tok-w"> </span>Xferd<span class="tok-w">  </span>Average<span class="tok-w"> </span>Speed<span class="tok-w">   </span>Time<span class="tok-w">    </span>Time<span class="tok-w">     </span>Time<span class="tok-w">  </span>Current
+<span class="tok-go">                                 Dload  Upload   Total   Spent    Left  Speed</span>
+<span class="tok-go">100  1815  100  1815    0     0   126k      0 --:--:-- --:--:-- --:--:--  126k</span>
+<span class="tok-go">{</span>
+<span class="tok-go">  "cluster_collector_metadata": {</span>
+<span class="tok-go">    "node": "mynode",</span>
+<span class="tok-go">    "host_name": "myrelease-checkmk-cluster-collector-58f97df9c9-mdhsw",</span>
+<span class="tok-go">    "container_platform": {</span>
+<span class="tok-go">      "os_name": "alpine",</span>
+<span class="tok-go">      "os_version": "3.15.4",</span>
+<span class="tok-go">      "python_version": "3.10.4",</span>
+<span class="tok-go">      "python_compiler": "GCC 10.3.1 20211027"</span>
+<span class="tok-go">    },</span>
+<span class="tok-go">    "checkmk_kube_agent": {</span>
+<span class="tok-go">      "project_version": "1.0.1"</span>
+<span class="tok-go">    }</span>
+<span class="tok-go">  }</span>
+<span class="tok-go">  ...</span></code></pre></div></div>
+<div class="paragraph"><p>Am Anfang der stark gekürzten Ausgabe sehen Sie beispielsweise die Version des Cluster Collectors.
+Weiter unten würden dann noch Metadaten zu allen Nodes in diesem Cluster folgen.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_setupincheckmk">
+<span class="hidden-anchor sr-only" id="setupincheckmk"></span>3. Monitoring in Checkmk einrichten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Als nächstes geht es in der GUI von Checkmk an die Einrichtung des <a href="glossar.html#special_agent">Spezialagenten</a> und einer Regel für die automatische Erzeugung von Hosts für Ihre Kubernetes-Objekte.
+Für die Einrichtung des Spezialagenten müssen aber zuerst noch einige Voraussetzungen erfüllt werden:</p></div>
+<div class="sect2">
+<h3 id="heading_token">
+<span class="hidden-anchor sr-only" id="token"></span>3.1. Passwort (Token) in Checkmk hinterlegen</h3>
+<div class="paragraph"><p>Das Passwort (Token) des Service-Accounts können Sie am besten im Passwortspeicher von Checkmk hinterlegen.
+Das ist die sicherste Variante, da Sie Hinterlegung und Benutzung des Passworts organisatorisch trennen können.
+Alternativ geben Sie es beim Anlegen der Regel (siehe weiter unten) direkt im Klartext ein.
+Wie Sie sich das benötigte Passwort anzeigen lassen können, steht in der <a href="#helm_output">Ausgabe der Helm-Charts.</a>
+Fügen Sie das Passwort in den Checkmk-Passwortspeicher ein mit <span class="guihint">Setup &gt; General &gt; Passwords &gt; Add password</span> z.B. unter der ID und dem Titel <code>My Kubernetes Token</code>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/kubernetes_password.png" alt="kubernetes password"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_certimport">
+<span class="hidden-anchor sr-only" id="certimport"></span>3.2. CA-Zertifikat des Service-Accounts in Checkmk importieren</h3>
+<div class="paragraph"><p>Damit Checkmk der Certificate Authority (CA) des Service-Accounts vertrauen kann, müssen Sie das CA-Zertifikat in Checkmk hinterlegen.
+Wie Sie sich das benötigte Zertifikat anzeigen lassen können, steht ebenfalls in der <a href="#helm_output">Ausgabe der Helm-Charts.</a>
+Kopieren Sie hier alles inklusive der Zeilen <code>BEGIN CERTIFICATE</code> und <code>END CERTIFICATE</code> und fügen Sie das Zertifikat im Setup-Menü unter <span class="guihint">Setup &gt; General &gt; Global settings &gt; Site management &gt; Trusted certificate authorities for SSL</span> hinzu:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/kubernetes_ca.png" alt="kubernetes ca"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_source-host">
+<span class="hidden-anchor sr-only" id="source-host"></span>3.3. Piggyback Quell-Host anlegen</h3>
+<div class="paragraph"><p>Erzeugen Sie in Checkmk auf gewohnte Weise einen neuen Host und nennen Sie diesen beispielsweise <code>mykubernetesclusterhost</code>.
+Wie Überschrift und Host-Name schon nahelegen, dient dieser Host dazu, die <a href="glossar.html#piggyback">Piggyback-Daten</a> zu sammeln und außerdem alle Services und Metriken auf Cluster-Ebene abzubilden.
+Da dieser Host ausschließlich über den Spezialagenten Daten erhält, setzen Sie in den Eigenschaften des Hosts die Option <span class="guihint">IP address family</span> unbedingt auf <span class="guihint">No IP</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_no_ip.png" alt="Beispielhafte Einrichtung eines Cluster-Hosts mit der wichtigen Einstellung 'No IP'."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__dynamische_host_konfiguration_einrichten">
+<span class="hidden-anchor sr-only" id="_dynamische_host_konfiguration_einrichten"></span>3.4. Dynamische Host-Konfiguration einrichten</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Um eine Trennung zwischen den Objekten verschiedener Kubernetes-Cluster zu gewährleisten, kann es sich anbieten über <span class="guihint">Setup &gt; Hosts &gt; Add folder</span> pro Cluster einen Ordner anzulegen, in welchem die <a href="dcd.html">dynamische Host-Konfiguration</a> automatisch alle Hosts eines Clusters anlegen kann.
+Einen solchen Ordner zu erzeugen bzw. zu nutzen ist aber optional.</p></div>
+<div class="paragraph"><p>Als nächstes richten Sie in den kommerziellen Editionen einen Konnektor für die anfallenden Piggyback-Daten ein:
+mit <span class="guihint">Setup &gt; Hosts &gt; Dynamic host management &gt; Add connection.</span>
+Tragen Sie zuerst einen Titel ein und klicken Sie anschließend unter <span class="guihint">Connection Properties</span> auf <span class="guihint">show more</span>.</p></div>
+<div class="paragraph"><p>Klicken Sie als Nächstes auf <span class="guihint">Add new element</span> und wählen Sie unter <span class="guihint">Create hosts in</span> den zuvor angelegten Ordner aus.</p></div>
+<div class="paragraph"><p>Die voreingestellten Attribute unter <span class="guihint">Host attributes to set</span> können Sie so belassen.
+Sie sorgen dafür das sich Checkmk bei den automatisch angelegten Hosts ausschließlich an die Piggyback-Daten hält und nicht versucht diese beispielsweise zu pingen oder per SNMP zu erreichen.</p></div>
+<div class="paragraph"><p>In einer Kubernetes-Umgebung, in der überwachbare und überwachte Objekte kontinuierlich kommen und gehen, empfiehlt es sich auch die Option <span class="guihint">Automatically delete hosts without piggyback data</span> zu aktivieren.
+Was genau diese Option bewirkt und unter welchen Umständen Hosts dann tatsächlich gelöscht werden, erklären wir im Kapitel <a href="dcd.html#automatic_deletion_of_hosts">Automatisches Löschen von Hosts</a> im Artikel zur dynamischen Host-Konfiguration.</p></div>
+<div class="paragraph"><p>Tragen Sie nun noch unter <span class="guihint">Restrict source hosts</span> den zuvor angelegten <a href="#source-host">Piggyback Quell-Host</a> ein und aktivieren Sie die Option <span class="guihint">Discover services during creation</span>.</p></div>
+<div class="paragraph"><p>Der Abschnitt <span class="guihint">Connection Properties</span> dieses neuen Konnektors könnte im Anschluss wie folgt aussehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_connection_properties.png" alt="Beispielhafte Einstellungen einer dynamischen Host-Konfiguration."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__piggyback_daten_in_checkmk_raw_verarbeiten">
+<span class="hidden-anchor sr-only" id="_piggyback_daten_in_checkmk_raw_verarbeiten"></span>3.5. Piggyback-Daten in Checkmk Raw verarbeiten</h3>
+<div class="paragraph"><p>In Checkmk Raw müssen Sie die Hosts für die anfallenden Piggyback-Daten <a href="piggyback.html#piggyback_in_practice">manuell erstellen.</a>
+Weil hier in einem Kubernetes-Cluster eine große Zahl an Piggyback-Hosts entstehen dürften, empfiehlt sich die Verwendung unseres Skript <a href="piggyback.html#orphaned_piggyback_data"><code>find_piggy_orphans</code></a> im Verzeichnis <code>~/share/doc/check_mk/treasures/</code> Ihrer Checkmk-Instanz.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__periodische_service_erkennung_anpassen">
+<span class="hidden-anchor sr-only" id="_periodische_service_erkennung_anpassen"></span>3.6. Periodische Service-Erkennung anpassen</h3>
+<div class="paragraph"><p>Standardmäßig führt Checkmk alle zwei Stunden eine Service-Erkennung durch und zeigt das Ergebnis dieser Erkennung im Service <span class="guihint">Check_MK Discovery</span> an.
+Sie finden diese Einstellung im Regelsatz <span class="guihint">Periodic service discovery</span>.
+Im Kontext von Kubernetes empfehlen wir eine Regel für alle Hosts mit dem Label <code>cmk/kubernetes:yes</code> zu erstellen.
+Dieses Label erhält nämlich jeder Host der Kubernetes-Objekte repräsentiert automatisch von Checkmk.
+Sie sollten hier ein kürzeres Intervall für die Service-Erkennung wählen und auch die Option <span class="guihint">Automatically update service configuration</span> aktivieren.
+Die Einstellungen im folgenden Screenshot sind nur exemplarisch.
+Was für Ihre Cluster sinnvoll ist, müssen Sie von Fall zu Fall entscheiden.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_periodic_service_discovery.png" alt="Exemplarische Einrichtung der periodischen Service-Erkennung für Kubernetes-Objekte."></div></div>
+<div class="paragraph"><p>Um diese Regel auf alle Hosts Ihrer Cluster zu beschränken genügt es bei den <span class="guihint">Conditions</span> unter <span class="guihint">Host labels</span> <code>cmk/kubernetes:yes</code> einzutragen.
+Wollen Sie jedoch für verschiedene Cluster auch verschiedene Regeln erstellen, verwenden Sie hier einfach das jeweilige Cluster-spezifische Label.
+Diese Labels haben immer die Form <code>cmk/kubernetes/cluster:mycluster</code>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_periodic_service_discovery_conditions.png" alt="Exemplarische Einschränkung auf Hosts mit einem Cluster-spezifischen Label."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rule">
+<span class="hidden-anchor sr-only" id="rule"></span>3.7. Spezialagent einrichten</h3>
+<div class="paragraph"><p>Nachdem nun alle Voraussetzungen im Cluster und in Checkmk geschaffen sind, können Sie sich der Konfiguration des Spezialagenten widmen.
+Diese finden Sie über <span class="guihint">Setup &gt; Agents &gt; VM, cloud, container &gt; Kubernetes</span>.
+Erstellen Sie mit <span class="guihint">Add rule</span> eine neue Regel.</p></div>
+<div class="paragraph"><p>Zuallererst müssen Sie einen Namen für das zu überwachende Cluster vergeben.
+Diesen Namen können Sie frei wählen.
+Er dient dazu, alle Objekte, die aus genau diesem Cluster stammen, mit einem eindeutigen Namen zu versehen.
+Wenn Sie hier beispielsweise <code>mycluster</code> eintragen, werden die Namen der Hosts aller Pods aus diesem Cluster später mit <code>pod_mycluster</code> beginnen.
+Der nächste Teil des Host-Namens wird dann immer der Namespace sein, in dem dieses Kubernetes-Objekt existiert.
+Der Host-Name eines Pods könnte dann beispielsweise <code>pod_mycluster_kube-system_svclb-traefik-8bgw7</code> lauten.</p></div>
+<div class="paragraph"><p>Wählen Sie unter <span class="guihint">Token</span> nun den <a href="#token">zuvor angelegten Eintrag</a> aus dem Passwortspeicher von Checkmk aus.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_cluster_name_and_token.png" alt="Beispielhafter Cluster-Name und Auswahl des Tokens."></div></div>
+<div class="paragraph"><p>Unter <span class="guihint">API server connection &gt; Endpoint</span> verlangt Checkmk nun die Eingabe der URL (bzw. IP-Adresse) über welche Ihr Kubernetes API-Server erreichbar ist.
+Die Angabe des Ports ist nur notwendig, wenn der Dienst nicht über einen virtuellen Host bereitgestellt wird.
+Wie Sie diese Adresse am einfachsten herausfinden können — falls Sie sie nicht bereits zur Hand haben — hängt von Ihrer Kubernetes-Umgebung ab.
+Mit dem folgenden Befehl erhalten Sie den Endpunkt des API-Servers in der Zeile <code>server</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>kubectl<span class="tok-w"> </span>config<span class="tok-w"> </span>view
+<span class="tok-go">apiVersion: v1</span>
+<span class="tok-go">clusters:</span>
+<span class="tok-go">  - cluster:</span>
+<span class="tok-go">    certificate-authority-data: DATA+OMITTED</span>
+<span class="tok-go">    server: https://DFE7A4191DCEC150F63F9DE2ECA1B407.mi6.eu-central-1.eks.amazonaws.com</span>
+<span class="tok-go">    name: xyz:aws:eks:eu-central-1:150143619628:cluster/my-kubernetes</span></code></pre></div></div>
+<div class="paragraph"><p>Die tatsächlich Ausgabe von <code>kubectl config view</code> variiert allerdings sehr stark.
+Wird hier in der Zeile <code>server</code> auch ein Port angegeben, so fügen Sie diesen unbedingt auch in der Regel ein.</p></div>
+<div class="paragraph"><p>Wenn Sie diese Anleitung bisher Schritt für Schritt befolgt haben und das CA-Zertifikat Ihres Clusters - <a href="#certimport">wie oben beschrieben</a> - in Checkmk hinterlegt haben, wählen Sie unter <span class="guihint">SSL certificate verification</span> den Eintrag <span class="guihint">Verify the certificate</span> aus.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_rule_api_server_connection.png" alt="Exemplarische Angabe der API-Server Verbindung."></div></div>
+<div class="paragraph"><p>Als Nächstes haben Sie die Wahl das Monitoring Ihres Kubernetes-Clusters mit Nutzungsdaten anzureichern, welche der Checkmk Cluster Collector einsammelt.
+Wir wiederholen es an dieser Stelle ein weiteres Mal, um die Wichtigkeit zu unterstreichen:
+<strong>Die Einrichtung des Cluster Collectors ist für ein vollumfängliches Monitoring Ihrer Cluster absolut unerlässlich.</strong>
+Nur so erhalten Sie wichtige Daten wie CPU- und Speicherauslastung und werden über die Dateisysteme der einzelnen Komponenten informiert.</p></div>
+<div class="paragraph"><p>Aktivieren Sie also die Option <span class="guihint">Enrich with usage data from Checkmk Cluster Collector</span> und geben Sie den Endpunkt des NodePorts bzw. des Ingress an.
+Wie Sie sich diesen Endpunkt erneut anzeigen lassen können, steht in der <a href="#helm_output">Ausgabe der Helm-Charts.</a></p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_rule_enrich.png" alt="Exemplarische Angabe der Cluster Collector Verbindung."></div></div>
+<div class="paragraph"><p>Mit den Optionen <span class="guihint">Collect information about…​</span> können Sie nun noch auswählen, welche Objekte innerhalb Ihres Cluster überwacht werden sollen.
+Unsere Vorauswahl deckt hier die relevantesten Objekte ab.
+Sollten Sie sich dazu entscheiden auch die <span class="guihint">Pods of CronJobs</span> zu überwachen, so beachten Sie die <a href="user_interface.html#inline_help">Inline-Hilfe</a> zu diesem Punkt.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_rule_collect_info_about.png" alt="Exemplarische Auswahl überwachbarer Kubernetes-Objekte."></div></div>
+<div class="paragraph"><p>Mit den nächsten beiden Auswahlmöglichkeiten, können Sie die zu überwachenden Objekte weiter eingrenzen.
+Falls Sie sich nur für die Objekte aus bestimmten Namespaces interessieren, stellen Sie dies entsprechend unter <span class="guihint">Monitor namespaces</span> ein.
+Hier können Sie entweder einzelne Namespaces eintragen, die überwacht werden sollen, oder aber einzelne Namespaces explizit vom Monitoring ausschließen.</p></div>
+<div class="paragraph"><p>Mit der Option <span class="guihint">Cluster resource aggregation</span> können Sie Nodes benennen, welche keine Ressourcen für die Arbeitslast Ihres Clusters zur Verfügung stellen.
+Diese Nodes sollten aus der Berechnung der zur Verfügung stehenden Ressourcen ausgenommen werden.
+Ansonsten besteht die Gefahr, dass Kapazitätsengpässe nicht erkannt werden.
+Standardmäßig nehmen wir daher bereits die Nodes <code>control-plane</code> und <code>infra</code> aus der Berechnung heraus.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_namespaces_and_resource_aggregation.png" alt="Beispielhafte Konfiguration für Namensräume und Ressourcen-Aggregation"></div></div>
+<div class="paragraph"><p>Als letzte Option können Sie noch sogenannte <em>Annotations</em> aus Kubernetes importieren.
+In Checkmk werden diese <em>Annotations</em> zu <a href="glossar.html#label">Host-Labels</a> und können somit als Bedingungen in Regeln weiterverwendet werden.
+Welche <em>Annotations</em> importiert werden sollen, können Sie über reguläre Ausdrücke festlegen.
+Konsultieren Sie an dieser Stelle erneut die ausführliche Inline-Hilfe.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Die Option <span class="guihint">Import all valid annotations</span> bieten wir an dieser Stelle nur der Vollständigkeit halber an.
+Wir raten davon ab, einfach blind alle <em>Annotations</em> zu importieren, weil hierdurch mitunter ein sehr großer Berg nutzloser Labels in Checkmk erzeugt wird.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Unter <span class="guihint">Conditions &gt; Explicit hosts</span> <strong>müssen</strong> Sie nun den <a href="#source-host">zuvor angelegten Host</a> eintragen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_explicit_hosts.png" alt="Regeln für Spezialagenten müssen, wie hier zu sehen, immer auf explizite Hosts festgelegt werden."></div></div>
+<div class="paragraph"><p>Speichern Sie anschließend die Regel und führen Sie eine Service-Erkennung auf diesem Host durch.
+Sie werden hier gleich die ersten Services auf Cluster-Ebene sehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_service_discovery.png" alt="Exemplarische Ansicht der ersten Service-Erkennung nach Abschluss der Konfiguration."></div></div>
+<div class="paragraph"><p>Aktivieren Sie im Anschluss alle vorgenommenen Änderungen und überlassen Sie ab jetzt der dynamischen Host-Konfiguration die Arbeit.
+Diese wird schon nach kurzer Zeit alle Hosts für Ihre Kubernetes-Objekte erzeugen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__labels_für_kubernetes_objekte">
+<span class="hidden-anchor sr-only" id="_labels_für_kubernetes_objekte"></span>4. Labels für Kubernetes-Objekte</h2>
+<div class="sectionbody"><div class="paragraph"><p>Checkmk erzeugt Labels für die Kubernetes-Objekte wie Cluster, Deployments oder Namespace während der Service-Erkennung automatisch.
+Alle Labels zu Kubernetes-Objekten, die Checkmk automatisch erzeugt, beginnen mit <code>cmk/kubernetes/</code>.
+Ein Pod erhält beispielsweise immer ein Label der Node (<code>cmk/kubernetes/node:mynode</code>), ein Label, welches eben zeigt, dass es sich bei diesem Objekt um einen Pod handelt (<code>cmk/kubernetes/object:pod</code>) und ein Label für den Namespace (<code>cmk/kubernetes/namespace:mynamespace</code>).
+So lassen sich in der Folge sehr einfach Filter und Regeln für alle Objekte gleichen Typs bzw. im gleichen Namespace erstellen.</p></div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__dashboards_und_ansichten">
+<span class="hidden-anchor sr-only" id="_dashboards_und_ansichten"></span>5. Dashboards und Ansichten</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_dashboards">
+<span class="hidden-anchor sr-only" id="dashboards"></span>5.1. Kubernetes-Dashboards</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die kommerziellen Editionen von Checkmk werden mit sechs eingebauten Dashboards für Kubernetes ausgeliefert.
+Um diese Dashboards sinnvoll verwenden zu können, ist es notwendig, dass unser Cluster Collector installiert und konfiguriert ist.
+Im einzelnen heißen diese Dashboards:</p></div>
+<div class="ulist"><ul>
+<li><p>Kubernetes</p></li>
+<li><p>Kubernetes Cluster</p></li>
+<li><p>Kubernetes DaemonSet</p></li>
+<li><p>Kubernetes Deployment</p></li>
+<li><p>Kubernetes Namespace</p></li>
+<li><p>Kubernetes StatefulSet</p></li>
+</ul></div>
+<div class="paragraph"><p>Der Einstieg geschieht dabei immer über das Dashboard <span class="guihint">Kubernetes</span>, welches Sie über <span class="guihint">Monitor &gt; Applications &gt; Kubernetes</span> erreichen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_kubernetes_dashboard.png" alt="Exemplarische Ansicht des Übersichts-Dashboards."></div></div>
+<div class="paragraph"><p>Im Dashboard <span class="guihint">Kubernetes</span> werden auf der linken Seite alle Ihre überwachten Kubernetes-Cluster aufgelistet.
+Diese Auflistung der Cluster ist auch Ihr Einstieg um sich tiefer in die Kubernetes-Dashboards zu bohren.
+Mit einem Klick auf den Namen eines Clusters gelangen Sie in das Dashboard <span class="guihint">Kubernetes Cluster</span> des angewählten Clusters.
+Im Dashboard <span class="guihint">Kubernetes Cluster</span> führt ein Klick auf den jeweiligen Namen dann in die übrigen kontextabhängigen Dashboards:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_cluster_dashboard.png" alt="Ausschnitt des Cluster-Dashboards mit Wegen in die weiteren Dashboards."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__hardware_software_inventur">
+<span class="hidden-anchor sr-only" id="_hardware_software_inventur"></span>5.2. Hardware-/Software-Inventur</h3>
+<div class="paragraph"><p>Die Kubernetes-Überwachung von Checkmk unterstützt auch die <a href="inventory.html">HW-/SW-Inventur.</a>
+Wenn Sie beispielsweise in dem obigen Cluster-Dashboard auf den großen Namen des Clusters (hier: <span class="guihint">mycluster</span>) klicken, gelangen Sie zur Inventur des Clusters.</p></div>
+<div class="paragraph"><p>Auf dem gleichen Weg, also über die Boxen mit den großen Namen der Objekte, gelangen Sie auch in den anderen Dashboards zur Inventur des jeweiligen Objekts.
+Im folgenden Beispiel sehen Sie die HW-/SW-Inventur eines Pods:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/kubernetes_monitoring_hw_sw_inventory.png" alt="kubernetes monitoring hw sw inventory" width="88% alt=" exemplarische ansicht der hardware- und software-inventur eines pods></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__prüfung_der_installation">
+<span class="hidden-anchor sr-only" id="_prüfung_der_installation"></span>6. Prüfung der Installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Im Abschnitt <a href="#helm_output">Ausgabe der Helm-Charts</a> haben Sie bereits die erste Möglichkeit kennengelernt, um die erfolgreiche Installation der Komponenten für das vollständige Monitoring von Kubernetes zu prüfen.
+In der GUI von Checkmk können Sie ebenfalls an einigen Stellen die erfolgreiche Installation und Konfiguration prüfen.</p></div>
+<div class="paragraph"><p>Die wichtigsten Services sind hier sicherlich <span class="guihint">Kubernetes API</span> und <span class="guihint">Cluster Collector</span>.
+Diese müssen auf dem von Ihnen erstellten Cluster-Host vorhanden sein und sollten auch bestimmte Informationen anzeigen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_check_installation.png" alt="Wichtigste Services zur Prüfung der korrekten Installation"></div></div>
+<div class="paragraph"><p>Der Service <span class="guihint">Kubernetes API</span> sollte im Normalfall unter <span class="guihint">Summary</span> <span class="guihint">Live, Ready</span> vermelden.
+Der Service <span class="guihint">Cluster Collector</span> muss die Versionsnummer des installierten Cluster Collectors anzeigen.
+Ist eins von beidem nicht der Fall, müssen Sie die Installation der Helm-Charts und die Konfiguration des Spezialagenten überprüfen.</p></div>
+<div class="paragraph"><p>Weitere Möglichkeiten zur Prüfung bieten in den kommerziellen Editionen die Cluster-Dashboards.</p></div>
+<div class="paragraph"><p>Im Dashboard <span class="guihint">Kubernetes</span> können Sie bereits sehr früh erkennen, ob der Cluster Collector in einem Cluster läuft und Daten sammelt.
+Wenn die Spalten <span class="guihint">CPU resources</span> und <span class="guihint">Memory resources</span> keine Daten enthalten, ist dies bereits ein starker Indikator dafür, dass der Cluster Collector nicht ordnungsgemäß läuft.
+Bei korrekter Einrichtung sollte das Dashboard <span class="guihint">Kubernetes</span> in etwa so aussehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/kubernetes_monitoring_validation_dashboard.png" alt="Kubernetes-Dashbaord mit Daten für CPU resources und Memory resources"></div></div>
+<div class="paragraph"><p>Wenn Sie hier nun auf den Namen des Clusters klicken, landen Sie im Dashboard <span class="guihint">Kubernetes Cluster</span> des jeweiligen Clusters.
+Hier sollten die drei Boxen <span class="guihint">Primary datasource</span>, <span class="guihint">Cluster collector</span> und <span class="guihint">API health</span> grün sein und <span class="guihint">OK</span> anzeigen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_cluster_state.png" alt="Funktionierendes Cluster-Monitoring."></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__monitoring_komponenten_aus_cluster_entfernen">
+<span class="hidden-anchor sr-only" id="_monitoring_komponenten_aus_cluster_entfernen"></span>7. Monitoring-Komponenten aus Cluster entfernen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wenn Sie Checkmk über unsere Helm-Charts in Ihrem Cluster bereitgestellt haben, können Sie die erstellten Accounts, Services, Pods und Node Ports genauso leicht wieder entfernen, wie Sie sie eingerichtet haben.
+Deinstallieren Sie dafür einfach das Release, welches Sie mithilfe unserer Charts <a href="#install_helm_charts">installiert</a> haben.</p></div>
+<div class="paragraph"><p>Sollten Sie sich beim Namen des Releases unsicher sein, lassen Sie sich zuerst alle Helm-Releases in allen Namespaces anzeigen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>helm<span class="tok-w"> </span>list<span class="tok-w"> </span>--all-namespaces
+<span class="tok-go">NAME        NAMESPACE           REVISION  UPDATED                                   STATUS    CHART          APP VERSION</span>
+<span class="tok-go">myrelease   checkmk-monitoring  1         2022-08-15 19:00:42.318666784 +0200 CEST  deployed  checkmk-1.0.1  1.0.1</span></code></pre></div></div>
+<div class="paragraph"><p>Wie in der obigen Beispielausgabe sollten Sie hier ein Release finden, welches in der Spalte <code>CHART</code> einen Hinweis auf Checkmk enthält.</p></div>
+<div class="paragraph"><p>Entfernen Sie dieses Release anschließend - unter Angabe des korrekten Namespaces - mit folgendem Befehl:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>helm<span class="tok-w"> </span>uninstall<span class="tok-w"> </span>myrelease<span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring
+<span class="tok-go">release "myrelease" uninstalled</span></code></pre></div></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li>
+<a href="#_einleitung">1. Einleitung</a><ul class="sectlevel1">
+<li><a href="#_unterst%C3%BCtzte_distributionen_und_versionen">1.1. Unterstützte Distributionen und Versionen</a></li>
+<li><a href="#_einstieg_in_das_kubernetes_monitoring">1.2. Einstieg in das Kubernetes-Monitoring</a></li>
+<li><a href="#_aufbau_der_monitoring_umgebung">1.3. Aufbau der Monitoring-Umgebung</a></li>
+<li><a href="#_ablauf_des_kubernetes_monitorings_in_checkmk">1.4. Ablauf des Kubernetes-Monitorings in Checkmk</a></li>
+<li><a href="#_unterschiede_zum_%C3%BCbrigen_monitoring_in_checkmk">1.5. Unterschiede zum übrigen Monitoring in Checkmk</a></li>
+<li><a href="#_unterschiede_zum_bisherigen_kubernetes_monitoring">1.6. Unterschiede zum bisherigen Kubernetes-Monitoring</a></li>
+</ul>
+</li>
+<li>
+<a href="#_voraussetzungen_im_cluster_schaffen">2. Voraussetzungen im Cluster schaffen</a><ul class="sectlevel1">
+<li><a href="#setup_helm_repo">2.1. Helm-Repository einrichten</a></li>
+<li>
+<a href="#_konfiguration_auf_ihre_umgebung_anpassen">2.2. Konfiguration auf Ihre Umgebung anpassen</a><ul class="sectlevel2">
+<li><a href="#_minimale_values_yaml_selbst_anlegen">Minimale values.yaml selbst anlegen</a></li>
+<li><a href="#_values_yaml_aus_helm_charts_extrahieren">values.yaml aus Helm-Charts extrahieren</a></li>
+<li><a href="#_kommunikation_per_ingress_bereitstellen">Kommunikation per Ingress bereitstellen</a></li>
+<li><a href="#_kommunikation_per_nodeport_bereitstellen">Kommunikation per NodePort bereitstellen</a></li>
+<li><a href="#_cluster_collector_auf_https_umstellen">Cluster Collector auf HTTPS umstellen</a></li>
+<li><a href="#_eigenen_service_account_verwenden">Eigenen Service-Account verwenden</a></li>
+<li><a href="#_voraussetzung_f%C3%BCr_monitoring_von_gke_autopilot">Voraussetzung für Monitoring von GKE Autopilot</a></li>
+<li><a href="#pod_security_standards">Pod Security Admission Controller konfigurieren</a></li>
+<li><a href="#pod_security_policies">Pod Security Policies und Network Policies</a></li>
+</ul>
+</li>
+<li>
+<a href="#install_helm_charts">2.3. Helm-Charts installieren</a><ul class="sectlevel2"><li><a href="#helm_output">Ausgabe der Helm-Charts</a></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#setupincheckmk">3. Monitoring in Checkmk einrichten</a><ul class="sectlevel1">
+<li><a href="#token">3.1. Passwort (Token) in Checkmk hinterlegen</a></li>
+<li><a href="#certimport">3.2. CA-Zertifikat des Service-Accounts in Checkmk importieren</a></li>
+<li><a href="#source-host">3.3. Piggyback Quell-Host anlegen</a></li>
+<li><a href="#_dynamische_host_konfiguration_einrichten">3.4. Dynamische Host-Konfiguration einrichten</a></li>
+<li><a href="#_piggyback_daten_in_checkmk_raw_verarbeiten">3.5. Piggyback-Daten in Checkmk Raw verarbeiten</a></li>
+<li><a href="#_periodische_service_erkennung_anpassen">3.6. Periodische Service-Erkennung anpassen</a></li>
+<li><a href="#rule">3.7. Spezialagent einrichten</a></li>
+</ul>
+</li>
+<li><a href="#_labels_f%C3%BCr_kubernetes_objekte">4. Labels für Kubernetes-Objekte</a></li>
+<li>
+<a href="#_dashboards_und_ansichten">5. Dashboards und Ansichten</a><ul class="sectlevel1">
+<li><a href="#dashboards">5.1. Kubernetes-Dashboards</a></li>
+<li><a href="#_hardware_software_inventur">5.2. Hardware-/Software-Inventur</a></li>
+</ul>
+</li>
+<li><a href="#_pr%C3%BCfung_der_installation">6. Prüfung der Installation</a></li>
+<li><a href="#_monitoring_komponenten_aus_cluster_entfernen">7. Monitoring-Komponenten aus Cluster entfernen</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

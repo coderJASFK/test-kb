@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="In diesem Artikel erfahren Sie, wie Sie in Checkmk mit Host- und Service-Labels bekannte Strukturierungsmarker aus anderen Umgebungen nutzen können.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Labels">
+<meta name="og:description" content="In diesem Artikel erfahren Sie, wie Sie in Checkmk mit Host- und Service-Labels bekannte Strukturierungsmarker aus anderen Umgebungen nutzen können.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Labels</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/labels.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/labels.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/labels.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Labels</h1>
+<div class="details">
+<span id="revdate">Last modified on 29-Mar-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/labels.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="hosts_setup.html">Verwaltung der Hosts</a>
+<a href="wato_rules.html">Regeln</a>
+<a href="notifications.html">Benachrichtigungen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk unterstützt das Konzept der Labels, von denen Sie beliebig viele einem Host zuweisen können.
+Dabei verhalten sich Labels und <a href="glossar.html#host_tag">Host-Merkmale</a> (<em>host tags</em>) recht ähnlich:</p></div>
+<div class="ulist"><ul>
+<li><p>Labels werden wie Merkmale an Hosts „gehängt“.</p></li>
+<li><p>Labels können wie Merkmale als Bedingungen in Regeln verwendet werden.</p></li>
+<li><p>Labels sind ähnlich wie Merkmale nach dem Prinzip <code>Schlüssel:Wert</code> aufgebaut.</p></li>
+</ul></div>
+<div class="paragraph"><p>Warum gibt es hier also ein neues Konzept?
+Nun — die IT-Welt ändert sich und wird viel dynamischer.
+Cloud- und Containersysteme wie <a href="monitoring_aws.html">Amazon Web Services (AWS)</a>, <a href="monitoring_azure.html">Microsoft Azure</a> und <a href="monitoring_kubernetes.html">Kubernetes</a> erzeugen und löschen selbständig Objekte, die in Checkmk Hosts entsprechen.
+In diesen Technologien spielen Labels und Merkmale eine große Rolle, denn sie stellen die Verbindung zwischen den überwachten Objekten und ihrer Bedeutung her.
+Die Host-Namen hingegen werden zunehmend zufällig und nichtssagend.</p></div>
+<div class="paragraph"><p>Checkmk kann mit der <a href="dcd.html">dynamischen Host-Konfiguration</a> solche dynamischen Hosts automatisch anlegen
+und bekommt dabei auch die Information über die dort bereits vorhandenen Labels/Merkmale.
+Diese können Sie dann für Regelbedingungen, Suchen, Auswertungen, Dashboards und andere Aufgaben verwenden.</p></div>
+<div class="paragraph"><p>Natürlich stellt sich die Frage, warum wir solche dynamischen Labels nicht einfach auf das vorhandene Konzept der Host-Merkmale abbilden.
+Und in der Tat ist das auch erst einmal sehr naheliegend.
+Allerdings haben Host-Merkmale eine sehr wichtige Eigenschaft, die das sehr schwierig und kompliziert machen würde:
+Welche Merkmalsgruppen und Merkmale es gibt, legen Sie bei Checkmk starr fest.
+Alles ist wohldefiniert.
+Jeder Host hat aus jeder Gruppe genau ein Merkmal.
+Alle können sich darauf verlassen.
+Tippfehler in der Schreibweise von Merkmalen können nicht vorkommen, ebenso wenig Hosts, die sich nicht an das Schema halten.
+Denn dessen Einhaltung wird von Checkmk streng kontrolliert.
+Bei sehr heterogenen Umgebungen mit vielen Tausend manuell gepflegten Hosts ist das wichtig und nützlich.</p></div>
+<div class="paragraph"><p>Dynamische Labels von Kubernetes und Co hingegen sind quasi „Freiform“.
+Und selbst wenn diese einem Schema folgen, ist dieses Checkmk überhaupt nicht bekannt.
+Außerdem überwachen Sie vielleicht mehrere unterschiedliche Plattformen, die wiederum Labels auf sehr unterschiedliche Art einsetzen.</p></div>
+<div class="paragraph"><p>Deswegen wurde mit den Checkmk-Labels ein Konzept eingeführt, welches bestens auf die wachsende Dynamik passt.
+Und Sie können die Labels natürlich auch ohne Anbindung an Cloud-Umgebungen nutzen.</p></div>
+<div class="paragraph"><p>Zur Beantwortung der Frage "Wann soll man Labels nehmen und wann Host-Merkmale?" gibt es mehr Informationen im Artikel zur <a href="hosts_structure.html">Strukturierung der Hosts.</a></p></div>
+<div class="paragraph"><p>Hier sind die Besonderheiten von Labels:</p></div>
+<div class="ulist"><ul>
+<li><p>Labels müssen nirgendwo vordefiniert werden.
+Es gibt kein fixes Schema für Labels.
+Alles ist Freiform.
+Alles ist erlaubt.</p></li>
+<li><p>Jeder Host kann beliebig viele Labels haben.
+Diese können manuell gepflegt sein, über <a href="glossar.html#rule">Regeln</a> definiert werden oder automatisch entstehen.</p></li>
+<li><p>Labels sind nach dem Prinzip <code>Schlüssel:Wert</code> aufgebaut.
+Pro Schlüssel darf ein Host nur einen Wert haben.
+Also kann ein Host, der das Label <code>foo:bar</code> hat, nicht gleichzeitig <code>foo:bar2</code> haben.</p></li>
+<li><p>Anders als die Host-Merkmale dürfen sowohl der Schlüssel als auch der Wert — bis auf den Doppelpunkt — <strong>beliebige Zeichen</strong> enthalten.</p></li>
+<li><p>Es gibt keine Unterscheidung zwischen ID und Titel (oder angezeigtem Namen):
+Der Schlüssel des Labels ist beides gleichzeitig.</p></li>
+</ul></div>
+<div class="paragraph"><p>Labels haben folgende Aufgaben:</p></div>
+<div class="ulist"><ul>
+<li><p>Sie bilden eine Grundlage für Bedingungen in Konfigurationsregeln, z.B.
+„Alle Hosts mit dem Label <code>os:windows</code> sollen so oder so oder sehr genau überwacht werden.“</p></li>
+<li><p>Sie können sehr einfach zusätzliche Informationen oder Anmerkungen zu einem Host speichern (z.B. <code>location:RZ 74/123/xyz</code>) und diese z.B. in <a href="glossar.html#view">Tabellenansichten</a> anzeigen lassen.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_create_labels">
+<span class="hidden-anchor sr-only" id="create_labels"></span>2. Labels erstellen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_explicit">
+<span class="hidden-anchor sr-only" id="explicit"></span>2.1. Explizite Labels</h3>
+<div class="paragraph"><p>Einem Host können auf verschiedenen Wegen Labels zugeordnet werden.</p></div>
+<div class="paragraph"><p>Der erste davon ist einfach:
+Auf der Seite mit den Host-Eigenschaften, die angezeigt wird, wenn Sie im <a href="user_interface.html#setup_menu">Setup</a> einen <a href="hosts_setup.html#create_hosts">Host erstellen oder bearbeiten,</a>
+können Sie diesem beliebig viele Labels verpassen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_host_properties.png" alt="Dialog mit Eigenschaften eines Hosts zum Definieren von Labels."></div></div>
+<div class="paragraph"><p>Aktivieren Sie <span class="guihint">Labels</span> mit der Checkbox, klicken Sie dann in das Feld <span class="guihint">Add some label</span>,
+geben Sie die Label-Definition in der Form <code>Schlüssel:Wert</code> ein und schließen diese mit Enter ab.</p></div>
+<div class="paragraph"><p>Ein bestehendes Label können Sie durch einen Klick in dessen Text editieren oder mit dem kleinen Kreuz wieder entfernen.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Sowohl der Schlüssel als auch der Wert eines Labels dürfen <em>jedes beliebige Zeichen</em> enthalten — außer dem Doppelpunkt!
+Allerdings sollten Sie sich genau überlegen, wie Sie es mit der Groß-/Kleinschreibung halten.
+Denn wenn Sie später Bedingungen über Labels definieren, dann muss die Schreibweise sowohl beim Schlüssel als auch beim Wert strikt beachtet werden.</p></div>
+<div class="paragraph"><p>Natürlich können Labels auch von einem Ordner vererbt werden.
+Wie andere Attribute auch, können Labels in Unterordnern oder beim Host dann nach Bedarf wieder überschrieben werden — und zwar <strong>pro Label</strong>.
+Wird im Ordner z.B. das Label <code>location:munich</code> gesetzt, so wird dies an alle Hosts in diesem Ordner vererbt,
+welche nicht selbst das Label <code>location</code> definiert haben.
+Andere Labels, die ein Hosts eventuell hat, bleiben dadurch unberührt.</p></div>
+<div class="paragraph"><p>Beim Host oder beim Ordner explizit definierte Labels werden in der Liste der Hosts violett dargestellt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_host_list.png" alt="Listeneintrag eines Hosts mit den zugewiesenen expliziten Labels."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rules">
+<span class="hidden-anchor sr-only" id="rules"></span>2.2. Labels über Regeln erzeugen</h3>
+<div class="paragraph"><p>Wie in Checkmk üblich, können Attribute auch per <a href="glossar.html#rule">Regeln</a> den Hosts und Services zugeordnet werden.
+Damit werden Sie unabhängig von der Ordnerstruktur.
+Dies gilt auch für die Labels.
+Dazu gibt es den Regelsatz <span class="guihint">Host labels</span>, den Sie schnell über die <a href="user_interface.html#search_setup">Suche im Setup-Menü</a> finden können.</p></div>
+<div class="paragraph"><p>Folgende Regel fügt allen Hosts im Ordner <span class="guihint">Bavaria</span> mit dem Host-Merkmal <span class="guihint">Real Hardware</span> das Label <span class="guihint">hw:real</span> hinzu:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_rule_host_labels.png" alt="Regel für die Festlegung von Labels für Hosts."></div></div>
+<div class="paragraph"><p>Vielleicht fällt Ihnen auf, dass bei den Bedingungen zu dieser Regel Labels <em>nicht</em> verwendet werden können.
+Das ist kein Fehler, sondern Absicht und vermeidet rekursive Abhängigkeiten und andere Anomalien.</p></div>
+<div class="paragraph"><p>Über Regeln hinzugefügte Labels werden rot dargestellt, tauchen allerdings nicht in der Host-Liste im Setup auf,
+sondern nur in der <a href="#views">Statusansicht des Hosts</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_automatic">
+<span class="hidden-anchor sr-only" id="automatic"></span>2.3. Automatisch erzeugte Labels</h3>
+<div class="paragraph"><p>Die dritte Art, wie Labels entstehen können, ist vollautomatisch.
+Verschiedene Datenquellen, wie z.B. die <a href="glossar.html#special_agent">Spezialagenten</a> für das Überwachen von Cloud- und Containersystemen
+sowie das Agentenplugin der <a href="inventory.html">Hardware-/Softwareinventur</a> erzeugen automatisch Labels.</p></div>
+<div class="paragraph"><p>Das Schöne: Sie müssen gar nichts konfigurieren.
+Sobald diese Datenquellen aktiv sind, entstehen die entsprechenden Labels.</p></div>
+<div class="paragraph"><p>Im Abschnitt <a href="#automatic_host_labels">Automatisch generierte Host-Labels</a> finden Sie eine Übersicht der Labels, die Checkmk automatisch generiert.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_agent_plugins">
+<span class="hidden-anchor sr-only" id="agent_plugins"></span>2.4. Label per Agentenplugin setzen</h3>
+<div class="paragraph"><p>Ein einfacher Weg, Label direkt zu beeinflussen, ist die Ergänzung eines <a href="glossar.html#agent_plugin">Agentenplugins</a>,
+das analog zu <a href="glossar.html#local_check">lokalen Checks</a> eine Sektion <code>labels</code> erzeugt.
+Sie können auf diese Weise Labels detaillierter als alleine durch Auswertung der HW-/SW-Inventur vergeben
+– beispielsweise nach Nuancen der verbauten Hardware (wie CPU-Features) oder tatsächlich laufenden Prozessen (statt nur installierter Software).</p></div>
+<div class="paragraph"><p>Die Label-Ausgabe ist hierbei als Python Dictionary zu formatieren, wie im folgenden Beispiel:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">&lt;&lt;&lt;labels:sep(0)&gt;&gt;&gt;</span>
+<span class="tok-go">{"cpu/vendor": "zilog"}</span></code></pre></div></div>
+<div class="paragraph"><p>Vermeiden Sie Konflikte mit den von Checkmk selbst und anderen Plugins automatisch vergebenen Labels, da keine bestimmte Reihenfolge der Auswertung garantiert werden kann.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_discovery_check">
+<span class="hidden-anchor sr-only" id="discovery_check"></span>2.5. Im Discovery Check gefundene Labels aufnehmen</h3>
+<div class="paragraph"><p>Falls Sie den <a href="wato_services.html#discovery_check">Discovery Check</a> aktiviert haben — und das ist bei neuen Installationen per Default der Fall — wird dieser Sie warnen, wenn neue Host-Labels gefunden wurden, welche noch nicht in die Host-Eigenschaften im Setup aufgenommen wurden.
+Das sieht dann z.B. so aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_discovery_check.png" alt="Service-Liste mit dem Service 'Check_MK Discovery'."></div></div>
+<div class="paragraph"><p>Sie haben zwei Möglichkeiten, auf diese Warnung zu reagieren.
+Die erste ist das Aufnehmen der neuen Labels, indem Sie im Setup die Service-Konfiguration des Hosts aufrufen
+und mit dem Menüeintrag <span class="guihint">Hosts &gt; Update host labels</span> die Konfiguration der Labels aktualisieren.
+Der Discovery Check wird bei der nächsten Ausführung (in bis zu zwei Stunden) dann wieder <span class="state0">OK</span>, selbst wenn Sie die Änderungen noch nicht aktiviert haben.
+Wenn Sie nicht so lange warten wollen, können Sie den Service auch sofort manuell aktualisieren durch Auswahl von <span class="guihint">Reschedule check</span> im Aktionsmenü des Services.</p></div>
+<div class="paragraph"><p>Wenn das viele Hosts auf einmal betrifft, werden Sie sicher nicht für jeden einzelnen die Service-Konfiguration besuchen wollen.
+Führen Sie hier am besten die <a href="hosts_setup.html#bulk_operations">Bulk-Aktion</a> zur Service-Erkennung durch (<span class="guihint">Discover services</span>)
+und wählen Sie als Modus <span class="guihint">Only discover new host labels</span> — oder alternativ <span class="guihint">Add unmonitored services and new host labels</span>, wenn Sie bei der Gelegenheit auch gleich neue Services aufnehmen wollen.</p></div>
+<div class="paragraph"><p>Die zweite Art, den Discovery Check grün zu bekommen, ist, dass Sie diesen so umkonfigurieren, dass er neue Labels nicht mehr anmahnt.
+Gehen Sie dazu in den Regelsatz <span class="guihint">Periodic service discovery</span> und editieren Sie die bestehende Regel.
+Dort finden Sie die Option <span class="guihint">Severity of new host labels</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_rule_periodic_service_discovery.png" alt="Regel für die regelmäßige Service-Erkennung."></div></div>
+<div class="paragraph"><p>Diese ist per Default auf <span class="guihint">Warning</span> eingestellt.
+Wählen Sie hier <span class="guihint">OK - do not alert, just display</span> und der Check wird Ruhe geben.</p></div>
+<div class="paragraph"><p>Per Discovery Check gefundene Labels werden orange dargestellt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_sequence">
+<span class="hidden-anchor sr-only" id="sequence"></span>2.6. Reihenfolge der Labelzuordnung</h3>
+<div class="paragraph"><p>Theoretisch kann es sein, dass das gleiche Label in mehreren Quellen gleichzeitig und mit unterschiedlichen Werten definiert wird.
+Deswegen gibt es folgende Reihenfolge des Vorrangs:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Zuerst gelten die expliziten Labels, also solche, die Sie im Setup direkt dem Host oder Ordner zuordnen.</p></li>
+<li><p>An zweiter Stelle gelten Labels, die per Regeln erzeugt werden.</p></li>
+<li><p>An letzter Stelle stehen die automatisch erzeugten Labels.</p></li>
+</ol></div>
+<div class="paragraph"><p>Durch diese Vorrangregeln haben Sie stets die letztgültige Kontrolle über die Labels.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_conditions">
+<span class="hidden-anchor sr-only" id="conditions"></span>3. Labels als Bedingungen in Regeln</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_rule_conditions">
+<span class="hidden-anchor sr-only" id="rule_conditions"></span>3.1. Bedingungen in Regeln</h3>
+<div class="paragraph"><p>Eine wichtige Funktion von Labels ist die gleiche wie bei Host-Merkmalen:
+Nämlich ihre Verwendung als Bedingung in Regeln.
+Das ist vor allem bei automatisch erzeugten Labels interessant,
+weil Sie so ihr Monitoring vollautomatisch aufgrund von Informationen aus AWS, Azure, Kubernetes und Co anpassen können.</p></div>
+<div class="paragraph"><p>Folgendes Beispiel zeigt eine Regel, deren Bedingung so definiert ist, dass sie genau dann gilt,
+wenn der Host das Label <code>state:bavaria</code>, aber nicht das Label <code>environment:test</code> hat:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_conditions.png" alt="Dialog zur Festlegung der Bedingungen mit Labels."></div></div>
+<div class="paragraph"><p>Sie können in einer Regel sowohl Labels als auch Host-Merkmale verwenden.
+Diese werden automatisch UND verknüpft.
+Die Regel greift also nur dann, wenn beide Bedingungen gleichzeitig erfüllt sind.</p></div>
+<div class="paragraph"><p>Beachten Sie, dass bei Labels die exakte Schreibweise wichtig ist.
+Da Labels ohne Vorgaben festgelegt werden können, kann Checkmk Vertipper nicht erkennen.
+Immerhin: Beim Eintippen eines Labels schlägt Checkmk bereits existierende Labels vor, sofern sie zu ihrer bisherigen Eingabe passen.
+Bei den Vorschlägen wird nicht nach Host- und Service-Labels unterschieden: es werden alle passenden Labels angeboten.</p></div>
+<div class="paragraph"><p><strong>Tipp:</strong> Falls das im Einzelfall Schwierigkeiten bereitet, ist es eventuell günstiger, wenn Sie mit Host-Merkmalen arbeiten.
+Im Artikel zur <a href="hosts_structure.html">Strukturierung der Hosts</a> finden Sie mehr Information über die verschiedenen Strukturierungselemente.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_notification_conditions">
+<span class="hidden-anchor sr-only" id="notification_conditions"></span>3.2. Bedingungen in Benachrichtigungsregeln</h3>
+<div class="paragraph"><p>Auch in <a href="notifications.html#rules">Benachrichtigungsregeln</a> können Sie Labels als Bedingungen nutzen.
+Das funktioniert analog zu den anderen verfügbaren <a href="notifications.html#rule_conditions">Bedingungen</a>,
+so dass Sie sich hier nicht umgewöhnen müssen.
+Wählen Sie <span class="guihint">Match host labels</span> und geben Sie einfach ein, welche Labels ein Host oder Service haben muss,
+damit durch die Regel eine Benachrichtigung ausgelöst wird.
+Auch hier werden mehrere Labels durch die UND-Verknüpfung verbunden.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_views">
+<span class="hidden-anchor sr-only" id="views"></span>4. Labels in Tabellenansichten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Bisher haben wir fast ausschließlich über die Labels im Setup (oder der <a href="glossar.html#configuration_environment">Konfigurationsumgebung</a>) gesprochen.
+Auch in der <a href="glossar.html#monitoring_environment">Monitoring-Umgebung</a> sind die Labels sichtbar, z.B. in der Statusansicht eines Hosts:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_host_status.png" alt="Dialog mit dem Host-Status und den zugewiesenen Labels."></div></div>
+<div class="paragraph"><p>Hier sehen Sie die Labels in den unterschiedlichen Farben, je nachdem, wie sie erzeugt wurden:
+Explizite Labels in violett, durch Regeln erzeugte in rot und per Discovery Check angelegte in gelb-ocker.</p></div>
+<div class="paragraph"><p>Die Farbtupfer der Label stechen nicht nur optisch aus der Ansicht hervor, sie sind dazu auch noch praktisch,
+weil anklickbar, und führen Sie dann zu einer Suche nach allen Hosts mit diesem Label weiter:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_search_filterbar.png" alt="Filterleiste mit Filter zur Suche nach einem Label." width="60%"></div></div>
+<div class="paragraph"><p>Hier können Sie nach Hosts fahnden <em>mit</em> diesem Label (über die Vorgabe <span class="guihint">is</span>) oder <em>ohne</em> dieses Label (mit der Option <span class="guihint">is not</span>).</p></div>
+<div class="paragraph"><p>Die Label-Suche geht aber noch einen Schritt weiter:
+Um die Ergebnisliste Ihrer Hosts weiter zu verfeinern, stehen Ihnen zusätzlich die booleschen Operatoren <code>Not</code>, <code>And</code> und <code>Or</code> zur Verfügung.
+Dabei ist <code>Not</code> die Abkürzung für <code>And Not</code>.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Die Operatoren werden in genau dieser Priorität — <code>Not</code>, <code>And</code>, <code>Or</code> — abgearbeitet, also <em>nicht</em> notwendigerweise in der Reihenfolge, in der sie in der Filterliste stehen.
+Dies entspricht dem Standard der booleschen Algebra.<br>
+Zum Beispiel würde <code>A And B Not C Or D</code> der Klammersetzung <code>(A And (B Not C)) Or D</code> entsprechen.</p></div>
+<div class="paragraph"><p>Um beispielsweise Linux-Hosts zu finden, die in München stehen und keine Web-Server sind, könnte der Filter wie folgt aussehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_filter_boolean.png" alt="Filterleiste mit 3 per logischen Operatoren verknüpften Label-Filtern." width="60%"></div></div>
+<div class="paragraph"><p>Diesen Filter können Sie noch verfeinern, um z.B. (mit <code>Or</code>) zusätzlich Windows-Hosts zu finden, die sowohl „headless“ als auch französisch sind (mit <code>And</code>).
+Die drei neuen Zeilen für diese Erweiterung des Filters können Sie direkt unter die bestehenden eintragen — oder Sie erstellen mit <span class="guihint">Add to query</span> eine neue Gruppe, was den nunmehr komplexeren Filter besser lesbar macht, aber nichts an der Auswertung der booleschen Algebra ändert:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/labels_filter_boolean_extended.png" alt="Filterleiste mit 6 per logischen Operatoren verknüpften Label-Filtern." width="60%"></div></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Wenn Sie daran interessiert sind, welche Klammersetzung Checkmk aus den eingegebenen Label-Filtern erzeugt, können Sie sich die zugehörige Livestatus-Abfrage einblenden lassen.
+Dazu aktivieren Sie in den globalen Einstellungen <span class="guihint">Setup &gt; General &gt; Global settings &gt; Debug Livestatus queries.</span></p></div>
+<div class="paragraph"><p>Die Suche nach Labels können Sie natürlich auch mit den anderen verfügbaren Suchparametern in der Filterleiste kombinieren.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_service_labels">
+<span class="hidden-anchor sr-only" id="service_labels"></span>5. Service-Labels</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Auch Services können Labels haben.
+Diese sind ähnlich zu den Host-Labels, allerdings mit ein paar kleinen Unterschieden:</p></div>
+<div class="ulist"><ul>
+<li><p>Sie können Service-Labels nicht explizit vergeben.
+Diese können nur durch Regeln (<span class="guihint">Service labels</span>) oder automatisch entstehen.</p></li>
+<li><p>Auch mit Service-Labels können Sie Bedingungen formulieren.
+In einem Regelsatz werden Ihnen die Service-Labels nur dann zur Eingabe angeboten, wenn die Regel auf einen Service matchen kann.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_agent_labels">
+<span class="hidden-anchor sr-only" id="agent_labels"></span>6. Agenten-Labels</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Cloud Edition"></span> <strong>Checkmk Cloud Edition</strong> verfügt über die Möglichkeit, <a href="hosts_autoregister.html">Hosts automatisch erstellen</a> zu lassen.
+Hierfür ist die gesamte Kette der Registrierung des Agenten, das Anlegen des Hosts, die Service-Erkennung und die Aktivierung der Änderungen automatisiert.
+Das Anlegen des Hosts findet dabei nach der Registrierung statt.</p></div>
+<div class="paragraph"><p>Dieser Automatismus schafft einige Herausforderungen für die Strukturierung neu angelegter Hosts.
+Bislang konnte das Betriebssystem (im Host-Label <code>cmk/os_family</code> hinterlegt) erst aus der Agentenausgabe ermittelt werden.
+Um diese zu bekommen, muss der Host jedoch bereits angelegt sein.</p></div>
+<div class="paragraph"><p>Aus diesem Grund wurde das Konzept der flüchtigen Agenten-Labels eingeführt, welche bereits bei der Registrierung übermittelt werden und damit vor der ersten Agentenausgabe bereit stehen.
+Während der Registrierung können Sie anhand dieser Labels bestimmen, ob ein Host überhaupt im Monitoring angelegt werden soll, und – falls dem so ist – seinen Ordner, aber auch andere Host-Attribute beeinflussen.
+Nach abgeschlossener Registrierung kann nicht mehr auf Agenten-Labels zugegriffen werden.</p></div>
+<div class="paragraph"><p>Zwei vordefinierte Agenten-Labels werden immer bei der Registrierung übertragen:</p></div>
+<div class="ulist"><ul>
+<li><p><code>cmk/os-family</code> enthält die Betriebssystemfamilie (derzeit <code>Windows</code> oder <code>Linux</code>)</p></li>
+<li><p><code>cmk/hostname-simple</code> enthält den Computernamen in Kurzform (also ohne Domainpart)</p></li>
+</ul></div>
+<div class="paragraph"><p>Sie können weitere, benutzerdefinierte Agenten-Label frei vergeben, beispielsweise:
+<code>organizational/department:documentation</code>.</p></div>
+<div class="paragraph"><p>Automatisch registrierte Hosts erhalten das Host-Label <code>cmk/agent_auto_registered:yes</code>.
+Eine direkte Zuweisung von Host-Labels als Folge bestimmter Agenten-Labels ist nicht vorgesehen.
+Sie können jedoch den Weg über die Registrierung in einem (temporären) Ordner und anschließender Zuweisung von Host-Labels für alle Hosts in diesem Ordner gehen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__weitere_informationen">
+<span class="hidden-anchor sr-only" id="_weitere_informationen"></span>7. Weitere Informationen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_automatic_host_labels">
+<span class="hidden-anchor sr-only" id="automatic_host_labels"></span>7.1. Automatisch generierte Host-Labels</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 65%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Schlüssel</th>
+<th class="tableblock halign-left valign-top">Werte</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/agent_auto_registered</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>yes</code>, wenn ein Host via Autoregistrierung angelegt wurde</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/check_mk_server</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>yes</code> für alle Checkmk-Server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/device_type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SNMP-übertragene Gerätebezeichnung, z.B. <code>appliance</code>, <code>fcswitch</code>, <code>firewall</code>, <code>printer</code>, <code>router</code>, <code>sensor</code>, <code>switch</code>, <code>ups</code>, <code>wlc</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/docker_image</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Docker-Image, z.B. <code>docker.io/library/nginx:latest</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/docker_image_name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name des Docker-Images, z.B. <code>nginx</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/docker_image_version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version des Docker-Images, z.B. <code>latest</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/docker_object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>container</code>, wenn der Host ein Docker-Container ist; <code>node</code>, wenn der Host ein Docker-Knoten ist</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes/annotation/{Schlüssel}:{Wert}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diese Bezeichnungen werden für jede Kubernetes-Beschriftung ausgegeben, die ein gültiges Kubernetes-Label ist (über die Regel <span class="guihint">Kubernetes</span> konfigurierbar).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>yes</code>, wenn der Host ein Kubernetes-Objekt ist</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes/cluster</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kubernetes Cluster-Name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes/daemonset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name des DaemonSet</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes/deployment</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name des Deployments</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes/namespace</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name des zugehörigen Kubernetes Namespace</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes/node</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name des zugehörigen Kubernetes-Knotens. Checkmk-Hosts vom Typ Pod oder Node erhalten dieses Label.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes/object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kubernetes Objekttyp, z.B. <code>endpoint</code>, wenn der Host ein Kubernetes Endpunktobjekt ist</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/kubernetes/statefulset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name des StatefulSet</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/os_family</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Betriebssystem, vom Agenten als <code>AgentOS</code> gemeldet (z.B. <code>windows</code> oder <code>linux</code>   )</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/vsphere_object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vm</code>, wenn der Host eine virtuelle Maschine ist; <code>server</code>, wenn der Host ein ESXi Host-System ist</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk/vsphere_vcenter</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>yes</code>, wenn der Host ein VMware vCenter ist</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__check_plugins_in_denen_labels_registriert_werden">
+<span class="hidden-anchor sr-only" id="_check_plugins_in_denen_labels_registriert_werden"></span>7.2. Check-Plugins, in denen Labels registriert werden</h3>
+<div class="paragraph"><p>Die Kubernetes-bezogenen Schlüssel <code>cmk/kubernetes</code> und <code>cmk/kubernetes/object</code> können Sie alternativ auch über die folgenden Plugins füllen,
+wenn mit dem Checkmk-Spezialagenten für <a href="monitoring_prometheus.html">Prometheus</a> die sogenannten „kube-state-metrics“ abgeholt werden:</p></div>
+<div class="ulist"><ul>
+<li><p><code>k8s_daemon_pods</code></p></li>
+<li><p><code>k8s_ingress_infos</code></p></li>
+<li><p><code>k8s_job_info</code></p></li>
+<li><p><code>k8s_nodes</code></p></li>
+<li><p><code>k8s_pod_container</code></p></li>
+<li><p><code>k8s_replicas</code></p></li>
+<li><p><code>k8s_service_port</code></p></li>
+<li><p><code>k8s_stateful_set_replicas</code></p></li>
+</ul></div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#create_labels">2. Labels erstellen</a><ul class="sectlevel1">
+<li><a href="#explicit">2.1. Explizite Labels</a></li>
+<li><a href="#rules">2.2. Labels über Regeln erzeugen</a></li>
+<li><a href="#automatic">2.3. Automatisch erzeugte Labels</a></li>
+<li><a href="#agent_plugins">2.4. Label per Agentenplugin setzen</a></li>
+<li><a href="#discovery_check">2.5. Im Discovery Check gefundene Labels aufnehmen</a></li>
+<li><a href="#sequence">2.6. Reihenfolge der Labelzuordnung</a></li>
+</ul>
+</li>
+<li>
+<a href="#conditions">3. Labels als Bedingungen in Regeln</a><ul class="sectlevel1">
+<li><a href="#rule_conditions">3.1. Bedingungen in Regeln</a></li>
+<li><a href="#notification_conditions">3.2. Bedingungen in Benachrichtigungsregeln</a></li>
+</ul>
+</li>
+<li><a href="#views">4. Labels in Tabellenansichten</a></li>
+<li><a href="#service_labels">5. Service-Labels</a></li>
+<li><a href="#agent_labels">6. Agenten-Labels</a></li>
+<li>
+<a href="#_weitere_informationen">7. Weitere Informationen</a><ul class="sectlevel1">
+<li><a href="#automatic_host_labels">7.1. Automatisch generierte Host-Labels</a></li>
+<li><a href="#_check_plugins_in_denen_labels_registriert_werden">7.2. Check-Plugins, in denen Labels registriert werden</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Checkmk-Instanz und -Agent können so vorbereitet werden, dass Hosts automatisch erstellt werden. Die Einrichtung beschreibt dieser Artikel.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Automatisch Hosts erstellen">
+<meta name="og:description" content="Checkmk-Instanz und -Agent können so vorbereitet werden, dass Hosts automatisch erstellt werden. Die Einrichtung beschreibt dieser Artikel.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Automatisch Hosts erstellen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/hosts_autoregister.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/hosts_autoregister.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/hosts_autoregister.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Automatisch Hosts erstellen</h1>
+<div class="details">
+<span id="revdate">Last modified on 28-Feb-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/de/hosts_autoregister.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+<a href="agent_linux.html">Linux überwachen</a>
+<a href="agent_windows.html">Windows überwachen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_autoregister">
+<span class="hidden-anchor sr-only" id="autoregister"></span>1. Die Autoregistrierung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Cloud-Systeme wie <a href="monitoring_aws.html">Amazon Web Services (AWS)</a>, <a href="monitoring_azure.html">Microsoft Azure</a> oder <a href="monitoring_gcp.html">Google Cloud Platform (GCP)</a> erzeugen und löschen selbständig Objekte,
+die in Checkmk <a href="glossar.html#host">Hosts</a> entsprechen.
+Damit diese Cloud-Objekte nach ihrer Entstehung ohne Verzögerung als Hosts ins Monitoring von Checkmk aufgenommen werden können, ist eine Lösung ohne manuelles Eingreifen gefragt.</p></div>
+<div class="paragraph"><p>Mit der <em>Autoregistrierung</em> gibt Checkmk die Antwort — und kann Hosts automatisch erstellen lassen.
+Da die automatische Host-Erstellung vor allem für die Cloud-Umgebungen benötigt wird, ist die Autoregistrierung erst ab <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Cloud"></span> <strong>Checkmk Cloud</strong> verfügbar, d. h. in Checkmk Cloud und Checkmk MSP.</p></div>
+<div class="paragraph"><p>Die Autoregistrierung erfolgt durch Kommunikation zwischen dem <a href="wato_monitoringagents.html#agents">Checkmk-Agenten</a> und dem Checkmk-Server.
+Der Agent Controller des Agenten stellt eine Anfrage zur Registrierung an den Agent Receiver des Servers und übermittelt dabei die zur Erstellung des Hosts notwendigen Daten.
+Wenn der Agent Receiver die Anfrage akzeptiert, wird die Registrierung durchgeführt und eine TLS-verschlüsselte Verbindung aufgebaut.
+Der Host wird erstellt, eine <a href="glossar.html#service_discovery">Service-Erkennung</a> durchgeführt und die Änderungen aktiviert,
+so dass der Host in die <a href="glossar.html#monitoring_environment">Monitoring-Umgebung</a> aufgenommen wird — alles vollautomatisch.</p></div>
+<div class="paragraph"><p>Damit dieser Automatismus funktioniert, ist natürlich eine entsprechende Vorbereitung notwendig.
+Los geht es mit der Checkmk-Instanz: mit der Erstellung eines Benutzers, der die Berechtigung zur Autoregistrierung besitzt, eines Ordners, in dem die Hosts erstellt werden sollen,
+und einer Regel, mit der der Agent Receiver Registrierungsanfragen ohne manuellen Eingriff abarbeiten kann.
+Bei der Konfiguration des Ordners können Sie übrigens festlegen, ob die Agenten der dort zu erstellenden Hosts im <a href="glossar.html#pull_mode">Pull-Modus</a> oder im <a href="glossar.html#push_mode">Push-Modus</a> arbeiten sollen.</p></div>
+<div class="paragraph"><p>Dann folgt der Checkmk-Agent: Hier werden per Agentenregel die Informationen für eine Registrierungsanfrage festgelegt und dann mit der Agentenbäckerei in ein Agentenpaket verpackt.
+Dieses für die Autoregistrierung konfigurierte Agentenpaket wird abschließend auf den Hosts installiert, die eine Autoregistrierung durchführen können sollen.</p></div>
+<div class="paragraph"><p>Wie das alles genau abläuft, wird in den folgenden Kapiteln erklärt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_setup_autoregister">
+<span class="hidden-anchor sr-only" id="setup_autoregister"></span>2. Autoregistrierung einrichten</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_user">
+<span class="hidden-anchor sr-only" id="user"></span>2.1. Benutzer für die Autoregistrierung auswählen</h3>
+<div class="paragraph"><p>Die Berechtigungen, die zur Registrierung des Agenten beim Checkmk-Server (für die TLS-verschlüsselte Datenübertragung) und zur Erstellung von Hosts benötigt werden, sind in der <a href="wato_user.html#roles">Rolle</a> <span class="guihint">Agent registration user</span> enthalten.
+Dabei sind in dieser Rolle die Berechtigungen zur Registrierung <em>neuer</em> Hosts nur ab Checkmk Cloud verfügbar.</p></div>
+<div class="paragraph"><p>Diese Rolle ist dem <a href="glossar.html#automation_user">Automationsbenutzer</a> <code>agent_registration</code> zugewiesen, der in jeder Checkmk-Instanz eingerichtet ist und dessen Eigenschaften Sie sich über <span class="guihint">Setup &gt; Users &gt; Users</span> anzeigen lassen können:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_user.png" alt="Dialog mit den Eigenschaften des Automationsbenutzer 'agent_registration'."></div>
+<div class="title">Dieser Automationsbenutzer hat standardmäßig nur die Rolle <span class="guihint">Agent registration user</span>
+</div>
+</div>
+<div class="paragraph"><p>Es bietet sich an, für die Autoregistrierung diesen Automationsbenutzer zu verwenden, der nichts anderes darf, als Hosts zu registrieren.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_new_folder">
+<span class="hidden-anchor sr-only" id="new_folder"></span>2.2. Ordner für die neuen Hosts einrichten</h3>
+<div class="paragraph"><p>Die automatisch erstellten Hosts sollen in einem neuen Ordner angelegt werden.
+Sie können alternativ auch einen bestehenden Ordner verwenden, wenn Sie ihn so konfigurieren, wie es im Folgenden beschrieben ist.</p></div>
+<div class="paragraph"><p>Starten Sie die Erstellung eines Ordners mit <span class="guihint">Setup &gt; Hosts &gt; Hosts &gt; Add folder.</span>
+Geben Sie dem Ordner im Kasten <span class="guihint">Basic settings</span> einen Namen.</p></div>
+<div class="paragraph"><p>Im Kasten <span class="guihint">Network address</span> geht es um die Option <span class="guihint">IP address family.</span>
+Sollen die Checkmk-Agenten der zu erstellenden Hosts den <a href="glossar.html#pull_mode">Pull-Modus</a> verwenden, können Sie den Standardwert <span class="guihint">IPv4 only</span> unverändert lassen.
+Für den <a href="glossar.html#push_mode">Push-Modus</a> wählen Sie den Wert <span class="guihint">No IP</span> aus.
+Damit verhindern Sie, dass die Erreichbarkeit des Hosts per <a href="cmc_differences.html#smartping">Smart Ping</a> überprüft wird.</p></div>
+<div class="paragraph"><p>Im folgenden Kasten <span class="guihint">Monitoring agents</span> setzen Sie zwei wichtige Optionen für die Autoregistrierung.
+Mit <span class="guihint">Checkmk agent connection mode</span> entscheiden Sie, ob der Checkmk-Agent im Pull-Modus oder (wie im folgenden Bild) im Push-Modus arbeiten soll.
+Diese Option gibt es nur ab Checkmk Cloud.
+Aktivieren Sie schließlich bei <span class="guihint">Bake agent packages</span> die Checkbox <span class="guihint">Bake a generic agent package for this folder.</span>
+Damit nutzen Sie die Möglichkeit der <a href="glossar.html#agent_bakery">Agentenbäckerei</a>,
+eine <a href="wato_monitoringagents.html#agent_configurations">Agentenkonfiguration</a> für einen Ordner und alle darin enthaltenen <strong>und</strong> hinzukommenden Hosts zu erstellen.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_new_folder.png" alt="Dialog zur Erstellung eines neuen Ordners für die Autoregistrierung."></div>
+<div class="title">Die Konfiguration eines Ordners für den Push-Modus</div>
+</div>
+<div class="paragraph"><p>Schließen Sie die Erstellung des Ordners mit <span class="guihint">Save</span> ab.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rule_autoregister_site">
+<span class="hidden-anchor sr-only" id="rule_autoregister_site"></span>2.3. Regel für die Checkmk-Instanz erstellen</h3>
+<div class="paragraph"><p>Die Entscheidung darüber, welche Hosts sich automatisch registrieren dürfen, welche Namen sie erhalten und was sonst noch nach der Registrierung mit ihnen geschieht,
+wird in Checkmk — wenig überraschend — mit Regeln getroffen.
+Dabei spielen die Labels, mit denen sich der Agent des Hosts bei der Registrierung meldet, eine entscheidende Rolle.
+Doch der Reihe nach.</p></div>
+<div class="paragraph"><p>Den Regelsatz <span class="guihint">Agent registration</span> gibt es nur ab Checkmk Cloud.
+Sie finden ihn unter <span class="guihint">Setup &gt; Agents</span> (sofern der <a href="intro_gui.html#show_less_more">Show-more-Modus</a> aktiv ist) oder über die Suche im <span class="guihint">Setup</span>-Menü.
+Starten Sie mit <span class="guihint">Add rule</span> die Erstellung einer neuen Regel und vergeben Sie im ersten Kasten <span class="guihint">Properties,</span> wie bei Checkmk gewohnt, zuerst eine ID und einen Titel.</p></div>
+<div class="paragraph"><p>Im folgenden Kasten <span class="guihint">Matching criteria</span> bestimmen Sie, welche Labels akzeptiert werden, wenn der Checkmk-Server eine Anfrage zur Registrierung von einem Agenten erhält.
+Diese <em>Agenten-Labels</em> werden ausschließlich für die Autoregistrierung verwendet und sind andere als die <a href="glossar.html#label">Labels</a>, die sonst in Checkmk zur Kennzeichnung von Hosts und Services verwendet werden.
+Zwei Agenten-Labels werden vom Checkmk-Agenten geliefert und können in der Liste ausgewählt werden:
+<code>cmk/hostname-simple</code> enthält den Host-Namen ohne Domain-Anteil (daher <code>simple</code>) und ist für die Bestimmung eines eindeutigen Host-Namens in Checkmk gedacht.
+<code>cmk/os-family</code> liefert das Betriebssystem des Hosts und kann z.B. für die Ablage der Hosts in unterschiedlichen Ordnern verwendet werden.
+Sie können mit <span class="guihint">Custom label</span> aber auch Ihre eigenen Labels eintragen.</p></div>
+<div class="paragraph"><p>Dabei wird das durch Doppelpunkt getrennte Schlüssel-Wert-Paar, aus dem sich ein Label zusammensetzt (z.B. <code>cmk/os-family:linux</code>) separat ausgewertet.
+So können Sie gezielt festlegen, dass ein Schlüssel (z.B. <code>cmk/os-family</code>) vorhanden sein muss (<span class="guihint">Exists</span>), nicht vorhanden sein darf (<span class="guihint">Does not exist</span>) oder nur mit einem vorgegebenen Wert (<span class="guihint">Equals</span>) akzeptiert wird.
+Als Wert können Sie auch einen <a href="regexes.html">regulären Ausdruck</a> (<span class="guihint">Regex</span>) eingeben.
+Wenn Sie mehrere Agenten-Labels festlegen, werden diese logisch mit UND verknüpft.
+Im folgenden Beispiel soll neben dem vordefinierten Label <code>cmk/hostname-simple</code> auch noch das benutzerdefinierte Label <code>my_autoregister_label</code> geprüft werden:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_rule_matching_criteria.png" alt="Regel zur Autoregistrierung mit Festlegung der zulässigen Labels."></div>
+<div class="title">Hier wird überprüft, ob die Label mit den Schlüsseln <code>cmk/hostname-simple</code> und <code>my_autoregister_label</code> existieren</div>
+</div>
+<div class="paragraph"><p><strong>Hinweis</strong>: Jeder Host, der erfolgreich automatisch registriert wurde, erhält von Checkmk das Host-Label <code>cmk/agent_auto_registered:yes</code> angehängt.
+Dieses Label können Sie aber hier nicht verwenden, da es kein Agenten-Label ist und erst <em>nach</em> der Registrierung vergeben wird.</p></div>
+<div class="paragraph"><p>Im nächsten Kasten <span class="guihint">Action</span> bestimmen Sie, was passieren soll, wenn die Auswertung der Labels greift: Den Host erstellen oder eben nicht.
+Bei Auswahl von <span class="guihint">Stop and do not create hosts</span> ist die Regelauswertung abgeschlossen und die beiden folgenden Kästen werden nicht mehr betrachtet.
+In unserem Beispiel sollen aber Hosts erstellt werden:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_rule_action.png" alt="Regel zur Autoregistrierung mit Festlegung der durchzuführenden Aktion."></div>
+<div class="title">Die Standardaktion ist die Erstellung der Hosts</div>
+</div>
+<div class="paragraph"><p>Im Kasten <span class="guihint">Hostname computation</span> legen Sie nun fest, welchen Namen der Host erhalten soll.
+Im Feld <span class="guihint">Hostname template</span> geben Sie die Vorlage ein.
+Hier können Sie per Makro auf die Werte derjenigen Agenten-Labels zugreifen, die Sie im obigen Kasten <span class="guihint">Matching criteria</span> ausgewählt haben,
+z. B. mit <code>$cmk/hostname-simple$</code> auf den vom Checkmk-Agenten gelieferten einfachen Host-Namen.
+Die Vorlage können Sie dann, wenn gewünscht, verändern durch Umwandlung in Klein- oder Großbuchstaben sowie Ersetzungen mit regulären Ausdrücken und mit expliziten Host-Namen.
+Dies sind übrigens die gleichen Optionen, die es bei der <a href="piggyback.html#renamehosts">Anpassung der Namen von Piggyback Hosts</a> gibt.
+Mehr Informationen finden Sie auch in der <a href="user_interface.html#inline_help">Inline-Hilfe.</a></p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_rule_hostname_computation.png" alt="Regel zur Autoregistrierung mit Festlegung des Host-Namens."></div>
+<div class="title">Übernahme des einfachen Host-Namens, ergänzt um den Prefix <code>push-</code>
+</div>
+</div>
+<div class="paragraph"><p>Zum Schluss wählen Sie dann noch im Kasten <span class="guihint">Host creation</span> den <a href="#new_folder">vorbereiteten Ordner</a> aus, in dem die neuen Hosts landen sollen.
+Zusätzlich können Sie noch Attribute bestimmen, die dem Host mitgegeben werden sollen.
+Mehr zu diesen Attributen erfahren Sie im Artikel zur <a href="hosts_setup.html#create_hosts">Verwaltung der Hosts.</a></p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_rule_host_creation.png" alt="Regel zur Autoregistrierung mit Festlegung des Zielordners und der Host-Attribute."></div>
+<div class="title">Die neuen Hosts sollen im vorbereiteten Ordner <code>Autoregistered</code> erstellt werden</div>
+</div>
+<div class="paragraph"><p>Nach dem Sichern der Regel, kehren Sie zur Seite <span class="guihint">Agent registration</span> zurück.
+Hier finden Sie den <span class="guihint">Agent labels simulator</span>.
+Wenn Sie viele Regeln definiert haben, hilft Ihnen der Simulator dabei, den Überblick zu behalten.
+Sie können Agenten-Labels eingeben und mit <span class="guihint">Try out</span> simulieren, ob und welche Regel bei der Übermittlung eines Agenten-Labels greift.
+Im Ergebnis sehen Sie dann die farbigen Ampelsymbole, die im Artikel zu den <a href="wato_rules.html#analyse_traffic_light">Regeln</a> beschrieben sind.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rule_autoregister_bakery">
+<span class="hidden-anchor sr-only" id="rule_autoregister_bakery"></span>2.4. Regel für die Agentenbäckerei erstellen</h3>
+<div class="paragraph"><p>Nachdem im vorherigen Abschnitt die Checkmk-Instanz konfiguriert wurde, geht es jetzt um den Agent Controller des Checkmk-Agenten.
+Hierfür nutzen Sie den <span class="guihint">Agent controller auto-registration</span> Regelsatz der Agentenbäckerei, der nur ab Checkmk Cloud vorhanden ist.
+Sie finden den Regelsatz in der Agentenbäckerei unter <span class="guihint">Agent rules</span> oder am schnellsten über die Suche im <span class="guihint">Setup</span>-Menü.
+Erstellen Sie eine neue Regel.</p></div>
+<div class="paragraph"><p>In Kasten <span class="guihint">Agent controller auto-registration</span> geben Sie dem Agent Controller alle Informationen mit,
+die dieser für eine Registrierungsanfrage beim Agent Receiver benötigt:
+den Checkmk-Server (<span class="guihint">Monitoring server address</span>),
+gegebenenfalls mit der Portnummer des Agent Receivers (<span class="guihint">Agent receiver port</span>),
+die Checkmk-Instanz (<span class="guihint">Site to register with</span>) und
+den <a href="#user">Automationsbenutzer</a> für die Autoregistrierung.</p></div>
+<div class="paragraph"><p>Sie können auch hier mit <span class="guihint">Additional agent labels to send during registration</span> eigene Labels definieren.
+Damit die Autoregistrierung funktioniert, müssen diese Labels zu denen passen,
+die Sie in der <a href="#rule_autoregister_site">Regel für die Checkmk-Instanz</a> als <span class="guihint">Custom label</span> eingetragen haben:
+im Beispiel also das zuvor gesetzte benutzerdefinierte Label mit dem Schlüssel <code>my_autoregister_label</code>.</p></div>
+<div class="paragraph"><p>Mit der letzten Option <span class="guihint">Keep existing connections</span> bestimmen Sie,
+ob der Agent Controller bereits existierende Verbindungen löschen (<span class="guihint">no</span>) oder behalten soll (<span class="guihint">yes</span>).
+Wenn Sie neben der automatischen Registrierung einer Verbindung auch manuelle Verbindungen zu anderen Checkmk-Instanzen konfiguriert haben,
+und diese auch nach einem Neustart des Agent Controllers <code>cmk-agent-ctl</code> behalten wollen, sollten Sie diese Option auf <span class="guihint">yes</span> setzen.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_rule_agent_bakery.png" alt="Regel zur Autoregistrierung für die Agentenbäckerei."></div>
+<div class="title">Die Werte für die Agentenbäckerei müssen zu denen der Checkmk-Instanz passen</div>
+</div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Im letzten Kasten <span class="guihint">Conditions</span> dieser Regel wählen Sie als <span class="guihint">Folder</span> erneut den vorbereiteten Ordner aus.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_bake">
+<span class="hidden-anchor sr-only" id="bake"></span>2.5. Agentenpaket backen</h3>
+<div class="paragraph"><p>Nun geht es weiter in der Agentenbäckerei mit <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX.</span>
+Klicken Sie auf <span class="image-inline"><img src="../images/icons/button_bake_agents.png" alt="Symbol zum Backen der Agenten."></span> und backen Sie sich einen neuen Agenten.
+Als Ergebnis erhalten Sie zusätzlich zur Agentenkonfiguration <span class="guihint">Vanilla (factory settings)</span> eine neue Zeile für die Konfiguration,
+in der die Regel eingebacken ist, die im vorherigen Abschnitt erstellt wurde:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_baked_agent.png" alt="Liste mit der neuen Konfiguration der Agenten für die Autoregistrierung."></div>
+<div class="title">Die Spalte <span class="guihint">Agent type</span> zeigt, dass die neue Konfiguration spezifisch für den konfigurierten Ordner ist</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_install">
+<span class="hidden-anchor sr-only" id="install"></span>2.6. Agentenpaket herunterladen und installieren</h3>
+<div class="paragraph"><p>Das Agentenpaket muss nun auf jedem Host installiert werden, der eine Autoregistrierung starten soll.
+Laden Sie das für das Betriebssystem des Hosts passende Agentenpaket herunter und installieren Sie es auf dem Host.
+Das Vorgehen ist genauso, wie in der Agentenbäckerei üblich.
+Mehr dazu finden Sie in den Artikeln zu den <a href="wato_monitoringagents.html#bakery_download">Monitoring-Agenten</a>,
+dem <a href="agent_linux.html#install">Linux-Agenten</a> und dem <a href="agent_windows.html#install">Windows-Agenten.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_success">
+<span class="hidden-anchor sr-only" id="success"></span>2.7. Erfolgskontrolle</h3>
+<div class="paragraph"><p>Nach der Installation des Agentenpakets wertet der Agent Controller die Datei <code>/var/lib/cmk-agent/pre_configured_connections.json</code> aus
+und setzt für eine darin enthaltene Verbindung den Befehl zur Registrierung ab.
+Wenn der Agent Receiver akzeptiert, wird die Verbindung eingerichtet und der Host in der Checkmk-Instanz erstellt.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_setup_new_host.png" alt="Inhalt des Ordners für die Autoregistrierung mit dem automatisch erstellten Host."></div>
+<div class="title">Der automatisch erstellte Host im Setup</div>
+</div>
+<div class="paragraph"><p>Anschließend wird die <a href="glossar.html#service_discovery">Service-Erkennung</a> durchgeführt und die <a href="glossar.html#activate_changes">Änderungen aktiviert</a>,
+damit der Host auch im Monitoring sichtbar ist.
+Beachten Sie, dass bei der automatischen Aktivierung alle anderen gesammelten Änderungen — auch von anderen Benutzern — mit aktiviert werden.</p></div>
+<div class="paragraph"><p>Es kann insgesamt einige (bis zu 5) Minuten dauern von der Installation des Agentenpakets bis zum Erscheinen des Hosts im Monitoring.
+Die einzelnen Schritte können Sie in <span class="guihint">Setup &gt; General &gt; Audit log</span> nach Auswahl der Datei <code>wato_audit.log</code> nachverfolgen.</p></div>
+<div class="paragraph"><p>Auf dem Host können Sie sich den Verbindungsstatus des Agent Controllers per Kommando ausgeben lassen,
+der nach einer erfolgreichen Registrierung im Push-Modus etwa so aussieht:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>status
+<span class="tok-go">Version: 2.3.0b1</span>
+<span class="tok-go">Agent socket: operational</span>
+<span class="tok-go">IP allowlist: any</span>
+
+
+<span class="tok-go">Connection: myserver/mysite</span>
+<span class="tok-go">	UUID: b11af975-40a8-4574-b6cd-12dc11c6f273</span>
+<span class="tok-go">	Local:</span>
+<span class="tok-go">		Connection mode: push-agent</span>
+<span class="tok-go">		Connecting to receiver port: 8000</span>
+<span class="tok-go">		Certificate issuer: Site 'mysite' agent signing CA</span>
+<span class="tok-go">		Certificate validity: Tue, 13 Feb 2024 12:50:35 +0000 - Tue, 13 Feb 2029 12:50:35 +0000</span>
+<span class="tok-go">	Remote:</span>
+<span class="tok-go">		Connection mode: push-agent</span>
+<span class="tok-go">		Registration state: discoverable</span>
+<span class="tok-go">		Host name: push-myhost</span></code></pre></div></div>
+<div class="paragraph"><p>Automatisch erstellte Hosts können Sie auch wieder <a href="hosts_setup.html#hosts_autoremove">automatisch entfernen lassen.</a>
+Ab Checkmk Cloud bietet Checkmk damit die beiden wichtigsten Komponenten für das <em>Lifecycle Management</em> von Hosts.
+Übrigens funktioniert die automatische Entfernung auch für manuell erstellte Hosts — und das in allen Editionen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_test">
+<span class="hidden-anchor sr-only" id="test"></span>3. Test und Fehlerdiagnose</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die einzelnen Schritte für die Erstellung des Hosts im Monitoring (Erstellung des Hosts im Setup, Service-Erkennung und Aktivierung) können Sie in der Checkmk-Instanz unter <span class="guihint">Setup &gt; General &gt; Audit log</span> nachverfolgen.
+Die erfolgreiche automatische Registrierung überprüfen Sie auf dem Host mit dem Befehl <code>cmk-agent-ctl status</code>.</p></div>
+<div class="paragraph"><p>Diese im vorherigen Abschnitt genannten Prüfungen zur Erfolgskontrolle zeigen allerdings nur im Erfolgsfall die gewünschten Ergebnisse.
+Wenn Sie dort nicht das sehen, was oben gezeigt ist, kann dies daran liegen, dass eine Registrierungsanfrage vom Agent Controller zwar abgesetzt, aber vom Agent Receiver nicht akzeptiert wurde.</p></div>
+<div class="paragraph"><p>Eine Übersicht über alle Registrierungsanfragen, die von der Checkmk-Instanz <em>abgelehnt</em> wurden, erhalten Sie auf der Seite <span class="guihint">Agent registration</span>,
+auf der Sie weiter oben die <a href="#rule_autoregister_site">Regel für die Checkmk-Instanz</a> erstellt haben.
+Eine Ablehnung kann allerlei Gründe haben.
+Im folgenden Bild sehen Sie zwei davon: ein Schreibfehler (<code>my_autoregister_labell</code>) im vom Agenten übermittelten Agenten-Label und einen Host, der bereits existiert:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/hosts_autoregister_declined_requests.png" alt="Liste der abgelehnten Anfragen zur Autoregistrierung."></div>
+<div class="title">Zwei abgelehnte Registrierungsanfragen</div>
+</div>
+<div class="paragraph"><p>Für jede abgelehnte Anfrage können Sie in der ersten Spalte <span class="guihint">Actions</span> eine Simulation starten, deren Ergebnis in der letzten Spalte <span class="guihint">Simulation result</span> angezeigt wird.</p></div>
+<div class="paragraph"><p>Für eine darüber hinausgehende Fehlerdiagnose finden Sie in den Artikeln zum <a href="agent_linux.html#test">Linux-Agenten</a> und zum <a href="agent_windows.html">Windows-Agenten</a> weitere Informationen — unter anderem zu den Themen Kommunikation zwischen Agent und Checkmk-Instanz sowie zur (manuellen) Registrierung.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>4. Dateien und Verzeichnisse</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__pfade_auf_dem_überwachten_linux_host">
+<span class="hidden-anchor sr-only" id="_pfade_auf_dem_überwachten_linux_host"></span>4.1. Pfade auf dem überwachten Linux-Host</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/cmk-agent/registered_connections.json</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält eine Liste der mit dem Agent Controller registrierten Verbindungen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/cmk-agent/pre_configured_connections.json</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält eine vorkonfigurierte und per Agentenbäckerei in das Agentenpaket integrierte Verbindung zu einer Instanz für die Autoregistrierung ab Checkmk Cloud.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__pfade_auf_dem_überwachten_windows_host">
+<span class="hidden-anchor sr-only" id="_pfade_auf_dem_überwachten_windows_host"></span>4.2. Pfade auf dem überwachten Windows-Host</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\registered_connections.json</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält eine Liste der mit dem Agent Controller registrierten Verbindungen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\pre_configured_connections.json</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält eine vorkonfigurierte und per Agentenbäckerei in das Agentenpaket integrierte Verbindung zu einer Instanz für die Autoregistrierung ab Checkmk Cloud.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__pfade_auf_dem_checkmk_server">
+<span class="hidden-anchor sr-only" id="_pfade_auf_dem_checkmk_server"></span>4.3. Pfade auf dem Checkmk-Server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/agent-receiver/received-outputs/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält für jede Verbindung deren UUID als Softlink, der auf den Ordner mit der Agentenausgabe zeigt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/agent-registration.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log-Datei für die Agentenregistrierung.
+Sie können die Ausführlichkeit der Meldungen in 6 Stufen steuern über <span class="guihint">Setup &gt; General &gt; Global settings &gt; User interface &gt; Logging &gt; Agent registration.</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/agent-receiver/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enthält die Log-Dateien des Agent Receivers.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#autoregister">1. Die Autoregistrierung</a></li>
+<li>
+<a href="#setup_autoregister">2. Autoregistrierung einrichten</a><ul class="sectlevel1">
+<li><a href="#user">2.1. Benutzer für die Autoregistrierung auswählen</a></li>
+<li><a href="#new_folder">2.2. Ordner für die neuen Hosts einrichten</a></li>
+<li><a href="#rule_autoregister_site">2.3. Regel für die Checkmk-Instanz erstellen</a></li>
+<li><a href="#rule_autoregister_bakery">2.4. Regel für die Agentenbäckerei erstellen</a></li>
+<li><a href="#bake">2.5. Agentenpaket backen</a></li>
+<li><a href="#install">2.6. Agentenpaket herunterladen und installieren</a></li>
+<li><a href="#success">2.7. Erfolgskontrolle</a></li>
+</ul>
+</li>
+<li><a href="#test">3. Test und Fehlerdiagnose</a></li>
+<li>
+<a href="#files">4. Dateien und Verzeichnisse</a><ul class="sectlevel1">
+<li><a href="#_pfade_auf_dem_%C3%BCberwachten_linux_host">4.1. Pfade auf dem überwachten Linux-Host</a></li>
+<li><a href="#_pfade_auf_dem_%C3%BCberwachten_windows_host">4.2. Pfade auf dem überwachten Windows-Host</a></li>
+<li><a href="#_pfade_auf_dem_checkmk_server">4.3. Pfade auf dem Checkmk-Server</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

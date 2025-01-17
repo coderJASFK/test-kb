@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="The Windows agent of Checkmk version 2.1.0 adds the Agent Controller and new features to the agent program. You can learn how to use the agent here.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Monitoring Windows - The new agent for Windows in detail">
+<meta name="og:description" content="The Windows agent of Checkmk version 2.1.0 adds the Agent Controller and new features to the agent program. You can learn how to use the agent here.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Monitoring Windows - The new agent for Windows in detail</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/de/agent_windows.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/en/agent_windows.html">2.2.0</a><a class="dropdown-item" href="../../latest/en/agent_windows.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host and service parameters</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Introduction to notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMWare ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Performance data and graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Configuration via the Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Configuration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Command reference for the HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Writing your own check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Monitoring Windows</h1>
+<div class="details">
+<span id="revdate">Last modified on 23-Jun-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/en/agent_windows.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="agent_deployment.html">Automatic agent updates</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. The new Windows agent</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>From the very beginning, monitoring Windows servers has been one of the most important tasks performed by Checkmk.
+As for all other server operating systems, Checkmk therefore also delivers its own agent for Windows.</p></div>
+<div class="paragraph"><p>In the Checkmk version <span class="new">2.1.0</span> there is now a new Windows Agent.
+More precisely, a new component is added to the <strong>agent program</strong> <code>check_mk_agent.exe</code>: the <strong>Agent Controller</strong>.
+The Agent Controller is upstream of the agent program, queries the agent program and communicates with the Checkmk server in its place.
+To do this, it registers with the <strong>Agent Receiver</strong>, which is also a new process running on the Checkmk server.</p></div>
+<div class="paragraph"><p>So, on the one hand, the new Windows Agent is taking over functions from the agent program, and thus its advantages.
+On the other hand, it supplements the program in such a way that new functions can be added, such as TLS encryption of the communication, data compression — and also the reversal of the communication direction.</p></div>
+<div class="paragraph"><p>The registered, encrypted and compressed <strong>pull mode</strong> with the Agent Controller is available from version <span class="new">2.1.0</span> for all Checkmk editions — as long as both the Checkmk server and the agent versions are <span class="new">2.1.0</span> or higher.</p></div>
+<div class="paragraph"><p>The Agent Controller is only executable on certain (newer) Windows versions.
+You can see which versions are supported in the table below.</p></div>
+<div class="paragraph"><p>However, the agent also masters a so-called <strong>legacy mode</strong> to support older Windows versions.
+In this mode the new agent works like the old one, i.e. without Agent Controller and therefore without registration at the Checkmk server.
+For the legacy mode some special features have to be considered, which are summarized in the <a href="#post_install">installation chapter</a>.</p></div>
+<div class="paragraph"><p>For compatibility reasons, the agent supports only the current versions of the <a href="https://en.wikipedia.org/wiki/Windows_NT" target="_blank">Microsoft Windows NT</a> product line (edition).
+The following table lists them explicitly.
+In the Version column you will find the beginning of the version number, which can be displayed on the Windows system with the commands <code>ver</code> and <code>systeminfo</code>.</p></div>
+<table id="windows_versions" class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Edition</th>
+<th class="tableblock halign-left valign-top">Version</th>
+<th class="tableblock halign-left valign-top">Agent Controller</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows Vista</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">without</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows Server 2008 (R1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">without</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows Server 2008 R2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows 8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows Server 2012 (R1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows 8.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows Server 2012 R2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows 10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows Server 2016</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows Server 2019</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows 11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows Server 2022</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">with</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Important</strong>: Editions not listed in the table are not officially supported.
+This also includes <em>Windows Embedded</em>, for example.</p></div>
+<div class="paragraph"><p>The installation, registration, and setup of the agent can be accomplished in just a few steps, because the agent does not need any additional libraries for its function, for example.
+In addition, the agent is shipped with a basic configuration that is sufficient for most use cases.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_agent_architecture">
+<span class="hidden-anchor sr-only" id="agent_architecture"></span>2. Architecture of the agent</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The Checkmk agent consists of the agent program and the Agent Controller, which communicates with the Agent Receiver on the Checkmk server.
+See the general article on <a href="wato_monitoringagents.html#agents">monitoring agents</a> for details on the common architecture of <a href="agent_linux.html">Linux agent</a> and Windows agent.
+This chapter is about the Windows specific implementation.</p></div>
+<div class="paragraph"><p>The <strong>agent program</strong> <code>check_mk_agent.exe</code> is responsible for collecting the monitoring data.
+The program is started as a Windows service under the local system account (<em>Local System account</em>).
+It collects data about the local system when called and makes it available to the Agent Controller.</p></div>
+<div class="paragraph"><p>The agent program is minimalistic, secure, easily extensible and comprehensive, having access to important data that is not accessible via WMI or SNMP.
+In some cases, however, monitoring via SNMP <strong>in addition</strong> to the Checkmk agent can be useful.
+See the article on <a href="snmp.html#snmp_cmk_agent">monitoring with SNMP</a> for more on this topic.
+In addition, the agent program is as transparent as a file delivered as executable can be, because you have access to the source code at any time and thus insight into the functionality and can in principle also compile the agent yourself.</p></div>
+<div class="paragraph"><p>The <strong>Agent Controller</strong> <code>cmk-agent-ctl.exe</code> takes care of transporting the data collected by the agent program.
+It runs as a background process under the local system account of Windows.
+It listens on TCP port 6556 for incoming connections from the Checkmk site and queries the agent program over a TCP connection.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_install">
+<span class="hidden-anchor sr-only" id="install"></span>3. Installation</h2>
+<div class="sectionbody">
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 50%;">
+<col style="width: 5%;">
+<col style="width: 5%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">CRE</th>
+<th class="tableblock halign-left valign-top">CEE</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supplied MSI package</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simple installation of a standard agent with manual configuration via configuration files.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSI package from the <a href="glossar.html#agent_bakery%20">Agent Bakery</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration via GUI, individual configuration per host possible.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="agent_deployment.html">Automatic update</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The package from the agent bakery is installed for the first time by hand or by script and automatically updated from then on.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Alternatively, you can also distribute the MSI package via other paths, such as the Microsoft Active Directory.
+The installation can be completely automated here using the MSI format.</p></div>
+<div class="sect2">
+<h3 id="heading_download">
+<span class="hidden-anchor sr-only" id="download"></span>3.1. Downloading an MSI package</h3>
+<div class="paragraph"><p>You install the Windows agent by installing the MSI package.</p></div>
+<div class="paragraph"><p>Before installation, you need to get the package and bring it to the host (for example with <code>scp</code> or WinSCP) on which the agent will run.</p></div>
+<div class="sect3">
+<h4 id="heading_download_gui">
+<span class="hidden-anchor sr-only" id="download_gui"></span>Getting a package via the Checkmk GUI</h4>
+<div class="paragraph"><p>In the <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> you can find the Windows package with the agent via <span class="guihint">Setup &gt; Agents &gt; Windows</span>.
+In the Enterprise Editions, you first get to the <a href="wato_monitoringagents.html#bakery">Agent Bakery</a> via <span class="guihint">Agents &gt; Windows, Linux, Solaris, AIX</span> in the <span class="guihint">Setup</span> menu, where you find the baked packages.
+From there, the <span class="guihint">Related &gt; Windows files</span> menu item takes you to the list of agent files:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_windows_agent_files.png" alt="Download page with the MSI package."></div>
+<div class="title">You can find the MSI package on the download page</div>
+</div>
+<div class="paragraph"><p>Everything you need can be found right in the first box named <span class="guihint">Packaged Agents</span>:
+the prepared MSI package file <code>check_mk_agent.msi</code>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__getting_a_package_via_the_rest_api">
+<span class="hidden-anchor sr-only" id="_getting_a_package_via_the_rest_api"></span>Getting a package via the REST API</h4>
+<div class="paragraph"><p>The Checkmk <a href="rest_api.html">REST API</a> provides the following ways to download agent packages from the Checkmk server:</p></div>
+<div class="ulist"><ul>
+<li><p>Downloading the provided agent.</p></li>
+<li><p>Downloading a baked agent by host name and operating system.</p></li>
+<li><p>Downloading a baked agent by hash of the agent and operating system.</p></li>
+</ul></div>
+<div class="paragraph"><p>Per REST API, you have the option to fetch the package from the Checkmk server directly to the target machine.</p></div>
+<div class="paragraph"><p>For example, the supplied MSI package for the Windows agent can be fetched using the following <code>curl</code> command.
+In newer Windows versions <code>curl</code> is already included, in older versions you will first have to install the <code>curl</code> command environment separately via <a href="https://curl.se/windows/" target="_blank">curl for Windows</a>.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Users\hhirsch\Downloads\&gt; curl -OJG "http://mycmkserver/mysite/check_mk/api/1.0/domain-types/agent/actions/download/invoke" ^</span>
+<span class="tok-go">--header "Accept: application/octet-stream" ^</span>
+<span class="tok-go">--header "Authorization: Bearer automation myautomationsecret" ^</span>
+<span class="tok-go">--data-urlencode "os_type=windows_msi"</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Note:</strong> The above command has been split into four lines for readability.</p></div>
+<div class="paragraph"><p>This is just a simple example to demonstrate how this one REST API endpoint works to download the agent.
+Details on this and other REST API endpoints can be found in the API documentation, which can be accessed in Checkmk via <span class="guihint">Help &gt; Developer resources &gt; REST API documentation</span>.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_install_package">
+<span class="hidden-anchor sr-only" id="install_package"></span>3.2. Package installation</h3>
+<div class="sect3">
+<h4 id="heading_install_manual">
+<span class="hidden-anchor sr-only" id="install_manual"></span>Manual installation</h4>
+<div class="paragraph"><p>After fetching the MSI package and — if necessary — copying it to the host to be monitored using <code>scp</code>, WinSCP or other means, start the installation either by double-clicking the MSI file or from the command line as follows:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Users\hhirsch\Downloads\&gt; check_mk_agent.msi</span></code></pre></div></div>
+<div class="paragraph"><p>You will see the start page for the Setup wizard:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_windows_setup_wizard_1.png" alt="Start page of the Setup wizard."></div>
+<div class="title">The installation starts with a welcome</div>
+</div>
+<div class="paragraph"><p>Use the <span class="guihint">Next</span> buttons to scroll through the pages of the wizard.
+Accept the license terms of the <span class="guihint">GNU GENERAL PUBLIC LICENSE</span> to continue.
+Then the Setup wizard presents you with the following page:</p></div>
+<div class="imageblock" id="agent_windows_setup_wizard_3b">
+<div class="content"><img src="../images/agent_windows_setup_wizard_3b.png" alt="Setup Wizard page on how to proceed when updating an old agent."></div>
+<div class="title">choices when updating a very old agent</div>
+</div>
+<div class="paragraph"><p>The choices on this page are relevant to you only if a Windows agent is already installed on the host and it is <strong>older</strong> than version <span class="new">1.6.0</span>.
+In version <span class="new">1.6.0</span> the architecture of the Windows agent had changed fundamentally.
+If you are updating (or <em>migrating</em>) from a Windows agent <strong>before</strong> version <span class="new">1.6.0</span> to the current agent, then first read the <a href="https://docs.checkmk.com/2.0.0/en/agent_windows.html#legacy">chapter on the old agent</a> in the Checkmk User guide for version <span class="new">2.0.0</span>.
+There you will learn which of the provided options you should select in this particular update case.</p></div>
+<div class="paragraph"><p>In all other cases, we recommend selecting the <span class="guihint">Clean installation.</span> option.</p></div>
+<div class="paragraph"><p>Confirm the start of the installation and then allow the installation program to make changes in the (<span class="guihint">User Account Control</span> dialog.
+When finished, you can exit the Setup wizard.</p></div>
+<div class="paragraph"><p>After the installation, the agent will immediately start as a Windows service and be ready to monitor the system.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_install_unattended">
+<span class="hidden-anchor sr-only" id="install_unattended"></span>Unattended installation</h4>
+<div class="paragraph"><p>Via the command line, Windows provides administrators with <code>msiexec</code> the possibility to install MSI packages automatically without user interaction.
+An automated installation can then look like this, for example:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Users\hhirsch\Downloads\&gt; msiexec /i check_mk_agent.msi /qn</span></code></pre></div></div>
+<div class="paragraph"><p>In this case, the agent is installed (<code>/i</code>) without user interaction or the user interface (<code>/qn</code>) and is also started immediately as a Windows service.
+So this method is great for automatically rolling out the agent to many hosts.</p></div>
+<div class="paragraph"><p>You can also use this method to select the three options that were offered to you during the manual installation <a href="#agent_windows_setup_wizard_3b">in the Setup wizard</a>.
+For each option, there is an identifier that you can use for the installation command:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 65%;">
+<col style="width: 35%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option in the Setup wizard</th>
+<th class="tableblock halign-left valign-top">Identifier</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Clean installation.</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WIXUI_CLEANINSTALL</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Remove Legacy Windows Agent (pre 1.6) if present.</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WIXUI_REMOVELEGACY</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Migrate from Legacy Windows Agent (pre 1.6) configuration if present.</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WIXUI_MIGRATELEGACY</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>To <em>enable</em> an option, append its identifier followed by an equal sign:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Users\hhirsch\Downloads\&gt; msiexec /i check_mk_agent.msi /qn WIXUI_CLEANINSTALL=</span></code></pre></div></div>
+<div class="paragraph"><p>To explicitly <em>disable</em> an option, you must add two more quotation marks following the equal sign:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Users\hhirsch\Downloads\&gt; msiexec /i check_mk_agent.msi /qn WIXUI_MIGRATELEGACY=""</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__installation_using_the_agent_bakery">
+<span class="hidden-anchor sr-only" id="_installation_using_the_agent_bakery"></span>3.3. Installation using the Agent Bakery</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+The <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong> have the <a href="wato_monitoringagents.html#bakery">Agent Bakery</a>, a software module for automatically packaging customized agents — including Windows agents.
+For a detailed description of this, see the general article on <a href="wato_monitoringagents.html">agents</a>.
+The installation of the baked MSI package is then done again exactly as described <a href="#install_package">above</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__automatic_updates">
+<span class="hidden-anchor sr-only" id="_automatic_updates"></span>3.4. Automatic updates</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+If you use the Agent Bakery, you can set up automatic updates of the agent.
+These are described in their <a href="agent_deployment.html">own article</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_config_files">
+<span class="hidden-anchor sr-only" id="config_files"></span>3.5. Agent configuration files</h3>
+<div class="paragraph"><p>During an installation the MSI package stores the program-specific files in <code>C:\Program Files (x86)\checkmk\service\</code> and the host-specific files in <code>C:\ProgramData\checkmk\agent\</code>.
+You do not need to customize the program-specific files.
+The host-specific files are used to store plug-ins, log and configuration files and to configure the behavior of the agent.</p></div>
+<div class="paragraph"><p><strong>Note</strong>: By default, the entire <code>C:\ProgramData</code> directory is <em>hidden</em> in Windows.</p></div>
+<div class="paragraph"><p>The agent reads three configuration files in succession:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p><code>C:\Program Files (x86)\checkmk\service\check_mk.yml</code><br>
+is the default configuration file, which you should not change.</p></li>
+<li><p><code>C:\ProgramData\checkmk\agent\bakery\check_mk.bakery.yml</code><br>
+is created by the agent bakery and should not be changed manually.</p></li>
+<li><p><code>C:\ProgramData\checkmk\agent\check_mk.user.yml</code><br>
+is your configuration file where you can manually make custom adjustments to test a setting or extension on a host.</p></li>
+</ol></div>
+<div class="paragraph"><p>If an option has been set in multiple files, then the last file read in determines the content of this option.
+For manual work with the agent, therefore, only the last configuration file <code>check_mk.user.yaml</code> is relevant, because it is read in last and thus <em>has the last word</em>.
+If the agent bakery is not used, this is in fact the only file in which customizations to the agent’s configuration may be made.</p></div>
+<div class="paragraph"><p>As you may have already recognized from the file extension of the configuration files, <a href="https://yaml.org" target="_blank">YAML</a> is used as the file format.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_post_install">
+<span class="hidden-anchor sr-only" id="post_install"></span>3.6. What happens when the installation is complete?</h3>
+<div class="paragraph"><p>After installing the agent including the Agent Controller, the next step is the <a href="#registration">registration</a>, which sets up TLS encryption so that the encrypted agent output can be decrypted by the Checkmk server and displayed in monitoring.</p></div>
+<div class="paragraph"><p>There is a special feature when the agent was installed with the Agent Controller for the first time.
+Then the agent switches to the unencrypted <strong>legacy pull mode</strong> so that the Checkmk server is not cut off from the monitoring data and can continue to display it.
+This applies to a new installation as well as to an update of an agent of version <span class="new">2.0.0</span> and older.</p></div>
+<div class="paragraph"><p>It will look like this in the monitoring:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_windows_service_legacy_pull_mode.png" alt="The WARN state of the 'Check_MK' service due to missing encryption."></div>
+<div class="title">Warning in Checkmk monitoring that TLS is not yet in use</div>
+</div>
+<div class="paragraph"><p>The Checkmk site recognizes from the agent output that the Agent Controller is present and thus TLS encryption is possible — but not yet enabled.
+The <span class="guihint">Check_MK Agent</span> service changes to the <span class="state1">WARN</span> state and remains so until you register it.
+After registration, only encrypted pull mode is used for communication.
+The legacy pull mode is switched off and will remain so.
+However, it can be switched on again <a href="#deregister">by command</a> if necessary.</p></div>
+<div class="paragraph"><p>The case is different if the agent is installed on very old <a href="#windows_versions">Windows systems</a>.
+The installation of the agent may be successful.
+However, if the Agent Controller cannot be started due to API incompatibilities, the unencrypted transfer is resorted to.
+Without Agent Controller, registration is not possible and the only communication path remains the <strong>legacy mode</strong>.
+In legacy mode, only the sections in the <a href="#registration">Registration</a> chapter are relevant for adding the host to the Setup and then to the monitoring.
+In the chapter <a href="#test">Testing and troubleshooting</a> you must omit the test for calling the Agent Controller, because it is not available in legacy mode.
+Since there is also no TLS encryption without Agent Controller, you have to use other methods of encryption if required.
+We recommend using the built-in (symmetric) encryption in this case with the <span class="guihint">Encryption (Linux, Windows)</span> rule and/or setting up an <a href="#ssh">SSH tunnel</a>.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> In the <span class="guihint">Checkmk Agent installation auditing</span> rule set you will find various settings to check the state of the agent and make it visible in monitoring.
+Among other things, you can specify here which state the <span class="guihint">Check_MK Agent</span> service should have if TLS configuration has not yet been performed.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_registration">
+<span class="hidden-anchor sr-only" id="registration"></span>4. Registration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__overview_and_prerequisites">
+<span class="hidden-anchor sr-only" id="_overview_and_prerequisites"></span>4.1. Overview and prerequisites</h3>
+<div class="paragraph"><p>Immediately after the installation of the new agent (also as an update of an agent of version <span class="new">2.0.0</span> and older) only unencrypted communication in legacy pull mode is possible.
+An exclusively encrypted data transmission is only active after a trust relationship has been established.</p></div>
+<div class="paragraph"><p>Therefore, perform the registration promptly after installation/update.
+This chapter shows how to do this.</p></div>
+<div class="paragraph"><p>Registration, and thus the establishment of the mutual trust relationship, is done from a Checkmk user with access to the <a href="rest_api.html">REST API.</a>
+For this purpose, a good choice is the <a href="glossar.html#automation_user">automation user</a>, which is automatically created with every Checkmk installation and whose password you can randomly generate.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> Since there is no Agent Controller, and thus no registry and TLS encryption, on very old <a href="#windows_versions">Windows systems</a>, you have to use other methods of encryption if required.
+In this case we recommend using the built-in (symmetric) encryption with the rule <span class="guihint">Encryption (Linux, Windows)</span> or to set up an <a href="#ssh">SSH tunnel</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__adding_a_host_to_the_setup">
+<span class="hidden-anchor sr-only" id="_adding_a_host_to_the_setup"></span>4.2. Adding a host to the Setup</h3>
+<div class="paragraph"><p>First create the new host via <span class="guihint">Setup &gt; Hosts &gt; Add host</span>.
+A host must exist in the <a href="glossar.html#configuration_environment">configuration environment</a> before it can be registered.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__registering_a_host_with_the_server">
+<span class="hidden-anchor sr-only" id="_registering_a_host_with_the_server"></span>4.3. Registering a host with the server</h3>
+<div class="paragraph"><p>The registration is done using the Agent Controller <code>cmk-agent-ctl</code>, which provides a command interface for configuring the connections.
+You can use the <code>cmk-agent-ctl help</code> command to display help on the options.</p></div>
+<div class="paragraph"><p>Now go to the host that is to be registered.
+Here you have to make a request to the Checkmk <a href="glossar.html#site">site</a> with administrator rights:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:\Program Files (x86)\checkmk\service\cmk-agent-ctl.exe" ^</span>
+<span class="tok-go">    register ^</span>
+<span class="tok-go">    --hostname mynewhost ^</span>
+<span class="tok-go">    --server cmkserver --site mysite ^</span>
+<span class="tok-go">    --user automation --password test23</span></code></pre></div></div>
+<div class="paragraph"><p>The host name following the <code>--hostname</code> option must be exactly the same as it was when it was created in the Setup.
+The <code>--server</code> and <code>--site</code> options specify the name of the Checkmk server and the site.
+The server name may also be the IP address, the site name (here <code>mysite</code>) corresponds to the one you see in the URL path of the web interface.
+The options are completed by the name and password for the automation user.
+If you omit the <code>--password</code> option, the password will be requested interactively.</p></div>
+<div class="paragraph"><p>If the specified values were correct, you will be asked to confirm the identity of the Checkmk site to which you want to connect.
+We have shortened the server certificate to be confirmed for clarity:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">Attempting to register at cmkserver:8000/mysite. Server certificate details:</span>
+
+<span class="tok-go">PEM-encoded certificate:</span>
+<span class="tok-go">---BEGIN CERTIFICATE---</span>
+<span class="tok-go">MIIC6zCCAdOgAwIBAgIUXbSE8FXQfmFqoRNhG9NpHhlRJ40wDQYJKoZIhvcNAQEL</span>
+<span class="tok-go">[...]</span>
+<span class="tok-go">nS+9hN5ILfRI+wkdrQLC0vkHVYY8hGIEq+xTpG/Pxw==</span>
+<span class="tok-go">---END CERTIFICATE---</span>
+
+<span class="tok-go">Issued by:</span>
+<span class="tok-go">	Site 'mysite' local CA</span>
+<span class="tok-go">Issued to:</span>
+<span class="tok-go">	localhost</span>
+<span class="tok-go">Validity:</span>
+<span class="tok-go">	From Thu, 10 Feb 2022 15:13:22 +0000</span>
+<span class="tok-go">	To   Tue, 13 Jun 3020 15:13:22 +0000</span>
+
+<span class="tok-go">Do you want to establish this connection? [Y/n]</span>
+<span class="tok-go">&gt; <mark>Y</mark></span></code></pre></div></div>
+<div class="paragraph"><p>Confirm with <code>Y</code> to complete the process.</p></div>
+<div class="paragraph"><p>If no error message is displayed, the encrypted connection has been established.
+All data will be transmitted in compressed form via this connection.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__verifying_the_trust_relationship">
+<span class="hidden-anchor sr-only" id="_verifying_the_trust_relationship"></span>4.4. Verifying the trust relationship</h3>
+<div class="paragraph"><p>The <code>cmk-agent-ctl status</code> command now shows exactly one trust relationship with the Checkmk server:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:\Program Files (x86)\checkmk\service\cmk-agent-ctl.exe" status</span>
+<span class="tok-go">Connection: 12.34.56.78:8000/mysite</span>
+<span class="tok-go">	UUID: d38e7e53-9f0b-4f11-bbcf-d196deadbeef</span>
+<span class="tok-go">	Local:</span>
+<span class="tok-go">		Connection type: pull-agent</span>
+<span class="tok-go">		Certificate issuer: Site 'mysite' local CA</span>
+<span class="tok-go">		Certificate validity: Mon, 21 Feb 2022 11:23:57 +0000 - Sat, 24 Jun 3020 11:23:57 +0000</span>
+<span class="tok-go">	Remote:</span>
+<span class="tok-go">		Connection type: pull-agent</span>
+<span class="tok-go">		Registration state: operational</span>
+<span class="tok-go">		Host name: mynewhost</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Note:</strong> There can only ever be one trust relationship between host and site.
+For example, if you register an already registered host <code>mynewhost</code> under a different name (<code>mynewhost2</code>) but with the same IP address, then the new connection will replace the existing one.
+The connection from <code>mynewhost</code> to the site will be disconnected and no more agent data will be supplied to the host for monitoring.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__registration_by_proxy">
+<span class="hidden-anchor sr-only" id="_registration_by_proxy"></span>4.5. Registration by proxy</h3>
+<div class="paragraph"><p>For easier registration of multiple hosts, any host on which the agent is installed can perform registration on behalf of others.
+This exports a JSON file, which can then be transferred to the target host and imported there.
+Again, as before, the host being registered in the job must already be set up on the site</p></div>
+<div class="paragraph"><p>First, the registration is performed on any host in the Setup by proxy.
+Here, of course, the Checkmk server comes in handy, as it is usually the first host to be set up.
+As with the example above, you can provide the password by job option or be asked for it interactively if you omit the <code>--password</code> option.
+We redirect the JSON output to a file in the example:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>proxy-register<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--hostname<span class="tok-w"> </span>mynewhost3<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--server<span class="tok-w"> </span>cmkserver<span class="tok-w"> </span>--site<span class="tok-w"> </span>mysite<span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>--user<span class="tok-w"> </span>automation<span class="tok-w"> </span>&gt;<span class="tok-w"> </span>/tmp/mynewhost3.json</code></pre></div></div>
+<div class="paragraph"><p>Now we transfer the file <code>/tmp/mynewhost3.json</code> to the host we registered for and import the file:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:\Program Files (x86)\checkmk\service\cmk-agent-ctl.exe" ^</span>
+<span class="tok-go">    import /tmp/mynewhost3.json</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__adding_the_host_to_the_monitoring">
+<span class="hidden-anchor sr-only" id="_adding_the_host_to_the_monitoring"></span>4.6. Adding the host to the monitoring</h3>
+<div class="paragraph"><p>Once the registration is complete, perform a <a href="wato_monitoringagents.html#diagnosticpage">connection test</a> and a <a href="wato_services.html#discovery">service discovery</a> in the Checkmk server Setup.
+Then, as the last step include the discovered services in the monitoring by <a href="wato.html#activate_changes">activating the changes</a>.</p></div>
+<div class="paragraph"><p>If the connection test fails, refer to the <a href="#test">following chapter</a> for testing and troubleshooting information.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_deregister">
+<span class="hidden-anchor sr-only" id="deregister"></span>4.7. Deregistering a host</h3>
+<div class="paragraph"><p>You can also deregister a host.</p></div>
+<div class="paragraph"><p>On a host connected to the Checkmk server, you can revoke the trust.
+Here, in the following command, the Universally Unique Identifier (UUID) to specify is the one output by the <code>cmk-agent-ctl status</code> command:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:\Program Files (x86)\checkmk\service\cmk-agent-ctl.exe" ^</span>
+<span class="tok-go">    delete d38e7e53-9f0b-4f11-bbcf-d196deadbeef</span></code></pre></div></div>
+<div class="paragraph"><p>To delete all connections from the host <strong>and</strong> additionally restore legacy pull mode, enter the following command:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:\Program Files (x86)\checkmk\service\cmk-agent-ctl.exe" ^</span>
+<span class="tok-go">    delete-all --enable-insecure-connections</span></code></pre></div></div>
+<div class="paragraph"><p>After that, the agent behaves as it did after the initial installation and before the first registration and sends its data unencrypted.</p></div>
+<div class="paragraph"><p>Complete the deregistration on the Checkmk server:
+In the Setup, on the <span class="guihint">Properties of host</span> page, select the <span class="guihint">Host &gt; Remove TLS registration</span> menu item and confirm the prompt.</p></div>
+<div class="paragraph"><p>In case you prefer the command line:
+On the Checkmk server, for each connection of a host that is in monitoring, there is a soft link with the UUID that points to the folder with the agent output:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">cd</span><span class="tok-w"> </span>~/var/agent-receiver/received-outputs
+<span class="tok-gp">OMD[mysite]:~$ </span>ls<span class="tok-w"> </span>-l<span class="tok-w"> </span>d38e7e53-9f0b-4f11-bbcf-d19617971595
+<span class="tok-go">lrwxrwxrwx 1 mysite mysite 67 Feb 23 07:18 d38e7e53-9f0b-4f11-bbcf-d19617971595 -&gt; /omd/sites/mysite/tmp/check_mk/data_source_cache/push-agent/mynewhost</span></code></pre></div></div>
+<div class="paragraph"><p>If you delete this soft link, you will need to re-register the host.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_test">
+<span class="hidden-anchor sr-only" id="test"></span>5. Testing and troubleshooting</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A modular system may not work as intended in many situations.
+Since the introduction with <span class="new">2.1.0</span> of the two new agent components, the Agent Controller on the host and the Agent Receiver on the Checkmk server, the number of points where something can go wrong has increased.</p></div>
+<div class="paragraph"><p>When troubleshooting, a structured approach is thus recommended.
+You can of course also use the step-by-step analysis described here to get to know the data collection and communication provided by Checkmk in more detail.</p></div>
+<div class="paragraph"><p>All of the diagnostic options that are available from the Checkmk server side are described in the general article on <a href="wato_monitoringagents.html#diagnostics">monitoring agents</a>.
+But, of course, there are other diagnostics available when logged in directly to the monitored host itself.</p></div>
+<div class="paragraph"><p>We’ll work our way from the agent program, through the Agent Controller and TCP port 6556, to the Checkmk site in the following sections.
+In most cases, after correcting an error, you can restart the service discovery and complete the inclusion in monitoring.</p></div>
+<div class="sect2">
+<h3 id="heading__checking_the_configuration">
+<span class="hidden-anchor sr-only" id="_checking_the_configuration"></span>5.1. Checking the configuration</h3>
+<div class="paragraph"><p>To check that the configuration has been read in as expected, call the agent program with the <code>showconfig</code> option.
+With this option you will not only get the configuration as it is currently used by the agent, but additionally, the environment variables as well as the configuration files in use will always be displayed.</p></div>
+<div class="paragraph"><p>If only a certain part of the configuration is of interest, you can limit the output to that specific part.
+Here, for example, it is checked whether the options in the <code>ps</code> section have been set correctly:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:/Program Files (x86)/checkmk/service/check_mk_agent.exe" showconfig ps</span>
+<span class="tok-gp"># </span>Environment<span class="tok-w"> </span>Variables:
+<span class="tok-gp"># </span><span class="tok-nv">MK_LOCALDIR</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\local"</span>
+<span class="tok-gp"># </span><span class="tok-nv">MK_STATEDIR</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\state"</span>
+<span class="tok-gp"># </span><span class="tok-nv">MK_PLUGINSDIR</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\plugins"</span>
+<span class="tok-gp"># </span><span class="tok-nv">MK_TEMPDIR</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\tmp"</span>
+<span class="tok-gp"># </span><span class="tok-nv">MK_LOGDIR</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\log"</span>
+<span class="tok-gp"># </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\config"</span>
+<span class="tok-gp"># </span><span class="tok-nv">MK_SPOOLDIR</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\spool"</span>
+<span class="tok-gp"># </span><span class="tok-nv">MK_INSTALLDIR</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\install"</span>
+<span class="tok-gp"># </span><span class="tok-nv">MK_MSI_PATH</span><span class="tok-o">=</span><span class="tok-s2">"C:\ProgramData\checkmk\agent\update"</span>
+<span class="tok-gp"># </span>Loaded<span class="tok-w"> </span>Config<span class="tok-w"> </span>Files:
+<span class="tok-gp"># </span>system:<span class="tok-w"> </span><span class="tok-s1">'C:\Program Files (x86)\checkmk\service\check_mk.yml'</span>
+<span class="tok-gp"># </span>bakery:<span class="tok-w"> </span><span class="tok-s1">'C:\ProgramData\checkmk\agent\bakery'</span>
+<span class="tok-gp"># </span>user<span class="tok-w"> </span>:<span class="tok-w"> </span><span class="tok-s1">'C:\ProgramData\checkmk\agent\check_mk.user.yml'</span>
+
+<span class="tok-gp"># </span>ps
+<span class="tok-go">enabled: yes</span>
+<span class="tok-go">use_wmi: yes</span>
+<span class="tok-go">full_path: no</span></code></pre></div></div>
+<div class="paragraph"><p>In this way you get a quick overview of how the three different <a href="#config_files">configuration files</a> have been merged and used by the agent program.
+Errors will be immediately visible.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_script_output">
+<span class="hidden-anchor sr-only" id="script_output"></span>5.2. Output of the agent program</h3>
+<div class="paragraph"><p>The agent program is a simple Windows executable that obtains data from your system and outputs it as loosely-formatted text.
+You can call this program directly from the command line.
+With the <code>test</code> parameter it prints everything to standard output.
+With the <code>help</code> option you get, among other things, a detailed and complete list of options available to you beyond those described here.
+Since the output can be a bit long, the <code>more</code> pager, with which you can exit from the output with the Q key, is very handy here:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:/Program Files (x86)/checkmk/service/check_mk_agent.exe" test | more</span>
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.1.0b1</span>
+<span class="tok-go">AgentOS: windows</span>
+<span class="tok-go">Hostname: DESKTOP-XYZA123</span>
+<span class="tok-go">AgentController: cmk-agent-ctl 0.1.0</span></code></pre></div></div>
+<div class="paragraph"><p>This allows you to test whether the output contains all the desired data — for example, whether all the installed plug-ins provide data.</p></div>
+<div class="paragraph"><p>Since the agent program listens on the local loopback interface (127.0.0.1) on port 50001, you can also test the connection to this using Telnet or Putty.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_networkrequirements">
+<span class="hidden-anchor sr-only" id="networkrequirements"></span>5.3. Network environment for registration</h3>
+<div class="paragraph"><p>If registering a host fails even before a certificate is presented, knowledge about the ways of communication can help identifying the problem — and of course solving it.</p></div>
+<div class="paragraph"><p>After entering the <code>cmk-agent-ctl register</code> command, the Agent Controller first asks the Checkmk server for the Agent Receiver port using the REST API.
+As second step a connection to the Agent Receiver is established to request the certificate.
+You can simulate the first request on the host with a program like <a href="https://curl.se/windows/microsoft.html" target="_blank"><code>curl</code></a>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; curl.exe -v --insecure https://mycmkserver/mysite/check_mk/api/1.0/domain-types/internal/actions/discover-receiver/invoke</span></code></pre></div></div>
+<div class="paragraph"><p>The parameter <code>--insecure</code> instructs <code>curl</code> to skip the certificate check.
+This behavior reflects the behavior of the Agent Controller in this step.
+The response is only a few bytes, containing the port number of the Agent Receiver.
+For the first site this is usually just <code>8000</code>, for the second <code>8001</code> and so on.
+Common problems regarding this request are:</p></div>
+<div class="ulist"><ul>
+<li><p>The Checkmk server is unreachable from the host</p></li>
+<li><p>The port used by the REST API differs from the default ports 443 (https) or 80 (http)</p></li>
+</ul></div>
+<div class="paragraph"><p>When the curl command fails you might change routing or firewall settings to enable access, respectively add the internal CA to the trust chain of the host.</p></div>
+<div class="paragraph"><p>In case the host you are trying to register uses an HTTP proxy, <code>curl</code> will use it, but <code>cmk-agent-ctl</code> won’t do so with default settings.
+Use the additional Flag <code>--detect-proxy</code> to instruct <code>cmk-agent-ctl</code> to use a proxy configured via system settings.</p></div>
+<div class="paragraph"><p>However often it may be easier to find out the port of the Agent Receiver and note it down.
+To do so, on the Checkmk server run, logged in as site user:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>config<span class="tok-w"> </span>show<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>AGENT_RECEIVER
+<span class="tok-go">AGENT_RECEIVER: on</span>
+<span class="tok-go">AGENT_RECEIVER_PORT: 8000</span></code></pre></div></div>
+<div class="paragraph"><p>Now you can specify the port when entering the command for registration.
+This skips the first request to the REST API.
+Communication then takes place directly with the Agent Receiver without any detours:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:\Program Files (x86)\checkmk\service\cmk-agent-ctl.exe" ^</span>
+<span class="tok-go">    register ^</span>
+<span class="tok-go">    --hostname mynewhost ^</span>
+<span class="tok-go">    --server cmkserver:8000 --site mysite ^</span>
+<span class="tok-go">    --user automation --password test23</span></code></pre></div></div>
+<div class="paragraph"><p>Port 8000 also must be reachable from the host.
+In case it is not, you will get this error message:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">ERROR [cmk_agent_ctl] Connection refused (os error 111)</span></code></pre></div></div>
+<div class="paragraph"><p>Equivalent to port 443 (respectively 80) mentioned above, you can now adjust routing or firewall settings so that the host to be registered can reach the Checkmk server on the Agent Receiver’s port (8000 or 8001…​)</p></div>
+<div class="paragraph"><p>Should security policies prohibit access to the Agent Receiver, there is still the possibility to use <a href="#proxyregister">registration by proxy</a> on the Checkmk server.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__the_agent_controller_in_dump_mode">
+<span class="hidden-anchor sr-only" id="_the_agent_controller_in_dump_mode"></span>5.4. The Agent Controller in dump mode</h3>
+<div class="paragraph"><p>The Agent Controller provides its own subcommand, <code>dump</code>, which displays the full agent output as it arrives in the monitoring:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\system32&gt; "C:/Program Files (x86)/checkmk/service/cmk-agent-ctl.exe" dump | more</span>
+<span class="tok-go">&lt;&lt;&lt;check_mk&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 2.1.0b1</span>
+<span class="tok-go">BuildDate: Mar 14 2022</span>
+<span class="tok-go">AgentOS: windows</span>
+<span class="tok-go">Hostname: DESKTOP-QVPV284</span>
+<span class="tok-go">Architecture: 64bit</span>
+<span class="tok-go">WorkingDirectory: C:\Windows\system32</span>
+<span class="tok-go">ConfigFile: C:\Program Files (x86)\checkmk\service\check_mk.yml</span>
+<span class="tok-go">LocalConfigFile: C:\ProgramData\checkmk\agent\check_mk.user.yml</span>
+<span class="tok-go">AgentDirectory: C:\Program Files (x86)\checkmk\service</span>
+<span class="tok-go">PluginsDirectory: C:\ProgramData\checkmk\agent\plugins</span>
+<span class="tok-go">StateDirectory: C:\ProgramData\checkmk\agent\state</span>
+<span class="tok-go">ConfigDirectory: C:\ProgramData\checkmk\agent\config</span>
+<span class="tok-go">TempDirectory: C:\ProgramData\checkmk\agent\tmp</span>
+<span class="tok-go">LogDirectory: C:\ProgramData\checkmk\agent\log</span>
+<span class="tok-go">SpoolDirectory: C:\ProgramData\checkmk\agent\spool</span>
+<span class="tok-go">LocalDirectory: C:\ProgramData\checkmk\agent\local</span>
+<span class="tok-go">OnlyFrom:</span>
+<span class="tok-go">&lt;&lt;&lt;cmk_agent_ctl_status:sep(0)&gt;&gt;&gt;</span></code></pre></div></div>
+<div class="paragraph"><p>This allows you to verify that the data from the agent program has arrived at the Agent Controller.
+This output does not yet prove that the agent is also accessible over the network.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__external_connection_test">
+<span class="hidden-anchor sr-only" id="_external_connection_test"></span>5.5. External connection test</h3>
+<div class="paragraph"><p>If you are sure that locally the agent program and the installed plug-ins are executing correctly, you can next check from the Checkmk server via <code>netcat</code> (or <code>nc</code>) whether port 6556 is accessible via the external IP address of the host:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>nc<span class="tok-w"> </span><span class="tok-m">10</span>.76.23.189<span class="tok-w"> </span><span class="tok-m">6556</span>
+<span class="tok-go">16</span></code></pre></div></div>
+<div class="paragraph"><p>The output <code>16</code> indicates whether the connection was successfully established and that the TLS handshake can now take place.
+Since everything else here is TLS encrypted, no more detailed check is possible.</p></div>
+<div class="paragraph"><p>If the communication between agent and Checkmk server is <em>still</em> unencrypted (as in legacy pull mode), you will get the complete unencrypted agent output with this command instead of the <code>16</code>.</p></div>
+<div class="paragraph"><p>For more diagnostics to run on the Checkmk server, see the general article on the <a href="wato_monitoringagents.html#diagnostics">monitoring agents</a>.
+In particular, you can also perform a <a href="wato_monitoringagents.html#diagnosticpage">connection test</a> using the Checkmk interface.
+You will get the result in the <span class="guihint">Agent:</span> box.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_windows_communication_failed.png" alt="Error message of an unreachable agent during connection test." width="64%"></div>
+<div class="title">Error during connection test to the agent</div>
+</div>
+<div class="paragraph"><p>If you get no information or only a timeout error message during the connection test, as in the example above, you should check the <span class="guihint">Inbound Rules</span> of the Windows firewall on the host.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_windows_firewall">
+<span class="hidden-anchor sr-only" id="windows_firewall"></span>5.6. Windows Firewall</h3>
+<div class="paragraph"><p>The agent already creates a rule in the Windows Firewall during its installation, so that the Agent Controller can be reached from the outside via port 6556.</p></div>
+<div class="paragraph"><p>In current versions of Windows you can find the <span class="guihint">Windows Defender Firewall with Advanced Security</span> via Windows Settings (<span class="guihint">Settings &gt; Windows Security</span>) or start it by calling <code>wf.msc</code> from the command line:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_windows_windows_firewall.png" alt="Entry of the Checkmk agent for Windows Firewall."></div>
+<div class="title">Windows Firewall with the incoming rule for the Checkmk agent</div>
+</div>
+<div class="paragraph"><p>If you do not find such an entry in the Windows Firewall settings, you can add it at this exact location.
+To do this, click on <span class="guihint">New Rule</span> in the <span class="guihint">Action</span> menu.</p></div>
+<div class="paragraph"><p>This opens a wizard for creating a new firewall rule.
+Set the five choices as follows:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;">
+<col style="width: 85%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Rule Type</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Leave the selection here at <span class="guihint">Program</span>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Program</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enter <span class="guihint">This program path</span> <code>%ALLUSERSPROFILE%\checkmk\agent\bin\cmk-agent-ctl.exe</code> or use the <span class="guihint">Browse</span> button to select <code>cmk-agent-ctl.exe</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Action</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Allow the connection.</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Profile</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This point strongly depends on the configuration of your network. However, in most cases it is recommended to enable only <span class="guihint">Domain</span> and <span class="guihint">Private</span> here.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Name</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Give the rule a concise and short name.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Alternatively, you can automate this step and set the rule directly on the command line.
+Modify the following command to your customized installation path if necessary:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Windows\System32&gt; netsh advfirewall firewall add rule name="Checkmk Agent" ^</span>
+<span class="tok-go">description="Allow inbound network traffic to the Checkmk Agent" dir=in localport=6556 protocol=tcp action=allow ^</span>
+<span class="tok-go">program="%ALLUSERSPROFILE%\checkmk\agent\bin\cmk-agent-ctl.exe" ^</span>
+<span class="tok-go">profile=private,domain enable=yes</span>
+<span class="tok-go">OK.</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Note:</strong> The command has been split into four lines for readability.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_security">
+<span class="hidden-anchor sr-only" id="security"></span>6. Security</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__preliminary_considerations">
+<span class="hidden-anchor sr-only" id="_preliminary_considerations"></span>6.1. Preliminary considerations</h3>
+<div class="paragraph"><p>Security is an important criterion for any software, and of course monitoring is no exception.
+Since the monitoring agent is installed on every monitored server, a security problem here could have particularly serious consequences.</p></div>
+<div class="paragraph"><p>This is why security was emphasized in the design of Checkmk and has been an absolute principle since the earliest days of Checkmk:
+<em>The agent does not read data from the network. Period.</em>
+This means that it is impossible for an attacker to inject any commands or script components via the monitoring port 6556.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__transport_layer_security_tls">
+<span class="hidden-anchor sr-only" id="_transport_layer_security_tls"></span>6.2. Transport Layer Security (TLS)</h3>
+<div class="paragraph"><p>For an attacker, however, even a process list can be a first approach to draw conclusions about worthwhile targets.
+Therefore, transport encryption between agent and Checkmk server with Transport Layer Security (TLS) is mandatory starting with Checkmk version <span class="new">2.1.0</span>.
+Here, the Checkmk server "pings" the monitored host, which then establishes the TLS connection to the Checkmk server and transmits the agent output over it.
+Since only Checkmk servers with which a trust relationship exists can initiate this data transfer, there is no risk of data falling into the wrong hands.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> Since there is no Agent Controller, and thus no registry and TLS encryption, on very old <a href="#windows_versions">Windows systems</a>, you will have to choose other ways of encryption if needed.
+In this case, we recommend using the built-in (symmetric) encryption with the <span class="guihint">Encryption (Linux, Windows)</span> rule and/or setting up an <a href="#ssh">SSH tunnel</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__restricting_access_via_ip_addresses">
+<span class="hidden-anchor sr-only" id="_restricting_access_via_ip_addresses"></span>6.3. Restricting access via IP addresses</h3>
+<div class="paragraph"><p>Restricting access to specific IP addresses can also be configured via the <a href="#windows_firewall">firewall</a>.
+However, the agent itself also offers the possibility to simply ignore requests from foreign IP addresses.
+Just add the following restriction to the configuration file in the global options.
+Note that there may be other parameters set in the configuration file before or after this and this is just a snippet:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>global:
+  only_from: 127.0.0.1/32 192.168.42.0/24</code></pre></div>
+</div>
+<div class="paragraph"><p>As you can see in the example, you can allow any number of subnets.
+For example, with <code>/32</code> you specify a subnet of size 1, so that only this one address is allowed, while with <code>192.168.42.0/24</code> you allow all addresses between <code>192.168.42.0</code> and <code>192.168.42.255</code>.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In Agent Bakery, you can configure the allowed IP addresses using the following ruleset:
+<span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Allowed agent access via IP address (Linux, Windows)</span>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_ssh">
+<span class="hidden-anchor sr-only" id="ssh"></span>6.4. Calling via SSH</h3>
+<div class="paragraph"><p>Newer versions of Windows (Windows 10 from version 1809 and Windows Server from 2019) have native support for SSH.
+OpenSSH can be installed here via <span class="guihint">Apps &gt; Apps &amp; Features &gt; Optional Features</span>.
+But even with older versions, you can retrofit an SSH server via <a href="https://www.cygwin.com" target="_blank">Cygwin</a> and thus recreate an identical configuration as is possible under <a href="agent_linux_legacy.html#ssh">Linux</a>.
+Please note the current help from Cygwin or Microsoft for the setup.
+Once an SSH server is started and accessible, further setup is identical to that under Linux:
+You set up <code>authorized_keys</code> on the monitored host and restrict access to running the agent.</p></div>
+<div class="paragraph"><p>However, the entry in the <code>authorized_keys</code> file is a bit bumpy on Windows hosts, as many characters have to be masked here.
+Use the following (shortened) example for orientation.
+The <em>forward slashes</em> as path separators are in both examples a permissible and preferred (saves escaping) exception to the otherwise common backslashes:</p></div>
+<div class="listingblock">
+<div class="title">~\.ssh\authorized_keys:</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>command="\"C:/Program Files (x86)/checkmk/service/check_mk_agent.exe\" test" ssh-rsa AAAA...pb48 mysite@mycmkserver</code></pre></div>
+</div>
+<div class="paragraph"><p>If the call is to be made under a user with administrator rights, the following two lines in the global configuration file <code>sshd_config</code> must be commented out with hash marks (<code>#</code>) on the Microsoft OpenSSH server:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\ssh\sshd_config:</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Match Group administrators
+    AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys</code></pre></div>
+</div>
+<div class="paragraph"><p>Note that you can stop the Windows service after this, and as a result any firewall rules that may have been set up will also become obsolete.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__disabling_built_in_encryption">
+<span class="hidden-anchor sr-only" id="_disabling_built_in_encryption"></span>6.5. Disabling built-in encryption</h3>
+<div class="paragraph"><p>When updating the agent, it may happen that the built-in (symmetric) encryption performed by the agent program itself remains active.
+If TLS encryption and built-in encryption are active at the same time, then the entropy of the transmitted data is so high that compression, which is active from version <span class="new">2.1.0</span> onwards, will not save any transmitted data — and will burden the CPUs of both the host and the Checkmk server with additional further encryption and decryption steps.</p></div>
+<div class="paragraph"><p>For this reason, you should disable the built-in encryption promptly after switching to TLS.
+In the <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> you can achieve this by setting the value of the <code>encrypted</code> parameter to <code>no</code> in the configuration file <code>C:\ProgramData\checkmk\agent\check_mk.user.yml</code>.</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>global:
+  encrypted: no
+  passphrase: D0e5NotMat7erAnym0r3</code></pre></div>
+</div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span> In the <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong>, you can change existing rules to <em>Use TLS encryption</em> in <span class="guihint">Setup &gt; Agents &gt; Access to agents &gt; Encryption (Linux, Windows)</span> in the <span class="guihint">Encryption (Linux, Windows)</span> section and then <a href="agent_deployment.html">rebake</a> the agent packages.
+After the next automatic agent update, the agent program encryption is disabled but guaranteed by the Agent Controller.
+Note that after the automatic agent update, only registered hosts can provide monitoring data.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_disable_sections">
+<span class="hidden-anchor sr-only" id="disable_sections"></span>7. Disabling sections</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The output from the Checkmk agent is divided into sections.
+Each of these sections contains related information.
+Sections always start with a section header.
+This is a line enclosed in <code>&lt;&lt;&lt;</code> and <code>&gt;&gt;&gt;</code>.</p></div>
+<div class="paragraph"><p>Except for Checkmk’s own sections, you can individually disable any of the 30+ sections that the agent generates by default.
+Specifically, this means that the corresponding commands will not be executed by the agent at all, possibly saving computation time.
+Other reasons for disabling could be that you are simply not interested in certain information from a certain group of hosts, or that a particular host is providing erroneous values and you want to suspend retrieval of that data for a short time.</p></div>
+<div class="paragraph"><p>As a user of one of the <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong>, you can simply create a rule via <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Disabled sections (Windows agent)</span> which will then be taken into account by the <a href="glossar.html#agent_bakery">Agent Bakery</a>.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_windows_disabled_sections.png" alt="List of agent rules for the windows agent."></div>
+<div class="title">In the Enterprise Editions you can disable sections by rule</div>
+</div>
+<div class="paragraph"><p><strong>Note:</strong> The above image shows that there is also an opposite rule <span class="guihint">Enabled sections (Windows agent)</span> to <span class="guihint">Disabled sections (Windows agent)</span>.
+So you can work with the positive list instead of the negative one.
+However, to keep the overview, we recommend to use only <em>one</em> of the two rules.</p></div>
+<div class="paragraph"><p>In the rule <span class="guihint">Disabled sections (Windows agent)</span> you will find a separate checkbox for each section that can be disabled.
+For the selected checkboxes you will then find — after the newly baked agent has been installed on the selected hosts — in the Agent Bakery configuration file <code>C:\ProgramData\checkmk\agent\bakery\check_mk.bakery.yml</code> below <code>global:</code> a line <code>disabled_sections:</code> listing the selected sections.</p></div>
+<div class="paragraph"><p>Users of <span class="image-inline"><img src="../images/CRE.svg" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> can manually create an entry in the <code>C:\ProgramData\checkmk\agent\check_mk.user.yml</code> configuration file and enter there the sections which should be disabled.
+All sections that can be disabled are listed in this file below <code>global:</code> in the <code>_sections:</code> section.</p></div>
+<div class="paragraph"><p>For example, to disable the two sections <code>uptime</code> (for "System uptime") and <code>wmi_webservices</code> (for "Web Services"), the appropriate section of the configuration file would look like this:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>global:
+    disabled_sections: [uptime, wmi_webservices]</code></pre></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_plugins">
+<span class="hidden-anchor sr-only" id="plugins"></span>8. Extending the agent by plug-ins</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__what_are_agent_plug_ins">
+<span class="hidden-anchor sr-only" id="_what_are_agent_plug_ins"></span>8.1. What are agent plug-ins?</h3>
+<div class="paragraph"><p>The agent program <code>check_mk_agent.exe</code> contains a whole set of sections which provide monitoring data for various check plug-ins which are then automatically found by the service discovery.
+This includes all important monitoring of the operating system.</p></div>
+<div class="paragraph"><p>In addition, there is the possibility to extend the agent with <em>agent plug-ins</em>.
+These are small scripts or programs that are called by the agent and extend it with additional sections with additional monitoring data.
+The Checkmk project provides a number of such plug-ins, which — if installed and configured correctly — automatically provide new services in the service discovery.</p></div>
+<div class="paragraph"><p>Why aren’t these plug-ins simply hard-coded into the agent?
+For each of the plug-ins there is one of the following reasons:</p></div>
+<div class="ulist"><ul>
+<li><p>The plug-in can only fetch its data through internal interfaces that the agent does not provide (example: PowerShell).</p></li>
+<li><p>The plug-in needs a configuration anyway, without which it would not work (example: <code>mk_oracle.ps1</code>).</p></li>
+<li><p>The plug-in is so special that it is not needed by most users (example: <code>citrix_licenses.vbs</code>).</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_manual_installation_of_plugins">
+<span class="hidden-anchor sr-only" id="manual_installation_of_plugins"></span>8.2. Manual installation</h3>
+<div class="paragraph"><p>The included plug-ins for Windows can all be found on the monitored host in the agent installation directory under <code>C:\Program Files (x86)\checkmk\service\plugins</code>.
+They are stored there so that they are directly available.</p></div>
+<div class="paragraph"><p>Alternatively, the plug-ins for Windows are also located on the Checkmk server under <code>share/check_mk/agents/windows/plugins</code>.
+They are also available from the agent download page in the Setup menu (as described in the <a href="#download_gui">Installation</a> chapter) in the <span class="guihint">Plugins</span> box:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_windows_files_plugins.png" alt="Download page with agent plug-ins."></div>
+<div class="title">The beginning of the list of available agent plug-ins</div>
+</div>
+<div class="paragraph"><p>For all agent plug-ins we provide, there are matching check plug-ins that can evaluate their data and generate services.
+These are already installed, so that newly found services are immediately recognized and can be configured.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> Before you install a plug-in on the host, take a look at the corresponding file.
+Often you will find important information there about the correct use of the plug-in.</p></div>
+<div class="paragraph"><p>The actual installation is then simple:
+Copy the file to <code>C:\ProgramData\checkmk\agent\plugins</code>.</p></div>
+<div class="paragraph"><p>Once the plug-in is in the correct directory, it will be called automatically by the agent and a new section will be created in the agent output.
+This usually has the same name as the plug-in.
+Complex plug-ins (e.g. <code>mk_oracle.ps1</code>) even create a whole set of new sections.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_pluginconfig">
+<span class="hidden-anchor sr-only" id="pluginconfig"></span>8.3. Configuration</h3>
+<div class="paragraph"><p>Some plug-ins need a configuration file in <code>C:\ProgramData\checkmk\agent\config</code> to work.
+For others, a configuration is optional (e.g. <code>mssql.vbs</code>) and allows special features or customizations.
+Still others just work that way.
+You have several sources to get information:</p></div>
+<div class="ulist"><ul>
+<li><p>The documentation of the associated check plug-ins in your Checkmk site, which you can access via <span class="guihint">Setup &gt; Services &gt; Catalog of check plugins</span>.</p></li>
+<li><p>Comments in the plug-in file (often very helpful!)</p></li>
+<li><p>A suitable article in this User guide (e.g. about monitoring <a href="monitoring_oracle.html">Oracle</a>)</p></li>
+</ul></div>
+<div class="paragraph"><p>For special (scripting) languages, it may be necessary to <em>enable</em> them first in the agent configuration.
+For example, Python scripts will not be executed unless they are explicitly enabled.
+You can do this by extending the file extensions in the <code>check_mk.user.yml</code> configuration file in the <code>global</code> section, as shown in the following excerpt:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>global:
+    execute: [exe, bat, vbs, cmd, ps1, py]</code></pre></div>
+</div>
+<div class="paragraph"><p><strong>Important</strong>: The use of such plug-ins requires that the files can also be called in a regular command line without special paths.
+In the case of Python, it must be installed correctly and the path to the interpreter must be present in the environment variables.
+Instructions on how to set up Python correctly can be found directly on the pages of the <a href="https://www.python.org/doc/" target="_blank">Python Software Foundation.</a></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_customizeexecution">
+<span class="hidden-anchor sr-only" id="customizeexecution"></span>8.4. Customizing execution of a specific plug-in</h3>
+<div class="paragraph"><p>Each plug-in can be executed in different modes.
+The following options are available for entry in the configuration file.
+The value in bold is the default value:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 12%;">
+<col style="width: 15%;">
+<col style="width: 73%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>'@user\*.ps1'</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the range of the following options. Wildcards can also be used here. Then the following options refer to all plug-ins to which the expression applies. Leading determines whether the plug-in should be executed directly from the installation directory under <code>C:\Program Files (x86)\</code> or from the data directory under <code>C:\ProgramData</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>run</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>yes</strong>/no</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determines whether the execution of a plug-in should be suppressed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>async</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>yes</strong>/no</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Executes a plug-in asynchronously and stores the data in a file. If executed synchronously, the output is passed directly to the agent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>60</strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum execution time. After that the plug-in will be terminated even if no output has come. The default value is based on the default for the query interval of the agent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cache_age</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>60</strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets in seconds how long an output is valid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>retry_count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>1</strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of times a plug-in may fail before discarding output from the cache.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>'Text'</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here you can enter a free text to be appended to the logs.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>A configuration for the Veeam plug-in looks then for example like this (the excerpt is shortened and contains only the relevant part for the example):</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>plugins:
+    enabled: yes
+    execution:
+        - pattern: $CUSTOM_PLUGINS_PATH$\veeam_backup_status.ps1
+          async: yes
+          timeout: 120
+          cache_age: 300
+          retry_count: 2</code></pre></div>
+</div>
+<div class="paragraph"><p>According to the above exemplary configuration the plug-in in the data directory <code>C:\ProgramData\checkmk\agent\plugins</code> is executed asynchronously every five minutes (300 seconds) and may run for a maximum of two minutes (120 seconds).
+If the plug-in runs into this timeout, it will try a second time to get a result.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__installation_via_the_agent_bakery">
+<span class="hidden-anchor sr-only" id="_installation_via_the_agent_bakery"></span>8.5. Installation via the Agent Bakery</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In the <span class="image-inline"><img src="../images/CEE.svg" alt="CEE" width="20" title="Checkmk Enterprise Editions"></span> <strong>Checkmk Enterprise Editions</strong>, the included plug-ins can be configured via the <a href="glossar.html#agent_bakery">Agent Bakery</a>.
+This takes care of both the installation of the plug-in itself and the correct creation of the configuration file, should one be needed.</p></div>
+<div class="paragraph"><p>Each plug-in is configured via an agent rule.
+You can find the appropriate rule sets in <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules &gt; Agent Plugins</span>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/agent_linux_rules_agent_plugins.png" alt="Page with rules for configuring agent plug-ins in the Enterprise Editions."></div>
+<div class="title">List of rules for the agent plug-ins in the Enterprise Editions</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__manual_execution">
+<span class="hidden-anchor sr-only" id="_manual_execution"></span>8.6. Manual execution</h3>
+<div class="paragraph"><p>Since agent plug-ins are executable programs, you can run them manually for testing and diagnostic purposes.
+However, there are plug-ins that need certain environment variables set by the agent to find their configuration file, for example.
+If necessary, set them manually if they are needed in the script or program.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_e2e_monitoring">
+<span class="hidden-anchor sr-only" id="e2e_monitoring"></span>9. Including classic (Nagios) check plug-ins</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_mrpe">
+<span class="hidden-anchor sr-only" id="mrpe"></span>9.1. Running plug-ins via MRPE</h3>
+<div class="paragraph"><p>There are two good reasons to use Nagios plug-ins also under Checkmk.
+If you migrated your monitoring from a Nagios based solution to Checkmk, you can continue to use older check plug-ins for which there is no Checkmk counterpart yet.
+In many cases these are self-written plug-ins in Perl or Shell.</p></div>
+<div class="paragraph"><p>The second reason for using Nagios plug-ins is true end-to-end monitoring.
+Let’s assume you have your Checkmk server, a web server and a database server distributed over a large data center.
+In such a case, the response times of the database server measured from the Checkmk server are not very meaningful.
+It is far more important to know these values for the connection between the web server and the database server.</p></div>
+<div class="paragraph"><p>The Checkmk agent provides a simple mechanism to meet both of these requirements:
+<em>MK’s Remote Plugin Executor</em> or <em>MRPE</em> for short.
+The name is deliberately an analogy to Nagios' <em>NRPE</em>, which performs the same task there.</p></div>
+<div class="paragraph"><p>The MRPE is built into the agent and is controlled by various configuration files.</p></div>
+<div class="sect3">
+<h4 id="heading__enabling_and_disabling_mpre">
+<span class="hidden-anchor sr-only" id="_enabling_and_disabling_mpre"></span>Enabling and disabling MPRE</h4>
+<div class="paragraph"><p>By default the consideration of MRPE plug-ins is enabled.
+If you do not want to use this feature, you can disable it in the configuration file by adding the following definition:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>mrpe:
+  enabled: no</code></pre></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__limiting_the_execution_time">
+<span class="hidden-anchor sr-only" id="_limiting_the_execution_time"></span>Limiting the execution time</h4>
+<div class="paragraph"><p>Sometimes the runtime of a script or Nagios plug-in is unpredictable and in the worst case a plug-in never finishes.
+To keep control here, you can limit the maximum runtime of the MRPE plug-ins.
+The value shown here is also the default value in seconds.
+So adjustments are only necessary if you want to set a shorter or longer interval:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>mrpe:
+  # enabled: yes
+  timeout: 60</code></pre></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__adding_mrpe_plug_ins">
+<span class="hidden-anchor sr-only" id="_adding_mrpe_plug_ins"></span>Adding MRPE plug-ins</h4>
+<div class="paragraph"><p>To tell the agent where the file to run is located and how to call it, add an entry in the MRPE configuration:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>MRPE:
+  config:
+    - check = MyServiceName 'C:\ProgramData\checkmk\agent\mrpe\my_check_plugin.bat' -w 10 -c 20 MyParameter</code></pre></div>
+</div>
+<div class="paragraph"><p>It is not necessary to put the file in the agent’s directory as well, although it is convenient to collect them all in a common place.
+In this example configuration, you can now see the following elements of the relevant line:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MyServiceName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The service name as it should be displayed in Checkmk.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>'C:\ProgramData\checkmk\agent\mrpe\my_check_plugin.bat'</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Program to run; quotes for any spaces.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-w 10 -c 20</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Passed options: A threshold of 10 for <span class="state1">WARN</span> and 20 for <span class="state2">CRIT</span>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MyParameter</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example passing of other parameters.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>After you set up the MRPE plug-in, it will be active directly without restarting the agent and will be added to the output.
+In the service discovery you will now find your new service automatically:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_windows_service_discovery.png" alt="agent windows service discovery"></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__mrpe_with_the_agent_bakery">
+<span class="hidden-anchor sr-only" id="_mrpe_with_the_agent_bakery"></span>9.2. MRPE with the Agent Bakery</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+As an alternative to configuring directly on a host in the user-specific configuration file, you can also define your MRPE plug-ins directly in the <span class="guihint">Setup</span> menu.
+To do this, use the <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent &gt; Agent rules &gt; Execute MRPE checks</span> rule set.
+The necessary entry is then automatically created in the <a href="#config_files">Agent Bakery configuration file</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_hw_monitoring">
+<span class="hidden-anchor sr-only" id="hw_monitoring"></span>10. Monitoring hardware</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Hardware monitoring of Windows hosts is well covered by the Checkmk agent, provided plug-ins and extensions available in the <a href="https://exchange.checkmk.com/" target="_blank">Checkmk Exchange</a> well covered.
+However, there are situations where neither ready-made plug-ins nor programming interfaces for creating your own plug-ins are available, but either application software or a hardware monitoring tool from a hardware manufacturer can provide monitoring data via SNMP.</p></div>
+<div class="paragraph"><p>In such a case, set <span class="guihint">SNMP</span> to the appropriate connection type (SNMP v2 or v3 or SNMP v1) in the <span class="guihint">Monitoring agents</span> box in the host’s properties in Setup.
+Services that are available via both SNMP and Checkmk agent (e.g. CPU usage, file systems, network cards) are then automatically fetched by the Checkmk agent and not via SNMP.
+This automatically avoids duplicate transmissions.</p></div>
+<div class="paragraph"><p>For more information, see the <a href="snmp.html#snmp_cmk_agent">Monitoring with SNMP</a> article.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_uninstall">
+<span class="hidden-anchor sr-only" id="uninstall"></span>11. Uninstallation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You have several options for uninstalling the agent in Windows.
+In all versions of Windows you will find an entry in the Control Panel under <span class="guihint">Control Panel &gt; Programs and Features &gt; Uninstall a program.</span>
+In newer versions you can also find the entry for the Checkmk agent in the settings under <span class="guihint">Settings &gt; Apps &gt; Apps &amp; features</span>.</p></div>
+<div class="paragraph"><p>From the command line for administrators, you have several options to remove the agent.
+If you still have the last installed MSI package, you can use it for uninstallation as follows:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\Users\downloads\&gt; msiexec /x check_mk_agent.msi /qn</span></code></pre></div></div>
+<div class="paragraph"><p>Alternatively, you can use the Windows Management Instrumentation Command (WMIC) to uninstall:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\&gt; wmic product where name="Check MK Agent 2.1" call uninstall /nointeractive</span></code></pre></div></div>
+<div class="paragraph"><p>If the uninstallation was successful, you will receive the message <code>Method execution successful.</code> as confirmation.</p></div>
+<div class="paragraph"><p><strong>Note:</strong> The string after <code>name=</code> must be exactly correct.
+If you want to uninstall another version of the agent here, you will find a list of all installed products with the following call:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\&gt; wmic product get name</span></code></pre></div></div>
+<div class="paragraph"><p>The process can sometimes take quite a long time and will not give any status messages, but will give very long lists.
+For filtering you can extend the command to a pipe:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\&gt; wmic product get name | findstr Check</span>
+<span class="tok-go">Check MK Agent 2.1</span></code></pre></div></div>
+<div class="paragraph"><p>Since the various routines of Windows only remove files that also got there through the installation process, it is perfectly normal that files remain in the <a href="#files">directories of the agent</a>.
+These can be deleted manually.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>12. Files and directories</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__paths_on_the_monitored_windows_host">
+<span class="hidden-anchor sr-only" id="_paths_on_the_monitored_windows_host"></span>12.1. Paths on the monitored Windows host</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\Program Files (x86)\checkmk\service</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Installation directory for the program specific files including the agent program <code>check_mk_agent.exe</code> and the Agent Controller <code>cmk-agent-ctl.exe</code>. Adjustments are not necessary here.<br>
+In the directory <code>Program Files <strong>(x86)</strong></code> the agent is installed for compatibility reasons. This is independent of whether the agent is installed on a 32- or 64-bit operating system. The installation routine automatically selects the correct agent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\Program Files (x86)\checkmk\service\check_mk.yml</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default configuration file of the agent. Do not modify this file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Installation directory for the host-specific files. This is where extensions, log, and configuration files specific to this host are located.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\bakery\check_mk.bakery.yml</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This configuration file is created by the Agent Bakery and overwrites values from the default configuration file if necessary.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\check_mk.user.yml</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file for your individual customizations. This file is read in last and overwrites values from the other configuration files if necessary.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\plugins</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory for plug-ins which should be executed automatically by the agent and extend its output with additional monitoring data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\config</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage of configuration files for the agent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\local</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory for custom <a href="localchecks.html">local checks</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\mrpe</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRPE extensions can be stored here.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\backup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">After each change of the Checkmk agent service a backup is created from the user configuration here.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__paths_on_the_checkmk_server">
+<span class="hidden-anchor sr-only" id="_paths_on_the_checkmk_server"></span>12.2. Paths on the Checkmk server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>local/share/check_mk/agents/custom</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Base directory for custom files to be delivered with a baked agent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>share/check_mk/agents/windows/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory containing the agent’s MSI package. This directory also contains configuration examples and all agent plug-ins.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. The new Windows agent</a></li>
+<li><a href="#agent_architecture">2. Architecture of the agent</a></li>
+<li>
+<a href="#install">3. Installation</a><ul class="sectlevel1">
+<li>
+<a href="#download">3.1. Downloading an MSI package</a><ul class="sectlevel2">
+<li><a href="#download_gui">Getting a package via the Checkmk GUI</a></li>
+<li><a href="#_getting_a_package_via_the_rest_api">Getting a package via the REST API</a></li>
+</ul>
+</li>
+<li>
+<a href="#install_package">3.2. Package installation</a><ul class="sectlevel2">
+<li><a href="#install_manual">Manual installation</a></li>
+<li><a href="#install_unattended">Unattended installation</a></li>
+</ul>
+</li>
+<li><a href="#_installation_using_the_agent_bakery">3.3. Installation using the Agent Bakery</a></li>
+<li><a href="#_automatic_updates">3.4. Automatic updates</a></li>
+<li><a href="#config_files">3.5. Agent configuration files</a></li>
+<li><a href="#post_install">3.6. What happens when the installation is complete?</a></li>
+</ul>
+</li>
+<li>
+<a href="#registration">4. Registration</a><ul class="sectlevel1">
+<li><a href="#_overview_and_prerequisites">4.1. Overview and prerequisites</a></li>
+<li><a href="#_adding_a_host_to_the_setup">4.2. Adding a host to the Setup</a></li>
+<li><a href="#_registering_a_host_with_the_server">4.3. Registering a host with the server</a></li>
+<li><a href="#_verifying_the_trust_relationship">4.4. Verifying the trust relationship</a></li>
+<li><a href="#_registration_by_proxy">4.5. Registration by proxy</a></li>
+<li><a href="#_adding_the_host_to_the_monitoring">4.6. Adding the host to the monitoring</a></li>
+<li><a href="#deregister">4.7. Deregistering a host</a></li>
+</ul>
+</li>
+<li>
+<a href="#test">5. Testing and troubleshooting</a><ul class="sectlevel1">
+<li><a href="#_checking_the_configuration">5.1. Checking the configuration</a></li>
+<li><a href="#script_output">5.2. Output of the agent program</a></li>
+<li><a href="#networkrequirements">5.3. Network environment for registration</a></li>
+<li><a href="#_the_agent_controller_in_dump_mode">5.4. The Agent Controller in dump mode</a></li>
+<li><a href="#_external_connection_test">5.5. External connection test</a></li>
+<li><a href="#windows_firewall">5.6. Windows Firewall</a></li>
+</ul>
+</li>
+<li>
+<a href="#security">6. Security</a><ul class="sectlevel1">
+<li><a href="#_preliminary_considerations">6.1. Preliminary considerations</a></li>
+<li><a href="#_transport_layer_security_tls">6.2. Transport Layer Security (TLS)</a></li>
+<li><a href="#_restricting_access_via_ip_addresses">6.3. Restricting access via IP addresses</a></li>
+<li><a href="#ssh">6.4. Calling via SSH</a></li>
+<li><a href="#_disabling_built_in_encryption">6.5. Disabling built-in encryption</a></li>
+</ul>
+</li>
+<li><a href="#disable_sections">7. Disabling sections</a></li>
+<li>
+<a href="#plugins">8. Extending the agent by plug-ins</a><ul class="sectlevel1">
+<li><a href="#_what_are_agent_plug_ins">8.1. What are agent plug-ins?</a></li>
+<li><a href="#manual_installation_of_plugins">8.2. Manual installation</a></li>
+<li><a href="#pluginconfig">8.3. Configuration</a></li>
+<li><a href="#customizeexecution">8.4. Customizing execution of a specific plug-in</a></li>
+<li><a href="#_installation_via_the_agent_bakery">8.5. Installation via the Agent Bakery</a></li>
+<li><a href="#_manual_execution">8.6. Manual execution</a></li>
+</ul>
+</li>
+<li>
+<a href="#e2e_monitoring">9. Including classic (Nagios) check plug-ins</a><ul class="sectlevel1">
+<li>
+<a href="#mrpe">9.1. Running plug-ins via MRPE</a><ul class="sectlevel2">
+<li><a href="#_enabling_and_disabling_mpre">Enabling and disabling MPRE</a></li>
+<li><a href="#_limiting_the_execution_time">Limiting the execution time</a></li>
+<li><a href="#_adding_mrpe_plug_ins">Adding MRPE plug-ins</a></li>
+</ul>
+</li>
+<li><a href="#_mrpe_with_the_agent_bakery">9.2. MRPE with the Agent Bakery</a></li>
+</ul>
+</li>
+<li><a href="#hw_monitoring">10. Monitoring hardware</a></li>
+<li><a href="#uninstall">11. Uninstallation</a></li>
+<li>
+<a href="#files">12. Files and directories</a><ul class="sectlevel1">
+<li><a href="#_paths_on_the_monitored_windows_host">12.1. Paths on the monitored Windows host</a></li>
+<li><a href="#_paths_on_the_checkmk_server">12.2. Paths on the Checkmk server</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

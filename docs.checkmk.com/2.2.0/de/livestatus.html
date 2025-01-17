@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Livestatus ist die Schnittstelle, um direkten Zugriff auf alle Daten der überwachten Objekte zu haben. Dieser Artikel führt in die Nutzung der API ein.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Statusdaten abrufen via Livestatus">
+<meta name="og:description" content="Livestatus ist die Schnittstelle, um direkten Zugriff auf alle Daten der überwachten Objekte zu haben. Dieser Artikel führt in die Nutzung der API ein.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Statusdaten abrufen via Livestatus</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/livestatus.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/livestatus.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/livestatus.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Statusdaten abrufen via Livestatus</h1>
+<div class="details">
+<span id="revdate">Last modified on 27-Oct-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/onprem/de/livestatus.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="livestatus_references.html">Livestatus Befehlsreferenz</a>
+<a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a>
+<a href="rest_api.html">Die Checkmk REST-API</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Der Livestatus ist die wichtigste Schnittstelle in Checkmk. Durch sie bekommen
+Sie schnellstmöglich und live Zugriff auf alle Daten der überwachten Hosts
+und Services. So werden z.B. die Daten im <a href="user_interface.html#overview">Overview</a> direkt über
+diese Schnittstelle abgerufen. Da diese direkt aus dem RAM geholt werden,
+werden langsame Festplattenzugriffe vermieden und es gibt einen schnellen
+Zugriff auf das Monitoring, ohne das System zu sehr zu belasten.</p></div>
+<div class="paragraph"><p>Um die Daten zu strukturieren, werden sie in Tabellen und Spalten geordnet. Die
+Tabelle <code>hosts</code> enthält dann z.B. die Spalten <code>name</code>,
+<code>state</code> und viele weitere. Jede Zeile in der Tabelle <code>hosts</code>
+repräsentiert dabei einen Host, in der Tabelle <code>services</code> einen
+Service usw. Auf diese Weise können die Daten einfach durchsucht und
+abgerufen werden.</p></div>
+<div class="paragraph"><p>Dieser Artikel soll Ihnen helfen, diese Schnittstelle für eigene Abfragen,
+Erweiterungen und Anpassungen zu nutzen. Alle Abfragen und Kommandos in diesem
+Artikel können Sie als Instanzbenutzer durch Copy&amp;Paste direkt ausprobieren.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_lql">
+<span class="hidden-anchor sr-only" id="lql"></span>2. Die Livestatus Query Language (LQL)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_lql_shell">
+<span class="hidden-anchor sr-only" id="lql_shell"></span>2.1. Nutzung der LQL in der Shell</h3>
+<div class="paragraph"><p>Der Zugriff zum Livestatus erfolgt über einen Unix-Socket unter Benutzung
+der <em>Livestatus Query Language (LQL)</em>. Diese ist in ihrer Syntax an
+HTTP angelehnt.</p></div>
+<div class="paragraph"><p>Sie können auf der Kommandozeile auf verschiedene Arten auf die Schnittstelle
+zugreifen. Eine Möglichkeit ist es, über die Kommandos <code>printf</code> und
+<code>unixcat</code> den Befehl an den Socket zu leiten. Checkmk liefert für
+den Instanzbenutzer das Tool <code>unixcat</code> bereits mit. <strong>Wichtig:</strong>
+Alle Eingaben an den Socket unterscheiden Groß- und Kleinschreibung, so
+dass diese immer eingehalten werden muss:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">printf</span><span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name\n"</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>unixcat<span class="tok-w"> </span>~/tmp/run/live</code></pre></div></div>
+<div class="paragraph"><p>Die Schnittstelle erwartet alle Befehle und Header in jeweils einer eigenen
+Zeile. Markieren Sie daher jeden Zeilenumbruch mit einem <code>\n</code>. Als
+Alternative zu dem Kommando oben können Sie auch den Skriptbefehl <code>lq</code>
+nutzen, welcher Ihnen einiges bei der Eingabe abnimmt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name"</span></code></pre></div></div>
+<div class="paragraph"><p>Oder Sie starten den interaktiven Eingabe-Stream und geben dann den Befehl
+und die Header nacheinander ein. Mit einer Leerzeile führen Sie den Befehl
+mit seinen Headern aus und eine weitere Zeile beendet den Zugriff auf den
+Socket. Beachten Sie, dass in dem Beispiel alles vor der ersten Leerzeile
+zum dem Befehl gehört und alles zwischen der ersten und zweiten Leerzeile
+die Antwort ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET hosts</span>
+<span class="tok-go">Columns: name</span>
+
+<span class="tok-go">myserver123</span>
+<span class="tok-go">myserver124</span>
+<span class="tok-go">myserver125</span>
+
+<span class="tok-gp">OMD[mysite]:~$</span></code></pre></div></div>
+<div class="paragraph"><p>Die folgenden Beispiele werden immer mit dem <code>lq</code>-Befehl ausgeführt; in direkter
+Form, wenn der Aufruf kurz ist und als Eingabe-Stream bei einem längeren.</p></div>
+<div class="sect3">
+<h4 id="heading__befehle_der_lql">
+<span class="hidden-anchor sr-only" id="_befehle_der_lql"></span>Befehle der LQL</h4>
+<div class="paragraph"><p>In den ersten Beispielen haben Sie bereits den ersten der beiden Befehle
+gesehen: Mit <code>GET</code> können Sie alle verfügbaren Tabellen abrufen. In
+der Befehlsreferenz finden Sie eine vollständige Liste aller verfügbaren
+<a href="livestatus_references.html#tables">Tabellen</a> mit einer Beschreibung In diesem
+Artikel wird die generelle Benutzung des Livestatus gezeigt.</p></div>
+<div class="paragraph"><p>Mit <code>COMMAND</code> können Sie Kommandos direkt an den Core schicken,
+um z.B. eine Downtime zu setzen oder Benachrichtigungen komplett zu
+deaktivieren. Eine Liste aller verfügbaren Kommandos finden Sie ebenfalls
+in der Befehlsreferenz bei den <a href="livestatus_references.html#commands">Commands</a>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__header_in_der_lql">
+<span class="hidden-anchor sr-only" id="_header_in_der_lql"></span>Header in der LQL</h4>
+<div class="paragraph"><p>Zu jedem GET-Befehl können Sie verschiedene Header hinzufügen, um das
+Ergebnis der Abfrage einzugrenzen, nur bestimmte Spalten einer Tabelle
+auszugeben und vieles mehr. Die beiden wichtigsten Header sind die folgenden:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Header</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Columns</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es werden nur die angegebenen Spalten einer Abfrage ausgegeben.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es werden nur die Einträge ausgegeben, auf die eine bestimmte Bedingung zutrifft.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Eine Liste aller Header mit einer Kurzbeschreibung finden Sie
+<a href="livestatus_references.html#hdr">hier</a>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_columns">
+<span class="hidden-anchor sr-only" id="columns"></span>Verfügbare Spalten und Tabellen anzeigen</h4>
+<div class="paragraph"><p>Sie werden sich nicht alle Tabellen und deren Spalten merken können und
+haben vielleicht auch nicht immer auf dieses Handbuch (mit den Referenzen
+in der Online-Version) Zugriff. Es lässt sich jedoch schnell eine Abfrage
+erstellen, welche die gewünschten Informationen bereit stellt. Um eine Liste
+aller verfügbaren Tabellen zu bekommen führen Sie die folgende Abfrage aus
+und entfernen in der Ausgabe die duplizierten Zeilen mit <code>sort</code>. In
+der Ausgabe sehen Sie die ersten vier Zeilen als Beispielausgabe:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET columns\nColumns: table"</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>sort<span class="tok-w"> </span>-u
+<span class="tok-go">columns</span>
+<span class="tok-go">commands</span>
+<span class="tok-go">comments</span>
+<span class="tok-go">contactgroups</span></code></pre></div></div>
+<div class="paragraph"><p>Für die Abfrage aller Spalten zu einer Tabelle müssen Sie diese natürlich
+angeben. Ersetzen Sie daher <code>hosts</code> durch die gewünschte Tabelle. Auch
+hier sind die ersten vier Zeilen der Ausgabe als Beispiel zu sehen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET columns\nFilter: table = hosts\nColumns: name"</span>
+<span class="tok-go">accept_passive_checks</span>
+<span class="tok-go">acknowledged</span>
+<span class="tok-go">acknowledgement_type</span>
+<span class="tok-go">action_url</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_lql_python">
+<span class="hidden-anchor sr-only" id="lql_python"></span>2.2. Nutzung der LQL in Python</h3>
+<div class="paragraph"><p>Da Checkmk sehr stark auf Python aufbaut, bieten sich Skripten in dieser
+Sprache an. Für den Zugriff auf den Socket des Livestatus können Sie das
+folgende Skript als Ausgangsbasis nutzen:</p></div>
+<div class="listingblock">
+<div class="title">live_example.py</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-ch">#!/usr/bin/env python</span>
+<span class="tok-c1"># Sample program for accessing Livestatus from Python</span>
+
+<span class="tok-kn">import</span> <span class="tok-nn">json</span><span class="tok-o">,</span> <span class="tok-nn">os</span><span class="tok-o">,</span> <span class="tok-nn">socket</span>
+
+<span class="tok-c1"># for local site only: file path to socket</span>
+<span class="tok-n">address</span> <span class="tok-o">=</span> <span class="tok-s2">"</span><span class="tok-si">%s</span><span class="tok-s2">/tmp/run/live"</span> <span class="tok-o">%</span> <span class="tok-n">os</span><span class="tok-o">.</span><span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s2">"OMD_ROOT"</span><span class="tok-p">)</span>
+<span class="tok-c1"># for local/remote sites: TCP address/port for Livestatus socket</span>
+<span class="tok-c1"># address = ("localhost", 6557)</span>
+
+<span class="tok-c1"># connect to Livestatus</span>
+<span class="tok-n">family</span> <span class="tok-o">=</span> <span class="tok-n">socket</span><span class="tok-o">.</span><span class="tok-n">AF_INET</span> <span class="tok-k">if</span> <span class="tok-nb">type</span><span class="tok-p">(</span><span class="tok-n">address</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-nb">tuple</span> <span class="tok-k">else</span> <span class="tok-n">socket</span><span class="tok-o">.</span><span class="tok-n">AF_UNIX</span>
+<span class="tok-n">sock</span> <span class="tok-o">=</span> <span class="tok-n">socket</span><span class="tok-o">.</span><span class="tok-n">socket</span><span class="tok-p">(</span><span class="tok-n">family</span><span class="tok-p">,</span> <span class="tok-n">socket</span><span class="tok-o">.</span><span class="tok-n">SOCK_STREAM</span><span class="tok-p">)</span>
+<span class="tok-n">sock</span><span class="tok-o">.</span><span class="tok-n">connect</span><span class="tok-p">(</span><span class="tok-n">address</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># send our request and let Livestatus know we're done</span>
+<span class="tok-n">sock</span><span class="tok-o">.</span><span class="tok-n">sendall</span><span class="tok-p">(</span><span class="tok-nb">str</span><span class="tok-o">.</span><span class="tok-n">encode</span><span class="tok-p">(</span><span class="tok-s2">"GET status</span><span class="tok-se">\n</span><span class="tok-s2">OutputFormat: json</span><span class="tok-se">\n</span><span class="tok-s2">"</span><span class="tok-p">))</span>
+<span class="tok-n">sock</span><span class="tok-o">.</span><span class="tok-n">shutdown</span><span class="tok-p">(</span><span class="tok-n">socket</span><span class="tok-o">.</span><span class="tok-n">SHUT_WR</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># receive the reply as a JSON string</span>
+<span class="tok-n">chunks</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+<span class="tok-k">while</span> <span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">chunks</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-mi">0</span> <span class="tok-ow">or</span> <span class="tok-n">chunks</span><span class="tok-p">[</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">]</span> <span class="tok-o">!=</span> <span class="tok-s2">""</span><span class="tok-p">:</span>
+    <span class="tok-n">data</span> <span class="tok-o">=</span> <span class="tok-n">sock</span><span class="tok-o">.</span><span class="tok-n">recv</span><span class="tok-p">(</span><span class="tok-mi">4096</span><span class="tok-p">)</span>
+    <span class="tok-n">chunks</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-nb">str</span><span class="tok-p">(</span><span class="tok-n">data</span><span class="tok-o">.</span><span class="tok-n">decode</span><span class="tok-p">(</span><span class="tok-s2">"utf-8"</span><span class="tok-p">)))</span>
+<span class="tok-n">sock</span><span class="tok-o">.</span><span class="tok-n">close</span><span class="tok-p">()</span>
+<span class="tok-n">reply</span> <span class="tok-o">=</span> <span class="tok-s2">""</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">chunks</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># print the parsed reply</span>
+<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">loads</span><span class="tok-p">(</span><span class="tok-n">reply</span><span class="tok-p">))</span></code></pre></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__nutzung_der_livestatus_api">
+<span class="hidden-anchor sr-only" id="_nutzung_der_livestatus_api"></span>2.3. Nutzung der Livestatus-API</h3>
+<div class="paragraph"><p>Checkmk stellt auch eine API für die Programmiersprachen Python, Perl und
+C++ zur Verfügung, welche den Zugriff auf den Livestatus vereinfachen. Zu
+jeder Sprache steht Ihnen Beispielcode zur Verfügung, welcher die Nutzung
+erläutert. Die Pfade zu diesen Beispielen finden Sie in dem Kapitel
+<a href="#files">Dateien und Verzeichnisse</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__einfache_abfragen">
+<span class="hidden-anchor sr-only" id="_einfache_abfragen"></span>3. Einfache Abfragen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__spalten_abfragen_columns">
+<span class="hidden-anchor sr-only" id="_spalten_abfragen_columns"></span>3.1. Spalten abfragen (Columns)</h3>
+<div class="paragraph"><p>Bisher wurden in den Beispielen alle Informationen zu allen Hosts abgefragt. In
+der Praxis möchten Sie aber wahrscheinlich nur bestimmte Informationen
+(Spalten) haben. Mit dem bereits erwähnten Header <code>Columns</code> können
+Sie die Ausgabe auf diese Spalten eingrenzen. Die einzelnen Spaltennamen
+werden durch ein einfaches Leerzeichen getrennt.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name address"</span>
+<span class="tok-go">myserver123;192.168.0.42</span>
+<span class="tok-go">myserver234;192.168.0.73</span></code></pre></div></div>
+<div class="paragraph"><p>Wie Sie sehen, erfolgt die Trennung der einzelnen Werte einer Zeile wiederum
+durch ein Semikolon.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Wenn Sie diesen Header benutzen, werden die Kopfzeilen
+in der Ausgabe unterdrückt. Sie können diese aber mit dem Header
+<a href="#columnheader">ColumnHeaders</a> der Ausgabe wieder hinzufügen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__einfache_filter_setzen_filter">
+<span class="hidden-anchor sr-only" id="_einfache_filter_setzen_filter"></span>3.2. Einfache Filter setzen (Filter)</h3>
+<div class="paragraph"><p>Um die Abfrage nur auf bestimmte Zeilen einzugrenzen, können Sie Spalten auf
+bestimmte Inhalte filtern. Wenn Sie also nur Services mit einem bestimmten
+Status suchen, können Sie das durch einen Filter realisieren:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET services\nColumns: host_name description state\nFilter: state = 2"</span>
+<span class="tok-go">myserver123;Filesystem /;2</span>
+<span class="tok-go">myserver234;ORA MYINST Processes;2</span></code></pre></div></div>
+<div class="paragraph"><p>In dem Beispiel wird nach allen Services gesucht, deren Status <span class="state2">CRIT</span> ist;
+anschließend werden der Hostname, die Servicebeschreibung und dessen Status ausgegeben. Sie
+können solche Filter natürlich auch kombinieren und weiter einschränken
+auf Services, deren Status <span class="state2">CRIT</span> ist <strong>und</strong> noch nicht bestätigt wurde:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET services\nColumns: host_name description state\nFilter: state = 2\nFilter: acknowledged = 0"</span>
+<span class="tok-go">myserver234;Filesystem /;2</span></code></pre></div></div>
+<div class="paragraph"><p>Wie Sie sehen, kann man auch nach Spalten filtern, die nicht in <code>Columns</code>
+aufgelistet sind.</p></div>
+<div class="sect3">
+<h4 id="heading__operatoren_und_reguläre_ausdrücke">
+<span class="hidden-anchor sr-only" id="_operatoren_und_reguläre_ausdrücke"></span>Operatoren und reguläre Ausdrücke</h4>
+<div class="paragraph"><p>Bisher haben Sie nur auf die Übereinstimmung von Zahlen gefiltert. Sie
+können das vorläufige Ergebnis einer Abfrage aber auch auf
+„kleiner als“ bei Zahlen oder auf Zeichenketten durchsuchen. Die
+Ihnen zur Verfügung stehenden Operatoren finden Sie im Kapitel
+<a href="livestatus_references.html#operators">Operatoren</a>
+der Befehlsreferenz. Dadurch können Sie z.B. auch über reguläre Ausdrücke
+in den Spalten filtern:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET services\nColumns: host_name description state\nFilter: description ~~ exchange database|availability"</span>
+<span class="tok-go">myserver123;Exchange Database myinst1;1</span>
+<span class="tok-go">myserver123;Exchange Availability Service;0</span>
+<span class="tok-go">myserver234;Exchange Database myinst3;0</span></code></pre></div></div>
+<div class="paragraph"><p>Mit dem richtigen Operator können Sie auf verschiedene Art und Weise
+mit regulären Ausdrücken die Spalten durchsuchen. Der Livestatus
+wird einen solchen Ausdruck grundsätzlich immer als „kann irgendwo in
+der Spalte vorkommen“ interpretieren, sofern das nicht entsprechend
+anders definiert wurde. Auf den Anfang einer Zeile verweisen Sie z.B. mit
+dem Zeichen <code>^</code>, während Sie mit dem Zeichen <code>$</code> auf das
+Ende einer Zeile hinweisen. Eine ausführliche Liste aller Sonderzeichen
+für Reguläre Ausdrücke in Checkmk finden Sie in dem Artikel für
+<a href="regexes.html#characters">Reguläre Ausdrücke</a>.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__komplexe_abfragen">
+<span class="hidden-anchor sr-only" id="_komplexe_abfragen"></span>4. Komplexe Abfragen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_filter">
+<span class="hidden-anchor sr-only" id="filter"></span>4.1. Filter für Listen</h3>
+<div class="paragraph"><p>Manche Spalten einer Tabelle liefern nicht nur einen Wert zurück,
+sondern gleich eine ganze Liste davon. Damit Sie auch diese
+effektiv durchsuchen können, haben die Operatoren hier eine andere
+Bedeutung. Eine vollständige Liste der Operatoren finden Sie bei den
+<a href="livestatus_references.html#list_operators">Operatoren für Listen</a>.
+So hat z.B. der Operator <code>&gt;=</code> die Bedeutung „enthält“. Mit diesem
+können Sie z.B. nach einem bestimmten Kontakt suchen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name address contacts\nFilter: contacts &gt;= hhirsch"</span>
+<span class="tok-go">myserver123;192.168.0.42;hhirsch,hhirsch,mfrisch</span>
+<span class="tok-go">myserver234;192.168.0.73;hhirsch,wherrndorf</span></code></pre></div></div>
+<div class="paragraph"><p>Wie Sie in dem Beispiel sehen, werden die Kontakte in der Spalte
+<code>contacts</code> kommasepariert aufgelistet. Dadurch lassen sie sich eindeutig
+von dem Beginn einer neuen Spalte unterscheiden. Eine Besonderheit stellt
+bei den Listen der Gleichheitsoperator dar. Er prüft, ob eine Liste leer ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name contacts\nFilter: contacts ="</span>
+<span class="tok-go">myserver345;</span>
+<span class="tok-go">myserver456;</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_combining">
+<span class="hidden-anchor sr-only" id="combining"></span>4.2. Filter kombinieren</h3>
+<div class="paragraph"><p>Bereits vorher wurden mehrere Filter kombiniert. Dabei erscheint es intuitiv,
+dass die Daten alle Filter passieren müssen, um angezeigt zu werden. Die
+Filter werden also mit einem logischen <strong>und</strong> verknüpft. Um bestimmte
+Filter mit einem logischen <strong>oder</strong> zu verknüpfen, können Sie am Ende der
+Filterreihe ein <code>Or:</code> gefolgt von einer Ganzzahl  einfügen. Der Counter
+bestimmt, wie viele der letzten Zeilen zu einem <strong>oder</strong> zusammengefasst
+werden. Dadurch können Sie Gruppen bilden und diese beliebig kombinieren. Ein
+einfaches Beispiel ist das folgende. Hier werden zwei Filter so kombiniert,
+dass alle Services angezeigt werden, die entweder den Status <span class="state1">WARN</span> oder
+<span class="state3">UNKNOWN</span> haben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">Columns: host_name description state</span>
+<span class="tok-go">Filter: state = 1</span>
+<span class="tok-go">Filter: state = 3</span>
+<span class="tok-go">Or: 2</span>
+
+<span class="tok-go">myserver123;Log /var/log/messages;1</span>
+<span class="tok-go">myserver123;Interface 3;1</span>
+<span class="tok-go">myserver234;Bonding Interface SAN;3</span>
+
+<span class="tok-gp">OMD[mysite]:~$</span></code></pre></div></div>
+<div class="paragraph"><p>Sie können das Ergebnis einer Kombination aber auch negieren oder Gruppen
+wiederum zu Gruppen zusammenfassen. In dem Beispiel werden alle Services
+angezeigt, deren Status nicht <span class="state0">OK</span> ist und deren Beschreibung entweder nicht
+mit <code>Filesystem</code> anfängt oder einen anderen Status als <span class="state3">UNKNOWN</span> hat:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">Columns: host_name description state</span>
+<span class="tok-go">Filter: state = 3</span>
+<span class="tok-go">Filter: description ~ Filesystem</span>
+<span class="tok-go">And: 2</span>
+<span class="tok-go">Filter: state = 0</span>
+<span class="tok-go">Or: 2</span>
+<span class="tok-go">Negate:</span>
+
+<span class="tok-go">myserver123;Log /var/log/messages;1</span>
+<span class="tok-go">myserver123;Interface 3;1</span>
+<span class="tok-go">myserver234;Filesystem /media;2</span>
+<span class="tok-go">myserver234;Filesystem /home;2</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__das_ausgabeformat_festlegen">
+<span class="hidden-anchor sr-only" id="_das_ausgabeformat_festlegen"></span>4.3. Das Ausgabeformat festlegen</h3>
+<div class="paragraph"><p>Sie können das Ausgabeformat auf zwei verschiedene Arten festlegen.
+Zum einen können Sie die Separatoren der Standardausgabe neu definieren. Zum
+anderen kann die Ausgabe auch Python- oder JSON-konform erfolgen.</p></div>
+<div class="sect3">
+<h4 id="heading_csv">
+<span class="hidden-anchor sr-only" id="csv"></span><code>csv</code> anpassen</h4>
+<div class="paragraph"><p>Wie bereits beschrieben, können Sie die genaue Formatierung des Standardausgabeformates <code>csv</code> (kleingeschrieben!)
+anpassen und definieren, wie die einzelnen Elemente voneinander getrennt werden
+sollen. Checkmk kennt hier vier verschiedene Separatoren, um die Daten zu
+strukturieren. Nach dem Doppelpunkt geben Sie dazu die entsprechenden Standard-ASCII-Werte an, so dass der Filter wie folgt aufgebaut ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">Separators: 10 59 44 124</span></code></pre></div></div>
+<div class="paragraph"><p>Diese Trenner haben nun die folgende Bedeutung:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Trenner für die Datensätze: <code>10</code> (Zeilenumbruch)</p></li>
+<li><p>Trenner für die Spalten eines Datensatzes: <code>59</code> (Semikolon)</p></li>
+<li><p>Trenner für die Elemente einer Liste: <code>44</code> (Komma)</p></li>
+<li><p>Trenner für die Elemente einer Serviceliste: <code>124</code> (Pipe)</p></li>
+</ol></div>
+<div class="paragraph"><p>Jeden dieser Werte können Sie anpassen, um die Ausgabe nach den eigenen
+Wünschen zu strukturieren. In dem folgenden Beispiel werden die einzelnen
+Spalten eines Datensatzes nicht mit Hilfe eines Semikolons (59), sondern mit
+einem Tabulator (9) getrennt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">Columns: host_name description state</span>
+<span class="tok-go">Filter: description ~ Filesystem</span>
+<span class="tok-go">Separators: <span class="hilite">10 9 44 124</span></span>
+
+<span class="tok-go">myserver123     Filesystem /opt     0</span>
+<span class="tok-go">myserver123     Filesystem /var/some/path       1</span>
+<span class="tok-go">myserver123     Filesystem /home        0</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Die Reihenfolge der Separatoren ist fest und darf daher
+nicht vertauscht werden.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_output_format">
+<span class="hidden-anchor sr-only" id="output_format"></span>Ausgabeformat ändern</h4>
+<div class="paragraph"><p>Neben einer Ausgabe in <code>csv</code> kann Livestatus für Sie auch andere
+Formate erzeugen. Diese haben den Vorteil, dass sie sich in höheren
+Programmiersprachen leichter und sauberer parsen lassen. Sie können sich die
+Ausgabe demnach in den folgenden Formaten kodieren lassen:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Format</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erzeugt die Ausgabe als Liste kompatibel zu Python 2.x. Text wird in Unicode formatiert.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">python3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erzeugt ebenso die Ausgabe als Liste und berücksichtigt dabei Änderungen in den Datentypen, wie z.B. die automatische Konvertierung von Text zu Unicode.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">json</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Ausgabe wird ebenfalls als Liste zurückgegeben. Es werden dabei jedoch nur JSON-kompatible Formate verwendet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Formatiert die Ausgabe nach <a href="https://tools.ietf.org/html/rfc4180" target="_blank">RFC-4180</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">csv</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Siehe <a href="#csv"><code>csv</code> anpassen</a>. Das ist das Standardformat, wenn nichts angegeben wird und an das offizielle CSV-Format angelehnt.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Verwechseln Sie das <code>CSV-Format</code> bitte nicht
+mit der <code>csv</code>-Ausgabe des Livestatus, welches verwendet wird, wenn
+kein Ausgabeformat festgelegt wurde. Eine korrekte Groß-/Kleinschreibung
+ist daher absolut notwendig. Für die Anpassung übergeben Sie am Ende ein
+<code>OutputFormat</code> statt des <code>Separator</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">Columns: host_name description state</span>
+<span class="tok-go">Filter: description ~ Filesystem</span>
+<span class="tok-go">OutputFormat: json</span>
+
+<span class="tok-go">[["myserver123","Filesystem /opt",0]</span>
+<span class="tok-go">["myserver123","Filesystem /var/some/path",1]</span>
+<span class="tok-go">["myserver123","Filesystem /home",0]]</span></code></pre></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_retrieving_statistics">
+<span class="hidden-anchor sr-only" id="retrieving_statistics"></span>5. Statistiken abrufen (Stats)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__einleitung_2">
+<span class="hidden-anchor sr-only" id="_einleitung_2"></span>5.1. Einleitung</h3>
+<div class="paragraph"><p>Es wird Situationen geben, in denen Sie gar nicht daran interessiert sind,
+wie der Status eines einzelnen oder einer Gruppe von Services ist. Vielmehr
+ist die Anzahl der Services wichtig, welche gerade <span class="state1">WARN</span> sind oder die
+Anzahl der überwachten Datenbanken. Livestatus ist in der Lage mit
+<code>Stats</code> Statistiken zu erstellen und auszugeben.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__zählen">
+<span class="hidden-anchor sr-only" id="_zählen"></span>5.2. Zählen</h3>
+<div class="paragraph"><p>Der <span class="guihint">Overview</span> bekommt seine Daten, indem er über Livestatus
+Statistiken zu Hosts, Services und Events abruft und dann in der Oberfläche
+von Checkmk darstellt. Mit dem direkten Zugriff auf Livestatus können
+Sie ebenfalls eigene Aufsummierungen erstellen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">Stats: state = 0</span>
+<span class="tok-go">Stats: state = 1</span>
+<span class="tok-go">Stats: state = 2</span>
+<span class="tok-go">Stats: state = 3</span>
+
+<span class="tok-go">34506;124;54;20</span></code></pre></div></div>
+<div class="paragraph"><p>Solche Statistiken lassen sich übrigens auch mit allen
+<a href="#filter">Filtern</a> kombinieren.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__gruppieren">
+<span class="hidden-anchor sr-only" id="_gruppieren"></span>5.3. Gruppieren</h3>
+<div class="paragraph"><p>Auch Statistiken lassen sich mit <code>and/or</code> zusammenfassen. Die Header
+heißen dann <code>StatsAnd</code> oder <code>StatsOr</code>. Wenn Sie die Ausgabe
+umkehren wollen, benutzen Sie <code>StatsNegate</code>. In dem Beispiel wird
+die Gesamtzahl der Hosts ausgegeben (das erste <code>Stats</code>) und dazu die
+Anzahl derer, die als <code>stale</code> markiert wurden und sich nicht in einer
+Downtime befinden (Stats 2 und 3 werden mit einem logischen UND verknüpft):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET hosts</span>
+<span class="tok-go">Stats: state &gt;= 0</span>
+<span class="tok-go">Stats: staleness &gt;= 3</span>
+<span class="tok-go">Stats: scheduled_downtime_depth = 0</span>
+<span class="tok-go">StatsAnd: 2</span>
+
+<span class="tok-go">734;23</span></code></pre></div></div>
+<div class="paragraph"><p>Verwechseln Sie nicht die unterschiedlichen Möglichkeiten, die Ergebnisse der
+Filter und Statistiken zusammenzufassen. Während bei dem Header
+<a href="#combining"><code>Filter</code></a> alle Hosts ausgegeben werden, auf die
+die Bedingungen zutreffen, wird bei den Statistiken die Summe ausgegeben, wie oft
+die <code>Stats</code>-Filter zutreffen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__minimum_maximum_durchschnitt_etc">
+<span class="hidden-anchor sr-only" id="_minimum_maximum_durchschnitt_etc"></span>5.4. Minimum, Maximum, Durchschnitt etc.</h3>
+<div class="paragraph"><p>Sie können auch Berechnungen an Werten durchführen und
+z.B. den Durchschnittswert oder das Maximum ausgeben lassen. Eine
+vollständige Liste der möglichen Operatoren finden Sie
+<a href="livestatus_references.html#stats">hier</a>.</p></div>
+<div class="paragraph"><p>In dem folgenden Beispiel wird die durchschnittliche, minimale und maximale
+Zeit ausgegeben, welche die Check-Plugins eines Hosts für die Berechnung
+eines Status benötigen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">Filter: host_name = myserver123</span>
+<span class="tok-go">Stats: avg execution_time</span>
+<span class="tok-go">Stats: max execution_time</span>
+<span class="tok-go">Stats: min execution_time</span>
+
+<span class="tok-go">0.0107628;0.452087;0.008593</span></code></pre></div></div>
+<div class="paragraph"><p>Berechnungen von Metriken werden etwas besonders behandelt. Auch hier sind
+alle Funktionen des <code>Stats</code>-Header möglich. Diese werden jedoch auf
+<strong>alle</strong> Metriken eines Service <strong>einzeln</strong> angewandt. Nachfolgend werden
+als Beispiel die Metriken der CPU-Benutzung einer Host-Gruppe aufsummiert:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">Filter: decription ~ CPU utilization</span>
+<span class="tok-go">Filter: host_groups &gt;= cluster_a</span>
+<span class="tok-go">Stats: sum perf_data</span>
+
+<span class="tok-go">guest=0.000000 steal=0.000000 system=34.515000 user=98.209000 wait=23.008000</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__begrenzung_der_ausgabe_limit">
+<span class="hidden-anchor sr-only" id="_begrenzung_der_ausgabe_limit"></span>6. Begrenzung der Ausgabe (Limit)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die Anzahl der Zeilen in der Ausgabe ist begrenzbar. Das kann z.B. nützlich
+sein, wenn Sie nur sehen wollen, ob überhaupt eine Antwort auf eine
+Livestatus-Anfrage zurückkommt, aber eine seitenlange Ausgabe verhindern
+wollen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$  </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name\nLimit: 3"</span>
+<span class="tok-go">myserver123</span>
+<span class="tok-go">myserver234</span>
+<span class="tok-go">myserver345</span></code></pre></div></div>
+<div class="paragraph"><p>Beachten Sie, dass dieses Limit auch funktioniert, wenn Sie es mit anderen
+Headern kombinieren. Wenn Sie z.B. mit <code>Stat</code> zählen, wie viele Hosts den Status <span class="hstate0">UP</span>
+haben und die Ausgabe auf 10 begrenzen, werden nur die ersten 10 Hosts
+berücksichtigt.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__zeitbeschränkungen_timelimit">
+<span class="hidden-anchor sr-only" id="_zeitbeschränkungen_timelimit"></span>7. Zeitbeschränkungen (Timelimit)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sie können nicht nur die Anzahl der ausgegebenen Zeilen einschränken. Auch
+die maximale Zeit, wie lange eine Abfrage dauern darf, können Sie
+begrenzen. Damit verhindern Sie, dass eine Livestatus-Abfrage nicht für immer
+eine Verbindung blockiert, weil sie aus irgendwelchen Gründen hängt. Die
+Zeitbeschränkung gibt dabei die Zeit in Sekunden an, die die Verarbeitung einer
+Abfrage dauern darf:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nTimelimit: 1"</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_columnheader">
+<span class="hidden-anchor sr-only" id="columnheader"></span>8. Kopfzeilen aktivieren (ColumnHeaders)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Mit den <code>ColumnHeaders</code> können Sie zu der Ausgabe die Namen der
+Spalten ausgeben lassen. Diese werden normalerweise unterdrückt, um die
+Weiterbearbeitung zu vereinfachen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$  </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns name address groups\nColumnHeaders: on"</span>
+<span class="tok-go">name;address;groups</span>
+<span class="tok-go">myserver123;192.168.0.42;cluster_a,headnode</span>
+<span class="tok-go">myserver234;192.168.0.43;cluster_a</span>
+<span class="tok-go">myserver345;192.168.0.44;cluster_a</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__berechtigungen_authuser">
+<span class="hidden-anchor sr-only" id="_berechtigungen_authuser"></span>9. Berechtigungen (AuthUser)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wenn Sie Skripten auf Basis des Livestatus zur Verfügung stellen möchten,
+sollen die Nutzer wahrscheinlich nur die Daten sehen, für die sie auch
+berechtigt sind. Checkmk stellt dafür den Header <code>AuthUser</code> mit
+der Einschränkung zur Verfügung, dass dieser nicht in den folgenden
+Tabellen benutzt werden kann:</p></div>
+<div class="ulist"><ul>
+<li><p><code>columns</code></p></li>
+<li><p><code>commands</code></p></li>
+<li><p><code>contacts</code></p></li>
+<li><p><code>contactgroups</code></p></li>
+<li><p><code>eventconsolerules</code></p></li>
+<li><p><code>eventconsolestatus</code></p></li>
+<li><p><code>status</code></p></li>
+<li><p><code>timeperiods</code></p></li>
+</ul></div>
+<div class="paragraph"><p>Umgekehrt bedeutet es, dass Sie diesen Header in allen Tabellen nutzen können,
+die auf die Tabellen <code>hosts</code> oder <code>services</code> zugreifen. Ob ein
+Nutzer nun berechtigt ist, hängt dabei von seinen Kontaktgruppen ab.</p></div>
+<div class="paragraph"><p>Auf diese Weise werden bei einer Abfrage nur diejenigen Daten ausgegeben,
+die der Kontakt auch sehen darf. Beachten Sie hier den Unterschied
+zwischen <a href="wato_user.html#visibility_host"><code>strict</code> und <code>loose</code></a> bei den
+Berechtigungseinstellungen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET services\nColumns: host_name description contacts\nAuthUser: hhirsch"</span>
+<span class="tok-go">myserver123;Uptime;hhirsch</span>
+<span class="tok-go">myserver123;TCP Connections;hhirsch</span>
+<span class="tok-go">myserver123;CPU utilization;hhrisch,kkleber</span>
+<span class="tok-go">myserver123;File /etc/resolv.conf;hhirsch</span>
+<span class="tok-go">myserver123;Kernel Context Switches;hhrisch,kkleber</span>
+<span class="tok-go">myserver123;File /etc/passwd;hhirsch</span>
+<span class="tok-go">myserver123;Filesystem /home;hhirsch</span>
+<span class="tok-go">myserver123;Kernel Major Page Faults;hhrisch</span>
+<span class="tok-go">myserver123;Kernel Process Creations;hhirsch</span>
+<span class="tok-go">myserver123;CPU load;hhrisch,kkleber</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__verzögerungen_wait">
+<span class="hidden-anchor sr-only" id="_verzögerungen_wait"></span>10. Verzögerungen (Wait)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Mit den Wait-Headern erstellen Sie Abfragen, um bestimmte Datensätze zu
+bekommen, ohne wissen zu müssen, wann die Bedingungen für die Daten
+erfüllt sind. Das kann nützlich sein, wenn Sie zu einem bestimmten
+Fehlerbild Vergleichsdaten benötigen, aber das System nicht durchgehend
+sinnlos belasten wollen. Informationen werden demnach nur dann abgerufen,
+wenn Sie auch wirklich benötigt werden.</p></div>
+<div class="paragraph"><p>Eine vollständige Liste der Wait-Header finden Sie <a href="livestatus_references.html#hdr">hier</a>.</p></div>
+<div class="paragraph"><p>In dem folgenden Beispiel wird der Service <span class="guihint">Disk IO SUMMARY</span> eines
+ESXi-Servers ausgegeben, sobald der Status des Service <span class="guihint">CPU load</span> auf einer
+bestimmten VM <span class="state2">CRIT</span> wird. Durch den Header <code>WaitTimeout</code> wird die
+Abfrage auch dann ausgeführt, wenn sie nach 10000 Millisekunden
+nicht eingetreten ist. Das verhindert, dass die Livestatus-Verbindung lange
+blockiert wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">WaitObject: myvmserver CPU load</span>
+<span class="tok-go">WaitCondition: state = 2</span>
+<span class="tok-go">WaitTrigger: state</span>
+<span class="tok-go">WaitTimeout: 10000</span>
+<span class="tok-go">Filter: host_name = myesxserver</span>
+<span class="tok-go">Filter: description = Disk IO SUMMARY</span>
+<span class="tok-go">Columns: host_name description plugin_output</span>
+
+<span class="tok-go">myesxserver;Disk IO SUMMARY;OK - Read: 48.00 kB/s, Write: 454.54 MB/s, Latency: 1.00 ms</span></code></pre></div></div>
+<div class="paragraph"><p>Ein weiterer Anwendungsfall ist die Kombination mit einem <a href="#commands">Kommando.</a>
+Sie können ein Kommando absetzen und die Ergebnisse abrufen, sobald diese verfügbar sind.
+In dem nachfolgenden Beispiel werden die aktuellen Daten eines Services abgerufen und angezeigt.
+Dafür wird zuerst das Kommando übergeben und danach eine normale Abfrage erstellt.
+Diese prüft, ob die Daten des Service Checkmk jünger sind als der definierte Zeitpunkt.
+Sobald die Bedingung erfüllt ist, wird der Status des Service <span class="guihint">Memory</span> ausgegeben.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"COMMAND [</span><span class="tok-k">$(</span>date<span class="tok-w"> </span>+%s<span class="tok-k">)</span><span class="tok-s2">] SCHEDULE_FORCED_SVC_CHECK;myserver;Check_MK;</span><span class="tok-k">$(</span>date
+<span class="tok-go">+%s)"</span>
+<span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET services</span>
+<span class="tok-go">WaitObject: myserver Check_MK</span>
+<span class="tok-go">WaitCondition: last_check &gt;= 1517914646</span>
+<span class="tok-go">WaitTrigger: check</span>
+<span class="tok-go">Filter: host_name = myserver</span>
+<span class="tok-go">Filter: description = Memory</span>
+<span class="tok-go">Columns: host_name description state</span>
+
+<span class="tok-go">myserver;Memory;0</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Achten Sie darauf,
+dass der Zeitstempel in <code>last_check</code> aus dem Beispiel durch einen
+aktuellen ersetzt werden muss.  Andernfalls ist die Bedingung immer erfüllt
+und die Ausgabe kommt sofort.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__zeitzonen_localtime">
+<span class="hidden-anchor sr-only" id="_zeitzonen_localtime"></span>11. Zeitzonen (Localtime)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Viele größere Monitoring-Umgebungen rufen auf globaler Ebene Hosts und
+Services ab. Da kann es schnell zu einer Situation kommen, bei der die
+beteiligten Monitoring-Instanzen in verschiedenen Zeitzonen arbeiten. Da
+Checkmk die zeitzonenunabhängige Unixzeit benutzt, sollte es hier zu
+keinen Problemen kommen.</p></div>
+<div class="paragraph"><p>Falls einer der Server jedoch einer falschen Zeitzone zugeordnet wurde, können
+Sie diese Differenz mit dem Header <code>Localtime</code> ausgleichen. Übergeben
+Sie dazu der Abfrage die aktuelle Zeit. Checkmk wird dann selbstständig
+auf die näher liegende halbe Stunde runden und die Differenz ausgleichen. Sie können
+die Zeit automatisch übergeben, wenn Sie eine direkte Abfrage nutzen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name last_check\nFilter: name = myserver123\nLocaltime: </span><span class="tok-k">$(</span>date<span class="tok-w"> </span>+%s<span class="tok-k">)</span><span class="tok-s2">"</span>
+<span class="tok-go">myserver123;1511173526</span></code></pre></div></div>
+<div class="paragraph"><p>Ansonsten übergeben Sie das Ergebnis aus <code>date +%s</code>, wenn Sie den
+Eingabe-Stream nutzen möchten:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET hosts</span>
+<span class="tok-go">Columns: name last_check</span>
+<span class="tok-go">Filter: name = myserver123</span>
+<span class="tok-go">Localtime: 1511173390</span>
+
+<span class="tok-go">myserver123;Memory;1511173526</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_response_header">
+<span class="hidden-anchor sr-only" id="response_header"></span>12. Statuscodes (ResponseHeader)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wenn Sie eine API schreiben, wollen Sie sehr wahrscheinlich auch einen
+Statuscode als Rückmeldung haben, um die Ausgabe besser verarbeiten zu
+können. Der Header <code>ResponseHeader</code> unterstützt die Werte <code>off</code>
+(Standard) und <code>fixed16</code> und bietet damit eine exakt 16 Bytes lange
+Statusnachricht in der ersten Zeile der Antwort. Im Falle eines Fehlers
+enthalten die weiteren Zeilen eine ausführliche Fehlerbeschreibung zu
+dem Statuscode. Sie eignet sich dadurch auch gut für eine Fehlersuche in
+der Abfrage.</p></div>
+<div class="paragraph"><p>Die Statusnachricht der ersten Zeile setzt sich folgendermaßen zusammen:</p></div>
+<div class="ulist"><ul>
+<li><p>Byte 1-3: Der Statuscode. Die komplette Tabelle der möglichen Codes finden Sie <a href="livestatus_references.html#response">hier</a>.</p></li>
+<li><p>Byte 4: Ein einfaches Leerzeichen (ASCII-Zeichen: 32).</p></li>
+<li><p>Byte 5-15: Die Länge der eigentlichen Antwort als Ganzzahl. Nicht benötigte Bytes werden mit Leerzeichen aufgefüllt.</p></li>
+<li><p>Byte 16: Ein Zeilenvorschub (ASCII-Zeichen: 10).</p></li>
+</ul></div>
+<div class="paragraph"><p>In dem folgenden Beispiel führen Sie eine fehlerhafte Abfrage aus, indem Sie
+einen Filter falsch setzen bzw. mit dem Namen einer Spalte <em>verwechseln.</em></p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nName: myserver123\nResponseHeader: fixed16"</span>
+<span class="tok-go">400          33</span>
+<span class="tok-go">Coluns: undefined request header</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Das <a href="#output_format">Ausgabeformat</a> ist im Fehlerfall
+immer eine Fehlermeldung in Textform. Das gilt unabhängig davon, wie Sie
+es angepasst haben.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_keepalive">
+<span class="hidden-anchor sr-only" id="keepalive"></span>13. Verbindung aufrecht erhalten (KeepAlive)</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Gerade bei Skripten, welche eine Livestatus-Verbindung über das
+<a href="#network">Netzwerk</a> aufbauen, wollen Sie vielleicht den Kanal
+offen halten, um sich den Overhead des Verbindungsaufbaus zu sparen. Sie
+erreichen das mit dem Header <code>KeepAlive</code> und sind so in der Lage, sich
+einen Kanal zu <em>reservieren</em>. Nach einem <a href="#commands">Kommando</a>
+bleibt eine Livestatus-Verbindung übrigens immer offen. Sie benötigen dafür
+keine Angabe eines zusätzlichen Headers.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Da der Kanal für die Dauer der Verbindung für andere Prozesse
+blockiert ist, kann das zu einem Problem werden, wenn keine Verbindungen
+mehr zur Verfügung stehen. Andere Prozesse müssen dann warten, bis wieder
+eine Verbindung frei ist. In der Standardkonfiguration hält Checkmk 20
+Verbindungen bereit — erhöhen Sie bei Bedarf die maximale Anzahl dieser
+Verbindungen in <span class="guihint">Setup &gt; General &gt; Global Settings &gt; Monitoring Core &gt; Maximum concurrent Livestatus connections</span>.</p></div>
+<div class="paragraph"><p>Kombinieren Sie <code>KeepAlive</code> immer mit dem
+<a href="#response_header"><code>ResponseHeader</code></a>, um die
+einzelnen Antworten voneinander korrekt unterscheiden zu können:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET hosts</span>
+<span class="tok-go">ResponseHeader: fixed16</span>
+<span class="tok-go">Columns: name</span>
+<span class="tok-go">KeepAlive: on</span>
+
+<span class="tok-go">200          33</span>
+<span class="tok-go">myserver123</span>
+<span class="tok-go">myserver234</span>
+<span class="tok-go">myserver345</span>
+<span class="tok-go">GET services</span>
+<span class="tok-go">ResponseHeader: fixed16</span>
+<span class="tok-go">Columns: host_name description last_check</span>
+<span class="tok-go">Filter: description = Memory</span>
+
+<span class="tok-go">200          58</span>
+<span class="tok-go">myserver123;Memory;1511261122</span>
+<span class="tok-go">myserver234;Memory;1511261183</span></code></pre></div></div>
+<div class="paragraph"><p>Achten Sie darauf, dass es zwischen der ersten Antwort und der zweiten
+Abfrage anders als sonst keine Leerzeile gibt. Sobald Sie in einer Abfrage
+den Header weglassen, wird die Verbindung nach der darauf folgenden Ausgabe
+durch die übliche Leerzeile geschlossen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_logs">
+<span class="hidden-anchor sr-only" id="logs"></span>14. Logs abrufen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__übersicht">
+<span class="hidden-anchor sr-only" id="_übersicht"></span>14.1. Übersicht</h3>
+<div class="paragraph"><p>Über die Tabelle <code>log</code> im Livestatus haben Sie direkten Zugriff
+auf die Monitoring-Historie des Cores, so dass Sie mit der LQL bequem nach
+bestimmten Ereignissen filtern können. Verfügbarkeiten werden zum Beispiel
+auf Basis dieser Tabelle berechnet. Um die Übersicht zu erhöhen und eine
+Abfrage thematisch einzugrenzen, haben Sie auf die folgenden Log-Klassen
+zugriff:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Klasse</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Nachrichten, welche nicht über andere Klassen abgedeckt sind</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host- und Service-Alerts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wichtige Ereignisse des Programms</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Benachrichtigungen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Passive Checks</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Externe Kommandos</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initiale oder aktuelle Statuseinträge (z.B. nach einer Rotation des Logs)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Änderungen des Programmstatus</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Mit Hilfe dieser Log-Klassen können Sie bereits sehr gut eingrenzen, welche Art
+von Einträgen angezeigt werden soll. Zusätzlich dazu wird der Zeitraum
+eingeschränkt, der bei der Abfrage berücksichtigt werden soll. Das ist wichtig,
+da andernfalls die gesamte Historie der Instanz durchsucht wird. Das kann
+logischerweise das System aufgrund der Informationsflut stark ausbremsen.</p></div>
+<div class="paragraph"><p>Eine weitere sinnvolle Einschränkung der Ausgabe sind die Spalten
+(<code>Columns</code>), die zu einem Eintrag angezeigt werden sollen. In dem
+folgenden Beispiel wird nach allen Benachrichtigungen gesucht, welche in der
+letzten Stunde geloggt wurden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET log\nFilter: class = 3\nFilter: time &gt;= </span><span class="tok-k">$$(</span>date<span class="tok-w"> </span>+%s<span class="tok-k">)</span><span class="tok-o">-</span><span class="tok-m">3600</span><span class="tok-k"></span><span class="tok-s2">\nColumns: host_name service_description time state"</span>
+<span class="tok-go">myserver123;Memory;1511343365;0</span>
+<span class="tok-go">myserver234;CPU load;1511343360;3</span>
+<span class="tok-go">myserver123;Memory;1511343338;2</span>
+<span class="tok-go">myserver234;CPU load;1511342512;0</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Achten Sie darauf, dass Sie im interaktiven Modus des Eingabe-Streams keine
+Variablen wie in dem Beispiel nutzen können. Und schränken Sie die Abfragen
+<strong>immer</strong> auf einen Zeitraum ein.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__die_monitoring_historie_konfigurieren">
+<span class="hidden-anchor sr-only" id="_die_monitoring_historie_konfigurieren"></span>14.2. Die Monitoring-Historie konfigurieren</h3>
+<div class="paragraph"><p>Sie
+haben die Möglichkeit, die Rotation der Dateien und deren maximale Größe
+zu beeinflussen. Zusätzlich können Sie auch bestimmen, wie viele Zeilen einer
+Datei eingelesen werden sollen, bevor Checkmk abbricht. Das alles kann,
+abhängig von dem Aufbau der Instanz, Auswirkungen auf die Performance Ihrer
+Abfragen haben. Es stehen dabei die folgenden drei Parameter zur Verfügung,
+welche Sie in unter <span class="guihint">Setup &gt; General &gt; Global Settings &gt; Monitoring Core</span> finden und anpassen können:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">History log rotation: Regular interval of rotations</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier wird festgelegt, in welchem Zeitintervall die Historie in einer neuen Datei weitergeführt wird.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">History log rotation: Rotate by size (Limit of the size)</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unabhängig von dem Zeitintervall wird hier die maximale Größe einer Datei festgelegt. Die Größe stellt einen Kompromiss zwischen der möglichen Leserate und den möglichen IOs dar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Maximum number of parsed lines per log file</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nach der angegeben Anzahl an Zeilen wird eine Datei nicht weiter gelesen. Das verhindert Timeouts, falls eine Datei aus irgendwelchen Gründen doch sehr groß geworden sein sollte.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__verfügbarkeiten_prüfen">
+<span class="hidden-anchor sr-only" id="_verfügbarkeiten_prüfen"></span>15. Verfügbarkeiten prüfen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Mit der Tabelle <code>statehist</code> können Sie die Rohdaten zu der
+Verfügbarkeit von Hosts und Services abfragen und haben somit auf alle
+Informationen Zugriff, die auch bei der <a href="availability.html">Verfügbarkeit</a> in der
+Oberfläche genutzt werden. Geben Sie auch hier immer einen Zeitraum an,
+da sonst alle verfügbaren Logs durchsucht werden, was das System sehr stark
+auslasten kann. Zusätzlich gelten folgende Besonderheiten:</p></div>
+<div class="ulist"><ul>
+<li><p>Der Zeitraum, in der ein Host/Service einen bestimmten Status hatte, kann sowohl absolut in Unix-Zeit ausgegeben werden, als auch relativ als prozentualer Anteil zum abgefragten Zeitraum.</p></li>
+<li><p>In Zeiten, in denen ein Host/Service nicht überwacht wurde, ist der Status <code>-1</code>.</p></li>
+</ul></div>
+<div class="paragraph"><p>Die Überprüfung, ob, wann und wie lange ein Host/Service überwacht wurde,
+ist in Checkmk durch das Logging von initialen Status möglich. Dadurch
+können Sie nicht nur sehen, welcher Status zu einem bestimmten Zeitpunkt
+bestand, sondern auch nachvollziehen ob dieser zu diesem Zeitpunkt überhaupt
+überwacht wurde. <strong>Wichtig:</strong> Auch bei dem Nagios-Core ist dieses Logging
+aktiviert. Hier können Sie es jedoch deaktivieren:</p></div>
+<div class="listingblock">
+<div class="title">~/etc/nagios/nagios.d/logging.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>log_initial_states=0</code></pre></div>
+</div>
+<div class="paragraph"><p>In dem folgenden Beispiel sehen Sie, wie die Abfrage einer prozentualen
+Verteilung und absoluten Zeiten von bestimmten Status aussieht. Als Zeitraum
+wurden hier die letzten 24 Stunden eingestellt und die Abfrage wurde auf die
+Verfügbarkeit eines Service von einem bestimmten Host eingeschränkt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq
+<span class="tok-go">GET statehist</span>
+<span class="tok-go">Columns: host_name service_description</span>
+<span class="tok-go">Filter: time &gt;= 1511421739</span>
+<span class="tok-go">Filter: time &lt; 1511436139</span>
+<span class="tok-go">Filter: host_name = myserver123</span>
+<span class="tok-go">Filter: service_description = Memory</span>
+<span class="tok-go">Stats: sum duration_ok</span>
+<span class="tok-go">Stats: sum duration_warning</span>
+<span class="tok-go">Stats: sum duration_critical</span>
+<span class="tok-go">Stats: sum duration_part_ok</span>
+<span class="tok-go">Stats: sum duration_part_warning</span>
+<span class="tok-go">Stats: sum duration_part_critical</span>
+
+<span class="tok-go">myserver123;Memory;893;0;9299;0.0620139;0;0.645764</span></code></pre></div></div>
+<div class="paragraph"><p>Wie Sie eine vollständige Liste der verfügbaren Spalten abrufen, wird in der
+<a href="#columns">Befehlsreferenz</a> näher erläutert.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__variablen_im_livestatus">
+<span class="hidden-anchor sr-only" id="_variablen_im_livestatus"></span>16. Variablen im Livestatus</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sie können an verschiedenen Stellen in der Checkmk-Oberfläche Variablen
+nutzen, um Hosts/Services kontextbezogen zuzuweisen. Einige dieser Daten
+sind auch über Livestatus abrufbar. Da diese Variablen auch aufgelöst werden
+müssen, stehen solche Spalten in einer Tabelle doppelt zur Verfügung:
+Einmal als wörtlicher Eintrag und einmal als Variante, in der die Variable
+durch den entsprechenden Wert ersetzt wurde. Ein Beispiel dafür ist die
+Spalte <code>notes_url</code>, welche eine URL mit der Variable ausgibt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name notes_url"</span>
+<span class="tok-gp">myserver123;https://mymonitoring/heute/wiki/doku.php?id=hosts:$HOSTNAME$</span></code></pre></div></div>
+<div class="paragraph"><p>Wenn Sie jedoch stattdessen die Spalte <code>note_url_expanded</code> abfragen,
+bekommen Sie den eigentlichen Wert des Makros ausgegeben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name notes_url_expanded"</span>
+<span class="tok-go">myserver123;https://mymonitoring/heute/wiki/doku.php?id=hosts:myserver123</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_network">
+<span class="hidden-anchor sr-only" id="network"></span>17. Livestatus über das Netzwerk nutzen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__verbindung_per_tcpip">
+<span class="hidden-anchor sr-only" id="_verbindung_per_tcpip"></span>17.1. Verbindung per TCP/IP</h3>
+<div class="paragraph"><p>Um über das Netzwerk auf den Livestatus zuzugreifen, können Sie den Unix-Socket des Livestatus an einen TCP-Port binden.
+Auf diese Weise können Sie Skripte über das auf entfernten Maschinen ausführen und die Daten direkt dort erheben, wo sie auch verarbeitet werden sollen.</p></div>
+<div class="paragraph"><p>Den Zugriff über TCP aktivieren Sie bei abgeschalteter Site mit dem
+<code>omd</code>-Befehl:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>omd<span class="tok-w"> </span>config<span class="tok-w"> </span><span class="tok-nb">set</span><span class="tok-w"> </span>LIVESTATUS_TCP<span class="tok-w"> </span>on</code></pre></div></div>
+<div class="paragraph"><p>Nach dem Start der Instanz ist Livestatus per TCP in der Regel auf dem <a href="ports.html">Standardport 6557</a> aktiv.
+Bei Checkmk-Servern mit mehreren Sites, die Livestatus per TCP nutzen, wird der nächsthöhere freie Port gewählt.</p></div>
+<div class="paragraph"><p>Alle Einstellungen wie Port und berechtigte IP-Adressen können Sie per <code>omd config</code> vornehmen.
+Alternativ sind diese Einstellungen im Setup möglich.
+In Checkmk ist SSL-Verschlüsselung der Livestatus-Kommunikation standardmäßig aktiviert:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/livestatus_setup.png" alt="Livestatus-Einstellungen im Setup."></div>
+<div class="title">Livestatus-Einstellungen im Setup</div>
+</div>
+<div class="sect3">
+<h4 id="heading__lokaler_test_der_ssl_verbindung">
+<span class="hidden-anchor sr-only" id="_lokaler_test_der_ssl_verbindung"></span>Lokaler Test der SSL-Verbindung</h4>
+<div class="paragraph"><p>Livestatus nutzt ein Zertifikat, welches beim Erstellen der Site automatisch generiert wird.
+Dieses befindet sich mit allen anderen CA-Zertifikaten, denen die Site vertraut in der Datei <code>var/ssl/ca-certificates.crt</code>.
+Damit das Kommandozeilentool <code>openssl s_client</code> das vom Livestatus-Server genutzte Zertifikat validieren kann, muss diese Datei als <em>Certificate Authority File</em> bekannt gemacht werden.</p></div>
+<div class="paragraph"><p>Die Ausgabe des Kommandozeilenaufrufs haben wir hier stark gekürzt, <code>[…​]</code> zeigt die Auslassungen an:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>openssl<span class="tok-w"> </span>s_client<span class="tok-w"> </span>-CAfile<span class="tok-w"> </span>var/ssl/ca-certificates.crt<span class="tok-w"> </span>-connect<span class="tok-w"> </span>localhost:6557
+<span class="tok-go">CONNECTED(00000003)</span>
+<span class="tok-go">Can't use SSL_get_servername</span>
+<span class="tok-go">depth=1 CN = Site 'mysite' local CA</span>
+<span class="tok-go">verify return:1</span>
+<span class="tok-go">depth=0 CN = mysite</span>
+<span class="tok-go">verify return:1</span>
+<span class="tok-go">---</span>
+<span class="tok-go">Certificate chain</span>
+<span class="tok-go"> 0 s:CN = mysite</span>
+<span class="tok-go">   i:CN = Site 'mysite' local CA</span>
+<span class="tok-go"> 1 s:CN = Site 'mysite' local CA</span>
+<span class="tok-go">   i:CN = Site 'mysite' local CA</span>
+<span class="tok-go">---</span>
+<span class="tok-go">Server certificate</span>
+<span class="tok-go">[...]</span>
+<span class="tok-go">    Start Time: 1664965470</span>
+<span class="tok-go">    Timeout   : 7200 (sec)</span>
+<span class="tok-go">    Verify return code: 0 (ok)</span>
+<span class="tok-go">    Extended master secret: no</span>
+<span class="tok-go">    Max Early Data: 0</span>
+<span class="tok-go">---</span>
+<span class="tok-go">read R BLOCK</span></code></pre></div></div>
+<div class="paragraph"><p>Erfolgt keine weitere Ausgabe mehr, können Sie interaktiv LQL-Kommandos absetzen, welche Sie mit einer Leerzeile (zweimal Return-Taste) abschließen.
+Klappt dies, können Sie Livestatus-Abfragen auch per Pipeline übergeben, der zusätzliche Parameter <code>-quiet</code> unterdrückt hier Debugging-Ausgaben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span>-e<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name\n\n"</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>openssl<span class="tok-w"> </span>s_client<span class="tok-w"> </span>-quiet<span class="tok-w">  </span>-CAfile<span class="tok-w"> </span>var/ssl/ca-certificates.crt<span class="tok-w"> </span>-connect<span class="tok-w"> </span>localhost:6557
+<span class="tok-go">Can't use SSL_get_servername</span>
+<span class="tok-go">depth=1 CN = Site 'mysite' local CA</span>
+<span class="tok-go">verify return:1</span>
+<span class="tok-go">depth=0 CN = mysite</span>
+<span class="tok-go">verify return:1</span>
+<span class="tok-go">myserver23</span>
+<span class="tok-go">myserver42</span>
+<span class="tok-go">myserver123</span>
+<span class="tok-go">myserver124</span></code></pre></div></div>
+<div class="paragraph"><p>Die Ausgabe vor den vier Hostnamen schreibt <code>openssl</code> auf STDERR, Sie können diese durch anhängen von <code>2&gt;/dev/null</code> unterdrücken.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__remote_zugriff_auf_livestatus">
+<span class="hidden-anchor sr-only" id="_remote_zugriff_auf_livestatus"></span>Remote-Zugriff auf Livestatus</h4>
+<div class="paragraph"><p>Wenn Sie von entfernten Rechnern auf Livestatus zugreifen, sollten Sie auf diesen nicht die gesamte Liste der von der Checkmk-Site vertrauten Zertifikate verwenden.
+Lesen Sie stattdessen alleine das Zertifikat der Site-CA aus dem Setup aus.</p></div>
+<div class="paragraph"><p>Begeben Sie sich hierfür nach <span class="guihint">Global Settings &gt; Site management &gt; Trusted certificate authorities for SSL</span>.
+Hier können Sie das verwendete Zertifikat der Site-CA per Copy and Paste übernehmen.
+Kopieren Sie den kompletten Text des ersten Zertifikats unter <span class="guihint">Content of CRT/PEM file</span> in eine Datei, im Beispiel verwenden wir <code>/tmp/mysite_ca.pem</code>.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/livestatus_ca_copy_paste.png" alt="Anzeige des Zertifikats der Site CA im Setup."></div>
+<div class="title">Anzeige des Zertifikats der Site CA im Setup</div>
+</div>
+<div class="paragraph"><p>Wenn der entfernte Host nun für den Livestatus-Zugriff freigeschaltet wurde, sind mit dieser Zertifikatsdatei Livestatus-Abfragen per Skript möglich:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span>-e<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name\n\n"</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span><span class="tok-se">\</span>
+<span class="tok-w">    </span>openssl<span class="tok-w"> </span>s_client<span class="tok-w"> </span>-quiet<span class="tok-w">  </span>-CAfile<span class="tok-w"> </span>/tmp/mysite_ca.pem<span class="tok-w"> </span>-connect<span class="tok-w"> </span>cmkserver:6557</code></pre></div></div>
+<div class="paragraph"><p>Beachten Sie: Die Zertifikatsdatei bietet keine Authentifizierung, sie stellt lediglich die Transportverschlüsselung sicher!
+Zugriffsschutz wird ausschließlich über die IP-Adressen geregelt, welche auf den Livestatus-Port zugreifen dürfen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__livestatus_mit_stunnel">
+<span class="hidden-anchor sr-only" id="_livestatus_mit_stunnel"></span>Livestatus mit stunnel</h4>
+<div class="paragraph"><p>Falls Sie einen entfernten verschlüsselten Livestatus Port als lokal unverschlüsselten Port erreichbar machen wollen, können Sie das Programm <a href="https://www.stunnel.org/" target="_blank">stunnel</a> verwenden.</p></div>
+<div class="listingblock">
+<div class="title">/etc/stunnel/cmk_myremotesite.conf</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>[pinning client]
+client = yes
+accept = 0.0.0.0:6557
+connect = &lt;myremotesiteip&gt;:6557
+verifyPeer = yes
+CAfile = /etc/stunnel/myremotesite.pem</code></pre></div>
+</div>
+<div class="paragraph"><p>Nach Neustart des stunnel ist der Zugriff auf den lokalen Port unverschlüsselt möglich:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span>-e<span class="tok-w"> </span><span class="tok-s2">"GET hosts\nColumns: name\n\n"</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>nc<span class="tok-w"> </span>localhost<span class="tok-w"> </span><span class="tok-m">6557</span></code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__ssl_im_skript">
+<span class="hidden-anchor sr-only" id="_ssl_im_skript"></span>SSL im Skript</h4>
+<div class="paragraph"><p>Falls Sie per Skript via SSL auf Livestatus zugreifen wollen, verwenden Sie möglichst nicht <code>openssl s_client</code>.
+Primärer Zweck dieses Tools ist der Test des Verbindungsaufbaus und das Debugging von Zertifikatsketten.
+Um im Falle von Verbindungsabbrüchen zu erkennen, ob die erwartete Ausgabe vollständig war, empfehlen wir, den <a href="#response_header"><code>ResponseHeader</code></a> auszuwerten.
+Ein gut gepflegtes API, welches SSL und Header-Auswertung unterstützt, ist jenes für Python, das Sie unter <code>share/doc/check_mk/livestatus/api/python</code> finden.
+Weitere APIs listet das Kapitel <a href="#files"><em>Dateien und Verzeichnisse</em></a>.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__verbindung_über_ssh">
+<span class="hidden-anchor sr-only" id="_verbindung_über_ssh"></span>17.2. Verbindung über SSH</h3>
+<div class="paragraph"><p>Wenn Zugriff auf Livestatus von außerhalb Ihres lokalen Netzwerkes erforderlich ist, mag Zugriffsschutz alleine auf Basis von IP-Adressen nicht praktikabel sein.
+Der einfachste Weg, authentifizierten Zugriff zu erlangen, ist hier die Verwendung der <em>Secure Shell</em>.</p></div>
+<div class="paragraph"><p>Mit SSH haben Sie die Möglichkeit, ein Kommando zu übergeben, welches auf dem entfernten Server ausgeführt wird:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>ssh<span class="tok-w"> </span>mysite@myserver<span class="tok-w"> </span><span class="tok-s1">'lq "GET hosts\nColumns: name"'</span>
+<span class="tok-go">myserver123</span>
+<span class="tok-go">myserver234</span></code></pre></div></div>
+<div class="paragraph"><p>Alternativ können Sie den Livestatus-Port per SSH-Tunnel auf den Host weiterleiten, auf dem Sie aktuell arbeiten:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>ssh<span class="tok-w"> </span>-L<span class="tok-w"> </span><span class="tok-m">6557</span>:localhost:6557<span class="tok-w"> </span>mysite@myserver</code></pre></div></div>
+<div class="paragraph"><p>Wenn die Verbindung steht, können Sie in einer zweiten Konsolensitzung testen, ob mit <code>openssl s_client</code> Zugriff möglich ist:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>openssl<span class="tok-w"> </span>s_client<span class="tok-w"> </span>-CAfile<span class="tok-w"> </span>/tmp/mysite_ca.pem<span class="tok-w"> </span>-connect<span class="tok-w"> </span>localhost:6557</code></pre></div></div>
+<div class="paragraph"><p>Klappt dieser Test, können Sie jedes Skript, dass Sie für direkten Livestatus-Netzwerkzugriff geschrieben haben, auf <code>localhost</code> einsetzen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_commands">
+<span class="hidden-anchor sr-only" id="commands"></span>18. Kommandos setzen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__übersicht_2">
+<span class="hidden-anchor sr-only" id="_übersicht_2"></span>18.1. Übersicht</h3>
+<div class="paragraph"><p>Sie können Livestatus nicht nur für die Abfrage von Daten nutzen,
+sondern auch, um Kommandos live und direkt an den Core (CMC oder Nagios) zu
+schicken. Ein korrektes Kommando enthält immer einen Zeitstempel. Dieser
+kann zwar beliebig sein. Da er aber in den <a href="#logs">Logs</a> dazu
+benutzt wird, den Zeitpunkt der Ausführung nachzuvollziehen, ist es
+sinnvoll, möglichst die exakte Zeit anzugeben. Kommandos mit fehlendem
+Zeitstempel werden ohne Fehlermeldung und lediglich mit einem Eintrag im
+<a href="#files"><code>cmc.log</code></a> verworfen!</p></div>
+<div class="paragraph"><p>Damit der Zeitstempel so genau, wie möglich ist, bietet es sich an,
+das Kommando nicht über den Eingabe-Stream zu setzen, sondern direkt zu
+übergeben. Sie haben in diesem Fall auch Zugriff auf Variablen und können
+automatisch die gerade aktuelle Zeit übergeben:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"COMMAND [</span><span class="tok-k">$(</span>date<span class="tok-w"> </span>+%s<span class="tok-k">)</span><span class="tok-s2">] DISABLE_NOTIFICATIONS"</span></code></pre></div></div>
+<div class="paragraph"><p>Dieses Format funktioniert sowohl mit dem Nagios-Core der <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong>,
+als auch mit dem CMC der kommerziellen Editionen. Allerdings überschneiden sich
+bei den beiden Cores nur teilweise die Kommandos. Eine vollständige Liste der
+Kommandos für den Nagios-Core finden Sie direkt auf der Internetseite von
+<a href="https://old.nagios.org/developerinfo/externalcommands/commandlist.php" target="_blank">Nagios</a>.
+Die für Checkmk relevanten und für den CMC verfügbaren Kommandos finden Sie in der
+<a href="livestatus_references.html#commands">Befehlsreferenz</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__besonderheiten_bei_nagios">
+<span class="hidden-anchor sr-only" id="_besonderheiten_bei_nagios"></span>18.2. Besonderheiten bei Nagios</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+In der Liste der Kommandos werden Sie die Syntax in der folgenden Form
+vorfinden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/sh
+# This is a sample shell script showing how you can submit the CHANGE_CUSTOM_HOST_VAR command
+# to Nagios.  Adjust variables to fit your environment as necessary.
+
+now=`date +%s`
+commandfile='/usr/local/nagios/var/rw/nagios.cmd'
+
+/bin/printf "[%lu] CHANGE_CUSTOM_HOST_VAR;host1;_SOMEVAR;SOMEVALUE\n" $now &gt; $commandfile</code></pre></div></div>
+<div class="paragraph"><p>Wie Sie gelernt haben, benutzt Checkmk ein sehr viel einfacheres Format
+für die Übergabe des Kommandos. Um dieses Format für Checkmk kompatibel
+zu übertragen, benötigen Sie lediglich das Kommando, den Zeitstempel und
+gegebenenfalls die Variablen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>lq<span class="tok-w"> </span><span class="tok-s2">"COMMAND [</span><span class="tok-k">$(</span>date<span class="tok-w"> </span>+%s<span class="tok-k">)</span><span class="tok-s2">] CHANGE_CUSTOM_HOST_VAR;host1;_SOMEVAR;SOMEVALUE"</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>19. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 55%;">
+<col style="width: 45%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/tmp/run/live</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Unix-Socket zur Übergabe der Abfragen und Kommandos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/bin/lq</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Skriptbefehl für die einfachere Übergabe der Abfragen und Kommandos and den Unix-Socket des Livestatus.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/cmc.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Logdatei des CMC, in der unter anderem die Abfragen/Kommandos dokumentiert werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/core/history</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Logdatei des CMC, in der alle zur Laufzeit des Core auftretenden Änderungen eingetragen werden, wie z.B. Statusänderungen eines Host/Service.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/core/archive/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier werden die <code>history</code>-Logdateien archiviert. Diese werden nur nach Bedarf eingelesen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/log/nagios.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Logdatei des Nagios-Core, in der unter anderem die Abfragen/Kommandos dokumentiert werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/nagios/archive/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier werden die <code>history</code>-Logdateien archiviert. Diese werden nur nach Bedarf eingelesen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/doc/check_mk/livestatus/LQL-examples/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In diesem Verzeichnis finden Sie einige Beispiele zu Livestatus-Abfragen, die Sie ausprobieren können. Die Beispiele werden an den Skriptbefehl <code>lq</code> geleitet, wie z.B.: <code>lq &lt; 1.lql</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/doc/check_mk/livestatus/api/python</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In diesem Verzeichnis finden Sie die API zu Python sowie einige Beispiele. Lesen Sie auch das <code>README</code> in diesem Verzeichnis.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/doc/check_mk/livestatus/api/perl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die API zu Perl finden Sie hier. Auch hier gibt es wieder ein <code>README</code>. Die Beispiele zur Nutzung befinden sich hier in dem Unterverzeichnis <code>examples</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/doc/check_mk/livestatus/api/c++</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zu der Programmiersprache C++ finden Sie hier ebenfalls Beispielcode. Der Code zu der API selbst liegt ebenfalls unkompiliert vor, so dass Sie maximalen Einblick in die Funktionsweise der API haben.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#lql">2. Die Livestatus Query Language (LQL)</a><ul class="sectlevel1">
+<li>
+<a href="#lql_shell">2.1. Nutzung der LQL in der Shell</a><ul class="sectlevel2">
+<li><a href="#_befehle_der_lql">Befehle der LQL</a></li>
+<li><a href="#_header_in_der_lql">Header in der LQL</a></li>
+<li><a href="#columns">Verfügbare Spalten und Tabellen anzeigen</a></li>
+</ul>
+</li>
+<li><a href="#lql_python">2.2. Nutzung der LQL in Python</a></li>
+<li><a href="#_nutzung_der_livestatus_api">2.3. Nutzung der Livestatus-API</a></li>
+</ul>
+</li>
+<li>
+<a href="#_einfache_abfragen">3. Einfache Abfragen</a><ul class="sectlevel1">
+<li><a href="#_spalten_abfragen_columns">3.1. Spalten abfragen (Columns)</a></li>
+<li>
+<a href="#_einfache_filter_setzen_filter">3.2. Einfache Filter setzen (Filter)</a><ul class="sectlevel2"><li><a href="#_operatoren_und_regul%C3%A4re_ausdr%C3%BCcke">Operatoren und reguläre Ausdrücke</a></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#_komplexe_abfragen">4. Komplexe Abfragen</a><ul class="sectlevel1">
+<li><a href="#filter">4.1. Filter für Listen</a></li>
+<li><a href="#combining">4.2. Filter kombinieren</a></li>
+<li>
+<a href="#_das_ausgabeformat_festlegen">4.3. Das Ausgabeformat festlegen</a><ul class="sectlevel2">
+<li><a href="#csv"><code>csv</code> anpassen</a></li>
+<li><a href="#output_format">Ausgabeformat ändern</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#retrieving_statistics">5. Statistiken abrufen (Stats)</a><ul class="sectlevel1">
+<li><a href="#_einleitung_2">5.1. Einleitung</a></li>
+<li><a href="#_z%C3%A4hlen">5.2. Zählen</a></li>
+<li><a href="#_gruppieren">5.3. Gruppieren</a></li>
+<li><a href="#_minimum_maximum_durchschnitt_etc">5.4. Minimum, Maximum, Durchschnitt etc.</a></li>
+</ul>
+</li>
+<li><a href="#_begrenzung_der_ausgabe_limit">6. Begrenzung der Ausgabe (Limit)</a></li>
+<li><a href="#_zeitbeschr%C3%A4nkungen_timelimit">7. Zeitbeschränkungen (Timelimit)</a></li>
+<li><a href="#columnheader">8. Kopfzeilen aktivieren (ColumnHeaders)</a></li>
+<li><a href="#_berechtigungen_authuser">9. Berechtigungen (AuthUser)</a></li>
+<li><a href="#_verz%C3%B6gerungen_wait">10. Verzögerungen (Wait)</a></li>
+<li><a href="#_zeitzonen_localtime">11. Zeitzonen (Localtime)</a></li>
+<li><a href="#response_header">12. Statuscodes (ResponseHeader)</a></li>
+<li><a href="#keepalive">13. Verbindung aufrecht erhalten (KeepAlive)</a></li>
+<li>
+<a href="#logs">14. Logs abrufen</a><ul class="sectlevel1">
+<li><a href="#_%C3%BCbersicht">14.1. Übersicht</a></li>
+<li><a href="#_die_monitoring_historie_konfigurieren">14.2. Die Monitoring-Historie konfigurieren</a></li>
+</ul>
+</li>
+<li><a href="#_verf%C3%BCgbarkeiten_pr%C3%BCfen">15. Verfügbarkeiten prüfen</a></li>
+<li><a href="#_variablen_im_livestatus">16. Variablen im Livestatus</a></li>
+<li>
+<a href="#network">17. Livestatus über das Netzwerk nutzen</a><ul class="sectlevel1">
+<li>
+<a href="#_verbindung_per_tcpip">17.1. Verbindung per TCP/IP</a><ul class="sectlevel2">
+<li><a href="#_lokaler_test_der_ssl_verbindung">Lokaler Test der SSL-Verbindung</a></li>
+<li><a href="#_remote_zugriff_auf_livestatus">Remote-Zugriff auf Livestatus</a></li>
+<li><a href="#_livestatus_mit_stunnel">Livestatus mit stunnel</a></li>
+<li><a href="#_ssl_im_skript">SSL im Skript</a></li>
+</ul>
+</li>
+<li><a href="#_verbindung_%C3%BCber_ssh">17.2. Verbindung über SSH</a></li>
+</ul>
+</li>
+<li>
+<a href="#commands">18. Kommandos setzen</a><ul class="sectlevel1">
+<li><a href="#_%C3%BCbersicht_2">18.1. Übersicht</a></li>
+<li><a href="#_besonderheiten_bei_nagios">18.2. Besonderheiten bei Nagios</a></li>
+</ul>
+</li>
+<li><a href="#files">19. Dateien und Verzeichnisse</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

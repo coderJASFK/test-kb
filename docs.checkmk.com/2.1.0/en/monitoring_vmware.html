@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="With Checkmk you can monitor a vCenter, its ESXi hosts and also the virtual machines (VMs) without requiring extra agents.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Monitoring VMware ESXi">
+<meta name="og:description" content="With Checkmk you can monitor a vCenter, its ESXi hosts and also the virtual machines (VMs) without requiring extra agents.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Monitoring VMware ESXi</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/de/monitoring_vmware.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/en/monitoring_vmware.html">2.2.0</a><a class="dropdown-item" href="../../latest/en/monitoring_vmware.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host and service parameters</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Introduction to notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMWare ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Performance data and graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">The Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Configuration via the Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Configuration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Command reference for the HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Writing your own check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Monitoring VMware ESXi</h1>
+<div class="details">
+<span id="revdate">Last modified on 29-Dec-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/en/monitoring_vmware.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="appliance_install_virt1.html">Installation of the virtual appliance</a>
+<a href="datasource_programs.html">Datasource programs</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>With Checkmk you can monitor ESXi-Hosts and also its VMs. Thus, for example,
+on a host it is possible to query Disk-IO, data store performance, the status
+of physical network interfaces, diverse hardware sensors, and much more.
+Checkmk likewise offers a series of check plug-ins for the VMs.
+A comprehensive list of these can be found in the
+<a href="https://checkmk.com/integrations?tags=vsphere">Catalog of check plug-ins</a>.</p></div>
+<div class="paragraph"><p>Using the piggyback technique VM data will be displayed directly in
+its associated host. Thus the VM related data is found right where it is actually
+required, and where it can be compared to that reported by the VM’s OS:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_services.png" alt="vmware services"></div></div>
+<div class="paragraph"><p>Access to this data is achieved via the HTTP-based vSphere-API — not over the
+normal agents or SNMP. This means that no agent or other software needs to be
+installed on the ESXi-Hosts, and that the access is very simple to set up.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__setting_up">
+<span class="hidden-anchor sr-only" id="_setting_up"></span>2. Setting up</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__setting_up_via_the_esxi_host_system">
+<span class="hidden-anchor sr-only" id="_setting_up_via_the_esxi_host_system"></span>2.1. Setting up via the ESXi host system</h3>
+<div class="paragraph"><p>The initial setup for monitoring a ESXi-server is very simple, and can be completed
+in less than five minutes. Before you can set up the access however, the following
+prerequisites must be satisfied:</p></div>
+<div class="ulist"><ul>
+<li><p>You must have defined a user on the ESXi-server. It is sufficient that this user only has read access.</p></li>
+<li><p>You must have defined the ESXi-server as the host in Checkmk, and configured it as an agent <span class="guihint">(Checkmk Agent)</span>. Tip: Select the host name so that it is the same as that known to the server itself.</p></li>
+</ul></div>
+<div class="paragraph"><p>Once the prerequisites have have been satisfied you can create a <a href="wato_rules.html#create_rules">Rule</a> in the
+<span class="guihint">Setup &gt; VM, Cloud, Container &gt; VMware ESX via vSphere</span> rule set.
+This will be assigned to the defined host, so that instead of the
+standard agent the <a href="datasource_programs.html#specialagents">special agent</a>
+will be used for retrieving data from the VMware-monitoring.</p></div>
+<div class="paragraph"><p>Enter the user’s name and password as they have been defined on the ESXi-Server.
+The condition for the rule must be set on the host defined in Checkmk.
+After this the first installation will be complete and Checkmk can retrieve
+the data from the server.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_username.png" alt="vmware username"></div></div>
+<div class="paragraph"><p>Finally, go back to the host configuration, and execute a
+<a href="hosts_setup.html#services">service discovery</a>. This should find a number of
+services:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_discovery.png" alt="vmware discovery"></div></div>
+<div class="paragraph"><p>Activate the changes as usual.
+If no services have been identified, you can search for errors in the configuration with
+the <a href="#diagnose">Diagnostic options</a>, as described later in this article.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__setting_up_using_vcenter">
+<span class="hidden-anchor sr-only" id="_setting_up_using_vcenter"></span>2.2. Setting up using vCenter</h3>
+<div class="paragraph"><p>If a vCenter is available, instead of retrieving the monitoring data via the individual host systems you can also call up the vCenter. This method has various advantages and disadvantages:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Advantages</th>
+<th class="tableblock halign-left valign-top">Disadvantages</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simple application in situations where VMs are assigned dynamically using vMotion.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No monitoring if vCenter is unavailable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Monitoring of a cluster’s total RAM usage is possible.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No monitoring of hardware-specific data in the cluster’s nodes (e.g., RAM-disks and network cards).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>A combination of both methods can also be utilized — then you can have the best of both worlds.</p></div>
+<div class="sect3">
+<h4 id="heading__configuring_the_vcenter">
+<span class="hidden-anchor sr-only" id="_configuring_the_vcenter"></span>Configuring the vCenter</h4>
+<div class="paragraph"><p>Similar prerequisites apply for this configuration as for the
+configuration over a single ESXi-Server:</p></div>
+<div class="ulist"><ul>
+<li><p>A user with read access must be present on the vCenter.</p></li>
+<li><p>The vCenter has been defined as a host and configured as a <span class="guihint">Checkmk Agent</span> agent in Checkmk</p></li>
+<li><p>If the ESXi-Servers have already been configured in Checkmk and you wish to combine the monitoring, then in vCenter their names will be the same as they are configured as hosts in Checkmk</p></li>
+</ul></div>
+<div class="paragraph"><p>As described earlier, create a rule for the VMware-monitoring’s special agent,
+in <span class="guihint">Type of Query</span> select the vCenter, and set the condition to the appropriate
+host as defined in Checkmk:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_vcenter_username.png" alt="vmware vcenter username"></div></div>
+<div class="paragraph"><p>With this the configuration will be completed.
+Execute a service discovery for the vCenter-host as described earlier.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_datasource_combination">
+<span class="hidden-anchor sr-only" id="datasource_combination"></span>Retrieving from ESXi-Hosts and vCenter</h4>
+<div class="paragraph"><p>In order to avoid duplicated data retrieval when using a combination of both
+configuration methods, the rule for the vCenter can be configured to retrieve
+only specific data. One possibility is to access the <span class="guihint">Datastores</span> and
+the <span class="guihint">Virtual Machines</span> over the vCenter, and the other data directly
+from the ESXi-hosts. The license usage can be fetched in both configurations
+since the vCenter reports an overall status.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_data1.png" alt="vmware data1"></div></div>
+<div class="paragraph"><p>If you have already configured the ESXi-hosts, its rules will be adapted accordingly.
+Here only access to the <span class="guihint">Host Systems</span> and <span class="guihint">Performance Counters</span> is available,
+since these belong unalterably to a particular ESXi-server.
+The license status is applicable only to the retrieved ESXi-server.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_data2.png" alt="vmware data2"></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__monitoring_the_vms">
+<span class="hidden-anchor sr-only" id="_monitoring_the_vms"></span>2.3. Monitoring the VMs</h3>
+<div class="paragraph"><p>By default, only the status of the VMs as services is created and assigned to the
+ESXi, or the vCenter respectively. There is however even more information available from
+these VMs — from RAM, or the Snapshots, for example.
+This data is stored as piggyback data and assigned directly to the hosts which correspond to the VMs in Checkmk.</p></div>
+<div class="paragraph"><p>In order to make this data visible, the VM must be defined as a host in
+Checkmk. You can of course install the Checkmk agent on the VM and take full
+advantage of its functions. The piggyback data will simply be added to that
+already available.</p></div>
+<div class="sect3">
+<h4 id="heading_rename_piggyback">
+<span class="hidden-anchor sr-only" id="rename_piggyback"></span>Naming the piggyback data</h4>
+<div class="paragraph"><p>If the host name of the VM in Checkmk matches the name of the VM, the assignment works automatically. If not, there are various options in Checkmk to customize the piggyback name. The following options are available in the configuration rule itself:</p></div>
+<div class="ulist"><ul>
+<li><p>You may use the VM’s operating system’s host name, if this can be accessed via the vSphere-API</p></li>
+<li><p>If the VM’s name includes blank characters, the name will be truncated after the first blank. Alternatively, the blanks can be replaced with underscores</p></li>
+</ul></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_nametranslation.png" alt="vmware nametranslation"></div></div>
+<div class="paragraph"><p>If the host’s name is quite different in Checkmk, an explicit allocation can be
+performed with the help of the <span class="guihint">Setup &gt; Agents &gt; Access to agents &gt; Hostname translation for piggybacked hosts</span> rule.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_nametranslation2.png" alt="vmware nametranslation2"></div></div>
+<div class="paragraph"><p>If the host is configured in Checkmk and the names conform, you can activate the
+<span class="guihint">Display VM power state on</span> check box in the configurations rule — select if and where the data is to be made available.
+Select <span class="guihint">The Virtual Machine</span> here.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_vms.png" alt="vmware vms"></div></div>
+<div class="paragraph"><p>With a service discovery on the host(s) the new services will now be identified and
+can be activated. Be aware that the information from the services could differ
+from one another. The ESXi-Server will see a virtual machine’s RAM usage differently
+to how the machine’s own OS reports it.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_services.png" alt="vmware services"></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_diagnose">
+<span class="hidden-anchor sr-only" id="diagnose"></span>3. Diagnostic options</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__introduction_2">
+<span class="hidden-anchor sr-only" id="_introduction_2"></span>3.1. Introduction</h3>
+<div class="paragraph"><p>When searching for the source of an error there are a number of ‘ports of call’.
+Since the data comes from the ESXi-/vCenter-Server, this is a logical place to start
+searching for the error. Later it is important that the data gets to the
+Checkmk-Server, and can be correctly processed and displayed there.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__problems_with_an_esxi_vcenter_server_configuration">
+<span class="hidden-anchor sr-only" id="_problems_with_an_esxi_vcenter_server_configuration"></span>3.2. Problems with an ESXi-/vCenter-Server configuration</h3>
+<div class="paragraph"><p>With the <code>curl</code> command you can verify whether the server is accessible from
+the monitoring:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>curl<span class="tok-w"> </span>-Ik<span class="tok-w"> </span>https://myESXhost.my-domain.net
+<span class="tok-go">HTTP/1.1 200 OK</span>
+<span class="tok-go">Date: Fri, 4 Nov 2016 14:29:31 GMT</span>
+<span class="tok-go">Connection: Keep-Alive</span>
+<span class="tok-go">Content-Type: text/html</span>
+<span class="tok-go">X-Frame-Options: DENY</span>
+<span class="tok-go">Content-Length: 5426</span></code></pre></div></div>
+<div class="paragraph"><p>Whether the access data has been entered correctly — and whether Checkmk can access the host — can be tested on the console with the Special-Agent. Use the <code>--help</code> or <code>-h</code> option
+to receive a complete list of the available options. In the example, with the aid
+of <code>grep</code> the output was limited to a specific section and the first four
+lines following it — you can omit this in order to receive a complete output,
+or filter for another:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>share/check_mk/agents/special/agent_vsphere<span class="tok-w"> </span>--debug<span class="tok-w"> </span>--user<span class="tok-w"> </span>myesxuser<span class="tok-w"> </span>--secret<span class="tok-w"> </span>myesxpassword<span class="tok-w"> </span>-D<span class="tok-w"> </span>myESXhost<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>-A4<span class="tok-w"> </span>esx_vsphere_objects
+<span class="tok-go">&lt;&lt;&lt;esx_vsphere_objects:sep(9)&gt;&gt;&gt;</span>
+<span class="tok-go">hostsystem      myESXhost           poweredOn</span>
+<span class="tok-go">hostsystem      myESXhost2          poweredOn</span>
+<span class="tok-go">virtualmachine  myVM123             myESXhost   poweredOn</span>
+<span class="tok-go">virtualmachine  myVM126             myESXhost   poweredOn</span></code></pre></div></div>
+<div class="paragraph"><p>Whether Checkmk can access the host can be verified on the console. Here the output is
+also limited to five lines:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-d<span class="tok-w"> </span>myESXhost<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>-A4<span class="tok-w"> </span>esx_vsphere_objects
+<span class="tok-go">&lt;&lt;&lt;esx_vsphere_objects:sep(9)&gt;&gt;&gt;</span>
+<span class="tok-go">hostsystem      myESXhost           poweredOn</span>
+<span class="tok-go">hostsystem      myESXhost2          poweredOn</span>
+<span class="tok-go">virtualmachine  myVM123             myESXhost   poweredOn</span>
+<span class="tok-go">virtualmachine  myVM126             myESXhost   poweredOn</span></code></pre></div></div>
+<div class="paragraph"><p>Alternatively, you can carry out the test on the host’s diagnostic page in the Setup:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/vmware_agent_test.png" alt="vmware agent test"></div></div>
+<div class="paragraph"><p>If everything works up to this point the output should have been saved to a
+temporary directory. Whether such a file has been produced, and whether the
+content is correct can be determined with the following:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>ll<span class="tok-w"> </span>tmp/check_mk/cache/myESXhost
+<span class="tok-go">-rw-r--r-- 1 mysite mysite 17703 Nov  4 15:42 myESXhost</span>
+<span class="tok-gp">OMD[mysite]:~$ </span>head<span class="tok-w"> </span>-n5<span class="tok-w"> </span>tmp/check_mk/cache/myESXhost
+<span class="tok-go">&lt;&lt;&lt;esx_systeminfo&gt;&gt;&gt;</span>
+<span class="tok-go">Version: 6.0</span>
+<span class="tok-go">AgentOS: VMware ESXi</span>
+<span class="tok-go">&lt;&lt;&lt;esx_systeminfo&gt;&gt;&gt;</span>
+<span class="tok-go">vendor VMware, Inc.</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__problems_with_piggyback_data">
+<span class="hidden-anchor sr-only" id="_problems_with_piggyback_data"></span>3.3. Problems with piggyback data</h3>
+<div class="paragraph"><p>Checkmk creates a directory containing a text file for each host. In this text
+file can be found the data which is to be allocated to the hosts.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>ll<span class="tok-w"> </span>tmp/check_mk/piggyback/
+<span class="tok-go">total 0</span>
+<span class="tok-go">drwxr-xr-x 2 mysite mysite 60 Nov  4 15:51 myVM123/</span>
+<span class="tok-go">drwxr-xr-x 2 mysite mysite 60 Nov  4 15:51 myVM124/</span>
+<span class="tok-go">drwxr-xr-x 2 mysite mysite 60 Nov  4 15:51 myVM126/</span>
+<span class="tok-go">drwxr-xr-x 2 mysite mysite 60 Nov  4 15:51 myESXhost2/</span>
+<span class="tok-gp">OMD[mysite]:~$ </span>ll<span class="tok-w"> </span>tmp/check_mk/piggyback/myVM123/
+<span class="tok-go">-rw-r--r-- 1 mysite mysite 1050 Nov  4 15:51 myESXhost</span></code></pre></div></div>
+<div class="paragraph"><p>If these directories or files are absent they have not been created by the
+Special-Agents. You can see if the VM’s data is included in the agent’s output.
+Should this situation arise, look in the configuration rule for the ESXi-/vCenter-host to see if the
+<a href="#datasource_combination">data retrieval</a> has been activated.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>grep<span class="tok-w"> </span><span class="tok-s2">"&lt;&lt;&lt;&lt;myVM123&gt;&gt;&gt;&gt;"</span><span class="tok-w"> </span>tmp/check_mk/cache/myESXhost
+<span class="tok-go">&lt;&lt;&lt;&lt;myVM123&gt;&gt;&gt;&gt;</span></code></pre></div></div>
+<div class="paragraph"><p>In the case of a very large number of such directories for piggyback data it
+can be very difficult to find those that have no allocation to a host.
+Here we provide a script with which unassigned piggyback hosts can easily be found:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>share/doc/check_mk/treasures/find_piggy_orphans
+<span class="tok-go">myESXhost2</span></code></pre></div></div>
+<div class="paragraph"><p>From the script output it can be that Checkmk can’t find a host with the same
+name to which it can allocate the data.
+The piggyback names can however be <a href="#rename_piggyback">altered</a>
+in a number of ways.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__files_and_directories">
+<span class="hidden-anchor sr-only" id="_files_and_directories"></span>4. Files and directories</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File Path</th>
+<th class="tableblock halign-left valign-top">Function</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/tmp/check_mk/piggyback/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checkmk saves the piggyback data here. For each host a subfolder is created with the host’s name — this subfolder contains a text file with the host’s data. The filename is the name of the host providing the data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/tmp/check_mk/cache/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Here the respective latest agent output from all hosts is temporarily saved. The content of a host’s file is identical to the <span class="guihint">cmk -d myhost</span> command.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/special/agent_vsphere</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The special agent for executing a query of ESXi and vCenter servers. This script can also be executed manually for testing purposes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/doc/check_mk/treasures/find_piggy_orphans</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A script for finding piggyback data that is not allocated to a host.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li>
+<a href="#_setting_up">2. Setting up</a><ul class="sectlevel1">
+<li><a href="#_setting_up_via_the_esxi_host_system">2.1. Setting up via the ESXi host system</a></li>
+<li>
+<a href="#_setting_up_using_vcenter">2.2. Setting up using vCenter</a><ul class="sectlevel2">
+<li><a href="#_configuring_the_vcenter">Configuring the vCenter</a></li>
+<li><a href="#datasource_combination">Retrieving from ESXi-Hosts and vCenter</a></li>
+</ul>
+</li>
+<li>
+<a href="#_monitoring_the_vms">2.3. Monitoring the VMs</a><ul class="sectlevel2"><li><a href="#rename_piggyback">Naming the piggyback data</a></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#diagnose">3. Diagnostic options</a><ul class="sectlevel1">
+<li><a href="#_introduction_2">3.1. Introduction</a></li>
+<li><a href="#_problems_with_an_esxi_vcenter_server_configuration">3.2. Problems with an ESXi-/vCenter-Server configuration</a></li>
+<li><a href="#_problems_with_piggyback_data">3.3. Problems with piggyback data</a></li>
+</ul>
+</li>
+<li><a href="#_files_and_directories">4. Files and directories</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

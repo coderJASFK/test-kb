@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Services form the core of every monitored host. They are automatically recorded and can be extensively configured and structured.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Understanding and configuring services - Detecting and monitoring elements of a host">
+<meta name="og:description" content="Services form the core of every monitored host. They are automatically recorded and can be extensively configured and structured.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Understanding and configuring services - Detecting and monitoring elements of a host</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/wato_services.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/wato_services.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/wato_services.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Understanding and configuring services</h1>
+<div class="details">
+<span id="revdate">Last modified on 22-Sep-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/en/wato_services.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a>
+<a href="hosts_setup.html">Host administration</a>
+<a href="wato_rules.html">Rules</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__introduction">
+<span class="hidden-anchor sr-only" id="_introduction"></span>1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Services are the actual ‘substance’ of a monitoring system. Each one represents an important
+cog in your complex IT landscape. The usefulness of the complete monitoring
+stands or falls depending on how accurately and usefully the services have
+been configured. Finally, the monitoring should reliably notify whenever
+a problem becomes apparent somewhere, but should definitely also minimize
+false or useless notifications.</p></div>
+<div class="imageblock inline-image"><div class="content"><img src="../images/wato_services_services_illu.png" alt="wato services services illu" width="300"></div></div>
+<div class="paragraph"><p>Checkmk demonstrates possibly its greatest strength when configuring services:
+it possesses an unrivaled and very powerful system for an <em>automatic
+detection and configuration of services</em>. With Checkmk there is no need
+to define every single service via templates and individual allocations.
+Checkmk can automatically and reliably detect the list of services to be
+monitored, and first and foremost, <em>keep it up to date</em>. This not
+only saves a lot of time — it also makes the monitoring <em>accurate</em>.
+It ensures that the daily changes in a data center are always promptly
+covered and that no important service goes unmonitored.</p></div>
+<div class="paragraph"><p>The service discovery in Checkmk is based on an important basic principle:
+the separation of <em>what</em> from <em>how</em>:</p></div>
+<div class="ulist"><ul>
+<li><p><strong>What</strong> should be monitored? → The system <code>/var</code> on the host <code>myserver01</code></p></li>
+<li><p><strong>How</strong> should it be monitored? → at 90 % used space <span class="state1">WARN</span>, at 95 % <span class="state2">CRIT</span></p></li>
+</ul></div>
+<div class="paragraph"><p><em>What</em> is automatically detected by the service discovery. It is
+a combination of the <strong>host name</strong> (<code>myserver01</code>), the <a href="#checkplugins"><strong>check plug-in</strong></a> (<code>df:</code> data system check in Linux) and the <strong>item</strong>
+(<code>/var</code>). Check plug-ins that can create a maximum of one service on a
+host do not require an item (e.g., the check plug-in for CPU utilization). The
+results from a service discovery are presented in a table as shown below:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Host</th>
+<th class="tableblock halign-left valign-top">Check plug-in</th>
+<th class="tableblock halign-left valign-top">Item</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver01</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>df</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver01</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>df</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myserver01</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cpu.util</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">…​</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">…​</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">…​</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>app01cz2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hr_fs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">…​</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">…​</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">…​</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>The <em>how</em> — thus the thresholds/check parameters for the individual
+services — is configured independently via <a href="wato_rules.html">rules</a>. You can
+e.g., define a rule that monitors all data systems with the mount point <code>/var</code>,
+and the 90 % / 95 % thresholds, without needing to think about on
+which hosts such a data system even exists. This is what makes configuring
+with Checkmk so clear and simple!</p></div>
+<div class="paragraph"><p>A few services can’t be installed using an automatic discovery.
+Among these are e.g., checks queried per HTTP-specified websites.
+These are created via rules, as you can learn about in the article about <a href="active_checks.html">active checks</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_discovery">
+<span class="hidden-anchor sr-only" id="discovery"></span>2. Host services in the Setup</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__incorporating_a_new_host">
+<span class="hidden-anchor sr-only" id="_incorporating_a_new_host"></span>2.1. Incorporating a new host</h3>
+<div class="paragraph"><p>Once you have added a new host in the setup the next step is to call up the list of services.
+With this action the automatic service discovery takes place for the first time for this host, and the accessibility of the data sources is checked in parallel.
+You can also call up this list at any time later in order to restart the discovery or to carry out modifications to the configuration.
+There are various ways of opening the service list:</p></div>
+<div class="ulist"><ul>
+<li><p>via the button <span class="image-inline"><img src="../images/icons/icon_save_to_services.png" alt="icon save to services"></span> <span class="guihint">Save &amp; run service discovery</span> in the <span class="guihint">Properties of host</span> in the setup</p></li>
+<li><p>in the menu bar of the <span class="guihint">Properties of host</span> via <span class="guihint">Host &gt; Run service discovery</span></p></li>
+<li><p>via the <span class="image-inline"><img src="../images/icons/icon_services.png" alt="icon services"></span> symbol in the list of hosts in a folder in the setup</p></li>
+<li><p>via the <span class="image-inline"><img src="../images/icons/icon_services.png" alt="icon services"></span> <span class="guihint">Run service discovery</span> entry in the action menu of the service <a href="#discovery_check"><span class="guihint">Check_MK Discovery</span></a> of a host</p></li>
+</ul></div>
+<div class="paragraph"><p>When a host has been newly-incorporated its services have not yet been configured, and therefore all discovered services appear in the <span class="guihint">Undecided services - currently not monitored</span> category:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_first_service_discovery.png" alt="View of all services of a host after the initial service discovery."></div></div>
+<div class="paragraph"><p>The usual method for adding the newly discovered services is to simply hit the <span class="image-inline"><img src="../images/icons/icon_accept.png" alt="icon accept"></span> <span class="guihint">Accept all</span> button.
+That way also all host labels will be added in one go.
+Afterwards quickly <span class="guihint">Activate changes</span> — after which the host will be in the monitoring.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_available">
+<span class="hidden-anchor sr-only" id="available"></span>2.2. Adding missing services</h3>
+<div class="paragraph"><p>For a host that is already being monitored this list looks different.
+Instead of <span class="guihint">Undecided services - currently not monitored</span> you will see <span class="guihint">Monitored services</span>.
+If Checkmk detects something on a host that is not being monitored, that however <em>should</em> be monitored, then the list will look something like this:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_adding_newly_discovered_services.png" alt="wato services adding newly discovered services"></div></div>
+<div class="paragraph"><p>A click on <span class="image-inline"><img src="../images/icons/icon_service_to_old.png" alt="icon service to old"></span> <span class="guihint">Monitor undecided services</span> or on <span class="image-inline"><img src="../images/icons/icon_accept.png" alt="icon accept"></span> <span class="guihint">Accept all</span> simply adds all of the missing services so that the monitoring is again complete.
+If you only want to add some of the missing services, you can alternatively click the button <span class="image-inline"><img src="../images/icons/icon_service_to_old.png" alt="icon service to old"></span> in order to <span class="guihint">Move to monitored services</span>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_vanished">
+<span class="hidden-anchor sr-only" id="vanished"></span>2.3. Vanished services</h3>
+<div class="paragraph"><p>In data centers things can not only newly appear, but also disappear.
+A data base instance can be discontinued, a LUN unmounted, a file system removed, etc.
+Checkmk automatically recognizes such services as <em>vanished</em>. In the service list e.g., it will look like this:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_vanished_services.png" alt="wato services vanished services"></div></div>
+<div class="paragraph"><p>The simplest way to be free of these services is again with a click on <span class="image-inline"><img src="../images/icons/icon_accept.png" alt="icon accept"></span> <span class="guihint">Accept all</span> or by clicking the button <span class="image-inline"><img src="../images/icons/icon_service_to_removed.png" alt="icon service to removed"></span> in each individual line,
+which stands for <span class="guihint">Remove vanished services</span>.
+<strong>Attention</strong>: The reason for the disappearance can of course be due to a problem!
+The disappearance of a file system can also mean that due to an error it could not be mounted.
+The monitoring is after all there for such cases!
+You should only remove the service when you really know that this no longer needs monitoring.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_remove_unwanted_services">
+<span class="hidden-anchor sr-only" id="remove_unwanted_services"></span>2.4. Removing unwanted services</h3>
+<div class="paragraph"><p>You won’t necessarily want to monitor everything that Checkmk finds. The
+discovery works in a target-oriented way of course, and it can exclude much
+unnecessary data in advance. Nonetheless, how can Checkmk know, for example, that
+a particular data base instance has been set up only ‘to play around with’,
+and is not in production?  There are two ways of eliminating such services:</p></div>
+<div class="sect3">
+<h4 id="heading__temporarily_disabling_services">
+<span class="hidden-anchor sr-only" id="_temporarily_disabling_services"></span>Temporarily disabling services</h4>
+<div class="paragraph"><p>In order to remove certain services from the monitoring temporarily, you can simply click the icon <span class="image-inline"><img src="../images/icons/icon_service_to_undecided.png" alt="icon service to undecided"></span>.
+That way the service will be moved to the list of <span class="guihint">Undecided services</span>.
+Or you could even click the icon <span class="image-inline"><img src="../images/icons/icon_move_to_disabled.png" alt="icon move to disabled"></span> at the beginning of the line, in order to disable the service.
+And naturally, don’t forget the usual <span class="guihint">Activate changes</span>.</p></div>
+<div class="paragraph"><p>This is however only intended for temporary and smaller actions, as the services deselected in this way will be highlighted as <span class="guihint">missing</span> by Checkmk, and the <a href="#discovery_check">discovery check</a> (which we will show you later below) will likewise be unhappy.
+In any case, that would simply be too much work and not really practical in an environment with x-thousand services …​</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_disabled_services">
+<span class="hidden-anchor sr-only" id="disabled_services"></span>Permanently disabling services</h4>
+<div class="paragraph"><p>It is far more elegant and enduring to permanently ignore services with the
+aid of the <span class="guihint">Disabled services</span> <a href="wato_rules.html">rule set</a>. Here you can not
+only exclude individual services from monitoring, but also formulate rules
+like “I don’t want to monitor services beginning with <em>myservice</em> on
+the host <span class="guihint">myserver01."</span></p></div>
+<div class="paragraph"><p>You can access the rule via <span class="guihint">Setup &gt; Services &gt; Discovery rules &gt; Discovery and Checkmk settings &gt; Disabled Services</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_disabled_services_conditions.png" alt="wato services disabled services conditions"></div></div>
+<div class="paragraph"><p>Once you have saved the rules, and return to the host’s service list, you
+will see the disabled services in the <span class="guihint">Disabled Services</span> section,
+together with any service that might have been disabled manually.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_disabled_services.png" alt="wato services disabled services"></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_refresh">
+<span class="hidden-anchor sr-only" id="refresh"></span>2.5. Refreshing services</h3>
+<div class="paragraph"><p>There are a number of plug-ins that <em>notice</em> things during a discovery.
+For example, the plug-in for network interfaces checks the speed set on the
+interface during the discovery.  Why? In order to be able to warn you in
+case it changes! It is rarely a good sign when an interface is sometimes
+set to 10 Mbit/s, and sometimes to 1 Gbit/s — this could rather be an indication
+of a defective auto-negotiation.</p></div>
+<div class="paragraph"><p>What happens when this change is desired and is to be accepted as OK from
+now on?
+Either — remove the service via icon <span class="image-inline"><img src="../images/icons/icon_service_to_undecided.png" alt="icon service to undecided"></span>, which
+stands for <span class="guihint">Move to undecided services</span> and re-add it immediately
+afterwards.
+Or refresh all services of the host by clicking <span class="guihint">Actions &gt; Remove all
+and find new</span> in the menu bar. This is naturally much easier, but only when you
+don’t want to keep individual services in an error state.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_update_labels">
+<span class="hidden-anchor sr-only" id="update_labels"></span>2.6. Update host and service labels</h3>
+<div class="paragraph"><p>Updating only the labels can be easily achieved via <span class="guihint">Actions &gt; Host labels &gt; Update host labels</span> and <span class="guihint">Actions &gt; Services &gt; Update service labels</span> respectively in the menu bar.
+If it is only necessary to add or update individual (new) service labels, this can be done in the line of the respective service in the <span class="guihint">Changed services</span> box by clicking on <span class="image-inline"><img src="../images/icons/button_update_service_labels.png" alt="button update service labels"></span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_update_service_labels.png" alt="New service labels in the service discovery and a button to add them to the monitoring."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_snmp">
+<span class="hidden-anchor sr-only" id="snmp"></span>2.7. Special conditions with SNMP</h3>
+<div class="paragraph"><p>There are a few special features for devices that are monitored via SNMP.
+You can learn about these in the <a href="snmp.html#services">Article about SNMP</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_bulk_discovery">
+<span class="hidden-anchor sr-only" id="bulk_discovery"></span>3. Bulk Discovery — simultaneous discovery on multiple hosts</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you want to perform a discovery for multiple hosts with a single action,
+you can make the work easier with Checkmk’s
+<a href="hosts_setup.html#bulk_operations">bulk actions</a>. Firstly, choose the hosts
+on which the discovery is to be performed.  You have several options for this:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>In a folder, select the check boxes for individual hosts and then via
+<span class="guihint">Hosts &gt; On selected hosts &gt; Run bulk service discovery</span> in the menu bar.</p></li>
+<li><p>Search for hosts with <a href="hosts_setup.html#search">host search</a>, select all hosts
+in the search result by clicking the <span class="image-inline"><img src="../images/icons/button_select_all.png" alt="button select all"></span> and then again
+via <span class="guihint">Hosts &gt; On selected hosts &gt; Run bulk service discovery</span> in the menu bar.</p></li>
+<li><p>In a folder, click <span class="guihint">Hosts &gt; <strong>In this folder</strong> &gt; Run bulk service discovery</span> in
+the menu bar.</p></li>
+</ol></div>
+<div class="paragraph"><p>With the third variant you can also perform the service discovery recursively in all subfolders.
+In all of the above three options the next step will take you to the following dialog:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_bulk_discovery.png" alt="wato services bulk discovery"></div></div>
+<div class="paragraph"><p>In the <span class="guihint">Parameters</span> drop-down menu, the option <span class="guihint">Custom service configuration update</span> is preselected.
+The four checkboxes below offer exactly the same options that you have in the service list in the setup and that we have already explained above.
+In the drop-down menu, you also have the option of selecting <span class="guihint">Refresh all services (tabula rasa)</span>.</p></div>
+<div class="paragraph"><p>Under <span class="guihint">Selection</span> you can again control the host selection.
+This is primarily sensible if you have selected these via the folder rather than via the check boxes.
+Most of the options are intended to accelerate the discovery:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Include all subfolders</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If you have started the bulk discovery for
+all hosts in a folder, this option will be active by default. The discovery
+will be run on all hosts of all subfolder, as well.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Only include hosts that failed on previous discovery</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hosts for which an earlier service discovery via bulk operations has failed (e.g. because the host was not accessible at the time), are flagged with the <span class="image-inline"><img src="../images/icons/icon_inventory_failed.png" alt="icon inventory failed"></span> symbol. This option allows the discovery to be repeated only for these hosts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Only include hosts with a failed discovery check</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This restricts the discovery to such hosts for which the <a href="#discovery_check">discovery check</a> failed. When you work with discovery check this is a good method for greatly accelerating a discovery on many hosts. The combination with the <span class="guihint">Refresh all services (tabula rasa)</span> option makes less sense in this case however as it can distort the status of existing services.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Exclude hosts where the agent is unreachable</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hosts that are not accessible cause long delays during discovery due to connection timeouts. This can greatly impede a discovery’s performance on larger numbers of hosts. If the hosts are already in monitoring — and it knows that the hosts are <span class="hstate1">DOWN</span> — you can bypass them here and thus avoid the timeouts.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>The <span class="guihint">Performance Options</span> are predefined so that a <span class="guihint">full
+service scan</span> will be performed. If you are not interested in new
+plug-ins a discovery can be greatly accelerated by not choosing this option.</p></div>
+<div class="paragraph"><p>The <code>10</code> set in <span class="guihint">Number of hosts to handle at once</span> means that
+ten hosts are always processed in one action. This is achieved internally
+with an HTTP request. If you encounter timeout problems due to some hosts
+requiring a long time to discover, you can try setting this number lower
+(to the detriment of the total time required).</p></div>
+<div class="paragraph"><p>As soon as you confirm the dialog the procedure will start and you can
+observe its progress:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_bulk_discovery_progress.png" alt="wato services bulk discovery progress"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_parameters">
+<span class="hidden-anchor sr-only" id="parameters"></span>4. Check parameters in services</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Many of the check plug-ins can be configured using parameters. The most common
+practice is the setting of thresholds for <span class="state1">WARN</span> and <span class="state2">CRIT</span>. Parameters can
+be structured in a much more complex way, as shown in this example of
+temperature-monitoring with Checkmk:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_example_check_parameters_temperature_levels.png" alt="wato services example check parameters temperature levels"></div></div>
+<div class="paragraph"><p>The check parameter for a service is composed of three parts:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Every plug-in has a <em>Default value</em> for the Parameter.</p></li>
+<li><p>Some plug-ins set values during a discovery (see <a href="#refresh">above</a>).</p></li>
+<li><p>Parameters can be set via rules.</p></li>
+</ol></div>
+<div class="paragraph"><p>Parameters from rules have priority over those set by a discovery, and these
+in turn have priority over default values. For complex parameters in which
+individual sub-parameters are set using check boxes (as with temperature
+for example), these priority-rules apply separately for each sub-parameter.
+So, if you set only one sub-parameter via rules, the others retain their
+respective default values.  In this way you can, for example, activate the trend
+calculation of the temperatures with one rule, and with another rule set
+the temperature threshold value for a physical sensor device.  The complete
+parameter set will then be composed from both rules.</p></div>
+<div class="paragraph"><p>The exact parameters a service eventually has can be found in the service’s
+parameters page.  This can be accessed via the <span class="image-inline"><img src="../images/icons/icon_check_parameters.png" alt="icon check parameters"></span>
+symbol in the host’s service list.  If you wish to see the parameters
+from all services directly in the service table, you can show it by clicking
+<span class="guihint">Display &gt; Details &gt; Show check parameters</span> in the menu bar. It will
+look something like this:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_check_parameters.png" alt="wato services check parameters"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__customizing_the_service_discovery">
+<span class="hidden-anchor sr-only" id="_customizing_the_service_discovery"></span>5. Customizing the service discovery</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>We have <a href="#disabled_services">earlier</a> shown how you can configure the
+service discovery to suppress the displaying of undesired services.
+In addition there are further rule sets for a number of plug-ins
+that influence the behavior of the discovery with these plug-ins.  Not only
+are there settings for <em>omitting</em> items, there are also those that
+actively find items, or collect them into groups. The naming of items
+is sometimes also an issue — e.g. for those switchports where you can decide
+on a description or alias to be used as an item (which will be used in the
+service name) instead of its interface ID.</p></div>
+<div class="paragraph"><p>All rule sets that are relevant for service discovery can be found under
+<span class="guihint"><span class="image-inline"><img src="../images/icons/icon_main_setup_dark.png" alt="icon main setup dark"></span> Setup &gt; Services &gt; Discovery rules</span>.
+Please don’t confuse these rule sets with those intended for parameterizing
+the actual services. A number of plug-ins have two rule sets in fact — one
+for the discovery, and one for the parameters.  Here are a few examples.</p></div>
+<div class="sect2">
+<h3 id="heading_processes">
+<span class="hidden-anchor sr-only" id="processes"></span>5.1. Monitoring of processes</h3>
+<div class="paragraph"><p>It would make little sense for Checkmk to simply define a service to monitor
+every process found on a host. Most processes are either of no interest
+or are only temporarily present. At the very least there are hundreds of
+processes running on a typical Linux server.</p></div>
+<div class="paragraph"><p>For monitoring services you therefore need to work with
+<a href="#enforced_services">enforced services</a> or — and this is
+much more elegant — by using the rule set <span class="guihint">Process discovery</span> to tell
+the service discovery which processes it should be on the lookout for.  In this
+manner you can always allow a monitoring to be instituted automatically when a
+<em>definitely interesting</em> process is found on a host.</p></div>
+<div class="paragraph"><p>The following image shows a rule in the <span class="guihint">Process discovery</span> rule set which
+searches for processes that execute the program <code>/usr/sbin/apache2</code>.
+In this example a service (<span class="guihint">Grab user from found processes</span>) will be
+created for every different operating system user for whom such a process
+is found.  The service will be named <code>Apache %u</code>, where <code>%u</code>
+will be replaced by the user name. For the threshold the number of process
+instances will be set to 1/1 (minimum) and 30/60 (maximum) respectively:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_process_discovery.png" alt="wato services process discovery"></div></div>
+<div class="paragraph"><p>Please note that the predefined thresholds are referred to as
+<span class="guihint">Default parameters for detected services</span>. You can assign these — and likewise all
+other services — via rules. As a reminder: the above rules configure the
+service <em>discovery</em> — the <em>what</em>. If the services are present
+for the first time, the rule chain <span class="guihint">State and count of processes</span> is
+responsible for the thresholds.</p></div>
+<div class="paragraph"><p>The fact that you can set thresholds during a discovery is an aid to
+convenience. There is a catch though: changes to the discovery rule only
+take effect with the <em>next discovery</em>. If you change thresholds you
+will need to run a new discovery. If, however, you only use the rule to
+discover the services (the <em>what</em>), and the rule set
+<span class="guihint">State and count of processes</span> for the <em>how</em>, then you will not have
+this problem.</p></div>
+<div class="paragraph"><p>In order to monitor certain or single processes on a Windows host, you just have
+to state the filename (incl. the extension) without any path in the field
+<span class="guihint">Executable</span>. You can find all these names in the details tab of the Windows
+Task Manager for example. In the rule <span class="guihint">Process discovery</span> this could look like
+this for the process <code>svchost</code>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_process_discovery_windows.png" alt="wato services process discovery windows"></div></div>
+<div class="paragraph"><p>Further information on process discovery can be found in the inline help for this rule set. As always you can activate this via <span class="guihint">Help &gt; Show inline help</span> in the menu bar.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__monitoring_services_under_windows">
+<span class="hidden-anchor sr-only" id="_monitoring_services_under_windows"></span>5.2. Monitoring services under Windows</h3>
+<div class="paragraph"><p>The discovery and parameterizing of the monitoring of Windows services is
+analogous to the processes and is controlled via the rule sets
+<span class="guihint">Windows service discovery</span> (<em>what</em>) and <span class="guihint">Windows services</span> (<em>how</em>)
+respectively. Here is an example of a rule that watches out for two services:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_windows_service_discovery.png" alt="wato services windows service discovery"></div></div>
+<div class="paragraph"><p>Exactly as for the processes, here the service discovery is also only
+one option. If, on the basis of host characteristics and folders, you
+can formulate precise rules for hosts on which specific services are to be
+expected, then you can also work with <a href="#enforced_services">enforced services</a>.
+This is independent of the situation actually found — it can however
+require considerably more effort, as under these circumstances
+you need many rules in order to exactly describe which service is to be
+expected on which host.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_switches">
+<span class="hidden-anchor sr-only" id="switches"></span>5.3. Monitoring of switch ports</h3>
+<div class="paragraph"><p>Checkmk uses the same logic for monitoring network interfaces on servers
+and ports on Ethernet switches. With switch ports the existing options for
+controlling the service discovery are especially interesting, even though
+(in contrast to the processes and Windows services) the discovery initially
+functions without rules. That is to say, by default Checkmk automatically
+monitors all physical ports that currently have an UP state. The applicable
+rule set is called <span class="guihint">Network interface and switch port discovery</span> and offers
+numerous setting options that are only briefly described here:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_network_interface_switch_port_discovery.png" alt="wato services network interface switch port discovery"></div></div>
+<div class="paragraph"><p>The following options are the most important ones:</p></div>
+<div class="ulist"><ul>
+<li><p>In the section <span class="guihint">Appearance of network interface</span> you can determine,
+how the interface should look in the name of the service. You can choose between
+<span class="guihint">Use description</span>, <span class="guihint">Use alias</span> and <span class="guihint">Use index</span>.</p></li>
+<li><p>The restriction or <em>expansion</em> of the types or names of interfaces being monitored.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_enforced_services">
+<span class="hidden-anchor sr-only" id="enforced_services"></span>6. Setting-up enforced services</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are some situations in which an automatic service discovery would make
+no sense. This is always the case if you want to force compliance with a
+specific <em>guideline</em>. As we saw in the previous chapter, you can allow
+the monitoring of Windows services to set itself up automatically when these
+are found. What happens when the absence of such a service presents a problem?
+For example:</p></div>
+<div class="ulist"><ul>
+<li><p>A particular virus scanner should be installed on every Windows host.</p></li>
+<li><p>NTP should be configured on every Linux host.</p></li>
+</ul></div>
+<div class="paragraph"><p>In such cases you can simply enforce those services. You find the starting point
+for this via <span class="guihint">Setup &gt; Services &gt; Enforced services</span>. Underlying this
+is a collection of <a href="wato_rules.html">rule sets</a> which have exactly the same
+names as the rule sets used for configuring the parameters for these checks.</p></div>
+<div class="paragraph"><p>The rules differ in two points however:</p></div>
+<div class="ulist"><ul>
+<li><p>These are rules for <em>hosts</em>, not for services. The services will be created by the rules.</p></li>
+<li><p>Since no discovery takes place, you must select the check plug-in to be used for the check.</p></li>
+</ul></div>
+<div class="paragraph"><p>The following example shows the body of the <span class="guihint">State of NTP time synchronisation</span>
+rule under <span class="guihint">Enforced services</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_example_enforced_services_ntp.png" alt="wato services example enforced services ntp"></div></div>
+<div class="paragraph"><p>Alongside the thresholds, here you set the check plug-in (e.g. <code>chrony</code>
+or <code>ntp_time</code>). For check plug-ins that require an item you must also
+specify these. For example, this is necessary for the <span class="guihint">oracle_processes</span>
+plug-in, which requires the details of the data base SID to be monitored:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_example_enforced_services_oracle_processes.png" alt="wato services example enforced services oracle processes"></div></div>
+<div class="paragraph"><p>A manual service defined in this way will be installed on all hosts to
+which these rules apply. There will now be three possible conditions for
+the actual monitoring:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>The host is correctly installed and the service is <span class="state0">OK</span>.</p></li>
+<li><p>The agent notifies that the requested service does not run or has a problem. The service then flags <span class="state2">CRIT</span> or <span class="state3">UNKNOWN</span>.</p></li>
+<li><p>The agent provides no information at all, e.g., because NTP is not even installed. The service then remains in <span class="statep">PEND</span> and the Checkmk service goes into <span class="state1">WARN</span> with the notice that the relevant section in the agent data is missing.</p></li>
+</ol></div>
+<div class="paragraph"><p>You won’t require most of the rule sets in the <span class="guihint">Enforced services</span>
+module, they are only present for the sake of completeness. The most common
+cases of manual checks are:</p></div>
+<div class="ulist"><ul>
+<li><p>Monitoring of Windows services (Rule set: <span class="guihint">Windows Services</span>)</p></li>
+<li><p>Monitoring of processes (Rule set: <span class="guihint">State and count of processes</span>)</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_discovery_check">
+<span class="hidden-anchor sr-only" id="discovery_check"></span>7. The discovery check</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In the introduction we promised that Checkmk not only detects the list of
+services automatically, it can also <em>keep it up to date</em>. It would also
+be natural to have the possibility of manually running a bulk discovery for
+all hosts from time to time.</p></div>
+<div class="sect2">
+<h3 id="heading_discovery_auto">
+<span class="hidden-anchor sr-only" id="discovery_auto"></span>7.1. Automatic check for unmonitored services</h3>
+<div class="paragraph"><p>Much better for this however is a regular <em>discovery check</em>, which is set up automatically on new sites.
+This service <span class="guihint">Check_MK Discovery</span> exists for every host and will log a warning whenever it finds unmonitored items:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_discovery_check_warn.png" alt="wato services discovery check warn"></div></div>
+<div class="paragraph"><p>The details of unmonitored or vanished services can be found on the <span class="guihint">Check_MK Discovery</span> service details page in the <span class="guihint">Details</span> field:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_discovery_check_details.png" alt="wato services discovery check details"></div></div>
+<div class="paragraph"><p>The host’s service list in the Setup can be easily accessed via the <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> action menu of the <span class="guihint">Check_MK Discovery</span> service
+and the <span class="image-inline"><img src="../images/icons/icon_services.png" alt="icon services"></span> <span class="guihint">Run service discovery</span> entry.</p></div>
+<div class="paragraph"><p>The parameterizing of the discovery check is very simply done using the <span class="guihint">Periodic service discovery</span> <a href="glossar.html#rule_set">rule set</a>.
+In a site which is fresh out the box, you will already find one rule which has been defined to apply to all hosts:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_periodic_service_discovery.png" alt="wato services periodic service discovery"></div></div>
+<div class="paragraph"><p>Alongside the interval in which the check is to be run, you can set monitoring state
+for cases of unmonitored services, vanished services, changed service labels and new host labels.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_automatically_update_service_configuration">
+<span class="hidden-anchor sr-only" id="automatically_update_service_configuration"></span>7.2. Adding services automatically</h3>
+<div class="paragraph"><p>You can have the discovery check add missing services automatically.
+To this end activate the <span class="guihint">Automatically update service configuration</span> option, which will make further options available.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_periodic_service_discovery_update_configuration.png" alt="wato services periodic service discovery update configuration"></div></div>
+<div class="paragraph"><p>Alongside the additions, in <span class="guihint">Parameters</span> you can also choose to delete vanished services, or even to delete all existing services and perform a complete new discovery.
+The latter option can be found in the drop-down menu under the name <span class="guihint">Refresh all services and host labels (tabula rasa)</span>.
+Both these options should be used carefully!
+A vanished service can indicate a problem!
+The discovery check will simply delete such a service and lull you into thinking everything is in order.
+The refresh is especially risky.
+For example, the check for switchports will only take ports that are <span class="hstate0">UP</span> into the monitoring.
+Ports with a status of <span class="hstate1">DOWN</span> will be perceived as vanished and quickly deleted from the discovery check!</p></div>
+<div class="paragraph"><p>A further problem needs to be considered: adding services or even the
+automatic <span class="guihint">Activate Changes</span> can distract you — the admin — when you are
+performing a configuration. It can theoretically occur that while you are
+working on rules and settings, in that moment a discovery check activates
+your changes. In Checkmk only all changes can be activated at once! In order
+to preclude such situations you can reschedule the time for this function,
+to overnight for example. The above image shows an example of this.</p></div>
+<div class="paragraph"><p>Under <span class="guihint">Vanished clustered services</span> you can handle <a href="clustered_services.html">clustered services</a> separately.
+The special feature here: If a clustered service moves from one node to another, it could be briefly considered as vanished and accordingly deleted unintentionally.
+If you waive this option, in turn, services that have actually disappeared would never be deleted.</p></div>
+<div class="paragraph"><p>The <span class="guihint">Group discovery and activation for up to</span> setting ensures that
+not every single service that has been newly-found immediately triggers an
+<span class="guihint">Activate Changes</span> — rather there will be a specified waiting time so that
+multiple changes can be activated in a single action. Even if the discovery
+check is set to an interval of two hours or more, this only applies to each host separately.
+The checks don’t run simultaneously for every host — which
+is a good thing, as a discovery check requires significantly more resources
+than a normal check.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_passive_checks">
+<span class="hidden-anchor sr-only" id="passive_checks"></span>8. Passive services</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Passive services are those that are not actively initiated by Checkmk, rather
+by check results regularly channeled from external sources. This generally
+occurs via the core’s command pipe. Here is a step-by-step procedure for
+creating a passive service:</p></div>
+<div class="paragraph"><p>First, you need to notify the core of the service.
+This is done with the same rule set as in your <a href="active_checks.html#nagios_plugins">own active checks</a>, except that you omit the <span class="guihint">Command line</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_passive_checks_integrate_nagios_plugins.png" alt="wato services passive checks integrate nagios plugins"></div></div>
+<div class="paragraph"><p>The image also shows how you can verify if check results are being regularly
+received. If these fail to appear for longer than ten minutes then the
+service will be automatically flagged as <span class="state3">UNKNOWN</span>.</p></div>
+<div class="paragraph"><p>After an <span class="guihint">Activate Changes</span> the new service will start its life in the
+<span class="statep">PEND</span> state:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_passive_checks_pending.png" alt="wato services passive checks pending"></div></div>
+<div class="paragraph"><p>Sending the check result now takes place on the command line via an
+<code>echo</code> of the <code>PROCESS_SERVICE_CHECK_RESULT</code> command in the
+<code>~/tmp/run/nagios.cmd</code> command pipe.</p></div>
+<div class="paragraph"><p>The syntax conforms to the usual Nagios conventions — including a current
+time stamp in square brackets. As the argument with the command you need
+the host name (e.g., <code>myhost</code>) and the selected service name
+(e.g., <code>BAR</code>). The two subsequent arguments are again the status
+(<code>0</code> …​ <code>3</code>) and the plug-in’s output. The time stamp is
+created with <code>$(date +%s)</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">"[</span><span class="tok-k">$(</span>date<span class="tok-w"> </span>+%s<span class="tok-k">)</span><span class="tok-s2">] PROCESS_SERVICE_CHECK_RESULT;myhost;BAR;2;Something bad has happened"</span><span class="tok-w"> </span>&gt;<span class="tok-w"> </span>~/tmp/run/nagios.cmd</code></pre></div></div>
+<div class="paragraph"><p>The service now immediately shows its new status:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_passive_checks_crit.png" alt="wato services passive checks crit"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_commandline">
+<span class="hidden-anchor sr-only" id="commandline"></span>9. Service discovery on the command line</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A GUI is fine, but the good old command line is sometimes still
+practical — whether it is for automation or it simply enables an experienced user
+to work quickly. A service discovery can be triggered with the <code>cmk
+-I</code> command on the command line. There are a couple of variables in
+this process. For all of these the <code>-v</code> option is recommended, so that
+you can see what happens. Without <code>-v</code> Checkmk behaves like the good
+old traditional Unix — as long as everything is OK it says nothing.</p></div>
+<div class="paragraph"><p>With a simple ‘<code>-I</code>’ search for <strong>all</strong> hosts by new services:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-vI
+<span class="tok-go">Discovering services and host labels on all hosts</span>
+<span class="tok-go">myserver01:</span>
+<span class="tok-go">+ FETCHING DATA</span>
+<span class="tok-go">Using data from cache file /omd/sites/mysite/tmp/check_mk/cache/myserver01</span>
+<span class="tok-go">[TCPFetcher] Use cached data</span>
+<span class="tok-go">No piggyback files for 'myserver01'. Skip processing.</span>
+<span class="tok-go">[PiggybackFetcher] Execute data source</span>
+<span class="tok-go">+ PARSE FETCHER RESULTS</span>
+<span class="tok-go">Received no piggyback data</span>
+<span class="tok-go">+ EXECUTING HOST LABEL DISCOVERY</span>
+<span class="tok-go">+ PERFORM HOST LABEL DISCOVERY</span>
+<span class="tok-go">+ EXECUTING DISCOVERY PLUGINS (42)</span>
+<span class="tok-go">SUCCESS - Found no new services, 2 host labels</span>
+<span class="tok-go">myserver02:</span>
+<span class="tok-go">+ FETCHING DATA</span>
+<span class="tok-go">Using data from cache file /omd/sites/mysite/tmp/check_mk/cache/myserver02</span>
+<span class="tok-go">[TCPFetcher] Use cached data</span>
+<span class="tok-go">No piggyback files for 'myserver02'. Skip processing.</span>
+<span class="tok-go">[PiggybackFetcher] Execute data source</span>
+<span class="tok-go">+ PARSE FETCHER RESULTS</span>
+<span class="tok-go">Received no piggyback data</span>
+<span class="tok-go">+ EXECUTING HOST LABEL DISCOVERY</span>
+<span class="tok-go">+ PERFORM HOST LABEL DISCOVERY</span>
+<span class="tok-go">+ EXECUTING DISCOVERY PLUGINS (1900)</span>
+<span class="tok-go">SUCCESS - Found no new services, 2 host labels</span></code></pre></div></div>
+<div class="paragraph"><p>With the <code>-I</code> you can also enter one or more host names in order
+to only discover these. This additionally has a second effect — whereas
+an <code>-I</code> on all hosts basically works only with <strong>cached</strong> data,
+Checkmk always works with <strong>fresh</strong> data from an explicitly-nominated host!</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-vI<span class="tok-w"> </span>myserver01</code></pre></div></div>
+<div class="paragraph"><p>Alternatively, you can filter using tags:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-vI<span class="tok-w"> </span>@mytag</code></pre></div></div>
+<div class="paragraph"><p>This would perform the discovery for all hosts with the host tag <code>mytag</code>.
+Filtering with tags is available for all cmk options that accept multiple hosts.</p></div>
+<div class="paragraph"><p>With the <code>--cache</code> and respectively <code>--no-cache</code> options you
+can explicitly determine the use of cache.</p></div>
+<div class="paragraph"><p>Additional outputs can be received with a second <code>-v</code>. With SNMP-based
+devices you can even see every single OID retrieved from the device:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-vvI<span class="tok-w"> </span>myswitch01
+<span class="tok-go">Discovering services on myswitch01:</span>
+<span class="tok-go">myswitch01:</span>
+<span class="tok-go"> SNMP scan:</span>
+<span class="tok-go">       Getting OID .1.3.6.1.2.1.1.1.0: Executing SNMP GET of .1.3.6.1.2.1.1.1.0 on switch</span>
+<span class="tok-go">=&gt; ['24G Managed Switch'] OCTETSTR</span>
+<span class="tok-go">24G Managed Switch</span>
+<span class="tok-go">       Getting OID .1.3.6.1.2.1.1.2.0: Executing SNMP GET of .1.3.6.1.2.1.1.2.0 on switch</span>
+<span class="tok-go">=&gt; ['.1.3.6.1.4.1.11863.1.1.3'] OBJECTID</span>
+<span class="tok-go">.1.3.6.1.4.1.11863.1.1.3</span>
+<span class="tok-go">       Getting OID .1.3.6.1.4.1.231.2.10.2.1.1.0: Executing SNMP GET of .1.3.6.1.4.1.231.2.10.2.1.1.0 on switch</span>
+<span class="tok-go">=&gt; [None] NOSUCHOBJECT</span>
+<span class="tok-go">failed.</span>
+<span class="tok-go">       Getting OID .1.3.6.1.4.1.232.2.2.4.2.0: Executing SNMP GET of .1.3.6.1.4.1.232.2.2.4.2.0 on switch</span>
+<span class="tok-go">=&gt; [None] NOSUCHOBJECT</span>
+<span class="tok-go">failed.</span></code></pre></div></div>
+<div class="paragraph"><p>A complete renewal of the services (tabula rasa) can be performed with a
+double <code>-II</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-vII<span class="tok-w"> </span>myserver01
+<span class="tok-go">Discovering services and host labels on: myserver01</span>
+<span class="tok-go">myserver01:</span>
+<span class="tok-go">+ FETCHING DATA</span>
+<span class="tok-go">Using data from cache file /omd/sites/mysite/tmp/check_mk/cache/myserver01</span>
+<span class="tok-go">[TCPFetcher] Use cached data</span>
+<span class="tok-go">No piggyback files for 'myserver01'. Skip processing.</span>
+<span class="tok-go">No piggyback files for '127.0.0.1'. Skip processing.</span>
+<span class="tok-go">[PiggybackFetcher] Execute data source</span>
+<span class="tok-go">+ PARSE FETCHER RESULTS</span>
+<span class="tok-go">Received no piggyback data</span>
+<span class="tok-go">+ EXECUTING HOST LABEL DISCOVERY</span>
+<span class="tok-go">+ PERFORM HOST LABEL DISCOVERY</span>
+<span class="tok-go">+ EXECUTING DISCOVERY PLUGINS (10)</span>
+<span class="tok-go">    <span class="green">1</span> cpu.loads</span>
+<span class="tok-go">    <span class="green">1</span> cpu.threads</span>
+<span class="tok-go">    <span class="green">6</span> cups_queues</span>
+<span class="tok-go">    <span class="green">3</span> df</span>
+<span class="tok-go">    <span class="green">1</span> diskstat</span>
+<span class="tok-go">    <span class="green">3</span> kernel</span>
+<span class="tok-go">    <span class="green">1</span> kernel.util</span>
+<span class="tok-go">    <span class="green">3</span> livestatus_status</span>
+<span class="tok-go">    <span class="green">1</span> lnx_if</span>
+<span class="tok-go">    <span class="green">1</span> lnx_thermal</span>
+<span class="tok-gp"><span class="green"></span>SUCCESS</span><span class="tok-w"> </span>-<span class="tok-w"> </span>Found<span class="tok-w"> </span><span class="tok-m">21</span><span class="tok-w"> </span>services,<span class="tok-w"> </span><span class="tok-m">2</span><span class="tok-w"> </span>host<span class="tok-w"> </span>labels</code></pre></div></div>
+<div class="paragraph"><p>You can also restrict all of this to a single check plug-in. For this the
+option is <code>--detect-plugins=</code>, and it must be placed before the host name:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">cmk -vII --detect-plugins=df myserver01</span>
+<span class="tok-go">Discovering services and host labels on: myserver01</span>
+<span class="tok-go">myserver01:</span>
+<span class="tok-go">+ FETCHING DATA</span>
+<span class="tok-go">[TCPFetcher] Execute data source</span>
+<span class="tok-go">No piggyback files for 'myserver01'. Skip processing.</span>
+<span class="tok-go">No piggyback files for '127.0.0.1'. Skip processing.</span>
+<span class="tok-go">[PiggybackFetcher] Execute data source</span>
+<span class="tok-go">+ PARSE FETCHER RESULTS</span>
+<span class="tok-go">Received no piggyback data</span>
+<span class="tok-go">+ EXECUTING HOST LABEL DISCOVERY</span>
+<span class="tok-go">+ PERFORM HOST LABEL DISCOVERY</span>
+<span class="tok-go">+ EXECUTING DISCOVERY PLUGINS (1)</span>
+<span class="tok-go">  <span class="green">3</span> df</span>
+<span class="tok-gp"><span class="green"></span>SUCCESS</span><span class="tok-w"> </span>-<span class="tok-w"> </span>Found<span class="tok-w"> </span><span class="tok-m">3</span><span class="tok-w"> </span>services,<span class="tok-w"> </span>no<span class="tok-w"> </span>host<span class="tok-w"> </span>labels</code></pre></div></div>
+<div class="paragraph"><p>When you are finished you can activate the changes with <code>cmk -O</code>
+(<code>cmk -R</code> with Nagios Core):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-O
+<span class="tok-go">Generating configuration for core (type cmc)...<span class="green">OK</span></span>
+<span class="tok-go">Creating helper config...<span class="green">OK</span></span>
+<span class="tok-go">Reloading monitoring core...<span class="green">OK</span></span></code></pre></div></div>
+<div class="paragraph"><p>And when you encounter an error during a discovery…​</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-vII<span class="tok-w"> </span>--detect-plugins<span class="tok-o">=</span>df<span class="tok-w"> </span>myserver01
+<span class="tok-go">  <span class="yellow">WARNING:</span> Exception in discovery function of check type 'df': global name 'bar' is not defined</span>
+<span class="tok-go">  nothing</span></code></pre></div></div>
+<div class="paragraph"><p>… with an additional <code>--debug</code> you can produce a detailed Python
+stack trace of the fault location:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>--debug<span class="tok-w"> </span>-vII<span class="tok-w"> </span>--detect-plugins<span class="tok-o">=</span>df<span class="tok-w"> </span>myserver01
+<span class="tok-go">Discovering services and host labels on myserver01:</span>
+<span class="tok-go">myserver01:</span>
+<span class="tok-go">Traceback (most recent call last):</span>
+<span class="tok-go">  File "/omd/sites/heute/share/check_mk/modules/check_mk.py", line 5252, in &lt;module&gt;</span>
+<span class="tok-go">    do_discovery(hostnames, check_types, seen_I == 1)</span>
+<span class="tok-go">  File "/omd/sites/heute/share/check_mk/modules/discovery.py", line 76, in do_discovery</span>
+<span class="tok-go">    do_discovery_for(hostname, check_types, only_new, use_caches, on_error)</span>
+<span class="tok-go">  File "/omd/sites/heute/share/check_mk/modules/discovery.py", line 96, in do_discovery_for</span>
+<span class="tok-go">    new_items = discover_services(hostname, check_types, use_caches, do_snmp_scan, on_error)</span>
+<span class="tok-go">  File "/omd/sites/heute/share/check_mk/modules/discovery.py", line 677, in discover_services</span>
+<span class="tok-go">    for item, paramstring in discover_check_type(hostname, ipaddress, check_type, use_caches, on_error):</span>
+<span class="tok-go">  File "/omd/sites/heute/share/check_mk/modules/discovery.py", line 833, in discover_check_type</span>
+<span class="tok-go">    discovered_items = discovery_function(info)</span>
+<span class="tok-go">  File "/omd/sites/heute/share/check_mk/checks/df", line 91, in inventory_df</span>
+<span class="tok-go">    foo = bar</span>
+<span class="tok-go">NameError: global name 'bar' is not defined</span></code></pre></div></div>
+<div class="sect2">
+<h3 id="heading__overview_of_options">
+<span class="hidden-anchor sr-only" id="_overview_of_options"></span>9.1. Overview of options</h3>
+<div class="paragraph"><p>To recap — all options at a glance:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk -I</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discover new services</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk -II</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete and rediscover all services (tabula rasa)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-v</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verbose: display hosts and detected services</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-vv</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Very verbose: display a precise protocol of all operations</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--detect-plugins=foo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Execute a discovery (and also a tabula rasa) only for the specified check plug-in</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@foo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Execute a discovery (and also a tabula rasa) only for hosts with the specified tag</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--cache</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Force the use of cache data (normally the default only when no host is specified)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--no-cache</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fetch fresh data (normally the default only when a host name is specified)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--debug</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cancel in an error situation, and display the complete Python stack trace</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk -O</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Activate changes (commercial editions with CMC as core)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmk -R</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Activate changes (Checkmk Raw with Nagios as core)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__saving_in_files">
+<span class="hidden-anchor sr-only" id="_saving_in_files"></span>9.2. Saving in files</h3>
+<div class="paragraph"><p>The <em>result</em> of a service discovery — thus, as explained earlier, the
+tables of host names, check plug-ins, items and identified parameters — can
+be found in the <code>var/check_mk/autochecks</code> folder. Here, for every
+host there is a data set that stores the automatically-discovered services.
+As long as you don’t damage this data set’s Python syntax you can alter or
+delete individual lines manually. Deleting the data set removes all services
+and flags them as quasi ‘unmonitored’ again.</p></div>
+<div class="listingblock">
+<div class="title">var/check_mk/autochecks/myserver01.mk</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>[
+  {'check_plugin_name': 'cpu_loads', 'item': None, 'parameters': (5.0, 10.0), 'service_labels': {}},
+  {'check_plugin_name': 'cpu_threads', 'item': None, 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'diskstat', 'item': 'SUMMARY', 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'kernel_performance', 'item': None, 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'kernel_util', 'item': None, 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'livestatus_status', 'item': 'myremotesite', 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'lnx_thermal', 'item': 'Zone 0', 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'mem_linux', 'item': None, 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'mknotifyd', 'item': 'mysite', 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'mknotifyd', 'item': 'myremotesite', 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'mounts', 'item': '/', 'parameters': ['errors=remount-ro', 'relatime', 'rw'], 'service_labels': {}},
+  {'check_plugin_name': 'omd_apache', 'item': 'mysite', 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'omd_apache', 'item': 'myremotesite', 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'tcp_conn_stats', 'item': None, 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'timesyncd', 'item': None, 'parameters': {}, 'service_labels': {}},
+  {'check_plugin_name': 'uptime', 'item': None, 'parameters': {}, 'service_labels': {}},
+]</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_service_groups">
+<span class="hidden-anchor sr-only" id="service_groups"></span>10. Service groups</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__why_have_service_groups">
+<span class="hidden-anchor sr-only" id="_why_have_service_groups"></span>10.1. Why have service groups?</h3>
+<div class="paragraph"><p>So far you have learned how to include services in monitoring.
+Now it makes little sense to have to look at lists of thousands of services and/or always
+have to go through host views. For example, if you want to view all file system or
+update services together, you can simply assemble groups in a similar way as you can
+with <a href="glossar.html#host_group">host groups</a>.</p></div>
+<div class="paragraph"><p>Service groups make it easy for you to bring a lot more order to monitoring via
+<a href="views.html">views</a> and NagVis maps, and to switch targeted
+<a href="notifications.html">notifications</a> and <a href="alert_handlers.html">alert handlers</a>. By the way – you could almost always construct corresponding views
+purely using the view filters – but service groups are more clearly arranged and
+easier to work with.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__creating_service_groups">
+<span class="hidden-anchor sr-only" id="_creating_service_groups"></span>10.2. Creating service groups</h3>
+<div class="paragraph"><p>You find the service groups via <span class="guihint">Setup &gt; Services &gt; Service groups</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_service_groups_add_group.png" alt="wato services service groups add group"></div></div>
+<div class="paragraph"><p>Creating a service group is simple:
+Create a group via <span class="image-inline"><img src="../images/icons/icon_new.png" alt="icon new"></span> <span class="guihint">Add group</span> and assign a name that cannot be subsequently changed, and likewise a meaningful alias:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_add_service_group.png" alt="wato services add service group"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__adding_services_to_a_service_group">
+<span class="hidden-anchor sr-only" id="_adding_services_to_a_service_group"></span>10.3. Adding services to a service group</h3>
+<div class="paragraph"><p>To assign services to service groups you need the <a href="wato_rules.html#conditions">rule set</a> <span class="guihint">Assignment of services to service groups</span>.
+The fastest way to go there is via the overview of the service groups (<span class="guihint">Setup &gt; Services &gt; Service Groups</span>).
+Here you simply click <span class="guihint">Service Groups &gt; Assign to group &gt; Rules</span> in the menu bar.
+Alternatively, you can, of course, find the rule via the rule search in the <span class="guihint">Setup</span> menu, or dig through <span class="guihint">Setup &gt; Services &gt; Service monitoring rules &gt; Various &gt; Assignment of services to service groups</span>.
+Now use <span class="guihint">Create rule in folder</span> to do just that. First you specify which service group to assign services to, for example <em>myservicegroup</em> or its alias <em>My service group 1</em>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_servicegroups_rule_assignment.png" alt="wato services servicegroups rule assignment"></div></div>
+<div class="paragraph"><p>The exciting part now follows in the <span class="guihint">Conditions</span> section.
+On the one hand, you can use folders, host tags, and explicit host names to make restrictions outside of the services.
+Secondly, you name the services you would like to group, such as <code>Filesystem</code> and <code>myservice</code> to create a set of file systems.
+The specification of the services takes place here in the form of <a href="regexes.html">regular expressions</a>. This allows you to define groups exactly.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_servicegroups_rule_conditions.png" alt="wato services servicegroups rule conditions"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__checking_the_service_groups_for_a_service">
+<span class="hidden-anchor sr-only" id="_checking_the_service_groups_for_a_service"></span>10.4. Checking the service groups for a service</h3>
+<div class="paragraph"><p>You can check the assignment of services on the detail page of a particular service.
+Below, by default, is the <span class="guihint">Service groups the service is member of</span> line.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_servicegroups_service_detail.png" alt="wato services servicegroups service detail"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__using_service_groups">
+<span class="hidden-anchor sr-only" id="_using_service_groups"></span>10.5. Using service groups</h3>
+<div class="paragraph"><p>As already mentioned, the service groups are used in several places: <a href="views.html">views</a>,
+NagVis maps, <a href="notifications.html">notifications</a> and <a href="alert_handlers.html">alert handlers.</a>
+For new views it is important that you use the <span class="guihint">Service groups</span> as the data source.
+Of course, the <span class="guihint">Views</span> widget also contains predefined views for service groups,
+for example a clear summary:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_servicegroups_view_summary.png" alt="wato services servicegroups view summary"></div></div>
+<div class="paragraph"><p>With a click on the service group names you will receive a complete view of all
+of the services of the respective group.</p></div>
+<div class="paragraph"><p>If you use service groups in NagVis maps, you will receive a summary of service
+groups opened in a menu by hovering over a single icon:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_servicegroups_nagvis_example.png" alt="wato services servicegroups nagvis example"></div></div>
+<div class="paragraph"><p>When you use service groups in <a href="notifications.html">notifications</a> and
+<a href="alert_handlers.html">alert handlers</a>, they are available as
+<a href="wato_rules.html#conditions">conditions/filters</a>, of which you can use one or more:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_servicegroups_notification_rule.png" alt="wato services servicegroups notification rule"></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_checkplugins">
+<span class="hidden-anchor sr-only" id="checkplugins"></span>11. More on Check plug-ins</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__a_short_description_of_their_functionality">
+<span class="hidden-anchor sr-only" id="_a_short_description_of_their_functionality"></span>11.1. A short description of their functionality</h3>
+<div class="paragraph"><p>Check plug-ins are required to generate services in Checkmk.
+Each service uses a check plug-in to determine its status, create/maintain metrics, etc.
+When doing so such a plug-in can create one or more services per host.
+So that multiple services from the same plug-in can be distinguished, an <strong>Item</strong> is needed.
+For example, for the service <code>Filesystem /var</code> the Item is the text <code>/var</code>.
+In the case of plug-ins that can only generate a maximum of one service per host,
+<code>CPU utilization</code>) for example, the Item is empty and not shown.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__available_check_plug_ins">
+<span class="hidden-anchor sr-only" id="_available_check_plug_ins"></span>11.2. Available check plug-ins</h3>
+<div class="paragraph"><p>A list of all available check plug-ins can be found under <span class="guihint">Setup &gt;
+Services &gt; Catalog of check plugins</span>. Here the individual plug-ins can be
+searched for, filtered in various categories:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_catalog_of_check_plugins.png" alt="wato services catalog of check plugins"></div></div>
+<div class="paragraph"><p>For each plug-in three columns of information will be shown: a description of
+the service (Type of Check), the name of the check plug-in (Plug-in Name) and
+its compatible data sources (Agents):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/wato_services_catalog_of_check_plugins_telephony.png" alt="wato services catalog of check plugins telephony"></div></div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li>
+<a href="#discovery">2. Host services in the Setup</a><ul class="sectlevel1">
+<li><a href="#_incorporating_a_new_host">2.1. Incorporating a new host</a></li>
+<li><a href="#available">2.2. Adding missing services</a></li>
+<li><a href="#vanished">2.3. Vanished services</a></li>
+<li>
+<a href="#remove_unwanted_services">2.4. Removing unwanted services</a><ul class="sectlevel2">
+<li><a href="#_temporarily_disabling_services">Temporarily disabling services</a></li>
+<li><a href="#disabled_services">Permanently disabling services</a></li>
+</ul>
+</li>
+<li><a href="#refresh">2.5. Refreshing services</a></li>
+<li><a href="#update_labels">2.6. Update host and service labels</a></li>
+<li><a href="#snmp">2.7. Special conditions with SNMP</a></li>
+</ul>
+</li>
+<li><a href="#bulk_discovery">3. Bulk Discovery — simultaneous discovery on multiple hosts</a></li>
+<li><a href="#parameters">4. Check parameters in services</a></li>
+<li>
+<a href="#_customizing_the_service_discovery">5. Customizing the service discovery</a><ul class="sectlevel1">
+<li><a href="#processes">5.1. Monitoring of processes</a></li>
+<li><a href="#_monitoring_services_under_windows">5.2. Monitoring services under Windows</a></li>
+<li><a href="#switches">5.3. Monitoring of switch ports</a></li>
+</ul>
+</li>
+<li><a href="#enforced_services">6. Setting-up enforced services</a></li>
+<li>
+<a href="#discovery_check">7. The discovery check</a><ul class="sectlevel1">
+<li><a href="#discovery_auto">7.1. Automatic check for unmonitored services</a></li>
+<li><a href="#automatically_update_service_configuration">7.2. Adding services automatically</a></li>
+</ul>
+</li>
+<li><a href="#passive_checks">8. Passive services</a></li>
+<li>
+<a href="#commandline">9. Service discovery on the command line</a><ul class="sectlevel1">
+<li><a href="#_overview_of_options">9.1. Overview of options</a></li>
+<li><a href="#_saving_in_files">9.2. Saving in files</a></li>
+</ul>
+</li>
+<li>
+<a href="#service_groups">10. Service groups</a><ul class="sectlevel1">
+<li><a href="#_why_have_service_groups">10.1. Why have service groups?</a></li>
+<li><a href="#_creating_service_groups">10.2. Creating service groups</a></li>
+<li><a href="#_adding_services_to_a_service_group">10.3. Adding services to a service group</a></li>
+<li><a href="#_checking_the_service_groups_for_a_service">10.4. Checking the service groups for a service</a></li>
+<li><a href="#_using_service_groups">10.5. Using service groups</a></li>
+</ul>
+</li>
+<li>
+<a href="#checkplugins">11. More on Check plug-ins</a><ul class="sectlevel1">
+<li><a href="#_a_short_description_of_their_functionality">11.1. A short description of their functionality</a></li>
+<li><a href="#_available_check_plug_ins">11.2. Available check plug-ins</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

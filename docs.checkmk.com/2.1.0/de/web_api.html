@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Die Checkmk HTTP-API (oder Web-API) ist eine Schnittstelle, um Checkmk über HTTP zu konfigurieren - und dieser Artikel führt in die Nutzung dieser API ein.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Konfiguration via HTTP-API">
+<meta name="og:description" content="Die Checkmk HTTP-API (oder Web-API) ist eine Schnittstelle, um Checkmk über HTTP zu konfigurieren - und dieser Artikel führt in die Nutzung dieser API ein.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Konfiguration via HTTP-API</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/web_api.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/web_api.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/web_api.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Konfiguration via HTTP-API</h1>
+<div class="details">
+<span id="revdate">Last modified on 14-Dec-2017</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/web_api.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody">
+<div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="web_api_references.html">Befehlsreferenz der HTTP-API</a>
+<a href="rest_api.html">Konfiguration via Checkmk REST-API</a>
+<a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a>
+<a href="wato.html">Die Konfiguration von Checkmk</a>
+</div>
+</div>
+</div>
+<div class="paragraph"><p><strong>Wichtig:</strong> <em>Die Web-API (auch HTTP-API genannt) ist abgekündigt und wird in der nächsten Checkmk-Version <span class="new">2.2.0</span> entfernt werden. Die Web-API wird durch die <a href="rest_api.html">REST-API</a> ersetzt. Weitere Informationen erhalten Sie im Artikel zum <a href="update_major.html#rest-api">Update auf Version <span class="new">2.1.0</span>.</a></em></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die Web-API ermöglicht Ihnen, Konfigurationsaufgaben, die Sie normalerweise manuell in der <a href="wato.html">Checkmk-Konfigurationsumgebung</a> mit dem <span class="guihint">Setup</span>-Menü durchführen, über HTTP-Aufrufe zu automatisieren. Zwar ist nicht die komplette Funktionalität des Setup-Menüs via API verfügbar, doch die wichtigsten Dinge, wie die Verwaltung von Hosts, Ordnern, Instanzen, Benutzern, Gruppen und etlichem mehr ist möglich. Eine vollständige Liste aller API-Funktionen finden Sie <a href="web_api_references.html">hier</a>.</p></div>
+<div class="paragraph"><p>Die meisten Anwender verwenden die Web-API zur Anbindung von bestehenden
+Configuration Management Databases (CMDB) oder zur Aufnahme von Hosts, die in einer dynamischen Umgebung automatisch entstehen.</p></div>
+<div class="paragraph"><p>Beim Lesen dieses Artikels sind grundlegende Kenntnisse in Python und dessen
+<a href="#format">Datenstrukturen</a> nötig. Natürlich ist der Artikel dennoch so einfach wie
+möglich geschrieben, um das Thema auch Einsteigern verständlich zu beschreiben.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__grundlagen_und_voraussetzungen">
+<span class="hidden-anchor sr-only" id="_grundlagen_und_voraussetzungen"></span>2. Grundlagen und Voraussetzungen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_automation">
+<span class="hidden-anchor sr-only" id="automation"></span>2.1. Der Automationsbenutzer</h3>
+<div class="paragraph"><p>Um von einem Client aus die Web-API nutzen zu können, muss auf dem Checkmk-Server ein <a href="wato_user.html#automation">Automationsbenutzer</a> eingerichtet sein. Nur dieser ist berechtigt, Aktionen über die API auszuführen.</p></div>
+<div class="paragraph"><p>Für die Authentifizierung benötigen Sie den Benutzernamen und das zugehörige sogenannte "automation secret for machine accounts", das heißt das Passwort des Automationsbenutzers. Beide Informationen müssen in jedem Kommando an den Checkmk-Server übermittelt werden.</p></div>
+<div class="paragraph"><p>Bei einer neu erstellten Instanz (site) ist der Benutzer <span class="guihint">automation</span> bereits angelegt. Sie finden ihn, wie andere Benutzer auch, unter <span class="guihint">Setup &gt; Users &gt; Users</span>. Achten Sie darauf, dass die Rollen und die damit verbundenen Berechtigungen für den Automationsbenutzer so gesetzt sind, dass Sie die Ausführung Ihrer Anfragen erlauben.</p></div>
+<div class="paragraph"><p>In diesem Artikel wird immer der standardmäßig eingerichtete Automationsbenutzer als Beispiel genommen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_url">
+<span class="hidden-anchor sr-only" id="url"></span>2.2. Der Aufbau der URL</h3>
+<div class="paragraph"><p>Die folgenden Beispiele beziehen sich immer auf das Kommandozeilenprogramm
+<code>curl</code>, um die generelle Syntax der Aufrufe zu verdeutlichen. Sofern
+Sie andere Technologien nutzen, passen Sie die Aufrufe entsprechend an.</p></div>
+<div class="paragraph"><p>Zu der eigentlichen URL <code>http://myserver/mysite/check_mk/webapi.py</code>
+benötigen Sie noch verschiedene Parameter. Diese enthalten die
+Zugangsdaten für den Automationsbenutzer und die Information darüber,
+was getan werden soll. Falls sich der Aufruf auf ein bestimmtes Element in
+Checkmk beziehen soll, werden zusätzlich noch folgende Daten als <em>payload</em>
+übergeben:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Anmeldename des Automationsbenutzers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_secret</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Automatisierungspasswort.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">action</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Legt fest, was durchgeführt werden soll.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">request_format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Syntax der <code>request</code>-Daten. Möglich sind <code>python</code> und <code>json</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">output_format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Syntax der Antwort. Auch hier sind  <code>python</code> und  <code>json</code> möglich.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die zu übertragenden Daten, falls die <code>action</code> welche benötigt.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Die ersten fünf Parameter können bei <code>curl</code> direkt in der URL
+übergeben werden. Sie werden mit einem <code>?</code> eingeleitet und mit einem
+<code>&amp;</code> verknüpft. Die Reihenfolge ist dabei egal:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_all_hosts&amp;_username=automation&amp;_secret=mysecret&amp;output_format=python"</span>
+<span class="tok-go">{'result': {'myserver123': {'attributes': {'ipaddress': '192.168.0.42'}, 'hostname': 'myserver123', 'path': ''}, 'myserver456': {'attributes': {'ipaddress': '192.168.0.73'}, 'hostname': 'myserver456', 'path': 'windows'}}, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph" id="result_code"><p>In der Antwort bekommen Sie zum einen den <code>result_code</code>, welcher
+angibt, ob ein Fehler bei der Abfrage aufgetreten ist. War die Abfrage
+erfolgreich, bekommen sie den Wert 0 zurück, bei einem Fehler den Wert
+1. Zum anderen gibt es das Resultat (<code>result</code>) selbst, in dem die
+Antwort der Instanz steht. Diese Antwort kann eine Fehlermeldung sein, wenn
+die Abfrage fehlgeschlagen ist, oder die gewünschten Daten enthalten,
+wenn die Abfrage erfolgreich war. Haben Sie ein Kommando an den Checkmk-Server
+geleitet, so bleibt das <code>result</code>-Feld unter Umständen leer
+beziehungsweise gibt den Wert <code>None</code> zurück.</p></div>
+<div class="paragraph"><p>Manche Befehle benötigen den Parameter <code>request</code>. Dieser enthält die
+benötigten Daten, um z.B. die Konfiguration eines bestimmten Hosts abzurufen.
+Um diese Daten zu übergeben, wird bei der Schalter <code>-d</code> benutzt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_host&amp;_username=automation&amp;_secret=mysecret&amp;output_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={'</span>hostname<span class="tok-s1">':'</span>myserver123<span class="tok-s1">'}'</span>
+<span class="tok-go">{'result': {'myserver123': {'attributes': {'ipaddress': '192.168.0.42'}, 'hostname': 'myserver123', 'path': ''}}, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> In den folgenden Beispielen und der
+<a href="web_api_references.html">Befehlsreferenz</a>
+werden Eingabe und Antwort oft noch einmal über mehrere Zeilen dargestellt,
+um Lesbarkeit und Übersicht zu verbessern. In der Praxis wird
+es sowohl in der Eingabe als auch in der Antwort keine Zeilenumbrüche geben.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_format">
+<span class="hidden-anchor sr-only" id="format"></span>2.3. Datenformat der Eingabe und Antwort</h3>
+<div class="paragraph"><p>Die API kennt zwei Parameter, um das Datenformat der Eingabe oder Antwort
+festzulegen. Mit <code>request_format</code> wird das Eingabeformat bestimmt, während
+<code>output_format</code> das Format der Antwort festlegt. Werden diese Parameter
+nicht benutzt, so nimmt die API an, dass es sich bei den Formaten um JSON
+handelt.</p></div>
+<div class="paragraph"><p>Die Unterstützung von JSON ist in Checkmk inzwischen aber generell
+experimentell/veraltet. Auch wenn es bei der Verwendung von JSON bei vielen
+Befehlen keine Fehlermeldung gibt, sollten Sie das Eingabe- und Antwortformat immer
+auf Python setzen. Nachfolgend ein praktisches Beispiel, in dem z.B. Tupel
+in der Antwort verwendet werden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=get_host&amp;_username=automation&amp;_secret=myautomationsecret&amp;output_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123"}'</span>
+<span class="tok-go">{'result': {'myserver123': {'attributes': {'ipaddress': '192.168.0.42', 'management_snmp_community': ('authPriv', 'md5', 'myuser', 'mypassword', 'DES', 'myprivacypassword')}, 'hostname': 'myserver123', 'path': ''}}, 'result_code': 0}</span></code></pre></div></div>
+<div class="paragraph"><p>JSON und Python haben aber noch weitere Unterschiede in ihren
+Datenformaten. Diese sind:</p></div>
+<div class="ulist"><ul>
+<li><p>Der Nullwert ist bei JSON <code>null</code> und bei Python <code>None</code>.</p></li>
+<li><p>Tupel gibt es, wie bereits erwähnt, bei JSON nicht. Sie werden bei einigen Befehlen der API genutzt und unter JSON in einfache Listen umgewandelt. Wenn aber bei der Weiterverarbeitung eine Liste statt eines Tupels übergeben wird, ist die Datenintegrität in Checkmk nicht mehr gewährleistet und die Übergabe einer Konfiguration wird mit einer Fehlermeldung abgebrochen.</p></li>
+<li><p>JSON akzeptiert ausschließlich doppelte Anführungszeichen, während bei Python lediglich die zusammenhängenden Anführungszeichen gleich sein müssen.</p></li>
+<li><p>Boolesche Werte (True und False) werden unter Python groß und unter JSON klein geschrieben.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_test">
+<span class="hidden-anchor sr-only" id="test"></span>2.4. Die API lokal testen</h3>
+<div class="paragraph"><p>Um Befehle der Web-API direkt vom Checkmk-Server aus zu testen, bietet
+es sich an, als Instanzbenutzer zu arbeiten. Sie können dann auf lokale
+Variablen zurückgreifen und auch das Passwort des Automationsbenutzers direkt
+auslesen. In dem folgenden Beispiel werden die Variablen <code>$OMD_SITE</code>
+und <code>$OMD_ROOT</code> benutzt, welche auf den Namen der Instanz und ihr
+Homeverzeichnis verweisen. Das Passwort wird dann mittels <code>cat</code>
+direkt ausgelesen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://localhost/</span><span class="tok-nv">$OMD_SITE</span><span class="tok-s2">/check_mk/webapi.py?action=get_all_hosts&amp;_username=automation&amp;_secret=</span><span class="tok-k">$(</span>cat<span class="tok-w"> </span><span class="tok-nv">$OMD_ROOT</span>/var/check_mk/web/automation/automation.secret<span class="tok-k">)</span><span class="tok-s2">&amp;output_format=python"</span></code></pre></div></div>
+<div class="paragraph"><p>Sofern der Benutzer <code>automation</code> vorhanden ist, wird dieser Aufruf
+auf jeder Instanz funktionieren. Sie können das Beispiel einfach kopieren und
+bei sich ausprobieren. Das funktioniert natürlich nur, wenn der Befehl auf
+dem Checkmk-Server als Instanzbenutzer ausgeführt wird.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_requests">
+<span class="hidden-anchor sr-only" id="requests"></span>3. Befehle verwenden</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__einleitung_2">
+<span class="hidden-anchor sr-only" id="_einleitung_2"></span>3.1. Einleitung</h3>
+<div class="paragraph"><p>Checkmk verfügt über einige Befehle, um die Konfiguration
+von Hosts, Regeln und vielem mehr zu steuern. Schauen Sie in die
+<a href="web_api_references.html">Befehlsreferenz</a>, um eine Beschreibung zu allen Befehlen
+zu erhalten.</p></div>
+<div class="paragraph"><p>Den Umgang mit der API zeigt ein einfaches Beispiel:
+Sie erstellen einen Host mit seinen Services über die Web-API mit nur
+drei Befehlen. Prinzipiell gehen Sie dabei genauso vor, wie im Checkmk <a href="wato.html">Setup</a>:</p></div>
+<div class="ulist"><ul>
+<li><p>Erstellen Sie einen Host.</p></li>
+<li><p>Führen Sie eine Serviceerkennung auf dem Host durch.</p></li>
+<li><p>Aktivieren Sie die Änderungen.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__einen_host_erstellen">
+<span class="hidden-anchor sr-only" id="_einen_host_erstellen"></span>3.2. Einen Host erstellen</h3>
+<div class="paragraph"><p>Mit dem Befehl <a href="web_api_references.html#hosts"><code>add_host</code></a>
+können Sie einen Host in Checkmk erstellen. Sie geben dabei mindestens den
+Hostnamen und das Verzeichnis, in dem er abgelegt werden soll, an. Zusätzlich
+können Sie auch die verfügbaren Attribute, wie z.B. die IP-Adresse eines
+Hosts, explizit setzen. Der <code>request</code>-Teil sieht dann z.B. so aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">{'hostname': 'myserver123',</span>
+<span class="tok-go"> 'folder': '',</span>
+<span class="tok-go"> 'attributes': {'ipaddress': '192.168.0.42',</span>
+<span class="tok-go">                'site': 'mysite',</span>
+<span class="tok-go">                'tag_agent': 'cmk-agent'}}</span></code></pre></div></div>
+<div class="paragraph"><p>In dem Beispiel wird der Host <code>myserver123</code> im Hauptverzeichnis
+angelegt. Diesem wird dabei eine IP-Adresse zugewiesen und weiter definiert,
+dass es sich hierbei um einen Host handelt, welcher seine Daten über
+einen Checkmk-Agenten bekommt und der Instanz <code>mysite</code> zugeordnet
+ist. Zum Testen auf der Kommandozeile kann man den Host nun folgendermaßen
+anlegen — tauschen Sie die Platzhalter entsprechend durch Ihre echten Daten aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=add_host&amp;_username=automation&amp;_secret=myautomationsecret&amp;request_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123","folder":"","attributes":{"ipaddress":"192.168.0.42","site":"mysite","tag_agent":"cmk-agent"}}'</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__eine_serviceerkennung_durchführen">
+<span class="hidden-anchor sr-only" id="_eine_serviceerkennung_durchführen"></span>3.3. Eine Serviceerkennung durchführen</h3>
+<div class="paragraph"><p>Nachdem der Host erstellt wurde, können die Services hinzugefügt
+werden. Hier geben Sie den Hostnamen an und bestimmen bei Bedarf
+<a href="web_api_references.html#discover_services">die Art der Serviceerkennung</a>.
+Wenn Sie nichts angeben, werden lediglich die
+neu erkannten Services hinzugefügt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?action=discover_services&amp;_username=automation&amp;_secret=myautomationsecret"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"hostname":"myserver123"}'</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__änderungen_aktivieren">
+<span class="hidden-anchor sr-only" id="_änderungen_aktivieren"></span>3.4. Änderungen aktivieren</h3>
+<div class="paragraph"><p>Zuletzt werden die Änderungen, wie im Checkmk <a href="wato.html#activate_changes">Setup</a> auch, aktiviert:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>curl<span class="tok-w"> </span><span class="tok-s2">"http://myserver/mysite/check_mk/webapi.py?_secret=myautomationsecret&amp;_username=automation&amp;action=activate_changes"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s1">'request={"sites":["mysite"]}'</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__die_api_absichern">
+<span class="hidden-anchor sr-only" id="_die_api_absichern"></span>4. Die API absichern</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Da beim Zugriff über die Web-API sensible Daten übertragen  und — je nach Berechtigung des Automationsbenutzers — umfassende Änderungen an
+Checkmk durchgeführt werden können, sollten Sie den Zugriff entsprechend
+absichern. Hier finden Sie einige der Möglichkeiten:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="omd_https.html">Checkmk über HTTPS</a>: Nutzen Sie die API ausschließlich über das Hypertext Transfer Protocol Secure (HTTPS), da Benutzername, Passwort und auch Konfigurationsdaten sonst im Klartext im Netz übertragen werden.</p></li>
+<li><p>Geben Sie dem Automationsbenutzer ein Passwort mit einer ausreichenden Länge. Da das Passwort in der Regel nur in einem Skript hinterlegt wird, können Sie problemlos ein sehr langes vergeben.</p></li>
+<li><p>Achten Sie auf das Berechtigungskonzept zu den Skripten, mit denen Sie die Anfragen an die API stellen. In den Skripten können sensible Daten, wie Konfigurationsdaten, Passwörter usw. enthalten sein. Stellen Sie daher sicher, dass ausschließlich berechtigte Benutzer und Gruppen diese Skripten lesen können.</p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__fehlerbehandlung">
+<span class="hidden-anchor sr-only" id="_fehlerbehandlung"></span>5. Fehlerbehandlung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__übersicht">
+<span class="hidden-anchor sr-only" id="_übersicht"></span>5.1. Übersicht</h3>
+<div class="paragraph"><p>Wie bereits weiter <a href="#result_code">oben</a> beschrieben, gibt die Anfrage
+einen Fehlercode zurück, wenn sie nicht erfolgreich war. Dieser ist in
+dem <code>result_code</code> hinterlegt. Eine Beschreibung des Fehlers ist dann
+in dem <code>result</code> selbst enthalten. Sie ist ein guter ein Einstieg in die
+Analyse des Problems.</p></div>
+<div class="paragraph"><p>Prüfen Sie zusätzlich, ob die folgenden Bedingungen erfüllt sind:</p></div>
+<div class="ulist"><ul>
+<li><p>Der Automationsbenutzer hat die nötigen Berechtigungen, um Konfigurationsdaten zu lesen und zu setzen.</p></li>
+<li><p>Die einzelnen Parameter wurden mit einem <code>?</code> eingeleitet und mit einem <code>&amp;</code> verknüpft. Beachten Sie auch, dass <code>_username</code> und <code>_secret</code> mit einem Unterstrich anfangen.</p></li>
+<li><p>Die Syntax des <code>request</code>-Teils ist korrekt.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__berechtigungen">
+<span class="hidden-anchor sr-only" id="_berechtigungen"></span>5.2. Berechtigungen</h3>
+<div class="paragraph"><p>Wie bereits erwähnt, ist die Berechtigung des Automationsbenutzers eine
+Fehlerquelle, wenn z.B. Konfigurationsdaten abgerufen werden sollen. Der von
+Checkmk mitgelieferte Benutzer <span class="guihint">automation</span> hat die Rolle <span class="guihint">Administrator</span>
+und darf somit alles sehen und bearbeiten. Da Sie dem Automationsbenutzer
+aber prinzipiell jede verfügbare <a href="wato_user.html#roles">Rolle</a> zuweisen können, müssen
+gegebenenfalls auch die <a href="wato_user.html#wato_permissions">Kontaktgruppen</a> angepasst
+werden, um bestimmte Hosts abrufen oder bearbeiten zu können. Prüfen Sie
+im Fehlerfall, ob diese Berechtigungen für den entsprechenden Automationsbenutzer
+passen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__syntax_in_befehlen">
+<span class="hidden-anchor sr-only" id="_syntax_in_befehlen"></span>5.3. Syntax in Befehlen</h3>
+<div class="paragraph"><p>Beim Testen mit <code>curl</code> wird es in dem <code>request</code>-Teil schnell
+unübersichtlich. Prüfen Sie daher immer (auch, wenn Sie nicht <code>curl</code>
+verwenden), ob die Syntax korrekt ist.</p></div>
+<div class="paragraph"><p>Eine gute Methode kann es sein, sich den <code>request</code>-Teil in eine Datei
+zu schreiben und damit zu visualisieren:</p></div>
+<div class="listingblock">
+<div class="title">~/home/myuser/pattern.txt</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>{"users": {"myuser": {"alias": "My User",
+                      "email": "myuser@mycompany.org",
+                      "language": None,
+                      "pager": "01374-12233456",
+                      "password": "mypassword"}}}</code></pre></div>
+</div>
+<div class="paragraph"><p>Sie können diese Zeilen auch in einen Python-Prompt kopieren und mit dem
+Befehl <code>print</code> in einer Zeile ausgeben lassen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>python
+<span class="tok-go">&gt;&gt;&gt; print {"users": {"myuser": {"alias": "My User",</span>
+<span class="tok-go">...                       "email": "<a href="mailto:myuser@mycompany.org">myuser@mycompany.org</a>",</span>
+<span class="tok-go">...                       "language": None,</span>
+<span class="tok-go">...                       "pager": "01374-12233456",</span>
+<span class="tok-go">...                       "password": "mypassword"}}}</span>
+<span class="tok-go">{'users': {'myuser': {'alias': 'My User', 'password': 'mypassword', 'pager': '01374-12233456', 'email': '<a href="mailto:myuser@mycompany.org">myuser@mycompany.org</a>', 'language': None}}}</span></code></pre></div></div>
+<div class="paragraph"><p>Die Leerzeichen können Sie in dem <code>curl</code>-Befehl übrigens behalten:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>curl<span class="tok-w"> </span><span class="tok-s2">"<a class="bare" href="http://localhost/">localhost/</a></span><span class="tok-nv">$OMD_SITE</span><span class="tok-s2">/check_mk/webapi.py?action=add_users&amp;_username=automation&amp;_secret=</span><span class="tok-k">$(</span>cat<span class="tok-w"> </span><span class="tok-nv">$OMD_ROOT</span>/var/check_mk/web/automation/automation.secret<span class="tok-k">)</span><span class="tok-s2">&amp;output_format=python&amp;request_format=python"</span><span class="tok-w"> </span>-d<span class="tok-w"> </span><span class="tok-s2">"request={'users': {'myuser': {'alias': 'My User', 'password': 'mypassword', 'pager': '01374-12233456', 'email': '<a href="mailto:myuser@mycompany.org">myuser@mycompany.org</a>', 'language': None}}}"</span>
+<span class="tok-go">{'result': None, 'result_code': 0}</span></code></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__dateien_und_verzeichnisse">
+<span class="hidden-anchor sr-only" id="_dateien_und_verzeichnisse"></span>6. Dateien und Verzeichnisse</h2>
+<div class="sectionbody"><table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etc/check_mk/conf.d/wato/</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle hier angelegten Verzeichnisse stellen die im <span class="guihint">Main directory</span> sichtbaren Verzeichnisse für Hosts dar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etc/check_mk/conf.d/wato/.wato</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Attribute und Titel eines Verzeichnisses werden in dieser Datei festgelegt. Sie befindet sich in jedem Verzeichnis unterhalb von <code>wato</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etc/check_mk/conf.d/wato/hosts.mk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier wird die Konfiguration der Hosts festgelegt, welche dem entsprechenden Verzeichnis zugeordnet wurden. Auch diese Datei gibt es in jedem Verzeichnis unterhalb von <code>wato</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etc/check_mk/conf.d/wato/group.mk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle definierten Gruppen befinden sich hier. Dazu gehören Kontakt-, Service- und Hostgruppen. Diese Datei gibt es nur einmal.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etc/check_mk/multisite.d/wato/users.mk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Benutzereinstellungen in Checkmk werden in dieser Datei definiert.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etc/check_mk/conf.d/wato/rules.mk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In dieser Datei werden zu jedem Verzeichnis unterhalb von <code>wato</code> die definierten Regeln festgehalten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etc/check_mk/multisite.d/wato/hosttags.mk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Hosttags und Auxiliarytags sind hier definiert.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">etc/check_mk/multisite.d/sites.mk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier werden alle Instanzen mit ihren Eigenschaften eingetragen. Auch die lokale Instanz wird hier festgehalten.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">var/check_mk/agents/</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erstellte/gebackene Agenten werden hier abgelegt. Für jeden Host ist ein Link zu dem Agenten angelegt, welcher auf sein Installationspaket verweist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">var/check_mk/web/myuser/user_custom_graphs.mk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Selbst erstellte Graphen werden bei dem jeweiligen Benutzer abgelegt. In dem Beispiel ist das der Benutzer „myuser“.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#_grundlagen_und_voraussetzungen">2. Grundlagen und Voraussetzungen</a><ul class="sectlevel1">
+<li><a href="#automation">2.1. Der Automationsbenutzer</a></li>
+<li><a href="#url">2.2. Der Aufbau der URL</a></li>
+<li><a href="#format">2.3. Datenformat der Eingabe und Antwort</a></li>
+<li><a href="#test">2.4. Die API lokal testen</a></li>
+</ul>
+</li>
+<li>
+<a href="#requests">3. Befehle verwenden</a><ul class="sectlevel1">
+<li><a href="#_einleitung_2">3.1. Einleitung</a></li>
+<li><a href="#_einen_host_erstellen">3.2. Einen Host erstellen</a></li>
+<li><a href="#_eine_serviceerkennung_durchf%C3%BChren">3.3. Eine Serviceerkennung durchführen</a></li>
+<li><a href="#_%C3%A4nderungen_aktivieren">3.4. Änderungen aktivieren</a></li>
+</ul>
+</li>
+<li><a href="#_die_api_absichern">4. Die API absichern</a></li>
+<li>
+<a href="#_fehlerbehandlung">5. Fehlerbehandlung</a><ul class="sectlevel1">
+<li><a href="#_%C3%BCbersicht">5.1. Übersicht</a></li>
+<li><a href="#_berechtigungen">5.2. Berechtigungen</a></li>
+<li><a href="#_syntax_in_befehlen">5.3. Syntax in Befehlen</a></li>
+</ul>
+</li>
+<li><a href="#_dateien_und_verzeichnisse">6. Dateien und Verzeichnisse</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

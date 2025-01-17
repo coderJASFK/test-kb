@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Mit der HW/SW-Inventur ermitteln Sie auf den von Checkmk überwachten Hosts die Hardwareausstattung, die installierte Software und mehr.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Die HW/SW-Inventur">
+<meta name="og:description" content="Mit der HW/SW-Inventur ermitteln Sie auf den von Checkmk überwachten Hosts die Hardwareausstattung, die installierte Software und mehr.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Die HW/SW-Inventur</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/inventory.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/inventory.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/inventory.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Die HW/SW-Inventur</h1>
+<div class="details">
+<span id="revdate">Last modified on 16-Aug-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/inventory.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="agent_linux.html">Linux überwachen</a>
+<a href="agent_windows.html">Windows überwachen</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_intro">
+<span class="hidden-anchor sr-only" id="intro"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Neben dem klassischen Monitoring — also dem Überwachen von Status-, Log- und Messdaten — bringt Checkmk noch eine ganz andere Funktion quasi kostenlos mit:
+die <em>Hardware-/Software-Inventur</em> (oder kurz <em>HW/SW-Inventur</em>).
+Diese kann auf Ihren Hosts z.B. folgende Informationen automatisch ermitteln:</p></div>
+<div class="ulist"><ul>
+<li><p>Welche Softwarepakete sind in welchen Versionen auf einem Server installiert?</p></li>
+<li><p>Welchen Ausbau an RAM-Bausteinen hat ein Server?</p></li>
+<li><p>Welche BIOS-Version ist auf dem Mainboard installiert?</p></li>
+<li><p>Welche Seriennummern haben die verbauten Festplatten?</p></li>
+<li><p>Welche Ports auf einem Switch sind länger nicht genutzt worden (also wahrscheinlich frei)?</p></li>
+<li><p>…​ und vieles mehr</p></li>
+</ul></div>
+<div class="paragraph"><p>Die so ermittelten Daten werden pro Host in einem strukturierten Baum und in verschiedenen anderen <a href="views.html">Ansichten</a> dargestellt und sind auch über eine API verfügbar.
+Hier ein Beispiel mit Daten zum Prozessor:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_example_main.png" alt="Aufgeklapptes Inventar mit CPU-Daten."></div>
+<div class="title">CPU-Daten im Inventurpfad <span class="guihint">hardware.cpu</span>
+</div>
+</div>
+<div class="paragraph"><p>Mit der HW/SW-Inventur können Sie zum Beispiel:</p></div>
+<div class="ulist"><ul>
+<li><p>Daten über installierte Software für ein Lizenz-Management-System bereitstellen,</p></li>
+<li><p>Typbezeichnungen für Ersatzteilbestellungen (RAM, Festplatten, Lüfter) ermitteln,</p></li>
+<li><p>generelle Daten über Hardware- und Softwareausstattung für den regelmäßigen Import in CMDBs liefern,</p></li>
+<li><p>Änderungen an Hardware oder Software zurückverfolgen, z.B. um festzustellen, wann ein bestimmtes BIOS-Update durchgeführt wurde,</p></li>
+<li><p>informiert werden, wenn sich etwas an der Hardware oder Software geändert hat,</p></li>
+<li><p>gezielt Server finden, die ein bestimmtes Servicepack noch nicht installiert haben.</p></li>
+</ul></div>
+<div class="paragraph"><p>Der wichtigste Vorteil gegenüber vergleichbaren anderen Systemen liegt auf der Hand:
+Sie können dafür einfach die vorhandene Infrastruktur von Checkmk verwenden und sparen sich das Einrichten und Administrieren einer weiteren Software-Umgebung.
+Sie rollen lediglich ein einziges zusätzliches Agentenplugin aus.
+Bei SNMP-Geräten ist nicht einmal das notwendig, da der Inventurscanner auch SNMP unterstützt und sich die Daten einfach auf diesem Weg holt.</p></div>
+<div class="paragraph"><p>Außerdem braucht sich Checkmk hinter anderen Inventurscannern nicht zu verstecken.
+Wie auch bei unseren Check-Plugins arbeiten wir ständig an einer Erweiterung der gescannten Daten.
+Jede Checkmk-Version bringt neue Plugins für den Inventurscanner mit, und die eingesammelten Informationen werden immer detaillierter und umfangreicher.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_config">
+<span class="hidden-anchor sr-only" id="config"></span>2. Einrichtung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Das Einrichten der HW/SW-Inventur geht in zwei Schritten.
+Voraussetzung ist, dass auf den Hosts bereits der Checkmk-Agent installiert ist (falls diese nicht per SNMP überwacht werden):</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Die Inventur für die gewünschten Hosts einschalten.</p></li>
+<li><p>Das Inventory-Agentenplugin auf diesen Hosts ausrollen.</p></li>
+</ol></div>
+<div class="sect2">
+<h3 id="heading_activate">
+<span class="hidden-anchor sr-only" id="activate"></span>2.1. Die Inventur für die gewünschten Hosts einschalten</h3>
+<div class="sect3">
+<h4 id="heading__regel_erstellen">
+<span class="hidden-anchor sr-only" id="_regel_erstellen"></span>Regel erstellen</h4>
+<div class="paragraph"><p>Wie immer, wenn Sie etwas für bestimmte Hosts konfigurieren wollen, geht das auch hier mithilfe einer <a href="wato_rules.html">Regel.</a>
+Den Regelsatz finden Sie unter <span class="guihint">Setup &gt; Hosts &gt; HW/SW inventory rules &gt; Do hardware/software inventory</span> oder noch einfacher mit der Suche nach <code>inventory</code>.
+Verwechseln Sie diesen nicht mit dem Regelsatz <span class="guihint">Hardware/Software-Inventory (Linux, Windows, Solaris, AIX).</span>
+Dieser wird für das <a href="#inventory_plugin">Agentenplugin</a> verwendet, wie Sie später sehen werden.</p></div>
+<div class="paragraph"><p>Im Regelsatz <span class="guihint">Do hardware/software inventory</span> sind bereits einige Regeln standardmäßig aktiv, die sich auf Host-<a href="labels.html">Labels</a> beziehen.
+Wenn die von Ihnen gewünschten Hosts ein solches Label haben, ist der Service für die HW/SW-Inventur bereits eingerichtet.
+Wenn nicht, müssen Sie eine neue Regel erstellen.</p></div>
+<div class="paragraph"><p>Legen Sie also hier mit <span class="image-inline"><img src="../images/icons/icon_new.png" alt="icon new"></span> <span class="guihint">Add rule</span> eine neue Regel für die Hosts an, für die Sie die Inventur aktivieren möchten.
+Dort finden Sie etliche Einstellungen:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_do_inventory_default.png" alt="Dialog für Inventuroptionen."></div>
+<div class="title">Standardmäßig sind alle Optionen deaktiviert und werden auch nicht benötigt</div>
+</div>
+<div class="paragraph"><p>Fürs Erste übernehmen Sie die Voreinstellungen.
+Die anderen Möglichkeiten erklären wir im Verlauf dieses Artikels.</p></div>
+<div class="paragraph"><p>Die Regel, die Sie gerade angelegt haben, erzeugt bei der nächsten <a href="wato.html#activate_changes">Aktivierung der Änderungen</a> einen <a href="active_checks.html">aktiven Check</a> pro Host, der alle Inventurdaten zu diesem einsammelt, darunter Daten von einem normalen Checkmk-Agenten, aber auch solche, die über SNMP-Abfragen hereinkommen.
+Den neuen Service <span class="guihint">Check_MK HW/SW Inventory</span> finden Sie in der Serviceliste bei den Hosts, und er sieht etwa so aus:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_list_first_item.png" alt="Statusanzeige eines frischen Inventur-Services."></div>
+<div class="title">Ohne Agentenplugin werden nur einige Standardeinträge gemeldet</div>
+</div>
+<div class="paragraph"><p>Lassen Sie sich nicht verunsichern, weil der Check nur wenige Einträge gefunden hat.
+Das liegt daran, dass Sie das Plugin noch nicht ausgerollt haben.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__intervall_festlegen">
+<span class="hidden-anchor sr-only" id="_intervall_festlegen"></span>Intervall festlegen</h4>
+<div class="paragraph"><p>Inventurdaten ändern sich nur selten.
+Und das Erkennen einer Änderung ist in der Regel auch nicht zeitkritisch.
+Deswegen ist es sehr sinnvoll, das Intervall, in dem der Inventurcheck ausgeführt wird, anzupassen und nicht einfach den Standard (1 Minute) zu verwenden — vor allem, weil das Verarbeiten der Inventurdaten in dem aktiven Check deutlich mehr Rechenzeit benötigt als für einen normalen
+Service.</p></div>
+<div class="paragraph"><p>Checkmk-Instanzen haben dazu <em>automatisch</em> eine Regel im Regelsatz <span class="guihint">Setup &gt; Service monitoring rules &gt; Service Checks &gt; Normal check interval for service checks</span>, die für alle Services mit dem Namen <span class="guihint">Check_MK HW/SW Inventory</span> das Intervall auf einen Tag festlegt:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_interval.png" alt="Die Regel zum Festlegen des Intervalls."></div>
+<div class="title">Eine tägliche Inventur genügt in der Praxis, für Testzwecke bieten sich kürzere Zeiträume an</div>
+</div>
+<div class="paragraph"><p>Falls Ihnen einmal am Tag zu selten ist, können Sie diese Regel natürlich auch anpassen — z.B. auf Prüfintervalle von vier oder acht Stunden.
+Und natürlich besteht immer die Möglichkeit, dass Sie das mithilfe mehrerer Regeln für unterschiedliche Hosts anders einstellen.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_inventory_plugin">
+<span class="hidden-anchor sr-only" id="inventory_plugin"></span>2.2. Das Inventory-Agentenplugin auf diesen Hosts ausrollen</h3>
+<div class="paragraph"><p>Der wichtigste Schritt ist das Installieren des Agentenplugins für die Inventur auf den entsprechenden Hosts.
+Das können Sie entweder manuell oder mit der <a href="wato_monitoringagents.html#bakery">Agentenbäckerei</a> (nur Enterprise Editions) machen.</p></div>
+<div class="sect3">
+<h4 id="heading__installation_von_hand">
+<span class="hidden-anchor sr-only" id="_installation_von_hand"></span>Installation von Hand</h4>
+<div class="paragraph"><p>Für eine manuelle Installation benötigen Sie zunächst das Plugin.
+Das finden Sie in den Enterprise Editions unter <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Related</span> und in der Raw Edition unter <span class="guihint">Setup &gt; Agents.</span>
+In allen Editionen finden Sie dort Menüeinträge für die unterschiedlichen Betriebssysteme.
+Verwenden Sie je nach Betriebssystem folgendes Plugin im Kasten <span class="guihint">Plugins</span>:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Betriebssystem</th>
+<th class="tableblock halign-left valign-top">Plugin</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mk_inventory.vbs</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linux</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mk_inventory.linux</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AIX</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mk_inventory.aix</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Solaris</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mk_inventory.solaris</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Sie finden diese Dateien auch auf der Kommandozeile in der Checkmk-Instanz im Unterverzeichnis
+<code>share/check_mk/agents/plugins</code> (Linux/Unix) bzw. <code>share/check_mk/agents/windows/plugins</code> (Windows).</p></div>
+<div class="paragraph"><p>Kopieren Sie das Plugin auf die Ziel-Hosts in das korrekte Verzeichnis für Plugins.
+Beim Windows-Agenten ist das <code>C:\ProgramData\checkmk\agent\plugins</code>.
+Einzelheiten finden Sie im <a href="agent_windows.html#plugins">Artikel zum Windows-Agenten.</a></p></div>
+<div class="paragraph"><p>Bei Linux und Unix lautet das Verzeichnis <code>/usr/lib/check_mk_agent/plugins</code>.
+Achten Sie darauf, dass die Datei ausführbar ist (<code>chmod +x</code>).
+Einzelheiten erfahren Sie im <a href="agent_linux.html#plugins">Artikel zum Linux-Agenten.</a></p></div>
+<div class="paragraph"><p>Wichtig ist nun Folgendes:
+Der Agent wird ja von Checkmk in der Regel einmal pro Minute abgerufen.
+Das Inventory-Agentenplugin benötigt aber mehr Rechenzeit als normale Plugins, weil es z.B. in vielen Verzeichnissen nach installierter Software suchen muss.
+Es erzeugt darüber hinaus deutlich größere Datenmengen.
+Deswegen ist es so entwickelt, dass es nur alle vier Stunden (14400 Sekunden) neue Daten erzeugt und ausliefert.</p></div>
+<div class="paragraph"><p>Falls Sie also für Ihren Inventurcheck aus irgendeinem Grund ein <em>kürzeres</em> Intervall als vier Stunden eingestellt haben, werden Sie trotzdem nur alle vier Stunden wirklich neue Daten bekommen.
+Falls Sie wirklich häufiger Daten ermitteln möchten, müssen Sie das voreingestellte Berechnungsintervall anpassen.</p></div>
+<div class="paragraph"><p>Bei Windows ersetzen Sie die Zahl direkt in der Plugin-Datei.
+Suchen Sie nach <code>14400</code> und ersetzen Sie diese durch eine andere Anzahl von Sekunden.
+Die Stelle in der Datei sieht so aus (Ausschnitt):</p></div>
+<div class="listingblock">
+<div class="title">mk_inventory.vbs</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Dim delay
+Dim exePaths
+Dim regPaths
+
+'These three lines are set in the agent bakery
+delay = 14400
+exePaths = Array("")
+regPaths = Array("Software\Microsoft\Windows\CurrentVersion\Uninstall","Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall")</code></pre></div>
+</div>
+<div class="paragraph"><p>Bei Linux und Unix geht das etwas anders.
+Dort legen Sie zu diesem Zweck eine Konfigurationsdatei <code>/etc/check_mk/mk_inventory.cfg</code> an mit folgender Zeile (hier im Beispiel mit 7200 Sekunden):</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mk_inventory.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>INVENTORY_INTERVAL=7200</code></pre></div>
+</div>
+<div class="paragraph"><p>Noch ein Hinweis:
+Das Inventory-Agentenplugin kümmert sich <em>selbst</em> darum, dass es nur alle vier Stunden ausgeführt wird.
+Verwenden Sie daher <strong>nicht</strong> den Mechanismus vom Agenten für eine asynchrone Ausführung von Plugins mit größeren Intervallen.
+Installieren Sie das Plugin auf die normale Art zur direkten Ausführung.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__konfiguration_über_die_agentenbäckerei">
+<span class="hidden-anchor sr-only" id="_konfiguration_über_die_agentenbäckerei"></span>Konfiguration über die Agentenbäckerei</h4>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Falls Sie in den Enterprise Editions für die Konfiguration Ihrer Agenten die <a href="wato_monitoringagents.html#bakery">Agentenbäckerei</a> verwenden, ist die Sache natürlich viel komfortabler.
+Hier gibt es unabhängig vom Betriebssystem nur einen einzigen Regelsatz mit dem Namen <span class="guihint">Hardware/Software-Inventory (Linux, Windows, Solaris, AIX).</span>
+Dieser steuert das Ausrollen des nötigen Plugins sowie dessen Konfiguration.
+Sie finden ihn unter <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agents &gt; Agent rules</span>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_agent_rule.png" alt="Eingabemaske mit Optionen für das Inventory-Agentenplugin."></div>
+<div class="title">Portable Programme können Sie direkt über Verzeichnisse mit einbeziehen</div>
+</div>
+<div class="paragraph"><p>Hier können Sie neben dem Intervall auch noch für Windows Pfade angeben, in denen nach ausführbaren <code>.EXE</code>-Dateien gesucht werden soll, wenn
+es darum geht, die auf dem System installierte Software zu finden.
+Auch die Pfade in der Windows-Registry, die als Indikator für installierte Software berücksichtigt werden sollen, können Sie hier konfigurieren.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__test">
+<span class="hidden-anchor sr-only" id="_test"></span>2.3. Test</h3>
+<div class="paragraph"><p>Wenn Sie das Plugin korrekt ausgerollt haben, dann finden Sie bei der nächsten Ausführung des Inventurchecks eines Hosts deutlich mehr Datensätze.
+Das sieht dann z.B. so aus:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_list_entries.png" alt="Statusanzeige eines Inventur-Services mit laufendem Agentenplugin."></div>
+<div class="title">So wenige Einträge werden Sie nur auf frisch aufgesetzten Systemen vorfinden</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_operating">
+<span class="hidden-anchor sr-only" id="operating"></span>3. Mit den Inventurdaten arbeiten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Inventurdaten gibt es natürlich insbesondere für jeden einzelnen Host, teils als Baum-, teils als Tabellendarstellung.
+Wie genau diese funktionieren und wie Sie darauf zugreifen können, sehen Sie unten.
+Es gibt aber freilich auch Ansichten, insbesondere Suchen, die Ihre gesamte Host-Landschaft betreffen.
+Diese erreichen Sie über den Eintrag <span class="guihint">Inventory</span> im <span class="guihint">Monitor</span>-Menü:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_monitor_menu.png" alt="Inventar-Einträge im Monitor-Menü."></div>
+<div class="title">Globale Ansichten der Inventurdaten</div>
+</div>
+<div class="sect2">
+<h3 id="heading__darstellung_als_baum">
+<span class="hidden-anchor sr-only" id="_darstellung_als_baum"></span>3.1. Darstellung als Baum</h3>
+<div class="paragraph"><p>Im Monitoring werden die Inventurdaten der Hosts einmal in einem Baum pro Host und noch einmal in Tabellen dargestellt.
+Den Baum erreichen Sie beispielsweise in einer Host-Ansicht über den Menüeintrag <span class="guihint">Host &gt; Inventory &gt; Inventory of host.</span></p></div>
+<div class="paragraph"><p>Alternativ können Sie in Ansichten, die Hosts auflisten, das <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> Menü eines Hosts aufrufen und darüber wiederum das <span class="image-inline"><img src="../images/icons/icon_inventory.png" alt="icon inventory"></span> Inventar:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_host_contextmenu.png" alt="Kontextmenü zum Anzeigen des Inventars eines Hosts."></div>
+<div class="title">Inventarzugriff aus einer Liste mit Hosts</div>
+</div>
+<div class="paragraph"><p>In beiden Fällen landen Sie bei der Baumdarstellung der Inventurdaten des Hosts.
+Ausgehend von den drei Basiskategorien <span class="image-inline"><img src="../images/icons/icon_hardware.png" alt="icon hardware"></span> <span class="guihint">Hardware</span>, <span class="image-inline"><img src="../images/icons/icon_networking.png" alt="icon networking"></span> <span class="guihint">Networking</span> und <span class="image-inline"><img src="../images/icons/icon_software.png" alt="icon software"></span> <span class="guihint">Software</span> können Sie Unteräste auf- und zuklappen:</p></div>
+<div class="imageblock" id="internal_paths">
+<div class="content"><img src="../images/inventory_example_main.png" alt="Aufgeklapptes Inventar mit CPU-Informationen."></div>
+<div class="title">Ein sehr kleiner Teil des Inventarbaums</div>
+</div>
+<div class="paragraph"><p>Hinter den einzelnen Einträgen sehen Sie oben im Bild in Klammern die internen <em>Inventurpfade</em>, die Sie sich über <span class="guihint">Display &gt; Modify display options</span> und die Option <span class="guihint">Show internal tree paths</span> einblenden lassen können:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/inventory_show_internal_paths.png" alt="Option zum Anzeigen der Inventurpfade."></div></div>
+<div class="paragraph"><p>Im Inventar sehen Sie dann die internen Bezeichnungen.
+So heißt der interne Pfad für den Bereich <span class="guihint">Processor</span> beispielsweise <span class="guihint">hardware.cpu</span>.
+Die Bezeichnungen für CPU-Modell und -Architektur, <span class="guihint">model</span> und <span class="guihint">arch</span>, finden Sie darunter in den CPU-Daten.</p></div>
+<div class="paragraph"><p>Sie können diese internen Bezeichnungen nutzen, um nur einzelne Pfade für <a href="wato_user.html#visibility">Kontaktgruppen freizuschalten.</a>
+Benutzer einer Kontaktgruppe, denen nur die oben gezeigten Einträge hardware.cpu, model und arch zugewiesen sind, sehen dann nur noch ein abgespecktes Inventar:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/inventory_restricted_internal_path.png" alt="Inventar mit ausgewählten Datensätzen."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__darstellung_als_tabelle">
+<span class="hidden-anchor sr-only" id="_darstellung_als_tabelle"></span>3.2. Darstellung als Tabelle</h3>
+<div class="paragraph"><p>Viele der Inventurdaten sind Einzelwerte unter ganz konkreten Pfaden im Baum, z.B. der Eintrag <span class="guihint">Hardware &gt; System &gt; Manufacturer &gt; Apple Inc.</span>.
+Es gibt aber auch Stellen im Baum mit Tabellen gleichartiger Objekte.
+Eine sehr wichtige ist z.B. die Tabelle <span class="guihint"><span class="image-inline"><img src="../images/icons/icon_software.png" alt="icon software"></span> Software &gt; <span class="image-inline"><img src="../images/icons/icon_packages.png" alt="icon packages"></span> Packages</span>:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_packages.png" alt="Softwarepakete im Inventarbaum."></div>
+<div class="title">Die Paketliste ist sehr ausführlich und hier im Bild stark beschnitten</div>
+</div>
+<div class="paragraph"><p>Das Besondere an diesem Teil der Inventurdaten:
+Sie können die Pakete über <span class="guihint">Host &gt; Inventory &gt; Software packages</span> in einer separaten Ansicht aufrufen.
+Dort finden Sie dann <span class="image-inline"><img src="../images/icons/icon_filter.png" alt="icon filter"></span> Filter speziell für die Suche in Paketen (im Bild stark gekürzt):</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_packages_search.png" alt="Filterliste für Softwarepakete."></div>
+<div class="title">Der Filter für den Host-Namen ist bereits vorausgefüllt</div>
+</div>
+<div class="paragraph"><p>Sie können auch in Softwarepaketen auf mehreren Hosts suchen.
+Die entsprechende Ansicht finden Sie im <a href="user_interface.html#monitor_menu">Monitor</a>-Menü unter <span class="guihint">Monitor &gt; Inventory &gt; Search Software packages</span> oder im Snapin <span class="guihint">Views</span> der <a href="user_interface.html#sidebar">Seitenleiste</a> im Bereich <span class="guihint">Inventory.</span>
+Dort sind auch alle weiteren Tabellenansichten für die Inventur aufgeführt, darunter weitere Suchen, etwa für bestimmte Oracle-Daten.</p></div>
+<div class="paragraph"><p>Beachten Sie, dass in der Voreinstellung viele allgemeine Filter zu den Hosts nicht in diesen Ansichten verfügbar sind.
+Sie können die Voreinstellungen aber bearbeiten und weitere Filter hinzufügen.</p></div>
+<div class="paragraph"><p>Weitere Dinge, die Sie mit diesen Ansichten machen können:</p></div>
+<div class="ulist"><ul>
+<li><p>In <a href="reporting.html">Berichte</a> einbinden</p></li>
+<li><p>Als PDF- oder CSV-Datei exportieren</p></li>
+<li><p>In <a href="dashboards.html">Dashboards</a> integrieren</p></li>
+</ul></div>
+<div class="paragraph"><p>Übrigens können Sie auch solche Inventurdaten in Ansichten aufnehmen, die <em>nicht</em> tabellenartig sind.
+Dazu gibt es für jeden bekannten Pfad im Inventurbaum einen Spaltentyp, den Sie in Ansichten von Hosts hinzufügen können.
+Ein Beispiel dafür ist die vordefinierte Beispielansicht <span class="guihint">CPU inventory of all hosts.</span>
+Das ist eine Tabelle der Hosts, die jeweils zusätzliche Daten aus der Inventur anzeigt.
+Hier ist beispielhaft eine der Spaltendefinitionen, die eine Spalte mit der Anzahl der physikalischen CPUs des Hosts hinzufügt:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_cpus.png" alt="Dialog für die Aufnahme von Spalten mit Inventurdaten in Ansichten."></div>
+<div class="title">Inventurdaten stehen allen Ansichten zur Verfügung</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_history">
+<span class="hidden-anchor sr-only" id="history"></span>4. Historischer Verlauf der Inventurdaten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sobald Sie die HW/SW-Inventur für einen Host eingerichtet haben, wird Checkmk jede Änderung in den Inventurdaten erfassen und die Historie aufzeichnen.
+Sie finden diese in Ansichten mit Inventurdaten über <span class="guihint">Host &gt; Inventory &gt; Inventory history of host.</span></p></div>
+<div class="paragraph"><p>Hier ist ein Ausschnitt aus der Historie mit einer Reihe von IP-Daten, die sich seit dem letzten Durchlauf geändert haben:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_history.png" alt="Historie von Einträgen im Inventar."></div>
+<div class="title">Änderungen im Inventar werden in der Historie sofort sichtbar</div>
+</div>
+<div class="paragraph"><p>Wenn Sie möchten, können Sie sich informieren lassen, wann immer eine Änderung in der Software oder Hardware auftritt.
+Das geschieht über den Status des Services <span class="guihint">Check_MK HW/SW Inventory.</span>
+Dazu bearbeiten Sie die Regel, die Sie ganz am Anfang dieses Artikels angelegt haben (im Regelsatz <span class="guihint">Do hardware/software inventory).</span>
+Dort finden Sie im Wert der Regel etliche Einstellungen, welche die Historie betreffen.
+Folgendes Beispiel setzt den Service auf <span class="state1">WARN</span>, wenn sich Änderungen in Software oder Hardware ergeben:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_do_inventory_warn.png" alt="Dialog zum Zustandswechsel des Inventurchecks."></div>
+<div class="title">Ein gutes Mittel, um auf Schatten-IT auf Arbeitsplatzrechnern aufmerksam zu werden</div>
+</div>
+<div class="paragraph"><p>Sobald der Inventurcheck das nächste Mal Änderungen feststellt, wird er auf <span class="state1">WARN</span> gehen.
+Das sieht dann z.B. so aus:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_list_warn.png" alt="Inventurcheck mit Warnung wegen erkannter Änderungen."></div>
+<div class="title">Warnungen in der Service-Liste eines einzelnen Hosts</div>
+</div>
+<div class="paragraph"><p>Bei der nächsten Ausführung des Checks geht dieser wieder automatisch auf <span class="state0">OK</span>, wenn sich nichts geändert hat.
+Das heißt, dass Sie den Check von Hand ausführen können, um den Service wieder auf <span class="state0">OK</span> zu setzen, wenn Sie nicht bis zum nächsten regelmäßigen Lauf warten möchten.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_statusdata">
+<span class="hidden-anchor sr-only" id="statusdata"></span>5. Statusdaten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Der Baum der Inventurdaten kann automatisch um aktuelle, passende Statusdaten ergänzt werden.
+Das ist in einigen Fällen sehr nützlich.
+Ein Beispiel dafür sind <em>Oracle Tablespaces.</em>
+In den eigentlichen Inventurdaten sind lediglich relativ statische Dinge wie die SID, der Name und der Typ enthalten.
+Aktuelle Statusdaten können dies um Angaben zur aktuellen Größe, zu freiem Platz usw. ergänzen.</p></div>
+<div class="paragraph"><p>Wenn Sie Statusdaten in Ihrem Baum sehen möchten (und da spricht eigentlich nichts dagegen), müssen Sie lediglich die entsprechende Option aktivieren in der Regel, die Sie <a href="#activate">am Anfang</a> unter <span class="guihint">Do hardware/software inventory</span> angelegt haben:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/inventory_do_inventory_status.png" alt="Dialog zum Aktivieren der Statusdaten."></div>
+<div class="title">Statusdaten erweitern das Monitoring teils erheblich</div>
+</div>
+<div class="paragraph"><p>Änderungen in Statusdaten finden übrigens <em>keinen</em> Niederschlag in der <a href="#history">Historie!</a>
+Dies würde quasi zu ständigen Änderungen führen und die Funktion nutzlos machen.
+Statusdaten werden auch nicht in Dateien abgelegt, sondern wie die Resultate von Checks direkt im Hauptspeicher vom Monitoringkern gehalten.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_external">
+<span class="hidden-anchor sr-only" id="external"></span>6. Externer Zugriff auf die Daten</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__zugriff_via_eigener_web_api">
+<span class="hidden-anchor sr-only" id="_zugriff_via_eigener_web_api"></span>6.1. Zugriff via eigener Web-API</h3>
+<div class="paragraph"><p>Sie können die HW/SW-Inventurdaten eines Hosts über eine Inventur-eigene Web-API exportieren.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Die hier erwähnte Web-API ist <strong>nicht</strong> die (abgekündigte) Checkmk Web-API.
+Diese Inventur-eigene Web-API ist von der Abkündigung nicht betroffen.</p></div>
+<div class="paragraph"><p>Die URL dazu lautet</p></div>
+<div class="paragraph"><p><code>http://myserver/mysite/check_mk/host_inv_api.py?host=myhost</code></p></div>
+<div class="paragraph"><p>Das Ausgabeformat in diesem Fall ist Python-Quellcode.
+Wenn Sie JSON bevorzugen, dann hängen Sie einfach ein <code>&amp;output_format=json</code> an die URL an:</p></div>
+<div class="paragraph"><p><code>http://myserver/mysite/check_mk/host_inv_api.py?host=myhost&amp;output_format=json</code></p></div>
+<div class="paragraph"><p>Das Ergebnis sieht in gekürzter Form etwa so aus:</p></div>
+<div class="listingblock">
+<div class="title">myhost.json</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>result:
+    Attributes: {}
+    Nodes:
+        hardware:
+            Attributes: {}
+            Nodes:
+                memory:
+                    Attributes:
+                        Pairs:
+                            total_ram_usable: 16495783936
+                            total_swap: 1027600384
+                            total_vmalloc: 35184372087808
+                        Nodes: {}
+                        Table: {}
+                Table: {}
+ ... usw. ...
+result_code: 0</code></pre></div>
+</div>
+<div class="paragraph"><p>Analog können Sie die Ausgabe auch in XML anfordern:</p></div>
+<div class="paragraph"><p><code>http://myserver/mysite/check_mk/host_inv_api.py?host=myhost&amp;output_format=xml</code></p></div>
+<div class="paragraph"><p>Geben Sie die jeweilige URL in die Adressleiste Ihres Browsers ein, sehen Sie sofort ein Ergebnis, weil Sie bereits bei Checkmk angemeldet sind.
+Die HW/SW-Inventurdaten finden Sie in der Ausgabedatei im Abschnitt nach dem Schlüssel <em>result</em>.
+Von einem Skript aus authentifizieren Sie sich am besten als <a href="glossar.html#automation_user">Automationsbenutzer.</a></p></div>
+<div class="paragraph"><p>Im Fehlerfall, z.B. wenn der angegebene Host nicht gefunden wurde, wird der <em>result code</em> auf 1 gesetzt und eine entsprechende Fehlermeldung ausgegeben:</p></div>
+<div class="paragraph"><p><code>{"result": "Found no inventory data for this host.", "result_code": 1}</code></p></div>
+<div class="sect3">
+<h4 id="heading__mehrere_hosts_abfragen">
+<span class="hidden-anchor sr-only" id="_mehrere_hosts_abfragen"></span>Mehrere Hosts abfragen</h4>
+<div class="paragraph"><p>Sie können auch die HW/SW-Inventurdaten mehrerer Hosts in einer Ausgabe abfragen.
+Erweitern Sie dafür die Abfrage auf alle gewünschten Hosts:</p></div>
+<div class="paragraph"><p><code>http://myserver/mysite/check_mk/host_inv_api.py?request={"hosts":["myhost","myhost2"]}&amp;output_format=json</code></p></div>
+<div class="paragraph"><p>Das Ergebnis dieser Abfrage sieht dann fast genauso aus wie die obige Ausgabe.
+Auf der obersten Ebene werden jedoch die Namen der Hosts als Schlüssel verwendet.
+Die Angaben zu den Hosts folgen dann darunter in den Verzeichnisbäumen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>result:
+<span class="hll">    myhost:
+</span>        Attributes: {}
+        Nodes:
+            hardware:
+                Attributes: {}
+                Nodes:
+                    memory:
+                        Attributes:
+                            Pairs:
+                                total_ram_usable: 16495783936
+                                total_swap: 1027600384
+                                total_vmalloc: 35184372087808
+                            Nodes: {}
+                            Table: {}
+                    Table:
+            networking:
+                Attributes:
+                    Pairs:
+                        available_ethernet_ports: 1
+                        hostname: "MyServer"
+                        total_ethernet_ports: 3
+                        total_interfaces: 4
+... etc. ...
+<span class="hll">    myhost2:
+</span>        Attributes: {}
+        Nodes: {}
+        Table: {}
+result_code: 0</code></pre></div></div>
+<div class="paragraph"><p>Werden zu einem Host keine Inventurdaten gefunden, dann hat der Host einen leeren Inventureintrag anstelle der Fehlermeldung.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__abfrage_auf_spezifische_daten_einschränken">
+<span class="hidden-anchor sr-only" id="_abfrage_auf_spezifische_daten_einschränken"></span>Abfrage auf spezifische Daten einschränken</h4>
+<div class="paragraph"><p>Nun wollen Sie aber vielleicht nicht alle Inventurdaten abfragen, sondern suchen nur gezielt nach einzelnen Informationen.
+Dann geben Sie sogenannte <a href="#internal_paths">Inventurpfade</a> an, um die gewünschten Angaben zu definieren.
+Sie bekommen dann nur von denjenigen Hosts Informationen angezeigt, die diese Pfade / Informationen haben.</p></div>
+<div class="paragraph"><p>Um zum Beispiel für den Host `myhost`nur die Angaben zu Gesamtspeicher und Auslagerungsspeicher zu sehen, verwenden Sie diese URL:</p></div>
+<div class="paragraph"><p><code>http://myserver/mysite/check_mk/host_inv_api.py?host=myhost&amp;request={"paths":[".hardware.memory.total_ram_usable",".hardware.memory.total_swap"]}&amp;output_format=json</code></p></div>
+<div class="paragraph"><p>Sie bekommen die gewünschten Angaben zurück:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code><span></span>result:
+    Attributes: {}
+    Nodes:
+        hardware:
+            Attributes: {}
+            Nodes:
+                memory:
+                    Attributes:
+                        Pairs:
+                            total_ram_usable: 16495783936
+                            total_swap: 1027600384
+                        Nodes: {}
+                        Table: {}
+                Table: {}
+        Table: {}
+result_code: 0</code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__zugriff_via_datei">
+<span class="hidden-anchor sr-only" id="_zugriff_via_datei"></span>6.2. Zugriff via Datei</h3>
+<div class="paragraph"><p>Alternativ können Sie auch einfach die Dateien auslesen, die Checkmk selbst erzeugt.
+Diese liegen im Python-Format im Verzeichnis <code>~/var/check_mk/inventory</code> vor.
+Für jeden Host gibt es dort eine Datei in unkomprimierter (z.B. <code>myhost</code>) und eine in komprimierter Variante (z.B. <code>myhost.gz</code>).</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_distributed">
+<span class="hidden-anchor sr-only" id="distributed"></span>7. Inventur in verteilten Umgebungen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+In den Enterprise Editions funktioniert die HW/SW-Inventur auch in <a href="distributed_monitoring.html">verteilten Umgebungen.</a>
+Hier werden die Inventurdaten zunächst durch die lokalen Instanzen ermittelt und dort unterhalb von <code>~/var/check_mk/inventory</code> abgelegt.</p></div>
+<div class="paragraph"><p>Der <a href="distributed_monitoring.html#livestatusproxy">Livestatus-Proxy-Daemon</a> überträgt turnusmäßig alle aktualisierten Inventurdaten von der Remote-Instanz in die Zentralinstanz und legt sie dort ebenfalls unter <code>~/var/check_mk/inventory</code> ab.
+Das ist wichtig, da diese Daten zu umfangreich sind, um sie bei einer Abfrage in diesem Augenblick live abzuholen.</p></div>
+<div class="paragraph"><p>Sobald über die Zentralinstanz Abfragen zu Inventurdaten kommen, werden diese Dateien gelesen und dann noch mit aktuellen Statusdaten zusammengeführt, welche per <a href="livestatus.html">Livestatus</a> von den Remote-Instanzen geholt werden.</p></div>
+<div class="paragraph"><p>Kurz zusammengefasst: Sie müssen sich um nichts kümmern.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+In der Raw Edition gibt es keinen Livestatus-Proxy.
+Daher ist auch die HW/SW-Inventur in der GUI der Zentralinstanz unvollständig und zeigt nur die Statusdaten.
+Sie können sich behelfen und die Dateien im Verzeichnis <code>~/var/check_mk/inventory</code> regelmäßig mit einem Skript o.Ä. an die Zentralinstanz übertragen.
+Dabei genügt es, die Dateien <em>ohne</em> die Endung <code>.gz</code> zu kopieren.
+Für eine effiziente Übertragung eignet sich z.B. <code>rsync</code>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__dateien_und_verzeichnisse">
+<span class="hidden-anchor sr-only" id="_dateien_und_verzeichnisse"></span>8. Dateien und Verzeichnisse</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__verzeichnisse_auf_dem_checkmk_server">
+<span class="hidden-anchor sr-only" id="_verzeichnisse_auf_dem_checkmk_server"></span>8.1. Verzeichnisse auf dem Checkmk-Server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agentenplugins für Linux und Unix</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/windows/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agentenplugins für Windows</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/inventory/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inventurdaten der einzelnen Hosts als Python-Dateien (komprimiert und unkomprimiert)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__verzeichnisse_auf_den_überwachten_hosts">
+<span class="hidden-anchor sr-only" id="_verzeichnisse_auf_den_überwachten_hosts"></span>8.2. Verzeichnisse auf den überwachten Hosts</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 45%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\plugins\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ablageort für das Inventory-Agentenplugin beim Windows-Agenten</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ablageort für das Inventory-Agentenplugin beim Linux-/Unix-Agenten</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/mk_inventory.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Konfiguration für das Inventory-Agentenplugin beim Linux-/Unix-Agenten</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Einleitung</a></li>
+<li>
+<a href="#config">2. Einrichtung</a><ul class="sectlevel1">
+<li>
+<a href="#activate">2.1. Die Inventur für die gewünschten Hosts einschalten</a><ul class="sectlevel2">
+<li><a href="#_regel_erstellen">Regel erstellen</a></li>
+<li><a href="#_intervall_festlegen">Intervall festlegen</a></li>
+</ul>
+</li>
+<li>
+<a href="#inventory_plugin">2.2. Das Inventory-Agentenplugin auf diesen Hosts ausrollen</a><ul class="sectlevel2">
+<li><a href="#_installation_von_hand">Installation von Hand</a></li>
+<li><a href="#_konfiguration_%C3%BCber_die_agentenb%C3%A4ckerei">Konfiguration über die Agentenbäckerei</a></li>
+</ul>
+</li>
+<li><a href="#_test">2.3. Test</a></li>
+</ul>
+</li>
+<li>
+<a href="#operating">3. Mit den Inventurdaten arbeiten</a><ul class="sectlevel1">
+<li><a href="#_darstellung_als_baum">3.1. Darstellung als Baum</a></li>
+<li><a href="#_darstellung_als_tabelle">3.2. Darstellung als Tabelle</a></li>
+</ul>
+</li>
+<li><a href="#history">4. Historischer Verlauf der Inventurdaten</a></li>
+<li><a href="#statusdata">5. Statusdaten</a></li>
+<li>
+<a href="#external">6. Externer Zugriff auf die Daten</a><ul class="sectlevel1">
+<li>
+<a href="#_zugriff_via_eigener_web_api">6.1. Zugriff via eigener Web-API</a><ul class="sectlevel2">
+<li><a href="#_mehrere_hosts_abfragen">Mehrere Hosts abfragen</a></li>
+<li><a href="#_abfrage_auf_spezifische_daten_einschr%C3%A4nken">Abfrage auf spezifische Daten einschränken</a></li>
+</ul>
+</li>
+<li><a href="#_zugriff_via_datei">6.2. Zugriff via Datei</a></li>
+</ul>
+</li>
+<li><a href="#distributed">7. Inventur in verteilten Umgebungen</a></li>
+<li>
+<a href="#_dateien_und_verzeichnisse">8. Dateien und Verzeichnisse</a><ul class="sectlevel1">
+<li><a href="#_verzeichnisse_auf_dem_checkmk_server">8.1. Verzeichnisse auf dem Checkmk-Server</a></li>
+<li><a href="#_verzeichnisse_auf_den_%C3%BCberwachten_hosts">8.2. Verzeichnisse auf den überwachten Hosts</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

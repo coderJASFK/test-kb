@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Tabellenansichten sind in Checkmk sehr mächtig und können indiviuell erstellt oder angepasst werden. Wie Sie Ansichten effektiv nutzen, erfahren Sie hier.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Ansichten von Hosts und Services (Views)">
+<meta name="og:description" content="Tabellenansichten sind in Checkmk sehr mächtig und können indiviuell erstellt oder angepasst werden. Wie Sie Ansichten effektiv nutzen, erfahren Sie hier.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Ansichten von Hosts und Services (Views)</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/views.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/views.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/views.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Ansichten von Hosts und Services (Views)</h1>
+<div class="details">
+<span id="revdate">Last modified on 05-Jun-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/views.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="user_interface.html">Die Benutzeroberfläche</a>
+<a href="dashboards.html">Dashboards</a>
+<a href="graphing.html">Messwerte und Graphing</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die wichtigste Aufgabe der <a href="user_interface.html">Benutzeroberfläche</a> von Checkmk ist das Anzeigen des aktuellen Status von Hosts und Services.
+Dies geschieht größtenteils in tabellarischen <em>Ansichten,</em> welche in der englischen Oberfläche mit <em>Views</em> bezeichnet werden.
+Damit das tägliche Arbeiten mit Checkmk so effizient wie möglich abläuft, bieten diese Tabellenansichten zahlreiche nützliche Funktionen und Sie können sie an Ihre Anforderungen anpassen.</p></div>
+<div class="paragraph"><p>Wir unterscheiden zwischen <strong>globalen</strong> Tabellenansichten und solchen, die einen <strong>Kontext</strong> benötigen.
+Globale Tabellenansichten können immer direkt aufgerufen werden.
+Ein Beispiel ist die Liste aller aktuellen Service-Probleme.
+Einen Kontext benötigt z.B. die Tabellenansicht <span class="guihint">Status of Host …​</span> — nämlich die Angabe desjenigen Hosts, dessen Status angezeigt werden soll.
+Solche Tabellenansichten können nur in Situationen aufgerufen werden, in denen es um einen bestimmten Host geht.</p></div>
+<div class="sect2">
+<h3 id="heading__globale_tabellenansichten">
+<span class="hidden-anchor sr-only" id="_globale_tabellenansichten"></span>1.1. Globale Tabellenansichten</h3>
+<div class="paragraph"><p>Die globalen Tabellenansichten erreichen Sie am einfachsten über das <span class="guihint">Monitor</span>-Menü.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/monitor_menu_less.png" alt="Monitor-Menü der Raw Edition im Show-less-Modus."></div>
+<div class="title">Das <span class="guihint">Monitor</span>-Menü der Raw Edition im Show-less-Modus</div>
+</div>
+<div class="paragraph"><p>Alternativ können Sie auch die <a href="glossar.html#snapin">Snapins</a> <span class="guihint">Overview</span> und <span class="guihint">Views</span> nutzen.
+Im <span class="guihint">Overview</span> ist jede der Zahlen anklickbar und bringt Sie zu einer globalen Tabellenansicht, die die jeweils gezählten Hosts oder Services einzeln auflistet.</p></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../images/views_tactical_overview.png" alt="views tactical overview" width="42%"></div></div>
+<div class="paragraph"><p>Im Snapin <span class="guihint">Views</span> sind alle globalen Tabellenansichten erreichbar — gruppiert nach Thema (<em>topic</em>).
+Zudem finden Sie einige Einträge, die eigentlich keine <span class="guihint">Views</span> sind — wie z.B. die <a href="glossar.html#dashboard#">Dashboards</a>, welche unter dem Thema <span class="guihint">Overview</span> einsortiert sind.
+Dashboards können aber Views <em>enthalten.</em></p></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../images/views_snapin_views.png" alt="views snapin views" width="42%"></div></div>
+<div class="paragraph"><p>Von einer globalen Tabellenansicht aus gelangen Sie zu den Einzelheiten eines bestimmten Hosts oder Services in einem weiteren Schritt.
+Die Namen von Hosts und Services und auch andere Spalten in den einzelnen Zellen sind anklickbar … :</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_all_hosts.png" alt="views all hosts"></div></div>
+<div class="paragraph"><p>… und bringen Sie zu (kontext-abhängigen) Detailansichten.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__kontext_abhängige_tabellenansichten">
+<span class="hidden-anchor sr-only" id="_kontext_abhängige_tabellenansichten"></span>1.2. Kontext-abhängige Tabellenansichten</h3>
+<div class="paragraph"><p>In Tabellenansichten, die <em>einen bestimmten</em> Host oder Service betreffen, finden Sie in den Menüs <span class="guihint">Host</span> beziehungsweise <span class="guihint">Service</span> wiederum allerlei Einträge,
+die Sie dann zu weiteren Tabellenansichten mit demselben Kontext bringen — also von demselben Host oder Service.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_context_buttons.png" alt="views context buttons"></div></div>
+<div class="paragraph"><p>Sie können Host- und Service-spezifische Tabellenansichten auch über die <a href="intro_gui.html#search_monitor">Suche im Monitor-Menü</a> erreichen:</p></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../images/views_monitor_search.png" alt="views monitor search" width="60%"></div></div>
+<div class="paragraph"><p>Ein weiterer Weg zu Detailansichten ist die Schnellsuche mit dem Snapin <span class="guihint">Quicksearch</span> in der Seitenleiste:</p></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../images/views_snapin_quicksearch.png" alt="views snapin quicksearch" width="42%"></div></div>
+<div class="paragraph"><p>Zu welcher Tabellenansicht Sie jeweils gelangen, hängt vom Ergebnis der Suche ab.
+Wenn die Suche einen Host eindeutig ermittelt, dann gelangen Sie direkt zur Seite <span class="guihint">Services of Host …​</span> dieses Hosts.
+Dort finden Sie dann wieder die Menüeinträge zu den anderen Tabellenansichten des gleichen Hosts.
+Ein Klick auf den Namen des Hosts bringt Sie beispielsweise zur Ansicht <span class="guihint">Status of Host.</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_services_of_host.png" alt="views services of host"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__auswirkung_in_der_menüleiste">
+<span class="hidden-anchor sr-only" id="_auswirkung_in_der_menüleiste"></span>1.3. Auswirkung in der Menüleiste</h3>
+<div class="paragraph" id="menucontext"><p>Die Unterscheidung zwischen globalen, Host- und Service-spezifischen Tabellenansichten macht sich auch in der Menüleiste bemerkbar.
+Immer vorhanden sind die Menüs <span class="guihint">Commands, Add to, Export, Display</span> und <span class="guihint">Help.</span></p></div>
+<div class="paragraph"><p>In globalen Host-Ansichten gibt es zudem das Menü <span class="guihint">Hosts</span> sowie in globalen Service-Ansichten <span class="guihint">Services</span> — beachten Sie hier den Plural!
+Darüber können Sie zum Beispiel die <a href="availability.html">Verfügbarkeit</a> aller Hosts oder Services der aktuellen Ansicht aufrufen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_menu_global.png" alt="views menu global"></div></div>
+<div class="paragraph"><p>Tabellenansichten eines einzelnen Hosts hingegen, haben die Menüs <span class="guihint">Host</span> und <span class="guihint">Services</span> mit allen Aktionen für den aktuellen Host beziehungsweise für all die Services der aktuellen Ansicht.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_menu_context_host.png" alt="views menu context host"></div></div>
+<div class="paragraph"><p>Tabellenansichten eines einzelnen Services wiederum haben ebenfalls das Menü <span class="guihint">Host</span>, dazu aber nun im Singular <span class="guihint">Service</span>, mit Aktionen für diesen einen Service.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_menu_context_service.png" alt="views menu context service"></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_using_views">
+<span class="hidden-anchor sr-only" id="using_views"></span>2. Tabellenansichten verwenden</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__optionen_filter_und_kommandos">
+<span class="hidden-anchor sr-only" id="_optionen_filter_und_kommandos"></span>2.1. Optionen, Filter und Kommandos</h3>
+<div class="paragraph"><p>Jede Tabellenansicht bietet diverse Optionen, über die Sie diese beeinflussen und Aktionen auslösen können.</p></div>
+<table id="filter" class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Menü</th>
+<th class="tableblock halign-left valign-top">Funktion</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Commands</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hier können Sie Kommandos auf den gezeigten Objekten ausführen (z.B. Eintragen von Wartungszeiten).
+Die Kommandos sind detailliert in einem <a href="commands.html">eigenen Artikel</a> beschrieben.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Filter</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Öffnet die Filterleiste am rechten Rand der Hauptseite.
+Damit können Sie die gezeigten Daten weiter einschränken.
+Sobald Sie einen Filter gesetzt haben, ändert sich das Symbol auf <span class="image-inline"><img src="../images/icons/button_filters_set_lo.png" alt="button filters set lo"></span>, damit klar ist, dass unter Umständen nicht alle Daten angezeigt werden.
+Umgekehrt haben manche Tabellenansichten schon Filter vorbelegt (z.B. die Liste aller Probleme).
+Hier können Sie durch Entfernen der Filter wiederum mehr Daten anzeigen lassen.
+Änderungen der Filter werden nicht gespeichert, sondern wieder zurückgesetzt, sobald Sie die Ansicht verlassen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Show checkboxes</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Damit schalten Sie Checkboxen ein oder aus.
+Mit den Checkboxen können Sie die Kommandos auf ausgewählte Datensätze einschränken.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Modify display options &gt; Number of columns</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Legt die Anzahl der Spalten für die Ansicht fest.
+Mehrspaltige Tabellenansichten helfen, auf breiten Monitoren den verfügbaren Platz auszunutzen.
+Bei Tabellenansichten, die nur einen Datensatz anzeigen, ist diese Einstellung wirkungslos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Modify display options &gt; Refresh interval</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Legt fest, in welchem Intervall die Ansicht neu geladen wird.
+Sie können damit das automatische Neuladen auch ganz abschalten.
+Beachten Sie, dass es in diesem Fall sein kann, dass Sie über ein inzwischen aufgetretenes Problem nicht informiert werden!</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Modify display options &gt; Date format</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Änderung des Formats für die Datumsanzeige.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Display &gt; Modify display options &gt; Time stamp format</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Zeitstempel können absolut, relativ, gemixt, gemeinsam oder als „Unix Timestamp“ angezeigt werden.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__zeit_und_datumsangaben">
+<span class="hidden-anchor sr-only" id="_zeit_und_datumsangaben"></span>2.2. Zeit- und Datumsangaben</h3>
+<div class="paragraph"><p>Checkmk zeigt in seinen Ansichten alle Zeitangaben, die weniger als 24 Stunden in der Vergangenheit oder Zukunft liegen, als relative Angaben — also z.B. <span class="guihint">16 hours.</span>
+Sie können das im Menü über <span class="guihint">Display &gt; Modify display options</span> umschalten und wahlweise nur absolute, nur relative oder beide Werte anzeigen lassen, oder auch den „Unix Timestamp“.
+Auch das Datumsformat können Sie in diesem Dialog festlegen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_time_date.png" alt="views time date"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__sortierung">
+<span class="hidden-anchor sr-only" id="_sortierung"></span>2.3. Sortierung</h3>
+<div class="paragraph"><p>Die Tabellenansichten können Sie durch ein Klicken auf die Spaltenüberschriften sortieren.
+Dabei gibt es drei Zustände einer Spalte, die durch mehrfaches Klicken im Kreis herum der Reihe nach ausgewählt werden:</p></div>
+<div class="ulist"><ul>
+<li><p>Aufsteigend sortieren</p></li>
+<li><p>Absteigend sortieren</p></li>
+<li><p>Nicht mehr nach dieser Spalte sortieren</p></li>
+</ul></div>
+<div class="paragraph"><p>Zunächst wird eine Tabellenansicht immer auf eine „natürliche“ Art sortiert, die in der Tabellenansicht selbst festgelegt ist.
+Bei den Service-Ansichten ist die Sortierung immer alphabetisch nach dem Namen des Services — mit der Ausnahme, dass die <span class="guihint">Check_MK</span>-Services immer oben stehen.
+Neben dem Service <span class="guihint">Check_MK</span>, der für die Abfrage des Monitoring-Agenten zuständig ist, sind das noch <span class="guihint">Check_MK Discovery</span>, <span class="guihint">Check_MK HW/SW Inventory</span> und gegebenenfalls
+<span class="guihint">Check_MK Agent</span>.
+Um eine solche Liste nach dem aktuellen Status der Services zu sortieren genügt ein Klick auf <span class="guihint">State.</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_sort_by_state.png" alt="views sort by state"></div></div>
+<div class="paragraph"><p>Die Sortierung nach der Spalte <span class="guihint">Perf-O-Meter</span> führt manchmal zu überraschenden Ergebnissen.
+Das liegt daran, dass die grafische Darstellung der <a href="graphing.html">Messwerte</a> teilweise eine prozentuale Zusammenfassung der eigentlichen Werte zeigt.
+Die Sortierung geschieht aber nach den absoluten Werten — und zwar immer nach der <em>ersten Metrik</em>, die ein Service ausgibt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_export">
+<span class="hidden-anchor sr-only" id="export"></span>2.4. Export</h3>
+<div class="paragraph"><p>Sie können die in einer Tabellenansicht gezeigten Daten in verschiedenen Formaten über das Menü <span class="guihint">Export</span> exportieren:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Menüeintrag</th>
+<th class="tableblock halign-left valign-top">Funktion</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Data &gt; Export CSV</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Als Trennzeichen wird ein Semikolon verwendet.
+Die einzelnen Zellen sind in Anführungszeichen eingeschlossen.
+In der ersten Zeile sind die internen Kürzel für die einzelnen Spalten eingetragen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Data &gt; Export JSON</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Beim JSON-Export landen die Zellen ebenfalls in Anführungszeichen, getrennt durch Umbrüche und Kommata, umschlossen von eckigen Klammern.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Reports &gt; This view as PDF</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nur in den kommerziellen Editionen: Hierbei wird ein sogenannter Sofortbericht (<em>instant report</em>) erzeugt, der die aktuelle Tabellenansicht in ein PDF-Dokument überführt, abzüglich Icons, Navigation und so weiter.
+Das Aussehen können Sie über spezielle Berichtsvorlagen im <a href="reporting.html">Reporting</a> anpassen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Reports</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Je nach aktueller Tabellenansicht werden hier weitere PDF-Exporte angeboten, etwa zur Verfügbarkeit, sowie gegebenenfalls individuell erstellte Vorlagen.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">REST API &gt; Query hosts/services resource</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ausgabe der <a href="rest_api.html">REST-API</a> zur Host-/Service-Auswahl der aktuellen (gefilterten) Tabellenansicht.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_limit">
+<span class="hidden-anchor sr-only" id="limit"></span>2.5. Das Anzeigelimit</h3>
+<div class="paragraph"><p>Bei einer größeren Monitoring-Umgebung sind nicht mehr alle Tabellenansichten sinnvoll.
+Wenn Sie 50.000 Services überwachen und die Ansicht <span class="guihint">All Services</span> anwählen, würde die Darstellung nicht nur sehr lange brauchen — sie wäre auch wenig nützlich.</p></div>
+<div class="paragraph"><p>Um den Benutzer in solchen Situationen vor langen Wartezeiten zu schützen und das System nicht durch absurde Datenmengen in die Knie zu zwingen,
+sind Tabellenansichten auf die Anzeige von 1000 Einträgen begrenzt.
+Bei einer Überschreitung erhalten Sie folgenden Hinweis:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_limit1.png" alt="views limit1" width="80%"></div></div>
+<div class="paragraph"><p>Wie Sie sehen, werden Sie darauf hingewiesen, dass die gezeigten Datensätze nicht unbedingt die ersten 1000 gemäß der gewählten Sortierung sind!
+Das hat einen technischen Hintergrund:
+Die Limitierung wird nämlich bereits an der Quelle der Daten durchgesetzt: in den Monitoring-Kernen der angebundenen Instanzen.
+Das ist sehr wichtig:
+Denn wenn wir erst eine Million Datensätze aus Ihrer weltweit verteilten Umgebung zusammensammeln würden, um gleich danach 99,9 % der Daten wieder wegzuwerfen,
+dann wäre das Kind ja schon in den Brunnen gefallen.
+Die Sortierung übernimmt erst am Ende die Oberfläche — es geschieht also <em>nach</em> der Limitierung.
+Denn die Daten von allen Instanzen müssen ja gemeinsam sortiert werden.</p></div>
+<div class="paragraph"><p>Sofern Sie wirklich der Meinung sind, mehr als 1000 Datensätze sehen zu wollen, können Sie durch einen Klick auf <span class="guihint">Repeat query and allow more results</span> ins nächste Level kommen.
+Hier greift eine Begrenzung auf 5000 Datensätze.
+Ist diese wieder überschritten, so können Sie <em>ganz ohne Limit</em> fortfahren.
+Da dies eine gefährliche Operation sein kann, benötigt sie Administratorrechte.
+Sie wurden gewarnt!</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_limit2.png" alt="views limit2" width="80%"></div></div>
+<div class="paragraph"><p>Sie können die beiden Stufen unter <span class="guihint">Global settings &gt; User interface</span> anpassen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_limit3.png" alt="views limit3"></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_edit">
+<span class="hidden-anchor sr-only" id="edit"></span>3. Ansichten anpassen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__grundsätzliches">
+<span class="hidden-anchor sr-only" id="_grundsätzliches"></span>3.1. Grundsätzliches</h3>
+<div class="paragraph"><p>Checkmk erlaubt Ihnen, die mitgelieferten Tabellenansichten anzupassen und sogar ganz Neue zu erzeugen, welche Sie dann auch in <a href="reporting.html">Berichte</a> und <a href="glossar.html#dashboard">Dashboards</a> einbauen können.
+Dabei können Sie bei jeder Tabellenansicht eine Menge verschiedener Aspekte bestimmen:</p></div>
+<div class="ulist"><ul>
+<li><p><strong>Allgemeine Dinge</strong> wie Titel, Thema, usw.</p></li>
+<li><p>Welche <strong>Datenquelle</strong> wird dargestellt (z.B., Hosts, Services, Events der Event Console etc.)?</p></li>
+<li><p>Welche Auswahl an Datensätzen wird dargestellt (<strong>Filterung</strong>)?</p></li>
+<li><p>Welche <strong>Spalten</strong> werden dargestellt?</p></li>
+<li><p>Zu welchen anderen Tabellenansichten <strong>verlinken</strong> die Texte in den Spalten?</p></li>
+<li><p>Wie wird standardmäßig <strong>sortiert</strong>?</p></li>
+<li><p>Gibt es eine <strong>Gruppierung,</strong> und falls ja, wie sieht diese aus?</p></li>
+<li><p>Wo und für welche Benutzer soll die Tabellenansicht <strong>sichtbar</strong> sein?</p></li>
+<li><p>Welche Art von <strong>Tabellenlayout</strong> soll verwendet werden?</p></li>
+</ul></div>
+<div class="paragraph"><p>Den Editiermodus für Tabellenansichten erreichen Sie auf zwei Arten:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>Bei einer bestehenden Tabellenansicht über einen Menüeintrag. Hier gibt es vier Varianten, abhängig vom Ursprung der jeweiligen Tabellenansicht:</p>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Display &gt; Clone builtin view</span> — erstellt einen Klon der mitgelieferten Tabellenansicht.</p></li>
+<li><p><span class="guihint">Display &gt; Edit my view</span> — öffnet den Bearbeitungsmodus für Ihre selbst erstellte Tabellenansicht.</p></li>
+<li><p><span class="guihint">Display &gt; Clone view</span> — legt einen Klon der Tabellenansicht eines anderen Benutzers an — wenn Sie keine Berechtigung zur Bearbeitung fremder Tabellenansichten haben.</p></li>
+<li><p><span class="guihint">Display &gt; Edit view of user X</span> und <span class="guihint">Display &gt; Clone view</span> — womit Sie wählen können, ob Sie die Tabellenansicht des anderen Benutzers bearbeiten oder stattdessen einen Klon seiner Tabellenansicht erstellen wollen — wenn Sie die Berechtigung zur Bearbeitung fremder Tabellenansichten haben.</p></li>
+</ul></div>
+</li>
+<li><p>Im Menü <span class="guihint">Customize &gt; Visualization &gt; Views</span>. Dort können Sie mit <span class="image-inline"><img src="../images/icons/button_add_view.png" alt="button add view"></span> ganz neue Tabellenansichten erzeugen oder wiederum mit <span class="image-inline"><img src="../images/icons/icon_clone.png" alt="icon clone"></span> bestehende klonen und anpassen:</p></li>
+</ol></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_views.png" alt="views edit views"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__erst_klonen_dann_verändern">
+<span class="hidden-anchor sr-only" id="_erst_klonen_dann_verändern"></span>3.2. Erst klonen, dann verändern</h3>
+<div class="paragraph"><p>Da die mitgelieferten Tabellenansichten Teil der Software sind und somit nicht verändert werden können, kennt Checkmk das Konzept des <em>Klonens</em>.
+Beim ersten Anpassen einer Tabellenansicht wird automatisch eine Kopie der Tabellenansicht für Sie erzeugt.
+Diese Kopie ist dabei Ihrem Benutzerprofil zugeordnet.</p></div>
+<div class="paragraph"><p>Die Kopie können Sie dann so anpassen, wie Sie es möchten.
+Die ursprüngliche Tabellenansicht bleibt erhalten, wird aber <em>verschattet</em> — also durch Ihre Kopie verdeckt.
+Sie können später einfach zur Standardansicht zurückkehren, indem Sie Ihren Klon löschen (das geht dann in der Tabelle der Ansichten wie erwartet mit <span class="image-inline"><img src="../images/icons/icon_delete.png" alt="icon delete"></span>).</p></div>
+<div class="paragraph"><p>Dieses Konzept hat noch einen weiteren Vorteil:
+Sie können nämlich bestimmen, ob die Tabellenansicht <em>für alle Benutzer</em> geändert sein soll, oder nur für Sie selbst.
+Dies legen Sie in den <span class="guihint">General Properties</span> der Tabellenansicht unter <span class="guihint">Visibility</span> mit der Checkbox <span class="guihint">Make this view available for other users</span> fest.
+Es überrascht wohl nicht, dass Sie diese Checkbox nur dann setzen können, wenn Sie <a href="wato_user.html#roles">Administratorrechte</a> haben
+(genau genommen gibt es dafür eine eigene Berechtigung mit dem Namen <span class="guihint">Publish views</span>).
+Zusätzlich können einzelne Tabellenansichten in den <a href="wato_user.html#roles">Rollendefinitionen</a> gesperrt werden.</p></div>
+<div class="paragraph"><p>Was ist nun, wenn eine Tabellenansicht von mehreren Benutzern angepasst und freigegeben wurde?
+Jeder der Benutzer hat dann nämlich eine eigene Variante der Tabellenansicht.
+Welche davon wird für wen sichtbar?
+Dies wird durch folgende Regeln bestimmt:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Wenn ein Benutzer für sich selbst eine Tabellenansicht erzeugt hat, hat diese für ihn immer Vorrang.</p></li>
+<li><p>Danach gelten Tabellenansichten, die ein Administrator angepasst und freigegeben hat (genau gesagt jemand mit dem Recht <span class="guihint">Modify builtin views</span>).</p></li>
+<li><p>Gibt es hier keine, so gelten Tabellenansichten, die ein anderer normaler Benutzer mit dem Recht <span class="guihint">Publish views</span> freigegeben hat.</p></li>
+<li><p>Und wenn es hier auch keine gibt, dann wird die ausgelieferte Variante sichtbar.</p></li>
+</ol></div>
+<div class="paragraph"><p>Wie können Sie nun aber eine <em>echte Kopie</em> einer Tabellenansicht erstellen, also am Ende beide Tabellenansichten sehen — die mitgelieferte und Ihre Version?
+Dies wird über die <span class="guihint">Unique ID</span> in den <span class="guihint">General Properties</span> gesteuert.
+Ändern Sie einfach die ID Ihrer Tabellenansicht auf einen anderen Wert.
+Damit gilt diese nicht mehr als Klon der mitgelieferten Tabellenansicht sondern beginnt ein eigenes Leben.</p></div>
+<div class="paragraph"><p>Die ID ist übrigens auch die entscheidende Angabe in der URL, über die Tabellenansichten aufgerufen werden.
+Das Schema ist ganz einfach.
+So wird z.B. die globale Tabellenansicht mit der ID <code>allhosts</code> wie folgt aufgerufen:</p></div>
+<div class="paragraph"><p><code>/mysite/check_mk/view.py?view_name=allhosts</code></p></div>
+<div class="paragraph"><p>Das Konzept mit dem Klonen und Anpassen und der Sichtbarkeit finden Sie übrigens auch an vielen anderen Stellen von Checkmk, nämlich bei:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="dashboards.html">Dashboards</a></p></li>
+<li><p><a href="reporting.html">Berichten</a></p></li>
+<li><p><a href="graphing.html#graph_collections">Graphensammlungen</a></p></li>
+<li><p><a href="graphing.html#custom_graphs">benutzerdefinierten Graphen</a></p></li>
+<li><p><a href="user_interface.html#bookmarks">Lesezeichenlisten</a></p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__integration_einer_tabellenansicht_in_die_navigation">
+<span class="hidden-anchor sr-only" id="_integration_einer_tabellenansicht_in_die_navigation"></span>3.3. Integration einer Tabellenansicht in die Navigation</h3>
+<div class="paragraph"><p>Wie und ob eine Tabellenansicht im <span class="guihint">Monitor</span>-Menü der Navigationsleiste sowie dem Snapin <span class="guihint">Views</span> angezeigt wird,
+legen folgende Eigenschaften unter <span class="guihint">General Properties</span> fest:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_general_properties.png" alt="views edit view general properties"></div></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Title:</span> Dies wird der Name des Eintrags.</p></li>
+<li><p><span class="guihint">Topic in 'Monitor menu':</span> Unter diesem Thema wird die Tabellenansicht einsortiert. Sie können auch eigene Themen definieren.</p></li>
+<li><p><span class="guihint">Sort index:</span> Entscheidet, wie weit oben die Tabellenansicht im Menü erscheint.</p></li>
+<li><p><span class="guihint">Visibility:</span> Damit können Sie den Eintrag unterdrücken und/oder für andere Benutzer freigeben.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading__grundlegendes_layout">
+<span class="hidden-anchor sr-only" id="_grundlegendes_layout"></span>3.4. Grundlegendes Layout</h3>
+<div class="paragraph"><p>Der nächste Kasten <span class="guihint">View Properties</span> bestimmt das generelle Aussehen der Tabellenansicht:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_view_properties.png" alt="views edit view view properties"></div></div>
+<div class="paragraph"><p>Die Einstellung <span class="guihint">Number of Columns</span> bestimmt die Anzahl der Spalten, <span class="guihint">Automatic page reload</span> das Aktualisierungsintervall — beide Werte können in der Tabellenansicht selbst <span class="guihint">Display &gt; Modify display options</span> noch verändert werden.</p></div>
+<div class="paragraph"><p>Unter <span class="guihint">Basic Layout</span> gibt es verschiedene Arten, wie die Daten in Tabellen dargestellt werden.
+Die meisten Tabellenansichten verwenden <span class="guihint">Table</span> — eine normale Tabelle, die nach Spalten sortierbar ist — oder <span class="guihint">Single dataset</span> — welches die Legende links hat und meist für einzelne Datensätze verwendet wird.
+Sie können <span class="guihint">Single dataset</span> aber auch für Tabellenansichten mit mehr als einem Objekt verwenden.
+Die Tabellenansicht <span class="guihint">All hosts</span> sieht nach einer Umstellung auf <span class="guihint">Single dataset</span> etwa so aus:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_layout_single_dataset.png" alt="views layout single dataset"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_columns">
+<span class="hidden-anchor sr-only" id="columns"></span>3.5. Spalten</h3>
+<div class="paragraph"><p>Der Kasten <span class="guihint">Columns</span> legt fest, welche Spalten Sie sehen.
+Die mögliche Auswahl von Spalten hängt von der gewählten Datenquelle ab.
+Die meisten Spalten finden Sie bei den Services, denn hier sind natürlich auch alle Informationen über den jeweiligen Host verfügbar.
+Die Liste kann schon recht lang werden und wenn Sie nicht sicher sind, welche Spalte die richtige ist, hilft nur eines: Ausprobieren.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_columns.png" alt="views edit view columns"></div></div>
+<div class="paragraph"><p>Je nach gewählter Spalte kann es dafür spezifische Optionen geben.
+Mit der Spalte <span class="guihint">Hosts: Hostname</span> ist es zum Beispiel möglich, den Host-Namen über die Option <span class="guihint">Coloring</span> entsprechend seines Status farblich zu hinterlegen.</p></div>
+<div class="paragraph"><p>Das Feld <span class="guihint">Link</span> bietet eine Auswahl von allen Tabellenansichten und Dashboards.
+Ist hier eine Tabellenansicht ausgewählt, dann ist die jeweilige Zelle dieser Spalte <em>anklickbar</em> und bringt den Benutzer zur gewählten Tabellenansicht.
+Wirklich sinnvoll ist das natürlich nur, wenn die Zielansicht einen Kontext hat.
+Bestes Beispiel ist die Tabellenansicht <span class="guihint">All hosts</span>.
+Die Spalte <span class="guihint">Hostname</span> ist hier anklickbar und bringt den Benutzer dann zu <span class="guihint">Services of Host</span> — von diesem Host.
+Alternativ können hier auch Dashboards angegeben werden, die freilich keinen Kontext benötigen.</p></div>
+<div class="paragraph"><p>Unter <span class="guihint">Tooltip</span> werden Sie wiederum die Liste aller Spalten finden.
+So können Sie eine weitere Information zu dem Host oder Service einblenden, sobald der Benutzer mit der Maus über die jeweilige Zelle fährt (wie im folgenden Beispiel die IP-Adresse):</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_hover_address.png" alt="views hover address"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_joined_columns">
+<span class="hidden-anchor sr-only" id="joined_columns"></span>3.6. Information über Services in einer Host-Ansicht</h3>
+<div class="paragraph"><p>Stellen Sie sich vor, Sie möchten gerne Informationen zu bestimmten Services in einer Tabelle von Hosts anzeigen.
+Das folgende ist ein sehr schönes Beispiel für so etwas:
+Zu jedem Host werden die aktuelle Uptime, die CPU-Last, die Speichernutzung und die Ausführungszeit des Checkmk-Agenten ausgegeben:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_joined_columns_example.png" alt="views joined columns example"></div></div>
+<div class="paragraph"><p>Hier wurde eine Tabelle von Hosts erstellt, in der für jeden Host die <strong>Service-Spalte</strong> <span class="guihint">Perf-O-Meter</span> von je vier verschiedenen Services angezeigt wird.
+Man sieht auch, dass bei einem der drei Hosts die Services <span class="guihint">CPU, Memory</span> und <span class="guihint">Uptime</span> nicht existieren und die Spalten dort konsequenterweise leer sind.</p></div>
+<div class="paragraph"><p>Um eine Konfiguration zu dieser Tabellenansicht umzusetzen, fügen Sie in der Ansicht Spalten vom Typ <span class="guihint">Joined column</span> hinzu.
+Hier erscheinen dann unter <span class="guihint">Column</span> die Spalten für Services, von denen Sie für das Beispiel <span class="guihint">Perf-O-Meter</span> auswählen.
+Mit dem Eintrag <span class="guihint">Title</span> weiter unten bestimmen Sie dann bei Bedarf die Überschrift der Spalte, wenn die automatische nicht passen sollte.</p></div>
+<div class="paragraph"><p>Unter <span class="guihint">of Service</span> wählen Sie zunächst entweder <span class="guihint">Explicit match</span> oder <span class="guihint">Regular expression match</span> aus.
+Bei Ersterem tragen Sie anschließend den <strong>exakten</strong> Namen inklusive der Groß- und Kleinschreibung ein.
+Dadurch wird der korrekte Service zu dem Host bestimmt.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_columns_2.png" alt="views edit view columns 2"></div></div>
+<div class="paragraph"><p>Wenn Sie nicht genau wissen, wie der Service heißt oder er auf jedem Host ein wenig anders ist, geben Sie einen regulären Ausdruck an, der pro Host auf exakt <strong>einen</strong> Service matcht.
+Das ist vor allem dann nützlich, wenn Sie eine Gruppe von Hosts betrachten wollen, bei denen es eine vergleichbare Gruppe an Services gibt, von denen jeweils immer nur einer auf einem Host vorkommen kann.
+In dem nachfolgenden Beispiel ist das die <span class="guihint">CPU load</span> oder die <span class="guihint">Processor queue,</span> welche entweder nur auf Linux- oder Windows-Systemen vorkommen kann.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_columns_3.png" alt="views edit view columns 3"></div></div>
+<div class="paragraph"><p>Es gibt übrigens nichts zu befürchten, sollte ein regulärer Ausdruck doch einmal auf mehrere Services zutreffen.
+In einem solchen Fall wird immer der erste Treffer in der Spalte angezeigt.</p></div>
+<div class="paragraph"><p>In beiden Varianten ist so eine Darstellung natürlich nur dann nützlich, wenn die Tabellenansicht eine Liste von ähnlichen Hosts anzeigt, welche auch alle über die gewählten Services verfügen oder sich ähnelnde Services haben.
+Das ist auch der Grund, warum Checkmk nur wenige solcher Ansichten mit ausliefert:
+Welche Spalten hier sinnvoll sind, hängt absolut von der Art der gewählten Hosts ab.
+Bei Linux-Servern interessieren sicherlich völlig andere Informationen als z.B. bei USVs.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__sortierung_2">
+<span class="hidden-anchor sr-only" id="_sortierung_2"></span>3.7. Sortierung</h3>
+<div class="paragraph"><p>Die Sortierung einer Tabellenansicht konfigurieren Sie im vierten Kasten.
+Es handelt sich dabei nur um die voreingestellte Sortierung:
+Der Benutzer kann, wie oben beschrieben, über einen Klick auf die Spaltentitel die Sortierung für sich anpassen.
+In der Konfiguration der Tabellenansicht haben Sie aber mehr Möglichkeiten:
+Sie können eine <em>mehrstufige</em> Sortierung einstellen, z.B. zuerst nach dem Service-Status, und bei gleichem Status nach dem Namen des Services.
+Die so eingestellte Reihenfolge bleibt auch als nachrangige Sortierung erhalten, wenn der Benutzer nach einer bestimmten Spalte umsortiert.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_sorting.png" alt="views edit view sorting"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__gruppierung">
+<span class="hidden-anchor sr-only" id="_gruppierung"></span>3.8. Gruppierung</h3>
+<div class="paragraph"><p>Durch Gruppierung zerteilen Sie eine Tabelle in mehrere Abschnitte — wobei jeder Abschnitt Daten anzeigt, die irgendwie zusammengehören.
+Ein gutes Beispiel ist die Tabellenansicht <span class="guihint">Service problems</span>, welche Sie bequem über das Snapin <span class="guihint">Overview</span> erreichen.</p></div>
+<div class="paragraph"><p>Hier sehen Sie diese Tabelle gruppiert nach dem Service-Status (<span class="guihint">State</span>): zuerst alle <span class="state2">CRIT</span>, dann <span class="state3">UNKNOWN</span>, dann <span class="state1">WARN</span> - jeweils mit einem eigenen Gruppentitel:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_grouping.png" alt="views edit view grouping"></div></div>
+<div class="paragraph"><p>Die Gruppierung in einer Tabellenansicht konfigurieren Sie analog zu den Spalten.
+Legen Sie einfach fest, nach welchen Spalten gruppiert werden soll.
+Meist ist das nur eine einzige, aber es können auch mehrere sein.
+Alle Datensätze mit dem gleichen Wert für alle gewählten Spalten werden dann in einer Gruppe angezeigt.
+Und die Spalteninformation wird jeweils als Gruppentitel anzeigt.</p></div>
+<div class="paragraph"><p>Es ist wichtig, dass Sie die Datensätze auch vorrangig nach der gewählten Gruppeneigenschaft <strong>sortieren!</strong>
+Andernfalls kann es sein, dass die gleiche Gruppe mehrfach auftaucht (in Einzelfällen kann dies sogar gewünscht sein).</p></div>
+<div class="paragraph"><p>Übrigens: Ein Umsortieren nach einer Spalte durch den Benutzer hat keinen Einfluss auf die Gruppierung:
+In diesem Fall wird nur die Reihenfolge der Gruppen bestimmt und die Datensätze werden innerhalb der Gruppen sortiert.
+Die Gruppen selbst bleiben erhalten.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_filter_context">
+<span class="hidden-anchor sr-only" id="filter_context"></span>3.9. Filter, Kontext und Suche</h3>
+<div class="paragraph"><p>Ein wichtiger Aspekt von Tabellenansichten ist die <em>Selektion</em> der Daten.
+Welche Hosts oder Services sollen in der Tabelle angezeigt werden?
+Checkmk verwendet hierfür das Konzept der <strong>Filter.</strong>
+Hier sind ein paar Beispiele für Host-Filter:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_filter.png" alt="views filter"></div></div>
+<div class="paragraph"><p>Jeder Filter kann vom Benutzer mit Suchbegriffen oder anderen Kriterien gefüllt werden und reduziert dann die Liste der Ergebnisse auf diejenigen Datensätze, die die Kriterien erfüllen.
+Die Filter werden dabei UND-verknüpft.
+Die Filterkriterien, die bei einer Tabellenansicht dann tatsächlich zum Einsatz kommen, werden aus drei Quellen zusammengestellt:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Filter, die direkt in der Tabellenansicht hinterlegt und mit Kriterien gefüllt sind.</p></li>
+<li><p>Filter, die der Benutzer interaktiv in der Tabellenansicht mit <span class="image-inline"><img src="../images/icons/icon_filter.png" alt="icon filter"></span> gesetzt hat.</p></li>
+<li><p>Filter, die per Variablen über die URL gesetzt werden.</p></li>
+</ol></div>
+<div class="paragraph"><p>Die Filter, die Sie beim Editieren einer Tabellenansicht im Kasten <span class="guihint">Context / Search Filters</span> zusammenstellen, haben dabei zwei Funktionen.
+Zum einen legen Sie so fest, welche Filter dem Benutzer beim Klick auf <span class="image-inline"><img src="../images/icons/icon_filter.png" alt="icon filter"></span> angeboten werden.
+Zum anderen können Sie Filter bereits mit Kriterien vorbelegen und so die in der Tabellenansicht gezeigten Daten einschränken (Punkt 1 von oben).</p></div>
+<div class="paragraph"><p>Falls Sie eine Tabellenansicht mit <strong>Kontext</strong> anlegen oder editieren, so tritt anstelle der Filter des entsprechenden Objekts nur ein optionales Eingabefeld.
+In diesem gilt dann immer ein <em>exakter</em> Vergleich (Groß-/Kleinschreibung beachten).
+Nehmen wir als Beispiel die Tabellenansicht <code>host</code>, welche alle Services eines bestimmten Hosts anzeigt.
+Der Host-Name wird der Tabellenansicht über einen Kontext mit auf den Weg gegeben.
+Sie können sich aber eine Tabellenansicht bauen, welche den gezeigten Host quasi <strong>hart kodiert</strong> direkt in der Tabellenansicht festlegt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_context_filter.png" alt="views edit view context filter"></div></div>
+<div class="paragraph"><p>Damit können Sie diese Tabellenansicht wieder ohne Kontext aufrufen und auf Wunsch auch problemlos in das Snapin <span class="guihint">Views</span> einbinden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__spezielle_suchansichten">
+<span class="hidden-anchor sr-only" id="_spezielle_suchansichten"></span>3.10. Spezielle Suchansichten</h3>
+<div class="paragraph"><p>Die mitgelieferten Tabellenansichten <span class="guihint">Host search</span> und <span class="guihint">Service search</span> (und auch andere) verhalten sich im Bezug auf die Filter auf eine spezielle Art:
+Wenn Sie so eine Tabellenansicht anwählen, so startet diese mit einem geöffnetem Filter-Formular und zeigt erst dann Hosts oder Services an, wenn dieses abgeschickt wurde.</p></div>
+<div class="paragraph"><p>Warum?
+Es wäre einfach sehr unpraktisch, wenn Sie erst auf <span class="guihint">All services</span> gehen müssten — dann warten bis viele tausend Services dargestellt würden — und erst dann durch eine Sucheingabe das Ergebnis filtern könnten.
+Dieses Verhalten legt die Option <span class="guihint">Show data only on search</span> fest:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_edit_view_view_properties_show_data.png" alt="views edit view view properties show data"></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_new">
+<span class="hidden-anchor sr-only" id="new"></span>4. Neue Tabellenansichten erstellen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Das Erzeugen einer neuen Tabellenansicht mit <span class="image-inline"><img src="../images/icons/button_add_view.png" alt="button add view"></span> geht im Prinzip genauso wie das Editieren einer bestehenden Tabellenansicht — mit einem kleinen Unterschied:
+Sie müssen vorher noch eine <strong>Datenquelle</strong> und einen <strong>spezifischen Objekttyp</strong> auswählen.</p></div>
+<div class="sect2">
+<h3 id="heading_datasource">
+<span class="hidden-anchor sr-only" id="datasource"></span>4.1. Datenquelle</h3>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_1.png" alt="views create view 1"></div></div>
+<div class="paragraph"><p>Die Datenquelle ist das, was man in Datenbanken vielleicht als Tabelle oder Datenbank-View bezeichnen würde.
+Checkmk verwendet zwar keine SQL-Datenbank, ist intern aber ähnlich aufgebaut.
+In den meisten Fällen liegen Sie mit <span class="guihint">All services</span> oder <span class="guihint">All hosts</span> richtig.
+Es gibt aber einige spezielle Datenquellen, die hier kurz aufgelistet werden sollen:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Datenquelle</th>
+<th class="tableblock halign-left valign-top">Bedeutung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host- und Service-Gruppen, diverse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">siehe <a href="#host_service_groups">unten</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Alert Statistics</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="livestatus.html#retrieving_statistics">Statusstatistiken</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">BI</span>, diverse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bi.html">Business Intelligence</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Event Console</span>, Host- und Service-Events</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="ec.html">Event Console</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">Inventory</span>, diverse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="inventory.html">HW/SW-Inventur</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="guihint">The Logfile</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="livestatus.html#logs">Livestatus-Daten</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="heading_host_service_groups">
+<span class="hidden-anchor sr-only" id="host_service_groups"></span>Host- und Service-Gruppen</h4>
+<div class="paragraph"><p>Die Datenquellen <span class="guihint">Host groups</span> und <span class="guihint">Service groups</span> liefern je Zeile die Informationen über die Gruppe selbst — Filter für einzelne Hosts oder Services gibt es entsprechend nicht.
+Ein Beispiel für diese Datenquelle ist die Standardansicht <span class="guihint">Host groups</span>.
+In verteilten Umgebungen erledigen die Datenquellen <span class="guihint">Host groups, merged</span> und <span class="guihint">Service groups, merged</span> genau das Gleiche.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_hostgroups_summary.png" alt="views hostgroups summary"></div></div>
+<div class="paragraph"><p>Wenn Sie hingegen Informationen zu einzelnen Hosts wünschen, lediglich gruppiert nach Host-Gruppen,
+können Sie etwa die Standardansicht <span class="guihint">All hosts</span> in den Einstellungen im Kasten <span class="guihint">Grouping</span> um die Option <span class="guihint">Hosts: Host groups the host is member of</span> ergänzen.
+Da Hosts mehreren Gruppen zugeordnet sein können, finden Sie in der Tabellenansicht dann einen einzelnen Bereich für jede <strong>Host-Gruppenkombination,</strong> die für mindestens einen Host gilt.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_hostgroups.png" alt="views hostgroups"></div></div>
+<div class="paragraph"><p>Auf dieselbe Weise können Sie auch mit Services und Service-Gruppen verfahren.</p></div>
+<div class="paragraph"><p>Je nach ausgewählter Datenquelle stehen Ihnen unterschiedliche Spalten zum Aufbau der Tabellenansicht zur Verfügung.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__objekttyp_global_oder_mit_kontext">
+<span class="hidden-anchor sr-only" id="_objekttyp_global_oder_mit_kontext"></span>4.2. Objekttyp: Global oder mit Kontext</h3>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_2.png" alt="views create view 2"></div></div>
+<div class="paragraph"><p>Hier entscheidet sich, ob Ihre neue Tabellenansicht einen Kontext haben oder ob es eine globale Tabellenansicht werden soll.
+Welche Auswahlmöglichkeiten Sie haben, hängt von der gewählten Datenquelle ab.
+Der mit Abstand häufigste Kontext ist Host.
+Die Abbildung von oben erscheint nach der Auswahl der Datenquelle <span class="guihint">All services.</span></p></div>
+<div class="paragraph"><p>Durch das Aktivieren von <span class="guihint">Show information of a single Host</span> legen Sie fest, dass die neue Tabellenansicht genau einen Host beschreibt.
+So haben Sie die Grundlage dafür geschaffen, dass die Tabellenansicht nicht global, sondern verlinkt sichtbar wird:</p></div>
+<div class="ulist"><ul>
+<li><p>Bei einer Host-Ansicht mit einem Kontext</p></li>
+<li><p>Als Verknüpfung in einer Spalte (siehe oben, z.B. Klick auf Host-Name in einer Tabellenansicht)</p></li>
+</ul></div>
+<div class="paragraph"><p>Bei dem Kontexttyp Service gibt es zwei Möglichkeiten:
+Wenn Sie nur <span class="guihint">Show information of a single Service</span> anwählen, können Sie eine Tabellenansicht bauen, die alle Services mit dem gleichen Namen aber auf <em>verschiedenen Hosts</em> anzeigt.
+Wenn es um einen ganz bestimmten Service von einem einzigen Host gehen sollen, dann wählen Sie zusätzlich <span class="guihint">Show information of a single Host</span> aus.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_joined_inventory_columns">
+<span class="hidden-anchor sr-only" id="joined_inventory_columns"></span>5. Inventur-Tabellen verknüpfen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk bietet viele unterschiedliche Daten zu einem Host oder einem Service.
+Die meisten davon können Sie mit den Datenquellen <span class="guihint">All services</span> oder <span class="guihint">All hosts</span> darstellen.
+Die <a href="inventory.html">HW/SW-Inventur</a> bietet darüber hinaus weitere <a href="inventory.html#table">Tabellen</a> (als Datenquellen), die Sie ebenso in eigenen Ansichten anzeigen und individuell strukturieren können.
+Ab Checkmk <span class="new">2.2.0</span> können Sie solchen Ansichten auch Spalten aus anderen Tabellen hinzufügen, sofern diese eine gemeinsame Spalte haben.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Die Anzahl der Zeilen der finalen Ansicht entspricht der Anzahl der Zeilen der zugrundeliegenden Datenquelle Ihrer Ansicht.
+Verknüpfte Tabellen fügen lediglich ausgewählte Spalten hinzu.</p></div>
+<div class="paragraph"><p>In dem folgenden Beispiel werden Sie einmal eine sehr kompakte Ansicht erstellen, in der zwei HW/SW-Inventur-Tabellen miteinander verknüpft werden.
+Erstellen Sie zum Anfang <a href="#new">eine neue Ansicht</a> und wählen Sie als grundlegende <a href="#datasource">Datenquelle</a> die gewünschte Inventur-Tabelle aus.
+Für das Beispiel suchen Sie nach <span class="guihint">Inventory table: Checkmk ➤ Checkmk sites</span> und bestätigen anschließend mit <span class="image-inline"><img src="../images/icons/button_continue.png" alt="button continue"></span> <span class="guihint">Continue</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_3.png" alt="Auswahl der Datenquelle 'Checkmk sites'."></div></div>
+<div class="paragraph"><p>Die darauf folgende Seite können Sie überspringen, da es nicht nötig ist, die Datenquelle auf einen einzelnen Host oder eine einzelne Instanz einzuschränken.
+Der nächste Schritt erfolgt also direkt auf der Hauptseite der Konfiguration, wo Sie zunächst die <span class="guihint">Unique ID</span> und einen <span class="guihint">Title</span> eintragen.</p></div>
+<div class="paragraph"><p>Im Kasten <span class="guihint">Macros for joining service data or inventory tables</span> kommt dann die erste spezifische Konfiguration, um später andere Datenquellen in die Ansicht einzubinden.
+Zu diesem Zweck werden Indikatoren benötigt, über die man dann später die richtigen Zeilen in den weiteren Datenquellen identifiziert.
+Legen Sie also hier wie in dem nachfolgenden Beispiel die Makros für die Spalten <span class="guihint">Version</span> und <span class="guihint">Site</span> an:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_4.png" alt="Dialog zum Anlegen von Makros."></div></div>
+<div class="paragraph"><p>Diese Makros können Sie nun in speziellen <span class="guihint">Columns</span> verwenden.
+Neben den <a href="#columns">regulären Spalten,</a> die bereits in der Anpassung von Ansichten verwendet wurden, stehen jetzt sowohl die ebenfalls vorher beschriebenen Spalten der <a href="#joined_columns">Service-Datenquelle</a> (<span class="guihint">Joined columns</span>) als auch die der <span class="guihint">Joined inventory columns</span> zur Verfügung.</p></div>
+<div class="paragraph"><p>Die ersten beiden Spalten nutzen Standarddaten aus der Datenquelle.
+Da Daten aus der HW/SW-Inventur immer zu einem bestimmten Host und einer bestimmten Instanz gehören, stehen Ihnen diese Tabellen ebenfalls zur Verfügung, wenn Sie eine solche Datenquelle ausgewählt haben.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_5.png" alt="Dialog mit Auswahl von Standardspalten."></div></div>
+<div class="paragraph"><p>Anschließend können Sie die definierten Makros nicht nur in den <span class="guihint">Joined inventory columns</span> verwenden, sondern auch in den <span class="guihint">Joined columns,</span>
+um die Daten von bestimmten Services anzuzeigen.
+Das ermöglicht die Kombination unterschiedlichster Quellen — in diesem Fall, das Perf-O-Meter des dazugehörigen Performance-Service einer Instanz anzuzeigen.</p></div>
+<div class="paragraph"><p>Die Makros können Sie übrigens genauso auch bei der Definition von regulären Ausdrücken verwenden.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_6.png" alt="Auswahl einer 'Joined column' unter Verwendung eines Makros."></div></div>
+<div class="paragraph"><p>Daten aus anderen HW/SW-Inventur-Tabellen anzuzeigen funktioniert ganz ähnlich.
+Lediglich die zu verwendende Tabelle ist vorher auszuwählen.
+In dem nachfolgenden Beispiel verwenden Sie die Tabelle <span class="guihint">Checkmk ➤ Checkmk versions,</span> wodurch die Drop-down-Liste <span class="guihint">Display the column</span> automatisch auf eine sinnvolle Auswahl eingeschränkt wird.</p></div>
+<div class="paragraph"><p>Wie Checkmk die richtige Zeile in der Tabelle findet, von der die Spalte angezeigt werden soll, bestimmen Sie danach.
+Fügen Sie dafür mit dem Knopf <span class="guihint">Add new match criteria</span> ein Kriterium in Form einer Spalte hinzu, über das Checkmk später die passende Zeile bestimmen kann.
+In dem obigen Beispiel ist das die <span class="gui">Version.</span>
+Denn diese ist in der Tabelle einzigartig und kann nur einmal vorkommen.
+Das bedeutet umgekehrt auch, dass Sie zwar beliebige Tabellen der HW/SW-Inventur miteinander verknüpfen können, Sie dabei aber auch sicherstellen müssen, dass die beiden Tabellen immer eine gemeinsame Spalte haben und diese Spalte auch immer einzigartige Einträge enthält.
+In dem obigen Beispiel wäre die Spalte <span class="guihint">Sites</span> also kein geeignetes Kriterium, da es mehrere Editionen mit derselben Anzahl an Instanzen geben könnte.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_7.png" alt="Auswahl einer 'Joined inventory column' unter Verwendung eines Makros."></div></div>
+<div class="paragraph"><p>Selbstverständlich können Sie bei Bedarf auch bei einer <span class="guihint">Joined inventory column</span> den Titel der Spalte anpassen, wenn der automatische nicht passen sollte.
+Nachdem alle Einstellungen vorgenommen wurden, speichern Sie mit <span class="image-inline"><img src="../images/icons/button_save_and_go_to_view.png" alt="button save and go to view"></span> <span class="guihint">Save &amp; go to view</span> die neue Ansicht ab und werden direkt zu dem Ergebnis geleitet.
+Je nachdem, wie viele Instanzen bei Ihnen überwacht werden, wird auch entsprechend für jede eine Zeile in der Ansicht eingefügt:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_create_view_8.png" alt="Fertige Ansicht inklusive Spalten aus anderen Quellen."></div></div>
+<div class="paragraph"><p>Wie Sie hier sehen können, gibt es für jede Spalte immer einen Standardtitel, wenn dieser nicht von Ihnen vorgegeben wird.
+In der dritten Spalte zu dem <span class="guihint">Perf-O-Meter</span> wurde der Titel nicht vergeben, so dass von Checkmk der verwendete reguläre Ausdruck als Titel herangezogen wurde.
+Sie können das jederzeit ändern und wie bei der Spalte zu der <span class="guihint">Edition</span> anpassen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_matrix">
+<span class="hidden-anchor sr-only" id="matrix"></span>6. Die Matrix</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Wenn Sie in den <span class="guihint">View Properties</span> als <span class="guihint">Basic Layout</span>  bei einer Ihrer Tabellenansichten <span class="guihint">Matrix</span> einstellen,
+werden Sie wahrscheinlich erstmal seltsame Dinge erleben und sich fragen, was das Ganze soll.
+Die Matrix ist sicher nicht auf den ersten Blick einleuchtend, aber Sie können damit tolle Dinge machen.</p></div>
+<div class="paragraph"><p>In den ausgelieferten Tabellenansichten gibt es z.B. <span class="guihint">Search performance data,</span> die dieses Layout verwendet.
+Sie finden diese Tabellenansicht über <span class="guihint">Customize &gt; Visualization &gt; Views.</span></p></div>
+<div class="paragraph"><p>Folgende Abbildung zeigt eine Suche nach dem Serviceausdruck <code>CPU|^memory|Filesystem /opt/omd/sites/mysite</code>:</p></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../images/views_matrix_filter_service.png" alt="views matrix filter service" width="55%"></div></div>
+<div class="paragraph"><p>Das Ergebnis ist eine hübsche Tabelle der Hosts, in denen die Metriken all dieser Services gegenübergestellt sind.
+Nicht alle Hosts haben die gleichen Services, so dass bei einigen Hosts dann die entsprechenden Zellen einfach leer bleiben:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_matrix_view_1.png" alt="views matrix view 1"></div></div>
+<div class="paragraph"><p>Das Ganze sieht jetzt erstmal sehr ähnlich aus wie die weiter oben beschriebene <a href="#joined_columns">Information über Services in einer Host-Ansicht.</a>
+Es gibt aber ein paar wesentliche Unterschiede:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Die Liste der Services ist dynamisch und nicht fest konfiguriert.</p></li>
+<li><p>Die Hosts sind hier die Spalten  —  nicht die Zeilen.</p></li>
+</ol></div>
+<div class="paragraph"><p>Sie können mit der Matrix noch viel mehr anstellen.
+Wenn Sie in die Definition der Tabellenansicht gucken, können Sie sehen, wie diese konstruiert ist:</p></div>
+<div class="ulist"><ul>
+<li><p>Als <span class="guihint">Basic Layout</span> ist <span class="guihint">Matrix</span> eingetragen.</p></li>
+<li><p>Bei <span class="guihint">Grouping</span> ist als einzige Spalte der Host-Name (<span class="guihint">Hosts: Hostname</span>) eingetragen.</p></li>
+<li><p>Bei <span class="guihint">Columns</span> sind die <span class="guihint">Service description</span> und das <span class="guihint">Service Perf-O-Meter</span> eingetragen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Die Regel für das Matrix-Layout ist so:</p></div>
+<div class="ulist"><ul>
+<li><p>Die unter <strong>Grouping festgelegten Spalten</strong> werden als Überschriften für die Spalten verwendet.</p></li>
+<li><p>Die <strong>erste normale Spalte</strong> bildet die linke Spalte mit der Beschriftung der Zeilen.</p></li>
+<li><p>Alle <strong>weiteren normalen Spalten</strong> werden in den Zellen angezeigt.</p></li>
+</ul></div>
+<div class="paragraph"><p>Wenn Sie z.B. mehr Informationen über den Host anzeigen möchten, fügen Sie einfach weitere Spalten im Kasten <span class="guihint">Grouping</span> hinzu.
+So sieht z.B. die Tabelle von oben aus, wenn Sie die Spalten
+<span class="guihint">Host icons</span> und <span class="guihint">Folder - just folder name</span> hinzufügen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_matrix_view_2.png" alt="views matrix view 2"></div></div>
+<div class="paragraph"><p>Weitere <strong>normale Spalten</strong> landen dann direkt in den Zellen. Folgendes Beispiel (gekürzt) zeigt
+die Matrix mit der zusätzlichen Spalte <span class="guihint">Output of check plugin</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_matrix_view_3.png" alt="views matrix view 3"></div></div>
+<div class="sect2">
+<h3 id="heading__erkennen_von_ausreißern">
+<span class="hidden-anchor sr-only" id="_erkennen_von_ausreißern"></span>6.1. Erkennen von Ausreißern</h3>
+<div class="paragraph"><p>Warum sind eigentlich manche Zellen farbig hinterlegt?
+Nun — hier werden Sie hingewiesen auf Werte, die sich <strong>abheben von der Mehrheit.</strong>
+Das ist wohl bei Messdaten nicht so sinnvoll.
+Aber es gibt Anwender, die mit einer speziell konstruierten Matrixansicht auf einen Blick feststellen können, ob z.B. bei gewissen Hosts oder Services eine falsche Kontaktgruppe eingetragen ist.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_matrix_view_4.png" alt="views matrix view 4"></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_alarm_sounds">
+<span class="hidden-anchor sr-only" id="alarm_sounds"></span>7. Alarmtöne</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Eine Tabellenansicht kann über den Browser Alarmtöne (<em>alarm sounds</em>) abspielen, wenn sich in der Tabelle mindestens ein Problem befindet (also ein Host der nicht <span class="hstate0">UP</span> oder ein Service
+der nicht <span class="state0">OK</span> ist).
+Diese primitive Art der Alarmierung ist z.B. interessant für Leitstände, wo die Liste der Probleme ständig auf einem Schirm sichtbar ist, aber der Operator nicht ständig auf diesen starren möchte.</p></div>
+<div class="paragraph"><p>Die Alarmtöne sind per Default ausgeschaltet.
+Über den globalen Schalter <span class="guihint">Setup &gt; General &gt; Global settings &gt; User interface &gt; Enable sounds in views</span> können Sie diese einschalten.
+Wie (fast) immer hilft hier die Suche im <span class="guihint">Setup</span>-Menü:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/global_settings_enable_sound.png" alt="global settings enable sound"></div></div>
+<div class="paragraph"><p>Alarmtöne werden aber nicht in allen Tabellenansichten abgespielt, sondern nur, wo dies in den <span class="guihint">View Properties</span> aktiviert ist:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/view_properties_sounds.png" alt="view properties sounds"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_embed_views">
+<span class="hidden-anchor sr-only" id="embed_views"></span>8. Ansichten in externe Websites einbetten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Da jede Tabellenansicht über eine URL erreichbar ist, können Sie diese auch in andere Webseiten einbetten — z.B. über einen <code>&lt;iframe&gt;</code>.
+Etliche Elemente der Tabellenansicht ergeben allerdings in so einem Kontext keinen Sinn oder sind sogar störend.
+In so einem Fall können Sie an die URL die Variable <code>display_options=…​</code> anhängen, über die Sie genau steuern können,
+welche Bestandteile der Tabellenansicht im HTML-Code <strong>nicht</strong> generiert werden sollen.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Auch die Navigation von Checkmk ist beim Einbetten meist eher unerwünscht.
+Bevor Sie also in einer Tabellenansicht manuell Optionen setzen, lassen Sie die Seite ohne Navigation und Seitenleiste anzeigen indem Sie <span class="guihint">Display &gt; Show page navigation</span> ausschalten.</p></div>
+<div class="paragraph"><p>Jeder Bestandteil wird durch einen Buchstaben kodiert und kann entsprechend ausgeschlossen werden.</p></div>
+<div class="paragraph"><p>Folgende Buchstaben sind definiert:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Wirkung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Titelzeile (mit Seitentitel, Breadcrumb-Pfad, Symbol zum Countdown der Seitenaktualisierung), Menüleiste und Aktionsleiste werden entfernt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>b</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menüeinträge und Aktionsknöpfe werden entfernt, die zu anderen Tabellenansichten verlinken.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>f</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menüeintrag <span class="guihint">Display &gt; Filter</span> und der zugehörige Aktionsknopf <span class="image-inline"><img src="../images/icons/icon_filter.png" alt="icon filter"></span> zum Öffnen der Filterleiste werden entfernt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>c</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menü <span class="guihint">Commands</span> und zugehörige Aktionsknöpfe werden entfernt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>o</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Optionen <span class="guihint">Number of columns</span> und <span class="guihint">Refresh interval</span> werden entfernt, sonst einzublenden mit <span class="guihint">Display &gt; Modify display options</span>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>d</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menüeintrag <span class="guihint">Display &gt; Modify display options</span> wird entfernt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>e</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Menüeintrag <span class="guihint">Display &gt; Customize View</span> wird entfernt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>r</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Symbol zum Countdown der Seitenaktualisierung in der Titelzeile und der JavaScript-Code für die automatische Aktualisierung werden entfernt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Abspielen von <a href="#alarm_sounds">Alarmtönen</a> bei den Service-Zuständen <span class="state1">WARN</span> und <span class="state2">CRIT</span> wird unterdrückt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>i</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Links auf andere Tabellenansichten werden entfernt, z.B. in einer Service-Liste die Links in der Spalte <span class="guihint">Service</span>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>m</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Ziel von Links ist standardmäßig der HTML-Frame <code>main</code> — mit dieser Option werden Links in neuen Tabs geöffnet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>l</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Links in Spaltentiteln werden entfernt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>w</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limitierung und Livestatus-Fehlermeldungen.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Wenn Sie also die z.B. alle Bedienelemente, Knöpfe und Links abschalten und nur die eigentliche Tabelle darstellen möchten, so sieht ein Link auf die Tabellenansicht <code>allhosts</code> so aus:</p></div>
+<div class="paragraph"><p><code>/myserver/mysite/check_mk/view.py?view_name=allhosts&amp;display_options=til</code></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__eigene_icons_und_aktionen_einfügen">
+<span class="hidden-anchor sr-only" id="_eigene_icons_und_aktionen_einfügen"></span>9. Eigene Icons und Aktionen einfügen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In Tabellenansichten von Hosts und Services sehen Sie auch eine Spalte für Icons und darin das <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> Aktionsmenü, aus dem Sie Host- beziehungsweise Service-Aktionen auswählen können.
+Sie dürfen Tabellenansichten aber auch um eigene Icons erweitern.
+Diese können wahlweise schlicht zur Visualisierung genutzt oder mit eigenen Aktionen belegt werden.</p></div>
+<div class="paragraph"><p>So ließen sich zum Beispiel Hosts, die über eine grafische Weboberfläche verfügen, über solch ein individuelles Icon schnell identifizieren und über einen Link auch direkt ansteuern.</p></div>
+<div class="paragraph"><p>Das Prozedere für eigene Icons und Aktionen gliedert sich in drei Schritte:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Icons hochladen.</p></li>
+<li><p>Icons/Aktionen definieren.</p></li>
+<li><p>Icons Hosts/Services zuordnen.</p></li>
+</ol></div>
+<div class="paragraph"><p>Starten Sie über <span class="guihint">Setup &gt; General &gt; Custom Icons</span> und laden Sie eine lokale Datei mit einer maximalen Größe von 80 x 80 Pixeln hoch.
+Damit ist das Icon im System, findet aber noch keinerlei Verwendung.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_manage_icons_upload.png" alt="views manage icons upload"></div></div>
+<div class="paragraph"><p>Nun müssen Sie das Icon noch als über <a href="glossar.html#rule">Regeln</a> ansprechbares Objekt und optional eine zugehörige Aktion definieren.
+Die Einstellungen finden Sie unter <span class="guihint">Setup &gt; General &gt; Global settings &gt; User interface &gt; Custom icons and actions.</span>
+Erstellen Sie hier über <span class="guihint">Add new element</span> einen neuen Eintrag und legen Sie <span class="guihint">ID</span>, <span class="guihint">Icon</span> und einen <span class="guihint">Title</span> fest;
+der Titel wird übrigens später per On-Mouse-Over-Effekt als Tooltipp direkt am Icon angezeigt und ist für die Benutzer damit sehr hilfreich.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_global_settings_custom_icons_and_actions.png" alt="views global settings custom icons and actions"></div></div>
+<div class="paragraph"><p>Interessant wird es nun beim Punkt <span class="guihint">Action</span>:
+Aktion ist hier gleichzusetzen mit einer URL und für diese dürfen Sie einige Variablen wie <code>$HOSTNAME$</code> oder <code>$SERVICEDESC$</code> (Service-Beschreibung) nutzen — weitere Hinweise bekommen Sie über die Inline-Hilfe.
+Eine gültige Aktion wäre beispielsweise:</p></div>
+<div class="paragraph"><p><code>view.py?host=$HOSTNAME$&amp;site=mysite&amp;view_name=host</code></p></div>
+<div class="paragraph"><p>Diese Aktion ruft schlicht die Standard-Host-Ansicht für den jeweiligen Host auf der Instanz <code>mysite</code> auf.</p></div>
+<div class="paragraph"><p>Über ein Häkchen bei <span class="guihint">Show in column</span> können Sie das Icon dann als eigenständiges Bildchen neben <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> anzeigen lassen,
+andernfalls landet Ihre Aktion im zugehörigen Aktionsmenü.</p></div>
+<div class="paragraph"><p>Im letzten Schritt bestimmen Sie nun, bei welchen Hosts oder Services das neue Icon angezeigt werden soll — und das natürlich über Regeln.
+Sie finden die beiden Regelsätze <span class="guihint">Custom icons or actions for hosts in status GUI</span> und <span class="guihint">Custom icons or actions for services in status GUI</span> im <span class="guihint">Setup</span>-Menü unter <span class="guihint">Host monitoring rules</span> und <span class="guihint">Service monitoring rules</span>.
+Am schnellsten finden Sie die beiden Regeln mit der Suche im <span class="guihint">Setup</span>-Menü.</p></div>
+<div class="paragraph"><p>Legen Sie eine neue Regel im gewünschten Ordner an und setzen Sie darin mindestens zwei Optionen:
+Zum einen wählen Sie unter <span class="guihint">Custom icons or actions for hosts in status GUI</span> das just angelegte Icon:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_custom_icons_or_actions.png" alt="views custom icons or actions"></div></div>
+<div class="paragraph"><p>Zum anderen filtern Sie im Kasten <span class="guihint">Conditions</span> wie üblich auf die gewünschten Hosts/Services:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_custom_icons_or_actions_b.png" alt="views custom icons or actions b"></div></div>
+<div class="paragraph"><p>Speichern und bestätigen Sie anschließend die Änderungen.</p></div>
+<div class="paragraph"><p>In Host- und Service-Ansichten sehen Sie ab sofort bei den gefilterten Hosts und Services Ihr neues Icon neben oder im Aktionsmenü:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/views_view_with_custom_icon.png" alt="views view with custom icon"></div></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li>
+<a href="#_einleitung">1. Einleitung</a><ul class="sectlevel1">
+<li><a href="#_globale_tabellenansichten">1.1. Globale Tabellenansichten</a></li>
+<li><a href="#_kontext_abh%C3%A4ngige_tabellenansichten">1.2. Kontext-abhängige Tabellenansichten</a></li>
+<li><a href="#_auswirkung_in_der_men%C3%BCleiste">1.3. Auswirkung in der Menüleiste</a></li>
+</ul>
+</li>
+<li>
+<a href="#using_views">2. Tabellenansichten verwenden</a><ul class="sectlevel1">
+<li><a href="#_optionen_filter_und_kommandos">2.1. Optionen, Filter und Kommandos</a></li>
+<li><a href="#_zeit_und_datumsangaben">2.2. Zeit- und Datumsangaben</a></li>
+<li><a href="#_sortierung">2.3. Sortierung</a></li>
+<li><a href="#export">2.4. Export</a></li>
+<li><a href="#limit">2.5. Das Anzeigelimit</a></li>
+</ul>
+</li>
+<li>
+<a href="#edit">3. Ansichten anpassen</a><ul class="sectlevel1">
+<li><a href="#_grunds%C3%A4tzliches">3.1. Grundsätzliches</a></li>
+<li><a href="#_erst_klonen_dann_ver%C3%A4ndern">3.2. Erst klonen, dann verändern</a></li>
+<li><a href="#_integration_einer_tabellenansicht_in_die_navigation">3.3. Integration einer Tabellenansicht in die Navigation</a></li>
+<li><a href="#_grundlegendes_layout">3.4. Grundlegendes Layout</a></li>
+<li><a href="#columns">3.5. Spalten</a></li>
+<li><a href="#joined_columns">3.6. Information über Services in einer Host-Ansicht</a></li>
+<li><a href="#_sortierung_2">3.7. Sortierung</a></li>
+<li><a href="#_gruppierung">3.8. Gruppierung</a></li>
+<li><a href="#filter_context">3.9. Filter, Kontext und Suche</a></li>
+<li><a href="#_spezielle_suchansichten">3.10. Spezielle Suchansichten</a></li>
+</ul>
+</li>
+<li>
+<a href="#new">4. Neue Tabellenansichten erstellen</a><ul class="sectlevel1">
+<li>
+<a href="#datasource">4.1. Datenquelle</a><ul class="sectlevel2"><li><a href="#host_service_groups">Host- und Service-Gruppen</a></li></ul>
+</li>
+<li><a href="#_objekttyp_global_oder_mit_kontext">4.2. Objekttyp: Global oder mit Kontext</a></li>
+</ul>
+</li>
+<li><a href="#joined_inventory_columns">5. Inventur-Tabellen verknüpfen</a></li>
+<li>
+<a href="#matrix">6. Die Matrix</a><ul class="sectlevel1"><li><a href="#_erkennen_von_ausrei%C3%9Fern">6.1. Erkennen von Ausreißern</a></li></ul>
+</li>
+<li><a href="#alarm_sounds">7. Alarmtöne</a></li>
+<li><a href="#embed_views">8. Ansichten in externe Websites einbetten</a></li>
+<li><a href="#_eigene_icons_und_aktionen_einf%C3%BCgen">9. Eigene Icons und Aktionen einfügen</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

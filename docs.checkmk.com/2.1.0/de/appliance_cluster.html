@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Anleitung zum Betrieb eines Failover-Clusters.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Appliance im Cluster-Betrieb">
+<meta name="og:description" content="Anleitung zum Betrieb eines Failover-Clusters.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Appliance im Cluster-Betrieb</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.1.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.1.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.1.0/en/appliance_cluster.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.1.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.2.0/de/appliance_cluster.html">2.2.0</a><a class="dropdown-item" href="../../latest/de/appliance_cluster.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und CentOS</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.1.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Host- und Serviceparameter</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Einführung in die Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMWare ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Konfiguration via Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+<li>
+<p><a href="web_api.html">Konfiguration via HTTP-API</a></p>
+</li>
+<li>
+<p><a href="web_api_references.html">Befehlsreferenz der HTTP-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_check_plugins.html">Eigene Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Appliance im Cluster-Betrieb</h1>
+<div class="details">
+<span id="revdate">Last modified on 15-Dec-2022</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.1.0/de/appliance_cluster.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="appliance_usage.html">Appliance einrichten und nutzen</a>
+<a href="appliance_rack_config.html">Besonderheiten der Appliance auf Racks</a>
+<a href="checkmk_getting_started.html">Schnelleinstieg ins Monitoring</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__grundlagen">
+<span class="hidden-anchor sr-only" id="_grundlagen"></span>1. Grundlagen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sie können zwei Checkmk-Appliances zu einem Failover-Cluster zusammenschließen.
+Dabei werden alle Konfigurationen und Daten zwischen den beiden Geräten abgeglichen.
+Die Geräte, die als Cluster verbunden sind, nennt man auch Knoten (Nodes).
+Einer der Knoten im Cluster übernimmt die aktive Rolle, führt also die Aufgaben des Clusters aus.
+Beide Knoten tauschen sich ständig über ihren Zustand aus.
+Sobald der inaktive Knoten erkennt, dass der aktive Knoten seine Aufgaben nicht mehr erfüllen kann, z.B. aufgrund eines Ausfalls,
+übernimmt er dessen Aufgaben und wird selbst zum aktiven Knoten.</p></div>
+<div class="paragraph"><p>Der Failover-Cluster ist dazu da, die Verfügbarkeit Ihrer Monitoring-Installation zu erhöhen, indem diese gegen Hardwareausfälle eines Geräts oder einzelner Komponenten abgesichert wird.
+Das Clustern ersetzt hingegen keine Datensicherung und fängt keine logischen Fehler ab.</p></div>
+<div class="paragraph"><p>In den folgenden Situationen sorgt der Cluster für eine geringere Ausfallzeit, indem der inaktive Knoten die Ressourcen übernimmt:</p></div>
+<div class="ulist"><ul>
+<li><p>Wenn das RAID in einem Checkmk-Rack nicht mehr zugreifbar ist.</p></li>
+<li><p>Wenn das bisher aktive Gerät nicht mehr erreichbar (ausgefallen) ist.</p></li>
+<li><p>Wenn das bisher aktive Gerät das „externe“ Netzwerk nicht mehr erreichen kann, der inaktive Knoten hingegen schon.</p></li>
+<li><p>Wenn Sie ein Firmware-Update auf den Knoten durchführen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Funktionieren kann das Cluster im Ernstfall natürlich nur, wenn die Knoten über <em>separate</em> Switches und Stromversorgungen betrieben werden!</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__voraussetzungen">
+<span class="hidden-anchor sr-only" id="_voraussetzungen"></span>2. Voraussetzungen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Damit Sie einen Cluster aufbauen können, brauchen Sie zunächst zwei kompatible Checkmk-Appliances.
+Folgende Modelle können miteinander geclustert werden:</p></div>
+<div class="ulist"><ul>
+<li><p>2 x Checkmk rack1</p></li>
+<li><p>2 x Checkmk rack4</p></li>
+<li><p>2 x Checkmk virt1 (Technisch möglich, aber nicht unterstützt bzw. empfohlen. Siehe <a href="#cluster_virt1">unten</a> für Details.)</p></li>
+<li><p>1 x Checkmk rack1/rack4 und 1 x Checkmk virt1</p></li>
+</ul></div>
+<div class="paragraph"><p>Weiterhin müssen die beiden Geräte eine <a href="appliance_usage.html#cma_webconf_firmware">kompatible Firmware</a> nutzen.
+Kombinieren Sie eine virt1-Appliance mit einem physischen Rack, muss die virtuelle Maschine die gleichen Spezifikationen wie der physische Server aufweisen — ansonsten könnte sie abstürzen, wenn sie die Last vom Rack übernimmt.</p></div>
+<div class="paragraph"><p>Die Geräte müssen mit mindestens zwei voneinander unabhängigen Netzwerkverbindungen verkabelt sein.
+Eine dieser Verbindungen dient der normalen Netzwerkanbindung, die zweite der Synchronisation zwischen den Cluster-Knoten.
+Die Sync-Verbindung sollte möglichst direkt zwischen den Geräten laufen, zumindest aber über ein separates Netzwerk.</p></div>
+<div class="paragraph"><p>Um die Verfügbarkeit der Netzwerkverbindungen zu erhöhen, sollten Sie eine Bonding-Konfiguration erstellen, die alle vier Netzwerkanschlüsse der Checkmk-Racks nutzt, statt lediglich zwei einzelne Anschlüsse zu konfigurieren.
+Dabei verwenden Sie die Schnittstellen <code>LAN1</code> und <code>LAN2</code> für den Anschluss an Ihr Netzwerk und die Schnittstellen <code>LAN3</code> und <code>LAN4</code> für die direkte Sync-Verbindung zwischen den Geräten.</p></div>
+<div class="paragraph" id="cluster_virt1"><p><strong>Virtuelle Maschinen:</strong> Technisch ist es durchaus möglich, zwei virt1-Instanzen zu clustern.
+Da die Cluster-Funktion jedoch darauf ausgelegt ist, Hardwareausfälle zu kompensieren, empfehlen wir dies nicht für den produktiven Betrieb.
+Für Hochverfügbarkeit bieten Virtualisierungsplattformen wie VMware ESXi eigene Funktionen.
+Jedoch können Sie die Verhaltensweise und Konfiguration eines Clusters mit zwei virtuellen Maschinen sehr einfach testen.
+Dazu eignen sich auch "Desktop-Virtualisierer" wie VirtualBox oder VMware Workstation Player.
+Auf die Bonding-Konfiguration können Sie dabei verzichten.
+Statt also wie im Folgenden gezeigt das Bonding einzurichten, nutzen Sie einfach die ungenutzte zweite Netzwerkschnittstelle.
+Beim eigentlichen Clustern wählen Sie dann schlicht Ihre beiden einzelnen Schnittstellen statt der Bonding-Schnittstellen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__konfiguration_des_clusters">
+<span class="hidden-anchor sr-only" id="_konfiguration_des_clusters"></span>3. Konfiguration des Clusters</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Diese Anleitung geht davon aus, dass Sie beide Geräte bereits so weit vorkonfiguriert haben, dass Sie die Weboberfläche mit einem Webbrowser öffnen können.</p></div>
+<div class="paragraph"><p>Vor der eigentlichen Einrichtung des Clusters müssen Sie zunächst beide Geräte vorbereiten.
+Dabei müssen Sie hauptsächlich die Netzwerkkonfiguration so anpassen, dass die oben genannten Anforderungen erfüllt werden.
+Beachten Sie gegebenenfalls die für das Clustering genutzten <a href="ports.html#appliance_cluster">Ports.</a></p></div>
+<div class="paragraph"><p>Im Folgenden wird die Konfiguration eines Clusters mit zwei Bonding-Schnittstellen gezeigt, das dem folgendem Schaubild entspricht:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cluster.png" alt="cluster"></div></div>
+<div class="paragraph"><p>Die im Schaubild verwendeten Schnittstellenbezeichnungen <span class="guihint">LAN1</span>, <span class="guihint">LAN2</span> usw. entsprechen den Bezeichnungen der physikalischen Schnittstellen am Gerät.
+Im Betriebssystem entspricht <span class="guihint">LAN1</span> dem Gerät <span class="guihint">eth0</span>, <span class="guihint">LAN2</span> dem Gerät <span class="guihint">eth1</span> usw.</p></div>
+<div class="paragraph"><p>Die verwendeten IP-Adressen sind freilich beliebig.
+Achten Sie jedoch darauf, dass das interne Cluster-Netz (<span class="guihint">bond1</span> im Schaubild) ein anderes IP-Netz verwendet, als das „externe“ Netz (<span class="guihint">bond0</span> im Schaubild).</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Die folgenden Screenshots wurden mit einem virt1-Cluster erzeugt — entsprechend unterscheiden sich die Namen der Netzwerkschnittstellen.</p></div>
+<div class="sect2">
+<h3 id="heading__netzwerkkonfiguration">
+<span class="hidden-anchor sr-only" id="_netzwerkkonfiguration"></span>3.1. Netzwerkkonfiguration</h3>
+<div class="paragraph"><p>Öffnen Sie die Weboberfläche des ersten Knotens, wählen Sie die Geräteeinstellungen und oben <span class="guihint">Network Settings.</span>
+Sie befinden sich jetzt auf der Seite zur Konfiguration der Netzwerkeinstellungen.
+Hier stehen Ihnen zwei Modi zur Verfügung.</p></div>
+<div class="paragraph"><p>Der <span class="guihint">Simple Mode,</span> mit dem Sie nur <span class="guihint">LAN1</span> Ihres Geräts konfigurieren können, ist standardmäßig aktiviert.
+(Dieser Modus entspricht der Konfiguration über die Textkonsole, die Sie während der initialen Einrichtung der Appliance durchgeführt haben.)</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_net_1_2.png" alt="cma de net 1 2"></div></div>
+<div class="paragraph"><p>Für das Clustern wird der <em>erweiterte Modus</em> benötigt.
+Um diesen Modus zu aktivieren, klicken Sie oben auf den Button <span class="guihint">Advanced Mode</span> und bestätigen Sie die Sicherheitsabfrage.</p></div>
+<div class="paragraph"><p>Auf der folgenden Seite werden Ihnen alle im Gerät verfügbaren Netzwerkschnittstellen angezeigt.
+Nur die Standardschnittstelle (auf den Racks <span class="guihint">eth0</span> über die Buchse <span class="guihint">LAN1</span>), hier im Screenshot <em>ens32</em>, hat aktuell eine Konfiguration.
+Diese wurde vom <em>einfachen Modus</em> übernommen.</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/cma_de_net_2_3.png" alt="cma de net 2 3"></div></div>
+<div class="paragraph"><p>Erstellen Sie nun durch Klick auf <span class="guihint">Create Bonding</span> die erste Bonding-Schnittstelle <span class="guihint">bond0.</span>
+Tragen Sie dazu im darauf folgenden Dialog alle Daten entsprechend des folgenden Screenshots ein und bestätigen Sie den Dialog mit <span class="guihint">Save.</span></p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_net_3_2.png" alt="cma de net 3 2"></div></div>
+<div class="paragraph"><p>Erstellen Sie nun die zweite Bonding-Schnittstelle <span class="guihint">bond1</span> mit der passenden Konfiguration für die direkte Sync-Verbindung.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_net_4_2.png" alt="cma de net 4 2"></div></div>
+<div class="paragraph"><p>Nachdem Sie die beiden Bonding-Schnittstellen erstellt haben, sehen Sie im Dialog zur Netzwerkkonfiguration noch einmal alle getätigten Einstellungen zu den Netzwerkschnittstellen …</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_net_5_a.png" alt="cma de net 5 a"></div></div>
+<div class="paragraph"><p>… sowie zu den erstellten Bondings:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_net_5_b.png" alt="cma de net 5 b"></div></div>
+<div class="paragraph"><p>Wenn Sie alle Schritte zur Konfiguration erfolgreich abgeschlossen haben, machen Sie die Einstellungen mit einem Klick auf <span class="guihint">Activate Changes</span>
+wirksam.
+Daraufhin werden die neuen Netzwerkeinstellungen geladen.
+Nach wenigen Sekunden zeigt die Netzwerkkonfiguration überall den Status OK, bei den echten Netzwerkschnittstellen …​</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_net_6_a.png" alt="cma de net 6 a"></div></div>
+<div class="paragraph"><p>… sowie wiederum bei den Bondings:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_net_6_b.png" alt="cma de net 6 b"></div></div>
+<div class="paragraph"><p>Wiederholen Sie die Konfiguration der Netzwerkeinstellungen mit den passenden Einstellungen nun auch auf Ihrem zweiten Gerät.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__host_namen">
+<span class="hidden-anchor sr-only" id="_host_namen"></span>3.2. Host-Namen</h3>
+<div class="paragraph"><p>Geräte, die in einem Cluster verbunden werden sollen, müssen unterschiedliche Host-Namen haben.
+Diese können Sie jetzt in den <a href="appliance_usage.html#cma_webconf_system_settings">Geräteeinstellungen</a> festlegen.
+Im Beispiel bekommen die Geräte die Namen <code>cma1</code> und <code>cma2</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__cluster_verbinden">
+<span class="hidden-anchor sr-only" id="_cluster_verbinden"></span>3.3. Cluster verbinden</h3>
+<div class="paragraph"><p>Nachdem Sie nun die Vorbereitungen abgeschlossen haben, können Sie mit dem Einrichten des Clusters fortfahren.
+Öffnen Sie dazu in der Weboberfläche im Hauptmenü des ersten Geräts (hier <code>cma1</code>) das Modul <span class="guihint">Clustering</span> und klicken Sie dort auf <span class="guihint">Create Cluster.</span></p></div>
+<div class="paragraph"><p>Tragen Sie im Dialog zum Erstellen des Clusters die entsprechende Konfiguration ein und bestätigen Sie den Dialog mit <span class="guihint">Save.</span>
+Wichtig ist hier vor allem die <span class="guihint">Cluster IP-Address,</span> über die Sie später auf das Cluster zugreifen.
+Wenn Sie zu diesem Dialog weiterführende Informationen benötigen, rufen Sie die Inline-Hilfe über das Symbol neben dem Checkmk-Logo auf.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_cluster_1_2.png" alt="cma de cluster 1 2"></div></div>
+<div class="paragraph"><p>Auf der folgenden Seite können Sie die beiden Geräte zu einem Cluster verbinden.
+Hierzu müssen Sie das Passwort der Weboberfläche des zweiten Geräts eingeben.
+Dieses wird einmalig dazu genutzt, die Verbindung zwischen den beiden Geräten herzustellen.
+Bestätigen Sie anschließend die Sicherheitsabfrage, wenn Sie sich sicher sind, dass Sie die Daten des angezeigten Zielgeräts überschreiben wollen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_cluster_2_2.png" alt="cma de cluster 2 2"></div></div>
+<div class="paragraph"><p>Nachdem dieser Verbindungsaufbau erfolgreich war, wird mit der Synchronisation des Clusters begonnen.
+Den aktuellen Status können Sie sich auf der Cluster-Seite anzeigen lassen.
+Noch während dieser Synchronisation werden alle Ressourcen, u.a. auch Ihre möglicherweise bestehenden Monitoring-Instanzen, auf dem ersten Knoten gestartet.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_cluster_4_2.png" alt="cma de cluster 4 2"></div></div>
+<div class="paragraph"><p>Ab sofort können Sie mit Hilfe der Cluster-IP-Adresse (hier <code>192.168.178.110</code>) auf die Ressourcen des Clusters, z.B. Ihre Monitoring-Instanzen, zugreifen — egal von welchem Knoten die Ressourcen gerade gehalten werden.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__der_status_des_clusters">
+<span class="hidden-anchor sr-only" id="_der_status_des_clusters"></span>4. Der Status des Clusters</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Nach Abschluss der ersten Synchronisation ist Ihr Cluster voll einsatzbereit.
+Auf der Cluster-Seite können Sie den Zustand jederzeit einsehen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_cluster_5_2.png" alt="cma de cluster 5 2"></div></div>
+<div class="paragraph"><p>Auch mit Hilfe der Statusansicht der Konsole können Sie den aktuellen Zustand des Clusters im Kasten <span class="guihint">Cluster</span> in zusammengefasster Form einsehen.
+Die Rolle des jeweiligen Knotens wird hinter dem aktuellen Status in Klammern angezeigt: beim aktiven Knoten <span class="guihint">M</span> (für <em>Main</em>) und beim passiven Knoten <span class="guihint">S</span> (für <em>Subordinate</em>).</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_cluster_6_2.png" alt="cma de cluster 6 2"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__besonderheiten_im_cluster">
+<span class="hidden-anchor sr-only" id="_besonderheiten_im_cluster"></span>5. Besonderheiten im Cluster</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__zugriff_auf_ressourcen">
+<span class="hidden-anchor sr-only" id="_zugriff_auf_ressourcen"></span>5.1. Zugriff auf Ressourcen</h3>
+<div class="paragraph"><p>Alle Anfragen an die Monitoring-Instanzen, wie z.B. Zugriffe auf die Weboberfläche, aber auch eingehende Meldungen wie z.B. SNMP-Traps oder
+Syslog-Meldungen an die Event-Console oder Anfragen an den Livestatus, sollten im Normalfall immer über die Cluster-IP-Adresse gehen.</p></div>
+<div class="paragraph"><p>Nur in Ausnahmefällen, wie z.B. Fehlerdiagnosen oder Updates eines bestimmten Knotens, sollten Sie direkt auf die einzelnen Knoten zugreifen müssen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__geräteeinstellungen">
+<span class="hidden-anchor sr-only" id="_geräteeinstellungen"></span>5.2. Geräteeinstellungen</h3>
+<div class="paragraph"><p>Die Einstellungen, wie z.B. für die Zeitsynchronisation oder zur Namensauflösung, die bisher auf den einzelnen Geräten unabhängig voneinander gemacht wurden, werden im Cluster zwischen den beiden Knoten synchronisiert.</p></div>
+<div class="paragraph"><p>Sie können diese Einstellungen aber nur auf dem jeweils aktiven Knoten bearbeiten.
+Auf dem inaktiven Knoten sind die Einstellungen gesperrt.</p></div>
+<div class="paragraph"><p>Es gibt einige gerätespezifische Einstellungen, wie z.B. die des Management-Interfaces des Checkmk rack1, die Sie zu jeder Zeit auf den einzelnen
+Geräten anpassen können.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__ip_adressen_oder_host_namen_der_knoten">
+<span class="hidden-anchor sr-only" id="_ip_adressen_oder_host_namen_der_knoten"></span>5.3. IP-Adressen oder Host-Namen der Knoten</h3>
+<div class="paragraph"><p>Um die IP-Konfiguration der einzelnen Knoten bearbeiten zu können, müssen Sie zunächst die Verbindung zwischen den Knoten lösen.
+Hierzu klicken Sie auf der Cluster-Seite auf <span class="guihint">Disconnect Cluster.</span>
+Anschließend können Sie über die Weboberfläche der einzelnen Knoten die gewünschten Einstellungen anpassen.</p></div>
+<div class="paragraph"><p>Nachdem Sie die Anpassungen abgeschlossen haben, müssen Sie nun auf der Cluster-Seite <span class="guihint">Reconnect Cluster</span> wählen.
+Wenn sich die Knoten wieder erfolgreich verbinden können, nimmt der Cluster den Betrieb nach wenigen Minuten wieder auf.
+Den Status können Sie auf der Cluster-Seite einsehen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__checkmk_versionen_und_monitoring_instanzen_verwalten">
+<span class="hidden-anchor sr-only" id="_checkmk_versionen_und_monitoring_instanzen_verwalten"></span>5.4. Checkmk-Versionen und Monitoring-Instanzen verwalten</h3>
+<div class="paragraph"><p>Auch die Monitoring-Instanzen und Checkmk-Versionen werden zwischen den beiden Knoten synchronisiert.
+Diese können Sie nur in der Weboberfläche des aktiven Knotens modifizieren — sowohl über dessen eigene als auch über die Cluster-IP-Adresse.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__administrative_aufgaben">
+<span class="hidden-anchor sr-only" id="_administrative_aufgaben"></span>6. Administrative Aufgaben</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_majorfirmwareupdate">
+<span class="hidden-anchor sr-only" id="majorfirmwareupdate"></span>6.1. Update von 1.4 auf 1.5</h3>
+<div class="paragraph"><p>Im Gegensatz zum folgend beschriebenen Firmware-Update innerhalb kompatibler Versionen, also beispielsweise 1.5.1 auf 1.5.2, müssen Sie beim Update von 1.4-Versionen auf die aktuellen 1.5-Versionen etwas anders vorgehen.
+Der Grund: Die 1.5 basiert auf einer neuen Debian-Version.
+Kurz gesagt heißt das, dass Sie das Cluster kurzzeitig komplett offline nehmen müssen - Sie bekommen also eine Wartungszeit (<em>downtime</em>).
+Bei regulären Updates genügt es, einzelne Knoten des Clusters in den Wartungszustand zu versetzen, um die Aktualisierung durchzuführen.
+Bei diesem Major-Update auf 1.5 gehen Sie wie folgt vor:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Trennen Sie die Knoten mit <span class="guihint">Clustering &gt; Disconnect Cluster</span> vom Cluster.</p></li>
+<li><p>Aktualisieren Sie die Knoten nacheinander wie im <a href="appliance_usage.html#cma_webconf_firmware">Appliance-Hauptartikel</a> beschrieben.</p></li>
+<li><p>Verbinden Sie die Knoten über <span class="guihint">Clustering &gt; Reconnect Cluster</span> wieder zum Cluster.</p></li>
+<li><p>Prüfen Sie, ob Ihre Instanzen kompatible Checkmk-Versionen nutzen und aktualisieren Sie bei Bedarf wie im <a href="appliance_usage.html#update_site">Appliance-Hauptartikel</a> beschrieben.</p></li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="heading__firmware_update_im_cluster">
+<span class="hidden-anchor sr-only" id="_firmware_update_im_cluster"></span>6.2. Firmware-Update im Cluster</h3>
+<div class="paragraph"><p>Die Firmware-Version eines Geräts wird auch im Cluster-Betrieb nicht synchronisiert.
+Das Update geschieht also pro Knoten.
+Sie haben jedoch den Vorteil, dass der eine Knoten weiterhin das Monitoring durchführen kann, während der andere Knoten aktualisiert wird.</p></div>
+<div class="paragraph"><p>Bei einem Update auf eine kompatible Firmware-Version sollten Sie stets wie folgt vorgehen:</p></div>
+<div class="paragraph"><p>Öffnen Sie zunächst das Modul <span class="guihint">Clustering</span> in der Weboberfläche des Knotens, der aktualisiert werden soll.</p></div>
+<div class="paragraph"><p>Klicken Sie nun auf das Herz-Symbol in der Spalte dieses Knotens und bestätigen Sie die folgende Sicherheitsabfrage.
+Dadurch setzen Sie den Knoten in den Wartungszustand.</p></div>
+<div class="paragraph"><p>Knoten, die sich im Wartungszustand befinden, geben alle Ressourcen frei, die aktuell auf dem Knoten aktiv sind, woraufhin der andere Knoten diese 	übernimmt.</p></div>
+<div class="paragraph"><p>Während sich ein Knoten im Wartungszustand befindet, ist der Cluster nicht ausfallsicher.
+Wenn jetzt also der aktive Knoten ausgeschaltet wird, übernimmt der inaktive Knoten, der sich im Wartungszustand befindet, <em>nicht</em> die Ressourcen.
+Sollten Sie nun auch noch den zweiten Knoten in den Wartungszustand setzen, werden alle Ressourcen heruntergefahren.
+Diese werden erst wieder aktiviert, wenn ein Knoten aus dem Wartungszustand geholt wird.
+Den Wartungszustand müssen Sie stets wieder manuell entfernen.</p></div>
+<div class="paragraph"><p>Wenn die Cluster-Seite Folgendes zeigt, sehen Sie, dass sich der Knoten im Wartungszustand befindet:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_cluster_7_2.png" alt="cma de cluster 7 2"></div></div>
+<div class="paragraph"><p>Nun können Sie auf diesem Knoten, wie auf nicht-geclusterten Geräten auch, das <a href="appliance_usage.html#cma_webconf_firmware">Firmware-Update</a> durchführen.</p></div>
+<div class="paragraph"><p>Öffnen Sie, nachdem Sie das Firmware-Update erfolgreich durchgeführt haben, wieder die Cluster-Seite.
+Entfernen Sie den Wartungszustand des aktualisierten Geräts.
+Das Gerät fügt sich anschließend automatisch wieder in den Cluster ein, womit der Cluster wieder voll funktionsfähig ist.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_cluster_5_2.png" alt="cma de cluster 5 2"></div></div>
+<div class="paragraph"><p>Wir empfehlen, auf beiden Knoten die gleiche Firmware-Version zu betreiben.
+Daher sollten Sie im Anschluss die gleiche Prozedur für den anderen Knoten wiederholen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_dissolve">
+<span class="hidden-anchor sr-only" id="dissolve"></span>6.3. Cluster auflösen</h3>
+<div class="paragraph"><p>Es ist möglich, die Knoten aus einem Cluster zu lösen und einzeln weiter zu betreiben.
+Dabei können Sie auf beiden Geräten die synchronisierte Konfiguration weiter nutzen oder z.B. eines der Geräte wieder auf den Werkszustand zurücksetzen und neu konfigurieren.</p></div>
+<div class="paragraph"><p>Sie können einen oder beide Knoten im laufenden Betrieb aus dem Cluster entfernen.
+Wenn Sie beide Knoten mit den aktuellen Daten weiterverwenden wollen, müssen Sie vorher sicherstellen, dass die Synchronisation der Daten ordnungsgemäß funktioniert.
+Dies sehen Sie auf der Cluster-Seite.</p></div>
+<div class="paragraph"><p>Um einen Cluster aufzulösen, klicken Sie auf der Cluster-Seite der Weboberfläche auf <span class="guihint">Disband Cluster</span>.
+Beachten Sie den Text der folgenden Sicherheitsabfrage.
+Dieser gibt in den verschiedenen Situationen Aufschluss darüber, in welchem Zustand sich das jeweilige Gerät nach dem Auflösen der Verbindung befinden wird.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cma_de_cluster_8_2.png" alt="cma de cluster 8 2"></div></div>
+<div class="paragraph"><p>Die Trennung der Geräte muss auf beiden Knoten separat durchgeführt werden, damit zukünftig beide Geräte einzeln betrieben werden können.</p></div>
+<div class="paragraph"><p>Wenn Sie nur eines der Geräte zukünftig verwenden wollen, lösen Sie den Cluster auf dem Gerät, das Sie weiterhin verwenden wollen und stellen Sie auf dem anderen Gerät anschließend den Werkszustand wieder her.</p></div>
+<div class="paragraph"><p>Nachdem Sie einen Knoten aus dem Cluster getrennt haben, werden die Monitoring-Instanzen nicht automatisch gestartet.
+Das müssen Sie im Anschluss bei Bedarf manuell erledigen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__ein_gerät_austauschen">
+<span class="hidden-anchor sr-only" id="_ein_gerät_austauschen"></span>6.4. Ein Gerät austauschen</h3>
+<div class="paragraph"><p>Wenn die Festplatten des alten Geräts in Ordnung sind, können Sie diese aus dem alten Gerät in das neue Gerät einbauen und das neue Gerät genau so verkabeln, wie das alte Gerät verkabelt war — und es anschließend einschalten.
+Nach dem Start fügt sich das neue Gerät wieder so in den Cluster ein wie das alte Gerät.</p></div>
+<div class="paragraph"><p>Wenn Sie ein altes Gerät komplett durch ein neues Gerät ersetzen wollen, sollten Sie so vorgehen, wie wenn Sie den <a href="#dissolve">Cluster komplett auflösen.</a>
+Wählen Sie dazu eines der bisherigen Geräte aus, lösen Sie dieses aus dem Cluster und erstellen Sie einen neuen Cluster mit diesem und dem neuen Gerät.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__fehlerdiagnose">
+<span class="hidden-anchor sr-only" id="_fehlerdiagnose"></span>7. Fehlerdiagnose</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading__logging">
+<span class="hidden-anchor sr-only" id="_logging"></span>7.1. Logging</h3>
+<div class="paragraph"><p>Die Cluster-Verwaltung geschieht weitestgehend automatisch.
+Dabei entscheiden automatische Prozesse auf den Knoten, auf welchem Gerät welche Ressourcen gestartet und gestoppt werden sollen.
+Dieses Verhalten wird in Form von Log-Einträgen detailliert protokolliert.
+Diese Einträge erreichen Sie von der Cluster-Seite aus über den Knopf <span class="guihint">Cluster Log.</span></p></div>
+<div class="paragraph"><p>Beachten Sie, dass diese Einträge, genau wie die anderen Systemmeldungen, bei einem Neustart des Geräts verloren gehen.
+Wenn Sie die Meldungen darüber hinaus erhalten möchten, können Sie sich die aktuelle Logdatei über Ihren Browser herunterladen oder dauerhaft eine Weiterleitung der Log-Meldungen an einen Syslog-Server einrichten.</p></div>
+</div></div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_grundlagen">1. Grundlagen</a></li>
+<li><a href="#_voraussetzungen">2. Voraussetzungen</a></li>
+<li>
+<a href="#_konfiguration_des_clusters">3. Konfiguration des Clusters</a><ul class="sectlevel1">
+<li><a href="#_netzwerkkonfiguration">3.1. Netzwerkkonfiguration</a></li>
+<li><a href="#_host_namen">3.2. Host-Namen</a></li>
+<li><a href="#_cluster_verbinden">3.3. Cluster verbinden</a></li>
+</ul>
+</li>
+<li><a href="#_der_status_des_clusters">4. Der Status des Clusters</a></li>
+<li>
+<a href="#_besonderheiten_im_cluster">5. Besonderheiten im Cluster</a><ul class="sectlevel1">
+<li><a href="#_zugriff_auf_ressourcen">5.1. Zugriff auf Ressourcen</a></li>
+<li><a href="#_ger%C3%A4teeinstellungen">5.2. Geräteeinstellungen</a></li>
+<li><a href="#_ip_adressen_oder_host_namen_der_knoten">5.3. IP-Adressen oder Host-Namen der Knoten</a></li>
+<li><a href="#_checkmk_versionen_und_monitoring_instanzen_verwalten">5.4. Checkmk-Versionen und Monitoring-Instanzen verwalten</a></li>
+</ul>
+</li>
+<li>
+<a href="#_administrative_aufgaben">6. Administrative Aufgaben</a><ul class="sectlevel1">
+<li><a href="#majorfirmwareupdate">6.1. Update von 1.4 auf 1.5</a></li>
+<li><a href="#_firmware_update_im_cluster">6.2. Firmware-Update im Cluster</a></li>
+<li><a href="#dissolve">6.3. Cluster auflösen</a></li>
+<li><a href="#_ein_ger%C3%A4t_austauschen">6.4. Ein Gerät austauschen</a></li>
+</ul>
+</li>
+<li>
+<a href="#_fehlerdiagnose">7. Fehlerdiagnose</a><ul class="sectlevel1"><li><a href="#_logging">7.1. Logging</a></li></ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

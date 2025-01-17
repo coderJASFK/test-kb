@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Mit Checkmk können Sie auch die OpenShift Container Platform überwachen. Lesen Sie hier die Details zur Einrichtung.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="OpenShift überwachen">
+<meta name="og:description" content="Mit Checkmk können Sie auch die OpenShift Container Platform überwachen. Lesen Sie hier die Details zur Einrichtung.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>OpenShift überwachen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/en/monitoring_openshift.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/monitoring_openshift.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/de/monitoring_openshift.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Benachrichtigungen per SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">MSSQL mit dem Legacy-Plugin überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring mit Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Übersicht der API-Ressourcen</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>OpenShift überwachen</h1>
+<div class="details">
+<span id="revdate">Last modified on 01-Mar-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/de/monitoring_openshift.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+<a href="monitoring_docker.html">Docker überwachen</a>
+<a href="monitoring_kubernetes.html">Kubernetes überwachen</a>
+<a href="https://checkmk.com/de/integrations" target="_blank">Katalog der Check-Plugins</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__vorwort">
+<span class="hidden-anchor sr-only" id="_vorwort"></span>1. Vorwort</h2>
+<div class="sectionbody"><div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Für die Einrichtung der Überwachung von Kubernetes und diversen Geschmacksrichtungen davon gibt es bereits einen <a href="monitoring_kubernetes.html">eigenen Artikel</a>.
+Da OpenShift im Allgemeinen und die Einrichtung im Speziellen allerdings etwas anders funktionieren, haben wir uns für die Beschreibung der Einrichtung der Überwachung von OpenShift beziehungsweise der darin betriebenen Kubernetes-Cluster für einen eigenen Artikel entschieden.
+Im weiteren Verlauf dieses Artikels nennen wir eben diese Cluster - aus Gründen der Lesbarkeit und der Einfachheit halber - OpenShift-Cluster.
+Das Monitoring von OpenShift-Clustern ist nur mit einer der kommerziellen Editionen von Checkmk möglich.</p></div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>2. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk unterstützt Sie bei der Überwachung Ihrer OpenShift-Cluster. Ab Version <span class="new">2.3.0</span> können Sie mit jeder unserer kommerziellen Editionen die folgenden Objekte überwachen:</p></div>
+<div class="ulist"><ul>
+<li><p>Cluster</p></li>
+<li><p>Deployments</p></li>
+<li><p>Nodes</p></li>
+<li><p>Pods</p></li>
+<li><p>DaemonSets</p></li>
+<li><p>StatefulSets</p></li>
+<li><p>CronJobs</p></li>
+</ul></div>
+<div class="paragraph"><p>Eine vollständige Auflistung aller verfügbaren Check-Plugins für die Überwachung von Kubernetes finden Sie in unserem <a href="https://checkmk.com/de/integrations?distributions%5B%5D=check_mk&amp;distributions%5B%5D=check_mk_cloud&amp;search=kube_" target="_blank">Katalog der Check-Plugins.</a></p></div>
+<div class="sect2">
+<h3 id="heading__aufbau_der_monitoring_umgebung">
+<span class="hidden-anchor sr-only" id="_aufbau_der_monitoring_umgebung"></span>2.1. Aufbau der Monitoring-Umgebung</h3>
+<div class="paragraph"><p>Da es in OpenShift-Cluster sehr schnell auch zu größeren Veränderungen kommen kann, was die Anzahl und Verortung der einzelnen Komponenten angeht, empfehlen wir für das Monitoring Ihrer OpenShift-Umgebung eine eigene Checkmk-Instanz zu erstellen.
+Diese können Sie dann wie üblich über das <a href="distributed_monitoring.html">verteilte Monitoring</a> an Ihre Zentralinstanz anbinden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__ablauf_des_openshift_monitorings_in_checkmk">
+<span class="hidden-anchor sr-only" id="_ablauf_des_openshift_monitorings_in_checkmk"></span>2.2. Ablauf des OpenShift-Monitorings in Checkmk</h3>
+<div class="paragraph"><p>Checkmk überwacht Ihre OpenShift-Cluster auf zwei Wegen:</p></div>
+<div class="ulist"><ul>
+<li><p>Grundlegende Informationen holt sich Checkmk direkt über die Kubernetes-API bei Ihrem Cluster ab.
+Hierüber lassen sich bereits die Zustände von Nodes und Containern abrufen. Auch die meisten Metadaten über Ihre Pods und Deployment werden auf diesem Wege gewonnen.
+Für ein umfängliches Monitoring fehlt bis zum diesem Punkt allerdings noch etwas.
+Die Fragen, wie viel Last beispielsweise ein bestimmtes Deployment auf der CPU erzeugt, oder wie viel Arbeitsspeicher ein DaemonSet gerade bindet, lassen sich so nicht beantworten.</p></li>
+<li><p>Da in OpenShift-Cluster standardmäßig bereits Prometheus installiert ist, kann Checkmk genau diese Prometheus-Instanz innerhalb Ihrer OpenShift-Umgebung abfragen und die so gewonnenen Daten für Sie in gewohnter Checkmk-Manier aufbereiten.
+Für ein vollumfängliches Monitoring Ihrer OpenShift-Umgebung empfehlen wir unbedingt diese Anbindung einzurichten.
+Auch ist die Verwendung der <a href="#dashboards">Kubernetes-Dashboards</a> nur dann sinnvoll, wenn die entsprechenden Daten zur Auslastung vorliegen.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__voraussetzungen_im_cluster_schaffen">
+<span class="hidden-anchor sr-only" id="_voraussetzungen_im_cluster_schaffen"></span>3. Voraussetzungen im Cluster schaffen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Um Ihre OpenShift-Umgebung in Checkmk überwachen zu können, schaffen Sie zuerst die Voraussetzungen in Ihrem Cluster.</p></div>
+<div class="sect2">
+<h3 id="heading__namespace_und_service_account_anlegen">
+<span class="hidden-anchor sr-only" id="_namespace_und_service_account_anlegen"></span>3.1. Namespace und Service-Account anlegen</h3>
+<div class="paragraph"><p>Zuerst müssen Sie in Ihrem OpenShift-Cluster einen Namespace und einen Service-Account für Checkmk einrichten.
+Am schnellsten lässt sich das über die OpenShift CLI (kurz: <code>oc</code>) bewerkstelligen.</p></div>
+<div class="paragraph"><p>Im folgenden Beispiel nennen wir diesen Namespace <code>checkmk-monitoring</code>.
+Sollten Sie einen anderen Namen wählen wollen oder müssen, dann müssen Sie diese Änderung auch in bei der Erzeugung des Service-Account vornehmen.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>oc<span class="tok-w"> </span>create<span class="tok-w"> </span>namespace<span class="tok-w"> </span>checkmk-monitoring
+<span class="tok-go">namespace/checkmk-monitoring created</span></code></pre></div></div>
+<div class="paragraph"><p>Den Service-Account mit der zugehörigen Rolle und der sogenannten RoleBinding, können Sie durch die Angabe einer von uns vorgefertigten und <a href="https://github.com/Checkmk/checkmk_kube_agent/blob/checkmk_docs/deploy/kubernetes/checkmk-serviceaccount.yaml" target="_blank">auf GitHub veröffentlichten YAML-Datei</a> vornehmen.
+Prüfen Sie deren Inhalt und führen Sie anschließend den folgenden Befehl aus:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>oc<span class="tok-w"> </span>apply<span class="tok-w"> </span>-f<span class="tok-w"> </span>https://raw.githubusercontent.com/Checkmk/checkmk_kube_agent/checkmk_docs/deploy/kubernetes/checkmk-serviceaccount.yaml
+<span class="tok-go">serviceaccount/checkmk created</span>
+<span class="tok-go">clusterrole.rbac.authorization.k8s.io/checkmk-metrics-reader created</span>
+<span class="tok-go">clusterrolebinding.rbac.authorization.k8s.io/checkmk-metrics-reader-binding created</span></code></pre></div></div>
+<div class="paragraph"><p>Alternativ können Sie diese YAML-Datei auch zuerst herunterladen, nach Ihren Bedürfnissen anpassen und anschließend <code>oc apply -f</code> auf Ihre lokale Kopie anwenden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__api_endpunkte_token_und_zertifikat_besorgen">
+<span class="hidden-anchor sr-only" id="_api_endpunkte_token_und_zertifikat_besorgen"></span>3.2. API-Endpunkte, Token und Zertifikat besorgen</h3>
+<div class="paragraph"><p>Mit dem Kommandozeilen-Tool <code>oc</code> können Sie nun auch alle Informationen aus Ihrem Cluster auslesen, welche Sie in der Regel zur Einrichtung des Spezialagenten angeben müssen.
+Wenn Sie den den Namen des Service-Account oder den Namespace verändert haben, müssen diese Angaben in der folgenden Befehlen entsprechend anpassen.</p></div>
+<div class="sect3">
+<h4 id="heading_get_kubernetes_endpoint">
+<span class="hidden-anchor sr-only" id="get_kubernetes_endpoint"></span>Kubernetes-API-Endpunkt auslesen</h4>
+<div class="paragraph"><p>Den Endpunkt der Kubernetes-API zeigt <code>oc</code> mit dem folgenden Befehl an:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>oc<span class="tok-w"> </span>cluster-info
+<span class="tok-go">Kubernetes control plane is running at https://api.myopenshift.example.com:6443</span></code></pre></div></div>
+<div class="paragraph"><p>Diese Adresse inklusive des angegebenen Ports gehört in der <a href="#rule">Kubernetes-Regel</a> später in das Feld <span class="guihint">API server connection &gt; Endpoint</span>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_get_prometheus_endpoint">
+<span class="hidden-anchor sr-only" id="get_prometheus_endpoint"></span>Prometheus-API-Endpunkt auslesen</h4>
+<div class="paragraph"><p>Die Adresse vom API-Endpunkt der Prometheus-Instanz in Ihrem Cluster herauszufinden, kann womöglich über die GUI von OpenShift einfacher sein.
+In der Rolle des Administrators finden Sie über <span class="guihint">Networking &gt; Routes</span> eine mehr oder weniger lange Liste.
+Hier sollte sich auch eine Route finden, die vermutlich das Wort Prometheus in Ihrem Namen trägt.
+Auch das hängt schlicht von der Konfiguration Ihres OpenShift-Cluster ab.
+Unter Location finden Sie dann eben die URL, die Sie später für das Feld <span class="guihint">Prometheus API endpoint</span> benötigen.</p></div>
+<div class="paragraph"><p>Mit dem folgenden Befehl können Sie die FQDN womöglich auch auf der Kommandozeile ermitteln.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>oc<span class="tok-w"> </span>get<span class="tok-w"> </span>routes<span class="tok-w"> </span>--all-namespaces<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>prometheus
+<span class="tok-go">openshift-monitoring    prometheus-k8s   prometheus-k8s-openshift-monitoring.apps.myopenshift.example.com   prometheus-k8s  web  reencrypt/Redirect   None</span></code></pre></div></div>
+<div class="paragraph"><p>Dem String <code>prometheus-k8s-openshift-monitoring.apps.myopenshift.example.com</code> müssen Sie dann später in der <a href="#rule">Kubernetes-Regel</a> im Feld <span class="guihint">Prometheus API endpoint</span> nur noch das Protokoll voranstellen.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_get_token">
+<span class="hidden-anchor sr-only" id="get_token"></span>Token auslesen</h4>
+<div class="paragraph"><p>Um das Token auszulesen, welches Sie später in Checkmk in der Regel für den Spezialagenten angeben müssen, können Sie den folgenden Befehl verwenden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>oc<span class="tok-w"> </span>get<span class="tok-w"> </span>secret<span class="tok-w"> </span><span class="tok-k">$(</span>oc<span class="tok-w"> </span>describe<span class="tok-w"> </span>sa<span class="tok-w"> </span>checkmk<span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-s1">'Tokens'</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>awk<span class="tok-w"> </span><span class="tok-s1">'{ print $2 }'</span><span class="tok-k">)</span><span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>-o<span class="tok-o">=</span><span class="tok-nv">jsonpath</span><span class="tok-o">=</span><span class="tok-s1">'{.data.token}'</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>base64<span class="tok-w"> </span>--decode
+<span class="tok-go">eyJhbGciOiJSUzI1NiIsImtpZCI6IkxFbDdZb25t...</span></code></pre></div></div>
+<div class="paragraph"><p>Lassen Sie die Shell mit diesen Informationen geöffnet oder kopieren Sie das Token an einen Ort, auf den Sie während der folgenden Einrichtung in Checkmk zugreifen können.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_get_certificate">
+<span class="hidden-anchor sr-only" id="get_certificate"></span>Zertifikat auslesen</h4>
+<div class="paragraph"><p>Um das Zertifikat auszulesen, welches Sie später in Checkmk in den <span class="guihint">Global settings</span> angeben müssen, können Sie den folgenden Befehl verwenden</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>oc<span class="tok-w"> </span>get<span class="tok-w"> </span>secret<span class="tok-w"> </span><span class="tok-k">$(</span>oc<span class="tok-w"> </span>describe<span class="tok-w"> </span>sa<span class="tok-w"> </span>checkmk<span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-s1">'Tokens'</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>awk<span class="tok-w"> </span><span class="tok-s1">'{ print $2 }'</span><span class="tok-k">)</span><span class="tok-w"> </span>-n<span class="tok-w"> </span>checkmk-monitoring<span class="tok-w"> </span>-o<span class="tok-o">=</span><span class="tok-nv">jsonpath</span><span class="tok-o">=</span><span class="tok-s1">'{.data.ca\.crt}'</span><span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>base64<span class="tok-w"> </span>--decode</code></pre></div></div>
+<div class="paragraph"><p>Lassen Sie die Shell mit diesen Informationen geöffnet oder kopieren Sie das Zertifikat – inklusive der Zeilen <code>BEGIN CERTIFICATE</code> und <code>END CERTIFICATE</code> – an einen Ort, auf den Sie während der folgenden Einrichtung in Checkmk zugreifen können.</p></div>
+<div class="paragraph"><p>Sollte die Ausgabe leer sein, gilt der gleiche Hinweis, wie im Abschnitt <a href="#get_token">Token auslesen.</a></p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_setupincheckmk">
+<span class="hidden-anchor sr-only" id="setupincheckmk"></span>4. Monitoring in Checkmk einrichten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Als nächstes geht es in der GUI von Checkmk an die Einrichtung des <a href="glossar.html#special_agent">Spezialagenten</a> und einer Regel für die automatische Erzeugung von Hosts für Ihre Kubernetes-Objekte.
+Für die Einrichtung des Spezialagenten müssen aber zuerst noch einige Voraussetzungen erfüllt werden:</p></div>
+<div class="sect2">
+<h3 id="heading_token">
+<span class="hidden-anchor sr-only" id="token"></span>4.1. Passwort (Token) in Checkmk hinterlegen</h3>
+<div class="paragraph"><p>Das <a href="#get_token">Passwort (Token) des Service-Accounts</a> hinterlegen Sie am besten im Passwortspeicher von Checkmk.
+Das ist die sicherste Variante, da Sie Hinterlegung und Benutzung des Passworts organisatorisch trennen können.
+Alternativ geben Sie es beim Anlegen der Regel (siehe weiter unten) direkt im Klartext ein.</p></div>
+<div class="paragraph"><p>Um das Passwort in den Checkmk-Passwortspeicher einzufügen, navigieren Sie zu <span class="guihint">Setup &gt; General &gt; Passwords &gt; Add password</span>.
+Wir verwenden für unser Beispiel als ID und Titel <code>My OpenShift Token</code>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/kubernetes_password.png" alt="kubernetes password"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_certimport">
+<span class="hidden-anchor sr-only" id="certimport"></span>4.2. CA-Zertifikat des Service-Accounts in Checkmk importieren</h3>
+<div class="paragraph"><p>Damit Checkmk der <a href="#get_certificate">Zertifikatskette des Service-Accounts</a> vertrauen kann, müssen Sie diese in Checkmk hinterlegen.
+Kopieren Sie hier alles – inklusive der Zeilen, die <code>BEGIN CERTIFICATE</code> und <code>END CERTIFICATE</code> enthalten – und fügen Sie das Zertifikat im Setup-Menü unter <span class="guihint">Setup &gt; General &gt; Global settings &gt; Site management &gt; Trusted certificate authorities for SSL</span> hinzu:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/kubernetes_ca.png" alt="kubernetes ca"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_source-host">
+<span class="hidden-anchor sr-only" id="source-host"></span>4.3. Piggyback Quell-Host anlegen</h3>
+<div class="paragraph"><p>Erzeugen Sie in Checkmk auf gewohnte Weise einen neuen Host und nennen Sie diesen beispielsweise <code>myopenshiftclusterhost</code>.
+Wie Überschrift und Host-Name schon nahelegen, dient dieser Host dazu, die <a href="glossar.html#piggyback">Piggyback-Daten</a> zu sammeln und außerdem alle Services und Metriken auf Cluster-Ebene abzubilden.
+Da dieser Host ausschließlich über den Spezialagenten Daten erhält, setzen Sie in den Eigenschaften des Hosts die Option <span class="guihint">IP address family</span> unbedingt auf <span class="guihint">No IP</span>.
+Bestätigen Sie das Ganze mit einem Druck auf den Knopf <span class="guihint">Save &amp; view folder</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_add_host_no_ip.png" alt="Beispielhafte Einrichtung eines Cluster-Hosts mit der wichtigen Einstellung 'No IP'."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__dynamische_host_konfiguration_einrichten">
+<span class="hidden-anchor sr-only" id="_dynamische_host_konfiguration_einrichten"></span>4.4. Dynamische Host-Konfiguration einrichten</h3>
+<div class="paragraph"><p>Um eine Trennung zwischen den Objekten verschiedener Kubernetes-Cluster zu gewährleisten, ist es meist praktisch, über <span class="guihint">Setup &gt; Hosts &gt; Add folder</span> pro Cluster einen Ordner anzulegen, in welchem die <a href="dcd.html">dynamische Host-Konfiguration</a> automatisch alle Hosts eines Clusters anlegen kann.
+Einen solchen Ordner zu erzeugen und zu nutzen ist aber optional.</p></div>
+<div class="paragraph"><p>Als nächstes richten Sie einen Konnektor für die anfallenden Piggyback-Daten ein.
+Navigieren Sie hierfür zu <span class="guihint">Setup &gt; Hosts &gt; Dynamic host management &gt; Add connection.</span>
+Tragen Sie zuerst einen Titel ein und klicken Sie anschließend unter <span class="guihint">Connection Properties</span> auf <span class="guihint">show more</span>.</p></div>
+<div class="paragraph"><p>Als nächstes ist es sehr wichtig unter <span class="guihint">Restrict source hosts</span> den zuvor angelegten <a href="#source-host">Piggyback Quell-Host</a> einzutragen.</p></div>
+<div class="paragraph"><p>Klicken Sie anschließend unter <span class="guihint">Piggyback creation options</span> auf <span class="guihint">Add new element</span> und wählen Sie unter <span class="guihint">Create hosts in</span> den zuvor angelegten Ordner aus.</p></div>
+<div class="paragraph"><p>Die voreingestellten Attribute unter <span class="guihint">Host attributes to set</span> können Sie so belassen.
+Sie sorgen dafür, dass sich Checkmk bei den automatisch angelegten Hosts ausschließlich an die Piggyback-Daten hält und nicht versucht. diese beispielsweise zu pingen oder per SNMP zu erreichen.</p></div>
+<div class="paragraph"><p>In einer OpenShift-Umgebung, in der überwachbare und überwachte Objekte kontinuierlich kommen und gehen, empfiehlt es sich meist, auch die Option <span class="guihint">Automatically delete hosts without piggyback data</span> zu aktivieren.
+Was genau diese Option bewirkt und unter welchen Umständen Hosts dann tatsächlich gelöscht werden, erklären wir im Kapitel <a href="dcd.html#automatic_deletion_of_hosts">Automatisches Löschen von Hosts</a> im Artikel zur dynamischen Host-Konfiguration.</p></div>
+<div class="paragraph"><p>Aktivieren Sie abschließend noch die Option <span class="guihint">Discover services during creation</span>.</p></div>
+<div class="paragraph"><p>Der Abschnitt <span class="guihint">Connection Properties</span> dieses neuen Konnektors könnte im Anschluss wie folgt aussehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_connection_properties.png" alt="Beispielhafte Einstellungen einer dynamischen Host-Konfiguration."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__periodische_service_erkennung_anpassen">
+<span class="hidden-anchor sr-only" id="_periodische_service_erkennung_anpassen"></span>4.5. Periodische Service-Erkennung anpassen</h3>
+<div class="paragraph"><p>Standardmäßig führt Checkmk alle zwei Stunden eine Service-Erkennung durch und zeigt das Ergebnis dieser Erkennung im Service <span class="guihint">Check_MK Discovery</span> an.
+Sie finden diese Einstellung im Regelsatz <span class="guihint">Periodic service discovery</span>.
+Im Kontext von OpenShift empfehlen wir eine Regel für alle Hosts mit dem Label <code>cmk/kubernetes:yes</code> zu erstellen.
+Dieses Label erhält nämlich jeder Host, der Kubernetes-Objekte repräsentiert, automatisch von Checkmk.
+Sie sollten hier ein kleineres Intervall als zwei Stunden für die Service-Erkennung wählen und auch die Option <span class="guihint">Automatically update service configuration</span> aktivieren.
+Die Einstellungen im folgenden Screenshot sind nur exemplarisch.
+Was für Ihre Cluster sinnvoll ist, müssen Sie von Fall zu Fall entscheiden.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_periodic_service_discovery.png" alt="Exemplarische Einrichtung der periodischen Service-Erkennung für Kubernetes-Objekte."></div></div>
+<div class="paragraph"><p>Um diese Regel auf alle Hosts Ihrer Cluster zu beschränken, genügt es bei den <span class="guihint">Conditions</span> unter <span class="guihint">Host labels</span> <code>cmk/kubernetes:yes</code> einzutragen.
+Wollen Sie jedoch für verschiedene Cluster auch verschiedene Regeln erstellen, verwenden Sie hier einfach das jeweilige Cluster-spezifische Label.
+Diese Labels haben immer die Form <code>cmk/kubernetes/cluster:mycluster</code>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_periodic_service_discovery_conditions.png" alt="Exemplarische Einschränkung auf Hosts mit einem Cluster-spezifischen Label."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_rule">
+<span class="hidden-anchor sr-only" id="rule"></span>4.6. Spezialagent einrichten</h3>
+<div class="paragraph"><p>Nachdem nun alle Voraussetzungen im Cluster und in Checkmk geschaffen sind, können Sie sich der Konfiguration des Spezialagenten widmen.
+Diese finden Sie über <span class="guihint">Setup &gt; Agents &gt; VM, cloud, container &gt; Kubernetes</span>.
+Erstellen Sie mit <span class="guihint">Add rule</span> eine neue Regel.</p></div>
+<div class="paragraph"><p>Zuallererst müssen Sie einen Namen für den zu überwachenden Cluster vergeben.
+Diesen Namen können Sie frei wählen.
+Er dient dazu, alle Objekte, die aus genau diesem Cluster stammen, mit einem eindeutigen Namen zu versehen.
+Wenn Sie hier beispielsweise <code>mycluster</code> eintragen, werden die Namen der Hosts aller Pods aus diesem Cluster später mit <code>pod_mycluster</code> beginnen.
+Der nächste Teil des Host-Namens wird dann immer der Namespace sein, in dem dieses Kubernetes-Objekt existiert.
+Der Host-Name eines Pods könnte dann beispielsweise <code>pod_mycluster_kube-system_svclb-traefik-8bgw7</code> lauten.</p></div>
+<div class="paragraph"><p>Wählen Sie unter <span class="guihint">Token</span> nun den <a href="#token">zuvor angelegten Eintrag</a> aus dem Passwortspeicher von Checkmk aus.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_cluster_name_and_token.png" alt="Beispielhafter Cluster-Name und Auswahl des Tokens."></div></div>
+<div class="paragraph"><p>Unter <span class="guihint">API server connection &gt; Endpoint</span> verlangt Checkmk nun die Eingabe der URL über welche Ihr Kubernetes API-Server erreichbar ist.
+Die Angabe des Ports ist nur notwendig, wenn der Dienst nicht über einen virtuellen Host bereitgestellt wird.
+Tragen Sie hier die Adresse ein, welche Sie im Abschnitt <a href="#get_kubernetes_endpoint">Kubernetes-API-Endpunkt auslesen</a> ermittelt haben.</p></div>
+<div class="paragraph"><p>Wenn Sie diese Anleitung bisher Schritt für Schritt befolgt haben und das CA-Zertifikat Ihres Clusters - <a href="#certimport">wie oben beschrieben</a> - in Checkmk hinterlegt haben, wählen Sie unter <span class="guihint">SSL certificate verification</span> den Eintrag <span class="guihint">Verify the certificate</span> aus.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_rule_api_server_connection.png" alt="Exemplarische Angabe der API-Server Verbindung."></div></div>
+<div class="paragraph"><p>Aktivieren Sie die Option <span class="guihint">Enrich with usage data</span>, wählen Sie im folgenden Menü <span class="guihint">Use data from OpenShift</span> und tragen Sie den <span class="guihint">Prometheus API endpoint</span> ein, den Sie im Abschnitt <a href="#get_prometheus_endpoint">Prometheus-API-Endpunkt auslesen</a> ermittelt haben.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_rule_enrich.png" alt="Exemplarische Angabe der Cluster Collector Verbindung."></div></div>
+<div class="paragraph"><p>Die Liste unter <span class="guihint">Collect information about…​</span> erlaubt Ihnen noch die Auswahl, welche Objekte innerhalb Ihres Cluster überwacht werden sollen.
+Unsere Vorauswahl deckt hier die relevantesten Objekte ab.
+Sollten Sie sich dazu entscheiden auch die <span class="guihint">Pods of CronJobs</span> zu überwachen, so beachten Sie die <a href="user_interface.html#inline_help">Inline-Hilfe</a> zu diesem Punkt.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_rule_collect_info_about.png" alt="Exemplarische Auswahl überwachbarer Kubernetes-Objekte."></div></div>
+<div class="paragraph"><p>Mit den nächsten beiden Auswahlmöglichkeiten können Sie die zu überwachenden Objekte weiter eingrenzen.
+Falls Sie sich nur für die Objekte aus bestimmten Namespaces interessieren, stellen Sie dies entsprechend unter <span class="guihint">Monitor namespaces</span> ein.
+Hier können Sie entweder einzelne Namespaces eintragen, die überwacht werden sollen, oder aber einzelne Namespaces explizit vom Monitoring ausschließen.</p></div>
+<div class="paragraph"><p>Mit der Option <span class="guihint">Cluster resource aggregation</span> können Sie Nodes benennen, welche keine Ressourcen für die Arbeitslast Ihres Clusters zur Verfügung stellen.
+Diese Nodes sollten aus der Berechnung der zur Verfügung stehenden Ressourcen ausgenommen werden.
+Ansonsten besteht die Gefahr, dass Kapazitätsengpässe nicht erkannt werden.
+Standardmäßig nehmen wir daher bereits die Nodes <code>control-plane</code> und <code>infra</code> aus der Berechnung heraus.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_namespaces_and_resource_aggregation.png" alt="Beispielhafte Konfiguration für Namensräume und Ressourcen-Aggregation"></div></div>
+<div class="paragraph"><p>Als letzte Option können Sie noch sogenannte <em>Annotations</em> aus Kubernetes importieren.
+In Checkmk werden diese Annotations zu <a href="glossar.html#label">Host-Labels</a> und können somit als Bedingungen in Regeln weiterverwendet werden.
+Welche Annotations importiert werden sollen, können Sie über reguläre Ausdrücke festlegen.
+Konsultieren Sie an dieser Stelle erneut die ausführliche Inline-Hilfe.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Die Option <span class="guihint">Import all valid annotations</span> bieten wir an dieser Stelle nur der Vollständigkeit halber an.
+Wir raten davon ab, einfach unbesehen <em>alle</em> Annotations zu importieren, weil hierdurch mitunter ein sehr großer Berg nutzloser Labels in Checkmk erzeugt wird.</p></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Unter <span class="guihint">Conditions &gt; Explicit hosts</span> <strong>müssen</strong> Sie nun den <a href="#source-host">zuvor angelegten Host</a> eintragen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_explicit_hosts.png" alt="Regeln für Spezialagenten müssen, wie hier zu sehen, immer auf explizite Hosts festgelegt werden."></div></div>
+<div class="paragraph"><p>Speichern Sie anschließend die Regel und führen Sie eine Service-Erkennung für diesen Host durch.
+Sie werden hier gleich die ersten Services auf Cluster-Ebene sehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_service_discovery.png" alt="Exemplarische Ansicht der ersten Service-Erkennung nach Abschluss der Konfiguration."></div></div>
+<div class="paragraph"><p>Aktivieren Sie im Anschluss alle vorgenommenen Änderungen und überlassen Sie ab jetzt der dynamischen Host-Konfiguration die Arbeit.
+Diese wird schon nach kurzer Zeit alle Hosts für Ihre Kubernetes-Objekte erzeugen.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__labels_für_kubernetes_objekte">
+<span class="hidden-anchor sr-only" id="_labels_für_kubernetes_objekte"></span>5. Labels für Kubernetes-Objekte</h2>
+<div class="sectionbody"><div class="paragraph"><p>Checkmk erzeugt Labels für Objekte wie Cluster, Deployments oder Namespaces während der Service-Erkennung automatisch.
+Alle Labels zu diesen Objekten, die Checkmk automatisch erzeugt, beginnen mit <code>cmk/kubernetes/</code>.
+Ein Pod erhält beispielsweise immer ein Label der Node (<code>cmk/kubernetes/node:mynode</code>), ein Label, welches eben zeigt, dass es sich bei diesem Objekt um einen Pod handelt (<code>cmk/kubernetes/object:pod</code>) und ein Label für den Namespace (<code>cmk/kubernetes/namespace:mynamespace</code>).
+So lassen sich in der Folge sehr einfach Filter und Regeln für alle Objekte gleichen Typs bzw. im gleichen Namespace erstellen.</p></div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__dashboards_und_ansichten">
+<span class="hidden-anchor sr-only" id="_dashboards_und_ansichten"></span>6. Dashboards und Ansichten</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_dashboards">
+<span class="hidden-anchor sr-only" id="dashboards"></span>6.1. Kubernetes-Dashboards</h3>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die kommerziellen Editionen von Checkmk werden mit sechs eingebauten Dashboards für Kubernetes ausgeliefert.
+Um diese Dashboards sinnvoll verwenden zu können, ist es notwendig, dass unser Cluster Collector installiert und konfiguriert ist.
+Im einzelnen heißen diese Dashboards:</p></div>
+<div class="ulist"><ul>
+<li><p>Kubernetes (Overview)</p></li>
+<li><p>Kubernetes Cluster</p></li>
+<li><p>Kubernetes DaemonSet</p></li>
+<li><p>Kubernetes Deployment</p></li>
+<li><p>Kubernetes Namespace</p></li>
+<li><p>Kubernetes StatefulSet</p></li>
+</ul></div>
+<div class="paragraph"><p>Der Einstieg geschieht dabei immer über das Dashboard <span class="guihint">Kubernetes</span>, welches Sie über <span class="guihint">Monitor &gt; Applications &gt; Kubernetes</span> erreichen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_kubernetes_dashboard.png" alt="Exemplarische Ansicht des Übersichts-Dashboards."></div></div>
+<div class="paragraph"><p>Im Dashboard <span class="guihint">Kubernetes</span> werden auf der linken Seite alle Ihre überwachten Cluster aufgelistet.
+Diese Auflistung der Cluster ist auch Ihr Einstieg, um sich tiefer in die Dashboards zu bohren.
+Mit einem Klick auf den Namen eines Clusters gelangen Sie in das Dashboard <span class="guihint">Kubernetes Cluster</span> des angewählten Clusters.
+Im Dashboard <span class="guihint">Kubernetes Cluster</span> führt ein Klick auf den jeweiligen Namen dann in die übrigen kontextabhängigen Dashboards:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_cluster_dashboard.png" alt="Ausschnitt des Cluster-Dashboards mit Wegen in die weiteren Dashboards."></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__hardware_software_inventur">
+<span class="hidden-anchor sr-only" id="_hardware_software_inventur"></span>6.2. Hardware-/Software-Inventur</h3>
+<div class="paragraph"><p>Die Überwachung von OpenShift mit Checkmk unterstützt auch die <a href="inventory.html">HW-/SW-Inventur.</a>
+Wenn Sie beispielsweise in dem obigen Cluster-Dashboard auf den großen Namen des Clusters (hier: <span class="guihint">mycluster</span>) klicken, gelangen Sie zur Inventur des Clusters.</p></div>
+<div class="paragraph"><p>Auf dem gleichen Weg, also über die Boxen mit den großen Namen der Objekte, gelangen Sie auch in den anderen Dashboards zur Inventur des jeweiligen Objekts.
+Im folgenden Beispiel sehen Sie die HW-/SW-Inventur eines Pods:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/kubernetes_monitoring_hw_sw_inventory.png" alt="kubernetes monitoring hw sw inventory" width="88% alt=" exemplarische ansicht der hardware- und software-inventur eines pods></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__prüfung_der_installation">
+<span class="hidden-anchor sr-only" id="_prüfung_der_installation"></span>7. Prüfung der Installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In der GUI von Checkmk können Sie die erfolgreiche Installation und Konfiguration prüfen.</p></div>
+<div class="paragraph"><p>Die wichtigsten Services sind hier sicherlich <span class="guihint">Kubernetes API</span> und <span class="guihint">Cluster collector</span>.
+Diese müssen auf dem von Ihnen erstellten Cluster-Host vorhanden sein und sollten auch bestimmte Informationen anzeigen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_check_installation.png" alt="Wichtigste Services zur Prüfung der korrekten Installation"></div></div>
+<div class="paragraph"><p>Der Service <span class="guihint">Kubernetes API</span> sollte im Normalfall unter <span class="guihint">Summary</span> <span class="guihint">Live, Ready</span> vermelden und wenn der Cluster Collector eingerichtet ist, wird dieser im Idealfall <span class="guihint">Successfully queried usage data from Prometheus</span> ausgeben.</p></div>
+<div class="paragraph"><p>Im Dashboard <span class="guihint">Kubernetes</span> können Sie bereits sehr früh erkennen, ob der Cluster Collector in einem Cluster läuft und Daten sammelt.
+Bei korrekter Einrichtung sollte das Dashboard <span class="guihint">Kubernetes</span> in etwa so aussehen:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_openshift_validation_dashboard.png" alt="Kubernetes-Dashbaord mit Daten für CPU resources und Memory resources"></div></div>
+<div class="paragraph"><p>Wenn Sie hier nun auf den Namen des Clusters klicken, landen Sie im Dashboard <span class="guihint">Kubernetes Cluster</span> des jeweiligen Clusters.
+Hier sollten die drei Boxen <span class="guihint">Primary datasource</span>, <span class="guihint">Cluster collector</span> und <span class="guihint">API health</span> grün sein und <span class="guihint">OK</span> anzeigen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/monitoring_kubernetes_cluster_state.png" alt="Funktionierendes Cluster-Monitoring."></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__monitoring_komponenten_aus_openshift_entfernen">
+<span class="hidden-anchor sr-only" id="_monitoring_komponenten_aus_openshift_entfernen"></span>8. Monitoring-Komponenten aus OpenShift entfernen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__service_account_löschen">
+<span class="hidden-anchor sr-only" id="_service_account_löschen"></span>8.1. Service-Account löschen</h3>
+<div class="paragraph"><p>Wenn Sie zur Erzeugung des Service-Accounts unsere vorgegebene YAML-Datei verwendet haben, können Sie diesen wie folgt auch wieder entfernen:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>oc<span class="tok-w"> </span>delete<span class="tok-w"> </span>-f<span class="tok-w"> </span>https://raw.githubusercontent.com/Checkmk/checkmk_kube_agent/checkmk_docs/deploy/kubernetes/checkmk-serviceaccount.yaml
+<span class="tok-go">serviceaccount "checkmk" deleted</span>
+<span class="tok-go">clusterrole.rbac.authorization.k8s.io "checkmk-metrics-reader" deleted</span>
+<span class="tok-go">clusterrolebinding.rbac.authorization.k8s.io "checkmk-metrics-reader-binding" deleted</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__namespace_entfernen_wenn_gewünscht">
+<span class="hidden-anchor sr-only" id="_namespace_entfernen_wenn_gewünscht"></span>8.2. Namespace entfernen, wenn gewünscht</h3>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$ </span>oc<span class="tok-w"> </span>delete<span class="tok-w"> </span>namespace<span class="tok-w"> </span>checkmk-monitoring
+<span class="tok-go">namespace "checkmk-monitoring" deleted</span></code></pre></div></div>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_vorwort">1. Vorwort</a></li>
+<li>
+<a href="#_einleitung">2. Einleitung</a><ul class="sectlevel1">
+<li><a href="#_aufbau_der_monitoring_umgebung">2.1. Aufbau der Monitoring-Umgebung</a></li>
+<li><a href="#_ablauf_des_openshift_monitorings_in_checkmk">2.2. Ablauf des OpenShift-Monitorings in Checkmk</a></li>
+</ul>
+</li>
+<li>
+<a href="#_voraussetzungen_im_cluster_schaffen">3. Voraussetzungen im Cluster schaffen</a><ul class="sectlevel1">
+<li><a href="#_namespace_und_service_account_anlegen">3.1. Namespace und Service-Account anlegen</a></li>
+<li>
+<a href="#_api_endpunkte_token_und_zertifikat_besorgen">3.2. API-Endpunkte, Token und Zertifikat besorgen</a><ul class="sectlevel2">
+<li><a href="#get_kubernetes_endpoint">Kubernetes-API-Endpunkt auslesen</a></li>
+<li><a href="#get_prometheus_endpoint">Prometheus-API-Endpunkt auslesen</a></li>
+<li><a href="#get_token">Token auslesen</a></li>
+<li><a href="#get_certificate">Zertifikat auslesen</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#setupincheckmk">4. Monitoring in Checkmk einrichten</a><ul class="sectlevel1">
+<li><a href="#token">4.1. Passwort (Token) in Checkmk hinterlegen</a></li>
+<li><a href="#certimport">4.2. CA-Zertifikat des Service-Accounts in Checkmk importieren</a></li>
+<li><a href="#source-host">4.3. Piggyback Quell-Host anlegen</a></li>
+<li><a href="#_dynamische_host_konfiguration_einrichten">4.4. Dynamische Host-Konfiguration einrichten</a></li>
+<li><a href="#_periodische_service_erkennung_anpassen">4.5. Periodische Service-Erkennung anpassen</a></li>
+<li><a href="#rule">4.6. Spezialagent einrichten</a></li>
+</ul>
+</li>
+<li><a href="#_labels_f%C3%BCr_kubernetes_objekte">5. Labels für Kubernetes-Objekte</a></li>
+<li>
+<a href="#_dashboards_und_ansichten">6. Dashboards und Ansichten</a><ul class="sectlevel1">
+<li><a href="#dashboards">6.1. Kubernetes-Dashboards</a></li>
+<li><a href="#_hardware_software_inventur">6.2. Hardware-/Software-Inventur</a></li>
+</ul>
+</li>
+<li><a href="#_pr%C3%BCfung_der_installation">7. Prüfung der Installation</a></li>
+<li>
+<a href="#_monitoring_komponenten_aus_openshift_entfernen">8. Monitoring-Komponenten aus OpenShift entfernen</a><ul class="sectlevel1">
+<li><a href="#_service_account_l%C3%B6schen">8.1. Service-Account löschen</a></li>
+<li><a href="#_namespace_entfernen_wenn_gew%C3%BCnscht">8.2. Namespace entfernen, wenn gewünscht</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

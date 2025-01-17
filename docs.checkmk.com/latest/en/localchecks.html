@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Checkmk can be easily extended even without much programming knowledge. Find out here how to provide your own script to an agent.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Local checks">
+<meta name="og:description" content="Checkmk can be easily extended even without much programming knowledge. Find out here how to provide your own script to an agent.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Local checks</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/localchecks.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/localchecks.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/localchecks.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Local checks</h1>
+<div class="details">
+<span id="revdate">Last modified on 22-Jan-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/en/localchecks.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="datasource_programs.html">Datasource programs</a>
+<a href="https://checkmk.com/integrations" target="_blank">Catalog of Check Plug-ins</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__why_own_checks">
+<span class="hidden-anchor sr-only" id="_why_own_checks"></span>1. Why own checks?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk already monitors many types of relevant data using a large number of
+its own standard check plug-ins.
+Nevertheless, every IT environment is unique, so that often very specialized requirements can arise.
+With <strong>local checks</strong> you have a facility to extend the agent on the target host for quickly and easily creating your own services.</p></div>
+<div class="paragraph"><p>These local plug-ins differ in one significant aspect from other checks:
+the calculation of a status occurs directly in the host on which the data is
+also retrieved.
+In this way the complex creation of checks in Python is not needed and there is thus a completely free choice of coding language for scripts.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_simple_check">
+<span class="hidden-anchor sr-only" id="simple_check"></span>2. Writing a simple local check</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_syntax">
+<span class="hidden-anchor sr-only" id="syntax"></span>2.1. Creating the script</h3>
+<div class="paragraph"><p>A local check can be written in any programming language supported by the target host.
+The script must be constructed so that each check produces a status line
+consisting of four parts.
+Here is an example:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">0 "My service" myvalue=73 My output text which may contain spaces</span></code></pre></div></div>
+<div class="paragraph"><p>The four parts are separated by blanks and have the following meanings:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Example value</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The status of the service is given as a number: <code>0</code> for <span class="state0">OK</span>, <code>1</code> for <span class="state1">WARN</span>, <code>2</code> for <span class="state2">CRIT</span> and <code>3</code> for <span class="state3">UNKNOWN</span>. Alternatively, the status can also be <a href="#dynamic_state">calculated dynamically</a>: then the number is replaced by a <code>P</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"My service"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The service name as shown in Checkmk, in the output of the check in double quotes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>myvalue=73;65;75</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value and metrics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metric values for the data. More information about the construction can be found in the chapter on <a href="#metrics">metrics</a>. Alternatively a minus sign can be coded if the check produces no metrics.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>My output text which may contain spaces</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status detail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Details for the status as they will be shown in Checkmk. This part can also contain blanks.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>There must always be <strong>exactly one space</strong> (ASCII <code>0x20</code>) between the four parts of this output.
+Within the status details, any spaces can be used in any order.</p></div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>Deviations from the specification just described <em>may</em> work, but <em>must</em> not.
+Future versions of Checkmk may enforce this output format and ignore deviating local checks.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>If you are unsure about a possible output, you can simply test it by writing a small script with the <code>echo</code> command.
+Insert the output you want to test into the <code>echo</code> command.
+Our example uses double quotation marks on the outside, as variables inside (environment variables and those set in the script) are evaluated.
+As a result, you must enclose the quotation marks for the service name with <code>\</code> so that these characters are not interpreted by the shell as the end and beginning of a string (and thus removed from the output):</p></div>
+<div class="listingblock">
+<div class="title">mylocalcheck</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>#!/bin/bash
+echo "0 \"My 1st service\" - This static service is always OK"</code></pre></div>
+</div>
+<div class="paragraph"><p>For Windows hosts, such a script will look very similar to this:</p></div>
+<div class="listingblock">
+<div class="title">mylocalcheck.bat</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>@echo off
+echo 0 "My 1st service" - This static service is always OK</code></pre></div>
+</div>
+<div class="paragraph"><p>Both scripts produce the same result in the output:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">0 "My 1st service" - This static service is always OK</span></code></pre></div></div>
+<div class="paragraph"><p>For Checkmk only this output is relevant, not how you created this output.</p></div>
+<div class="paragraph"><p>By the way — you can write any number of outputs in a script.
+Each output line will have its own service created in Checkmk.
+Therefore, no newline characters are allowed in the output — unless they are masked, for example for a <a href="#multi-line">multi-line output</a> in Checkmk.</p></div>
+<div class="paragraph"><p>How it can be checked whether the local script will be correctly invoked by the agent can be seen in the <a href="#diagnose">Error analysis</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_distribute">
+<span class="hidden-anchor sr-only" id="distribute"></span>2.2. Distributing the script</h3>
+<div class="paragraph"><p>Once the script has been written it can be distributed to the appropriate hosts.
+The path used will depend on the operating system.
+A list of path names can be found in <a href="#folders_script">Files and directories</a> below.</p></div>
+<div class="paragraph"><p>Don’t forget to make the script executable on Unix-like systems.
+The path shown in this example is for Linux:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span>+x<span class="tok-w"> </span>/usr/lib/check_mk_agent/local/mylocalcheck</code></pre></div></div>
+<div class="paragraph"><p>If you use the <a href="wato_monitoringagents.html#bakery">Agent Bakery</a>, the script can be distributed with a rule-based procedure.
+More on rule-creation can be found in the chapter <a href="#bakery">Distribution via the Agent Bakery</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_add_service">
+<span class="hidden-anchor sr-only" id="add_service"></span>2.3. Adding the service to the monitoring</h3>
+<div class="paragraph"><p>At every invocation of the Checkmk agent the local check contained in the script will also be executed and appended to the agent’s output.
+The <a href="wato_services.html#discovery">service discovery</a> also functions automatically like with other services:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/localchecks_services.png" alt="localchecks services"></div></div>
+<div class="paragraph"><p>Once the service has been added to the monitoring and the changes have been activated, the implementation of the self-created service with the aid of a local check will be complete.
+Should a problem arise during the service discovery, the <a href="#diagnose">Error analysis</a> can be of help.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_extended_functions">
+<span class="hidden-anchor sr-only" id="extended_functions"></span>3. Extended functions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_metrics">
+<span class="hidden-anchor sr-only" id="metrics"></span>3.1. Metrics</h3>
+<div class="paragraph"><p>With a local script metrics can also be set.
+To enable them the value of the check must always return <code>P</code>.
+Then the state will be calculated by Checkmk.</p></div>
+<div class="paragraph"><p>The general syntax for this data is as follows:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">metricname=value;warn;crit;min;max</span></code></pre></div></div>
+<div class="paragraph"><p>where <code>value</code> is the current value, <code>warn</code> and <code>crit</code> set the (upper) thresholds, and <code>min</code> and <code>max</code> fix the range of values — for example like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">count=73;80;90;0;100</span></code></pre></div></div>
+<div class="paragraph"><p>The values are separated with a semicolon.
+All values except <code>value</code> are optional.
+If a value is not required, the field remains empty or is omitted at the end, as in the following for <code>warn</code>, <code>crit</code> and <code>max</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">count=42;;;0</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Note:</strong> In the commercial editions the values for <code>min</code> and <code>max</code> can indeed be set — but only for compatibility reasons.
+Limiting the associated graph to a certain range of values has no effect in the commercial editions.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_metricname">
+<span class="hidden-anchor sr-only" id="metricname"></span>3.2. Metric name</h3>
+<div class="paragraph"><p>You should take special care when choosing the identifier of this metric - called <code>metricname</code> in the example here.
+We recommend prefixing the identifiers to prevent overlap with metrics already present in Checkmk.</p></div>
+<div class="paragraph"><p>So, for example, instead of simply calling a metric that represents the number of
+currently waiting requests in a queue you are monitoring, 'current',
+we recommend a clearer identifier with a prefix - such as: <code>mycompany_current_requests</code>.</p></div>
+<div class="paragraph"><p>If you were to choose an identifier here that already exists in Checkmk, the
+representation of your metrics in graphs would be overwritten with the
+definitions that already exist.</p></div>
+<div class="paragraph"><p>Of course, you can also reuse an existing metric from Checkmk intentionally. So,
+for a metric for an electrical current you could simply use the identifier
+<code>current</code> in your local check. In case of doubt, however, you have to look up
+the definition of this metric in <code>~/lib/python3/cmk/gui/plugins/metric</code> by
+yourself.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>grep<span class="tok-w"> </span>-r<span class="tok-w"> </span>-A<span class="tok-w"> </span><span class="tok-m">4</span><span class="tok-w"> </span><span class="tok-s1">'metric_info\["current"\]'</span><span class="tok-w"> </span>./lib/python3/cmk/gui/plugins/metrics/</code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_multiple_metrics">
+<span class="hidden-anchor sr-only" id="multiple_metrics"></span>3.3. Multiple metrics</h3>
+<div class="paragraph"><p>You can also have several metrics output.
+These are then separated by the 'pipe' character <code>|</code>, for example like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">count1=42|count2=23</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Attention:</strong> On Windows hosts you have to prefix a caret (<code>^</code>) to the pipe in the script, so that it does not get interpreted.</p></div>
+<div class="listingblock">
+<div class="title">mylocalcheck.bat</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>@echo off
+echo 0 "My 2nd service" count1=42^|count2=23 A service with 2 graphs</code></pre></div>
+</div>
+<div class="paragraph"><p>A complete <strong>output</strong> with two metrics will look like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/local/mylocalcheck
+<span class="tok-go">0 "My 2nd service" count1=42|count2=23 A service with 2 graphs</span></code></pre></div></div>
+<div class="paragraph"><p>After you have also included the new service in the monitoring, you will see the text for the status detail in the <span class="guihint">Summary</span> field in the service list.
+After clicking on the service, the page with the service details is displayed.
+The metrics are shown in the <span class="guihint">Details</span> field and below this you will see the service graphs automatically generated by Checkmk:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/localchecks_graphs2.png" alt="localchecks graphs2"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_dynamic_state">
+<span class="hidden-anchor sr-only" id="dynamic_state"></span>3.4. Calculating status dynamically</h3>
+<div class="paragraph"><p>In the previous chapters, you learned how to set threshold values for metrics and how to display them in the graphs.
+The next obvious step is to use these thresholds for a dynamic calculation of the service state.
+ Checkmk provides exactly these options for extending a local check.</p></div>
+<div class="paragraph"><p>If you pass the letter <code>P</code> instead of a number in the first field of the output that determines the state, the service’s status will be calculated on the basis of the threshold as provided.</p></div>
+<div class="paragraph"><p>An output will then look like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/local/mylocalcheck
+<span class="tok-go">P "My 1st dynamic service" count=40;30;50 Result is computed from two threshold values</span>
+<span class="tok-go">P "My 2nd dynamic service" - Result is computed with no values</span></code></pre></div></div>
+<div class="paragraph"><p>… and the display in a service view like this:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/localchecks_dynsrv.png" alt="localchecks dynsrv"></div></div>
+<div class="paragraph"><p>The display differs in two points from the one that we saw earlier:</p></div>
+<div class="ulist"><ul>
+<li><p>For services in the <span class="state1">WARN</span> or <span class="state2">CRIT</span> state, the <span class="guihint">Summary</span> of the service shows all important information about the metrics (name, value, thresholds).
+This means you can always see how this status was calculated from a value.
+For all other states, the metric information is only displayed in the <span class="guihint">Details</span> field.</p></li>
+<li><p>If no metrics have been passed the service’s status will always be <span class="state0">OK</span>.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_upper_lower_thresholds">
+<span class="hidden-anchor sr-only" id="upper_lower_thresholds"></span>3.5. Upper and lower thresholds</h3>
+<div class="paragraph"><p>Some parameters have not only an upper threshold but also a lower threshold.
+An example is humidity.
+For such cases the local check has the option of passing two threshold values each for the states <span class="state1">WARN</span> and <span class="state2">CRIT</span>.
+They are separated by a colon and represent the lower and the upper threshold value respectively.</p></div>
+<div class="paragraph"><p>In the general syntax, it looks like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">metricname=value;warn_lower:warn_upper;crit_lower:crit_upper</span></code></pre></div></div>
+<div class="paragraph"><p>… and in the example like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/local/mylocalcheck
+<span class="tok-go">P "My 3rd service" humidity=37;40:60;30:70 A service with lower and upper thresholds</span></code></pre></div></div>
+<div class="paragraph"><p>… and in the display of a service view like this:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/localchecks_lower.png" alt="localchecks lower"></div></div>
+<div class="paragraph"><p>If you are only concerned with lower thresholds, leave out the upper threshold fields:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/local/mylocalcheck
+<span class="tok-go">P "My 4th dynamic service" count_lower=37;40:;30: A service with lower thresholds only</span></code></pre></div></div>
+<div class="paragraph"><p>With this output, you specify that the service should become <span class="state1">WARN</span> if the value is less than 40 and <span class="state2">CRIT</span> if it is less than 30: thus, at the specified value of 37, the service will get the <span class="state1">WARN</span> state.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_multi-line">
+<span class="hidden-anchor sr-only" id="multi-line"></span>3.6. Multi-line outputs</h3>
+<div class="paragraph"><p>The option to spread an output over multiple lines is also available.
+Because Checkmk runs under Linux you can work with the Escape sequence <code>'\n'</code> in order to force a line-break.
+Even if due to the scripting language the backslash itself needs to be escaped, it will be correctly interpreted by Checkmk:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/local/mylocalcheck
+<span class="tok-go">P "My service" humidity=37;40:60;30:70 My service output\nA line with details\nAnother line with details</span></code></pre></div></div>
+<div class="paragraph"><p>In the service’s details these additional lines will be visible under the <span class="guihint">Summary</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/localchecks_srv_details.png" alt="localchecks srv details"></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_cache">
+<span class="hidden-anchor sr-only" id="cache"></span>3.7. Executing asynchronously and caching output</h3>
+<div class="paragraph"><p>The output of local checks, like that of agent plug-ins, can be <em>cached</em>.
+This can be necessary if a script has a longer processing time.
+Such a script is then executed asynchronously and only in a defined time interval and the last output is cached.
+If the agent is queried again before the time expires, it uses this cache for the local check and returns it in the agent output.</p></div>
+<div class="paragraph"><p><strong>Note</strong>: Caching is only available for AIX, FreeBSD, Linux, OpenWrt and Windows.</p></div>
+<div class="sect3">
+<h4 id="heading__configuring_linux">
+<span class="hidden-anchor sr-only" id="_configuring_linux"></span>Configuring Linux</h4>
+<div class="paragraph"><p>Under Linux or another Unix-like operating system, any plug-in can be executed asynchronously.
+For a local check, the necessary configuration is very similar to that of a <a href="agent_linux.html#async_plugins">plug-in</a>.
+To do this, create a subdirectory called the number of seconds you want the output to be cached and put your script in that subdirectory.</p></div>
+<div class="paragraph"><p>In the following example, the local check will be executed only every 10 minutes (600 seconds):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>/usr/lib/check_mk_agent/local/600/mylocalcheck
+<span class="tok-go">2 "My cached service" count=4 Some output of a long running script</span></code></pre></div></div>
+<div class="paragraph"><p>The cached data is written to a <a href="#folders_cache">cache directory</a>.</p></div>
+<div class="paragraph"><p>For a service that provides cached data, the cache-specific information is added to the service view:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/localchecks_srv_cached.png" alt="localchecks srv cached"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__configuring_windows">
+<span class="hidden-anchor sr-only" id="_configuring_windows"></span>Configuring Windows</h4>
+<div class="paragraph"><p>Under Windows, the configuration is also analogous to that of a <a href="agent_windows.html#customizeexecution">plug-in</a>.
+Instead of using a special subdirectory as with Linux &amp; Co, the options are set in a configuration file:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>local:
+    enabled: yes
+    execution:
+        - pattern     : $CUSTOM_LOCAL_PATH$\mylocalcheck.bat
+          async       : yes
+          run         : yes
+          cache_age   : 600</code></pre></div>
+</div>
+<div class="paragraph"><p>As you can see above, under Windows you can configure the asynchronous execution (with <code>async</code>) and the time interval (with <code>cache_age</code>) separately.</p></div>
+<div class="paragraph"><p>Alternatively, on Windows you can also do the configuration in the <a href="#bakery">Agent Bakery</a>.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_bakery">
+<span class="hidden-anchor sr-only" id="bakery"></span>4. Distribution via the Agent Bakery</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+If you are already using the <a href="wato_monitoringagents.html#bakery">Agent Bakery</a>, you can also distribute the scripts with local checks to several hosts this way.</p></div>
+<div class="paragraph"><p>To do this, first create the directory <code>custom</code> on the Checkmk server as site user below <code>~/local/share/check_mk/agents/</code> and in it a subdirectory tree for each package of local checks:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span><span class="tok-nb">cd</span><span class="tok-w"> </span>~/local/share/check_mk/agents
+<span class="tok-gp">OMD[mysite]:~$ ~/local/share/check_mk/agents$ </span>mkdir<span class="tok-w"> </span>-p<span class="tok-w"> </span>custom/mycustompackage/lib/local/</code></pre></div></div>
+<div class="paragraph"><p>The package directory in the above example is <code>mycustompackage</code>.
+Below that, the <code>lib</code> directory flags the script as a plug-in or as a local check.
+The subsequent <code>local</code> directory then allocates the file explicitly.
+Place the script with the local check in this directory.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> On Linux, you can configure asynchronous execution analogously as described in the <a href="#cache">previous chapter</a> by now creating a directory under <code>custom/mycustompackage/lib/local/</code> with the number of seconds of the execution interval and placing the script there.
+Under Windows, you can use the rule sets <span class="guihint">Set execution mode for plugins and local checks</span> and <span class="guihint">Set cache age for plugins and local checks</span>. These and other rule sets for local checks under Windows can be found in the Agent Bakery under <span class="guihint">Agent rules &gt; Windows Agent</span>.</p></div>
+<div class="paragraph"><p>In the configuration environment of Checkmk, the package directory <code>mycustompackage</code> will be shown as a new option:
+Open <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX</span>, create a new rule with <span class="guihint">Agents &gt; Agent rules &gt; Generic options &gt; Deploy custom files with agent</span> and select the newly-created package:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/localchecks_custom.png" alt="localchecks custom"></div></div>
+<div class="paragraph"><p>Checkmk will then autonomously integrate the local check correctly into the
+installation packet for the appropriate operating system.
+After the changes have been activated and the agent baked, the configuration will be complete.
+Now the agents only need to be distributed.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_diagnose">
+<span class="hidden-anchor sr-only" id="diagnose"></span>5. Error analysis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__testing_the_script">
+<span class="hidden-anchor sr-only" id="_testing_the_script"></span>5.1. Testing the script</h3>
+<div class="paragraph"><p>If you run into problems with a self-written script, you should check the following potential error sources:</p></div>
+<div class="ulist"><ul>
+<li><p>Is the script in its correct <a href="#folders_script">directory</a>?</p></li>
+<li><p>Is the script executable, and are the access permissions correct?
+This is especially relevant if you are not running the agent or script under root or the LocalSystem account.</p></li>
+<li>
+<p>Is the output compliant with the given syntax?
+The output of the local check must conform to the syntax as described in the chapters <a href="#syntax">Creating the script</a> and <a href="#extended_functions">Extended functions</a>.
+Otherwise, error-free execution cannot be guaranteed.</p>
+<div class="paragraph"><p>Problems and errors can arise in particular when a local check is intended to perform a task that requires a <a href="devel_intro.html">full-fledged check plug-in</a>, for example when the output of the local check itself contains a <em>section header</em> or the definition of a host name as used when transporting <a href="piggyback.html">piggyback data</a>.</p></div>
+</li>
+</ul></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Under Linux, when the agent script or the plug-in is called directly in a shell, different <a href="https://wiki.debian.org/EnvironmentVariables" target="_blank">environment variables</a> may be available than when called by the Agent Controller of the <a href="wato_monitoringagents.html#agents">Checkmk agent</a>.
+Under Windows, the Agent Controller also runs under the LocalSystem account, but the call in the terminal is made under a normal user or administrator.
+In addition to the different environment, this can mean that permissions are missing.
+In order to be able to analyze the output from the agent script as closely as possible to the conditions under which the Checkmk agent is called, you should use the <a href="agent_linux.html#agent_ctl_dump">Agent Controller in dump mode</a> if possible.</p></div></td>
+</tr></table></div>
+</div>
+<div class="sect2">
+<h3 id="heading__testing_agent_output_on_the_target_host">
+<span class="hidden-anchor sr-only" id="_testing_agent_output_on_the_target_host"></span>5.2. Testing agent output on the target host</h3>
+<div class="paragraph"><p>If the script itself is correct, the agent can be run on the host.
+With Unix-like operating systems such as Linux, BSD, etc., the command below is available.
+With the <code>-A</code> option the number of additional lines to be displayed following a hit can be specified.
+This number can be customized to suit the number of expected output lines:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-agent-ctl<span class="tok-w"> </span>dump<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>-v<span class="tok-w"> </span>grep<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>-A2<span class="tok-w"> </span><span class="tok-s2">"&lt;&lt;&lt;local"</span>
+<span class="tok-go">&lt;&lt;&lt;local:sep(0)&gt;&gt;&gt;</span>
+<span class="tok-go">P "My service" humidity=37;40:60;30:70 My service output\nA line with details\nAnother line with details</span>
+<span class="tok-go">cached(1618580356,600) 2 "My cached service" count=4 Some output of a long running script</span></code></pre></div></div>
+<div class="paragraph"><p>In the last line, you can recognize a cached service by the preceding <code>cache</code> information with the current Unix time and the execution interval in seconds.</p></div>
+<div class="paragraph"><p>Under Windows, you can achieve a very similar result with PowerShell and the <code>Select-String</code> 'cmdlet' as with the <code>grep</code> command under Linux. In the following command, the two digits behind the <code>Context</code> parameter determine how many lines are to be output before and after the hit:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">PS C:\Program Files (x86)\checkmk\service&gt; ./cmk-agent-ctl.exe dump | Select-String -Pattern "&lt;&lt;&lt;local" -Context 0,3</span>
+<span class="tok-go">&gt; &lt;&lt;&lt;local:sep(0)&gt;&gt;&gt;</span>
+<span class="tok-go">  0 "My 1st service" - This static service is always OK</span>
+
+<span class="tok-go">  cached(1618580520,600) 1 "My cached service on Windows" count=4 Some output of a long running script</span></code></pre></div></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Depending on the environment, programming language used, Windows version and some other conditions, you are often confronted with the <em>UTF-16</em> character set under Windows.
+In addition, the combination of <em>Carriage Return</em> and <em>Line Feed</em> for line breaks is frequently encountered there.
+However, Checkmk as a Linux application expects <em>UTF-8</em> and simple <em>Line Feeds</em> without any ifs and buts.
+Our article on the spool directory includes <a href="spool_directory.html#charset">a chapter</a> explaining the troubleshooting of character set-related problems.</p></div></td>
+</tr></table></div>
+</div>
+<div class="sect2">
+<h3 id="heading__testing_agent_output_on_the_checkmk_server">
+<span class="hidden-anchor sr-only" id="_testing_agent_output_on_the_checkmk_server"></span>5.3. Testing agent output on the Checkmk server</h3>
+<div class="paragraph"><p>As a last step the processing of the script output can also be tested on the Checkmk server with the <code>cmk</code> command — once for the service discovery:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-IIv<span class="tok-w"> </span>--detect-plugins<span class="tok-o">=</span><span class="tok-nb">local</span><span class="tok-w"> </span>mycmkserver
+<span class="tok-go">Discovering services and host labels on: mycmkserver</span>
+<span class="tok-go">mycmkserver:</span>
+<span class="tok-go">...</span>
+<span class="tok-go">+ EXECUTING DISCOVERY PLUGINS (1)</span>
+<span class="tok-go">  <span class="green">2</span> local</span>
+<span class="tok-gp"><span class="green"></span>SUCCESS</span><span class="tok-w"> </span>-<span class="tok-w"> </span>Found<span class="tok-w"> </span><span class="tok-m">2</span><span class="tok-w"> </span>services,<span class="tok-w"> </span>no<span class="tok-w"> </span>host<span class="tok-w"> </span>labels</code></pre></div></div>
+<div class="paragraph"><p>… and also the processing of the service output with a similar command:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">OMD[mysite]:~$ </span>cmk<span class="tok-w"> </span>-nv<span class="tok-w"> </span>--detect-plugins<span class="tok-o">=</span><span class="tok-nb">local</span><span class="tok-w"> </span>mycmkserver
+<span class="tok-go">Checkmk version 2.0.0p2</span>
+<span class="tok-go">+ FETCHING DATA</span>
+<span class="tok-go">...</span>
+<span class="tok-go">+ PARSE FETCHER RESULTS</span>
+<span class="tok-go">Received no piggyback data</span>
+<span class="tok-go">My cached service    <span class="red">Some output of a long running script(!!), Cache generated 6 minutes 52 seconds ago, Cache interval: 10 minutes 0 seconds, Elapsed cache lifespan: 68.71%</span></span>
+<span class="tok-go">My service           <span class="yellow">My service output\, humidity: 37.00 (warn/crit below 40.00/30.00)(!)</span></span></code></pre></div></div>
+<div class="paragraph"><p>For both commands we have shortened the output by lines not relevant for this topic.</p></div>
+<div class="paragraph"><p>If there are errors in a local check, Checkmk will identify them in the service output.
+This applies as well for erroneous metrics, for false or incomplete information in the script output, or an invalid status.
+These error messages should aid in quickly identifying errors in a script.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_folders">
+<span class="hidden-anchor sr-only" id="folders"></span>6. Files and directories</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_folders_script">
+<span class="hidden-anchor sr-only" id="folders_script"></span>6.1. Script directory on the target host</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 65%;">
+<col style="width: 35%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Path name</th>
+<th class="tableblock halign-left valign-top">Operating system</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/check_mk/lib/local/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AIX</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/local/lib/check_mk_agent/local/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FreeBSD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent/local/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HP-UX, Linux, OpenBSD, OpenWrt and Solaris</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>%ProgramData%\checkmk\agent\local</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading_folders_cache">
+<span class="hidden-anchor sr-only" id="folders_cache"></span>6.2. Cache directory on the target host</h3>
+<div class="paragraph"><p>Cached data of individual sections, including the <code>local</code> section, is stored here and appended to the agent again with each execution, as long as the data is valid.</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 65%;">
+<col style="width: 35%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Path name</th>
+<th class="tableblock halign-left valign-top">Operating system</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/tmp/check_mk/cache/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AIX</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/run/check_mk/cache/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FreeBSD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/check_mk_agent/cache/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linux, OpenWrt and Solaris</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_why_own_checks">1. Why own checks?</a></li>
+<li>
+<a href="#simple_check">2. Writing a simple local check</a><ul class="sectlevel1">
+<li><a href="#syntax">2.1. Creating the script</a></li>
+<li><a href="#distribute">2.2. Distributing the script</a></li>
+<li><a href="#add_service">2.3. Adding the service to the monitoring</a></li>
+</ul>
+</li>
+<li>
+<a href="#extended_functions">3. Extended functions</a><ul class="sectlevel1">
+<li><a href="#metrics">3.1. Metrics</a></li>
+<li><a href="#metricname">3.2. Metric name</a></li>
+<li><a href="#multiple_metrics">3.3. Multiple metrics</a></li>
+<li><a href="#dynamic_state">3.4. Calculating status dynamically</a></li>
+<li><a href="#upper_lower_thresholds">3.5. Upper and lower thresholds</a></li>
+<li><a href="#multi-line">3.6. Multi-line outputs</a></li>
+<li>
+<a href="#cache">3.7. Executing asynchronously and caching output</a><ul class="sectlevel2">
+<li><a href="#_configuring_linux">Configuring Linux</a></li>
+<li><a href="#_configuring_windows">Configuring Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#bakery">4. Distribution via the Agent Bakery</a></li>
+<li>
+<a href="#diagnose">5. Error analysis</a><ul class="sectlevel1">
+<li><a href="#_testing_the_script">5.1. Testing the script</a></li>
+<li><a href="#_testing_agent_output_on_the_target_host">5.2. Testing agent output on the target host</a></li>
+<li><a href="#_testing_agent_output_on_the_checkmk_server">5.3. Testing agent output on the Checkmk server</a></li>
+</ul>
+</li>
+<li>
+<a href="#folders">6. Files and directories</a><ul class="sectlevel1">
+<li><a href="#folders_script">6.1. Script directory on the target host</a></li>
+<li><a href="#folders_cache">6.2. Cache directory on the target host</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

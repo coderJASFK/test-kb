@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Prognosebasiertes Monitoring berechnet aus Messdaten der Vergangenheit eine Vorhersage, wie sich ein Service in Checkmk in Zukunft verhalten wird.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Prognosebasiertes Monitoring">
+<meta name="og:description" content="Prognosebasiertes Monitoring berechnet aus Messdaten der Vergangenheit eine Vorhersage, wie sich ein Service in Checkmk in Zukunft verhalten wird.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Prognosebasiertes Monitoring</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/predictive_monitoring.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/predictive_monitoring.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/predictive_monitoring.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Prognosebasiertes Monitoring</h1>
+<div class="details">
+<span id="revdate">Last modified on 14-Dec-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/predictive_monitoring.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="forecast_graphs.html">Vorhersagegraphen erstellen</a>
+<a href="graphing.html">Messwerte und Graphing</a>
+<a href="timeperiods.html">Zeitperioden (Time Periods)</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Für Checks, die Leistungswerte messen, ist es oft schwierig, die richtigen Schwellwerte festzulegen.
+Während zu niedrige Werte <span class="state1">WARN</span>- oder <span class="state2">CRIT</span>-Zustände erzeugen, die nur vermeintlich Probleme anzeigen, bleibt es bei einer zu hohen Einstellung beim Zustand <span class="state0">OK</span>, was das Monitoring blind für Probleme macht.</p></div>
+<div class="paragraph"><p>Nehmen wir als Beispiel den Service <span class="guihint">CPU load</span> eines Linux-Hosts (oder analog <span class="guihint">Processor Queue</span> eines Windows-Hosts):
+Sie haben vielleicht einen Server, der die meiste Zeit im Leerlauf ist, aber regelmäßig für einige kurze Zeiträume viel Rechenleistung benötigt.
+Nehmen wir weiter an, dass jeden Tag außer samstags und sonntags auf diesem Server von ca. 0:00 bis 7:00 Uhr morgens einige große Backup-Aufträge laufen.
+In dieser Zeit ist eine CPU-Auslastung von 10 (bei 20 Prozessorkernen) völlig normal. In der restlichen Zeit könnte sogar eine Auslastung von 3 verdächtig hoch sein.</p></div>
+<div class="paragraph"><p>In Checkmk haben Sie verschiedene Möglichkeiten, dieses Beispiel abzubilden.
+Eine davon ist, zuerst die Zeiträume mit unterschiedlicher Auslastung zu definieren und für diese Zeiten dann spezifische Schwellwerte festzulegen.
+Für unser Beispiel bedeutet das, zuerst eine neue <a href="timeperiods.html">Zeitperiode</a> für die Zeit mit hoher Auslastung zu definieren (montags bis freitags von 0:00 bis 7:00 Uhr).
+Anschließend können Sie in einer Regel für den Service (<span class="guihint">CPU load</span> bzw. <span class="guihint">Processor Queue</span>) diese neue Zeitperiode auswählen und für diese abweichende (höhere) Schwellwerte festlegen.</p></div>
+<div class="paragraph"><p>Die Nutzung einer Zeitperiode hat den Vorteil, dass immer gut nachvollziehbar ist, warum ein <span class="state1">WARN</span>-/<span class="state2">CRIT</span>-Zustand zu einem bestimmten Zeitpunkt auftrat.
+Allerdings ist die manuelle Bindung von Schwellwerten an Zeitperioden auch etwas unflexibel und manchmal auch einfach viel zu umständlich.</p></div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Falls Sie eine der kommerziellen Editionen einsetzen, steht Ihnen aber noch eine weitere Möglichkeit zu Verfügung, um das Problem zu lösen.
+Sie heißt prognosebasiertes Monitoring (<em>predictive monitoring</em>), und dabei werden die Messdaten der Vergangenheit ausgewertet um daraus eine Vorhersage zu berechnen, wie sich diese in Zukunft verhalten werden.</p></div>
+<div class="paragraph"><p>Einmal eingerichtet, ist die Vorhersage nicht mehr statisch, sondern passt sich mit der Zeit der sich ändernden Realität an:
+Die Prognose von heute ist übermorgen eine andere, weil übermorgen bereits die realen Werte von morgen einbezogen sind.
+Ohne Zeitreisen zu strapazieren kann man es auch so ausdrücken:
+Checkmk lernt kontinuierlich dazu.
+Da die Schwellwerte für die <span class="state1">WARN</span>-/<span class="state2">CRIT</span>-Zustände stets relativ zu den prognostizierten Werten festgelegt werden, lernen die Schwellwerte ebenfalls mit.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__prognosebasiertes_monitoring_einrichten">
+<span class="hidden-anchor sr-only" id="_prognosebasiertes_monitoring_einrichten"></span>2. Prognosebasiertes Monitoring einrichten</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__vom_plugin_namen_zum_prognoseparameter">
+<span class="hidden-anchor sr-only" id="_vom_plugin_namen_zum_prognoseparameter"></span>2.1. Vom Plugin-Namen zum Prognoseparameter</h3>
+<div class="paragraph"><p>Eine ganze Reihe von Checkmk-Plugins unterstützt das prognosebasierte Monitoring. Im Folgenden finden Sie einige wichtige Beispiele:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Kategorie</th>
+<th class="tableblock halign-left valign-top">Plugin-Name</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CPU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://checkmk.com/de/integrations/kernel_util" target="_blank">CPU Utilization</a><br>
+<a href="https://checkmk.com/de/integrations/cpu_loads" target="_blank">CPU Load</a><br>
+<a href="https://checkmk.com/de/integrations/vms_cpu" target="_blank">OpenVMS: CPU Utilization and IO-Wait</a>
+<a href="https://checkmk.com/de/integrations/ucd_cpu_util" target="_blank">UCD SNMP Daemon: CPU Utilization</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Festplatte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://checkmk.com/de/integrations/diskstat" target="_blank">Disk Throughput</a><br>
+<a href="https://checkmk.com/de/integrations/winperf_phydisk" target="_blank">Windows: Disk Throughput</a><br>
+<a href="https://checkmk.com/de/integrations/scaleio_volume" target="_blank">EMC ScaleIO: Volume Size and Throughput</a><br>
+<a href="https://checkmk.com/de/integrations/esx_vsphere_counters_diskio" target="_blank">VMware ESX Host Systems: Disk Throughput</a><br>
+<a href="https://checkmk.com/de/integrations/aws_ec2_disk_io" target="_blank">AWS EC2: Instance Disk IO</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Schnittstelle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://checkmk.com/de/integrations/lnx_if" target="_blank">Linux: State of Network Interfaces</a><br>
+<a href="https://checkmk.com/de/integrations/winperf_if" target="_blank">Windows: State and Performance of Network Interfaces</a><br>
+<a href="https://checkmk.com/de/integrations/interfaces" target="_blank">Traffic and Status of Network Interfaces</a><br>
+<a href="https://checkmk.com/de/integrations/if64" target="_blank">Monitor Network Interfaces via Standard MIB Using 64-Bit Counters</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p>Die Einstellungen für das prognosebasierte Monitoring finden Sie an der gleichen Stelle, an der Sie auch sonst Schwellwerte für einen Service einstellen.
+Dort finden Sie — sofern der betroffene Check dies unterstützt — die Auswahl <span class="guihint">Predictive Levels (only on CMC).</span></p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__eine_regel_für_das_prognosebasierte_monitoring_erstellen">
+<span class="hidden-anchor sr-only" id="_eine_regel_für_das_prognosebasierte_monitoring_erstellen"></span>2.2. Eine Regel für das prognosebasierte Monitoring erstellen</h3>
+<div class="paragraph"><p>Für den Service <span class="guihint">CPU load</span> des Linux-Hosts unseres Beispiels können Sie eine neue Regel mit dem Regelsatz <span class="guihint">CPU load (not utilization!)</span> unter <span class="guihint">Service monitoring rules</span> erstellen, den Sie am schnellsten mit der <a href="user_interface.html#search_setup">Suche im Setup-Menü</a> finden.</p></div>
+<div class="paragraph"><p>Im Abschnitt <span class="guihint">Value</span> finden Sie den Parameter auf Service-Ebene, für den Sie den Wert <span class="guihint">Predictive Levels (only on CMC)</span> auswählen können:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/predictive_rule_select_only_on_cmc.png" alt="Regel mit Auswahl für das prognosebasierte Monitoring."></div>
+<div class="title">Das prognosebasierte Monitoring in einer Regel auswählen</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__referenzwerte_der_vergangenheit_auswählen">
+<span class="hidden-anchor sr-only" id="_referenzwerte_der_vergangenheit_auswählen"></span>2.3. Referenzwerte der Vergangenheit auswählen</h3>
+<div class="paragraph"><p>Nach der Auswahl von <span class="guihint">Predictive Levels (only on CMC)</span> werden die Parameter angezeigt, von denen wir zunächst die ersten beiden genauer vorstellen werden:</p></div>
+<div class="imageblock" id="predictive_rule_base_parameters">
+<div class="content"><img src="../images/predictive_rule_base_parameters.png" alt="Parameter für die Referenzwerte der Vergangenheit."></div>
+<div class="title">Blick in die Vergangenheit: Auswahl der Referenzwerte</div>
+</div>
+<div class="paragraph"><p>Mit <span class="guihint">Base prediction on</span> legen Sie die Periodizität fest, in der die Wiederholung der Messdaten zu erwarten ist (monatlich, wöchentlich, täglich oder stündlich):</p></div>
+<div class="ulist"><ul>
+<li><p><span class="guihint">Day of the month</span>: Die Messwerte jedes Monatstags werden miteinander verglichen, d.h. des 1., 2., 3., …​ jedes Monats.</p></li>
+<li><p><span class="guihint">Day of the week</span>: Der Vergleich basiert auf den Wochentagen, d.h. für jeden Wochentag (montags, dienstags, mittwochs, etc.) wird eine andere Prognose erstellt. Dies ist meist die richtige Einstellung.</p></li>
+<li><p><span class="guihint">Hour of the day</span>: Es werden die einzelnen Stunden jedes Tages verglichen, d.h. die Prognose wiederholt sich täglich.</p></li>
+<li><p><span class="guihint">Minute of the hour</span>: Der Vergleich auf Minutenbasis und die stündliche Wiederholung ist in der Regel nur nützlich, um eine Prognose zu testen.</p></li>
+</ul></div>
+<div class="paragraph"><p>Im nächsten Parameter <span class="guihint">Time horizon</span> geben Sie ein, bis zu wie vielen Tagen in der Vergangenheit Checkmk die Messdaten auswerten soll.
+Checkmk greift dabei auf die in den <a href="graphing.html#rrds">RRD-Dateien</a> gespeicherten historischen Daten zu.
+Obwohl die Messdaten in den RRD-Dateien 4 Jahre lang gespeichert werden, macht es keinen Sinn, zu weit in die Vergangenheit zurückzugehen.
+Zum einen könnten sich die typischen Werte der jüngeren von denen der älteren Vergangenheit unterscheiden.</p></div>
+<div class="paragraph"><p>Zum anderen gibt es, je weiter Sie in die Vergangenheit zurückschauen, desto weniger Messdaten pro Zeiteinheit für den Vergleich.
+Das liegt daran, dass Checkmk die minütlich vorliegenden Messdaten in den RRD-Dateien <em>standardmäßig</em> in drei Phasen verdichtet, um Platz zu sparen: nach 2, 10 und nach 90 Tagen.
+Verdichtung bedeutet, dass aus mehreren Messdaten das Minimum, das Maximum und der Durchschnitt berechnet werden und diese berechneten Daten die ursprünglich gemessenen Daten ersetzen.
+Liegen die Messdaten der letzten beiden Tage in der vollen Auflösung von 1 Minute vor, so beträgt die Auflösung nach 2 Tagen 5 Minuten, nach 10 Tagen 30 Minuten und nach 90 Tagen 6 Stunden.
+Greift Checkmk für das prognosebasierte Monitoring auf historische Daten zu, wird von den drei gespeicherten Werten immer das Maximum genommen.</p></div>
+<div class="paragraph"><p>Für unseren Beispiel-Server mit der hohen Auslastung Montag bis Freitag nachts bietet es sich an, die wöchentliche <em>Referenzperiode</em> auszuwählen und einen <em>Referenzzeitraum</em> von (maximal) 90 Tagen.
+90 Tage sind ein akzeptabler Kompromiss, da einerseits in diesem Zeitraum genügend Vergleichstage enthalten sind und andererseits die Messdaten in einer Auflösung von immerhin noch 30 Minuten vorliegen - sofern die Default-Werte nicht verändert wurden.</p></div>
+<div class="paragraph"><p>Wählen Sie als <span class="guihint">Base prediction on</span> den Eintrag <span class="guihint">Day of the week</span> aus und geben Sie als <span class="guihint">Time horizon</span> <code>90</code> ein, so wie es das <a href="#predictive_rule_base_parameters">Bild oben</a> zeigt.</p></div>
+<div class="paragraph"><p>Mit der Festlegung der wöchentlichen Referenzperiode für einen 90-Tage-Zeitraum in der Vergangenheit hat Checkmk die notwendigen Informationen, um die Referenzkurve zu berechnen.
+Dabei wird jeder Montag in der Zeitperiode ausgewertet (bei 90 Tagen sind es 12 Montage), jeder Messwert eines Montags mit den Messwerten der anderen Montage zur gleichen Uhrzeit verglichen und der Durchschnitt berechnet.
+Nach dem Montag kümmert sich Checkmk in gleicher Weise um die anderen Wochentage Dienstag bis Sonntag.
+Die so berechnete Referenzkurve der Vergangenheit wird dann fortgeschrieben und damit zur prognostizierten Referenzkurve für die Zukunft.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Die Werte, die zur Berechnung des Durchschnitts für die Referenzperiode hergenommen werden, können selbst bereits berechnete (d.h. nicht gemessene) Werte sein - je nach Auflösung der historischen Daten in den RRD-Dateien.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Die von Checkmk auf Basis der beiden bisher festgelegten Parameter (Referenzperiode und Referenzzeitraum) berechnete Referenzkurve ist im folgenden Bild als schwarze Linie gezeichnet:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/predictive_graph.png" alt="Prognose-Graph mit zwei Kurven für die prognostizierten und die aktuellen Werte und farbige Bereiche für die Zustände."></div></div>
+<div class="paragraph"><p>Dieses Bild zeigt als Vorgriff den Prognose-Graphen, den Sie sich nach der vollständig abgeschlossenen Einrichtung anzeigen lassen können.
+Außer der schwarzen Referenzkurve werden die aktuellen Werte als blaue Linie dargestellt - sofern sie in der dargestellten Zeitperiode verfügbar sind.</p></div>
+<div class="paragraph"><p>Was fehlt, um die Einrichtung abzuschließen, sind die Festlegungen der Schwellwerte für die Zustände <span class="state1">WARN</span> und <span class="state2">CRIT</span>, die im Graphen mit gelber und roter Hintergrundfarbe markiert sind.
+Um die Festlegung dieser Schwellwerte geht es im nächsten Abschnitt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__schwellwerte_für_die_prognose_festlegen">
+<span class="hidden-anchor sr-only" id="_schwellwerte_für_die_prognose_festlegen"></span>2.4. Schwellwerte für die Prognose festlegen</h3>
+<div class="paragraph"><p>Die Schwellwerte für <span class="state1">WARN</span> und <span class="state2">CRIT</span> legen Sie in Abhängigkeit der in der Referenzkurve abgebildeten prognostizierten Werte fest.</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/predictive_rule_threshold_parameters.png" alt="Parameter für die Schwellwerte der Prognose."></div>
+<div class="title">Blick in die Zukunft: Schwellwerte für die Prognose</div>
+</div>
+<div class="paragraph"><p>Um die Auswirkung der verschiedenen Parameterwerte zur Festlegung der Schwellwerte zu verdeutlichen, sehen wir uns einen einzigen Wert auf der Referenzkurve genau an.
+Wir nehmen an, dass der prognostizierte Wert des Services <span class="guihint">CPU load</span> freitags um 3:30 Uhr 10 beträgt.</p></div>
+<div class="paragraph"><p>Für die oberen Schwellwerte gibt es den Parameter <span class="guihint">Dynamic levels - upper bound</span>, für die unteren Schwellwerte <span class="guihint">Dynamic levels - lower bound</span>.
+Für beide Parameter haben Sie 3 Auswahlmöglichkeiten, die in den folgenden 3 Abschnitten beschrieben werden.</p></div>
+<div class="sect3">
+<h4 id="heading__absolute_differenz_zur_vorhersage">
+<span class="hidden-anchor sr-only" id="_absolute_differenz_zur_vorhersage"></span>Absolute Differenz zur Vorhersage</h4>
+<div class="paragraph"><p>Mit <span class="guihint">Absolute difference from prediction</span> werden die Schwellwerte berechnet, indem der prognostizierte Wert um einen festen, absoluten Wert erhöht bzw. vermindert wird.
+Beispiel: <span class="guihint">Warning at</span> <code>2.00</code> wird dazu führen, dass bei einem Wert über 12 und unter 8 eine Warnung angezeigt wird.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__relative_differenz_zur_vorhersage">
+<span class="hidden-anchor sr-only" id="_relative_differenz_zur_vorhersage"></span>Relative Differenz zur Vorhersage</h4>
+<div class="paragraph"><p>Mit <span class="guihint">Relative difference from prediction</span> werden die Schwellwerte berechnet, indem der prognostizierte Wert um einen Prozentsatz erhöht bzw. vermindert wird.
+Beispiel: <span class="guihint">Warning at</span> <code>10.0</code> % wird dazu führen, dass bei einem Wert über 11 und unter 9 eine Warnung angezeigt wird.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__in_relation_zur_standardabweichung">
+<span class="hidden-anchor sr-only" id="_in_relation_zur_standardabweichung"></span>In Relation zur Standardabweichung</h4>
+<div class="paragraph"><p>Mit <span class="guihint">In relation to standard deviation</span> werden die Schwellwerte berechnet, indem der prognostizierte Wert um ein Vielfaches der Standardabweichung erhöht bzw. vermindert wird.
+Die Standardabweichung gibt an, wie stark sich die Werte in einer Referenzperiode (z.B. freitags um 3:30 Uhr) unterscheiden.</p></div>
+<div class="paragraph"><p>Mit dieser Option ist die Berechnung der Schwellwerte nicht so einfach vorherzusagen, da Checkmk die Standardabweichung aus allen Messwerten der Referenzperiode intern kalkuliert.
+Zur Verdeutlichung der Auswirkung benötigen wir weitere Informationen über die 12 Messwerte der Referenzperiode freitags um 3:30 Uhr:
+Wir nehmen an, dass 10 Messwerte gleich 10 sind, einer 11 und einer 9.
+Die 12 Messwerte haben also den Mittelwert von 10 (was dem prognostizierten Wert entspricht), eine Varianz von ca. 0,167 und eine Standardabweichung von ca. 0,41.
+(Die Berechnungsdetails sparen wir uns hier, können aber auf verschiedenen <a href="https://de.statista.com/statistik/lexikon/definition/126/standardabweichung/" target="_blank">Statistikseiten</a> im Internet nachgelesen werden.)</p></div>
+<div class="paragraph"><p>Beispiel: <span class="guihint">Warning at</span> <code>1.00</code> als Vielfaches der Standardabweichung wird dazu führen, dass bei einem Wert über 10,41 und unter 9,59 eine Warnung angezeigt wird.</p></div>
+<div class="paragraph"><p>Um ungewollte <span class="state1">WARN</span>-/<span class="state2">CRIT</span>-Zustände zu vermeiden, werden keine Schwellwerte angewendet, wenn die Standardabweichung undefiniert ist (z. B. weil es nur einen Messwert in der Referenzperiode gibt) oder Null ist (wenn alle Messwerte identisch sind).</p></div>
+<div class="paragraph"><p>Allgemein gilt die Regel:
+Je gleichmäßiger die Werte der Vergangenheit sind, desto geringer ist die Standardabweichung und desto strikter die Prognose.
+Diese Option bietet sich daher an, um Schwellwerte enger zu definieren für eine Referenzperiode mit stabilen, gleichmäßigen Werten.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__mindestwerte_der_oberen_schwellwerte">
+<span class="hidden-anchor sr-only" id="_mindestwerte_der_oberen_schwellwerte"></span>Mindestwerte der oberen Schwellwerte</h4>
+<div class="paragraph"><p>Schließlich haben Sie mit <span class="guihint">Limit for upper bound dynamic levels</span> die Möglichkeit für die oberen Schwellwerte absolute Mindestwerte vorzugeben.
+Damit können Sie ungewollte <span class="state1">WARN</span>-/<span class="state2">CRIT</span>-Zustände vorbeugen für Zeiten, in denen die prognostizierten Werte sehr niedrig sind.</p></div>
+<div class="paragraph"><p>Beispiel: Ein <span class="guihint">Warning level</span> von <code>2.00</code> wird dazu führen, dass eine Warnung nur bei einem Wert über 2 angezeigt wird, selbst wenn der obere Schwellwert für eine Warnung bei 1,5 liegt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__darstellung_der_schwellwerte_im_prognose_graphen">
+<span class="hidden-anchor sr-only" id="_darstellung_der_schwellwerte_im_prognose_graphen"></span>Darstellung der Schwellwerte im Prognose-Graphen</h4>
+<div class="paragraph"><p>Die beispielhaft für <em>einen</em> Wert beschriebenen Auswirkungen berechnet Checkmk für <em>alle</em> Werte der Referenzkurve.
+Das Ergebnis sehen Sie im <a href="#predictive_graph">Prognose-Graphen</a>, der im nächsten Kapitel noch genauer beschrieben wird.
+Im Graphen sind ober- und unterhalb der Referenzkurve die Kurven für die oberen und unteren Schwellwerte gezeichnet.
+Die Bereiche für <span class="state1">WARN</span> sind in gelb und für <span class="state2">CRIT</span> in rot eingefärbt.</p></div>
+<div class="paragraph"><p>Sie sollten die Bereiche für <span class="state1">WARN</span> und <span class="state2">CRIT</span> im Prognose-Graphen kritisch überprüfen, insbesondere wenn Sie die Schwellwerte aus der Standardabweichung berechnen lassen, da sich die der Standardabweichung zugrundeliegenden Werte nicht direkt aus der Checkmk-Oberfläche ablesen lassen.
+Durch die Prüfung und ggf. die Anpassung der Schwellwerte können Sie vermeiden, dass der Service zu häufig ungewollt die Zustände <span class="state1">WARN</span> oder <span class="state2">CRIT</span> annimmt.</p></div>
+<div class="paragraph"><p>Damit ist die Einrichtung des prognosebasierten Monitoring abgeschlossen.
+Im nächsten Kapitel erfahren Sie, wie sich die Einrichtung im Monitoring bemerkbar macht und wie Sie sich den Prognose-Graphen anzeigen lassen können.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__die_prognose_analysieren">
+<span class="hidden-anchor sr-only" id="_die_prognose_analysieren"></span>3. Die Prognose analysieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Haben Sie das prognosebasierte Monitoring für einen Service eingerichtet, die <a href="wato.html#activate_changes">Änderungen aktiviert</a> und hat Checkmk danach den Check für den Service einmal ausgeführt, wird das neue Symbol <span class="image-inline"><img src="../images/icons/icon_prediction.png" alt="icon prediction"></span> in der Service-Liste angezeigt:</p></div>
+<div class="imageblock">
+<div class="content"><img src="../images/predictive_service_list.png" alt="Service-Liste mit zwei Einträgen und Symbolen für die Anzeige des Prognose-Graphen."></div>
+<div class="title">Mit dem neuen Symbol lässt sich der Prognose-Graph öffnen</div>
+</div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Insbesondere nach der Ersteinrichtung für einen Service kann es vorkommen, dass das Symbol fehlt, da noch nicht genügend Daten für die konfigurierte Prognose bereitstehen.
+In diesem Fall wird in der Spalte <span class="guihint">Summary</span> eine Meldung der Art <code>(no reference for prediction yet)</code> angezeigt.
+Sobald genügend Daten vorhanden sind, wird sich das Problem von selbst erledigen.
+Falls Sie in einer frisch aufgesetzten Instanz allerdings einen 90-Tage-Zeitraum in der Vergangenheit auswerten wollen, werden Sie länger warten müssen.</p></div></td>
+</tr></table></div>
+<div class="paragraph"><p>Klicken Sie in der Service-Liste auf <span class="image-inline"><img src="../images/icons/icon_prediction.png" alt="icon prediction"></span> und eine grafische Darstellung des aktuellen Prognosezeitraums, der Prognose-Graph
+(<em>prediction graph</em>), wird angezeigt:</p></div>
+<div class="imageblock border" id="predictive_graph"><div class="content"><img src="../images/predictive_graph.png" alt="Prognose-Graph mit zwei Kurven für die prognostizierten und die aktuellen Werte und farbige Bereiche für die Zustände."></div></div>
+<div class="paragraph"><p>Im Graphen sehen Sie die Referenzkurve als schwarze Linie, die aktuellen Werte als blaue Linie und die Bereiche für die Zustände <span class="state0">OK</span> in weißer,
+für <span class="state1">WARN</span> in gelber und für <span class="state2">CRIT</span> in roter Hintergrundfarbe.</p></div>
+<div class="paragraph"><p>Der dargestellte Zeitraum orientiert sich an der ausgewählten Referenzperiode.
+Zum Beispiel können Sie sich bei einer wöchentliche Periode die einzelnen Wochentage ansehen und mit der Liste über dem Graphen zu einem anderen Tag wechseln.
+Mit dem speziellen Listeneintrag <span class="guihint">Everyday</span> zeigt Ihnen der Graph die Durchschnittswerte aller Tage, für die Daten verfügbar sind.</p></div>
+<div class="paragraph"><p>Im Beispielgraphen ist die hohe Auslastung nachts und die niedrige Auslastung tagsüber zu erkennen.
+Von 0:00 bis 04:00 Uhr sind die aktuellen Werte (blaue Linie) niedriger als die prognostizierte Referenzkurve (schwarze Linie), und zwar so niedrig, dass die unteren Schwellwerte zeitweise unterschritten wurden und <span class="state1">WARN</span>-/<span class="state2">CRIT</span>-Zustände ausgelöst haben.
+Ähnlich ist das Verhalten im Zeitraum zwischen 08:30 und 23:30 Uhr, in der sich die blaue Linie konstant im unteren <span class="state2">CRIT</span>-Bereich befindet.
+Diese Zustände könnten in Zukunft durch höhere Werte für die unteren Schwellwerte vermieden werden.</p></div>
+<div class="paragraph"><p>Schließlich lässt sich aus dem Graphen ablesen, dass die oberen Schwellwerte auf der Standardabweichung basieren, denn zwischen 05:00 und 07:30 Uhr erhöhen sich tendenziell die oberen Schwellwerte bei gleichzeitig abnehmenden Werten in der Referenzkurve.
+Dieses Verhalten kann nur durch die Standardabweichung erklärt werden, da die anderen beiden Optionen (absoluter und prozentualer Wert) zu einer Veränderung der Schwellwerte in Richtung der Referenzkurve geführt hätten.</p></div>
+<div class="admonitionblock tip"><table><tr>
+<td class="icon"><img src="../images/icons/tip.png" alt="Tip"></td>
+<td class="content"><div class="paragraph"><p>Wie beim erstmaligen Einrichten wird auch jede Änderung des prognosebasierten Monitoring erst nach einem neuen Check des Services wirksam.
+Sie brauchen auf den nächsten regelmäßigen Check nicht zu warten, sondern können ihn manuell in der Service-Liste anstoßen mit dem Symbol <span class="image-inline"><img src="../images/icons/icon_menu.png" alt="icon menu"></span> und dem Menüeintrag <span class="guihint">Reschedule 'Check_MK' service.</span></p></div></td>
+</tr></table></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#_prognosebasiertes_monitoring_einrichten">2. Prognosebasiertes Monitoring einrichten</a><ul class="sectlevel1">
+<li><a href="#_vom_plugin_namen_zum_prognoseparameter">2.1. Vom Plugin-Namen zum Prognoseparameter</a></li>
+<li><a href="#_eine_regel_f%C3%BCr_das_prognosebasierte_monitoring_erstellen">2.2. Eine Regel für das prognosebasierte Monitoring erstellen</a></li>
+<li><a href="#_referenzwerte_der_vergangenheit_ausw%C3%A4hlen">2.3. Referenzwerte der Vergangenheit auswählen</a></li>
+<li>
+<a href="#_schwellwerte_f%C3%BCr_die_prognose_festlegen">2.4. Schwellwerte für die Prognose festlegen</a><ul class="sectlevel2">
+<li><a href="#_absolute_differenz_zur_vorhersage">Absolute Differenz zur Vorhersage</a></li>
+<li><a href="#_relative_differenz_zur_vorhersage">Relative Differenz zur Vorhersage</a></li>
+<li><a href="#_in_relation_zur_standardabweichung">In Relation zur Standardabweichung</a></li>
+<li><a href="#_mindestwerte_der_oberen_schwellwerte">Mindestwerte der oberen Schwellwerte</a></li>
+<li><a href="#_darstellung_der_schwellwerte_im_prognose_graphen">Darstellung der Schwellwerte im Prognose-Graphen</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_die_prognose_analysieren">3. Die Prognose analysieren</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

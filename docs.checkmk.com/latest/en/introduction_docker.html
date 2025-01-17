@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="Installing Checkmk in a Docker container is very easy with the official image. The relevant options are described in more detail here.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Installation as a Docker container">
+<meta name="og:description" content="Installing Checkmk in a Docker container is very easy with the official image. The relevant options are described in more detail here.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Installation as a Docker container</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/introduction_docker.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/introduction_docker.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/introduction_docker.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Installation as a Docker container</h1>
+<div class="details">
+<span id="revdate">Last modified on 11-Apr-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/onprem/en/introduction_docker.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="intro_setup.html">Setting up Checkmk</a>
+<a href="managing_docker.html">Checkmk server in a Docker container</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__the_basics">
+<span class="hidden-anchor sr-only" id="_the_basics"></span>1. The basics</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are numerous reasons why many users would want to operate software in a Docker container.
+Checkmk can also be used in a Docker environment.
+One application scenario may be to monitor a dynamically-created container group and to make Checkmk a part of this group.
+Should the container group no longer be needed the Checkmk site can also be removed.</p></div>
+<div class="paragraph"><p><strong>Important</strong>: Even it is possible and very easy to integrate Checkmk into a containerized infrastructure, it is not always the best solution.
+Since you get a reduced performance with every virtualization and your monitoring in general should have a minimum of physical dependencies,
+it is not a good solution to use a Checkmk container to monitor your complete infrastructure.
+But it may be a good option to integrate a Checkmk container in a self-contained container cluster, because in this case you would be able to monitor this cluster from the inside.
+So, especially in this case verify whether the Docker/Container tool is the best solution for your actual requirements.</p></div>
+<div class="paragraph"><p>In order to make the setting-up as easy as possible for you, we supply each <a href="intro_setup.html#editions">Checkmk edition</a> inclusive of its own specific image, which contains the Linux operating system Ubuntu in addition to Checkmk:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://hub.docker.com/r/checkmk/check-mk-raw/" target="_blank">Docker Hub</a> or <a href="https://checkmk.com/download?method=docker&amp;edition=cre&amp;version=stable" target="_blank">Checkmk download page</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commercial editions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://checkmk.com/download?method=docker&amp;edition=cce&amp;version=stable" target="_blank">Checkmk download page</a> (from <span class="image-inline"><img src="../images/icons/CSE.png" alt="CSE" width="20" title="Checkmk Cloud"></span> <strong>Checkmk Cloud</strong> onwards, i.e. Checkmk Cloud and Checkmk MSP), <a href="https://portal.checkmk.com/" target="_blank">Checkmk customer portal</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph"><p><strong>Note:</strong> Deployment in Docker Hub allows you to download and install with a single command, as we will show in the <a href="#install_cre">chapter on installing Checkmk Raw</a>.</p></div>
+<div class="paragraph"><p>In this article we will guide you through the installation of Checkmk in Docker, and show a few tricks that will make life with Checkmk in Docker easier.
+Further information can be found in the article <a href="managing_docker.html">Checkmk server in a Docker container</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_prerequisites">
+<span class="hidden-anchor sr-only" id="prerequisites"></span>2. Prerequisites</h2>
+<div class="sectionbody"><div class="paragraph"><p>To execute the commands presented in this article you will need a working <a href="https://docs.docker.com/engine/install/" target="_blank">Docker Engine</a> installation and basic knowledge of its use.</p></div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_install_cre">
+<span class="hidden-anchor sr-only" id="install_cre"></span>3. Installation of Checkmk Raw</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CRE.svg" alt="CRE" class="icon-left"></span>
+Getting started with <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw"></span> <strong>Checkmk Raw</strong> in Docker is easy.
+You can get a suitable image directly from the Docker Hub.
+This is done with just a single command on the command line.
+With this command not only will a Docker container with Checkmk be created, but also a monitoring site named <code>cmk</code> is set up and started.
+This site will be immediately available for a login as the <code>cmkadmin</code> user.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>container<span class="tok-w"> </span>run<span class="tok-w"> </span>-dit<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-m">8080</span>:5000<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-m">8000</span>:8000<span class="tok-w"> </span>--tmpfs<span class="tok-w"> </span>/opt/omd/sites/cmk/tmp:uid<span class="tok-o">=</span><span class="tok-m">1000</span>,gid<span class="tok-o">=</span><span class="tok-m">1000</span><span class="tok-w"> </span>-v<span class="tok-w"> </span>monitoring:/omd/sites<span class="tok-w"> </span>--name<span class="tok-w"> </span>monitoring<span class="tok-w"> </span>-v<span class="tok-w"> </span>/etc/localtime:/etc/localtime:ro<span class="tok-w"> </span>--restart<span class="tok-w"> </span>always<span class="tok-w"> </span>checkmk/check-mk-raw:2.3.0-latest
+<span class="tok-go">Unable to find image 'checkmk/check-mk-raw:2.3.0-latest' locally</span>
+<span class="tok-go">2.3.0-latest: Pulling from checkmk/check-mk-raw</span>
+<span class="tok-go">43f89b94cd7d: Pull complete</span>
+<span class="tok-go">c6b4550f40cc: Pull complete</span>
+<span class="tok-go">86f6e730bc27: Pull complete</span>
+<span class="tok-go">cf0f3e792f33: Pull complete</span>
+<span class="tok-go">81777b9c4e2e: Pull complete</span>
+<span class="tok-go">da44e2c4d930: Pull complete</span>
+<span class="tok-go">Digest: sha256:8a71002e019fab358bcefb204d6bff3390713781df99fb5c6587b289df9796e4</span>
+<span class="tok-go">Status: Downloaded newer image for checkmk/check-mk-raw:2.3.0-latest</span>
+<span class="tok-go">86e14b7d604033cc44f4b92c25ce67f45967c82db3e84f2e16fee76f4ff48fdf</span></code></pre></div></div>
+<div class="paragraph"><p>Some more information on the available options:</p></div>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-p 8080:5000</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default the container’s web server listens on port 5000.
+In this example port 8080 of the Docker node will be published to the port of the container so that it is accessible from outside.
+If you do not have another container or process using the standard HTTP port 80, you can also tie the container to it.
+In such a case the option will look like this: <code>-p 80:5000</code>.
+The use of HTTPS will be explained in the article <a href="managing_docker.html">Checkmk server in a Docker container</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-p 8000:8000</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Since Checkmk <span class="new">2.1.0</span> you also have to publish the port for the Agent Receiver in order to be able to <a href="agent_linux.html#registration">register the agent controller</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--tmpfs /opt/omd/sites/cmk/tmp:uid=1000,gid=1000</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For optimal performance, you can use a temporary file system directly in the RAM of the Docker node.
+The path for this file system is specified with this option.
+If you change the site ID this path must also be edited accordingly.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-v monitoring:/omd/sites</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This option binds the data from the site in this container to a persistent location in the Docker node’s file system.
+The data is not lost if the container is deleted.
+The code before the colon determines the name — in this way you can clearly identify the storage location later, for example, with the <code>docker volume ls</code> command.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--name monitoring</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This defines the name of the container.
+This name must be unique and may not be used again on the Docker node.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-v /etc/localtime:/etc/localtime:ro</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This option allows you to use the same time zone in the container as that used in the Docker node — at the same time the file is integrated as read only (<code>ro</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--restart always</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A container does not normally restart automatically after it has been stopped.
+With this option you can ensure that it always starts again automatically.
+However, if you manually stop a container, it will only be restarted if the Docker daemon restarts or the container itself is restarted manually.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>checkmk/check-mk-raw:2.3.0-latest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Checkmk image label in the <code>&lt;repository&gt;:&lt;tag&gt;</code> format.
+The exact labels can be read out with the command <code>docker images</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph" id="login"><p>After all needed files have been loaded and the container has been started, you should access the Checkmk GUI via <code>http://localhost:8080/cmk/check_mk/</code>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/login.png" alt="Checkmk login dialog." width="60%"></div></div>
+<div class="paragraph"><p>You can now for the first time <a href="intro_gui.html">log in and try Checkmk out</a>.
+You will find the provisional password for the <code>cmkadmin</code> account in the logs that are written for this container (the output is abbreviated to the essential information here in this example):</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>container<span class="tok-w"> </span>logs<span class="tok-w"> </span>monitoring
+<span class="tok-go">Created new site cmk with version 2.3.0p1.cre.</span>
+
+<span class="tok-go">  The site can be started with <strong>omd start cmk</strong>.</span>
+<span class="tok-go">  The default web UI is available at <strong>http://73a86e310b60/cmk/</strong></span>
+
+<span class="tok-go">  The admin user for the web applications is <strong>cmkadmin</strong> with password: <strong>2JLysBmv</strong></span>
+<span class="tok-go">  For command line administration of the site, log in with <strong>'omd su cmk'</strong>.</span>
+<span class="tok-go">  After logging in, you can change the password for cmkadmin with <strong>'cmk-passwd cmkadmin'</strong>.</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Note:</strong> The URL displayed in the log for accessing the web interface with the ID of the container is only recognized within the container and is not suitable for access from outside in the web browser.</p></div>
+<div class="sect2">
+<h3 id="heading_short-lived_containers">
+<span class="hidden-anchor sr-only" id="short-lived_containers"></span>3.1. Short-lived containers</h3>
+<div class="paragraph"><p>If you are sure that the data in the Checkmk container site should only be available in this special container,
+you can either refrain from assigning a persistent data storage to the container, or you can automatically remove this storage when the container is stopped.</p></div>
+<div class="paragraph"><p>To go without persistent storage, simply omit the <code>-v monitoring:/omd/sites</code> option:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>container<span class="tok-w"> </span>run<span class="tok-w"> </span>-dit<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-m">8080</span>:5000<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-m">8000</span>:8000<span class="tok-w"> </span>--tmpfs<span class="tok-w"> </span>/opt/omd/sites/cmk/tmp:uid<span class="tok-o">=</span><span class="tok-m">1000</span>,gid<span class="tok-o">=</span><span class="tok-m">1000</span><span class="tok-w"> </span>--name<span class="tok-w"> </span>monitoring<span class="tok-w"> </span>-v<span class="tok-w"> </span>/etc/localtime:/etc/localtime:ro<span class="tok-w"> </span>--restart<span class="tok-w"> </span>always<span class="tok-w"> </span>checkmk/check-mk-raw:2.3.0-latest</code></pre></div></div>
+<div class="paragraph"><p>To create a persistent storage and remove it automatically when the container stops, use the following command</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>container<span class="tok-w"> </span>run<span class="tok-w"> </span>--rm<span class="tok-w"> </span>-dit<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-m">8080</span>:5000<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-m">8000</span>:8000<span class="tok-w"> </span>--tmpfs<span class="tok-w"> </span>/opt/omd/sites/cmk/tmp:uid<span class="tok-o">=</span><span class="tok-m">1000</span>,gid<span class="tok-o">=</span><span class="tok-m">1000</span><span class="tok-w"> </span>-v<span class="tok-w"> </span>/omd/sites<span class="tok-w"> </span>--name<span class="tok-w"> </span>monitoring<span class="tok-w"> </span>-v<span class="tok-w"> </span>/etc/localtime:/etc/localtime:ro<span class="tok-w"> </span>checkmk/check-mk-raw:2.3.0-latest</code></pre></div></div>
+<div class="paragraph"><p>This command — unlike the previous one — has only two other options:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>Use the <code>--rm</code> option at the start to pass the command that the data storage for the container should also be removed when the container stops. This saves you having to tidy-up manually if you have many short-lived Checkmk containers.</p>
+<div class="paragraph"><p><strong>Important</strong>: When stopping, the container itself is completely removed!</p></div>
+</li>
+<li><p>The <code>-v /omd/sites</code> option is altered compared to the above. It no longer contains a self-assigned name, otherwise the data storage will not be deleted correctly.</p></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_install_cee">
+<span class="hidden-anchor sr-only" id="install_cee"></span>4. Installation of the commercial editions</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+You can also run the commercial editions in a Docker container.
+The images of the commercial editions are not freely-available through Docker Hub.
+Download the desired edition and version from the <a href="https://checkmk.com/download?method=docker&amp;edition=cce&amp;version=stable" target="_blank">Checkmk download page</a> (from Checkmk Cloud onwards) or from the <a href="https://portal.checkmk.com/" target="_blank">Checkmk customer portal</a>.</p></div>
+<div class="paragraph"><p>Load the image from the downloaded tar archive file into Docker, in the following example for Checkmk Cloud:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>load<span class="tok-w"> </span>-i<span class="tok-w"> </span>check-mk-cloud-docker-2.3.0p1.tar.gz
+<span class="tok-go">1f35d34cf8fa: Loading layer [==================================================&gt;]  2.048kB/2.048kB</span>
+<span class="tok-go">9fcc49e3e223: Loading layer [==================================================&gt;]  365.5MB/365.5MB</span>
+<span class="tok-go">96507768f1a4: Loading layer [==================================================&gt;]  261.2MB/261.2MB</span>
+<span class="tok-go">a65c9018ee9b: Loading layer [==================================================&gt;]   1.27GB/1.27GB</span>
+<span class="tok-go">4dbb1e959fe6: Loading layer [==================================================&gt;]  7.168kB/7.168kB</span>
+<span class="tok-go">Loaded image: checkmk/check-mk-cloud:2.3.0p1</span></code></pre></div></div>
+<div class="paragraph"><p>You can then start the container with a very similar command to that described above.
+Just take care that you use the name of the <code>Loaded image</code> from the previous command output in the following start command, so in this example <code>checkmk/check-mk-cloud:2.2.0p1</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>container<span class="tok-w"> </span>run<span class="tok-w"> </span>-dit<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-m">8080</span>:5000<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-m">8000</span>:8000<span class="tok-w"> </span>--tmpfs<span class="tok-w"> </span>/opt/omd/sites/cmk/tmp:uid<span class="tok-o">=</span><span class="tok-m">1000</span>,gid<span class="tok-o">=</span><span class="tok-m">1000</span><span class="tok-w"> </span>-v<span class="tok-w"> </span>monitoring:/omd/sites<span class="tok-w"> </span>--name<span class="tok-w"> </span>monitoring<span class="tok-w"> </span>-v<span class="tok-w"> </span>/etc/localtime:/etc/localtime:ro<span class="tok-w"> </span>--restart<span class="tok-w"> </span>always<span class="tok-w"> </span>checkmk/check-mk-cloud:2.3.0p1
+<span class="tok-go">f00d10fcb16313d3539065933b90c4dec9f81745f3d7283d794160f4f9b28df1</span></code></pre></div></div>
+<div class="paragraph"><p>After starting the container, you can log in to the Checkmk web interface as described at the <a href="#login">Installation of Checkmk Raw</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_update">
+<span class="hidden-anchor sr-only" id="update"></span>5. Update</h2>
+<div class="sectionbody"><div class="paragraph"><p>How to update Checkmk in a Docker container is described in the <a href="update.html#updatedocker">Updates and Upgrades</a> article.</p></div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_uninstall">
+<span class="hidden-anchor sr-only" id="uninstall"></span>6. Uninstall</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When uninstalling, remove the Docker container and optionally the data created when the container was created.</p></div>
+<div class="paragraph"><p>Have the Docker containers listed:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>container<span class="tok-w"> </span>ls<span class="tok-w"> </span>-a
+<span class="tok-go">CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS                    PORTS                              NAMES</span>
+<span class="tok-go">9a82ddbabc6e   checkmk/check-mk-cloud:2.3.0p1   "/docker-entrypoint.…"   57 minutes ago   Up 53 minutes (healthy)   6557/tcp, 0.0.0.0:8080-&gt;5000/tcp   monitoring</span></code></pre></div></div>
+<div class="paragraph"><p>Take over the displayed <code>CONTAINER ID</code> from the command output for the next commands.</p></div>
+<div class="paragraph"><p>First stop the container and then remove it:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>container<span class="tok-w"> </span>stop<span class="tok-w"> </span>9a82ddbabc6e
+<span class="tok-go">9a82ddbabc6e</span>
+<span class="tok-gp">root@linux# </span>docker<span class="tok-w"> </span>container<span class="tok-w"> </span>rm<span class="tok-w"> </span>9a82ddbabc6e
+<span class="tok-go">9a82ddbabc6e</span></code></pre></div></div>
+<div class="paragraph"><p>If you created the container with the <code>-v monitoring:/omd/sites</code> option, you can also remove the Docker volume created by this:
+<code>docker volume ls</code> displays the volumes and <code>docker volume rm &lt;VOLUME NAME&gt;</code> deletes the volume.</p></div>
+<div class="paragraph"><p>Finally, you can remove the image in a similar way:
+with <code>docker images</code> you get the list of images and <code>docker rmi &lt;IMAGE ID&gt;</code> removes the selected image.</p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li><a href="#_the_basics">1. The basics</a></li>
+<li><a href="#prerequisites">2. Prerequisites</a></li>
+<li>
+<a href="#install_cre">3. Installation of Checkmk Raw</a><ul class="sectlevel1"><li><a href="#short-lived_containers">3.1. Short-lived containers</a></li></ul>
+</li>
+<li><a href="#install_cee">4. Installation of the commercial editions</a></li>
+<li><a href="#update">5. Update</a></li>
+<li><a href="#uninstall">6. Uninstall</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

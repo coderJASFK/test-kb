@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Mit dem Checkmk Plugin für Windows, Linux, Solaris und AIX überwachen Sie vollumfänglich MySQL.">
+<meta name="keywords" content="sql, db, database, oracle">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="MySQL überwachen">
+<meta name="og:description" content="Mit dem Checkmk Plugin für Windows, Linux, Solaris und AIX überwachen Sie vollumfänglich MySQL.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>MySQL überwachen</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/monitoring_mysql.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/monitoring_mysql.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/monitoring_mysql.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>MySQL überwachen</h1>
+<div class="details">
+<span id="revdate">Last modified on 30-Dec-2021</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/monitoring_mysql.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="agent_linux.html">Linux überwachen</a>
+<a href="wato_monitoringagents.html">Monitoring-Agenten</a>
+<a href="https://checkmk.com/de/integrations" target="_blank">Katalog der Check-Plugins</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__einleitung">
+<span class="hidden-anchor sr-only" id="_einleitung"></span>1. Einleitung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Checkmk erlaubt Ihnen die umfangreiche Überwachung von MySQL und Galera Cluster für MySQL.
+Eine vollständige Liste der Überwachungsmöglichkeiten können Sie in unserem <a href="https://checkmk.com/de/integrations?tags=mysql" target="_blank">Katalog der Check-Plugins</a> nachlesen.
+Unter anderem kann Checkmk die folgenden Werte überwachen:</p></div>
+<div class="ulist"><ul>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_sessions" target="_blank">MySQL: Sessions</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_galeradonor" target="_blank">MySQL: Galera Donor</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_galerasize" target="_blank">MySQL: Galera Size</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_galerastartup" target="_blank">MySQL: Galera Cluster Addresses (Startup)</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_galerastatus" target="_blank">MySQL: Galera Status</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_galerasync" target="_blank">MySQL: Galera Sync Status</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_connections" target="_blank">MySQL: Maximum Connection Usage since Startup</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_slave" target="_blank">MySQL: Slave Sync Status</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_ping" target="_blank">MySQL: Status of Daemon</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_innodb_io" target="_blank">MySQL: IO Statistics of InnoDB Engine</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql" target="_blank">MySQL: Version</a></p></li>
+<li><p><a href="https://checkmk.com/de/integrations/mysql_capacity" target="_blank">MySQL: Capacity</a></p></li>
+</ul></div>
+<div class="paragraph"><p>Um die Datenbanken überwachen zu können, benötigen Sie neben dem Checkmk-Agenten
+lediglich das Agenten-Plugin auf dem Datenbankserver. Zusätzliche Software wird
+weder auf dem Checkmk- noch auf dem Datenbankserver benötigt.</p></div>
+<div class="paragraph"><p>Im Folgenden wird die Einrichtung für Linux- und Windows-Hosts beschrieben. Weiter
+unten gehen wir auf die Einrichtung über die <a href="#bakery">Agent Bakery</a>
+ein.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__einrichten_der_überwachung">
+<span class="hidden-anchor sr-only" id="_einrichten_der_überwachung"></span>2. Einrichten der Überwachung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_benutzereinrichten">
+<span class="hidden-anchor sr-only" id="benutzereinrichten"></span>2.1. Benutzer einrichten</h3>
+<div class="sect3">
+<h4 id="heading__linux_und_windows">
+<span class="hidden-anchor sr-only" id="_linux_und_windows"></span>Linux und Windows</h4>
+<div class="paragraph"><p>Die einzige Voraussetzung für die Einrichtung der Überwachung innerhalb von MySQL
+ist, dass ein Datenbanknutzer und dessen Passwort vorhanden sein müssen. Dieser
+Benutzer benötigt lediglich lesende Rechte auf die MySQL-Instanzen. Sollte noch
+kein solcher Benutzer vorhanden sein, legen Sie diesen in den zu überwachenden
+Instanzen an. Melden Sie sich dazu mit einem Benutzer mit ausreichenden
+Zugriffsberechtigungen in MySQL an und erzeugen Sie anschließend einen neuen
+Datenbanknutzer:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">mysql</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">CREATE</span><span class="tok-w"> </span><span class="tok-k">USER</span><span class="tok-w"> </span><span class="tok-s1">'checkmk'</span><span class="tok-o">@</span><span class="tok-s1">'localhost'</span><span class="tok-w"> </span><span class="tok-n">IDENTIFIED</span><span class="tok-w"> </span><span class="tok-k">BY</span><span class="tok-w"> </span><span class="tok-s1">'MyPassword'</span><span class="tok-p">;</span></code></pre></div></div>
+<div class="paragraph"><p>Dieser neu angelegte Benutzer benötigt die Berechtigung, die Instanzen zu
+lesen. Prüfen Sie daher, ob der Benutzer die notwendigen Berechtigungen
+hat, oder fügen Sie sie mit dem folgenden Befehl hinzu. Im folgenden Beispiel
+wird das für den Benutzer <code>checkmk</code> erledigt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">mysql</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">GRANT</span><span class="tok-w"> </span><span class="tok-k">SELECT</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-k">SHOW</span><span class="tok-w"> </span><span class="tok-n">DATABASES</span><span class="tok-w"> </span><span class="tok-k">ON</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-p">.</span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-k">TO</span><span class="tok-w"> </span><span class="tok-s1">'checkmk'</span><span class="tok-o">@</span><span class="tok-s1">'localhost'</span><span class="tok-p">;</span></code></pre></div></div>
+<div class="paragraph"><p>Sollten Sie die MySQL Replikation einsetzen so muss dem Nutzer zur Überwachung
+der Replica Server noch mindestens das Recht REPLICATION CLIENT erteilt werden:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">mysql</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-k">GRANT</span><span class="tok-w"> </span><span class="tok-n">REPLICATION</span><span class="tok-w"> </span><span class="tok-n">CLIENT</span><span class="tok-w"> </span><span class="tok-k">ON</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-p">.</span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-k">TO</span><span class="tok-w"> </span><span class="tok-s1">'checkmk'</span><span class="tok-o">@</span><span class="tok-s1">'localhost'</span><span class="tok-p">;</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__plugin_installieren">
+<span class="hidden-anchor sr-only" id="_plugin_installieren"></span>2.2. Plugin installieren</h3>
+<div class="sect3">
+<h4 id="heading__linux">
+<span class="hidden-anchor sr-only" id="_linux"></span>Linux</h4>
+<div class="paragraph"><p>Das benötigte Plugin <code>mk_mysql</code> finden Sie auf ihrem Checkmk-Server im
+Verzeichnis <code>~/share/check_mk/agents/plugins/</code>. Kopieren Sie dieses nun
+in einem ersten Schritt in das Plugins-Verzeichnis des <a href="agent_linux.html#manualplugins">Agenten</a>
+auf dem zu überwachenden Host. Das Plugins-Verzeichnis lautet im Regelfall
+<code>/usr/lib/check_mk_agent/plugins</code>. Sobald das Skript im angegebenen
+Verzeichnis liegt, machen Sie dieses noch ausführbar:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span><span class="tok-m">700</span><span class="tok-w"> </span>mk_mysql</code></pre></div></div>
+<div class="paragraph"><p>Selbstverständlich kann auch dieses Plugin auf Wunsch
+<a href="agent_linux.html#async_plugins">asynchron ausgeführt</a> werden.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows">
+<span class="hidden-anchor sr-only" id="_windows"></span>Windows</h4>
+<div class="paragraph"><p>Der Agent für Windows wird standardmäßig bereits mit einer ganzen Reihe von Plugins
+ausgeliefert. Deshalb finden Sie auch das Plugin für die Überwachung von MySQL
+nach der Installation des Agenten bereits auf Ihrem Host. Dieses kopieren Sie für die
+Verwendung nur noch in das richtige Verzeichnis.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">PS</span><span class="tok-p">&gt;</span> <span class="tok-nb">copy </span><span class="tok-s2">"c:\Program Files (x86)\checkmk\service\plugins\mk_mysql.vbs"</span> <span class="tok-n">c</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\</span><span class="tok-n">plugins</span><span class="tok-p">\</span></code></pre></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__konfigurationsdatei_erstellen">
+<span class="hidden-anchor sr-only" id="_konfigurationsdatei_erstellen"></span>2.3. Konfigurationsdatei erstellen</h3>
+<div class="sect3">
+<h4 id="heading__linux_2">
+<span class="hidden-anchor sr-only" id="_linux_2"></span>Linux</h4>
+<div class="paragraph"><p>Erzeugen Sie anschließend eine Datei mit dem Namen <code>mysql.cfg</code> im
+<a href="agent_linux.html#pluginconfig">Konfigurationsverzeichnis</a> (regulär: <code>/etc/check_mk</code>)
+des Checkmk-Agenten auf dem Ziel-Host. Unter Verwendung der darin eingetragenen
+Nutzerdaten, kann der Agent die gewünschten Informationen aus Ihrer MySQL-Instanz
+abrufen. Zwar ist die Angabe eines Datenbanknutzers optional, wir empfehlen diese
+allerdings, da der Agent das Plugin in der Regel als <em>root</em> ausführt. Diese
+Angabe wird im üblichen Format für MySQL Konfigurationsdateien vorgenommen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/mysql.cfg</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[client]</span>
+<span class="tok-na">user</span><span class="tok-o">=</span><span class="tok-s">checkmk</span>
+<span class="tok-na">password</span><span class="tok-o">=</span><span class="tok-s">MyPassword</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Die so gespeicherten Zugangsdaten werden durch das folgende Kommando noch vor
+unbefugtem Zugriff geschützt:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>chmod<span class="tok-w"> </span><span class="tok-m">400</span><span class="tok-w"> </span>mysql.cfg</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows_2">
+<span class="hidden-anchor sr-only" id="_windows_2"></span>Windows</h4>
+<div class="paragraph"><p>Auf einem Windows-Host legen Sie im unten angegebenen Verzeichnis eine Datei
+names <code>mysql.ini</code> an.</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mysql.ini</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[client]</span>
+<span class="tok-na">user</span><span class="tok-o">=</span><span class="tok-s">checkmk</span>
+<span class="tok-na">password</span><span class="tok-o">=</span><span class="tok-s">MyPassword</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Sollten Sie auf dem Host mehrere MySQL-Instanzen mit verschiedenen Nutzernamen
+und Passwörtern betreiben, erstellen einfach Sie pro Instanz eine <code>.ini</code>-Datei nach dem
+folgenden Namensschema: <code>mysql_INSTANZ-ID.ini</code></p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__services_einrichten">
+<span class="hidden-anchor sr-only" id="_services_einrichten"></span>2.4. Services einrichten</h3>
+<div class="paragraph"><p>Nachdem Sie das Plugin nun installiert und konfiguriert haben, können Sie für
+diesen Host eine <a href="hosts_setup.html#services">Service-Erkennung</a> durchführen. Der folgende
+Screenshot zeigt dabei nur eine Auswahl der auffindbaren Services:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/mysql_discovery.png" alt="mysql discovery"></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__erweiterte_konfiguration">
+<span class="hidden-anchor sr-only" id="_erweiterte_konfiguration"></span>3. Erweiterte Konfiguration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__asynchrone_ausführung_des_plugins">
+<span class="hidden-anchor sr-only" id="_asynchrone_ausführung_des_plugins"></span>3.1. Asynchrone Ausführung des Plugins</h3>
+<div class="paragraph"><p>Das Plugin für die Überwachung von MySQL kann - wie so viele andere -
+asynchron ausgeführt werden, um beispielsweise längeren Laufzeiten bei großen
+MySQL-Instanzen Rechnung zu tragen.</p></div>
+<div class="sect3">
+<h4 id="heading__linux_3">
+<span class="hidden-anchor sr-only" id="_linux_3"></span>Linux</h4>
+<div class="paragraph"><p>Auf einem Linux-Host wird das Plugin dafür nur in ein Unterverzeichnis des
+Plugin-Verzeichnisses verschoben. Möchten Sie das Plugin beispielsweise
+nur alle 5 Minuten ausführen, so verschieben Sie das Skript <code>mk_mysql</code> einfach in
+ein Unterverzeichnis mit dem Namen <code>300</code>. Eine detaillierte Anleitung zur
+asynchronen Ausführung von Plugins finden Sie im
+<a href="agent_linux.html#async_plugins">Artikel über den Linux-Agenten</a>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__windows_3">
+<span class="hidden-anchor sr-only" id="_windows_3"></span>Windows</h4>
+<div class="paragraph"><p>Um das Plugin unter Windows asynchron auszuführen, passen Sie die Konfiguration
+des Agenten an und erweitern die Sektion <code>execution</code> unter
+<code>plugins</code> um den folgenden Eintrag:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\check_mk.user.yml</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">plugins</span><span class="tok-p">:</span>
+<span class="tok-w">    </span><span class="tok-nt">execution</span><span class="tok-p">:</span>
+<span class="tok-w">        </span><span class="tok-p tok-p-Indicator">-</span><span class="tok-w"> </span><span class="tok-nt">pattern</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">mk_mysql.vbs</span>
+<span class="tok-w">          </span><span class="tok-nt">cache_age</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">300</span>
+<span class="tok-w">          </span><span class="tok-nt">async</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">yes</span></code></pre></div>
+</div>
+<div class="paragraph"><p>Eine detaillierte Anleitung zur asynchronen Ausführung von Plugins auf einem
+Windows-Host finden Sie im Artikel über den
+<a href="agent_windows.html#customizeexecution">Windows-Agenten</a>.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__zusätzliche_optionen_der_konfigurationsdateien">
+<span class="hidden-anchor sr-only" id="_zusätzliche_optionen_der_konfigurationsdateien"></span>3.2. Zusätzliche Optionen der Konfigurationsdateien</h3>
+<div class="sect3">
+<h4 id="heading__kommunikation_mit_mysql_über_socket_einrichten">
+<span class="hidden-anchor sr-only" id="_kommunikation_mit_mysql_über_socket_einrichten"></span>Kommunikation mit MySQL über Socket einrichten</h4>
+<div class="paragraph"><p>Statt den Agenten über TCP mit MySQL kommunizieren zu lassen, können Sie Checkmk anweisen den Socket anzusprechen.
+Dazu definieren Sie in der Datei <code>mysql.cfg</code> lediglich die Variable <code>socket</code>.
+Hier an dem Beispiel der Windows-Konfigurationsdatei:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mysql.ini</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[client]</span>
+<span class="tok-na">user</span><span class="tok-o">=</span><span class="tok-s">checkmk</span>
+<span class="tok-na">password</span><span class="tok-o">=</span><span class="tok-s">MyPassword</span>
+<span class="tok-na">*socket</span><span class="tok-o">=</span><span class="tok-s">/var/run/mysqld/mysqld.sock*</span></code></pre></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading__host_manuell_definieren">
+<span class="hidden-anchor sr-only" id="_host_manuell_definieren"></span>Host manuell definieren</h4>
+<div class="paragraph"><p>Des Weiteren ist es über die Konfigurationsdateien auch möglich den MySQL-Host
+manuell zu setzen. Die entsprechende Variable dazu heißt schlicht <code>host</code>. Auch hier wieder an dem Beispiel von Windows:</p></div>
+<div class="listingblock">
+<div class="title">C:\ProgramData\checkmk\agent\config\mysql.ini</div>
+<div class="content"><pre class="pygments highlight"><code data-lang="ini"><span></span><span class="tok-k">[client]</span>
+<span class="tok-na">user</span><span class="tok-o">=</span><span class="tok-s">checkmk</span>
+<span class="tok-na">password</span><span class="tok-o">=</span><span class="tok-s">MyPassword</span>
+<span class="tok-na">*host</span><span class="tok-o">=</span><span class="tok-s">127.0.0.1*</span></code></pre></div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__schwellwerte_konfigurieren">
+<span class="hidden-anchor sr-only" id="_schwellwerte_konfigurieren"></span>3.3. Schwellwerte konfigurieren</h3>
+<div class="sect3">
+<h4 id="heading__sitzungen_überwachen">
+<span class="hidden-anchor sr-only" id="_sitzungen_überwachen"></span>Sitzungen überwachen</h4>
+<div class="paragraph"><p>Einige der so eingerichteten Checks haben keine voreingestellten
+Schwellwerte. Meistens ist das der Fall, weil es keine sinnvollen Standardwerte gibt, die
+in den meisten Anwendungsfällen ausreichend wären. Diese können aber
+mit wenigen Handgriffen eingerichtet werden. Über die bekannten
+<span class="guihint">Host &amp; Service Parameters</span> finden Sie beispielsweise die Regel
+<span class="guihint">MySQL Sessions &amp; Connections</span>. Hiermit lassen sich die für ihre
+MySQL-Instanz sinnvollen Schwellwerte für den Service <span class="guihint">MySQL sessions</span> festlegen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/mysql_sessions_connections.png" alt="mysql sessions connections"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__verbindungen_überwachen">
+<span class="hidden-anchor sr-only" id="_verbindungen_überwachen"></span>Verbindungen überwachen</h4>
+<div class="paragraph"><p>Auch für die Auslastung der durch MySQL vorgegebenen maximalen Anzahl an
+gleichzeitigen Verbindungen haben wir keine Schwellwerte vorgegeben, da diese viel
+stärker als bei anderen Services vom Aufbau Ihrer MySQL-Instanz abhängig sind.
+Die Einrichtung entsprechender Schwellwerte lässt sich mit einer Regel aus dem
+Satz <span class="guihint">MySQL Connections</span> im Handumdrehen bewerkstelligen.
+Gleiches gilt dann auch für die Anzahl der offenen Verbindungen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/mysql_connections.png" alt="mysql connections"></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__datenbankgröße_überwachen">
+<span class="hidden-anchor sr-only" id="_datenbankgröße_überwachen"></span>Datenbankgröße überwachen</h4>
+<div class="paragraph"><p>Die Größe einzelner Datenbanken in MySQL wird durch das Check-Plugin <a href="https://checkmk.com/de/integrations/mysql_capacity" target="_blank">MySQL: Capacity</a> überwacht.
+Schwellwerte hierfür lassen sich mit der Regel <span class="guihint">Size of MySQL databases</span> festlegen.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/mysql_size_database.png" alt="mysql size database"></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__log_dateien_überwachen">
+<span class="hidden-anchor sr-only" id="_log_dateien_überwachen"></span>3.4. Log-Dateien überwachen</h3>
+<div class="paragraph"><p>Unter Zuhilfenahme des Check-Plugins <a href="https://checkmk.com/de/integrations/logwatch" target="_blank">Logwatch</a> können Sie auch die von MySQL erzeugten Log-Dateien auf Fehler überwachen.
+Nach der Einrichtung des Plugins prüfen Sie zuerst, wo in Ihrer MySQL-Instanz die entsprechenden Log-Dateien liegen.
+Den genauen Speicherort finden Sie in der <code>.ini</code> bzw. <code>.cnf</code>-Datei Ihrer Instanz.</p></div>
+<div class="paragraph"><p>In der Konfigurationsdatei von Logwatch können Sie die für Sie interessanten
+Logs eintragen und auf einem Linux-Host etwa die folgenden Einträge vornehmen:</p></div>
+<div class="listingblock">
+<div class="title">/etc/check_mk/logwatch.cfg</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>/var/log/mysql/error.log
+ W Can't create/write to file
+ C [ERROR] Can't start server
+ C mysqld_safe mysqld from pid file /var/run/mysql/mysqld.pid ended</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_bakery">
+<span class="hidden-anchor sr-only" id="bakery"></span>4. Konfiguration über die Agent Bakery</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+Die Einrichtung wird mittels der <a href="wato_monitoringagents.html#bakery">Agent Bakery</a>
+sehr vereinfacht, da Syntaxfehler in den Konfigurationsdateien vermieden werden
+und Anpassungen an sich verändernde Umgebungen einfach bewerkstelligt werden
+können. Der wesentliche Unterschied zu einer manuellen Installation ist, dass
+Sie nur noch dann auf dem MySQL-Host auf der Kommandozeile arbeiten müssen, wenn
+Sie spezielle MySQL-spezifische Konfigurationen vornehmen möchten.</p></div>
+<div class="paragraph"><p>Für die erste Einrichtung reicht es, wenn Sie den
+<a href="#benutzereinrichten">Datenbankbenutzer auf dem MySQL-Host einrichten</a>
+und eine entsprechende Regel in der Bakery anlegen. Sie finden den Regelsatz
+unter <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agent rules</span>. In dem Suchfeld können Sie dann nach
+<code>mysql</code> suchen:</p></div>
+<div class="imageblock border"><div class="content"><img src="../images/mysql_bakery_ruleset_search.png" alt="mysql bakery ruleset search"></div></div>
+<div class="paragraph"><p>Tragen Sie User ID und Password dem neuen Datenbanknutzer entsprechend ein. Über
+das folgende Feld können Sie für Linux-Hosts den Checkmk-Agenten so einstellen,
+dass er die Verbindung zu MySQL nicht über TCP sondern eben über den Socket
+aufbaut. Dies kann je nach Größe und Auslastung zu einer besseren Performance
+beitragen.</p></div>
+<div class="paragraph"><p>Eine asynchrone Ausführung des MySQL-Plugins ist ebenfalls über diesen Regelsatz
+einstellbar. Dies kann sinnvoll sein, um längeren Laufzeiten bei großen
+MySQL-Instanzen Rechnung zu tragen oder wenn die Statusdaten schlicht nicht im
+Minutentakt benötigt werden.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/mysql_bakery.png" alt="mysql bakery"></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__diagnosemöglichkeiten">
+<span class="hidden-anchor sr-only" id="_diagnosemöglichkeiten"></span>5. Diagnosemöglichkeiten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sollte es beispielsweise bei der Einrichtung der Überwachung zu unerwartetem
+Verhalten oder Problemen kommen, so empfiehlt sich eine Prüfung direkt auf einem
+betroffenen Host. Da es sich bei den Plugins für die Überwachung von MySQL
+sowohl für Linux als auch für Windows um Shell- bzw. Visual Basic-Skripte
+handelt, können diese leicht auch ohne den Agenten ausgeführt werden. Unabhängig
+vom verwendeten Betriebssystem muss der Shell bzw. der Kommandozeile vorher
+nur das jeweilige Konfigurationsverzeichnis bekannt gemacht werden.</p></div>
+<div class="sect2">
+<h3 id="heading__diagnosemöglichkeiten_unter_linux">
+<span class="hidden-anchor sr-only" id="_diagnosemöglichkeiten_unter_linux"></span>5.1. Diagnosemöglichkeiten unter Linux</h3>
+<div class="paragraph"><p>Prüfen Sie zuerst die für ihren jeweiligen Host gültigen Verzeichnisse.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">user@host:~$  </span>grep<span class="tok-w"> </span><span class="tok-s1">'export MK'</span><span class="tok-w"> </span>/usr/bin/check_mk_agent
+<span class="tok-go">export MK_LIBDIR='/usr/lib/check_mk_agent'</span>
+<span class="tok-go">export MK_CONFDIR='/etc/check_mk'</span></code></pre></div></div>
+<div class="paragraph"><p>Erzeugen Sie nun mit dem Befehl export die Umgebungsvariablen <code>MK_CONFDIR</code>
+und <code>MK_LIBDIR</code>. Passen Sie die Befehle entsprechend Ihrer tatsächlichen
+Verzeichnisse an.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_CONFDIR</span><span class="tok-o">=</span><span class="tok-s2">"/etc/check_mk/"</span>
+<span class="tok-gp">root@linux# </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">MK_LIBDIR</span><span class="tok-o">=</span><span class="tok-s2">"/usr/lib/check_mk_agent"</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Diese Umgebungsvariablen existieren nur in der aktuell geöffneten Shell und
+verschwinden sobald Sie diese schließen.</p></div>
+<div class="paragraph"><p>Anschließend können Sie das Skript <code>mk_mysql</code> direkt im Plugin-Verzeichnis
+des Checkmk-Agenten ausführen.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# $</span>MK_LIBDIR/plugins/mk_mysql</code></pre></div></div>
+<div class="paragraph"><p>Wenn alle Rechte für den Datenbanknutzer korrekt erteilt sind, sollten Sie jetzt
+selbst in einer kleinen und frischen MySQL-Umgebung mehrere Hundert Zeilen
+Ausgabe sehen.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__diagnosemöglichkeiten_unter_windows">
+<span class="hidden-anchor sr-only" id="_diagnosemöglichkeiten_unter_windows"></span>5.2. Diagnosemöglichkeiten unter Windows</h3>
+<div class="paragraph"><p>Um das Check-Plugin auf einem Windows-Host manuell anführen zu können, öffnen Sie
+zuerst eine Kommandozeile mit Admin-Rechten. Setzen Sie in dieser
+Kommandozeile nun die Umgebungsvariable <code>MK_CONFDIR</code>. Diese wird benötigt,
+damit das Plugin Ihre Konfigurationsdateien finden kann.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">PS</span><span class="tok-p">&gt;</span> <span class="tok-nb">set </span><span class="tok-n">MK_CONFDIR</span><span class="tok-p">=</span><span class="tok-n">c</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\</span><span class="tok-n">config</span></code></pre></div></div>
+<div class="paragraph"><p><strong>Wichtig:</strong> Auch hier ist die gesetzte Umgebungsvariable nicht permanent,
+sondern besteht nur, solange diese Kommandozeile offen ist.</p></div>
+<div class="paragraph"><p>Bei der eigentlichen Ausführung des Plugins empfiehlt es sich die Ausgabe auf die Kommandozeile umzulenken.
+Zu diesen Zwecks liefert Windows das Bordwerkzeug <code>cscript</code> mit.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">PS</span><span class="tok-p">&gt;</span> <span class="tok-n">cscript</span> <span class="tok-n">c</span><span class="tok-p">:\</span><span class="tok-n">ProgramData</span><span class="tok-p">\</span><span class="tok-n">checkmk</span><span class="tok-p">\</span><span class="tok-n">agent</span><span class="tok-p">\</span><span class="tok-n">plugins</span><span class="tok-p">\</span><span class="tok-n">mk_mysql</span><span class="tok-p">.</span><span class="tok-n">vbs</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading__mögliche_fehler_und_fehlermeldungen">
+<span class="hidden-anchor sr-only" id="_mögliche_fehler_und_fehlermeldungen"></span>5.3. Mögliche Fehler und Fehlermeldungen</h3>
+<div class="sect3">
+<h4 id="heading__mysqladmin_connect_to_server_at_xyz_failed">
+<span class="hidden-anchor sr-only" id="_mysqladmin_connect_to_server_at_xyz_failed"></span>mysqladmin: connect to server at <em>xyz</em> failed</h4>
+<div class="paragraph"><p>Die Fehlermeldung <code>connect to server at xyz failed</code> deutet darauf hin, dass der
+in der Konfigurationsdatei angegebene Nutzer keinen Zugriff auf MySQL hat.
+Prüfen Sie zuerst, dass sich keine Übertragungsfehler beim Anlegen der
+Konfigurationsdatei (<code>mysql.cfg</code> bzw. <code>mysql.ini</code>) eingeschlichen haben.</p></div>
+<div class="paragraph"><p>Sollte der in der Konfigurationsdatei angegebene Nutzername oder das Passwort
+falsch sein, erhalten Sie in etwa die folgende Fehlermeldung:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">Access denied for user checkmk</span></code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__größe_der_datenbank_wird_nicht_ausgegeben">
+<span class="hidden-anchor sr-only" id="_größe_der_datenbank_wird_nicht_ausgegeben"></span>Größe der Datenbank wird nicht ausgegeben</h4>
+<div class="paragraph"><p>Sollten Sie in Checkmk zwar eine ganze Reihe von Daten Ihrer MySQL-Instanz sehen,
+es jedoch keinen Service geben, welcher die Größe der enthaltenen Datenbanken
+überwacht, so ist dies ein Indiz dafür, dass der Datenbanknutzer nicht über das
+Recht SELECT verfügt.</p></div>
+<div class="paragraph"><p>Prüfen Sie Ihren Datenbanknutzer aus MySQL heraus mit dem folgenden Befehl:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="sql"><span></span><span class="tok-n">mysql</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-k">show</span><span class="tok-w"> </span><span class="tok-n">grants</span><span class="tok-w"> </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-s1">'checkmk'</span><span class="tok-o">@</span><span class="tok-s1">'localhost'</span><span class="tok-p">;</span><span class="tok-o">*</span>
+<span class="tok-o">+</span><span class="tok-c1">--------------------------------------------------------------------------+</span>
+<span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-n">Grants</span><span class="tok-w"> </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-n">checkmk</span><span class="tok-o">@</span><span class="tok-n">localhost</span><span class="tok-w">                                             </span><span class="tok-o">|</span>
+<span class="tok-o">+</span><span class="tok-c1">--------------------------------------------------------------------------+</span>
+<span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-k">GRANT</span><span class="tok-w"> </span><span class="tok-k">SELECT</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-k">SHOW</span><span class="tok-w"> </span><span class="tok-n">DATABASES</span><span class="tok-w"> </span><span class="tok-k">ON</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-p">.</span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-k">TO</span><span class="tok-w"> </span><span class="tok-o">`</span><span class="tok-n">checkmk</span><span class="tok-o">`@`</span><span class="tok-n">localhost</span><span class="tok-o">`</span><span class="tok-w">             </span><span class="tok-o">|</span>
+<span class="tok-o">+</span><span class="tok-c1">--------------------------------------------------------------------------+</span></code></pre></div></div>
+<div class="paragraph"><p>Sollte hier in Ihrer Ausgabe das Schlüsselwort SELECT fehlen, so erteilen Sie
+dem Datenbanknutzer die entsprechenden Rechte, wie im Abschnitt
+<a href="#benutzereinrichten">Benutzer einrichten</a> angegeben.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__dateien_und_verzeichnisse">
+<span class="hidden-anchor sr-only" id="_dateien_und_verzeichnisse"></span>6. Dateien und Verzeichnisse</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__auf_dem_mysql_host">
+<span class="hidden-anchor sr-only" id="_auf_dem_mysql_host"></span>6.1. Auf dem MySQL-Host</h3>
+<div class="sect3">
+<h4 id="heading__linux_4">
+<span class="hidden-anchor sr-only" id="_linux_4"></span>Linux</h4>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Verwendung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/bin/check_mk_agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Agent, welcher alle Daten zu dem Host sammelt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk/plugins/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das übliche Verzeichnis, in dem Plugins abgelegt werden.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/mysql.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die Konfigurationsdatei für das MySQL-Plugin.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/mysql.local.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weitere Konfigurationsdatei um Host-spezifische Sockets anzugeben</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="heading__windows_4">
+<span class="hidden-anchor sr-only" id="_windows_4"></span>Windows</h4>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Verwendung</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\plugins\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">übliches Plugins-Verzeichnis</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\config\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Übliches Konfigurationsverzeichnis</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\Program Files (x86)\checkmk\agent\config\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">übliches Konfigurationsverzeichnis vor Checkmk-Version <span class="new">1.6.0</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\Program Files (x86)\check_mk\plugins\</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">übliches Plugins-Verzeichnis vor Checkmk-Version <span class="new">1.6.0</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading__auf_dem_checkmk_server">
+<span class="hidden-anchor sr-only" id="_auf_dem_checkmk_server"></span>6.2. Auf dem Checkmk-Server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">Pfad</th>
+<th class="tableblock halign-left valign-top">Verwendung</th>
+</tr></thead>
+<tbody><tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/share/check_mk/agents/plugins/mk_mysql</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Das Plugin, welches auf dem MySQL-Host die Daten holt.</p></td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_einleitung">1. Einleitung</a></li>
+<li>
+<a href="#_einrichten_der_%C3%BCberwachung">2. Einrichten der Überwachung</a><ul class="sectlevel1">
+<li>
+<a href="#benutzereinrichten">2.1. Benutzer einrichten</a><ul class="sectlevel2"><li><a href="#_linux_und_windows">Linux und Windows</a></li></ul>
+</li>
+<li>
+<a href="#_plugin_installieren">2.2. Plugin installieren</a><ul class="sectlevel2">
+<li><a href="#_linux">Linux</a></li>
+<li><a href="#_windows">Windows</a></li>
+</ul>
+</li>
+<li>
+<a href="#_konfigurationsdatei_erstellen">2.3. Konfigurationsdatei erstellen</a><ul class="sectlevel2">
+<li><a href="#_linux_2">Linux</a></li>
+<li><a href="#_windows_2">Windows</a></li>
+</ul>
+</li>
+<li><a href="#_services_einrichten">2.4. Services einrichten</a></li>
+</ul>
+</li>
+<li>
+<a href="#_erweiterte_konfiguration">3. Erweiterte Konfiguration</a><ul class="sectlevel1">
+<li>
+<a href="#_asynchrone_ausf%C3%BChrung_des_plugins">3.1. Asynchrone Ausführung des Plugins</a><ul class="sectlevel2">
+<li><a href="#_linux_3">Linux</a></li>
+<li><a href="#_windows_3">Windows</a></li>
+</ul>
+</li>
+<li>
+<a href="#_zus%C3%A4tzliche_optionen_der_konfigurationsdateien">3.2. Zusätzliche Optionen der Konfigurationsdateien</a><ul class="sectlevel2">
+<li><a href="#_kommunikation_mit_mysql_%C3%BCber_socket_einrichten">Kommunikation mit MySQL über Socket einrichten</a></li>
+<li><a href="#_host_manuell_definieren">Host manuell definieren</a></li>
+</ul>
+</li>
+<li>
+<a href="#_schwellwerte_konfigurieren">3.3. Schwellwerte konfigurieren</a><ul class="sectlevel2">
+<li><a href="#_sitzungen_%C3%BCberwachen">Sitzungen überwachen</a></li>
+<li><a href="#_verbindungen_%C3%BCberwachen">Verbindungen überwachen</a></li>
+<li><a href="#_datenbankgr%C3%B6%C3%9Fe_%C3%BCberwachen">Datenbankgröße überwachen</a></li>
+</ul>
+</li>
+<li><a href="#_log_dateien_%C3%BCberwachen">3.4. Log-Dateien überwachen</a></li>
+</ul>
+</li>
+<li><a href="#bakery">4. Konfiguration über die Agent Bakery</a></li>
+<li>
+<a href="#_diagnosem%C3%B6glichkeiten">5. Diagnosemöglichkeiten</a><ul class="sectlevel1">
+<li><a href="#_diagnosem%C3%B6glichkeiten_unter_linux">5.1. Diagnosemöglichkeiten unter Linux</a></li>
+<li><a href="#_diagnosem%C3%B6glichkeiten_unter_windows">5.2. Diagnosemöglichkeiten unter Windows</a></li>
+<li>
+<a href="#_m%C3%B6gliche_fehler_und_fehlermeldungen">5.3. Mögliche Fehler und Fehlermeldungen</a><ul class="sectlevel2">
+<li><a href="#_mysqladmin_connect_to_server_at_xyz_failed">mysqladmin: connect to server at <em>xyz</em> failed</a></li>
+<li><a href="#_gr%C3%B6%C3%9Fe_der_datenbank_wird_nicht_ausgegeben">Größe der Datenbank wird nicht ausgegeben</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#_dateien_und_verzeichnisse">6. Dateien und Verzeichnisse</a><ul class="sectlevel1">
+<li>
+<a href="#_auf_dem_mysql_host">6.1. Auf dem MySQL-Host</a><ul class="sectlevel2">
+<li><a href="#_linux_4">Linux</a></li>
+<li><a href="#_windows_4">Windows</a></li>
+</ul>
+</li>
+<li><a href="#_auf_dem_checkmk_server">6.2. Auf dem Checkmk-Server</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

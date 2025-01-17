@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="robots" content="noindex">
+<meta name="description" content="Der Checkmk Micro Core (CMC) unterscheidet sich an einigen Stellen von anderen Nagios-kompatiblen Kernen. Diese werden hier ausführlich beschrieben.">
+<meta name="og:locale" content="de">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Besonderheiten des CMC">
+<meta name="og:description" content="Der Checkmk Micro Core (CMC) unterscheidet sich an einigen Stellen von anderen Nagios-kompatiblen Kernen. Diese werden hier ausführlich beschrieben.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Besonderheiten des CMC</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Suche auf docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/2.2.0/de"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/2.2.0/de"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">de</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../2.2.0/en/cmc_differences.html">English</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2.2.0</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/de/cmc_differences.html">2.1.0</a><a class="dropdown-item" href="../../latest/de/cmc_differences.html">latest (2.3.0)</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_willkommen_bei_checkmk">
+<a class="anchor" href="#_willkommen_bei_checkmk"></a>1. Willkommen bei Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Willkommen im Checkmk Handbuch</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossar</a></p>
+</li>
+<li>
+<p><a href="search.html">Suchen in docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_leitfaden_für_einsteiger">
+<a class="anchor" href="#_leitfaden_f%C3%BCr_einsteiger"></a>2. Leitfaden für Einsteiger</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Checkmk aufsetzen</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">Die Checkmk-Oberfläche</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Das Monitoring einrichten</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">Die Monitoring-Werkzeuge</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk im Monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Das Monitoring feinjustieren</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Mit mehreren Benutzern arbeiten</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Benachrichtigungen einschalten</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Das Monitoring weiter ausbauen</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best Practices, Tipps &amp; Tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Grundsätzliches zur Installation von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_und_vms">
+<a class="anchor" href="#_server_und_vms"></a>3.1. Server und VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation unter Debian und Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation unter Red Hat und Derivaten</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation unter SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, Container, Cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation von Checkmk in der Appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation als Docker-Container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation aus dem Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation aus dem AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates und Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update auf Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update-Matrix für Version <span class="new">2.2.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux-Upgrade auf dem Checkmk-Server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk-Versionen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_von_checkmk">
+<a class="anchor" href="#_administration_von_checkmk"></a>4. Administration von Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Anmeldung mit SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single Sign-On mit Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk-Server im Docker-Container</a></p>
+</li>
+<li>
+<p><a href="security.html">Sicherheit (Security)</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Weboberfläche mit HTTPS absichern</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instanzen">
+<a class="anchor" href="#_instanzen"></a>4.2. Instanzen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Instanzen (Sites) mit omd verwalten</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk auf der Kommandozeile</a></p>
+</li>
+<li>
+<p><a href="license.html">Lizenzen verwalten</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Verteiltes Monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Passwortspeicher (Password store)</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Konfiguration der Checkmk Instanz analysieren</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk-Erweiterungspakete (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs für GUI-Erweiterungen</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Der Simulationsmodus</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konfiguration">
+<a class="anchor" href="#_konfiguration"></a>5. Konfiguration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Die Konfiguration von Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Verwaltung der Hosts</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Strukturierung der Hosts</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host-Merkmale</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamische Host-Konfiguration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automatisch Hosts erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Services verstehen und konfigurieren</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Cluster-Services überwachen</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">Der Piggyback-Mechanismus</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_regeln">
+<a class="anchor" href="#_regeln"></a>5.3. Regeln</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Regeln</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unterstützende_konfigurationen">
+<a class="anchor" href="#_unterst%C3%BCtzende_konfigurationen"></a>5.4. Unterstützende Konfigurationen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Zeitperioden (Time Periods)</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Reguläre Ausdrücke in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzer_und_berechtigungen">
+<a class="anchor" href="#_benutzer_und_berechtigungen"></a>5.5. Benutzer und Berechtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Benutzer, Zuständigkeiten, Berechtigungen</a></p>
+</li>
+<li>
+<p><a href="ldap.html">Benutzerverwaltung mit LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benachrichtigungen">
+<a class="anchor" href="#_benachrichtigungen"></a>5.6. Benachrichtigungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Benachrichtigungen</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Benachrichtigungen per Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Benachrichtigungen per ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Benachrichtigungen per Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Benachrichtigungen per Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Benachrichtigungen per Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Benachrichtigungen per PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Benachrichtigungen per Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Benachrichtigungen per Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Benachrichtigungen per ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Benachrichtigungen per Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Benachrichtigungen per Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">Die Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert Handler</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_überwachung_von_systemen">
+<a class="anchor" href="#_%C3%BCberwachung_von_systemen"></a>6. Überwachung von Systemen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring-Agenten</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agenten_und_snmp">
+<a class="anchor" href="#_checkmk_agenten_und_snmp"></a>6.1. Checkmk-Agenten und SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatische Agenten-Updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Linux überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Linux überwachen im Legacy-Modus</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Windows überwachen</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">FreeBSD überwachen</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Überwachen via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agentenerweiterungen">
+<a class="anchor" href="#_agentenerweiterungen"></a>6.2. Agentenerweiterungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">Die HW/SW-Inventur</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Log-Dateien überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Oracle-Datenbanken überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">MySQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">MSSQL überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Zeitbasierte Prozesse (Cronjobs) überwachen</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">Das Spool-Verzeichnis</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Lokale Checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, Cloud, Container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datenquellenprogramme</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">VMware ESXi überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Amazon Web Services (AWS) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Microsoft Azure überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Google Cloud Platform (GCP) überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Kubernetes überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">OpenShift überwachen</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Docker überwachen</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpunkte">
+<a class="anchor" href="#_endpunkte"></a>6.4. Endpunkte</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Netzwerkdienste überwachen (Aktive Checks)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metriken">
+<a class="anchor" href="#_dashboards_views_metriken"></a>7. Dashboards, Views, Metriken</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">Die Benutzeroberfläche</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_allgemein">
+<a class="anchor" href="#_allgemein"></a>7.1. Allgemein</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Ansichten von Hosts und Services (Views)</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Messwerte und Graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Anmerkungen (Custom notes)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kommandos_in_ansichten">
+<a class="anchor" href="#_kommandos_in_ansichten"></a>7.2. Kommandos in Ansichten</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Kommandos</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Quittierung von Problemen</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Wartungszeiten</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_auswertungen_und_prognosen">
+<a class="anchor" href="#_auswertungen_und_prognosen"></a>8. Auswertungen und Prognosen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_auswertungen">
+<a class="anchor" href="#_auswertungen"></a>8.1. Auswertungen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Verfügbarkeit (Availability)</a></p>
+</li>
+<li>
+<p><a href="sla.html">Erweiterte Verfügbarkeiten (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Berichte (Reports)</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosen">
+<a class="anchor" href="#_prognosen"></a>8.2. Prognosen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Prognosebasiertes Monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Vorhersagegraphen erstellen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anbindung_anderer_applikationen">
+<a class="anchor" href="#_anbindung_anderer_applikationen"></a>9. Anbindung anderer Applikationen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Prometheus integrieren</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Datadog integrieren</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: Statusdaten auf Karten und Diagrammen</a></p>
+</li>
+<li>
+<p><a href="ntop.html">ntopng in Checkmk integrieren</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Checkmk in Grafana integrieren</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Metriken an InfluxDB und Graphite senden</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Nagstamon mit Checkmk verbinden</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_besonderheiten_in_den_editionen">
+<a class="anchor" href="#_besonderheiten_in_den_editionen"></a>10. Besonderheiten in den Editionen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Die Standard Edition</a></p>
+</li>
+<li>
+<p><a href="cce.html">Die Cloud Edition</a></p>
+</li>
+<li>
+<p><a href="managed.html">Die Managed Services Edition</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support Diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automatisierung_und_programmierung">
+<a class="anchor" href="#_automatisierung_und_programmierung"></a>11. Automatisierung und Programmierung</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_apis_zur_automatisierung">
+<a class="anchor" href="#_apis_zur_automatisierung"></a>11.1. APIs zur Automatisierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">Die Checkmk REST-API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Statusdaten abrufen via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus Befehlsreferenz</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_zur_programmierung">
+<a class="anchor" href="#_apis_zur_programmierung"></a>11.2. APIs zur Programmierung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">Die Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmierung_von_check_plugins">
+<a class="anchor" href="#_programmierung_von_check_plugins"></a>11.3. Programmierung von Check-Plugins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Erweiterungen für Checkmk entwickeln</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Agentenbasierte Check-Plugins schreiben</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">SNMP-basierte Check-Plugins schreiben</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_konzepte">
+<a class="anchor" href="#_konzepte"></a>12. Konzepte</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Grundlagen des Monitorings mit Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_der_checkmk_micro_core_cmc">
+<a class="anchor" href="#_der_checkmk_micro_core_cmc"></a>12.1. Der Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">Der Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Besonderheiten des CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration auf den CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_checkmk_appliance">
+<a class="anchor" href="#_die_checkmk_appliance"></a>13. Die Checkmk Appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Schnellstart-Anleitung für Checkmk-Racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Schnellstart-Anleitung für Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Virtuelle Appliance installieren</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Appliance einrichten und nutzen</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in der Appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance im Cluster-Betrieb</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Besonderheiten der Hardware-Appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Besonderheiten des CMC</h1>
+<div class="details">
+<span id="revdate">Last modified on 01-Jun-2023</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.2.0/src/common/de/cmc_differences.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">Dies ist eine am 2025-01-07 22:12:14 +0000 für die Offline-Nutzung exportierte Seite. Sie spiegelt möglicherweise nicht den aktuellen Stand der Checkmk Dokumentation wider. Um eine täglich aktualisierte Version dieser Seite anzusehen, rufen Sie bitte <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a> auf.</div>
+<div class="sectionbody"><div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="cmc.html">Der Checkmk Micro Core</a>
+<a href="cmc_migration.html">Migration auf den CMC</a>
+<a href="cmc_files.html">Dateien und Verzeichnisse des CMC</a>
+</div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading__besonderheiten_des_checkmk_micro_cores">
+<span class="hidden-anchor sr-only" id="_besonderheiten_des_checkmk_micro_cores"></span>1. Besonderheiten des Checkmk Micro Cores</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die wichtigsten Vorteile des <a href="cmc.html">CMC</a> liegen in seiner gegenüber Nagios höheren Performance und schnelleren Reaktionszeiten.
+Es gibt jedoch auch darüber hinaus einige interessante Besonderheiten, die Sie kennen sollten.
+Die wichtigsten sind:</p></div>
+<div class="ulist"><ul>
+<li><p>Smart Ping — Intelligente Host-Checks</p></li>
+<li><p>Hilfsprozesse Check Helper, Checkmk Fetcher und Checkmk Checker</p></li>
+<li><p>Initiales Scheduling</p></li>
+<li><p>Verarbeitung von Messdaten</p></li>
+<li><p>Einige Funktionen von Nagios sind im CMC nicht oder anders umgesetzt.
+Die Details finden Sie im Artikel zur <a href="cmc_migration.html">Migration auf den CMC.</a></p></li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_smartping">
+<span class="hidden-anchor sr-only" id="smartping"></span>2. Smart Ping — Intelligente Host-Checks</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Bei Nagios ist es üblich, die Erreichbarkeit von Hosts mittels eines <em>Ping</em> zu prüfen.
+Dazu wird für jeden Host einmal pro Intervall (in der Regel eine Minute) ein Plugin wie <code>check_ping</code> oder <code>check_icmp</code> aufgerufen.
+Dieses sendet dann z.B. fünf Ping-Pakete und wartet auf deren Rückkehr.
+Das Erzeugen der Prozesse für den Aufruf der Plugins bindet wertvolle CPU-Ressourcen.
+Zudem sind diese recht lange blockiert, falls ein Host nicht erreichbar ist und lange Timeouts abgewartet werden müssen.</p></div>
+<div class="paragraph"><p>Der CMC führt Host-Checks hingegen — soweit nicht anders konfiguriert — mit einem Verfahren namens <em>Smart Ping</em> aus.
+Dabei wird an jeden Host pro Intervall <em>ein</em> Ping-Paket versendet.
+Das erledigt ein Hilfsprozess mit dem Namen <code>icmpsender</code> — und zwar direkt und ohne Prozesserzeugung.
+Der <code>icmpsender</code> hat zu diesem Zweck eine von uns entwickelte eigenständige Ping-Implementierung und ist ausgesprochen effizient.
+In Benchmarks konnten wir bis zu 45 MBit/sec Netzwerkverkehr nur durch Ping erzeugen!
+Das Intervall für die Pings ist pro Host per Default auf <strong>sechs Sekunden</strong> eingestellt.
+Sie können das über den Regelsatz <span class="guihint">Normal check interval for host checks</span> anpassen.</p></div>
+<div class="paragraph"><p>Die Antworten auf die Pings werden nicht explizit abgewartet.
+Eingehende Ping-Pakete werden einfach als erfolgreiche Host-Checks gewertet.
+Dafür ist der Hilfsprozess <code>icmpreceiver</code> verantwortlich.
+Wenn für eine einstellbare Zeit kein Paket von einem Host empfangen wurde, wird dieser als <span class="hstate1">DOWN</span> gewertet.
+Diese Timeout-Zeit ist per Default auf 15 Sekunden (2,5 Intervalle) eingestellt und kann pro Host mit dem Regelsatz <span class="guihint">Settings for host checks via Smart PING</span> geändert werden.</p></div>
+<div class="sect2">
+<h3 id="heading_no_on-demand_host_checks">
+<span class="hidden-anchor sr-only" id="no_on-demand_host_checks"></span>2.1. Keine Host-Checks auf Abruf</h3>
+<div class="paragraph"><p>Host-Checks dienen nicht nur der Benachrichtigung bei einem Totalausfall eines Hosts, sondern auch dazu, <a href="notifications.html#state_host">Benachrichtigungen zu Service-Problemen</a> während der Zeit des Host-Ausfalls zu unterdrücken.
+Hierbei ist es wichtig, im Falle eines Service-Problems schnell und präzise den Zustand des Hosts zu kennen.
+Selbst wenn der letzte Host-Check nicht lange her ist, kann dessen Ergebnis bereits veraltet sein.
+Dazu genügt es, wenn direkt nach einem Ausfall des Hosts durch Zufall zuerst der Service-Check (und nicht der Host-Check) ausgeführt wird.
+Obwohl er ausgefallen ist, würde der Host noch als <span class="hstate0">UP</span> angesehen und die Benachrichtigung für den Service — fälschlicherweise — versendet.</p></div>
+<div class="paragraph"><p>Der CMC löst dieses Problem sehr einfach:
+Ist bei einem Service-Problem der Host im Zustand <span class="hstate0">UP</span>, dann wird einfach der nächste Host-Check abgewartet.
+Da das Intervall mit sechs Sekunden sehr kurz ist, ergibt sich keine nennenswerte Verzögerung der Benachrichtigung — falls der Host weiterhin <span class="hstate0">UP</span> ist und daher die Benachrichtigung für den Service gesendet werden muss.
+Zusätzlich verwendet der CMC einen weiteren Trick:
+Der <code>icmpreceiver</code> wertet nämlich nicht nur eingehende Antworten auf Ping aus, sondern auch Pakete, die beim TCP-Verbindungsaufbau entstehen: SYN (synchronization) und RST (reset).
+Beachten Sie dabei, dass SNMP <strong>nicht</strong> über TCP, sondern über das UDP-Protokoll läuft und SNMP-Pakete daher nicht vom <code>icmpreceiver</code> berücksichtigt werden!</p></div>
+<div class="paragraph"><p>Nehmen wir folgendes Beispiel: Ein <code>check_http</code>-Plugin liefert einen <span class="state2">CRIT</span>-Status, weil der abgefragte Webserver nicht
+erreichbar ist.
+In diesem Fall wurde <em>nach dem Beginn</em> des Service-Checks ein TCP-RST-Paket (<em>connection refused</em>) von diesem Server empfangen.
+Der CMC weiß daher mit Sicherheit, dass der Host selbst <span class="hstate0">UP</span> ist und kann die Benachrichtigung ohne Verzögerung versenden.</p></div>
+<div class="paragraph"><p>Das gleiche Prinzip wird beim Berechnen von Netzwerkausfällen angewendet, wenn <a href="notifications.html#parents">Parent-Hosts</a> definiert sind.
+Auch hier werden Benachrichtigungen teilweise kurz zurückgehalten, um einen gesicherten Status abzuwarten.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__der_nutzen">
+<span class="hidden-anchor sr-only" id="_der_nutzen"></span>2.2. Der Nutzen</h3>
+<div class="paragraph"><p>Durch dieses Verfahren ergibt sich eine Reihe von Vorteilen:</p></div>
+<div class="ulist"><ul>
+<li><p>Nahezu vernachlässigbare CPU-Last durch Host-Checks: Es können selbst ohne besonders leistungsfähige Hardware Zigtausende von Hosts überwacht werden.</p></li>
+<li><p>Kein Ausbremsen des Monitorings durch blockierende Host-Checks auf Abruf, falls Hosts <span class="hstate1">DOWN</span> sind.</p></li>
+<li><p>Keine Fehlalarme von Services bei nicht aktuellem Host-Status.</p></li>
+</ul></div>
+<div class="paragraph"><p>Ein Nachteil soll dabei nicht verschwiegen werden:
+Die Host-Checks via Smart Ping erzeugen keine Performance-Daten (Paketlaufzeiten).</p></div>
+<div class="paragraph"><p>Für Hosts, bei denen Sie diese benötigen, können Sie einfach einen <a href="glossar.html#active_check">aktiven Check</a> per Ping einrichten mit dem Regelsatz <span class="guihint">Check hosts with PING (ICMP Echo Request)</span>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__nicht_ping_bare_hosts">
+<span class="hidden-anchor sr-only" id="_nicht_ping_bare_hosts"></span>2.3. Nicht Ping-bare Hosts</h3>
+<div class="paragraph"><p>In der Praxis sind nicht alle Hosts durch Ping überprüfbar.
+Für diese Fälle kann man auch im CMC andere Methoden für den Host-Check verwenden, z.B. einen TCP-Connect.
+Da dies Ausnahmen von der Regel sind, wirken sie sich nicht negativ auf die Gesamtperformance aus.
+Der Regelsatz dazu lautet <span class="guihint">Host Check Command</span>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading__probleme_mit_firewalls">
+<span class="hidden-anchor sr-only" id="_probleme_mit_firewalls"></span>2.4. Probleme mit Firewalls</h3>
+<div class="paragraph"><p>Es gibt Firewalls, die TCP-Verbindungspakete an nicht erreichbare Hosts mit einem TCP-RST-Paket beantworten.
+Das Trickreiche ist dabei, dass die Firewall als <em>Absender</em> dieser Pakete nicht sich selbst eintragen darf, sondern die IP-Adresse des Ziel-Hosts angeben muss.
+Smart Ping wird dieses Paket als Lebenszeichen werten und somit zu Unrecht annehmen, dass der Zielhost erreichbar ist.</p></div>
+<div class="paragraph"><p>In so einer (seltenen) Situation haben Sie die Möglichkeit, mit <span class="guihint">Global settings &gt; Monitoring Core &gt; Tuning of Smart PING</span> die
+Option <span class="guihint">Ignore TCP RST packets when determining host state</span> zu aktivieren.
+Oder Sie wählen für die betroffenen Hosts als Host-Check einen klassischen Ping mit <code>check_icmp</code>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_aux_processes">
+<span class="hidden-anchor sr-only" id="aux_processes"></span>3. Hilfsprozesse</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Eine Lehre aus der schlechten Performance von Nagios in größeren Umgebungen ist, dass das Erzeugen von Prozessen eine teure Operation ist.
+Entscheidend hierbei ist vor allem die <em>Größe des Mutterprozesses</em>.
+Bei jeder Ausführung eines <a href="glossar.html#active_check">aktiven Checks</a> muss zunächst der komplette Nagios-Prozess dupliziert werden (<em>fork</em>), bevor er durch den neuen Prozess — das Check-Plugin — ersetzt wird.
+Je mehr Hosts und Services überwacht werden, desto größer ist dieser Prozess und desto länger dauert der Fork.
+Da der Prozess während dessen auch noch blockiert ist, bleiben auch die anderen Aufgaben des Prozessorkerns liegen — da helfen auch keine 24 CPU-Kerne.</p></div>
+<div class="sect2">
+<h3 id="heading_checkhelper">
+<span class="hidden-anchor sr-only" id="checkhelper"></span>3.1. Check Helper</h3>
+<div class="paragraph"><p>Um das Forken des Kerns zu vermeiden, erzeugt der CMC beim Programmstart eine festgelegte Anzahl sehr schlanker Hilfsprozesse, deren Aufgabe das Starten der aktiven Check-Plugins ist: die <strong>Check Helper.</strong>
+Nicht nur forken diese viel schneller, das Forken skaliert auch noch über alle vorhandenen CPU-Kerne, da der Prozessorkern selbst nicht mehr blockiert wird.
+Dadurch wird das Ausführen von aktiven Checks (z.B. <code>check_http</code>), deren eigentliche Laufzeit recht kurz ist, stark beschleunigt.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_fetcher_checker">
+<span class="hidden-anchor sr-only" id="fetcher_checker"></span>3.2. Checkmk Fetcher und Checkmk Checker</h3>
+<div class="paragraph"><p>Der CMC geht noch einen wesentlichen Schritt weiter.
+Denn in einer Checkmk-Umgebung sind aktive Checks eher die Ausnahme.
+Hier kommen hauptsächlich Checkmk-basierte Checks zum Einsatz, bei denen pro Host und Intervall nur noch ein Fork notwendig ist.</p></div>
+<div class="paragraph"><p>Um die Ausführung dieser Checks zu optimieren, unterhält der CMC noch zwei weitere Typen von Hilfsprozessen: die <strong>Checkmk Fetcher</strong> und die <strong>Checkmk Checker:</strong></p></div>
+<div class="sect3">
+<h4 id="heading__die_checkmk_fetcher">
+<span class="hidden-anchor sr-only" id="_die_checkmk_fetcher"></span>Die Checkmk Fetcher</h4>
+<div class="paragraph"><p>rufen die benötigten Informationen von den überwachten Hosts ab, das heißt, die Daten der Services <span class="guihint">Check_MK</span> und <span class="guihint">Check_MK Discovery.</span>
+Die Fetcher übernehmen damit die Netzwerkkommunikation mit den Checkmk-Agenten, SNMP-Agenten und den <a href="glossar.html#special_agent">Spezialagenten.</a>
+Das Sammeln dieser Informationen benötigt etwas Zeit, aber mit normalerweise weniger als 50 MByte pro Prozess vergleichsweise wenig Arbeitsspeicher.
+Es können also viele dieser Prozesse ohne Probleme konfiguriert werden.
+Bedenken Sie dennoch, dass die Prozesse teilweise oder gar nicht in den Swap ausgelagert werden können und damit immer im physischen Speicher gehalten werden müssen.
+Der limitierende Faktor ist hier der verfügbare Arbeitsspeicher des Checkmk-Servers.</p></div>
+<div class="paragraph"><p><strong>Hinweis</strong>: Bei den 50 MByte handelt es sich um eine Schätzung, die der grundsätzlichen Orientierung dienen soll.
+Unter bestimmten Umständen (z.B. bei der Konfiguration von IPMI im <a href="hosts_setup.html#management_board">Management board</a>) kann der Wert auch höher sein.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__die_checkmk_checker">
+<span class="hidden-anchor sr-only" id="_die_checkmk_checker"></span>Die Checkmk Checker</h4>
+<div class="paragraph"><p>analysieren und bewerten die von den Checkmk Fetchern gesammelten Informationen und erzeugen die Check-Resultate für die Services.
+Die Checker benötigen viel Arbeitsspeicher, da sie die Checkmk-Konfiguration mit dabei haben müssen.
+Ein Checker-Prozess belegt mindestens ca. 90 MByte — es kann aber auch ein Vielfaches davon notwendig sein, je nachdem wie die Checks konfiguriert sind. Dafür verursachen die Checker keine Netzwerklast und sind sehr schnell in der Ausführung.
+Die Anzahl der Checker sollte nur so groß sein, wie Ihr Checkmk-Server parallel Prozesse abarbeiten kann.
+Im Regelfall entspricht diese Zahl der Anzahl an Prozessorkernen Ihres Servers.
+Da die Checker nicht IO-gebunden sind, sind sie am effektivsten, wenn jeder Checker seinen eigenen Prozessorkern erhält.</p></div>
+<div class="paragraph"><p>Die Aufteilung der beiden unterschiedlichen Aufgaben „Sammeln“ und „Ausführen“ auf Checkmk Fetcher und Checkmk Checker gibt es seit der Checkmk-Version <span class="new">2.0.0</span>.
+Vorher gab es nur <em>einen</em> Hilfsprozesstyp, der für beides zuständig war — die sogenannten Checkmk Helper.</p></div>
+<div class="paragraph"><p>Mit dem Fetcher/Checker-Modell können nunmehr beide Aufgaben auf zwei separate Pools von Prozessen aufgeteilt werden:
+das Abrufen der Informationen aus dem Netzwerk mit vielen kleinen Fetcher-Prozessen und die rechenintensive Überprüfung mit wenigen großen Checker-Prozessen.
+Dadurch benutzt ein CMC bei gleicher Leistung (Checks pro Sekunde) bis zu viermal weniger Arbeitsspeicher!</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_numbers">
+<span class="hidden-anchor sr-only" id="numbers"></span>3.3. Zahl der Hilfsprozesse richtig einstellen</h3>
+<div class="paragraph"><p>Standardmäßig werden 5 Check Helper, 13 Checkmk Fetcher und 4 Checkmk Checker gestartet.
+Diese Werte werden unter <span class="guihint">Global settings &gt; Monitoring Core</span> festgelegt und können von Ihnen angepasst werden:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cmc_differences_global_settings_monitoring_core.png" alt="Liste der globalen Einstellungen für die Hilfsprozesse des CMC."></div></div>
+<div class="paragraph"><p>Um herauszufinden, ob und wie sie die Standardwerte verändern müssen, haben Sie mehrere Möglichkeiten:</p></div>
+<div class="paragraph"><p>In der Seitenleiste zeigt Ihnen das Snapin <span class="guihint">Core statistics</span> die prozentuale Auslastung im Durchschnitt der letzten 10-20 Sekunden:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/cmc_differences_snapin_core_statistics.png" alt="Snapin Core statistics." width="50%"></div></div>
+<div class="paragraph"><p>Für alle Hilfsprozesstypen gilt: Es sollten immer genügend Prozesse vorhanden sein, um die konfigurierten Prüfungen durchzuführen.
+Wenn ein Pool zu 100 % ausgelastet ist, werden die Checks nicht rechtzeitig ausgeführt, die Latenzzeit wächst und die Zustände der Services sind nicht aktuell.</p></div>
+<div class="paragraph"><p>Die Auslastung (<em>usage</em>) sollte wenige Minuten nach dem Start einer Instanz 80 % nicht überschreiten.
+Bei höheren Prozentwerten sollten Sie die Anzahl der Prozesse erhöhen.
+Da die notwendige Anzahl der Checkmk Fetcher mit der Zahl der überwachten Hosts und Services wächst, ist hier eine Korrektur am wahrscheinlichsten.
+Achten Sie jedoch darauf, nur so viele Hilfsprozesse zu erzeugen, wie wirklich benötigt werden, da jeder Prozess Ressourcen belegt.
+Außerdem werden alle Hilfsprozesse beim Start des CMC parallel initialisiert, was zu Lastspitzen führen kann.</p></div>
+<div class="paragraph"><p>Das Snapin <span class="guihint">Core statistics</span> zeigt Ihnen aber nicht nur die Auslastung, sondern auch die Latenzzeiten (<em>latency</em>).
+Für diese Werte gilt die simple Regel: Je niedriger, desto besser — und am allerbesten sind daher 0 Sekunden.</p></div>
+<div class="paragraph"><p><strong>Hinweis:</strong> Die im Snapin gezeigten Werte können Sie sich für Ihre Instanz auch in den Details des Services <span class="guihint">OMD &lt;site_name&gt; performance</span> anzeigen lassen.</p></div>
+<div class="paragraph"><p>Alternativ zum Snapin <span class="guihint">Core statistics</span> können Sie sich auch Ihre <a href="analyze_configuration.html">Konfiguration von Checkmk analysieren lassen</a>, mit <span class="guihint">Setup &gt; Maintenance &gt; Analyze configuration</span>.
+Der Vorteil: Hier erhalten Sie von Checkmk sofort die Bewertung, wie es um den Zustand der Hilfsprozesse steht.
+Sehr praktisch ist:
+Sollte einer der Hilfsprozesse nicht <span class="state0">OK</span> sein, können Sie aus dem Hilfetext gleich die zugehörige Option in den <span class="guihint">Global settings</span> öffnen, um den Wert zu ändern.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__initiales_scheduling">
+<span class="hidden-anchor sr-only" id="_initiales_scheduling"></span>4. Initiales Scheduling</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Beim Scheduling wird festgelegt, welche Checks zu welcher Zeit ausgeführt werden sollen.
+Nagios hat hier mehrere Verfahren implementiert, die dafür sorgen sollen, dass die Checks gleichmäßig über die Zeit verteilt werden.
+Dabei wird auch versucht, die Abfragen, die auf einem einzelnen Zielsystem laufen, über das Intervall zu verteilen.</p></div>
+<div class="paragraph"><p>Der CMC hat hier ein eigenes, einfacheres Verfahren.
+Dies trägt dem Umstand Rechnung, dass Checkmk einen Host ohnehin nur einmal pro Intervall kontaktiert.
+Außerdem sorgt der CMC dafür, dass neue Checks <em>sofort</em> ausgeführt werden und nicht über mehrere Minuten verteilt.
+Für den Anwender ist das sehr angenehm, da ein neu aufgenommener Host sofort nach dem Aktivieren der Konfiguration abgefragt wird.
+Um eine Lastspitze bei einer großen Zahl von neuen Checks zu vermeiden, werden neue Checks, die eine bestimmte einstellbare Zahl überschreiten, auf das ganze Intervall verteilt.
+Die Option dafür finden Sie unter <span class="guihint">Global settings &gt; Monitoring Core &gt; Initial Scheduling</span>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_metrics">
+<span class="hidden-anchor sr-only" id="metrics"></span>5. Verarbeitung von Messdaten</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Eine wichtige Funktion von Checkmk ist das <a href="graphing.html">Verarbeiten von Messdaten</a>, wie z.B. CPU-Auslastung, und deren Speicherung über einen längeren Zeitraum.
+In der <span class="image-inline"><img src="../images/icons/CRE.png" alt="CRE" width="20" title="Checkmk Raw Edition"></span> <strong>Checkmk Raw Edition</strong> kommt dabei <a href="http://docs.pnp4nagios.org/" target="_blank">PNP4Nagios</a> von Jörg Linge zum Einsatz,
+welches wiederum auf dem <a href="https://oss.oetiker.ch/rrdtool/" target="_blank">RRDtool</a> aufsetzt.</p></div>
+<div class="paragraph"><p>Die Software erledigt zwei Aufgaben:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Das Anlegen und Aktualisieren der <a href="graphing.html#rrds">Round-Robin-Datenbanken (RRDs).</a></p></li>
+<li><p>Die grafische Darstellung der Daten in der GUI.</p></li>
+</ol></div>
+<div class="paragraph"><p>Bei Verwendung des Nagios-Kerns läuft der erste Part über einen recht langen Weg.
+Je nach Methode kommen dabei Spool-Dateien, Perl-Skripte und ein Hilfsprozess (<code>npcd</code>) zum Einsatz, der in C geschrieben ist.
+Am Ende werden leicht umgewandelte Daten in das Unix-Socket des RRD-Cache-Daemons geschrieben.</p></div>
+<div class="paragraph"><p>Der CMC kürzt diese Kette ab, in dem er <em>direkt</em> zum RRD-Cache-Daemon schreibt — alle Zwischenschritte werden ausgelassen.
+Das Parsen der Daten und Umwandeln in das Format des RRDtools erfolgt direkt in C++.
+Dieses Verfahren ist heute möglich und sinnvoll, da der RRD-Cache-Daemon ohnehin sein eigenes sehr effizientes Spooling implementiert und mithilfe von Journaldateien auch bei einem Absturz des Systems keine Daten verliert.</p></div>
+<div class="paragraph"><p>Die Vorteile:</p></div>
+<div class="ulist"><ul>
+<li><p>Einsparen von Disk-I/O und CPU.</p></li>
+<li><p>Einfachere Implementierung mit deutlich mehr Stabilität.</p></li>
+</ul></div>
+<div class="paragraph"><p>Das Neuanlegen von RRDs erledigt der CMC mit einem weiteren Helper, der per <code>cmk --create-rrd</code> aufgerufen wird.
+Dieser legt die Dateien wahlweise kompatibel zu PNP an oder alternativ im neuen Checkmk-Format (gilt nur für Neuinstallationen).
+Ein Wechsel von Nagios auf CMC hat daher keinen Einfluss auf bestehende RRD-Dateien.
+Diese werden nahtlos weiter gepflegt.</p></div>
+<div class="paragraph"><p>In den kommerziellen Editionen übernimmt die grafische Darstellung der Daten direkt die GUI von Checkmk selbst, so dass keine Komponente von PNP4Nagios mehr beteiligt ist.</p></div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">Auf dieser Seite</div>
+<ul class="sectlevel1">
+<li><a href="#_besonderheiten_des_checkmk_micro_cores">1. Besonderheiten des Checkmk Micro Cores</a></li>
+<li>
+<a href="#smartping">2. Smart Ping — Intelligente Host-Checks</a><ul class="sectlevel1">
+<li><a href="#no_on-demand_host_checks">2.1. Keine Host-Checks auf Abruf</a></li>
+<li><a href="#_der_nutzen">2.2. Der Nutzen</a></li>
+<li><a href="#_nicht_ping_bare_hosts">2.3. Nicht Ping-bare Hosts</a></li>
+<li><a href="#_probleme_mit_firewalls">2.4. Probleme mit Firewalls</a></li>
+</ul>
+</li>
+<li>
+<a href="#aux_processes">3. Hilfsprozesse</a><ul class="sectlevel1">
+<li><a href="#checkhelper">3.1. Check Helper</a></li>
+<li>
+<a href="#fetcher_checker">3.2. Checkmk Fetcher und Checkmk Checker</a><ul class="sectlevel2">
+<li><a href="#_die_checkmk_fetcher">Die Checkmk Fetcher</a></li>
+<li><a href="#_die_checkmk_checker">Die Checkmk Checker</a></li>
+</ul>
+</li>
+<li><a href="#numbers">3.3. Zahl der Hilfsprozesse richtig einstellen</a></li>
+</ul>
+</li>
+<li><a href="#_initiales_scheduling">4. Initiales Scheduling</a></li>
+<li><a href="#metrics">5. Verarbeitung von Messdaten</a></li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../../assets/js/lunr.de.js"></script>
+<script src="../lunr.index.de.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>

@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<link rel="icon" href="/favicon.png">
+<meta name="description" content="In this article you will learn how to create custom installation packages for agents, and if required, distribute them automatically.">
+<meta name="og:locale" content="en">
+<meta name="og:site_name" content="Checkmk Docs">
+<meta name="og:title" content="Automatic agent updates - Distribute agents and plug-ins automatically">
+<meta name="og:description" content="In this article you will learn how to create custom installation packages for agents, and if required, distribute them automatically.">
+<meta name="og:image" content="https://docs.checkmk.com/assets/images/share_image.png">
+<meta name="twitter:site" content="@checkmk">
+<meta name="twitter:creator" content="@checkmk">
+<title>Automatic agent updates - Distribute agents and plug-ins automatically</title>
+<link rel="stylesheet" href="../../assets/css/checkmk.css?id=4473d2acbb1ea6136428">
+<link rel="stylesheet" href="../../assets/css/pygments-monokai.css">
+<link rel="stylesheet" href="../../assets/css/addons.css">
+<link rel="stylesheet" href="../../assets/css/SourceCodePro.css">
+<link rel="search" href="./opensearch.xml" type="application/opensearchdescription+xml" title="Search docs.checkmk.com">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJ3VGL8');</script>
+<!-- End Google Tag Manager --><style>
+#staticinfo { font-style: italic; }
+</style>
+</head>
+<body class="article toc2 toc-right">
+<!-- Cookie Consent (GDPR Compliance) -->
+
+<!-- End Cookie Consent (GDPR Compliance) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ3VGL8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="header-top">
+<div class="header-top__left">
+<a class="header-top__logo d-none d-xl-inline-block" href="/latest/en"><img src="../../assets/images/docs_logo.png" alt="Checkmk"></a><a class="header-top__icon d-inline-block d-xl-none" href="/latest/en"><img src="../../assets/images/logo_icon.svg" alt="Checkmk"></a>
+</div>
+<div class="header-top__center">
+<input type="text" class="header-top__search" placeholder="Search the checkmk docs"><div class="header-top__search__results"></div>
+</div>
+<div class="header-top__right d-block">
+<button class="header-top__search__toggle d-inline-block d-md-none"><img class="header-top__search__toggle__icon" src="../../assets/images/search.svg" alt="Search"></button><div class="dropdown dropdown__language">
+                    <button class="btn dropdown-toggle" type="button" id="languageMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">en</button>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="languageMenuButton"><a class="dropdown-item" href="../../latest/de/agent_deployment.html">Deutsch</a></div>
+</div>
+<div class="dropdown dropdown__branch">
+                        <button class="btn dropdown-toggle" type="button" id="branchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">latest (2.3.0)</button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="branchMenuButton">
+<a class="dropdown-item" href="../../2.1.0/en/agent_deployment.html">2.1.0</a><a class="dropdown-item" href="../../2.2.0/en/agent_deployment.html">2.2.0</a>
+</div>
+</div>
+<a class="header-top__back d-none d-lg-inline-block" href="https://checkmk.com">to checkmk.com</a><button class="header-top__toggle d-inline-block d-lg-none"><span class="header-top__toggle__icon"></span></button>
+</div>
+</div>
+<aside><div class="main-nav">
+<div class="main-nav__content"><div id="content">
+<div class="sect1">
+<h2 id="_welcome_to_checkmk">
+<a class="anchor" href="#_welcome_to_checkmk"></a>1. Welcome to Checkmk</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="welcome.html">Welcome to the Checkmk User Guide</a></p>
+</li>
+<li>
+<p><a href="release_notes.html">Release notes</a></p>
+</li>
+<li>
+<p><a href="glossar.html">Glossary</a></p>
+</li>
+<li>
+<p><a href="search.html">Searching docs.checkmk.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beginners_guide">
+<a class="anchor" href="#_beginners_guide"></a>2. Beginner’s Guide</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="intro_setup.html">Setting up Checkmk</a></p>
+</li>
+<li>
+<p><a href="intro_gui.html">The Checkmk user interface</a></p>
+</li>
+<li>
+<p><a href="intro_setup_monitor.html">Setting up monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_tools.html">The monitoring tools</a></p>
+</li>
+<li>
+<p><a href="intro_monitor.html">Checkmk in monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_finetune.html">Fine-tuning the monitoring</a></p>
+</li>
+<li>
+<p><a href="intro_users.html">Working with multiple users</a></p>
+</li>
+<li>
+<p><a href="intro_notifications.html">Switching on notifications</a></p>
+</li>
+<li>
+<p><a href="intro_extend.html">Extending the monitoring system further</a></p>
+</li>
+<li>
+<p><a href="intro_bestpractise.html">Best practices, tips &amp; tricks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">
+<a class="anchor" href="#_installation"></a>3. Installation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages.html">Basic information on the installation of Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_server_and_vms">
+<a class="anchor" href="#_server_and_vms"></a>3.1. Server and VMs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_packages_debian.html">Installation on Debian and Ubuntu</a></p>
+</li>
+<li>
+<p><a href="install_packages_redhat.html">Installation on Red Hat and derivatives</a></p>
+</li>
+<li>
+<p><a href="install_packages_sles.html">Installation on SUSE Linux Enterprise Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appliance_container_cloud">
+<a class="anchor" href="#_appliance_container_cloud"></a>3.2. Appliance, container, cloud</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="install_appliance_cmk.html">Installation of Checkmk in the appliance</a></p>
+</li>
+<li>
+<p><a href="introduction_docker.html">Installation as a Docker container</a></p>
+</li>
+<li>
+<p><a href="install_azure.html">Installation from Azure Marketplace</a></p>
+</li>
+<li>
+<p><a href="install_aws.html">Installation from AWS Marketplace</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updates">
+<a class="anchor" href="#_updates"></a>3.3. Updates</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="update.html">Updates and Upgrades</a></p>
+</li>
+<li>
+<p><a href="update_major.html">Update to version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="update_matrix.html">Update matrix for version <span class="new">2.3.0</span></a></p>
+</li>
+<li>
+<p><a href="release_upgrade.html">Linux upgrade on the Checkmk server</a></p>
+</li>
+<li>
+<p><a href="cmk_versions.html">Checkmk versions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_administration_of_checkmk">
+<a class="anchor" href="#_administration_of_checkmk"></a>4. Administration of Checkmk</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_server">
+<a class="anchor" href="#_server"></a>4.1. Server</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="saml.html">Authentication with SAML</a></p>
+</li>
+<li>
+<p><a href="kerberos.html">Single sign-on with Kerberos</a></p>
+</li>
+<li>
+<p><a href="managing_docker.html">Checkmk server in a Docker container</a></p>
+</li>
+<li>
+<p><a href="security.html">Security</a></p>
+</li>
+<li>
+<p><a href="ports.html">Ports</a></p>
+</li>
+<li>
+<p><a href="omd_https.html">Securing the web interface with HTTPS</a></p>
+</li>
+<li>
+<p><a href="support_diagnostics.html">Support diagnostics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sites">
+<a class="anchor" href="#_sites"></a>4.2. Sites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="omd_basics.html">Site administration with omd</a></p>
+</li>
+<li>
+<p><a href="cmk_commandline.html">Checkmk on the command line</a></p>
+</li>
+<li>
+<p><a href="license.html">Managing licenses</a></p>
+</li>
+<li>
+<p><a href="distributed_monitoring.html">Distributed monitoring</a></p>
+</li>
+<li>
+<p><a href="backup.html">Backups</a></p>
+</li>
+<li>
+<p><a href="password_store.html">Password store</a></p>
+</li>
+<li>
+<p><a href="analyze_configuration.html">Analyzing the Checkmk site configuration</a></p>
+</li>
+<li>
+<p><a href="mkps.html">Checkmk extension packages (MKPs)</a></p>
+</li>
+<li>
+<p><a href="mkp_viewables.html">MKPs for GUI extensions</a></p>
+</li>
+<li>
+<p><a href="simulation_mode.html">Simulation mode</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">
+<a class="anchor" href="#_configuration"></a>5. Configuration</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato.html">Configuring Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_hosts">
+<a class="anchor" href="#_hosts"></a>5.1. Hosts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="hosts_setup.html">Host administration</a></p>
+</li>
+<li>
+<p><a href="hosts_structure.html">Host structuring</a></p>
+</li>
+<li>
+<p><a href="host_tags.html">Host tags</a></p>
+</li>
+<li>
+<p><a href="dcd.html">Dynamic host configuration</a></p>
+</li>
+<li>
+<p><a href="hosts_autoregister.html">Automated host creation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_services">
+<a class="anchor" href="#_services"></a>5.2. Services</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_services.html">Understanding and configuring services</a></p>
+</li>
+<li>
+<p><a href="clustered_services.html">Monitoring cluster services</a></p>
+</li>
+<li>
+<p><a href="piggyback.html">The piggyback mechanism</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules">
+<a class="anchor" href="#_rules"></a>5.3. Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_rules.html">Rules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supporting_configurations">
+<a class="anchor" href="#_supporting_configurations"></a>5.4. Supporting configurations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="timeperiods.html">Time periods</a></p>
+</li>
+<li>
+<p><a href="labels.html">Labels</a></p>
+</li>
+<li>
+<p><a href="regexes.html">Regular expressions in Checkmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_users_and_permissions">
+<a class="anchor" href="#_users_and_permissions"></a>5.5. Users and permissions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_user.html">Users, roles and permissions</a></p>
+</li>
+<li>
+<p><a href="ldap.html">User management with LDAP/Active Directory</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">
+<a class="anchor" href="#_notifications"></a>5.6. Notifications</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="notifications.html">Notifications</a></p>
+</li>
+<li>
+<p><a href="notifications_webex.html">Notifications via Cisco Webex Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_ilert.html">Notifications via ilert</a></p>
+</li>
+<li>
+<p><a href="notifications_jira.html">Notifications via Jira</a></p>
+</li>
+<li>
+<p><a href="notifications_mattermost.html">Notifications via Mattermost</a></p>
+</li>
+<li>
+<p><a href="notifications_teams.html">Notifications via Microsoft Teams</a></p>
+</li>
+<li>
+<p><a href="notifications_pagerduty.html">Notifications via PagerDuty</a></p>
+</li>
+<li>
+<p><a href="notifications_pushover.html">Notifications via Pushover</a></p>
+</li>
+<li>
+<p><a href="notifications_opsgenie.html">Notifications via Opsgenie</a></p>
+</li>
+<li>
+<p><a href="notifications_servicenow.html">Notifications via ServiceNow</a></p>
+</li>
+<li>
+<p><a href="notifications_signl4.html">Notifications via SIGNL4</a></p>
+</li>
+<li>
+<p><a href="notifications_slack.html">Notifications via Slack</a></p>
+</li>
+<li>
+<p><a href="notifications_splunkoncall.html">Notifications via Splunk On-Call</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_events">
+<a class="anchor" href="#_events"></a>5.7. Events</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="ec.html">The Event Console</a></p>
+</li>
+<li>
+<p><a href="alert_handlers.html">Alert handlers</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_monitoring_systems">
+<a class="anchor" href="#_monitoring_systems"></a>6. Monitoring systems</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="wato_monitoringagents.html">Monitoring agents</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_checkmk_agents_and_snmp">
+<a class="anchor" href="#_checkmk_agents_and_snmp"></a>6.1. Checkmk agents and SNMP</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="agent_deployment.html">Automatic agent updates</a></p>
+</li>
+<li>
+<p><a href="agent_linux.html">Monitoring Linux</a></p>
+</li>
+<li>
+<p><a href="agent_linux_legacy.html">Monitoring Linux in legacy mode</a></p>
+</li>
+<li>
+<p><a href="agent_windows.html">Monitoring Windows</a></p>
+</li>
+<li>
+<p><a href="agent_freebsd.html">Monitoring FreeBSD</a></p>
+</li>
+<li>
+<p><a href="snmp.html">Monitoring via SNMP</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_agent_extensions">
+<a class="anchor" href="#_agent_extensions"></a>6.2. Agent extensions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="inventory.html">The HW/SW inventory</a></p>
+</li>
+<li>
+<p><a href="mk_filestats.html">Monitoring files</a></p>
+</li>
+<li>
+<p><a href="monitoring_logfiles.html">Monitoring log files</a></p>
+</li>
+<li>
+<p><a href="monitoring_oracle.html">Monitoring Oracle databases</a></p>
+</li>
+<li>
+<p><a href="monitoring_mysql.html">Monitoring MySQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql.html">Monitoring MSSQL</a></p>
+</li>
+<li>
+<p><a href="monitoring_mssql_legacy.html">Monitoring MSSQL with the legacy plug-in</a></p>
+</li>
+<li>
+<p><a href="monitoring_jobs.html">Monitoring time-based processes (Cronjobs)</a></p>
+</li>
+<li>
+<p><a href="spool_directory.html">The spool directory</a></p>
+</li>
+<li>
+<p><a href="localchecks.html">Local checks</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vm_cloud_container">
+<a class="anchor" href="#_vm_cloud_container"></a>6.3. VM, cloud, container</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="datasource_programs.html">Datasource programs</a></p>
+</li>
+<li>
+<p><a href="monitoring_vmware.html">Monitoring VMware ESXi</a></p>
+</li>
+<li>
+<p><a href="monitoring_aws.html">Monitoring Amazon Web Services (AWS)</a></p>
+</li>
+<li>
+<p><a href="monitoring_azure.html">Monitoring Microsoft Azure</a></p>
+</li>
+<li>
+<p><a href="monitoring_gcp.html">Monitoring Google Cloud Platform (GCP)</a></p>
+</li>
+<li>
+<p><a href="monitoring_kubernetes.html">Monitoring Kubernetes</a></p>
+</li>
+<li>
+<p><a href="monitoring_openshift.html">Monitoring OpenShift</a></p>
+</li>
+<li>
+<p><a href="monitoring_docker.html">Monitoring Docker</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_endpoints">
+<a class="anchor" href="#_endpoints"></a>6.4. Endpoints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="active_checks.html">Monitoring network services (Active checks)</a></p>
+</li>
+<li>
+<p><a href="robotmk.html">Checkmk Synthetic Monitoring with Robotmk</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dashboards_views_metrics">
+<a class="anchor" href="#_dashboards_views_metrics"></a>7. Dashboards, views, metrics</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="user_interface.html">The user interface</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_general">
+<a class="anchor" href="#_general"></a>7.1. General</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="views.html">Host and service views</a></p>
+</li>
+<li>
+<p><a href="dashboards.html">Dashboards</a></p>
+</li>
+<li>
+<p><a href="graphing.html">Measured values and graphing</a></p>
+</li>
+<li>
+<p><a href="custom_notes.html">Custom notes</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_in_views">
+<a class="anchor" href="#_commands_in_views"></a>7.2. Commands in views</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="commands.html">Commands</a></p>
+</li>
+<li>
+<p><a href="basics_ackn.html">Acknowledging problems</a></p>
+</li>
+<li>
+<p><a href="basics_downtimes.html">Scheduled downtimes</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_analysis_and_prognosis">
+<a class="anchor" href="#_analysis_and_prognosis"></a>8. Analysis and prognosis</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_analysis">
+<a class="anchor" href="#_analysis"></a>8.1. Analysis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="availability.html">Availability</a></p>
+</li>
+<li>
+<p><a href="sla.html">Extended availability (SLAs)</a></p>
+</li>
+<li>
+<p><a href="bi.html">Business Intelligence (BI)</a></p>
+</li>
+<li>
+<p><a href="reporting.html">Reports</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prognosis">
+<a class="anchor" href="#_prognosis"></a>8.2. Prognosis</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="predictive_monitoring.html">Predictive monitoring</a></p>
+</li>
+<li>
+<p><a href="forecast_graphs.html">Forecast graphs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_of_other_applications">
+<a class="anchor" href="#_connection_of_other_applications"></a>9. Connection of other applications</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_prometheus.html">Integrating Prometheus</a></p>
+</li>
+<li>
+<p><a href="integrating_datadog.html">Integrating Datadog</a></p>
+</li>
+<li>
+<p><a href="nagvis.html">NagVis: status data on maps and diagrams</a></p>
+</li>
+<li>
+<p><a href="ntop.html">Integrating ntopng in Checkmk</a></p>
+</li>
+<li>
+<p><a href="grafana.html">Integrating Checkmk in Grafana</a></p>
+</li>
+<li>
+<p><a href="metrics_exporter.html">Sending metrics to InfluxDB and Graphite</a></p>
+</li>
+<li>
+<p><a href="nagstamon.html">Integrating Checkmk in Nagstamon</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_specifics_to_the_editions">
+<a class="anchor" href="#_specifics_to_the_editions"></a>10. Specifics to the editions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cse.html">Checkmk Enterprise</a></p>
+</li>
+<li>
+<p><a href="cce.html">Checkmk Cloud</a></p>
+</li>
+<li>
+<p><a href="managed.html">Checkmk MSP</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_automation_and_development">
+<a class="anchor" href="#_automation_and_development"></a>11. Automation and development</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="apis_intro.html">Overview of API resources</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_automation">
+<a class="anchor" href="#_apis_for_automation"></a>11.1. APIs for automation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="rest_api.html">The Checkmk REST API</a></p>
+</li>
+<li>
+<p><a href="livestatus.html">Retrieving status data via Livestatus</a></p>
+</li>
+<li>
+<p><a href="livestatus_references.html">Livestatus command reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_apis_for_development">
+<a class="anchor" href="#_apis_for_development"></a>11.2. APIs for development</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bakery_api.html">The Bakery-API</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_of_check_plug_ins">
+<a class="anchor" href="#_development_of_check_plug_ins"></a>11.3. Development of check plug-ins</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devel_intro.html">Developing extensions for Checkmk</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins.html">Writing agent-based check plug-ins</a></p>
+</li>
+<li>
+<p><a href="devel_check_plugins_snmp.html">Writing SNMP-based check plug-ins</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concepts">
+<a class="anchor" href="#_concepts"></a>12. Concepts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="monitoring_basics.html">Basic principles of monitoring with Checkmk</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_the_checkmk_micro_core_cmc">
+<a class="anchor" href="#_the_checkmk_micro_core_cmc"></a>12.1. The Checkmk Micro Core (CMC)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="cmc.html">The Checkmk Micro Core (CMC)</a></p>
+</li>
+<li>
+<p><a href="cmc_differences.html">Special characteristics of the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_migration.html">Migration to the CMC</a></p>
+</li>
+<li>
+<p><a href="cmc_files.html">CMC files and directories</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_checkmk_appliance">
+<a class="anchor" href="#_the_checkmk_appliance"></a>13. The Checkmk appliance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appliance_rack1_quick_start.html">Quick start guide for Checkmk racks</a></p>
+</li>
+<li>
+<p><a href="appliance_virt1_quick_start.html">Quick start guide for Checkmk virt1</a></p>
+</li>
+<li>
+<p><a href="appliance_install_virt1.html">Installation of the virtual appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_usage.html">Configuring and using the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_backup.html">Backup in the appliance</a></p>
+</li>
+<li>
+<p><a href="appliance_cluster.html">Appliance in cluster operation</a></p>
+</li>
+<li>
+<p><a href="appliance_rack_config.html">Special features of the hardware appliance</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+<div class="main-nav__utils">
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="aboutMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About Checkmk</button><div class="dropdown-menu dropup" aria-labelledby="aboutMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/product/features" target="_blank">Features</a><a class="dropdown-item" href="https://checkmk.com/product/editions" target="_blank">Editions</a><a class="dropdown-item" href="https://checkmk.com/integrations" target="_blank">Integrations</a><a class="dropdown-item" href="https://checkmk.com/imprint" target="_blank">Imprint</a><a class="dropdown-item" href="copyright.html" target="_blank">Copyright</a>
+</div>
+</div>
+<div class="dropup dropdown__utils">
+<button class="btn dropdown-toggle" type="button" id="learnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn</button><div class="dropdown-menu dropup" aria-labelledby="learnMenuButton">
+<a class="dropdown-item" href="https://checkmk.com/videos">Videos</a><a class="dropdown-item" href="https://checkmk.com/webinars">Webinars</a><a class="dropdown-item" href="https://checkmk.com/trainings/classes">Trainings</a>
+</div>
+</div>
+<a class="main-nav__utils__link" href="https://forum.checkmk.com">Forum</a>
+</div>
+</div></aside><main><div id="header">
+<h1>Automatic agent updates</h1>
+<div class="details">
+<span id="revdate">Last modified on 16-Sep-2024</span><a class="edit-document" href="https://github.com/Checkmk/checkmk-docs/edit/2.3.0/src/common/en/agent_deployment.asciidoc">Edit this page on GitHub</a>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div id="staticinfo">This page was exported for offline usage on 2025-01-07 22:12:14 +0000. It may not reflect the current state of the Checkmk documentation. To view a daily updated version, visit <a href="https://docs.checkmk.com/" target="_blank">docs.checkmk.com</a>.</div>
+<div class="sectionbody">
+<div class="paragraph">
+<p></p>
+<div class="dropdown dropdown__related">
+<button class="btn btn-primary dropdown-toggle" type="button" id="relatedMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Related Articles</button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="relatedMenuButton">
+<a href="wato_monitoringagents.html">Monitoring agents</a>
+<a href="update.html">Updates and Upgrades</a>
+<a href="cmk_commandline.html">Checkmk on the command line</a>
+</div>
+</div>
+</div>
+<div class="paragraph"><p><span class="image-inline"><img src="../images/CEE.svg" alt="CEE" class="icon-left"></span>
+The commercial editions can update their agents on Linux, Windows and Solaris automatically.
+This feature enables easy updating of the agents in the case of new Checkmk versions, and even a changed configuration of the agents can be applied automatically.
+In this way you can take advantage of the <a href="wato_monitoringagents.html#bakery">Agent Bakery</a> to apply individual configurations to hosts.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_setup_automatic_updates">
+<span class="hidden-anchor sr-only" id="setup_automatic_updates"></span>1. Setting up automatic updates</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The automatic deployment of agents is by default globally disabled.
+So before you take care of the configuration itself, enable the <span class="guihint">Activation of automatic agent updates</span> option under <span class="guihint">Setup &gt; General &gt; Global Settings &gt; Automatic Agent Updates</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_activation_of_automatic_agent_updates.png" alt="agent deployment activation of automatic agent updates"></div></div>
+<div class="paragraph"><p>To implement the updates, follow these steps:
+First open <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX</span> and select <span class="guihint">Agents &gt; Automatic updates</span>:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_automatic_agent_updates.png" alt="agent deployment automatic agent updates"></div></div>
+<div class="paragraph"><p>See <span class="guihint">Prerequisites</span> for a list of prerequisites that need to be met for the automatic updates to work correctly.
+You can simply tick these off in order.
+Do not forget that you can get more information for each of these items via <span class="guihint">Help &gt; Show inline help</span>.
+Clicking on <span class="image-inline"><img src="../images/icons/icon_edit.png" alt="icon edit"></span> will take you directly to the setting you need to configure.
+Specifically, the settings described in the following five chapters must be made and activated via the <span class="guihint">Master switch</span>.</p></div>
+<div class="sect2">
+<h3 id="heading_create_signature_key">
+<span class="hidden-anchor sr-only" id="create_signature_key"></span>1.1. Creating a signature key</h3>
+<div class="paragraph"><p>The system is designed in a way that the agents can download updates via HTTP or HTTPS from their central monitoring server.
+Because agents contain executable code it is especially important to guard against the possibility of falsified agents coming from an attacker.
+Signature keys are used for this purpose.
+These keys consist of a pair of public and private keys (the public-key method).</p></div>
+<div class="paragraph"><p>You can create as many signature keys as you like.
+Each of these is secured with a passphrase, which you will subsequently need to enter each time you sign.
+This prevents, for example, an attacker gaining access to a monitoring server backup from signing agents.</p></div>
+<div class="paragraph"><p>Create a signature key here and record the passphrase.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> This passphrase can later neither be changed nor restored.
+If the key is lost, it can mean that all agents need to be updated manually once again.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_configure_update_plugin">
+<span class="hidden-anchor sr-only" id="configure_update_plugin"></span>1.2. Configuring the Update plug-in</h3>
+<div class="paragraph"><p>The actual update is performed by an agent plug-in named <code>cmk-update-agent</code>.
+This is called by the agent in a definable cycle (e.g. once per hour).
+At this time it asks the deployment server (your central monitoring system) if there is a new package available for this host, and if so it will then perform the update.</p></div>
+<div class="paragraph"><p>The plug-in must of course be present and correctly configured in the agent.
+To do this, extend the agents with this plug-in using the <span class="guihint">Agent updater (Linux, Windows, Solaris)</span> rule set.
+The rule set can be found quickly, for example, on the <span class="guihint">Automatic agent updates</span> page in the menu <span class="guihint">Related &gt; Agent updater ruleset</span>.</p></div>
+<div class="paragraph"><p>Note that the rule set here follows the <a href="wato_rules.html#matching_type">‘First rule per parameter wins’</a> principle.
+This allows you to define basic settings in general so that they do not have to be set again and again in the more specific rules.
+In addition, the <a href="user_interface.html#inline_help">inline help</a> provides more information about each item as soon as you activate it.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_agent_updater_empty.png" alt="agent deployment agent updater empty"></div></div>
+<div class="paragraph"><p>Below are a few explanations of the individual points.</p></div>
+<div class="sect3">
+<h4 id="heading_activation">
+<span class="hidden-anchor sr-only" id="activation"></span>Activation</h4>
+<div class="paragraph"><p>This setting must be enabled (<span class="guihint">Deploy plugin …​</span>) to allow the plug-in to be added to the agent.
+Here, for example, rule inheritance can be used to set a default in a higher-level folder and override this for individual hosts/folders as needed.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_update_server_information">
+<span class="hidden-anchor sr-only" id="update_server_information"></span>Update server information</h4>
+<div class="paragraph"><p>Optional configuration data for the connection of the agent updater to the Checkmk server can be entered here.
+If this entry is not configured, the information must be entered later when registering the agent updater.</p></div>
+<div class="sect4">
+<h5 id="heading_fixed_update_server">
+<span class="hidden-anchor sr-only" id="fixed_update_server"></span>Usage</h5>
+<div class="paragraph"><p>In the case of distributed monitoring with a centralized configuration, the agent updater receives its relevant update server by default from the Checkmk site to which it connects.
+This option can be used to configure that the update server entered here is used permanently and that the automatic update server will be ignored.</p></div>
+</div>
+<div class="sect4">
+<h5 id="heading_dns_name_update_server">
+<span class="hidden-anchor sr-only" id="dns_name_update_server"></span>DNS name or IP address of update server</h5>
+<div class="paragraph"><p>Here you enter the DNS name under which the Checkmk server is accessible.
+It is important here that the host to be monitored can resolve this name and that it is configured as a host in Checkmk.
+Take care when using HTTPS that the name of the certificate matches the name of the Checkmk server as known to the host.</p></div>
+</div>
+<div class="sect4">
+<h5 id="heading_cmk_site_update_server">
+<span class="hidden-anchor sr-only" id="cmk_site_update_server"></span>Name of Checkmk site of update server</h5>
+<div class="paragraph"><p>Here you enter — with a few exceptions — the name of the site on which you
+are currently configuring this rule. An exception to this approach would be if
+the affected hosts should be ‘moved’ to another Checkmk site. In such a case,
+for one time only, enter a different site here.
+See also below under <a href="#scenarios">Application scenarios</a>.
+In a distributed setup with a central configuration, the site where you want to register may also be different from the central site where this rule is configured.</p></div>
+</div>
+<div class="sect4">
+<h5 id="heading_update_protocol">
+<span class="hidden-anchor sr-only" id="update_protocol"></span>Protocol to use for fetching updates</h5>
+<div class="paragraph"><p>If — as we recommend — you use HTTPS, you must ensure that the agent updater also has a CA certificate available to verify the connection.</p></div>
+<div class="paragraph"><p><strong>Important</strong>: Depending on the server configuration, the use of HTTPS (including forwarding from HTTP to HTTPS) may be forced. In such a case, configuring this rule to HTTP has no effect.</p></div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="heading_certificates_for_https">
+<span class="hidden-anchor sr-only" id="certificates_for_https"></span>Certificates for HTTPS verification</h4>
+<div class="paragraph"><p>CA or self-signed certificates configured here are available to the agent updater for the verification of HTTPS connections. Alternatively, in the case of a distributed setup with a central configuration, certificates can also be made available to the agent updater from the Checkmk site, or these can be imported directly during the connection via command line parameters.</p></div>
+<div class="paragraph"><p><strong>Important</strong>: If the server’s certificate chain is signed with a public CA, the connection can normally be verified without imported certificates.
+However, as soon as imported certificates from one of the mentioned sources are available to the agent updater, all other CA certificate authorities are ignored! In the case of problems with the configuration of HTTPS, please consult the <a href="#faq4">following FAQ</a> below.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_interval_for_update_check">
+<span class="hidden-anchor sr-only" id="interval_for_update_check"></span>Interval for update check</h4>
+<div class="paragraph"><p>Here you specify the interval in which the agent updater queries the configured
+monitoring server whether any updates are available. As long as the specified
+interval has not expired, a cached call is returned, so as to burden the network
+load as little as possible. It usually makes sense to use an interval of not
+less than 10 minutes, otherwise there is the very great danger that your network
+will be very heavily burdened if you have a large number of Checkmk agents.
+If you do not set a value here a default value of 1 hour will apply.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_proxy_settings">
+<span class="hidden-anchor sr-only" id="proxy_settings"></span>Proxy settings</h4>
+<div class="paragraph"><p>This rule setting is likewise optional.
+The agent updater initially assumes that there is a direct connection to the Checkmk server on the target host, even with configured proxy settings, and ignores all local proxy settings.
+If this is the desired behavior this rule setting can therefore be omitted.
+Otherwise either enter proxy settings manually, or use the host’s existing environment variables.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_executable_format">
+<span class="hidden-anchor sr-only" id="executable_format"></span>Executable format (Linux)</h4>
+<div class="paragraph"><p>You can optionally specify how the plug-in is added to the agent installation package.
+How the rule behaves by default depends on the target system:</p></div>
+<div class="ulist"><ul>
+<li><p>Linux (deb, rpm, tgz):
+You do not have to manually edit anything for these systems; the agent updater is passed as a 64-bit binary.
+You can also optionally select a 32-bit binary for legacy systems, or the old Python script.
+<strong>Important</strong>: For the binary you will need the <em>glibc</em> package (minimum the 2.5 version).
+Linux distributions have generally met these requirements since 2006.</p></li>
+<li><p>Windows:
+For Windows hosts Checkmk will always deploy a 32-bit executable.
+This rule is therefore ignored by default.
+<strong>Note:</strong> Should you find a 64-bit binary of the agent updater on any of your Windows hosts, this version dates back to an older version of Checkmk and is not up to date.</p></li>
+<li><p>Solaris:
+You do not have to modify anything here either.
+Checkmk will use the Python script even if you leave the default value on the 64-bit binary.</p></li>
+<li><p>Other architectures:
+If you have packages for other architectures such as arm or ppc, set this option manually to <span class="guihint">Python</span>,
+since Checkmk does not intercept this automatically and no binaries are offered for these platforms.</p></li>
+</ul></div>
+<div class="paragraph"><p>If you still need to rely on the old Python script the following requirements apply to the system:</p></div>
+<div class="ulist"><ul>
+<li><p>Python3 in version 3.4 or newer</p></li>
+<li><p>The Python-Modules <em>requests</em>, <em>PySocks</em> and <em>pyOpenSSL</em></p></li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="heading_signature_keys">
+<span class="hidden-anchor sr-only" id="signature_keys"></span>Signature keys the agent will accept</h4>
+<div class="paragraph"><p>Select at least one signature key whose signature should be accepted by the
+agent updater. You can also optionally specify multiple keys. This can be
+the case if, for example, you want to disable an old key. For this purpose
+the host’s agent updater must in the interim accept both keys.</p></div>
+<div class="paragraph"><p>After this last setting, your rule could look like the following screenshot. Save all your entries by clicking on <span class="image-inline"><img src="../images/icons/icon_save.png" alt="icon save"></span> <span class="guihint">Save</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_agent_updater.png" alt="agent deployment agent updater"></div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_bakery">
+<span class="hidden-anchor sr-only" id="bakery"></span>1.3. Baking and signing agents</h3>
+<div class="paragraph"><p>Next, you can immediately bake and sign the agents configured in this way in a single action.
+This is because the newly created and customized rules will not be found in the installation packages until you have created/baked them again.
+Navigate to <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris AIX</span> and click <span class="guihint">Bake and sign agents</span>.
+You must now enter the passphrase for the key you want to use.
+After you click <span class="guihint">Bake and sign</span>, the baking procedure will start as a background process.
+When this process has completed, you will be informed:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_agent_baking_successful.png" alt="agent deployment agent baking successful"></div></div>
+<div class="paragraph" id="sign_agent"><p>All agents signed in this way will be assigned to a corresponding <span class="image-inline"><img src="../images/icons/icon_signature_key.png" alt="icon signature key"></span> symbol.
+If you have created multiple keys, sign with these additional keys separately.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> It is sufficient for the agent updater on the host to be monitored if the new package has been signed with one of the keys known to the updater.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_register_agent">
+<span class="hidden-anchor sr-only" id="register_agent"></span>1.4. Registering agent updater</h3>
+<div class="paragraph"><p>In the next step register the hosts to be monitored on the Checkmk server.
+Since a new host is not yet trusted by the Checkmk server, and the server does not yet know that the host should be updated automatically, the agent must be installed manually — once-only — on the host.</p></div>
+<div class="paragraph"><p>To do this, first go to <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX</span> and download the appropriate package for the host from the <a href="wato_monitoringagents.html#bakery_download">Agent Bakery</a>.
+Make sure that the package really contains the agent updater plug-in.</p></div>
+<div class="sect3">
+<h4 id="heading__registering_agent_updater_under_linux">
+<span class="hidden-anchor sr-only" id="_registering_agent_updater_under_linux"></span>Registering agent updater under Linux</h4>
+<div class="paragraph"><p>Now copy the agent package to the host and install it with <code>rpm</code> or <code>dpkg</code> (<a href="agent_linux.html#install_package">Linux package installation</a>).</p></div>
+<div class="paragraph"><p>After installation, you will find the agent updater plug-in in the directory <code>/usr/lib/check_mk_agent/plugins/3600/cmk-update-agent</code>.
+The subdirectory’s value of <code>3600</code> indicates the <a href="#interval_for_update_check">interval for the update check</a> in seconds (here for the default value of one hour).
+A script of the same name is also stored under <code>/usr/bin/</code>, so that <code>cmk-update-agent</code> is also available as a command.</p></div>
+<div class="paragraph"><p>Now call the agent updater with the <code>register</code> argument.
+Enter the required information in sequence.</p></div>
+<div class="paragraph"><p>With the following command, you now register the agent updater from a <strong>Linux host</strong>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-update-agent<span class="tok-w"> </span>register<span class="tok-w"> </span>-v
+<span class="tok-go">-------------------------------------------------------------------</span>
+<span class="tok-go">|                                                                   |</span>
+<span class="tok-go">|  Check_MK Agent Updater v2.1.0 - Registration                     |</span>
+<span class="tok-go">|                                                                   |</span>
+<span class="tok-go">|  Activation of automatic agent updates. Your first step is to     |</span>
+<span class="tok-go">|  register this host at your deployment server for agent updates.  |</span>
+<span class="tok-go">|  For this step you need a user with the permission                |</span>
+<span class="tok-go">|  "Register all hosts" on that Checkmk site.                       |</span>
+<span class="tok-go">|                                                                   |</span>
+<span class="tok-go">-------------------------------------------------------------------</span>
+<span class="tok-go">Our host name in the monitoring:</span>
+<span class="tok-go"><strong>myhost</strong></span>
+
+<span class="tok-go">User with registration permissions:</span>
+<span class="tok-go"><strong>cmkadmin</strong></span>
+
+<span class="tok-go">Password:</span>
+
+<span class="tok-go">Going to register agent at deployment server</span>
+<span class="tok-go">Successfully registered agent of host "myhost" for deployment.</span>
+<span class="tok-go">You can now update your agent by running 'cmk-update-agent -v'</span>
+<span class="tok-go">Saved your registration settings to /etc/cmk-update-agent.state.</span>
+
+<span class="tok-go">Hint: you can do this in scripts with the command:</span>
+
+<span class="tok-go">cmk-update-agent register -s myserver.example.com -i mysite -H myhost -p https -U cmkadmin -P <strong>*</strong> -v</span></code></pre></div></div>
+<div class="paragraph"><p>Alternatively, you can perform the registration in non-interactive mode by entering the required data via the command line options.
+On Linux, a call to the <code>cmk-update-agent register --help</code> here shows the settable options.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading__registering_agent_updater_under_windows">
+<span class="hidden-anchor sr-only" id="_registering_agent_updater_under_windows"></span>Registering agent updater under Windows</h4>
+<div class="paragraph"><p>Now copy the agent package to the host and install it with <code>msiexec</code> (<a href="agent_windows.html#install_package">Windows package installation</a>).</p></div>
+<div class="paragraph"><p>After installation, the agent updater is integrated into the Windows agent <code>C:\Program Files (x86)\checkmk\service\check_mk_agent.exe</code>.
+The updater itself can be controlled with the <code>check_mk_agent.exe updater</code> command.</p></div>
+<div class="paragraph"><p>Now call the agent updater with the <code>register</code> argument.
+Under Windows this must be done in a command prompt with administrator rights.
+Enter the required information in sequence.</p></div>
+<div class="paragraph"><p>As the agent updater for <strong>Windows hosts</strong> is integrated into the agent itself, the command for registering it looks like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\WINDOWS\system32&gt; "C:\Program Files (x86)\checkmk\service\check_mk_agent.exe" updater register</span>
+<span class="tok-go">Using previous settings from C:\ProgramData\checkmk\agent\config\cmk-update-agent.state.</span>
+<span class="tok-go">Our host name in the monitoring:</span>
+<span class="tok-go"><strong>mywindowshost</strong></span>
+
+<span class="tok-go">User with registration permissions:</span>
+<span class="tok-go"><strong>cmkadmin</strong></span>
+
+<span class="tok-go">Password:</span>
+
+<span class="tok-go">Successfully registered agent of host "mywindowshost" for deployment.</span></code></pre></div></div>
+<div class="paragraph"><p>Alternatively, you can perform the registration in non-interactive mode by entering the required data via the command line options.
+The complete command for registration looks like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">C:\WINDOWS\system32&gt; "C:\Program Files (x86)\checkmk\service\check_mk_agent.exe" ^</span>
+<span class="tok-go">updater register -s myserver.example.com -i mysite -H mywindowshost -p https -U cmkadmin -P mycmkadminpassword -v</span></code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading__one_time_registration_and_general_information">
+<span class="hidden-anchor sr-only" id="_one_time_registration_and_general_information"></span>One-time registration and general information</h4>
+<div class="paragraph"><p>The one-time registration can also be made via an <a href="glossar.html#automation_user">automation user</a>.
+For this, on the command line the user is passed via <code>-U/--user</code> and the automation password via <code>-S/--secret</code>.</p></div>
+<div class="paragraph"><p>Some notes about registration:</p></div>
+<div class="ulist"><ul>
+<li><p>When registering, the plug-in also needs the name of the host as it is known in the monitoring.
+This is not necessarily identical to the computer’s host name.
+The host name is then stored locally together with the key.</p></li>
+<li><p>To use HTTPS, HTTPS must also be set up on your monitoring server.
+HTTP is much easier here, but does not provide encryption of the transmission.
+Since the agent can theoretically contain passwords, HTTPS is the recommended method.
+The authenticity of the agent is however ensured independently by the signature.</p></li>
+<li><p>The login as Checkmk administrator is only required once.
+On registration the agent and the server agree a secret key (<em>host secret</em>) known only to this host.
+The password of the Checkmk administrator is not stored anywhere.</p></li>
+<li><p>While the interactive mode only polls fields that are not yet in any configuration, the non-interactive mode allows all fields displayed in the help to be set and has the highest priority for this call.
+Options that are saved only in <code>cmk-update-agent.state</code> will be overwritten — options from <code>cmk-update-agent.cfg</code>, however, won’t.
+More details on this can be found below at <a href="#show_config">Viewing the local configuration</a>.</p></li>
+</ul></div>
+<div class="paragraph"><p>Following a successful registration the host secret is stored at the agent in the <code>/etc/cmk-update-agent.state</code> file.
+On the server it is located in <code>~/var/check_mk/agent_deployment/myhost</code>.
+From now on the host secret allows the host to <strong>download its own agent</strong> from the server without requiring a password.
+It is not possible to download agents from other hosts, since these could contain confidential data.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heading_master_switch">
+<span class="hidden-anchor sr-only" id="master_switch"></span>1.5. Master switch</h3>
+<div class="paragraph"><p>All conditions should should now have been fulfilled.
+If this hasn’t happened yet, activate it by clicking <span class="image-inline"><img src="../images/icons/icon_edit.png" alt="icon edit"></span> at the <span class="guihint">Master switch</span>.
+The <span class="guihint">Prerequisites</span> table should now look like this:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_prerequisites_fulfilled.png" alt="agent deployment prerequisites fulfilled"></div></div>
+<div class="paragraph"><p>From now on, the agent will report at the end of each configured update interval and look for a new version of the agent.
+If a new version is ready — <em>and signed</em> — it will be downloaded and installed automatically.</p></div>
+<div class="paragraph"><p>At the same time, the <span class="guihint">Master switch</span> is also one way to deactivate the update process globally.</p></div>
+<div class="paragraph"><p>A step-by-step guide is also provided by the video which originated at the Checkmk Conference #3 (2017), under the following link.
+This is not the latest version — however the basic procedure has not changed:
+<a href="https://youtu.be/S7TNo2YcGpM?t=767" target="_blank">The new automatic agent updates</a></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_host_selection">
+<span class="hidden-anchor sr-only" id="host_selection"></span>2. Restricting updates to specific hosts</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Before rolling out a new agent to a large number of hosts, you will certainly want to first try it out with a smaller number of hosts.
+This important step prevents a possible mistake of serious dimensions.</p></div>
+<div class="paragraph"><p>For this function, use the middle box on the <span class="guihint">Automatic agent updates</span> page:</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_host_selection.png" alt="agent deployment host selection"></div></div>
+<div class="paragraph"><p>A logical conjunction (<em>AND</em>) is applied to the conditions: Only hosts that match <em>all</em> selected criteria will receive the update.
+After you have stated the conditions for selecting hosts here, you can use the <span class="guihint">Test hostname before activation</span> field to enter individual host names and check if the updates for these hosts have been enabled or not.</p></div>
+<div class="paragraph"><p><strong>Important:</strong> On hosts that are not yet to be provided with automatic updates, the installed package must not contain the agent updater plug-in — otherwise the plug-in will regularly warn you that the host has not yet been registered.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_diagnosis">
+<span class="hidden-anchor sr-only" id="diagnosis"></span>3. Diagnoses</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are quite a few sources of information for diagnosing whether all updates work as intended.</p></div>
+<div class="sect2">
+<h3 id="heading_statistics">
+<span class="hidden-anchor sr-only" id="statistics"></span>3.1. Agent deployment statistics</h3>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_update_status.png" alt="agent deployment update status"></div></div>
+<div class="paragraph"><p>This overview shows how the individual hosts in the agent update behave.
+The <a href="user_interface.html#inline_help">inline help</a> gives further explanations.
+Clicking on <span class="image-inline"><img src="../images/icons/icon_view_20.png" alt="icon view 20"></span> provides a detailed list of the individual hosts.
+You can also get to the complete list of all registered hosts via the <span class="guihint">Monitor &gt; System &gt; Agent update status</span> view.
+There you can then search for individual hosts.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_status_view.png" alt="agent deployment status view"></div></div>
+<div class="paragraph"><p>In this list you will also find documentation on how the hash of an agent starts, which agent is intended for a host (<span class="guihint">Target Agent</span>),
+which agent was most recently downloaded from the host (<span class="guihint">Downloaded Agent</span>),
+and which agent is currently installed on the host (<span class="guihint">Installed Agent</span>).
+In this way you can always see if the specifications have been met or where the process is currently located.
+It should be noted here that the status information appears to the left directly in the communication between the Agent Bakery and agent updater,
+while the <span class="guihint">Update Check</span> and <span class="guihint">Update Check Output</span> fields come from the agent updater plug-in when querying the host’s agent, and that due to caching (defined by the query interval) these may be updated at a different time.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_check_mk_agent">
+<span class="hidden-anchor sr-only" id="check_mk_agent"></span>3.2. The Check_MK Agent service</h3>
+<div class="paragraph"><p>If you have installed the agent updater plug-in on an agent, it will regularly output the current status of the update in the form of monitoring data.
+The service discovery generates a new service with the name <span class="guihint">Check_MK Agent</span> on the host.
+This again reflects the current state of the update.
+This way you can be notified of any problem with the updates.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_agent_check.png" alt="agent deployment agent check"></div></div>
+<div class="paragraph"><p>Among other things, the state of the service signals how the status of the signature key is assessed. The following states are possible:</p></div>
+<div class="ulist"><ul>
+<li><p><span class="state1">WARN</span>: The signature key’s certificate is corrupt, no longer valid, or will become invalid in the next 90 days.</p></li>
+<li><p><span class="state2">CRIT</span>: There is no valid certificate for the signature key or the certificate will lose its validity within the next 30 days.</p></li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="heading_show_config">
+<span class="hidden-anchor sr-only" id="show_config"></span>3.3. Viewing the local configuration</h3>
+<div class="paragraph"><p>The behavior of the agent updater is governed by the two files <code>cmk-update-agent.cfg</code> and <code>cmk-update-agent.state</code>.
+It always applies that defined values from the <code>.cfg</code> file override those from the <code>.state</code> file.
+If the agent updater shows unexpected behavior, it is sometimes worth having a look in the configuration.
+There is also a handy feature if you call the agent updater directly from the command line:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>cmk-update-agent<span class="tok-w"> </span>show-config
+<span class="tok-go">Showing current configuration...</span>
+
+<span class="tok-go">Configuration from config file (/etc/check_mk/cmk-update-agent.cfg):</span>
+<span class="tok-go">server: myserver</span>
+<span class="tok-go">site: mysite</span>
+<span class="tok-go">protocol: http</span>
+<span class="tok-go">certificates: []</span>
+<span class="tok-go">ignore_update_url: False</span>
+<span class="tok-go">interval: 3600</span>
+<span class="tok-go">proxy: None</span>
+<span class="tok-go">signature_keys: ['-----BEGIN CERTIFICATE-----\n [...] \n-----END CERTIFICATE-----\n']</span>
+<span class="tok-go">use_proxy_env: False</span>
+
+<span class="tok-go">Configuration from state file (/etc/cmk-update-agent.state):</span>
+<span class="tok-go">last_error: None</span>
+<span class="tok-go">host_secret: zqscykkqfdkpwnwenqfibdksqvuamblstbtmpasbhnlbubmncgmrqxvakasittxw</span>
+<span class="tok-go">host_name: myhost</span>
+<span class="tok-go">user: cmkadmin</span>
+<span class="tok-go">last_check: 1660750511.8183599</span>
+<span class="tok-go">pending_hash: None</span>
+<span class="tok-go">installed_aghash: 94b60c8ef40c4900</span>
+<span class="tok-go">last_update: 1660750584.8527653</span></code></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="heading_logs_on_host">
+<span class="hidden-anchor sr-only" id="logs_on_host"></span>3.4. Log messages</h3>
+<div class="paragraph"><p>In the event of a problem you will also find log data for the updates on the host to be monitored.
+On Linux <code>cmk-update-agent</code> logs important information to syslog — such as warnings and errors:</p></div>
+<div class="listingblock">
+<div class="title">/var/log/syslog</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>Jul 02 13:59:23 myhost [cmk-update-agent] WARNING: Missing config file at ./cmk-update-agent.cfg. Configuration may be incomplete.
+Jul 02 13:59:23 myhost [cmk-update-agent] ERROR: Not yet registered at deployment server. Please run 'cmk-update-agent register' first.</code></pre></div>
+</div>
+<div class="paragraph"><p>A more detailed log file <code>cmk-update-agent.log</code> including debug output and possible tracebacks can be found on Linux and on Windows:</p></div>
+<div class="listingblock">
+<div class="title">/var/lib/check_mk_agent/cmk-update-agent.log</div>
+<div class="content"><pre class="pygments highlight"><code><span></span>2021-07-02 17:58:18,321 DEBUG: Starting Check_MK Agent Updater v2.0.0p9
+2021-07-02 17:58:18,322 DEBUG: Successfully read /etc/cmk-update-agent.state.
+2021-07-02 17:58:18,322 DEBUG: Successfully read /etc/check_mk/cmk-update-agent.cfg.
+pass:q[...]
+2021-07-02 17:58:18,387 INFO: Target state (from deployment server):
+2021-07-02 17:58:18,387 INFO:   Agent Available:     True
+2021-07-02 17:58:18,387 INFO:   Signatures:          1
+2021-07-02 17:58:18,387 INFO:   Target Hash:         081b6bcc6102d94a
+2021-07-02 17:58:18,387 INFO: Ignoring signature #1 for certificate: certificate is unknown.
+2021-07-02 17:58:18,388 DEBUG: Caught Exception:
+Traceback (most recent call last):
+  File "/build/enterprise/agents/plugins/cmk_update_agent.py", line 1733, in main
+  File "/build/enterprise/agents/plugins/cmk_update_agent.py", line 714, in run
+  File "/build/enterprise/agents/plugins/cmk_update_agent.py", line 1372, in _run_mode
+  File "/build/enterprise/agents/plugins/cmk_update_agent.py", line 1071, in _do_update_as_command
+  File "/build/enterprise/agents/plugins/cmk_update_agent.py", line 1150, in _do_update_agent
+  File "/build/enterprise/agents/plugins/cmk_update_agent.py", line 1221, in _check_signatures
+Exception: No valid signature found.</code></pre></div>
+</div>
+<div class="paragraph"><p>Under both systems you can also use the command line option <code>--logfile LOGFILE</code> to specify an alternate path for the log file.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_scenarios">
+<span class="hidden-anchor sr-only" id="scenarios"></span>4. Application scenarios</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading_deactivate_automatic_updates">
+<span class="hidden-anchor sr-only" id="deactivate_automatic_updates"></span>4.1. Deactivating automatic host updates</h3>
+<div class="paragraph"><p>If a host is to be removed from the automatic updates, alter its setting with
+the <span class="guihint">Agent updater (Linux, Windows, Solaris)</span> rule set so that the update
+plug-in is deactivated there. At the next regular update the agent
+itself then removes its own updater!</p></div>
+<div class="paragraph"><p>It goes without saying that the update can then only be reactivated by the
+manual installation of a new agent package! The registration is retained and
+does not have to be renewed.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_move_to_new_monitoring_server">
+<span class="hidden-anchor sr-only" id="move_to_new_monitoring_server"></span>4.2. Migrating to a new monitoring site</h3>
+<div class="paragraph"><p>Should you want to move to a new Checkmk site in a single-site setup without losing the hosts
+registered on the server, it should be noted that for a successful agent
+update process the following information on server and host must match:</p></div>
+<div class="ulist"><ul>
+<li><p>The name under which the host is monitored and registered.</p></li>
+<li><p>The <a href="#show_config">host secret</a>, which was automatically assigned during registration.</p></li>
+<li><p>The signature used to sign the agents.</p></li>
+</ul></div>
+<div class="paragraph"><p>To achieve this, follow these steps:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>First add all hosts whose registration information is to be migrated to the new site to the monitoring. Make sure the hosts in the new site are monitored under the same name. Then copy the <code>~/var/check_mk/agent_deployment</code> folder from the old to the new monitoring site.</p></li>
+<li><p>Export the signature key(s) that are accepted by the agents installed on the hosts. The signature keys can be exported and imported using <span class="guihint">Setup &gt; Agents &gt; Windows, Linux, Solaris, AIX &gt; Agents &gt; Signature keys</span>.</p></li>
+<li><p>Import these signature keys from step 2 on the new monitoring site.</p></li>
+<li><p>Configure the agent updater rule on the new monitoring site according to the instructions, and sign the baked agents with the imported signature key(s).</p></li>
+<li><p>Lastly, in the agent updater rule on the old site, configure the fields for the update server and the name of the Checkmk site conforming to your new monitoring site, and bake the agents again. <strong>Note</strong>: Please check at this point that you have specified everything correctly <em>before</em> you re-bake the agents.</p></li>
+</ol></div>
+<div class="paragraph"><p>As soon as the next automatic updates go through the hosts, the old monitoring
+site will be locked out. From that time on the hosts to be monitored will
+only answer to the new Checkmk server. Following the second automatic update the
+agent will be installed by the new Checkmk server accordingly.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_automatic_installer">
+<span class="hidden-anchor sr-only" id="automatic_installer"></span>4.3. The agent updater as automatic installer</h3>
+<div class="paragraph"><p><strong>Attention</strong>: This is not an official feature of the agent updater.
+These instructions are therefore intended primarily for more experienced users.
+The official way to install a Checkmk Agent on a host is to download and run the
+agent package appropriate for the system. It is however also possible to allow
+the Checkmk Agent to be installed initially by the agent updater, since this also
+works as a stand-alone program.</p></div>
+<div class="paragraph"><p>Proceed as follows:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Copy the cmk-update-agent binary or the <code>cmk_update_agent.py</code> script to the host to be monitored (both can be found at <code>~/share/check_mk/agents/plugins</code> on the Checkmk server).</p></li>
+<li><p>Register the host on the Checkmk server by invoking <code>cmk-update-agent register</code>. Here it makes sense to pass the required registration information directly via the command line – especially if you want to use an installation script. The corresponding options can be displayed when calling <code>cmk-update-agent register --help</code>.</p></li>
+<li><p>Then, with a final call to the agent updater plug-in, install the agent with all of the configuration details for the host being monitored. However since there is no local configuration (the agent updater also displays a corresponding warning), and thus no signature for the agent package to be downloaded, call the updater once more with <code>cmk-update-agent --skip-signatures</code> to explicitly trust the downloaded package. The prerequisite for the installation by agent updater is, of course, that the Agent Bakery has a suitable agent package ready for the target host on the Checkmk server.</p></li>
+</ol></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_distr_wato">
+<span class="hidden-anchor sr-only" id="distr_wato"></span>5. Agent updates in distributed monitoring</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Since Checkmk <span class="new">2.0.0</span> it has also been possible to distribute baked agents via remote sites.
+The prerequisite for this is a setup with a <a href="distributed_monitoring.html">central configuration</a>
+and a connection which allows the central site to be reached from the remote sites via HTTP/HTTPS.</p></div>
+<div class="paragraph"><p>Such a distributed monitoring can — especially temporarily — also be operated with different Checkmk versions.
+This makes it possible to successively switch larger systems to a new Checkmk version.
+In this case, however, be sure to follow the notes on mixed-version monitoring environments in <a href="distributed_monitoring.html#mixed_versions">distributed monitoring</a>.</p></div>
+<div class="sect2">
+<h3 id="heading_functionality">
+<span class="hidden-anchor sr-only" id="functionality"></span>5.1. Functionality</h3>
+<div class="paragraph"><p>Technically, the feature is implemented in such a way that requests for updates on remote sites are forwarded to the central site — so that the entire configuration as well as the baking of the agents takes place exclusively on the central site.
+Agent packages that have already been requested at a remote site are cached on the remote site (as long as they are valid), so that the packages do not have to be downloaded again from the central site. In addition, the requested data will be checked for consistency on the remote site, so that unnecessary connections to the central site are avoided.</p></div>
+<div class="paragraph"><p>Unlike in a single-site setup, the appropriate update server for the hosts does not originate exclusively from the set of rules for the agent updater, but is communicated to the requesting agent updater by the contacted Checkmk site.
+In this process, a host is provided with its server by the site from which it is being monitored. The specification of a Checkmk server is therefore only needed for the one-time registration, which can theoretically take place at any site — that is accessible from the host — in the entire distributed monitoring system.
+If the connection to the automatically determined server fails, the previously saved server (from the rule configuration or previously-entered manually during registration) is used as a fallback.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_configuration_distributed_monitoring">
+<span class="hidden-anchor sr-only" id="configuration_distributed_monitoring"></span>5.2. Configuration</h3>
+<div class="paragraph"><p>The distribution of agent packages via remote sites does not have to be activated separately — the respective remote site recognizes the situation automatically and accordingly communicates with the central site as well as the requesting agent updater.
+If the agents are to report explicitly only to the central site for updates,
+this can be done via a fixed update server in the
+<a href="#fixed_update_server">rule set for the Agent Updater</a>.</p></div>
+<div class="paragraph"><p>In order for the agent updates to actually work in a distributed monitoring,
+however, some settings must be made on the central site, all of which can be
+found in <span class="guihint">Setup &gt; General &gt; Global Settings &gt; Automatic Agent Updates</span>.
+If the settings differ for each remote site, they can be edited in <span class="guihint">Setup &gt; General &gt; Distributed monitoring &gt; <span class="image-inline"><img src="../images/icons/icon_site_globals.png" alt="icon site globals"></span> (Site specific global settings)</span>.</p></div>
+<div class="sect3">
+<h4 id="heading_connection_to_central_bakery">
+<span class="hidden-anchor sr-only" id="connection_to_central_bakery"></span>Connection to central agent bakery</h4>
+<div class="paragraph"><p>At this point, the URL through which the central site can be accessed from the
+remote site must be specified, including its protocol and the character string
+<code>check_mk</code>, for example <code>https://myserver.org/mysite/check_mk</code>. While the
+Checkmk site will try to identify all other missing settings itself, the specification
+of this URL is not optional, as this connection direction will otherwise not be
+established in the case of a central configuration. If the protocol is HTTPS,
+the remote site automatically uses the CA or self-signed certificates available
+in the setup for the verification of the connection <span class="guihint">Setup &gt; General &gt; Global Settings &gt; Site management &gt; Trusted certificate authorities for SSL</span>.
+The remote site also requires a previously-created automation user to be able to
+log on to the central site. This can also be selected here. If none is specified,
+the remote site searches for an automation user with the name 'Automation'.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_connection_to_remote_bakery">
+<span class="hidden-anchor sr-only" id="connection_to_remote_bakery"></span>Connection to remote agent bakery</h4>
+<div class="paragraph"><p>Since the remote sites are not necessarily accessible from the respective monitored hosts via the same URL as from the central site, a URL can be configured here for this purpose. This URL is then automatically communicated to the host (or the requesting Agent Updater) when a connection is made to a Checkmk site.
+The configuration as a site-specific global setting makes particular sense here.
+If no URL is specified, it is assumed that the remote sites are accessible from both the central site and from the monitored hosts under the identical URL. If it is an HTTPS connection, the appropriate certificate can also be automatically made available to the host. Since the central CA store cannot be used for this, appropriate certificates can be specified at this point.
+Alternatively, the certificates can also be specified in the Agent Updater rules.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading_https_handling">
+<span class="hidden-anchor sr-only" id="https_handling"></span>6. Working with HTTPS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>At various points in this article there are references to securing the respective connections via HTTPS.
+Here, we will once again provide a general overview of what needs to be done to fully secure connections via HTTPS.
+Both the connection from a remote to its central site, and from a host to a Checkmk site can and should be secured via TLS, i.e. using HTTPS.
+This is independent of whether it is a single site setup or a distributed setup.</p></div>
+<div class="sect2">
+<h3 id="heading_https_usage">
+<span class="hidden-anchor sr-only" id="https_usage"></span>6.1. Configuring HTTPS</h3>
+<div class="paragraph"><p>In order to be able to connect to a Checkmk site via HTTPS, first the monitoring server must be configured for HTTPS.
+This can be achieved, for example, via a suitable <a href="omd_https.html">configuration of the system Apache</a>, or most simply via the HTTPS settings on the Checkmk appliance.</p></div>
+<div class="paragraph"><p>Whether a Checkmk server is then addressed via HTTP or HTTPS is determined by the URL configured in each case.
+If this begins with <code>https://</code>, the server is addressed via the HTTPS protocol using port 443.
+This also applies to the protocol you configured with the <a href="#update_server_information"><span class="guihint">Update server information</span></a> setting.
+In principle, you can force forwarding from HTTP to HTTPS on the Apache side and (initially) exclude individual paths for this.
+For configuration details, see the Apache documentation for the <code>mod_rewrite</code> and <code>mod_redirect</code> modules.</p></div>
+</div>
+<div class="sect2">
+<h3 id="heading_provide_certificates">
+<span class="hidden-anchor sr-only" id="provide_certificates"></span>6.2. Providing certificates</h3>
+<div class="paragraph"><p>In order for an HTTPS connection to be established, it must be possible to verify the contacted server’s certificate chain or the self-signed certificate (depending on how the server is configured).
+The provision of suitable CA or self-signed certificates makes this possible and can be realized in various ways.</p></div>
+<div class="sect3">
+<h4 id="heading_connection_to_cmk_server">
+<span class="hidden-anchor sr-only" id="connection_to_cmk_server"></span>Connections from a host to a Checkmk server</h4>
+<div class="paragraph"><p>The Agent Updater always attempts to verify HTTPS connections and terminates these if a verification is  not possible.
+Certificates for verification are available to the Agent Updater from the following sources:</p></div>
+<div class="paragraph"><p><strong>The Agent Updater:</strong>
+By default, the Agent Updater comes with a Python runtime environment including any required modules.
+Also included is the certificate bundle of the <a href="https://pypi.org/project/certifi/#" target="_blank">Certifi module</a>, which in turn is based on the Mozilla project’s certificate collection.
+This ensures that public CAs are made known to the Agent Updater in a timely manner, even when operating system updates are pending.</p></div>
+<div class="paragraph"><p><strong>Certificates via the Agent Bakery:</strong>
+Certificates contained in the Certifi module are ignored once one or more certificates have been imported via one of the following mechanisms.
+Certificates from the following sources are stored locally on the host and used only by the Agent Updater:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Using the <a href="#certificates_for_https"><span class="guihint">Certificates for HTTPS verification</span></a> setting, certificates can be baked into an agent package and will be available to the Agent Updater from installation (or an update).</p></li>
+<li><p>When configuring the connection to the remote site via <span class="guihint">Setup &gt; General &gt; Global settings &gt; Automatic agent updates &gt; Connection to remote agent bakery</span>, you can specify certificates that can be used to verify the HTTPS connection to the respective remote site.
+This is especially useful if it is not yet clear at configuration time which host will be assigned to which site.
+This import option can also be used to reduce the number of agents to be baked, since the correct certificates for the respective update servers do not have to be host-specifically configured.</p></li>
+</ol></div>
+<div class="paragraph"><p><strong>Certificate Store:</strong>
+the Agent Updater <em>may</em> use the operating system’s Certificate Store only if the Agent Updater has been configured to use the <a href="#executable_format">System-Python</a> instead of the supplied Python runtime environment, and no Certifi module is configured in the System-Python.
+Since many factors such as the installation parameters or the <code>_PIP_STANDALONE_CERT</code> environment variable are involved here, we do not officially support such a configuration.</p></div>
+<div class="paragraph"><p><strong>Certificate via command line - Import certificate:</strong>
+You can also call the Agent Updater with the command line argument <code>--trust-cert</code>.
+This retrieves and imports the server certificate.
+This is done without taking into account the type of certificate:
+The certificate is trusted without further checking of a possible chain - regardless of whether it is a self-signed certificate, a certificate at the end of a public certificate chain or a certificate signed with an internal CA.</p></div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="olist arabic"><ol class="arabic">
+<li><p>If a certificate is imported in this way, you must ensure the authenticity of the server itself, since the certificate does not come from an independent source.</p></li>
+<li><p>As only the server certificate is imported, which is sometimes very short-lived, you must provide <a href="#certificate_change">new certificates</a> via the Agent Bakery in good time before expiry.</p></li>
+</ol></div></td>
+</tr></table></div>
+<div class="paragraph"><p><strong>Certificate via command line - Ignore certificate:</strong>
+If there is no valid certificate available to the Agent Updater at all, the certificate validation can be bypassed by using the <code>--insecure</code> command line argument for a call.
+This can be useful if the valid certificate is already waiting to be retrieved from the server on the next connection,
+but the Agent Updater will be 'locked out' by this missing certificate.</p></div>
+<div class="admonitionblock important"><table><tr>
+<td class="icon"><img src="../images/icons/important.png" alt="Important"></td>
+<td class="content"><div class="paragraph"><p>This actually completely deactivates the certificate check for this call.
+Communication still takes place in encrypted form, so the use of this argument is 'better than nothing'.</p></div></td>
+</tr></table></div>
+</div>
+<div class="sect3">
+<h4 id="heading_connection_from_remote_to_central_site">
+<span class="hidden-anchor sr-only" id="connection_from_remote_to_central_site"></span>Connection from a remote site to a central site</h4>
+<div class="paragraph"><p>The distribution of certificates is simpler when connecting from a remote to the central site, since the setup procedure is not exited at all.
+The remote site can use the Checkmk certificate store under <span class="guihint">Global settings &gt; Site management &gt; Trusted certificate authorities for SSL</span>.
+It is therefore sufficient to import the certificate(s) via the central site, if necessary also via <span class="guihint">Site specific global settings</span> when the central site is accessible under multiple URLs.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_certificate_change">
+<span class="hidden-anchor sr-only" id="certificate_change"></span>Procedure for replacing a certificate</h4>
+<div class="paragraph"><p>If you work with your own certification infrastructure, you ideally use a root certificate that is valid for a very long time and whose associated key is regularly used to create intermediate certificates. These are then in turn used to sign the server certificates.
+In this case, you roll out intermediate certificates as a certificate chain on the Checkmk server.
+The hosts that receive automatic agent updates now only need to be made aware of the root certificate.</p></div>
+<div class="paragraph"><p>If you are unsure whether a new server certificate requires a new root certificate, use the following command.
+Use it to determine the identifier of the root key used to sign a server certificate:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>openssl<span class="tok-w"> </span>x509<span class="tok-w"> </span>-noout<span class="tok-w"> </span>-text<span class="tok-w"> </span>-in<span class="tok-w"> </span>cert.pem<span class="tok-w"> </span><span class="tok-p">|</span><span class="tok-w"> </span>grep<span class="tok-w"> </span>-A1<span class="tok-w"> </span><span class="tok-s1">'X509v3 Authority Key'</span>
+<span class="tok-go">            X509v3 Authority Key Identifier:</span>
+<span class="tok-go">                14:2E:B3:17:B7:58:56:CB:AE:50:09:40:E6:1F:AF:9D:8B:14:C2:C6</span></code></pre></div></div>
+<div class="paragraph"><p>If the displayed identifier is identical for both the old and the new certificate, no further action is required.
+Hosts that trust this root certificate can continue to obtain updates even if the certificate chain changes — provided that the chain was correctly stored in the system Apache.</p></div>
+<div class="paragraph"><p>If a self-signed certificate or a short-lived root certificate from an internal CA has been used up to now, or if the previous root key of one of your internal CAs has been compromised, proceed as follows when replacing the certificate:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li><p>Add the new certificate using the <span class="guihint">Certificates for HTTPS verification</span> parameter (in the <span class="guihint">Agent updater (Linux, Windows, Solaris)</span> rule).</p></li>
+<li><p>Re-bake the agent packages and update all hosts in the monitoring.
+Ensure that this update has been run for all hosts before proceeding.</p></li>
+<li><p>Now replace the server certificate.</p></li>
+<li><p>Test with a few hosts in which it is easy to reinstall the agent manually if it fails, to see if it is possible to update again using the new certificate.</p></li>
+<li><p>If the preceding step (4) could be performed successfully — you <em>can</em> (the certificate will expire), or <em>must</em> (the key was compromised) — remove the old certificate and perform another agent update.</p></li>
+</ol></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="heading__troubleshooting">
+<span class="hidden-anchor sr-only" id="_troubleshooting"></span>7. Troubleshooting</h2>
+<div class="sectionbody"><div class="sect2">
+<h3 id="heading_faq">
+<span class="hidden-anchor sr-only" id="faq"></span>7.1. Typical errors and their solutions</h3>
+<div class="sect3">
+<h4 id="heading_faq1">
+<span class="hidden-anchor sr-only" id="faq1"></span>Errors already fixed in the Checkmk Agent service</h4>
+<div class="paragraph"><p>The agent updater will really only be run once within the update interval,
+so an error will be continuously-displayed until either you call the plug-in
+manually, or the next interval is pending.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_faq2">
+<span class="hidden-anchor sr-only" id="faq2"></span>Registration fails after a manual reinstallation of the Checkmk agent</h4>
+<div class="paragraph"><p>The agent updater creates its own status file <code>cmk-update-agent.state</code> independently (under Linux/Unix in <code>/etc</code>, and under Windows in the <code>config</code> folder).
+This file remains on the host after uninstallation, so that the registry information does not get lost.
+A new installation will find the file and continue using it.
+If this situation is undesirable, simply delete the <code>cmk-update-agent.state</code> file manually after an uninstall.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_faq3">
+<span class="hidden-anchor sr-only" id="faq3"></span>Update status for hosts with no automatic updates active</h4>
+<div class="paragraph"><p>The <span class="guihint">Monitor &gt; System &gt; Agent Update Status</span> page displays all of the hosts that are are in the monitoring and for which a status file exists on the Checkmk server.
+It does  not matter if the host actually reports to the Checkmk server for
+automatic updates. Should an unexpected host be displayed here, it is worth
+taking a look in the <code>/omd/sites/mysite/var/check_mk/agent_deployment</code>
+folder — the cause will probably be an old or accidentally-created registry.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_faq4">
+<span class="hidden-anchor sr-only" id="faq4"></span>The connection over SSL/TLS does not function</h4>
+<div class="paragraph"><p>The agent updater is designed to explicitly trust only the certificates which are usually specified under <span class="guihint">Agent updater (Linux, Windows, Solaris)</span> in the
+<a href="#certificates_for_https">HTTPS configuration</a>.
+In particular locally-installed certificates are ignored.
+It can also occur that the Checkmk server is accessible through the browser,
+while the agent updater cannot connect due to an incorrect configuration.</p></div>
+<div class="paragraph"><p>In the HTTPS configuration of the agent updater rule a <em>root certificate</em>
+must be specified with which the connection to the Checkmk server can be verified.
+In other words: the <em>certificate chain</em> included in the Checkmk server’s
+<em>server certificate</em> must be verifiable by the certificate given here.
+Often the server certificate is specified here instead — this is however not
+suitable for this purpose.</p></div>
+<div class="paragraph"><p>Take a look at the Checkmk server’s certificate chain with the
+<em>OpenSSL</em> tool. Due to the chain’s length, for clarity here only a relevant section is shown and the omitted sections marked by <code>[...]</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>openssl<span class="tok-w"> </span>s_client<span class="tok-w"> </span>-connect<span class="tok-w"> </span>mymonitoring.example.net:443
+<span class="tok-go">[...]</span>
+<span class="tok-go">subject=/CN=mymonitoring.example.net</span>
+<span class="tok-go">issuer=/C=DE/O=Deutsche Telekom AG/OU=T-TeleSec Trust Center/CN=Deutsche Telekom Root CA 2</span>
+<span class="tok-go">---</span>
+<span class="tok-go">No client certificate CA names sent</span>
+<span class="tok-go">Peer signing digest: SHA512</span>
+<span class="tok-go">Server Temp Key: ECDH, P-256, 256 bits</span>
+<span class="tok-go">---</span>
+<span class="tok-go">SSL handshake has read 3832 bytes and written 302 bytes</span>
+<span class="tok-go">Verification: OK</span>
+<span class="tok-go">---</span>
+<span class="tok-go">[...]</span></code></pre></div></div>
+<div class="paragraph"><p>For the last entry — in our case
+<code>subject=/CN=mymonitoring.example.net</code> — you need a valid root
+certificate. This must not necessarily be — as in this example —  the issuer of
+the certificate. It will usually be a chain of issuers.</p></div>
+<div class="paragraph"><p>Then look at the certificate used. Here too due to the length it will be
+shortened as in the above example:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span>openssl<span class="tok-w"> </span>x509<span class="tok-w"> </span>-text<span class="tok-w"> </span>-noout<span class="tok-w"> </span>-in<span class="tok-w"> </span>myca.pem
+<span class="tok-go">Certificate:</span>
+<span class="tok-go">    Data:</span>
+<span class="tok-go">        Version: 3 (0x2)</span>
+<span class="tok-go">        Serial Number: 38 (0x26)</span>
+<span class="tok-go">    Signature Algorithm: sha1WithRSAEncryption</span>
+<span class="tok-go">        Issuer: C = DE, O = Deutsche Telekom AG, OU = T-TeleSec Trust Center, CN = Deutsche Telekom Root CA 2</span>
+<span class="tok-go">        Validity</span>
+<span class="tok-go">            Not Before: Jul  9 12:11:00 1999 GMT</span>
+<span class="tok-go">            Not After : Jul  9 23:59:00 2019 GMT</span>
+<span class="tok-go">        Subject: C = DE, O = Deutsche Telekom AG, OU = T-TeleSec Trust Center, CN = Deutsche Telekom Root CA 2</span>
+<span class="tok-go">        [...]</span>
+<span class="tok-go">        X509v3 extensions:</span>
+<span class="tok-go">            [...]</span>
+<span class="tok-go">            X509v3 Basic Constraints:</span>
+<span class="tok-go">                CA:TRUE, pathlen:5</span>
+<span class="tok-go">            [...]</span></code></pre></div></div>
+<div class="paragraph"><p>The top certificate — seen in the above excerpt — is not permitted to have a
+dependency on another certificate. You can see that the issuer
+(<em>Issuer</em>) and the item (<em>Subject</em>) are identical and that the
+option <code>CA:TRUE</code> is included. In addition the issuer’s chain that
+authenticates an object must be consistent up until the final entry.
+You therefore also need all intermediate certificates if the issuer of the last
+certificate should not be a CA.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_faq5">
+<span class="hidden-anchor sr-only" id="faq5"></span>Error message: Cannot open self cmk-update-agent or archive cmk-update-agent.pkg</h4>
+<div class="paragraph"><p>On some Linux systems the program <em>Prelink</em> is installed and a cronjob
+is activated which regularly examines all binary files on the system,
+and adapts them if necessary to speed up the programs. However the Agent
+Updater plug-in is packaged with the <em>PyInstaller</em> program which is
+not compatible with such actions, and is therefore <em>broken</em>. Checkmk
+therefore has a blacklist entry for deb/rpm packages which is stored under
+<code>/etc/prelink.conf.d</code>, and — if prelink exists — sets an entry in the
+existing <code>/etc/prelink.conf</code> file. Since this problem is difficult
+to handle, it can still happen that these measures do not take effect — especially in the case of a subsequent setup of prelink.</p></div>
+<div class="paragraph"><p>Therefore, if you install prelink later, set the entry yourself and add the
+following line to the file with the following command:</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">root@linux# </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">"-c /etc/prelink.conf.d/cmk-update-agent.conf"</span><span class="tok-w"> </span>&gt;&gt;<span class="tok-w"> </span>/etc/prelink.conf</code></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="heading_faq6">
+<span class="hidden-anchor sr-only" id="faq6"></span>Error message cmk-update-agent: error while loading shared libraries: libz.so.1: failed to map segment from shared object</h4>
+<div class="paragraph"><p>This error message occurs when the <code>/tmp</code> directory with the flag
+<code>noexec</code> was mounted in the system. To fix this problem, you can
+either remove the flag, or — if you deliberately set and require the
+flag — on the Checkmk server in <span class="guihint">Setup</span> create a rule under
+<span class="guihint">Agents &gt; Windows, Linux, Solaris, AIX &gt; Agents &gt; Agent rules &gt; Installation paths for agent files (Linux, UNIX)</span>.
+There you can define the tmp directory in the
+<span class="guihint">Directory for storage of temporary data (set TMPDIR environment variable)</span>
+option yourself. The agent updater plug-in will then in future write temporary
+files in the defined directory. That works even if you call the plug-in manually
+with the helper script in <code>/usr/bin/cmk-update-agent</code>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_faq7">
+<span class="hidden-anchor sr-only" id="faq7"></span>RPM installation fails on RedHat/CentOS</h4>
+<div class="paragraph"><p>It has occasionally occurred — especially on RedHat/CentOS systems — that the
+call to <code>rpm</code> triggered by the automatic update repeatedly fails, while a
+manual call to <code>cmk-update-agent</code> processes successfully. The cause in
+these cases was a SELinux policy that prevented an error-free call
+if <code>rpm</code> was called by a child process of <code>xinetd</code>. You can solve
+the problem, i.e., get to the bottom of it by analyzing the SELinux logs,
+and adjusting the policy accordingly using the <code>audit2allow</code> tool.</p></div>
+</div>
+<div class="sect3">
+<h4 id="heading_faq8">
+<span class="hidden-anchor sr-only" id="faq8"></span>Error message: No valid signature found</h4>
+<div class="paragraph"><p>If the <span class="guihint">Check_MK Agent</span> service displays the warning <code>No valid signature found</code>, this means that the agent package intended for the host in the Agent Bakery has <strong>not</strong> been signed with one of the <a href="#signature_keys">accepted keys</a>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_no_valid_signature.png" alt="agent deployment no valid signature"></div></div>
+<div class="paragraph"><p>In the simplest case, all you need to do is sign your agents using the <span class="guihint">Sign agents</span> function in the Agent Bakery with one of the keys displayed under <span class="guihint">Signature keys the agent will accept</span>.</p></div>
+<div class="imageblock"><div class="content"><img src="../images/agent_deployment_sign_agent.png" alt="agent deployment sign agent"></div></div>
+<div class="paragraph"><p>As soon as the agent updater makes its next report from the affected host to the Checkmk server, <strong>and</strong> the cache interval for the service has expired, the warning will disappear.</p></div>
+<div class="paragraph"><p>However, if the host does not have (or no longer has) a single signature key that is located on the Checkmk server, you must repeat the <a href="#bakery">bake and sign</a> with a key displayed under <span class="guihint">Signature keys the agent will accept</span>, then copy the baked agent to the affected host and reinstall it there.</p></div>
+<div class="paragraph"><p>On an affected host, you can run <code>cmk-update-agent -v</code> or <code>check_mk_agent.exe updater -v</code> to get more details about this error.
+The detailed error message explicitly lists the signatures from the <a href="#files">agent updater plug-in’s configuration file</a> that do not have an accepted (i.e. configured) counterpart on your Checkmk server.</p></div>
+<div class="listingblock"><div class="content"><pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-go">Ignoring signature #1 for certificate: certificate is unknown.</span>
+<span class="tok-go">No valid signature found.</span></code></pre></div></div>
+</div>
+</div></div>
+</div>
+<div class="sect1">
+<h2 id="heading_files">
+<span class="hidden-anchor sr-only" id="files"></span>8. Files and directories</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="heading__file_paths_on_the_checkmk_server">
+<span class="hidden-anchor sr-only" id="_file_paths_on_the_checkmk_server"></span>8.1. File paths on the Checkmk server</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/agents/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the baked agents, sorted first in subdirectories by operating system (e.g. <code>linux_rpm</code>) and below by hosts via soft link.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~/var/check_mk/agent_deployment/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains files with the names of the registered hosts. One such file contains the time of the last registration and the <em>host secret</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__file_paths_on_the_monitored_linuxunix_host">
+<span class="hidden-anchor sr-only" id="_file_paths_on_the_monitored_linuxunix_host"></span>8.2. File paths on the monitored Linux/Unix host</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/lib/check_mk_agent/plugins/3600/cmk-update-agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The agent updater plug-in as binary or script, depending on the configuration in <a href="#executable_format">executable format</a>. The subdirectory <code>3600</code> stands for the <a href="#interval_for_update_check">interval for the update check</a> in seconds (here for the default value of one hour).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/usr/bin/cmk-update-agent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script to call the agent updater plug-in and register the agent with the command <code>cmk-update-agent register</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/check_mk/cmk-update-agent.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file for the agent updater plug-in, which contains the settings of the <span class="guihint">Agent updater (Linux, Windows, Solaris)</span> rule. Do not edit this file, because it is written to during installations and updates.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/etc/cmk-update-agent.state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File with registry information, including the <em>host secret</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/var/lib/check_mk_agent/cmk-update-agent.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extensive log file with DEBUG messages</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="heading__file_paths_on_the_monitored_windows_host">
+<span class="hidden-anchor sr-only" id="_file_paths_on_the_monitored_windows_host"></span>8.3. File paths on the monitored Windows host</h3>
+<table class="table-responsive table-bordered table tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead><tr>
+<th class="tableblock halign-left valign-top">File path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\plugins\cmk_update_agent.checkmk.py</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The agent updater plug-in as a Python file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\Program Files (x86)\checkmk\service\check_mk_agent.exe</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agent program to register the agent with the command <code>check_mk_agent.exe updater register</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\config\cmk-update-agent.cfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agent updater plug-in configuration file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\config\cmk-update-agent.state</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File with registry information including the <em>host secret</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\log\cmk-update-agent.log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detailed log file with DEBUG messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>C:\ProgramData\checkmk\agent\bakery\check_mk.bakery.yml</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file created by the Agent Bakery, which among other things defines the interval for the update check.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></main><div id="toc" class="toc2">
+<div id="toctitle">On this page</div>
+<ul class="sectlevel1">
+<li>
+<a href="#setup_automatic_updates">1. Setting up automatic updates</a><ul class="sectlevel1">
+<li><a href="#create_signature_key">1.1. Creating a signature key</a></li>
+<li>
+<a href="#configure_update_plugin">1.2. Configuring the Update plug-in</a><ul class="sectlevel2">
+<li><a href="#activation">Activation</a></li>
+<li><a href="#update_server_information">Update server information</a></li>
+<li><a href="#certificates_for_https">Certificates for HTTPS verification</a></li>
+<li><a href="#interval_for_update_check">Interval for update check</a></li>
+<li><a href="#proxy_settings">Proxy settings</a></li>
+<li><a href="#executable_format">Executable format (Linux)</a></li>
+<li><a href="#signature_keys">Signature keys the agent will accept</a></li>
+</ul>
+</li>
+<li><a href="#bakery">1.3. Baking and signing agents</a></li>
+<li>
+<a href="#register_agent">1.4. Registering agent updater</a><ul class="sectlevel2">
+<li><a href="#_registering_agent_updater_under_linux">Registering agent updater under Linux</a></li>
+<li><a href="#_registering_agent_updater_under_windows">Registering agent updater under Windows</a></li>
+<li><a href="#_one_time_registration_and_general_information">One-time registration and general information</a></li>
+</ul>
+</li>
+<li><a href="#master_switch">1.5. Master switch</a></li>
+</ul>
+</li>
+<li><a href="#host_selection">2. Restricting updates to specific hosts</a></li>
+<li>
+<a href="#diagnosis">3. Diagnoses</a><ul class="sectlevel1">
+<li><a href="#statistics">3.1. Agent deployment statistics</a></li>
+<li><a href="#check_mk_agent">3.2. The Check_MK Agent service</a></li>
+<li><a href="#show_config">3.3. Viewing the local configuration</a></li>
+<li><a href="#logs_on_host">3.4. Log messages</a></li>
+</ul>
+</li>
+<li>
+<a href="#scenarios">4. Application scenarios</a><ul class="sectlevel1">
+<li><a href="#deactivate_automatic_updates">4.1. Deactivating automatic host updates</a></li>
+<li><a href="#move_to_new_monitoring_server">4.2. Migrating to a new monitoring site</a></li>
+<li><a href="#automatic_installer">4.3. The agent updater as automatic installer</a></li>
+</ul>
+</li>
+<li>
+<a href="#distr_wato">5. Agent updates in distributed monitoring</a><ul class="sectlevel1">
+<li><a href="#functionality">5.1. Functionality</a></li>
+<li>
+<a href="#configuration_distributed_monitoring">5.2. Configuration</a><ul class="sectlevel2">
+<li><a href="#connection_to_central_bakery">Connection to central agent bakery</a></li>
+<li><a href="#connection_to_remote_bakery">Connection to remote agent bakery</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#https_handling">6. Working with HTTPS</a><ul class="sectlevel1">
+<li><a href="#https_usage">6.1. Configuring HTTPS</a></li>
+<li>
+<a href="#provide_certificates">6.2. Providing certificates</a><ul class="sectlevel2">
+<li><a href="#connection_to_cmk_server">Connections from a host to a Checkmk server</a></li>
+<li><a href="#connection_from_remote_to_central_site">Connection from a remote site to a central site</a></li>
+<li><a href="#certificate_change">Procedure for replacing a certificate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#_troubleshooting">7. Troubleshooting</a><ul class="sectlevel1"><li>
+<a href="#faq">7.1. Typical errors and their solutions</a><ul class="sectlevel2">
+<li><a href="#faq1">Errors already fixed in the Checkmk Agent service</a></li>
+<li><a href="#faq2">Registration fails after a manual reinstallation of the Checkmk agent</a></li>
+<li><a href="#faq3">Update status for hosts with no automatic updates active</a></li>
+<li><a href="#faq4">The connection over SSL/TLS does not function</a></li>
+<li><a href="#faq5">Error message: Cannot open self cmk-update-agent or archive cmk-update-agent.pkg</a></li>
+<li><a href="#faq6">Error message cmk-update-agent: error while loading shared libraries: libz.so.1: failed to map segment from shared object</a></li>
+<li><a href="#faq7">RPM installation fails on RedHat/CentOS</a></li>
+<li><a href="#faq8">Error message: No valid signature found</a></li>
+</ul>
+</li></ul>
+</li>
+<li>
+<a href="#files">8. Files and directories</a><ul class="sectlevel1">
+<li><a href="#_file_paths_on_the_checkmk_server">8.1. File paths on the Checkmk server</a></li>
+<li><a href="#_file_paths_on_the_monitored_linuxunix_host">8.2. File paths on the monitored Linux/Unix host</a></li>
+<li><a href="#_file_paths_on_the_monitored_windows_host">8.3. File paths on the monitored Windows host</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script src="../../assets/js/manifest.js?id=7db827d654313dce4250"></script>
+<script src="../../assets/js/vendor.js?id=581a3d4a61b7156d04df"></script>
+<script src="../../assets/js/app.js?id=959ccd04b1f8b7b78c5e"></script>
+<script src="../../assets/js/lunr.js"></script>
+<script src="../../assets/js/lunr.stemmer.support.js"></script>
+<script src="../lunr.index.en.js"></script>
+<script src="../../assets/js/lunr.client.js"></script>
+</body>
+</html>
